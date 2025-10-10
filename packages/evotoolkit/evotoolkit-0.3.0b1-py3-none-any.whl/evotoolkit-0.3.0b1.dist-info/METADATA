@@ -1,0 +1,102 @@
+Metadata-Version: 2.4
+Name: evotoolkit
+Version: 0.3.0b1
+Summary: LLM-driven code evolution method library.
+Project-URL: Homepage, https://github.com/pgg3/evotool
+Project-URL: Repository, https://github.com/pgg3/evotool
+Author-email: Ping Guo <pguo6680@gmail.com>
+License: MIT
+License-File: LICENSE
+Keywords: LLM,evolutionary,optimization,toolkit
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.11
+Requires-Dist: numpy
+Requires-Dist: scipy
+Provides-Extra: adversarial-attack
+Requires-Dist: foolbox; extra == 'adversarial-attack'
+Requires-Dist: timm; extra == 'adversarial-attack'
+Provides-Extra: all-tasks
+Requires-Dist: foolbox; extra == 'all-tasks'
+Requires-Dist: ninja; extra == 'all-tasks'
+Requires-Dist: pandas; extra == 'all-tasks'
+Requires-Dist: portalocker; extra == 'all-tasks'
+Requires-Dist: psutil; extra == 'all-tasks'
+Requires-Dist: scipy; extra == 'all-tasks'
+Requires-Dist: torch; extra == 'all-tasks'
+Requires-Dist: torchvision; extra == 'all-tasks'
+Provides-Extra: cuda-engineering
+Requires-Dist: ninja; extra == 'cuda-engineering'
+Requires-Dist: portalocker; extra == 'cuda-engineering'
+Requires-Dist: psutil; extra == 'cuda-engineering'
+Provides-Extra: prompt-engineering
+Provides-Extra: scientific-regression
+Requires-Dist: pandas; extra == 'scientific-regression'
+Requires-Dist: scipy; extra == 'scientific-regression'
+Description-Content-Type: text/markdown
+
+# EvoToolkit
+
+**LLM-driven solution evolutionary optimization toolkit**
+
+EvoToolkit is a Python library that leverages Large Language Models (LLMs) to evolve solutions for optimization problems. It combines the power of evolutionary algorithms with LLM-based solution generation and refinement.
+
+## Installation
+
+```bash
+pip install evotoolkit
+```
+
+**Note**: The package is installed as `evotoolkit` but imported as `evotool`:
+
+```python
+import evotool  # Note: import name is different from package name
+```
+
+## Quick Start
+
+```python
+import evotool
+from evotool.task.python_task.scientific_regression import ScientificRegressionTask
+from evotool.task.python_task import EvoEngineerPythonInterface
+from evotool.tools import HttpsApi
+
+# 1. Create a task
+task = ScientificRegressionTask(dataset_name="bactgrow")
+
+# 2. Create an interface
+interface = EvoEngineerPythonInterface(task)
+
+# 3. Solve with LLM
+llm_api = HttpsApi(
+    api_url="https://api.openai.com/v1/chat/completions",
+    key="your-api-key-here",
+    model="gpt-4o"
+)
+result = evotool.solve(
+    interface=interface,
+    output_path='./results',
+    running_llm=llm_api,
+    max_generations=5
+)
+```
+
+## Features
+
+- 🤖 **LLM-Driven Evolution**: Use language models to generate and evolve solutions
+- 🔬 **Multiple Algorithms**: EoH, EvoEngineer, and FunSearch
+- 🌍 **Task-Agnostic**: Supports code, text, math expressions, etc.
+- 🎯 **Extensible**: Easy-to-extend task system
+- 🔌 **Simple API**: High-level `evotool.solve()` function
+
+## Documentation
+
+Full documentation: https://evotoolkit.readthedocs.io/
+
+## License
+
+MIT License
