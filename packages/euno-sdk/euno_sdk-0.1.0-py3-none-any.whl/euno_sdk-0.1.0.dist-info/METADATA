@@ -1,0 +1,125 @@
+Metadata-Version: 2.4
+Name: euno-sdk
+Version: 0.1.0
+Summary: Euno's CLI library to programmatically interact with Euno instance
+Home-page: https://github.com/euno-ai/euno-sdk
+Author: Euno Team
+Author-email: Euno Team <team@euno.ai>
+Maintainer-email: Euno Team <team@euno.ai>
+License: MIT
+Project-URL: Homepage, https://github.com/euno-ai/euno-sdk
+Project-URL: Documentation, https://github.com/euno-ai/euno-sdk#readme
+Project-URL: Repository, https://github.com/euno-ai/euno-sdk.git
+Project-URL: Issues, https://github.com/euno-ai/euno-sdk/issues
+Keywords: euno,sdk,cli,api
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Systems Administration
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0.0
+Requires-Dist: requests>=2.25.0
+Requires-Dist: pydantic>=1.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0.0; extra == "dev"
+Requires-Dist: black>=21.0.0; extra == "dev"
+Requires-Dist: flake8>=3.8.0; extra == "dev"
+Requires-Dist: mypy>=0.800; extra == "dev"
+Requires-Dist: pre-commit>=2.0.0; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Euno SDK
+
+Euno's CLI library to programmatically interact with Euno instance
+
+## Installation
+
+```bash
+pip install euno-sdk
+```
+
+## Quick Start
+
+### As a Library
+
+```python
+from euno import hello_world
+
+# Use the hello_world function
+message = hello_world("Euno")
+print(message)  # Output: Hello, Euno! Welcome to the Euno SDK!
+```
+
+### As a CLI Tool
+
+```bash
+# Hello world command
+euno hello-world --name Euno
+
+# Show version
+euno version
+
+# Show help
+euno --help
+```
+
+## Development
+
+### Setup Development Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/euno-ai/euno-sdk.git
+cd euno-sdk
+
+# Install development dependencies
+pip install -r requirements-dev.txt
+
+# Install the package in development mode
+pip install -e .
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Formatting
+
+```bash
+black euno tests
+```
+
+### Type Checking
+
+```bash
+mypy euno
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for your changes
+5. Run the test suite
+6. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
