@@ -1,0 +1,64 @@
+name: Build Linux Wheels
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-linux-wheels:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install maturin
+      run: pip install maturin[patchelf]
+
+    - name: Build wheel
+      run: maturin build --release --interpreter python
+
+    - name: Upload wheel
+      uses: actions/upload-artifact@v3
+      with:
+        name: wheel-py${{ matrix.python-version }}
+        path: target/wheels/*.whl
+
+  upload-to-pypi:
+    needs: build-linux-wheels
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download all wheels
+      uses: actions/download-artifact@v3
+      with:
+        path: dist
+
+    - name: Flatten wheels
+      run: find dist -name "*.whl" -exec cp {} dist/ \;
+
+    - name: Publish to PyPI
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      run: |
+        pip install twine
+        twine upload dist/*.whl
