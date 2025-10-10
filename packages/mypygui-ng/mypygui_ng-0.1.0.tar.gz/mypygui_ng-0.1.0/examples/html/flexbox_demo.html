@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPyGUI - Flexbox Demo</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        /* Demo 1: Flex Row */
+        .flex-row-demo {
+            display: flex;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            padding: 15px;
+            gap: 10px;
+        }
+
+        .flex-item {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .flex-item:nth-child(2) {
+            background-color: #e74c3c;
+        }
+
+        .flex-item:nth-child(3) {
+            background-color: #2ecc71;
+        }
+
+        /* Demo 2: Flex Column */
+        .flex-column-demo {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            gap: 10px;
+            height: 200px;
+        }
+
+        .flex-column-item {
+            background-color: #9b59b6;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* Demo 3: Justify Content */
+        .justify-demo {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff3cd;
+            border-radius: 8px;
+            padding: 15px;
+            gap: 10px;
+        }
+
+        .justify-item {
+            background-color: #fd7e14;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 0 0 auto;
+            width: 80px;
+        }
+
+        /* Demo 4: Align Items */
+        .align-demo {
+            display: flex;
+            align-items: center;
+            background-color: #d4edda;
+            border-radius: 8px;
+            padding: 15px;
+            gap: 10px;
+            height: 100px;
+        }
+
+        .align-item {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .tall-item {
+            background-color: #dc3545;
+            height: 60px;
+        }
+
+        .code-example {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            background-color: #4299e1;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .responsive-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .responsive-item {
+            background-color: #17a2b8;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-item {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-section">
+            <h2>🚀 MyPyGUI - Flexbox Básico</h2>
+            <p>MyPyGUI ahora soporta <strong>flexbox básico</strong> con <span class="highlight">display: flex</span>, <span class="highlight">justify-content</span> y <span class="highlight">align-items</span>.</p>
+        </div>
+
+        <div class="demo-section">
+            <h3>📱 Ejemplo 1: Flex Row (Horizontal)</h3>
+            <div class="code-example">display: flex; /* Activa flexbox */</div>
+            <div class="flex-row-demo">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📊 Ejemplo 2: Flex Column (Vertical)</h3>
+            <div class="code-example">display: flex;<br>flex-direction: column;</div>
+            <div class="flex-column-demo">
+                <div class="flex-column-item">Header</div>
+                <div class="flex-column-item">Content</div>
+                <div class="flex-column-item">Footer</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎯 Ejemplo 3: Justify Content (Espaciado Horizontal)</h3>
+            <div class="code-example">display: flex;<br>justify-content: space-between;</div>
+            <div class="justify-demo">
+                <div class="justify-item">Inicio</div>
+                <div class="justify-item">Centro</div>
+                <div class="justify-item">Final</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📐 Ejemplo 4: Align Items (Alineación Vertical)</h3>
+            <div class="code-example">display: flex;<br>align-items: center;</div>
+            <div class="align-demo">
+                <div class="align-item">Texto corto</div>
+                <div class="align-item tall-item">Texto más largo que centra verticalmente</div>
+                <div class="align-item">Otro texto</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>📱 Responsive Design</h3>
+            <p>El flexbox facilita crear diseños responsivos que se adaptan al tamaño de la pantalla.</p>
+            <div class="code-example">display: flex;<br>flex-wrap: wrap;</div>
+            <div class="responsive-demo">
+                <div class="responsive-item">Responsive 1</div>
+                <div class="responsive-item">Responsive 2</div>
+                <div class="responsive-item">Responsive 3</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>💡 ¿Por qué Flexbox?</h3>
+            <ul>
+                <li><strong>Fácil de usar:</strong> Menos código que posicionamiento absoluto</li>
+                <li><strong>Responsive:</strong> Se adapta automáticamente a diferentes pantallas</li>
+                <li><strong>Modular:</strong> Cada elemento puede tener diferentes tamaños</li>
+                <li><strong>Moderna:</strong> Estándar web actual usado en aplicaciones reales</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔧 Propiedades Flexbox Soportadas</h3>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="background-color: #e9ecef; padding: 10px; border-radius: 5px; text-align: center;">
+                    <strong>display: flex</strong><br>
+                    <small>Activa modo flexbox</small>
+                </div>
+                <div style="background-color: #e9ecef; padding: 10px; border-radius: 5px; text-align: center;">
+                    <strong>justify-content</strong><br>
+                    <small>Alineación horizontal</small>
+                </div>
+                <div style="background-color: #e9ecef; padding: 10px; border-radius: 5px; text-align: center;">
+                    <strong>align-items</strong><br>
+                    <small>Alineación vertical</small>
+                </div>
+                <div style="background-color: #e9ecef; padding: 10px; border-radius: 5px; text-align: center;">
+                    <strong>flex-direction</strong><br>
+                    <small>Dirección del flujo</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

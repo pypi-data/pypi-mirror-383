@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPyGUI - SVG Icons Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .icon-card {
+            text-align: center;
+            padding: 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #007bff;
+        }
+
+        .icon-svg {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            padding: 10px;
+            background-color: #007bff;
+            border-radius: 50%;
+            color: white;
+        }
+
+        .icon-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .icon-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .code-example {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .feature-highlight {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+
+        .coming-soon {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-ready {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-soon {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-planned {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 style="text-align: center; color: #2c3e50; margin-bottom: 2rem;">
+            🎨 MyPyGUI-NG SVG Icons Demo
+        </h1>
+
+        <div class="feature-highlight">
+            <h3>🚀 Vector Icons Without External Dependencies</h3>
+            <p>MyPyGUI-NG will support SVG icons natively, allowing you to use scalable vector graphics without needing external icon libraries or image files.</p>
+        </div>
+
+        <div class="icon-showcase">
+            <div class="icon-card">
+                <div class="icon-svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26 15 3.41 18.13 3.41 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="icon-title">User Icon</div>
+                <div class="icon-description">Profile and user-related actions</div>
+                <span class="status-badge status-ready">Ready</span>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="icon-title">Search Icon</div>
+                <div class="icon-description">Search functionality and filters</div>
+                <span class="status-badge status-ready">Ready</span>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.22 2H11.78C10.82 2 10.12 2.86 10.32 3.79L10.83 6.37C10.93 6.91 10.69 7.43 10.27 7.73L8.17 9.17C7.41 9.69 7.35 10.81 8.05 11.41L10.15 13.07C10.57 13.43 10.77 14.01 10.67 14.57L10.16 17.15C10.05 18.08 10.85 18.78 11.78 18.78H12.22C13.15 18.78 13.95 18.08 13.84 17.15L13.33 14.57C13.23 14.01 13.43 13.43 13.85 13.07L15.95 11.41C16.65 10.81 16.59 9.69 15.83 9.17L13.73 7.73C13.31 7.43 13.07 6.91 13.17 6.37L13.68 3.79C13.88 2.86 13.18 2 12.22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="icon-title">Settings Icon</div>
+                <div class="icon-description">Configuration and preferences</div>
+                <span class="status-badge status-ready">Ready</span>
+            </div>
+
+            <div class="icon-card">
+                <div class="icon-svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69364 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69364 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.5783 8.509 3.9987 7.05 3.9987C5.591 3.9987 4.1917 3.5783 3.16 4.61C2.1283 5.6417 1.5487 7.041 1.5487 8.5C1.5487 9.959 2.1283 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.351 11.879 21.7563 11.2728 22.0329 10.6053C22.3095 9.93789 22.4518 9.2225 22.4518 8.5C22.4518 7.7775 22.3095 7.06211 22.0329 6.39467C21.7563 5.72723 21.351 5.12087 20.84 4.61V4.61Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="icon-title">Heart Icon</div>
+                <div class="icon-description">Favorites and social interactions</div>
+                <span class="status-badge status-ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="code-example">
+&lt;!-- SVG Icons in MyPyGUI-NG (Coming Soon) --&gt;
+&lt;img src="svg_icons/user.svg" alt="User" width="24" height="24"&gt;
+&lt;img src="svg_icons/search.svg" alt="Search" width="24" height="24"&gt;
+&lt;img src="svg_icons/settings.svg" alt="Settings" width="24" height="24"&gt;
+
+&lt;!-- Or inline SVG --&gt;
+&lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
+    &lt;path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor"/&gt;
+    &lt;path d="M2 17L12 22L22 17" stroke="currentColor"/&gt;
+    &lt;path d="M2 12L12 17L22 12" stroke="currentColor"/&gt;
+&lt;/svg&gt;
+        </div>
+
+        <div class="coming-soon">
+            <h3>🔮 SVG Support - Planned Features</h3>
+            <ul>
+                <li>Native SVG rendering with &lt;svg&gt; elements</li>
+                <li>SVG icons via img[src="icon.svg"]</li>
+                <li>Inline SVG support for complex graphics</li>
+                <li>SVG animation and interaction</li>
+                <li>Icon set integration (Material Icons, Font Awesome style)</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background-color: #e7f3ff; border-radius: 8px;">
+            <h3>🎯 Benefits of SVG Icons</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div>
+                    <strong>📱 Scalable</strong><br>
+                    <small>Look sharp at any size</small>
+                </div>
+                <div>
+                    <strong>🎨 Colorable</strong><br>
+                    <small>Change colors with CSS</small>
+                </div>
+                <div>
+                    <strong>⚡ Lightweight</strong><br>
+                    <small>Smaller than PNG/JPG</small>
+                </div>
+                <div>
+                    <strong>🔧 Editable</strong><br>
+                    <small>Modify with code</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
