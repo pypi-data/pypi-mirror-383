@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/stanhus/Documents/work/incept/incept-multilingual-generation/**)",
+      "Bash(grep:*)",
+      "Bash(python:*)",
+      "Bash(POSTGRES_URI=:*)",
+      "Bash(timeout 30 python src/evaluator/evaluate_grade3_math_with_edubench.py --db_limit 2)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
