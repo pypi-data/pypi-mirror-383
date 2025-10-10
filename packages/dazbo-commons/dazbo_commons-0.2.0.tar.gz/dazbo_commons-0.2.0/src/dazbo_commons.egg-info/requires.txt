@@ -1,0 +1,13 @@
+colorama
+python-dotenv
+
+[build]
+build
+twine
+
+[lint]
+ruff
+mypy
+codespell
+types-pyyaml
+types-requests

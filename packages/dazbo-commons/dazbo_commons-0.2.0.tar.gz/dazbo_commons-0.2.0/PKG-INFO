@@ -1,0 +1,161 @@
+Metadata-Version: 2.4
+Name: dazbo_commons
+Version: 0.2.0
+Summary: Handy utility code, such as coloured logging.
+Author-email: Darren Lester <derailed.dash@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2022 Derailed-Dash (Dazbo)
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/derailed-dash/dazbo-commons-py
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: colorama
+Requires-Dist: python-dotenv
+Provides-Extra: lint
+Requires-Dist: ruff; extra == "lint"
+Requires-Dist: mypy; extra == "lint"
+Requires-Dist: codespell; extra == "lint"
+Requires-Dist: types-pyyaml; extra == "lint"
+Requires-Dist: types-requests; extra == "lint"
+Provides-Extra: build
+Requires-Dist: build; extra == "build"
+Requires-Dist: twine; extra == "build"
+Dynamic: license-file
+
+# Dazbo Commons
+
+## Table of Contents
+
+- [Overview](#overview)
+- [To Install and Use](#to-install-and-use)
+- [Coloured Logging Module](#coloured-logging-module)
+- [To Build From Package Source](#to-build-from-package-source)
+
+## Overview
+
+A reusable utility library.
+
+```text
+dazbo-commons/
+│
+├── src/
+│   └── dazbo_commons/
+│       ├── __init__.py
+│       └── colored_logging.py
+│
+├── tests/
+│   └── test_colored_logging.py
+│
+├── .env
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+├── README.md
+└── requirements.txt
+```
+
+## To Install and Use
+
+You can simply install the package from [PyPi](https://pypi.org/project/dazbo-commons/). There's no need to clone this repo.
+
+```bash
+pip install --upgrade dazbo-commons
+```
+
+Then, in your Python code, include this `import`:
+
+```python
+import dazbo_commons as dc
+```
+
+### Coloured Logging Module
+
+This module provides a function to retrieve a logger that logs to the console, with colour.
+
+Example:
+
+```python
+import logging
+import dazbo_commons as dc
+
+logger_name = __name__ # or just pass in a str
+logger = dc.retrieve_console_logger(logger_name)
+logger.setLevel(logging.INFO) # Set threshold. E.g. INFO, DEBUG, or whatever
+
+logger.info("Some msg") # log at info level
+```
+
+### File Locations Module
+
+This module is used to retrieve a `Locations` class, which stores directory paths 
+based on the location of a specified script. 
+This makes it convenient to manage and access different file and directory paths 
+relative to a given script's location.
+
+Example:
+
+```python
+import dazbo_commons as dc
+APPNAME = "My_App"
+
+locations = get_locations(APP_NAME)
+
+with open(locations.input_file, mode="rt") as f:
+    input_data = f.read().splitlines()
+```
+
+## To Build From Package Source
+
+1. Create a Python virtual and install dependencies. E.g.
+
+```bash
+make install # runs uv sync
+```
+
+2. Run tests. E.g.
+
+```bash
+make test
+
+# Or for more verbose logging
+py -m unittest discover -v -s tests -p '*.py'
+```
+
+3. Make any required updates to the `pyproject.toml` file. E.g. the `version` attribute.
+
+4. Build the package.
+
+```bash
+make build-dist
+```
+
+This generates a `dist` folder in your project folder and uploads it to PyPi.
+
+You'll be prompted for your API token. In my experience, when doing this from a terminal inside VS Code, Ctrl-V doesn't work here. So I use Paste from the menu, and this works.
+
+And we're done!
