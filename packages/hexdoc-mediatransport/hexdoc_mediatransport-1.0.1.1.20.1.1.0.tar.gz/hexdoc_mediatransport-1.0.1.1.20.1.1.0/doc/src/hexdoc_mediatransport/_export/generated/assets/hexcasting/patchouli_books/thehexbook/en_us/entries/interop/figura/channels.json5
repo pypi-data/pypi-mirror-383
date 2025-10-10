@@ -1,0 +1,45 @@
+{
+  name: "mediatransport.book.channels",
+  category: "hexcasting:interop/figura",
+  icon: "minecraft:crimson_sign",
+  advancement: "hexcasting:root",
+  sortnum: 5,
+  pages: [
+    {
+      type: "patchouli:text",
+      text: "mediatransport.book.channels.A1",
+      hexdoc_hide: true,
+    },
+    {
+      type: "hexcasting:mediatransport/text",
+      text: "mediatransport.book.channels.A2",
+      hexdoc_hide: true,
+    },
+
+    {
+      // opengraph description lololol
+      type: "hexcasting:mediatransport/hexdoc/null",
+      text: "mediatransport.book.channels.og",
+      flag: "mediatransport:never",
+    },
+    
+    {
+      type: "patchouli:text",
+      text: "mediatransport.book.channels.B1",
+      flag: "mediatransport:never",
+    },
+    {
+      type: "hexcasting:mediatransport/hexdoc/begin_altn",
+      flag: "mediatransport:never",
+    },
+    {
+      // see apidocs.html.jinja
+      type: "hexcasting:mediatransport/hexdoc/channels",
+      flag: "mediatransport:never",
+    },
+    {
+      type: "hexcasting:mediatransport/hexdoc/end_altn",
+      flag: "mediatransport:never",
+    },
+  ]
+}
