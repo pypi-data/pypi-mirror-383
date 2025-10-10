@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "boston-harbor-ferries": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "-m",
+        "boston_harbor_ferries.mcp_server"
+      ],
+      "env": {
+        "APRS_API_KEY": "${APRS_API_KEY}"
+      }
+    }
+  }
+}

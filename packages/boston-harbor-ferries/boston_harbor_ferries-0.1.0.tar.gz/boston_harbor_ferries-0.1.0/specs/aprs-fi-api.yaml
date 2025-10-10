@@ -1,0 +1,506 @@
+openapi: 3.1.0
+info:
+  title: APRS.fi API
+  version: 1.0.0
+  description: |
+    APRS.fi API for querying APRS (Automatic Packet Reporting System) data.
+
+    This API provides access to real-time position, weather, and message data from APRS stations,
+    including AIS vessels tracked via APRS.
+
+    **Authentication**: Requires API key from https://aprs.fi (free registration)
+
+    **Rate Limits**: Recommended 10 requests/minute per API key
+
+    **User-Agent**: Must include application name and version
+
+  contact:
+    name: APRS.fi
+    url: https://aprs.fi
+  license:
+    name: Terms of Service
+    url: https://aprs.fi/page/api
+
+servers:
+  - url: https://api.aprs.fi/api
+    description: Production APRS.fi API
+
+security:
+  - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: apikey
+      description: API key from aprs.fi
+
+  parameters:
+    ApiKey:
+      name: apikey
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Your aprs.fi API key
+
+    Format:
+      name: format
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [json, xml]
+        default: json
+      description: Response format
+
+    Name:
+      name: name
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Station name(s), comma-separated (max 20)
+
+    What:
+      name: what
+      in: query
+      required: true
+      schema:
+        type: string
+        enum: [loc, wx, msg]
+      description: Type of data to query
+
+  schemas:
+    # Common response fields
+    BaseResponse:
+      type: object
+      required:
+        - command
+        - result
+      properties:
+        command:
+          type: string
+          description: API command that was executed
+        result:
+          type: string
+          enum: [ok, fail]
+          description: Result status
+        description:
+          type: string
+          description: Error description if result=fail
+
+    # Location/Position data
+    LocationEntry:
+      type: object
+      required:
+        - name
+        - type
+        - time
+        - lasttime
+        - lat
+        - lng
+      properties:
+        # Basic fields
+        name:
+          type: string
+          description: Station name, object, item or vessel
+          example: "CRISPUS ATTUCKS"
+        type:
+          type: string
+          description: "Type: a=AIS, l=APRS station, i=item, o=object, w=weather"
+          enum: [a, l, i, o, w]
+        time:
+          type: integer
+          format: int64
+          description: Unix timestamp when target first reported this position
+          example: 1760049198
+        lasttime:
+          type: integer
+          format: int64
+          description: Unix timestamp when target last reported this position
+          example: 1760049198
+        lat:
+          oneOf:
+            - type: number
+            - type: string
+          description: Latitude in decimal degrees, north is positive
+          example: 42.353535
+        lng:
+          oneOf:
+            - type: number
+            - type: string
+          description: Longitude in decimal degrees, east is positive
+          example: -71.043121
+
+        # Optional common fields
+        class:
+          type: string
+          description: "Class of station: a=APRS, i=AIS, w=Web"
+        showname:
+          type: string
+          description: Displayed name (may differ from unique name)
+        course:
+          oneOf:
+            - type: integer
+            - type: number
+          description: Course over ground in degrees
+          example: 267
+        speed:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: number
+          description: Speed in km/h
+          example: 0
+        altitude:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: number
+          description: Altitude in meters
+        symbol:
+          type: string
+          description: APRS symbol table and code
+          example: "/s"
+        srccall:
+          type: string
+          description: Source callsign
+          example: "WDL7133"
+        dstcall:
+          type: string
+          description: APRS destination callsign
+          example: "ais"
+        comment:
+          type: string
+          description: APRS comment or AIS destination/ETA
+          example: "BOSTON"
+        path:
+          type: string
+          description: APRS/AIS packet path
+          example: "kx1t"
+
+        # AIS-specific fields
+        mmsi:
+          type: string
+          description: AIS vessel MMSI number
+          example: "368157410"
+        imo:
+          type: string
+          description: AIS vessel IMO number
+        vesselclass:
+          type: string
+          description: AIS vessel class code
+          example: "60"
+        navstat:
+          type: string
+          description: AIS navigational status code
+          example: "0"
+        heading:
+          oneOf:
+            - type: integer
+            - type: string
+          description: Heading in degrees (may be >359 if invalid)
+          example: 511
+        length:
+          oneOf:
+            - type: integer
+            - type: string
+          description: AIS vessel length in meters
+        width:
+          oneOf:
+            - type: integer
+            - type: string
+          description: AIS vessel width in meters
+        draught:
+          oneOf:
+            - type: number
+            - type: string
+          description: AIS vessel draught in meters
+          example: 2.0
+        ref_front:
+          oneOf:
+            - type: integer
+            - type: string
+          description: AIS position reference from front
+        ref_left:
+          oneOf:
+            - type: integer
+            - type: string
+          description: AIS position reference from left
+
+    LocationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - what
+            - found
+          properties:
+            what:
+              type: string
+              enum: [loc]
+            found:
+              type: integer
+              description: Number of entries returned
+            entries:
+              type: array
+              items:
+                $ref: '#/components/schemas/LocationEntry'
+
+    # Weather data
+    WeatherEntry:
+      type: object
+      required:
+        - name
+        - time
+      properties:
+        name:
+          type: string
+          description: Station name
+        time:
+          type: integer
+          format: int64
+          description: Unix timestamp of weather report
+        temp:
+          oneOf:
+            - type: number
+            - type: string
+          description: Temperature in degrees Celsius
+        pressure:
+          oneOf:
+            - type: number
+            - type: string
+          description: Atmospheric pressure in millibars
+        humidity:
+          oneOf:
+            - type: number
+            - type: string
+          description: Relative humidity in %
+        wind_direction:
+          oneOf:
+            - type: number
+            - type: string
+          description: Average wind direction in degrees
+        wind_speed:
+          oneOf:
+            - type: number
+            - type: string
+          description: Average wind speed in m/s
+        wind_gust:
+          oneOf:
+            - type: number
+            - type: string
+          description: Wind gust in m/s
+        rain_1h:
+          oneOf:
+            - type: number
+            - type: string
+          description: Rainfall past 1h in mm
+        rain_24h:
+          oneOf:
+            - type: number
+            - type: string
+          description: Rainfall past 24h in mm
+        rain_mn:
+          oneOf:
+            - type: number
+            - type: string
+          description: Rainfall since midnight in mm
+        luminosity:
+          oneOf:
+            - type: number
+            - type: string
+          description: Luminosity in W/m²
+
+    WeatherResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - what
+            - found
+          properties:
+            what:
+              type: string
+              enum: [wx]
+            found:
+              type: integer
+              description: Number of entries returned
+            entries:
+              type: array
+              items:
+                $ref: '#/components/schemas/WeatherEntry'
+
+    # Message data
+    MessageEntry:
+      type: object
+      required:
+        - messageid
+        - time
+        - srccall
+        - dst
+        - message
+      properties:
+        messageid:
+          type: string
+          description: Incrementing message ID
+        time:
+          type: integer
+          format: int64
+          description: Unix timestamp when message was received
+        srccall:
+          type: string
+          description: Source callsign
+        dst:
+          type: string
+          description: APRS message destination
+        message:
+          type: string
+          description: Message contents
+
+    MessageResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          required:
+            - what
+            - found
+          properties:
+            what:
+              type: string
+              enum: [msg]
+            found:
+              type: integer
+              description: Number of messages returned
+            entries:
+              type: array
+              items:
+                $ref: '#/components/schemas/MessageEntry'
+
+paths:
+  /get:
+    get:
+      operationId: queryData
+      summary: Query APRS data
+      description: |
+        Generic endpoint for querying location, weather, or message data.
+        The response type depends on the 'what' parameter.
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/Name'
+        - $ref: '#/components/parameters/What'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/LocationResponse'
+                  - $ref: '#/components/schemas/WeatherResponse'
+                  - $ref: '#/components/schemas/MessageResponse'
+              examples:
+                location:
+                  summary: Location query response
+                  value:
+                    command: get
+                    result: ok
+                    what: loc
+                    found: 1
+                    entries:
+                      - name: CRISPUS ATTUCKS
+                        mmsi: "368157410"
+                        type: a
+                        time: 1760049198
+                        lasttime: 1760049198
+                        lat: 42.353535
+                        lng: -71.043121
+                        course: 267.5
+                        speed: 0
+                        srccall: WDL7133
+                        dstcall: ais
+                        comment: BOSTON
+                        vesselclass: "60"
+                        navstat: "0"
+                        heading: "511"
+                        draught: "2.0"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+              example:
+                command: get
+                result: fail
+                description: Invalid API key
+
+  /loc:
+    get:
+      operationId: queryLocation
+      summary: Query location/position data
+      description: Get position data for APRS stations or AIS vessels
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/Format'
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Station/vessel name or MMSI (comma-separated for multiple, max 20)
+          example: "368157410"
+      responses:
+        '200':
+          description: Location data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResponse'
+
+  /wx:
+    get:
+      operationId: queryWeather
+      summary: Query weather data
+      description: Get weather data from APRS weather stations
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/Format'
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Station name(s), comma-separated
+      responses:
+        '200':
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherResponse'
+
+  /msg:
+    get:
+      operationId: queryMessages
+      summary: Query APRS messages
+      description: Get APRS messages for destination(s)
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/Format'
+        - name: dst
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Message recipient(s), comma-separated (max 10)
+      responses:
+        '200':
+          description: Message data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'

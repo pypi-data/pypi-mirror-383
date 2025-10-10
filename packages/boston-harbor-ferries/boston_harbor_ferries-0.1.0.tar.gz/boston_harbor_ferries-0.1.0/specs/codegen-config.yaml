@@ -1,0 +1,24 @@
+# OpenAPI Python Client Generator Config
+# https://github.com/openapi-generators/openapi-python-client
+
+project_name_override: aprs-fi-client
+package_name_override: aprs_fi_client
+package_version_override: 0.1.0
+
+# Use httpx (same as our current impl)
+http_client: httpx
+
+# Field naming
+field_prefix: field_
+
+# Enable async support
+use_path_prefixes_for_title_model_names: true
+
+# Class naming
+class_overrides:
+  LocationEntry: APRSLocationEntry
+  WeatherEntry: APRSWeatherEntry
+  MessageEntry: APRSMessageEntry
+
+# Custom templates (optional)
+# custom_template_path: ./templates

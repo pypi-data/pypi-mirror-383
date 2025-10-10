@@ -1,0 +1,63 @@
+[project]
+name = "boston-harbor-ferries"
+version = "0.1.0"
+description = "APRS-based Boston Harbor commuter ferry tracker with MCP server"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Aidan Pace", email = "apace@defrecord.com"}
+]
+maintainers = [
+    {name = "Aidan Pace", email = "apace@defrecord.com"}
+]
+keywords = ["boston", "harbor", "ferry", "aprs", "mcp", "tracker", "marine"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Ham Radio",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "httpx>=0.26.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "click>=8.1.7",
+    "rich>=13.7.0",
+    "diskcache>=5.6.3",
+    "mcp>=0.9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/aygp-dr/boston-harbor-ferries"
+Repository = "https://github.com/aygp-dr/boston-harbor-ferries.git"
+Issues = "https://github.com/aygp-dr/boston-harbor-ferries/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-httpx>=0.27.0",
+]
+viz = [
+    "pandas>=2.0.0",
+    "seaborn>=0.13.0",
+    "matplotlib>=3.7.0",
+    "numpy>=1.24.0",
+]
+
+[project.scripts]
+harbor-ferry = "boston_harbor_ferries.cli:main"
+harbor-ferry-mcp = "boston_harbor_ferries.mcp_server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["boston_harbor_ferries"]
