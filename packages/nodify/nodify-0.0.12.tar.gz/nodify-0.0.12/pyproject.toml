@@ -1,0 +1,156 @@
+# Top most items are probably changed the most
+[project]
+requires-python = ">=3.9"
+
+name = "nodify"
+description = "Supercharge your functional application with a powerful node system."
+readme = "README.md"
+license = {file = "LICENSE"}
+version = "0.0.12"
+
+dependencies = []
+
+authors = [
+    {name = "Pol Febrer", email = "pfebrer96@gmail.com"}
+]
+maintainers = [{name="Pol Febrer", email = "pfebrer96@gmail.com"}]
+
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/pfebrer/nodify"
+Repository = "https://github.com/pfebrer/nodify"
+
+[project.optional-dependencies]
+
+scripting = [
+    "black",
+    "isort",
+]
+
+files = [
+    "watchdog",
+]
+
+test = [
+    "pytest",
+    "coverage[toml]",
+    "pytest-cov",
+    "pytest-env",
+    "pytest-faulthandler",
+    "black",
+    "isort",
+    "watchdog",
+]
+
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "nbsphinx",
+    "pyvis",
+    "networkx",
+    "matplotlib",
+    "ipykernel",
+    "black",
+    "isort"
+]
+
+server = [
+    "simplejson",
+]
+
+gui = [
+    "simplejson",  # Because built-in json parses nan and JS does not understand it
+    "black",
+    "isort",
+    "flask",
+    "flask-socketio >= 5.0",
+    "eventlet"
+]
+
+[project.scripts]
+nodify-gui = "nodify.gui.cli:nodify_gui_cli"
+
+[tool.setuptools.package-data]
+"nodify.gui" = ["build/*", "build/static/*/*"]
+
+
+[tool.pytest.ini_options]
+testpaths = [
+    "src"
+]
+markers = [
+    "slow: mark a test as slow",
+]
+
+addopts = "-rXs --durations=20"
+
+[tool.coverage.run]
+source_pkgs = [
+    "nodify",
+]
+omit = [
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+include_namespace_packages = true
+exclude_also = [
+    "raise NotImplementedError",
+]
+exclude_lines = [
+  "@overload",
+  'if __name__ == "__main":',
+  "if TYPE_CHECKING:",
+]
+
+[tool.pylint]
+[tool.pylint.master]
+jobs = 6
+ignore-paths = [
+   ".*/tests/.*.py"
+]
+
+ignore-patterns = [
+   "conftest.py",
+]
+
+[tool.pylint.format]
+# Currently no formatting rules
+
+[tool.pylint.messages_control]
+max-line-length = 110
+
+disable = [
+    "invalid-name",
+    "missing-module-docstring",
+    "redefined-builtin"
+]
+
+
+[tool.isort]
+# how should sorting be done
+profile = "black"
+sections = ['FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+known_first_party = ["nodify"]
+line_length = 88
+overwrite_in_place = true
+extend_skip = ["src/nodify/__init__.py"]
+multi_line_output = "VERTICAL_HANGING_INDENT"
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311", "py312"]
+extend-exclude = """
+(
+ ^/files/*
+ | /\\..*
+ | .*/\\..*
+)
+"""
