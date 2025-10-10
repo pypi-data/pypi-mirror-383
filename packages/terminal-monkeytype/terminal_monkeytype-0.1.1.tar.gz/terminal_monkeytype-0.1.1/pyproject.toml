@@ -1,0 +1,18 @@
+[project]
+name = "terminal-monkeytype"
+version = "0.1.1"
+description = "A terminal-based typing test inspired by Monkeytype"
+authors = [{name="Aaqui Ali", email="contactaaquibali@gmail.com"}]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+
+dependencies = [
+    "prompt_toolkit>=3.0.0",
+    "rich>=13.0.0",
+    "pyfiglet>=0.8.post1",
+    "keyboard>=0.13.5"
+]
+
+[project.scripts]
+terminal-monkeytype = "terminal_monkeytype.main:main"
