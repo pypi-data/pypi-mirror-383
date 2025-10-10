@@ -1,0 +1,109 @@
+Metadata-Version: 2.4
+Name: aviro
+Version: 0.1.1
+Summary: A Python package for LLM execution tracking and flow analysis
+Home-page: https://github.com/yourusername/aviro
+Author: Your Name
+Author-email: Your Name <your.email@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/aviro
+Project-URL: Repository, https://github.com/yourusername/aviro
+Project-URL: Documentation, https://aviro.readthedocs.io
+Project-URL: Bug Tracker, https://github.com/yourusername/aviro/issues
+Keywords: python,package
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: httpx>=0.24.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Aviro
+
+A Python package for LLM execution tracking and flow analysis.
+
+## Installation
+
+You can install aviro using pip:
+
+```bash
+pip install aviro
+```
+
+## Usage
+
+```python
+import aviro
+
+# Create a Tropir instance for tracking
+tropir = aviro.Tropir(api_key="your-api-key", base_url="https://api.tropir.com")
+
+# Use as a context manager to track LLM calls
+with tropir.span("my_llm_workflow"):
+    # Your LLM calls will be automatically tracked
+    pass
+
+# Or use the Span class directly
+span = aviro.Span("my_span", api_key="your-api-key")
+with span.track_calls("my_case"):
+    # LLM calls tracked here
+    pass
+```
+
+## Development
+
+To set up the development environment:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/aviro.git
+cd aviro
+
+# Install in development mode
+pip install -e .
+
+# Install development dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Format code
+black aviro tests
+
+# Lint code
+flake8 aviro tests
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for your changes
+5. Run the test suite
+6. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
