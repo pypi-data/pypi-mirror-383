@@ -1,0 +1,7 @@
+[console_scripts]
+wbk = wcommon.__init__:backup_file
+wcat = wcommon.__init__:clear_look
+wli = wcommon.__li__:main
+wmv = wcommon.__init__:temp_delete_file
+wtip = wcommon.__main__:main
+
