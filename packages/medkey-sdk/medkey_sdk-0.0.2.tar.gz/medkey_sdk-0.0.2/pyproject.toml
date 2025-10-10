@@ -1,0 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "medkey-sdk"
+version = "0.0.2"
+description = "MedKey SDK: OAuth + consent proxy client for healthcare FHIR APIs"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Samuel Oh", email = "you@medkey.dev" }]
+keywords = ["fhir", "oauth2", "healthcare", "medicare", "sdk"]
+dependencies = ["httpx>=0.27.0"]
+
+[project.urls]
+Homepage = "https://github.com/usemedkey/medkey-sdk-python"
+Issues = "https://github.com/usemedkey/medkey-sdk-python/issues"
