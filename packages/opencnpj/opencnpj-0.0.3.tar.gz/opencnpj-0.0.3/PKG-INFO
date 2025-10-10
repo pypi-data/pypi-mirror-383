@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: opencnpj
+Version: 0.0.3
+Summary: Wrapper para a API OpenCNPJ
+Home-page: https://github.com/ofcoliva/opencnpj
+Author: ofcoliva
+Author-email: ofcoliva@gmail.com
+License: MIT License
+Keywords: opencnpj api cnpj
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests
+Requires-Dist: pip_system_certs
+Requires-Dist: pydantic
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+Repository with more instructions available at: https://github.com/ofcoliva/opencnpj
