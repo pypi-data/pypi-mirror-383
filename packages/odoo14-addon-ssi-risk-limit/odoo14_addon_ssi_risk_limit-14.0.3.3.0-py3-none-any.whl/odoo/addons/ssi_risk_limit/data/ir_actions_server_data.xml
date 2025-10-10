@@ -1,0 +1,18 @@
+<odoo>
+<!-- Copyright 2022 OpenSynergy Indonesia
+     Copyright 2022 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<data>
+<record
+            id="action_remove_queue_batch_from_batch_limit_assignment"
+            model="ir.actions.server"
+        >
+    <field name="name">Remove Queue Batch From Batch Risk Limit Assignment</field>
+    <field name="model_id" ref="model_risk_limit_batch_assignment" />
+    <field name="state">code</field>
+    <field
+                name="code"
+            >records.write({"queue_job_batch_id": False, "queue_job_batch_state": False})</field>
+</record>
+</data>
+</odoo>

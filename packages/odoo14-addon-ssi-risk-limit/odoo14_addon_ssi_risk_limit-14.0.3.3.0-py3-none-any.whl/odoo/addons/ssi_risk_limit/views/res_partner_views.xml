@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 OpenSynergy Indonesia
+     Copyright 2022 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<record id="res_partner_view_form" model="ir.ui.view">
+    <field name="name">res.partner - form</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="priority" eval="10" />
+    <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+            <page name="default_risk_limit" string="Default Risk Limits">
+                <group name="default_risk_limit" colspan="4" col="2">
+                    <field name="default_risk_limit_type_id" />
+                </group>
+                <button
+                        name="action_reload_risk_limit"
+                        type="object"
+                        string="Risk Limit"
+                        class="oe_highlight"
+                        icon="fa-refresh"
+                        attrs="{'invisible': [('default_risk_limit_type_id', '=', False)]}"
+                    />
+                <separator string="Limit" />
+                <field name="default_risk_limit_detail_ids">
+                    <tree editable="top" create="false" edit="false" delete="false">
+                        <field name="item_id" />
+                        <field name="restrict_single" widget="boolean_toggle" />
+                        <field name="currency_id" />
+                        <field name="amount" />
+                    </tree>
+                </field>
+                <separator string="Composite Limit" />
+                  <field name="default_risk_limit_composite_detail_ids">
+                    <tree editable="top" create="false" edit="false" delete="false">
+                        <field name="item_ids" widget="many2many_tags" />
+                        <field name="currency_id" />
+                        <field name="amount" />
+                    </tree>
+                </field>
+            </page>
+            <page
+                    name="risk_limit"
+                    string="Risk Limits"
+                    groups="ssi_risk_limit.risk_limit_assignment_viewer_group"
+                >
+                <group name="risk_limit" colspan="4" col="2">
+                    <field name="risk_limit_assignment_id" />
+                </group>
+                <separator string="Limit" />
+                <field name="risk_limit_ids">
+                    <tree>
+                        <field name="item_id" />
+                        <field name="currency_id" />
+                        <field name="amount" />
+                        <field name="amount_usage" />
+                        <field name="amount_residual" />
+                    </tree>
+                </field>
+                <separator string="Composite Limit" />
+                  <field name="composite_risk_limit_ids">
+                    <tree>
+                        <field name="item_ids" widget="many2many_tags" />
+                        <field name="currency_id" />
+                        <field name="amount" />
+                        <field name="amount_usage" />
+                        <field name="amount_residual" />
+                    </tree>
+                </field>
+            </page>
+        </xpath>
+    </field>
+</record>
+</odoo>
