@@ -1,0 +1,327 @@
+
+# This file contains comprehensive NLTK text preprocessing techniques including tokenization, cleaning, normalization, stemming, lemmatization, and POS tagging.
+# Covers sentence/word tokenization, contraction expansion, stopword removal, spelling correction, and various tagging approaches with evaluation.
+
+import nltk
+from nltk.corpus import inaugural
+from pprint import pprint
+from nltk.tokenize import sent_tokenize
+nltk.download('punkt')
+nltk.download('brown')
+from nltk.corpus import brown
+
+brown.categories()
+brown_text = " ".join(brown.words(categories='news'))
+print(brown_text)
+
+
+#sent_token
+from nltk.corpus import brown
+brown_text = " ".join(brown.words(categories='news'))
+
+sample_text = "Natural Language Processing helps machines understand human communication. It's widely used in chatbots and search engines."
+
+default_st = nltk.sent_tokenize
+brown_sentences = sent_tokenize(brown_text)
+sample_sentences = sent_tokenize(sample_text)
+
+print('Total sentences in sample_text:', len(sample_sentences))
+print('Sample text sentences :-')
+pprint(sample_sentences)
+
+print('\nTotal sentences in brown corpus (news category):', len(brown_sentences))
+print('First 5 sentences in brown corpus:-')
+pprint(brown_sentences[0:5])
+
+punkt_st = nltk.tokenize.PunktSentenceTokenizer()
+sample_sentences = punkt_st.tokenize(sample_text)
+pprint(sample_sentences)
+
+SENTENCE_TOKENS_PATTERN = r"(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<![A-Z]\.)(?<=\.|\?|\!)\s"
+regex_st = nltk.tokenize.RegexpTokenizer(pattern=SENTENCE_TOKENS_PATTERN, gaps=True)
+sample_sentences = regex_st.tokenize(sample_text)
+pprint(sample_sentences)
+
+
+sentence = "Technology didn't slow down during the pandemic; it accelerated innovation."
+
+default_wt = nltk.word_tokenize
+words = default_wt(sentence)
+print(words)
+
+treebank_wt = nltk.TreebankWordTokenizer()
+words = treebank_wt.tokenize(sentence)
+print(words)
+
+TOKEN_PATTERN = r'\w+'
+regex_wt = nltk.RegexpTokenizer(pattern=TOKEN_PATTERN, gaps=False)
+words = regex_wt.tokenize(sentence)
+print(words)
+
+TOKEN_PATTERN = r'\s+'
+regex_wt = nltk.RegexpTokenizer(pattern=TOKEN_PATTERN, gaps=True)
+words = regex_wt.tokenize(sentence)
+print(words)
+
+word_indices = list(regex_wt.span_tokenize(sentence))
+print(word_indices)
+print([sentence[start:end] for start, end in word_indices])
+
+wordpunkt_wt = nltk.WordPunctTokenizer()
+words = wordpunkt_wt.tokenize(sentence)
+print(words)
+
+whitespace_wt = nltk.WhitespaceTokenizer()
+words = whitespace_wt.tokenize(sentence)
+print(words)
+
+
+#special char removal
+import re, string
+
+corpus = [
+    "The smart car wouldn’t stop quickly, so it couldn’t avoid the accident.",
+    "Wow, that's unbelievable! I just purchased a laptop for $799",
+    "@@You'll (discover) a **lot** in this workshop. AI is fascinating !@@"
+]
+
+def tokenize_text(text):
+    sentences = nltk.sent_tokenize(text)
+    word_tokens = [nltk.word_tokenize(sentence) for sentence in sentences]
+    return word_tokens
+
+token_list = [tokenize_text(text) for text in corpus]
+
+def remove_characters_after_tokenization(tokens):
+    pattern = re.compile(r'[{}]'.format(re.escape(string.punctuation)))
+    cleaned = [pattern.sub('', token) for token in tokens]
+    return list(filter(None, cleaned))
+
+filtered_list_1 = [
+    [remove_characters_after_tokenization(tokens) for tokens in sentence_tokens]
+    for sentence_tokens in token_list
+]
+print(filtered_list_1)
+
+def remove_characters_before_tokenization(sentence, keep_apostrophes=False):
+    sentence = sentence.strip()
+    if keep_apostrophes:
+        PATTERN = r'[?|$|&|*|%|@|(|)|~]'
+        filtered_sentence = re.sub(PATTERN, r'', sentence)
+    else:
+        PATTERN = r'[^a-zA-Z0-9 ]'
+        filtered_sentence = re.sub(PATTERN, r'', sentence)
+    return filtered_sentence
+
+filtered_list_2 = [remove_characters_before_tokenization(sentence) for sentence in corpus]
+print(filtered_list_2)
+
+cleaned_corpus = [remove_characters_before_tokenization(sentence, keep_apostrophes=True) for sentence in corpus]
+print(cleaned_corpus)
+
+
+#expanding Contraction
+def normalize_quotes(text):
+    return text.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+
+CONTRACTION_MAP = {
+    "isn't": "is not", "aren't": "are not", "can't": "cannot",
+    "you'll": "you will", "you're": "you are", "you've": "you have",
+    "that's": "that is", "wouldn't": "would not", "couldn't": "could not",
+    "won't": "will not", "didn't": "did not", "doesn't": "does not",
+    "don't": "do not", "i'm": "i am", "it's": "it is", "i've": "i have", "i'll": "i will"
+}
+
+def expand_contractions(sentence, contraction_mapping):
+    contractions_pattern = re.compile(
+        '({})'.format('|'.join(re.escape(k) for k in contraction_mapping.keys())),
+        flags=re.IGNORECASE | re.DOTALL
+    )
+    def expand_match(contraction):
+        match = contraction.group(0)
+        lower_match = match.lower()
+        expanded = contraction_mapping.get(lower_match)
+        if expanded:
+            return match[0] + expanded[1:] if match[0].isupper() else expanded
+        return match
+    expanded_sentence = contractions_pattern.sub(expand_match, sentence)
+    return expanded_sentence
+
+original_corpus = [
+    "The smart car wouldn’t stop quickly, so it couldn’t avoid the accident.",
+    "Wow that's unbelievable! I just purchased a laptop for 799",
+    "You’ll discover a lot in this workshop. AI is fascinating !"
+]
+
+cleaned_corpus = [normalize_quotes(sentence) for sentence in original_corpus]
+expanded_corpus = [expand_contractions(sentence, CONTRACTION_MAP) for sentence in cleaned_corpus]
+print(expanded_corpus)
+
+#case Convertion
+print(corpus[0].lower())
+print(corpus[0].upper())
+#stopwords removal
+nltk.download('stopwords')
+
+def remove_stopwords(tokens):
+    stopword_list = nltk.corpus.stopwords.words('english')
+    return [token for token in tokens if token not in stopword_list]
+
+expanded_corpus_tokens = [tokenize_text(text) for text in expanded_corpus]
+filtered_list_3 = [[remove_stopwords(tokens) for tokens in sentence_tokens] for sentence_tokens in expanded_corpus_tokens]
+print(filtered_list_3)
+
+
+#Repeating char removal
+from nltk.corpus import wordnet
+nltk.download('wordnet')
+
+def remove_repeated_characters(tokens):
+    repeat_pattern = re.compile(r'(\w*)(\w)\2(\w*)')
+    match_substitution = r'\1\2\3'
+    def replace(old_word):
+        if wordnet.synsets(old_word):
+            return old_word
+        new_word = repeat_pattern.sub(match_substitution, old_word)
+        return replace(new_word) if new_word != old_word else new_word
+    return [replace(word) for word in tokens]
+
+sample_sentences = [
+    "Soooooo happppyyyy to seeee youuuu!",
+    "Thisss technnnooology issss unreeeeal!"
+]
+
+for sentence in sample_sentences:
+    tokens = tokenize_text(sentence)[0]
+    print("Original tokens :", tokens)
+    cleaned = remove_repeated_characters(tokens)
+    print("Corrected tokens:", cleaned)
+    print()
+#Spelling Corrections
+from collections import Counter
+
+def words(text): return re.findall(r'\w+', text.lower())
+
+corpus_text = "This example text contains correct words for building vocabulary and testing spell correction."
+WORD_COUNTS = Counter(words(corpus_text))
+
+def edits0(word): return {word}
+def edits1(word):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    splits = [(word[:i], word[i:]) for i in range(len(word)+1)]
+    deletes = [a+b[1:] for a,b in splits if b]
+    transposes = [a+b[1]+b[0]+b[2:] for a,b in splits if len(b)>1]
+    replaces = [a+c+b[1:] for a,b in splits if b for c in alphabet]
+    inserts = [a+c+b for a,b in splits for c in alphabet]
+    return set(deletes+transposes+replaces+inserts)
+def edits2(word): return {e2 for e1 in edits1(word) for e2 in edits1(e1)}
+def known(words): return {w for w in words if w in WORD_COUNTS}
+
+def correct(word):
+    candidates = (known(edits0(word)) or known(edits1(word)) or known(edits2(word)) or {word})
+    return max(candidates, key=WORD_COUNTS.get)
+
+def correct_sentence(sentence):
+    tokens = re.findall(r'\w+|\W+', sentence)
+    corrected = [correct(word) if word.isalpha() else word for word in tokens]
+    return ''.join(corrected)
+
+sentence = "Thiss exampel provieds incorrct spellinng."
+print("Original:", sentence)
+print("Corrected:", correct_sentence(sentence))
+
+#Stemming
+from nltk.stem import PorterStemmer, LancasterStemmer, RegexpStemmer
+
+print("Porter Stemmer:")
+ps = PorterStemmer()
+print(ps.stem('running'))
+print(ps.stem('played'))
+print(ps.stem('boxes'))
+
+print("\nLancaster Stemmer:")
+ls = LancasterStemmer()
+print(ls.stem('running'))
+print(ls.stem('played'))
+print(ls.stem('boxes'))
+
+print("\nRegex Stemmer:")
+rs = RegexpStemmer('ing$|s$|ed$', min=4)
+print(rs.stem('running'))
+print(rs.stem('played'))
+print(rs.stem('boxes'))
+#Lemmatization
+from nltk.stem import WordNetLemmatizer
+wnl = WordNetLemmatizer()
+print(wnl.lemmatize('children', 'n'))
+print(wnl.lemmatize('geese', 'n'))
+print(wnl.lemmatize('swimming', 'v'))
+print(wnl.lemmatize('driven', 'v'))
+print(wnl.lemmatize('bigger', 'a'))
+print(wnl.lemmatize('happiest', 'a'))
+print(wnl.lemmatize('driven', 'n'))
+print(wnl.lemmatize('bigger', 'v'))
+
+#POS tag
+sentence = "Technology didn’t slow down during the pandemic; it accelerated innovation."
+nltk.download('averaged_perceptron_tagger_eng')
+tokens = nltk.word_tokenize(sentence)
+tagged_sent = nltk.pos_tag(tokens)
+print(tagged_sent)
+
+nltk.download('treebank')
+from nltk.corpus import treebank
+data = treebank.tagged_sents()
+train_data = data[:3500]
+test_data = data[3500:]
+print(train_data[0])
+
+tokens = nltk.word_tokenize(sentence)
+from nltk.tag import DefaultTagger
+dt = DefaultTagger('NN')
+print(dt.evaluate(test_data))
+print(dt.tag(tokens))
+
+from nltk.tag import RegexpTagger
+patterns = [
+    (r'.*ing$', 'VBG'),
+    (r'.*ed$', 'VBD'),
+    (r'.*es$', 'VBZ'),
+    (r'.*ould$', 'MD'),
+    (r'.*\'s$', 'NN$'),
+    (r'.*s$', 'NNS'),
+    (r'^-?[0-9]+(.[0-9]+)?$', 'CD')
+]
+rt = RegexpTagger(patterns)
+print(rt.evaluate(test_data))
+print(rt.tag(tokens))
+
+from nltk.tag import UnigramTagger, BigramTagger, TrigramTagger
+ut = UnigramTagger(train_data)
+bt = BigramTagger(train_data)
+tt = TrigramTagger(train_data)
+print("--------------------------------")
+print(ut.evaluate(test_data))
+print(ut.tag(tokens))
+print(bt.evaluate(test_data));
+print(bt.tag(tokens))
+print(tt.evaluate(test_data))
+print(tt.tag(tokens))
+
+def combined_tagger(train_data, taggers, backoff=None):
+    for tagger in taggers:
+        backoff = tagger(train_data, backoff=backoff)
+    return backoff
+
+ct = combined_tagger(train_data=train_data, taggers=[TrigramTagger, BigramTagger, UnigramTagger], backoff=rt)
+print(ct.evaluate(test_data))
+print(ct.tag(tokens))
+
+
+from nltk.classify import NaiveBayesClassifier
+from nltk.tag.sequential import ClassifierBasedPOSTagger
+nbt = ClassifierBasedPOSTagger(train=train_data,
+classifier_builder=NaiveBayesClassifier.train)
+print(nbt.evaluate(test_data))
+print(nbt.tag(tokens))
+
