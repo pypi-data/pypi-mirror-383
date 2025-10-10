@@ -1,0 +1,34 @@
+
+start: (statement | NEWLINE)*
+
+?statement: var_decl | assignment | print_stmt | if_stmt | block
+?block: "{" (statement | NEWLINE)* "}"
+
+var_decl: "var" NAME "=" expression
+assignment: NAME "=" expression
+
+print_stmt: "print" "(" expression ")"
+
+if_stmt: "if" "(" condition ")" block ["else" (block | if_stmt)]
+
+condition: expression (COMPARATOR expression)?
+
+?expression: sum
+?sum: product ((ADD | SUB) product)*
+?product: factor ((MUL | DIV) factor)*
+?factor: NUMBER | NAME | STRING | "(" expression ")"
+
+ADD: "+"
+SUB: "-"
+MUL: "*"
+DIV: "/"
+COMPARATOR: "==" | "!=" | "<" | ">" | "<=" | ">="
+
+NUMBER: ("0".."9")+
+STRING: /"([^"\\]|\\.)*"/
+NAME: ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*
+
+%ignore /\s+/
+%ignore COMMENT
+COMMENT: "//" /[^\n]*/
+NEWLINE: "\n"
