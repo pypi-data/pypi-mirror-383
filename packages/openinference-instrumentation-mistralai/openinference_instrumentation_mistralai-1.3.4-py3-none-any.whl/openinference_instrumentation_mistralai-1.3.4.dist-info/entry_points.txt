@@ -1,0 +1,5 @@
+[openinference_instrumentor]
+mistralai = openinference.instrumentation.mistralai:MistralAIInstrumentor
+
+[opentelemetry_instrumentor]
+mistralai = openinference.instrumentation.mistralai:MistralAIInstrumentor
