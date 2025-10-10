@@ -1,0 +1,86 @@
+Metadata-Version: 2.4
+Name: mathykit
+Version: 0.1.3
+Summary: A lightweight AI framework for using Meta/Facebook models with pure Python
+Home-page: https://github.com/yourusername/mathykit
+Author: MathyKit Team
+Author-email: your.email@example.com
+Project-URL: Bug Tracker, https://github.com/yourusername/mathykit/issues
+Project-URL: Documentation, https://mathykit.readthedocs.io
+Project-URL: Source Code, https://github.com/yourusername/mathykit
+Keywords: ai,machine learning,nlp,meta,facebook,opt,transformers
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.19.0
+Requires-Dist: torch>=1.9.0
+Requires-Dist: requests>=2.25.0
+Requires-Dist: tqdm>=4.64.0
+Requires-Dist: huggingface-hub>=0.12.0
+Requires-Dist: safetensors>=0.3.0
+Requires-Dist: regex>=2022.0.0
+Requires-Dist: gradio>=3.50.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: black>=22.0; extra == "dev"
+Requires-Dist: isort>=5.0; extra == "dev"
+Requires-Dist: flake8>=3.9; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# MathyKit
+
+MathyKit is a lightweight Python framework for building and using AI models, with a focus on Meta/Facebook models. It provides a simple and efficient way to use state-of-the-art AI models without the need for API keys or local model installations.
+
+## Features
+
+- Easy-to-use interface for AI model integration
+- Support for Meta/Facebook models
+- Pure Python implementation
+- No API keys required
+- Lightweight and efficient
+
+## Installation
+
+```bash
+pip install mathykit
+```
+
+## Quick Start
+
+```python
+from mathkit import Model
+from mathkit.models import MetaOPT
+
+# Load a pre-trained model
+model = MetaOPT.from_pretrained("meta-opt-1.3b")
+
+# Generate text
+output = model.generate("What is artificial intelligence?")
+print(output)
+```
+
+## Documentation
+
+For detailed documentation and examples, visit our [documentation page](https://mathkit.readthedocs.io).
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
