@@ -1,0 +1,167 @@
+# This file implements text summarization techniques using LSI (Latent Semantic Indexing) and TextRank algorithms for extractive document summarization.
+# Uses SVD for LSI-based summarization and NetworkX with TF-IDF similarity for TextRank-based sentence ranking and selection.
+
+#exp-5
+import nltk
+from nltk.corpus import brown
+brown.categories()
+brown_text = " ".join(brown.words(categories='news'))
+#print(brown_text)
+
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+import numpy as np
+from nltk.tokenize import sent_tokenize
+from sklearn.feature_extraction.text import CountVectorizer
+from scipy.sparse.linalg import svds
+
+# Sample text
+toy_text = """
+Elephants are large mammals of the family Elephantidae
+and the order Proboscidea. Two species are traditionally recognised,
+the African elephant and the Asian elephant. Elephants are scattered
+throughout sub-Saharan Africa, South Asia, and Southeast Asia. Male
+African elephants are the largest extant terrestrial animals. All
+elephants have a long trunk used for many purposes,
+particularly breathing, lifting water and grasping objects. Their
+incisors grow into tusks, which can serve as weapons and as tools
+for moving objects and digging. Elephants' large ear flaps help
+to control their body temperature. Their pillar-like legs can
+carry their great weight. African elephants have larger ears
+and concave backs while Asian elephants have smaller ears
+and convex or level backs.
+
+"""
+
+# Tokenize into sentences
+sentences = sent_tokenize(toy_text)
+
+# -------------------------------
+# Helper function: build feature matrix
+# -------------------------------
+def build_feature_matrix(sentences, feature_type='frequency'):
+    vectorizer = CountVectorizer(stop_words='english')
+    dt_matrix = vectorizer.fit_transform(sentences)
+    return vectorizer, dt_matrix
+
+# -------------------------------
+# Helper function: low-rank SVD
+# -------------------------------
+def low_rank_svd(matrix, singular_count=2):
+    u, s, vt = svds(matrix.astype(float), k=singular_count)
+    return u, s, vt
+
+# -------------------------------
+# Step 1: set number of sentences and topics
+# -------------------------------
+num_sentences = 3
+num_topics = 3
+
+# Step 2: build document-term matrix
+vec, dt_matrix = build_feature_matrix(sentences, feature_type='frequency')
+
+# Step 3: convert to term-document matrix
+td_matrix = dt_matrix.transpose()
+td_matrix = td_matrix.multiply(td_matrix > 0)
+
+# Step 4: get low rank SVD components
+u, s, vt = low_rank_svd(td_matrix, singular_count=num_topics)
+
+# Step 5: remove singular values below threshold
+sv_threshold = 0.5
+min_sigma_value = max(s) * sv_threshold
+s[s < min_sigma_value] = 0
+
+# Step 6: compute salience scores
+salience_scores = np.sqrt(np.dot(np.square(s), np.square(vt)))
+print("Salience scores:", np.round(salience_scores, 2))
+
+# Step 7: rank sentences
+top_sentence_indices = salience_scores.argsort()[-num_sentences:][::-1]
+top_sentence_indices.sort()
+print("Top sentence indices:", top_sentence_indices)
+
+# Step 8: get document summary
+print("\n📄 Summary:\n")
+for index in top_sentence_indices:
+    print("-", sentences[index])
+
+print("\n\n\n\n")
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+import numpy as np
+import networkx as nx
+from nltk.tokenize import sent_tokenize
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# ------------------------------
+# Sample text
+# ------------------------------
+toy_text = """
+Elephants are large mammals of the family Elephantidae
+and the order Proboscidea. Two species are traditionally recognised,
+the African elephant and the Asian elephant. Elephants are scattered
+throughout sub-Saharan Africa, South Asia, and Southeast Asia. Male
+African elephants are the largest extant terrestrial animals. All
+elephants have a long trunk used for many purposes,
+particularly breathing, lifting water and grasping objects. Their
+incisors grow into tusks, which can serve as weapons and as tools
+for moving objects and digging. Elephants' large ear flaps help
+to control their body temperature. Their pillar-like legs can
+carry their great weight. African elephants have larger ears
+and concave backs while Asian elephants have smaller ears
+and convex or level backs.
+
+"""
+
+# ------------------------------
+# Step 1: Sentence tokenization
+# ------------------------------
+sentences = sent_tokenize(toy_text)
+
+# ------------------------------
+# Step 2: Build TF-IDF feature matrix
+# ------------------------------
+def build_feature_matrix(sentences, feature_type='tfidf'):
+    vectorizer = TfidfVectorizer(stop_words='english')
+    dt_matrix = vectorizer.fit_transform(sentences)
+    return vectorizer, dt_matrix
+
+# ------------------------------
+# Step 3: TextRank Summarizer
+# ------------------------------
+num_sentences = 3  # number of sentences in summary
+
+# Build document-term matrix (TF-IDF)
+vec, dt_matrix = build_feature_matrix(sentences, feature_type='tfidf')
+
+# Compute similarity matrix
+similarity_matrix = dt_matrix * dt_matrix.T
+print("Document Similarity Matrix:\n", np.round(similarity_matrix.todense(), 2))
+
+# Build similarity graph
+similarity_graph = nx.from_scipy_sparse_array(similarity_matrix)
+
+# Compute PageRank scores
+scores = nx.pagerank(similarity_graph)
+
+# Rank sentences based on scores
+ranked_sentences = sorted(((score, index) for index, score in scores.items()), reverse=True)
+print("\nRanked Sentences (score, index):")
+for s in ranked_sentences:
+    print(s)
+
+# Select top sentence indices
+top_sentence_indices = [ranked_sentences[i][1] for i in range(num_sentences)]
+top_sentence_indices.sort()
+print("\nTop sentence indices:", top_sentence_indices)
+
+# ------------------------------
+# Final Summary
+# ------------------------------
+print("\n📄 Summary:\n")
+for index in top_sentence_indices:
+    print("-", sentences[index])
+

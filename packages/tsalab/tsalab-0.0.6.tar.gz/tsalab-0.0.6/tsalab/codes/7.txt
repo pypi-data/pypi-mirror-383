@@ -1,0 +1,29 @@
+# This file demonstrates advanced audio processing using pydub for audio format conversion, segmentation, and volume adjustment.
+# Combines pydub AudioSegment with speech_recognition for audio manipulation, extraction, and speech-to-text conversion.
+
+#exp-7
+# pip install pydub
+import speech_recognition as sr
+from pydub import AudioSegment
+print(sr.__version__)
+r=sr.Recognizer()
+harward=AudioSegment.from_file("D:/new/male.wav")
+import os
+#This shows path where exported audio is stored
+print(os.getcwd())
+
+harward.export("converted_audio.wav",format="wav")
+with sr.AudioFile("converted_audio.wav") as source:
+    audio=r.record(source)
+
+print(type(audio))
+audio_segment=harward[1000:15000]
+extracted_audio="extracted_audio.wav"
+audio_segment.export(extracted_audio,format="wav")
+louder_audio=harward+10
+extracted_audio="extracted_audio_louder.wav"
+audio_segment.export(extracted_audio,format="wav")
+
+
+
+
