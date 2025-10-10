@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "akshare-tools"
+version = "0.1.2"
+description = "Akshare MCP Server - A Model Context Protocol server for accessing Chinese stock market data via AKShare"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Fanfei Gao", email = "gfanfei@gmail.com"},
+]
+keywords = ["mcp", "akshare", "stock", "finance", "chinese-market"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "fastmcp>=0.1.0",
+    "akshare>=1.14.0",
+    "pandas>=1.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/iefnaf/akshare-mcp"
+Repository = "https://github.com/iefnaf/akshare-mcp.git"
+Documentation = "https://github.com/iefnaf/akshare-mcp#readme"
+"Bug Tracker" = "https://github.com/iefnaf/akshare-mcp/issues"
+
+[project.scripts]
+akshare-tools = "akshare_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/akshare_mcp"]
