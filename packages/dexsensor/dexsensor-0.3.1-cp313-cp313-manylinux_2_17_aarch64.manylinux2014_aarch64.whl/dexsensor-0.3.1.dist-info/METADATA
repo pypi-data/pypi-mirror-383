@@ -1,0 +1,258 @@
+Metadata-Version: 2.4
+Name: dexsensor
+Version: 0.3.1
+Summary: A Python library for processing sensor data on Dexmate Robots
+Author-email: Dexmate <contact@dexmate.ai>
+Keywords: robot,robotics,sensors,camera,imu,python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Operating System :: OS Independent
+Classifier: Typing :: Typed
+Requires-Python: <3.14,>=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=2.2.1
+Requires-Dist: hydra-core>=1.3.2
+Requires-Dist: omegaconf>=2.3.0
+Requires-Dist: loguru>=0.7.3
+Requires-Dist: tyro>=0.9.24
+Requires-Dist: colorama>=0.4.6
+Requires-Dist: pyserial>=3.5
+Requires-Dist: scipy>=1.15.0
+Requires-Dist: pyrplidarsdk>=0.1.0
+Requires-Dist: opencv-python>=4.8.0
+Requires-Dist: dexcomm>=0.1.17
+Requires-Dist: aiortc>=1.6.0
+Requires-Dist: websockets>=11.0
+Requires-Dist: aiofiles>=23.0.0
+Requires-Dist: uvloop>=0.17.0
+Requires-Dist: av>=14.4.0
+Dynamic: license-file
+
+# Dexsensor
+
+A unified sensor management system for Dexmate robots. Dexsensor provides automatic robot detection and configuration for cameras, IMU, LiDAR, and other sensors through an easy-to-use command line interface.
+
+![License](https://img.shields.io/badge/license-AGPL--3.0%20%7C%20Commercial-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)
+
+## Features
+
+- **Automatic Robot Detection**: Detects robot model and loads appropriate sensor configuration
+- **Multiple Robot Variants**: Support for different robot models with optimized sensor configurations  
+- **Unified Sensor Management**: Consistent interface for cameras, IMU, LiDAR, and other sensors
+- **Real-time Communication**: High-performance sensor data streaming with Zenoh and WebRTC
+- **Hardware Timestamps**: Synchronized timestamps from camera hardware (ZED) and system time
+- **Multi-process Support**: Robust sensor isolation with spawn-based multiprocessing
+- **Flexible Configuration**: Easy configuration management with YAML files
+- **Command Line Interface**: Simple CLI for sensor control and configuration
+
+## Installation
+
+
+```bash
+# Install DexSensor package
+pip install dexsensor
+
+# Verify installation
+dexsensor --help
+```
+
+## Quick Start
+
+### Automatic Robot Detection
+
+Set your robot model and launch sensors:
+
+```bash
+# Launch sensors with automatic detection
+dexsensor launch
+```
+
+### Manual Robot Selection
+
+```bash
+# Launch specific sensors only
+dexsensor launch --sensor head_camera base_front_camera
+
+# Override configuration values
+dexsensor launch --set head_camera.fps=60 lidar.enable=true
+```
+
+
+## Command Line Interface
+
+### Launch Sensors
+
+```bash
+# Basic usage
+dexsensor launch
+
+# With specific robot model
+dexsensor launch --robot vega-1
+
+# Launch specific sensors
+dexsensor launch --sensor head_camera lidar
+
+# Launch all sensors (enables all sensors regardless of default config)
+dexsensor launch --sensor all
+
+# Launch all base cameras (base_left, base_right, base_front, base_back)
+dexsensor launch --sensor base_camera
+
+# Single-process mode (useful for debugging or ZED cameras)
+dexsensor launch --single-process
+
+# Override configuration
+dexsensor launch --set head_camera.fps=60 lidar.enable=true
+
+# Use custom configuration file
+dexsensor launch --config /path/to/config.yaml
+
+# Combine options
+dexsensor launch --set head_camera.fps=30 --sensor head_camera
+```
+
+### Configuration Management
+
+```bash
+# Generate configuration template
+dexsensor gen-cfg
+
+
+# Save to custom location
+dexsensor gen-cfg --output /path/to/config.yaml
+```
+
+### Command Options
+
+| Option | Description | Example |
+|--------|-------------|---------|
+| `--robot` | Specify robot variant | `--robot vega-1` |
+| `--sensor` | Launch specific sensors, "all", or "base_camera" | `--sensor head_camera lidar` |
+| `--config` | Use custom config file | `--config config.yaml` |
+| `--set` | Override config values | `--set head_camera.fps=60` |
+| `--single-process` | Run in single-process mode | `--single-process` |
+| `--zenoh` | Custom Zenoh config | `--zenoh zenoh.json5` |
+
+## Configuration
+
+### Configuration Files
+
+DexSensor uses YAML configuration files with the following precedence:
+
+1. **Command line overrides** (`--set key=value`)
+2. **Custom configuration files** (`--config file.yaml`)
+3. **Default configuration file** (`~/.dexmate/sensors/default_config.yaml`)
+4. **Robot variant defaults** (based on detected/specified robot model)
+
+### Configuration Example
+
+```yaml
+head_camera:
+  enable: true
+  fps: 30
+  resolution: HD1080
+  depth_mode: NEURAL
+
+base_front_camera:
+  enable: true
+  width: 640
+  height: 480
+  fps: 30
+  format: MJPG
+
+lidar:
+  enable: false
+  ip_address: "192.168.50.41"
+  udp_port: 8089
+
+base_imu:
+  enable: true
+
+head_imu:
+  enable: true
+```
+
+
+## Recent Updates (v0.3.1)
+
+### Performance & Reliability
+- **Hardware Timestamps**: All camera and depth streams now include synchronized timestamps from hardware (ZED) or system time
+- **Multiprocess Improvements**: Fixed ZED SDK compatibility with spawn-based multiprocessing for better stability
+- **WebRTC Enhancements**: Improved real-time streaming with automatic BGR to RGB conversion and better connection handling
+
+### Data Serialization
+- **Protobuf Support**: LiDAR data now uses efficient protobuf serialization from DexComm
+- **Timestamp Integration**: All sensor data includes nanosecond-precision timestamps for synchronization
+- **Future-Ready Architecture**: Prepared infrastructure for 3D LiDAR and additional sensor types
+
+## Sensor Types
+
+- **Cameras**: 
+  - RGB cameras with JPEG/PNG compression
+  - Stereo cameras (ZED) with depth sensing
+  - RGBD cameras with synchronized timestamps
+  - WebRTC streaming support for low-latency video
+- **IMU**: Inertial measurement units for head and base
+- **LiDAR**: 
+  - 2D laser range finders with protobuf serialization
+  - Support for RPLIDAR and network-based LiDARs
+- **Additional sensors**: Extensible architecture for future sensor types
+
+## System Requirements
+
+- **Operating System**: Linux (Ubuntu 20.04+ recommended)
+- **Python**: 3.10, 3.11, 3.12, or 3.13
+- **Hardware**: Compatible Dexmate robot hardware or USB cameras
+- **Optional**: ZED SDK for ZED camera support
+
+## Troubleshooting
+
+### Common Issues
+
+**ZED camera malloc errors:**
+```bash
+# Use single-process mode for ZED cameras to avoid fork() issues
+dexsensor launch --sensor head_camera --single-process
+```
+
+**USB device permissions:**
+```bash
+# Add user to dialout group for serial device access
+sudo usermod -a -G dialout $USER
+# Log out and back in for changes to take effect
+```
+
+**Camera not detected:**
+```bash
+# List available cameras
+ls /dev/video*
+# Check camera permissions
+ls -l /dev/video*
+```
+
+**Network sensor connectivity:**
+```bash
+# Test LiDAR network connection
+ping 192.168.50.41  # Replace with your sensor IP
+```
+
+## Licensing
+
+This project is dual-licensed:
+
+### Open Source License
+This software is available under the GNU Affero General Public License v3.0 (AGPL-3.0).
+See the [LICENSE](./LICENSE) file for details.
+
+### Commercial License
+For businesses that want to use this software in proprietary applications without the AGPL requirements, commercial licenses are available. Contact us for commercial licensing: contact@dexmate.ai
+
+Commercial licenses provide:
+- Right to use in closed-source applications
+- No source code disclosure requirements
+- Priority support options
