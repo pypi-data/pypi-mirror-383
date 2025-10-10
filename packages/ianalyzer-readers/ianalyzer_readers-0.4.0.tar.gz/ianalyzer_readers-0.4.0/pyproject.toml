@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ianalyzer_readers"
+version = "0.4.0"
+authors = [
+  {name="Utrecht University, Centre for Digital Humanities - Research Software Lab", email="cdh@uu.nl"}
+]
+maintainers = [
+  {name="Utrecht University, Centre for Digital Humanities - Research Software Lab", email="cdh@uu.nl"}
+]
+license = {text = "MIT"}
+dependencies = [
+  "beautifulsoup4",
+  "lxml",
+  "openpyxl",
+  "pandas",
+  "requests",
+  "rdflib",
+]
+
+description = "Utilities for extracting XML, HTML, CSV, XLSX, and RDF data with a common interface"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+  'Development Status :: 2 - Pre-Alpha',
+  'Intended Audience :: Science/Research',
+  'License :: OSI Approved :: MIT License',
+  'Operating System :: OS Independent',
+  'Programming Language :: Python :: 3'
+]
+
+[project.urls]
+Repository = "https://github.com/CentreForDigitalHumanities/ianalyzer-readers"
+Documentation = "https://ianalyzer-readers.readthedocs.io/"
+
+[project.optional-dependencies]
+dev = ['pytest', 'mkdocs', 'mkdocstrings-python']
+
+[tool.setuptools]
+packages = [
+  "ianalyzer_readers",
+  "ianalyzer_readers.readers",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  'ianalyzer_readers'
+]
