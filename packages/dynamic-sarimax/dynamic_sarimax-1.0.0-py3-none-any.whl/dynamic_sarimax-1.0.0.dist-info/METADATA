@@ -1,0 +1,321 @@
+Metadata-Version: 2.1
+Name: dynamic-sarimax
+Version: 1.0.0
+Summary: Safe, delay-aware SARIMAX with rolling evaluation and AIC-based lag selection
+Home-page: https://github.com/NefariousNiru/dynamic-sarimax
+License: Apache-2.0
+Keywords: time-series,sarimax,arima,forecasting,exogenous
+Author: Nirupom Bose Roy
+Author-email: nirupomboseroy@uga.edu
+Requires-Python: >=3.12,<4.0
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Requires-Dist: matplotlib (>=3.10.7,<4.0.0)
+Requires-Dist: numpy (>=2.3.3,<3.0.0)
+Requires-Dist: pandas (>=2.3.3,<3.0.0)
+Requires-Dist: statsmodels (>=0.14.5,<0.15.0)
+Project-URL: Repository, https://github.com/NefariousNiru/dynamic-sarimax
+Description-Content-Type: text/markdown
+
+# 🧭 dynamic-sarimax
+
+[![PyPI Version](https://img.shields.io/pypi/v/dynamic-sarimax.svg)](https://pypi.org/project/dynamic-sarimax/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/dynamic-sarimax.svg)](https://pypi.org/project/dynamic-sarimax/)
+[![License](https://img.shields.io/github/license/NefariousNiru/dynamic-sarimax.svg)](https://github.com/NefariousNiru/dynamic-sarimax/blob/master/LICENSE)
+[![Tests](https://github.com/NefariousNiru/dynamic-sarimax/actions/workflows/ci.yml/badge.svg)](https://github.com/NefariousNiru/dynamic-sarimax/actions)
+
+---
+
+**Delay-aware SARIMAX wrapper** that fixes the common pitfalls of `statsmodels.SARIMAX`:
+proper lag alignment for exogenous variables, train-only scaling, and safe rolling-origin
+evaluation — all built-in.
+
+---
+
+## ✨ Why this exists
+
+Plain SARIMAX requires you to hand-align exogenous regressors (e.g. lagged mobility, weather),
+risking leakage or off-by-one bugs.
+`dynamic-sarimax` makes this safe by construction.
+
+**Key guarantees**
+
+* ✅ For delay `b`, trains only on valid pairs `(y_t, x_{t-b})` — never imputes missing lags.
+* ✅ Scalers are fit *only on training windows* during CV.
+* ✅ Forecasting refuses to run if required future exogenous rows are missing.
+* ✅ Rolling-origin evaluation and AIC-based delay selection included.
+
+---
+
+## 🚀 Quickstart
+
+```bash
+# create venv and install deps
+poetry install
+
+# run example (uses example CSV under examples/)
+poetry run python examples/ili_quickstart.py
+```
+
+```python
+from dynamic_sarimax import (
+    SarimaxConfig,
+    select_delay_by_aic,
+    rolling_evaluate,
+)
+
+cfg = SarimaxConfig(order=(5,0,2), seasonal_order=(1,0,0,52))
+best_b, best_aic = select_delay_by_aic(y_train, x_train, delays=[1,2,3], cfg=cfg)
+print(f"Best lag = {best_b}  |  AIC = {best_aic:.2f}")
+
+res = rolling_evaluate(y, x, cfg, delay=best_b, horizons=24, train_frac=0.8)
+print(res.head())
+```
+
+---
+
+## 📈 Example output
+
+```
+Chosen delay b (on 80% train): 2 | Train AIC: 1234.56
+
+Per-horizon scores (rolling validation on last 20%):
+ h  n_origins     MSE  sMAPE
+ 1         52   0.103   8.12
+ 2         51   0.109   8.54
+ ...
+
+Average MSE   = 0.124
+Average sMAPE = 8.77 %
+```
+
+---
+
+## ⚙️ Installation
+
+```bash
+pip install dynamic-sarimax
+# or
+poetry add dynamic-sarimax
+```
+
+Python ≥ 3.10, tested on 3.10–3.12.
+
+---
+
+## 🧩 Components
+
+| Module          | Purpose                                        |
+| :-------------- | :--------------------------------------------- |
+| `config.py`     | Parameter dataclasses for SARIMAX and lag spec |
+| `features.py`   | Safe lagging + scaling transformer             |
+| `model.py`      | Wrapper around `statsmodels.SARIMAX`           |
+| `selection.py`  | Delay (lag) selection via AIC                  |
+| `evaluation.py` | Rolling-origin cross-validation (new v1.2)     |
+| `metrics.py`    | MSE & sMAPE helpers                            |
+
+---
+
+## 🔁 Rolling validation — strategies & knobs
+
+`rolling_evaluate` is the batteries-included, safe rolling-origin evaluator.
+
+### **Signature**
+
+```python
+agg = rolling_evaluate(
+    y, X, cfg,
+    delay,                # int or None
+    horizons,             # int > 0
+    train_frac=0.8,
+    min_train=30,
+    *,
+    # exogenous policy
+    allow_future_exog=False,
+    X_future_manual=None,
+    # window strategy
+    strategy="expanding",         # "expanding" | "sliding"
+    window=None,                  # required if strategy="sliding"
+    refit_every=1,                # >1 = refit every k origins
+    return_details=False,         # if True returns (agg, details)
+)
+```
+
+---
+
+### 🧱 Strategies
+
+| Strategy      | Description                                                                            |
+| ------------- | -------------------------------------------------------------------------------------- |
+| `"expanding"` | Default. Train on `[0..o-1]` for origin `o`. The training window grows over time.      |
+| `"sliding"`   | Train on last `window` observations `[o-window..o-1]`. `window` must be ≥ `min_train`. |
+
+---
+
+### 🔁 Refitting cadence
+
+| `refit_every` | Behavior                                                           |
+| ------------- | ------------------------------------------------------------------ |
+| `1` (default) | Refit at every origin (fully independent fits).                    |
+| `k>1`         | Refit every `k` origins; reuse parameters between refits. (Faster) |
+
+> **Future v2 roadmap:** optional *state reconditioning* for partial re-use without full re-fit.
+
+---
+
+### ⚖️ Exogenous policy (no-peek by default)
+
+| Case                                   | Behavior                                                                                          |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `delay=None`                           | Univariate SARIMAX; forecasts all `horizons`.                                                     |
+| `delay=int`, `allow_future_exog=False` | Evaluate at most `steps_eff = min(horizons, delay)` per origin — prevents future X leakage.       |
+| `delay=int`, `allow_future_exog=True`  | Requires passing `X_future_manual` with the same columns as `X`. Allows full-horizon forecasting. |
+
+> If `delay=0` and `allow_future_exog=False`, no valid horizon exists → raises `RuntimeError` (explicitly to prevent silent misuse).
+
+---
+
+### 📤 Return values
+
+| Mode                       | Description                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------- |
+| Default                    | Returns aggregate DataFrame (`agg`) with columns `["h", "n_origins", "MSE", "sMAPE"]`.    |
+| With `return_details=True` | Returns tuple `(agg, details)`, where `details` has `["origin", "h", "y_true", "y_hat"]`. |
+
+`agg.attrs` always contains:
+
+```python
+{
+    "macro_MSE": float,
+    "macro_sMAPE": float
+}
+```
+
+---
+
+## 🧪 Usage patterns
+
+### 1️⃣ Univariate (default expanding window)
+
+```python
+cfg = SarimaxConfig(order=(2,0,1), seasonal_order=(0,0,0,0))
+agg = rolling_evaluate(y, X=None, cfg=cfg, delay=None, horizons=12, train_frac=0.8)
+```
+
+### 2️⃣ With exogenous (no-peek, delay-limited)
+
+```python
+cfg = SarimaxConfig(order=(1,0,1), seasonal_order=(0,0,0,0))
+agg = rolling_evaluate(y, X, cfg, delay=2, horizons=12, allow_future_exog=False)
+# => Evaluates only h=1..2 per origin
+```
+
+### 3️⃣ With exogenous (opt-in future X)
+
+```python
+X_future_manual = pd.DataFrame({...})  # Future exogenous block
+agg = rolling_evaluate(
+    y, X, cfg,
+    delay=2, horizons=12,
+    allow_future_exog=True,
+    X_future_manual=X_future_manual,
+)
+```
+
+### 4️⃣ Sliding window with refit cadence
+
+```python
+agg = rolling_evaluate(
+    y, X, cfg,
+    delay=1, horizons=6,
+    strategy="sliding",
+    window=96,
+    refit_every=4,
+)
+```
+
+### 5️⃣ Detailed results for plotting
+
+```python
+agg, details = rolling_evaluate(
+    y, X=None, cfg=cfg,
+    delay=None, horizons=8,
+    return_details=True,
+)
+# details has origin, h, y_true, y_hat
+```
+
+---
+
+## ⚠️ Common errors (by design)
+
+| Error                                                                        | Reason                                            |
+| ---------------------------------------------------------------------------- | ------------------------------------------------- |
+| `ValueError("horizons must be positive")`                                    | Invalid `horizons`.                               |
+| `ValueError("window must be provided when strategy='sliding'")`              | Missing window for sliding mode.                  |
+| `ValueError("allow_future_exog=True but X_future_manual was not provided.")` | Required future exog missing.                     |
+| `ValueError("Exogenous columns mismatch...")`                                | Column mismatch between X and X_future_manual.    |
+| `RuntimeError("No evaluations produced...")`                                 | All origins skipped (e.g., delay=0 with no-peek). |
+
+---
+
+## 📊 Example: Comparing rolling strategies
+
+```python
+cfg = SarimaxConfig(order=(2,0,1), seasonal_order=(0,0,0,0))
+
+agg1 = rolling_evaluate(y, X, cfg, delay=1, horizons=6, strategy="expanding")
+agg2 = rolling_evaluate(y, X, cfg, delay=1, horizons=6, strategy="sliding", window=80)
+agg3 = rolling_evaluate(y, X, cfg, delay=1, horizons=6, strategy="expanding", refit_every=4)
+```
+
+Plot macro averages or per-horizon curves to compare trade-offs between accuracy and runtime.
+
+---
+
+## 🧯 Testing
+
+```bash
+poetry run pytest -q
+```
+
+Comprehensive tests cover:
+
+* expanding vs sliding windows
+* refit cadence (`refit_every`)
+* no-peek & future-exog modes
+* input validation and error cases
+* optional return-details branch
+
+---
+
+## 🗺️ Roadmap (v2)
+
+* **State reconditioning** between refits (partial parameter reuse).
+* **Parallel rolling origins** for large datasets.
+* **Custom metric hooks** and progress callbacks.
+
+---
+
+## 🪞 Project links
+
+* [Repository](https://github.com/NefariousNiru/dynamic-sarimax)
+* [Contributing guide](https://github.com/NefariousNiru/dynamic-sarimax/blob/master/CONTRIBUTING.md)
+* [Licence](https://github.com/NefariousNiru/dynamic-sarimax/blob/master/LICENSE)
+* [Issues](https://github.com/NefariousNiru/dynamic-sarimax/issues)
+* [PyPI package](https://pypi.org/project/dynamic-sarimax/)
+
+---
+
+## 📜 License
+
+Apache-2.0 © 2025 **Nirupom Bose Roy**
+Contributions welcome!
+
