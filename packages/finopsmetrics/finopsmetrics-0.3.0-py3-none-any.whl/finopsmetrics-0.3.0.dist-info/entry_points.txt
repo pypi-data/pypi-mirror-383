@@ -1,0 +1,4 @@
+[console_scripts]
+finopsmetrics = finopsmetrics.cli:main
+finopsmetrics-dashboard = finopsmetrics.cli:dashboard_command
+finopsmetrics-server = finopsmetrics.cli:server_command
