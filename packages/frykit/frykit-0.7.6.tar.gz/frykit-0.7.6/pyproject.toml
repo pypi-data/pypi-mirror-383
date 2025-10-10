@@ -1,0 +1,50 @@
+[project]
+name = "frykit"
+version = "0.7.6"
+authors = [{ name = "ZhaJiMan", email = "915023793@qq.com" }]
+description = "A simple toolbox for Matplotib and Cartopy"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas>=2.0.0",
+    "shapely>=2.0.0",
+    "cartopy>=0.22.0",
+]
+
+[project.optional-dependencies]
+data = ["frykit_data~=0.0.1"]
+
+[project.urls]
+Homepage = "https://github.com/ZhaJiMan/frykit"
+Issues = "https://github.com/ZhaJiMan/frykit/issues"
+Changelog = "https://github.com/ZhaJiMan/frykit/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "RUF022"]
+ignore = ["F403", "E731"]
+
+[tool.typos.default.extend-identifiers]
+typ = "typ"
+hav = "hav"
+arange2 = "arange2"
+NEO_modis_aer_od = "NEO_modis_aer_od"
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
+reportMissingTypeStubs = false
