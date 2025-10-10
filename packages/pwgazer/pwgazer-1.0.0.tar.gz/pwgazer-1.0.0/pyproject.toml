@@ -1,0 +1,51 @@
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[project]
+name = "pwgazer"
+version = "1.0.0"
+authors = [
+    { name = "Hiroyuki Sogo", email = "hsogo12600@gmail.com>" },
+]
+maintainers = [
+    { name = "Hiroyuki Sogo", email = "hsogo12600@gmail.com>" },
+]
+description = "Python-based Wide-angle GAZE Recorder"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+]
+dependencies = [
+    "numpy; sys_platform != 'win32'",
+    "numpy<2.0; sys_platform == 'win32'",
+    "scipy",
+    "wxpython",
+    "dlib; sys_platform != 'win32'",
+    "dlib-binary; sys_platform == 'win32'",
+    "onnxruntime; sys_platform != 'win32'",
+    "onnxruntime==1.20.1; sys_platform == 'win32'",
+    "opencv-python; sys_platform != 'win32'",
+    "opencv-python<4.12; sys_platform == 'win32'",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/hsogo/pwgazer"
+
+[tool.pdm.build]
+includes = []
+excludes = []
+
+[tool.distutils.bdist_wheel]
+universal = 1
