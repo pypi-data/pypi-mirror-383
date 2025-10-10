@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-server-flockx"
+version = "0.2.0"
+authors = [
+    {name = "FlockX Team", email = "support@flockx.io"},
+    {name = "Mark Alosey", email = "mark@flockx.io"}
+]
+description = "MCP server for FlockX AI agent platform - enables AI assistants to interact with FlockX agents"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+keywords = ["mcp", "flockx", "ai", "agents", "cursor", "claude"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "requests>=2.32,<3",
+    "pydantic>=2.8,<3",
+    "pydantic-settings>=2.3,<3",
+    "fastmcp>=2.7.1,<3",
+    "fastapi>=0.115,<1.0",
+    "uvicorn>=0.30,<1.0",
+    "python-dotenv>=1.0,<2",
+    "httpx>=0.28.1,<0.29",
+]
+
+[project.urls]
+"Homepage" = "https://flockx.io"
+"Source" = "https://github.com/flockx-official/mcp-server-flockx"
+"Bug Reports" = "https://github.com/flockx-official/mcp-server-flockx/issues"
+"Documentation" = "https://docs.flockx.io"
+
+[project.scripts]
+mcp-server-flockx = "mcp_server_flockx.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mcp_server_flockx*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.txt", "*.json"]
