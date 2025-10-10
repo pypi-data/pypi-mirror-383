@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "graph_datasets"
+version = "1.0.1"
+authors = [{ name = "galo.gm", email = "galo.gm.work@gmail.com" }]
+keywords = ["graph", "datasets"]
+description = "Load graph datasets."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "torch>=1.12",
+    "torch_sparse",
+    "torch-scatter",
+    "torch-geometric>=2.0",
+    "torchaudio>=0.10.2",
+    "torchvision>=0.11.3",
+    "dgl>=1.1.0",
+    "dglgo>=0.0.2",
+    "gdown>=4.7",
+    "wget>=3.2",
+    "texttable>=1.6",
+    "pandas>=2.0.3",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/galogm/graph_datasets"
+"Bug Tracker" = "https://github.com/galogm/graph_datasets/issues"
+
+
+[tool.yapf]
+based_on_style = "facebook"
+indent_width = 4
+split_before_first_argument = true
+split_arguments_when_comma_terminated = true
+indent_dictionary_value = true
+column_limit = 100
+
+[tool.yapfignore]
+
+[tool.black]
+line-length = 100
+
+[tool.semantic_release]
+version_variables = [
+    "graph_datasets/__init__.py:__version__",
+    "docs/conf.py:release",
+]
+version_toml = ["pyproject.toml:project.version"]
+allow_zero_version = false
+
+[tool.semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.md"
+output_format = "md"
+
+[tool.isort]
+profile = "black"

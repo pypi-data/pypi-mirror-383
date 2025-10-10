@@ -1,0 +1,88 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: publish
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+            python-version: '3.8.16'
+
+      - name: Set user info
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # This action uses Python Semantic Release v8
+      - name: Python Semantic Release
+        id: release
+        uses: python-semantic-release/python-semantic-release@v10.4.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          push: true
+
+      - name: Publish package distributions to GitHub Releases
+        uses: python-semantic-release/upload-to-gh-release@main
+        if: steps.release.outputs.released == 'true'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        run: |
+          bash .ci/install-dev.sh && bash .ci/install-cpu.sh
+          source .env/bin/activate
+          python -m build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # NOTE: DO NOT wrap the conditional in ${{ }} as it will always evaluate to true.
+        # See https://github.com/actions/runner/issues/1173
+        if: steps.release.outputs.released == 'true'
+
+# jobs:
+#   release:
+#     name: Release
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - name: Set up Python 3.8
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.8.16
+#       - name: Install dependencies
+#         run: bash .ci/install-dev.sh && bash .ci/install-cpu.sh
+#       - name: Update table
+#         run: |
+#           bash .ci/table_maker.sh
+#       - name: Update docs
+#         run: |
+#           bash .ci/docs.sh
+#       - name: commit and push
+#         run: |
+#           git add .
+#           git commit -m 'chore: update statistics' --no-verify
+#           git push origin master
+#       - name: Release
+#         run: |
+#           git config --local user.name "github-actions"
+#           git config --local user.email "action@github.com"
+#           source .env/bin/activate && semantic-release publish -D commit_author="github-actions <action@github.com>"
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
