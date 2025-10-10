@@ -1,0 +1,27 @@
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["**.__pycache__"]
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+[project]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: Unix',
+]
+name = "pyprojectlib"
+version = "0.0.6"
+authors = [{ name = "Jason Krist", email = "jkrist2696@gmail.com" }]
+description = ""
+requires-python = ">=3.6"
+dependencies = ["pipreqs>=0.4.13","cleandoc>=0.0.13","GitPython>=3.1.40","pytest>=7.4.3","build","twine","tomli","tomli-w","types-requests","types-setuptools","selenium"]
+[tool.setuptools.package-data]
+pyprojectlib = ["*.typed", "*.template"]
+[project.scripts]
+ppl="pyprojectlib:cli_main"
+[project.urls]
+"Homepage" = "https://github.com/jkrist2696/pyprojectlib"
