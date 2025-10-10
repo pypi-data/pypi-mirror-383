@@ -1,0 +1,53 @@
+Metadata-Version: 2.4
+Name: boring-math-pythagorean-triples
+Version: 0.8.3
+Summary: Module for generating and analyzing Pythagorean triples.
+Keywords: mathematics,pythagorean,triples
+Author-email: "Geoffrey R. Scheller" <geoffrey@scheller.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/x-rst
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: Pytest
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+License-File: LICENSE
+Requires-Dist: boring-math-number-theory>=2.0.0
+Requires-Dist: pythonic-fp.circulararray>=5.3.2
+Requires-Dist: pythonic-fp.fptools>=5.1.1
+Requires-Dist: pytest>=8.4.1 ; extra == "test"
+Project-URL: Changelog, https://github.com/grscheller/boring-math-pythagorean-triples/blob/main/CHANGELOG.rst
+Project-URL: Documentation, https://grscheller.github.io/boring-math/pythagorean-triples/development/build/html/
+Project-URL: Homepage, https://grscheller.github.io/boring-math/homepage/build/html/
+Project-URL: Source, https://github.com/grscheller/boring-math-pythagorean-triples
+Provides-Extra: test
+
+Boring Math - Pythagorean Triples
+=================================
+
+PyPI project
+`boring-math-pythagorean-triples
+<https://pypi.org/project/boring-math-pythagorean-triples>`_.
+
+Package containing a class to generate Pythagorean triples along
+with a CLI executable.
+
+This pypi project is part of the
+`boring math
+<https://grscheller.github.io/boring-math>`_ projects.
+
+Documentation
+-------------
+
+Documentation for this project is hosted on
+`GitHub Pages
+<https://grscheller.github.io/boring-math/pythagorean-triples/development/build/html>`_.
+
+Copyright and License
+---------------------
+
+Copyright (c) 2023-2025 Geoffrey R. Scheller. Licensed under the Apache
+License, Version 2.0. See the LICENSE file for details.
+
