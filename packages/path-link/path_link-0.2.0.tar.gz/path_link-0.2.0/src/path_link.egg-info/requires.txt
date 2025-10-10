@@ -1,0 +1,10 @@
+pydantic>=2.11.0
+python-dotenv>=1.0.1
+
+[dev]
+mypy>=1.18.2
+ruff>=0.8.0
+
+[test]
+pytest>=8.4.2
+pytest-cov>=7.0.0

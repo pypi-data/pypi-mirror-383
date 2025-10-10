@@ -1,0 +1,81 @@
+[project]
+name = "path-link"
+version = "0.2.0"
+description = "Type-safe path and URL configuration for Python projects with validation, static models, and IDE autocompletion. Currently supports local paths, URL support coming in v0.3.0."
+authors = [
+  { name = "Lasse Tammilehto", email = "lasse@jaahdytyspalvelu.fi" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+dependencies = [
+  "pydantic>=2.11.0",
+  "python-dotenv>=1.0.1",
+]
+
+[project.urls]
+Homepage = "http://jaahdytyspalvelu.fi"
+Documentation = "https://github.com/jaahdytyspalvelu/path-link#readme"
+"Issue Tracker" = "https://github.com/jaahdytyspalvelu/path-link/issues"
+"AI Guidelines" = "https://github.com/jaahdytyspalvelu/path-link/blob/main/assistant_context.md"
+"Developer Guide" = "https://github.com/jaahdytyspalvelu/path-link/blob/main/CLAUDE.md"
+
+[project.scripts]
+ptool = "project_paths.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["examples*", "tests*"]
+
+[tool.setuptools.package-data]
+project_paths = ["docs/*.md", "docs/*.json"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.project_paths.paths]
+config_dir = "config"
+data_dir = "data"
+logs_dir = "logs"
+src_dir = "src"
+tests_dir = "tests"
+docs_dir = "docs"
+cache_dir = ".cache"
+
+[tool.project_paths.files]
+settings_file = "config/settings.json"
+log_file = "logs/app.log"
+readme_file = "README.md"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]
+dev = [
+    "mypy>=1.18.2",
+    "ruff>=0.8.0",
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+# Ignore missing imports for third-party libraries without type stubs
+[[tool.mypy.overrides]]
+module = ["dotenv", "pydantic"]
+ignore_missing_imports = true

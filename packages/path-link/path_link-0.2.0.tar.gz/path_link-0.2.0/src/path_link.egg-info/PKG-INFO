@@ -1,0 +1,643 @@
+Metadata-Version: 2.4
+Name: path-link
+Version: 0.2.0
+Summary: Type-safe path and URL configuration for Python projects with validation, static models, and IDE autocompletion. Currently supports local paths, URL support coming in v0.3.0.
+Author-email: Lasse Tammilehto <lasse@jaahdytyspalvelu.fi>
+License: MIT
+Project-URL: Homepage, http://jaahdytyspalvelu.fi
+Project-URL: Documentation, https://github.com/jaahdytyspalvelu/path-link#readme
+Project-URL: Issue Tracker, https://github.com/jaahdytyspalvelu/path-link/issues
+Project-URL: AI Guidelines, https://github.com/jaahdytyspalvelu/path-link/blob/main/assistant_context.md
+Project-URL: Developer Guide, https://github.com/jaahdytyspalvelu/path-link/blob/main/CLAUDE.md
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Classifier: Typing :: Typed
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pydantic>=2.11.0
+Requires-Dist: python-dotenv>=1.0.1
+Provides-Extra: test
+Requires-Dist: pytest>=8.4.2; extra == "test"
+Requires-Dist: pytest-cov>=7.0.0; extra == "test"
+Provides-Extra: dev
+Requires-Dist: mypy>=1.18.2; extra == "dev"
+Requires-Dist: ruff>=0.8.0; extra == "dev"
+Dynamic: license-file
+
+# path-link
+
+Type-safe path and URL configuration for Python projects with validation, static models, and IDE autocompletion.
+
+**Current:** Local path management ✅
+**Coming in v0.3.0:** URL support (API endpoints, external resources)
+
+## 🚀 Features
+
+- **Dynamic Path Management**: Load paths from `pyproject.toml` or custom `.paths` files
+- **Type-Safe Static Models**: Generate static dataclasses for IDE autocomplete and type checking
+- **Extensible Validation**: Protocol-based validator system with built-in and custom validators
+- **Cross-Platform**: Works on Linux, Windows, and macOS
+- **Zero Runtime Dependencies**: Only requires `pydantic` and `python-dotenv`
+- **Developer Friendly**: Full type hints, comprehensive testing, and clear error messages
+
+## 📦 Installation
+
+### Using pip
+```bash
+pip install path-link
+```
+
+### Using uv (recommended)
+```bash
+uv add path-link
+```
+
+### From source
+```bash
+git clone https://github.com/jaahdytyspalvelu/path-link.git
+cd path-link
+uv sync
+```
+
+## 🎯 Quick Start
+
+### Basic Usage
+
+```python
+from project_paths import ProjectPaths
+
+# Load paths from pyproject.toml
+paths = ProjectPaths.from_pyproject()
+
+# Access paths
+print(paths.base_dir)  # Project root directory
+print(paths.config)    # config directory path
+print(paths.icons)     # icons directory path
+
+# Dictionary-style access
+config_path = paths["config"]
+
+# Get all paths as dictionary
+all_paths = paths.to_dict()
+```
+
+### Configuration in pyproject.toml
+
+```toml
+[tool.project_paths.paths]
+config = "config"
+icons = "icons"
+data = "data"
+cache = ".cache"
+logs = "logs"
+
+[tool.project_paths.files]
+settings = "config/settings.json"
+database = "data/app.db"
+```
+
+### Using Custom Configuration Files
+
+```python
+# Load from custom .paths file
+paths = ProjectPaths.from_config(".paths")
+
+# Load from specific location
+paths = ProjectPaths.from_config("configs/my.paths")
+```
+
+### Environment Variable Expansion
+
+Path configurations support environment variable expansion and home directory expansion (`~`). This is useful for creating portable configurations that adapt to different environments.
+
+```python
+# .paths file
+# data_dir = ${DATA_ROOT}/files
+# cache_dir = ~/my_app/cache
+# config = ${APP_CONFIG:-/etc/myapp}
+
+# Environment variables are expanded automatically
+import os
+os.environ["DATA_ROOT"] = "/custom/data"
+
+paths = ProjectPaths.from_config(".paths")
+print(paths.data_dir)   # /custom/data/files
+print(paths.cache_dir)  # /home/username/my_app/cache
+```
+
+**Supported patterns:**
+- `${VAR}` - Expands to environment variable value (empty string if undefined)
+- `$VAR` - Alternative syntax for environment variables
+- `~` - Expands to user's home directory
+- `~/path` - Expands to path under user's home directory
+
+**Example `.paths` file:**
+```bash
+# Production paths
+data_dir = ${DATA_ROOT}/app_data
+logs_dir = ${LOG_DIR:-/var/log/myapp}
+cache_dir = /tmp/${USER}_cache
+
+# User-specific paths
+config_dir = ~/.config/myapp
+```
+
+**Example `pyproject.toml`:**
+```toml
+[tool.project_paths.paths]
+data_dir = "${DATA_ROOT}/files"
+config_dir = "~/.config/myapp"
+```
+
+## 🖥️ Command Line Interface
+
+ptool-serena includes a `ptool` CLI for quick operations without writing Python code.
+
+### Available Commands
+
+```bash
+# Print all configured paths as JSON
+ptool print
+
+# Validate project structure
+ptool validate
+
+# Generate static dataclass model
+ptool gen-static
+
+# Show help
+ptool --help
+```
+
+### Command Reference
+
+#### `ptool print` - Display Paths
+
+Prints all configured paths as formatted JSON.
+
+```bash
+# Print from pyproject.toml (default)
+ptool print
+
+# Print from custom .paths file
+ptool print --source config --config my.paths
+
+# Output example:
+# {
+#   "base_dir": "/home/user/project",
+#   "config_dir": "/home/user/project/config",
+#   "data_dir": "/home/user/project/data",
+#   ...
+# }
+```
+
+**Options:**
+- `--source {pyproject,config}` - Configuration source (default: pyproject)
+- `--config PATH` - Path to .paths file (default: .paths)
+
+#### `ptool validate` - Validate Paths
+
+Validates that your project structure matches the configuration.
+
+```bash
+# Basic validation (check paths can be loaded)
+ptool validate
+
+# Strict validation (check paths exist, no symlinks)
+ptool validate --strict
+
+# Raise exception on validation failure
+ptool validate --strict --raise
+
+# Validate from custom config
+ptool validate --source config --config production.paths
+```
+
+**Options:**
+- `--source {pyproject,config}` - Configuration source (default: pyproject)
+- `--config PATH` - Path to .paths file (default: .paths)
+- `--strict` - Enable strict validation (paths must exist, correct types)
+- `--raise` - Raise exception on validation failure (for CI/scripts)
+
+**Exit codes:**
+- `0` - Validation passed
+- `1` - Validation failed or error occurred
+
+#### `ptool gen-static` - Generate Static Model
+
+Generates a static dataclass for IDE autocomplete and type checking.
+
+```bash
+# Generate at default location (src/project_paths/project_paths_static.py)
+ptool gen-static
+
+# Generate at custom location
+ptool gen-static --out custom/path/static_paths.py
+```
+
+**Options:**
+- `--out PATH` - Output path for static model
+
+**When to use:** After modifying `[tool.project_paths]` in `pyproject.toml` to keep static model in sync.
+
+### CLI Usage Examples
+
+**Quick project validation:**
+```bash
+cd your-project/
+ptool validate --strict
+# ✅ All paths valid (strict mode)
+```
+
+**View all configured paths:**
+```bash
+ptool print
+# Outputs JSON with all resolved paths
+```
+
+**Generate static model for IDE support:**
+```bash
+ptool gen-static
+# ✅ Static model generated successfully
+```
+
+**CI/CD integration:**
+```bash
+# In your CI script
+ptool validate --strict --raise || exit 1
+```
+
+**Multiple environments:**
+```bash
+# Development
+ptool validate --source config --config .paths.dev
+
+# Production
+ptool validate --source config --config .paths.prod
+```
+
+### With Validation
+
+You can validate your project's structure by using one of the built-in validators.
+
+```python
+from project_paths import ProjectPaths, validate_or_raise, PathValidationError
+from project_paths.builtin_validators import StrictPathValidator
+
+# 1. Load your paths
+paths = ProjectPaths.from_pyproject()
+
+# 2. Configure a validator
+# This example ensures a 'config' directory and a 'database' file exist.
+validator = StrictPathValidator(
+    required=["config", "database"],
+    must_be_dir=["config"],
+    must_be_file=["database"]
+)
+
+# 3. Validate and raise an exception on failure
+try:
+    validate_or_raise(paths, validator)
+    print("✅ Project structure is valid.")
+except PathValidationError as e:
+    print(f"❌ Invalid project structure:\n{e}")
+
+# Or, to handle results manually without raising an exception:
+result = validator.validate(paths)
+if not result.ok():
+    for error in result.errors():
+        print(f"Error: {error.message} (Code: {error.code})")
+```
+
+### Security: Sandbox Validation
+
+The `SandboxPathValidator` prevents path traversal attacks by ensuring all paths stay within your project's base directory. This is crucial for applications that handle user input or load paths from external sources.
+
+```python
+from project_paths import ProjectPaths
+from project_paths.builtin_validators import SandboxPathValidator
+
+paths = ProjectPaths.from_pyproject()
+
+# Create sandbox validator with security settings
+validator = SandboxPathValidator(
+    base_dir_key="base_dir",        # Key representing the base directory
+    allow_absolute=False,            # Block absolute paths (recommended)
+    strict_mode=True,                # Block '..' patterns (recommended)
+    check_paths=[]                   # Empty = check all paths
+)
+
+result = validator.validate(paths)
+if not result.ok():
+    for error in result.errors():
+        print(f"🔒 Security issue: {error.message}")
+        print(f"   Field: {error.field}, Code: {error.code}")
+```
+
+**Security Features:**
+
+- **Path Traversal Protection**: Detects and blocks `..` patterns in strict mode
+- **Absolute Path Control**: Can block or allow absolute paths
+- **Sandbox Verification**: Ensures resolved paths stay within base directory
+- **Symlink Resolution**: Properly resolves symlinks before validation
+
+**Error Codes:**
+
+- `PATH_TRAVERSAL_ATTEMPT`: Path contains `..` pattern (strict mode)
+- `ABSOLUTE_PATH_BLOCKED`: Absolute path not allowed
+- `PATH_ESCAPES_SANDBOX`: Path resolves outside base directory
+- `SANDBOX_BASE_MISSING`: Base directory key not found
+- `SANDBOX_BASE_UNRESOLVABLE`: Cannot resolve base directory
+- `PATH_UNRESOLVABLE`: Cannot resolve path (warning)
+
+**Example Use Cases:**
+
+```python
+# 1. Maximum security - block everything suspicious
+strict_sandbox = SandboxPathValidator(
+    allow_absolute=False,
+    strict_mode=True
+)
+
+# 2. Allow absolute paths within sandbox
+permissive_sandbox = SandboxPathValidator(
+    allow_absolute=True,
+    strict_mode=False
+)
+
+# 3. Check specific paths only
+targeted_sandbox = SandboxPathValidator(
+    check_paths=["user_uploads", "temp_files"],
+    strict_mode=True
+)
+```
+
+## 🛠️ Advanced Features
+
+### Static Model Generation
+
+Generate a static dataclass for better IDE support:
+
+```python
+from project_paths import write_dataclass_file
+
+# Generate src/project_paths/project_paths_static.py
+write_dataclass_file()
+```
+
+This creates a fully typed dataclass that can be imported:
+
+```python
+from project_paths.project_paths_static import ProjectPathsStatic
+
+paths = ProjectPathsStatic()
+# Now you get full IDE autocomplete!
+```
+
+### Custom Validators
+
+Create your own validators by creating a class with a `validate` method that returns a `ValidationResult`.
+
+```python
+from dataclasses import dataclass
+from project_paths import Finding, Severity, ValidationResult, ProjectPaths
+
+@dataclass
+class MyCustomValidator:
+    """A custom validator to check for a specific file."""
+    required_file: str
+
+    def validate(self, paths: ProjectPaths) -> ValidationResult:
+        result = ValidationResult()
+        # Assume 'config_dir' is a defined path in your ProjectPaths
+        config_path = paths.to_dict().get("config_dir")
+
+        if not config_path or not (config_path / self.required_file).exists():
+            result.add(Finding(
+                severity=Severity.ERROR,
+                code="CUSTOM_FILE_MISSING",
+                field="config_dir",
+                message=f"Required file '{self.required_file}' not found in config directory."
+            ))
+        return result
+
+# Use the custom validator
+paths = ProjectPaths.from_pyproject()
+custom_validator = MyCustomValidator(required_file="user_settings.json")
+validation_result = custom_validator.validate(paths)
+
+if not validation_result.ok():
+    print("Custom validation failed!")
+```
+
+### Composite Validators
+
+Combine multiple validators to run them as a single pipeline.
+
+```python
+# Assuming MyCustomValidator is defined as in the previous example
+from project_paths.builtin_validators import CompositeValidator, StrictPathValidator
+
+# 1. Load paths
+paths = ProjectPaths.from_pyproject()
+
+# 2. Configure validators
+strict_check = StrictPathValidator(required=["config_dir"])
+custom_check = MyCustomValidator(required_file="user_settings.json")
+
+# 3. Combine them
+composite_validator = CompositeValidator(parts=[strict_check, custom_check])
+
+# 4. Run all checks at once
+final_result = composite_validator.validate(paths)
+
+if not final_result.ok():
+    print("Composite validation failed!")
+    for error in final_result.errors():
+        print(f"- {error.message}")
+```
+
+### Programmatic Documentation Access
+
+The package includes bundled documentation that can be accessed programmatically, even in offline or airgapped environments. This is especially useful for AI assistants helping users with the package.
+
+```python
+from project_paths import get_ai_guidelines, get_developer_guide, get_metadata
+import json
+
+# Get AI assistant guidelines (comprehensive usage patterns and best practices)
+ai_docs = get_ai_guidelines()
+print(f"AI Guidelines: {len(ai_docs)} characters")
+
+# Get developer guide (architecture, development setup, contribution guidelines)
+dev_docs = get_developer_guide()
+print(f"Developer Guide: {len(dev_docs)} characters")
+
+# Get machine-readable metadata (version, APIs, validators, CLI commands)
+metadata_json = get_metadata()
+metadata = json.loads(metadata_json)
+print(f"Version: {metadata['version']}")
+print(f"Public APIs: {metadata['public_api']}")
+```
+
+**Use Cases:**
+- **AI Assistants**: Provide context to AI agents helping users with the package
+- **Offline Environments**: Access documentation without internet connection
+- **Enterprise/Airgapped**: Full documentation in restricted environments
+- **Automation**: Build tools that need package metadata programmatically
+
+**Available Functions:**
+- `get_ai_guidelines()` → Comprehensive AI assistant usage guide
+- `get_developer_guide()` → Architecture and development documentation
+- `get_metadata()` → Machine-readable project metadata (JSON)
+
+## 📁 Project Structure
+
+```
+project_root/
+├── pyproject.toml          # Configuration file
+├── src/
+│   └── project_paths/      # Main package
+│       ├── model.py        # Core ProjectPaths class
+│       ├── factory.py      # Factory functions
+│       ├── validators.py   # Built-in validators
+│       └── ...
+└── tests/                  # Test suite
+```
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+# Run all tests
+uv run pytest
+
+# With coverage
+uv run pytest --cov=src --cov-report=term-missing
+
+# Run specific test
+uv run pytest tests/test_validators.py
+```
+
+## 🔧 Development
+
+### Setup Development Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ptool-serena.git
+cd ptool-serena
+
+# Install with uv
+uv sync
+
+# Run tests
+uv run pytest
+
+# Format code
+uv run ruff format .
+
+# Lint
+uv run ruff check .
+
+# Type check
+uv run mypy src/
+```
+
+### Code Quality Standards
+
+This project follows strict quality standards defined in `CLAUDE.md`:
+
+- **Minimal Compliance**: For prototypes and quick fixes
+- **Standard Compliance**: For production code (80% test coverage)
+- **Strict Compliance**: For critical systems (90% test coverage)
+
+## 📚 API Reference
+
+### ProjectPaths
+
+Main class for path management.
+
+#### Methods
+
+- `from_config(config_path: str | Path) -> ProjectPaths`: Load from custom config
+- `to_dict() -> dict[str, Path]`: Get all paths as dictionary
+- `get_paths() -> dict[str, Path]`: Get only Path fields
+
+### Factory Functions
+
+- `create_project_paths(validator=None, raise_on_error=False)`: Create with validation
+
+### Documentation Functions
+
+- `get_ai_guidelines() -> str`: Return AI assistant guidelines for working with this package
+- `get_developer_guide() -> str`: Return developer guide for contributing to this package
+- `get_metadata() -> str`: Return machine-readable project metadata (JSON)
+
+### Validators
+
+#### Built-in Validators
+
+- `StrictPathValidator`: Ensures all paths exist and match expected types (file/directory)
+- `SandboxPathValidator`: Prevents path traversal attacks and enforces base directory sandbox
+- `CompositeValidator`: Combines multiple validators into a single validation pipeline
+
+#### Validator Protocol
+
+```python
+class PathValidatorProtocol(Protocol):
+    def validate(self, paths: Any) -> None: ...
+    def add_error(self, message: str) -> None: ...
+    def add_warning(self, message: str) -> None: ...
+    def add_info(self, key: str, value: Any) -> None: ...
+    @property
+    def has_errors(self) -> bool: ...
+    def clear(self) -> None: ...
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our contributing guidelines and follow the code style defined in `CLAUDE.md`.
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🔗 Links
+
+- [Documentation](https://github.com/yourusername/ptool-serena/docs)
+- [Issue Tracker](https://github.com/yourusername/ptool-serena/issues)
+- [Changelog](CHANGELOG.md)
+
+## 💡 Examples
+
+Check out the `tests/examples/` directory for more usage examples:
+
+- Basic configuration loading
+- Custom validator implementation
+- Static model generation
+- Integration with existing projects
+
+## 🛟 Support
+
+- Open an issue for bug reports
+- Start a discussion for feature requests
+- Check existing issues before creating new ones
+
+---
+
+Made with ❤️ for Python developers who value type safety and clean configuration management.
