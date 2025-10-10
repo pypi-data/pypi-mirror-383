@@ -1,0 +1,165 @@
+Metadata-Version: 2.4
+Name: ai-computing-broker
+Version: 1.0.0
+Platform: linux_x86_64
+Description-Content-Type: text/markdown
+Requires-Dist: grpcio!=1.68.1
+Requires-Dist: grpcio-tools!=1.68.1
+Requires-Dist: numpy
+Requires-Dist: nvidia-ml-py
+Requires-Dist: optree
+Requires-Dist: scipy
+Requires-Dist: toml
+Requires-Dist: cryptography>=41.0.0
+Requires-Dist: requests
+Requires-Dist: typing-extensions
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: platform
+Dynamic: requires-dist
+
+# Adaptive GPU Allocator
+
+In the following instruction, the name of the directory where the files related to AGA are installed is assumed as `$WORKDIR`.
+
+## Install
+
+### Install AGA
+
+1. Prepare your python virtual environment you like and activate it.
+2. Run `cd $WORKDIR && git clone https://github.labs.fujitsu.com/shcpj/adaptive-gpu-allocator.git` to clone the AGA repository.
+3. Run `cd $WORKDIR/adaptive-gpu-allocator` to change the working directory.
+4. Run `pip install -e .` to install AGA.
+
+### Launch a GPU assigner
+
+GPU assiger is automatically installed with the `adaptive_gpu_allocator` package.
+You have to launch a GPU assigner server before running your application program with AGA enabled.
+
+You can start or stop a GPU assigner server using the `gpu_assigner` CLI.
+
+```sh
+gpu_assigner start               # Start GPU assigner server
+gpu_assigner status              # Show current GPU assigner status
+agarun python <your_program>.py  # Run your program with AGA enabled.
+...
+gpu_assigner stop                # Stop GPU assigner
+```
+
+## Usage
+
+### Single run
+
+The following example shows how to run the sample program contained in this repository.
+
+1. Run `cd $WORKDIR/adaptive-gpu-allocator/samples`
+2. Run  `agarun python sample.py`
+
+The output looks like below.
+
+```
+Epoch 0, Loss: 1.0316227674484253 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 1, Loss: 1.0306103229522705 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 2, Loss: 1.0296107530593872 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 3, Loss: 1.0286246538162231 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 4, Loss: 1.0276520252227783 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 5, Loss: 1.02669358253479 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 6, Loss: 1.0257498025894165 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 7, Loss: 1.0248205661773682 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 8, Loss: 1.0239065885543823 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 9, Loss: 1.023008108139038 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 10, Loss: 1.022125244140625 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 11, Loss: 1.0212583541870117 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 12, Loss: 1.020407795906067 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 13, Loss: 1.01957368850708 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 14, Loss: 1.0187562704086304 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 15, Loss: 1.0179557800292969 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 16, Loss: 1.0171724557876587 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 17, Loss: 1.0164062976837158 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 18, Loss: 1.015657663345337 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 19, Loss: 1.014926552772522 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+```
+### Run multiple programs
+
+In order to see whether AGA is working, run the sample program
+with a greater number of concurrent processes than the number of GPUs.
+
+When you run 3 processes with 2 GPUs, the output looks like below.
+
+1st process
+```
+Epoch 0, Loss: 1.0316227674484253 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 1, Loss: 1.0306103229522705 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 2, Loss: 1.0296107530593872 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 3, Loss: 1.0286246538162231 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 4, Loss: 1.0276520252227783 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 5, Loss: 1.02669358253479 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 6, Loss: 1.0257498025894165 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 7, Loss: 1.0248205661773682 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 8, Loss: 1.0239065885543823 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 9, Loss: 1.023008108139038 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 10, Loss: 1.022125244140625 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 11, Loss: 1.0212583541870117 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 12, Loss: 1.020407795906067 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 13, Loss: 1.01957368850708 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 14, Loss: 1.0187562704086304 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 15, Loss: 1.0179557800292969 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 16, Loss: 1.0171724557876587 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 17, Loss: 1.0164062976837158 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 18, Loss: 1.015657663345337 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 19, Loss: 1.014926552772522 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+```
+
+2nd process
+```
+Epoch 0, Loss: 1.0316227674484253 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 1, Loss: 1.0306103229522705 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 2, Loss: 1.0296107530593872 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 3, Loss: 1.0286246538162231 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 4, Loss: 1.0276520252227783 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 5, Loss: 1.02669358253479 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 6, Loss: 1.0257498025894165 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 7, Loss: 1.0248205661773682 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 8, Loss: 1.0239065885543823 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 9, Loss: 1.023008108139038 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 10, Loss: 1.022125244140625 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 11, Loss: 1.0212583541870117 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 12, Loss: 1.020407795906067 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 13, Loss: 1.01957368850708 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 14, Loss: 1.0187562704086304 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 15, Loss: 1.0179557800292969 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 16, Loss: 1.0171724557876587 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 17, Loss: 1.0164062976837158 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 18, Loss: 1.015657663345337 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+Epoch 19, Loss: 1.014926552772522 on GPU-173d3486-b338-629d-3b9d-8a3a4c31ea3f
+```
+
+3rd process
+```
+Epoch 0, Loss: 1.0316228866577148 on CPU
+Epoch 1, Loss: 1.0306103229522705 on CPU
+Epoch 2, Loss: 1.0296107530593872 on CPU
+Epoch 3, Loss: 1.0286246538162231 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 4, Loss: 1.0276520252227783 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 5, Loss: 1.02669358253479 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 6, Loss: 1.0257498025894165 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 7, Loss: 1.0248205661773682 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 8, Loss: 1.0239065885543823 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 9, Loss: 1.023008108139038 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 10, Loss: 1.022125244140625 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 11, Loss: 1.0212583541870117 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 12, Loss: 1.020407795906067 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 13, Loss: 1.01957368850708 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 14, Loss: 1.0187562704086304 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 15, Loss: 1.0179557800292969 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 16, Loss: 1.0171724557876587 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 17, Loss: 1.0164062976837158 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 18, Loss: 1.015657663345337 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+Epoch 19, Loss: 1.014926552772522 on GPU-b9d18b6a-6648-3e3a-90af-d3d717ee8d8f
+```
+
+The first and second processes run on each of the two GPUs
+and the third process run on CPU because of the lack of GPUs at the beginning.
+
+Once the first or second process finishs, a GPU becomes available and then the third process runs on the GPU.
+
