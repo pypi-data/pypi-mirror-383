@@ -1,0 +1,5 @@
+include LICENSE
+include README.md
+recursive-include flappy_rl/assets *
+recursive-include flappy_rl/models *.npy
+recursive-include flappy_rl/results *.png
