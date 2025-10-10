@@ -1,0 +1,314 @@
+Metadata-Version: 2.4
+Name: rooctl
+Version: 1.0.1
+Summary: Official CLI for FounderX-AI Orchestration System - Execute templates, manage artifacts, and monitor workflows from the command line
+Author-email: FounderX-AI <dev@founder-x.ai>
+Maintainer-email: FounderX-AI <dev@founder-x.ai>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/founderx-ai/RooCommands
+Project-URL: Documentation, https://docs.founder-x.ai/cli
+Project-URL: Source Code, https://github.com/founderx-ai/RooCommands/tree/main/orchestration-system/cli
+Project-URL: Bug Tracker, https://github.com/founderx-ai/RooCommands/issues
+Keywords: orchestration,cli,founderx,automation,workflow,command-line,founderx-ai
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: rc-orchestration-sdk>=1.1.1
+Requires-Dist: click>=8.0.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: tabulate>=0.9.0
+Dynamic: license-file
+
+# rooctl - FounderX-AI Orchestration CLI
+
+**Official command-line interface for the FounderX-AI Orchestration System.**
+
+Execute templates, manage artifacts, configure webhooks, and monitor workflows from your terminal.
+
+## 🚀 Quick Start
+
+### Installation
+
+**Using pip:**
+```bash
+pip install rooctl
+```
+
+**Using pipx (recommended):**
+```bash
+pipx install rooctl
+```
+
+**Using Homebrew (macOS/Linux):**
+```bash
+brew install rooctl
+```
+
+### Basic Usage
+
+```bash
+# Login to orchestration system
+rooctl login admin Admin123! --base-url https://api.founder-x.ai
+
+# Check system status
+rooctl status
+
+# List executions
+rooctl executions list
+
+# Execute a template
+rooctl run my-template --param input=data.csv
+
+# List artifacts
+rooctl artifacts list
+
+# Configure webhook
+rooctl webhooks add https://myapp.com/hook --events execution.completed
+```
+
+## 📋 Features
+
+- ✅ **Authentication** - Secure login and API key management
+- ✅ **Template Execution** - Run templates with parameters
+- ✅ **Artifact Management** - List, download, sign, and export artifacts
+- ✅ **Webhook Configuration** - Add and manage webhooks
+- ✅ **Public API** - Access public endpoints without authentication
+- ✅ **Status Monitoring** - Check system and execution status
+- ✅ **Retention Policies** - Manage admin retention settings
+
+## 📖 Commands
+
+### Authentication
+
+```bash
+# Login with username/password
+rooctl login <username> <password> [--base-url URL]
+
+# Set public API key
+rooctl public set-key <api-key>
+```
+
+### System Status
+
+```bash
+# Get system status
+rooctl status
+
+# Get public system status
+rooctl public status
+```
+
+### Template Execution
+
+```bash
+# Run a template
+rooctl run <template-id> [--param key=value ...]
+
+# List executions
+rooctl executions list [--status completed|failed|running]
+
+# Get execution status
+rooctl executions status <execution-id>
+
+# Cancel execution
+rooctl executions cancel <execution-id>
+```
+
+### Artifact Management
+
+```bash
+# List artifacts
+rooctl artifacts list [--execution-id ID]
+
+# Download artifact
+rooctl artifacts download <artifact-id> [--output path]
+
+# Sign artifact
+rooctl artifacts sign <artifact-id>
+
+# Export artifact
+rooctl artifacts export <artifact-id> [--format json|csv]
+
+# Show artifact diff
+rooctl artifacts diff --left <id1> --right <id2>
+
+# Show artifact history
+rooctl artifacts history <artifact-id>
+
+# Public artifact operations
+rooctl public artifacts <artifact-id>
+rooctl public sign <artifact-id>
+```
+
+### Webhook Management
+
+```bash
+# Add webhook
+rooctl webhooks add <url> [--events EVENT1,EVENT2 ...] [--secret SECRET]
+
+# List webhooks
+rooctl webhooks list
+
+# Test webhook
+rooctl webhooks test <webhook-id>
+
+# Delete webhook
+rooctl webhooks delete <webhook-id>
+```
+
+### Admin Operations
+
+```bash
+# Get retention settings
+rooctl admin retention get
+
+# Set retention period
+rooctl admin retention set <days>
+
+# Set retention max size
+rooctl admin retention set-max-size <size-gb>
+```
+
+## 🔧 Configuration
+
+The CLI stores configuration in `~/.rooctl/config.json`:
+
+```json
+{
+  "base_url": "https://api.founder-x.ai",
+  "access_token": "your-token-here",
+  "public_api_key": "your-api-key-here"
+}
+```
+
+### Environment Variables
+
+```bash
+export ROOCTL_BASE_URL="https://api.founder-x.ai"
+export ROOCTL_USERNAME="your-username"
+export ROOCTL_PASSWORD="your-password"
+export ROOCTL_API_KEY="your-api-key"
+```
+
+## 📚 Examples
+
+### Execute a data processing workflow
+
+```bash
+# Login
+rooctl login user@example.com mypassword --base-url https://api.founder-x.ai
+
+# Run template with parameters
+rooctl run data-processor \
+  --param input_file=sales_2025.csv \
+  --param output_format=json \
+  --param filter_date=2025-01-01
+
+# Monitor execution
+rooctl executions status <execution-id>
+
+# List artifacts when complete
+rooctl artifacts list --execution-id <execution-id>
+
+# Download results
+rooctl artifacts download <artifact-id> --output results.json
+```
+
+### Set up webhook notifications
+
+```bash
+# Add webhook for completion events
+rooctl webhooks add https://myapp.com/webhook \
+  --events execution.completed,execution.failed \
+  --secret my-secret-key
+
+# Test webhook
+rooctl webhooks test <webhook-id>
+
+# List all webhooks
+rooctl webhooks list
+```
+
+### Public API access
+
+```bash
+# Set public API key
+rooctl public set-key pk_1234567890abcdef
+
+# Access public status without login
+rooctl public status
+
+# Access public artifacts
+rooctl public artifacts <artifact-id>
+```
+
+### Admin retention management
+
+```bash
+# Get current retention settings
+rooctl admin retention get
+
+# Set retention period to 30 days
+rooctl admin retention set 30
+
+# Set max storage size to 100 GB
+rooctl admin retention set-max-size 100
+```
+
+## 🐛 Troubleshooting
+
+### Authentication Issues
+
+```bash
+# Clear stored credentials
+rm ~/.rooctl/config.json
+
+# Login again
+rooctl login <username> <password> --base-url <url>
+```
+
+### Connection Issues
+
+```bash
+# Verify base URL is correct
+rooctl status --base-url https://api.founder-x.ai
+
+# Check if API is accessible
+curl https://api.founder-x.ai/health
+```
+
+### Debug Mode
+
+Enable verbose logging:
+```bash
+export ROOCTL_DEBUG=1
+rooctl <command>
+```
+
+## 🔗 Related Tools
+
+- **Python SDK**: `pip install rc-orchestration-sdk`
+- **TypeScript SDK**: `npm install founderx-orchestration-sdk`
+- **Web UI**: https://app.founder-x.ai
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 🤝 Support
+
+- **Documentation**: https://docs.founder-x.ai/cli
+- **Issues**: https://github.com/founderx-ai/RooCommands/issues
+- **Email**: support@founder-x.ai
+
+---
+
+**FounderX-AI** - Building the future of orchestration, one command at a time.
