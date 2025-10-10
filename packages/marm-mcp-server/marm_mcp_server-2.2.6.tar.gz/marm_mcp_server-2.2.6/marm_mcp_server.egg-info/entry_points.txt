@@ -1,0 +1,5 @@
+[console_scripts]
+marm-mcp-server = marm_mcp_server.server:main
+
+[mcp.servers]
+marm = server:create_server
