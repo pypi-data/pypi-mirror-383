@@ -1,0 +1,182 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "deferrer"
+authors = [{ name = "Chris Fu", email = "17433201@qq.com" }]
+description = "Fancy `defer` for Python >= 3.12 (partially supported in Python 3.11)"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11, <3.15"
+dynamic = ["version"]
+keywords = ["defer", "sugar"]
+
+
+[project.urls]
+Homepage = "https://github.com/Azureblade3808/py-deferrer"
+"Bug Tracker" = "https://github.com/Azureblade3808/py-deferrer/issues"
+
+
+[tool.black]
+enable-unstable-feature = [
+    "hug_parens_with_braces_and_square_brackets",
+    "string_processing",
+]
+line-length = 120
+skip-magic-trailing-comma = true
+preview = true
+
+
+[tool.isort]
+profile = "black"
+
+case_sensitive = true
+combine_as_imports = true
+reverse_relative = true
+star_first = true
+treat_all_comments_as_code = true
+
+
+[tool.pyright]
+
+# region[Main Configuration Options]
+
+include = ["**/*.ipy", "**/*.ipynb", "**/*.py", "**/*.pyi"]
+stubPath = "__typings__"
+
+pythonPlatform = "All"
+
+typeCheckingMode = "strict"
+useLibraryCodeForTypes = false
+
+# endregion
+
+# region[Type Check Diagnostics Settings]
+
+analyzeUnannotatedFunctions = true
+strictParameterNoneValue = false
+enableTypeIgnoreComments = true
+disableBytesTypePromotions = true
+strictListInference = false
+strictDictionaryInference = false
+strictSetInference = false
+deprecateTypingAliases = true
+enableExperimentalFeatures = false
+reportMissingTypeStubs = "none"
+reportMissingModuleSource = "error"
+reportInvalidTypeForm = "error"
+reportMissingImports = "error"
+reportUndefinedVariable = "error"
+reportAssertAlwaysTrue = "error"
+reportInvalidStringEscapeSequence = "error"
+reportInvalidTypeVarUse = "error"
+reportSelfClsParameterName = "warning"
+reportUnsupportedDunderAll = "warning"
+reportUnusedExpression = "none"
+reportWildcardImportFromLibrary = "warning"
+reportAbstractUsage = "error"
+reportArgumentType = "error"
+reportAssertTypeFailure = "error"
+reportAssignmentType = "error"
+reportAttributeAccessIssue = "error"
+reportCallIssue = "error"
+reportGeneralTypeIssues = "error"
+reportInconsistentOverload = "error"
+reportIndexIssue = "error"
+reportInvalidTypeArguments = "error"
+reportNoOverloadImplementation = "error"
+reportOperatorIssue = "error"
+reportOptionalSubscript = "error"
+reportOptionalMemberAccess = "error"
+reportOptionalCall = "error"
+reportOptionalIterable = "error"
+reportOptionalContextManager = "error"
+reportOptionalOperand = "error"
+reportRedeclaration = "error"
+reportReturnType = "error"
+reportTypedDictNotRequiredAccess = "error"
+reportPrivateImportUsage = "error"
+reportUnboundVariable = "error"
+reportUnhashable = "error"
+reportUnusedCoroutine = "error"
+reportUnusedExcept = "error"
+reportFunctionMemberAccess = "warning"
+reportIncompatibleMethodOverride = "error"
+reportIncompatibleVariableOverride = "error"
+reportOverlappingOverload = "none"
+reportPossiblyUnboundVariable = "error"
+reportConstantRedefinition = "error"
+reportDeprecated = "warning"
+reportDuplicateImport = "error"
+reportIncompleteStub = "warning"
+reportInconsistentConstructor = "error"
+reportInvalidStubStatement = "error"
+reportMatchNotExhaustive = "error"
+reportMissingParameterType = "none"
+reportMissingTypeArgument = "none"
+reportPrivateUsage = "warning"
+reportTypeCommentUsage = "error"
+reportUnknownArgumentType = "none"
+reportUnknownLambdaType = "none"
+reportUnknownMemberType = "none"
+reportUnknownParameterType = "none"
+reportUnknownVariableType = "none"
+reportUnnecessaryCast = "none"
+reportUnnecessaryComparison = "none"
+reportUnnecessaryContains = "none"
+reportUnnecessaryIsInstance = "none"
+reportUnusedClass = "warning"
+reportUnusedImport = "warning"
+reportUnusedFunction = "warning"
+reportUnusedVariable = "warning"
+reportUntypedBaseClass = "warning"
+reportUntypedClassDecorator = "none"
+reportUntypedFunctionDecorator = "none"
+reportUntypedNamedTuple = "warning"
+reportCallInDefaultInitializer = "warning"
+reportImplicitOverride = "none"
+reportImplicitStringConcatenation = "warning"
+reportImportCycles = "none"
+reportMissingSuperCall = "none"
+reportPropertyTypeMismatch = "none"
+reportShadowedImports = "warning"
+reportUninitializedInstanceVariable = "none"
+reportUnnecessaryTypeIgnoreComment = "none"
+reportUnusedCallResult = "error"
+
+# endregion
+
+
+[tool.pytest.ini_options]
+python_files = ["*_tests/*.py"]
+addopts = [
+    "--doctest-modules",
+    "--doctest-glob=*.md",
+    "--cov=deferrer",
+    "--cov-report=xml",
+    "--ignore-glob=**/samples/*",
+]
+
+
+[tool.setuptools.dynamic]
+version = { attr = "deferrer.__version__" }
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["deferrer", "deferrer.*"]
