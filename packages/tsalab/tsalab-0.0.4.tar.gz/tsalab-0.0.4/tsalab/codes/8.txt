@@ -1,0 +1,22 @@
+# This file demonstrates real-time speech recognition from microphone input using pyaudio and speech_recognition libraries.
+# Captures live audio from microphone, adjusts for ambient noise, converts speech to text, and saves the recorded audio as WAV file.
+
+#exp-8
+# pip install pyaudio
+import pyaudio
+import speech_recognition as sr
+r=sr.Recognizer()
+with sr.Microphone() as source:
+    r.adjust_for_ambient_noise(source,duration=4)
+    print("listening")
+    audio=r.listen(source)
+try:
+    text=r.recognize_google(audio)
+    print(text)
+except UnknownValueError as e:
+    print(e)
+except RequestError as e:
+    print(e)
+with open("microphone_audio.wav","wb") as f:
+    f.write(audio.get_wav_data())
+print("Audio saved ")
