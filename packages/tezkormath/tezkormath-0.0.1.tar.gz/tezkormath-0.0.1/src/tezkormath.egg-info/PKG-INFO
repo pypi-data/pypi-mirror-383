@@ -1,0 +1,23 @@
+Metadata-Version: 2.4
+Name: tezkormath
+Version: 0.0.1
+Summary: Bu kutubxona juda ham oddiy.
+Author-email: Ozodbek Sobirjonovich <ozodbeksobirjonovich@gmail.com>
+License: MIT
+Project-URL: Homepage, https://ozodbeksobirjonovich.uz
+Project-URL: Repository, https://github.com
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# TezkorMath kutubxonasi v0.0.1
+
+# Kutubxonani o'rnatish
+```
+pip install tezkormath
+```
+
+# Ishlatilinishi
+```
+from tezkormath import matematika
+x = matematika(2, "+", 3) #5
+```

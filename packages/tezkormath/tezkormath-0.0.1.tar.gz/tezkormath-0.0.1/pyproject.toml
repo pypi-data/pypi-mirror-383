@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tezkormath"
+version = "0.0.1"
+description = "Bu kutubxona juda ham oddiy."
+authors = [{name="Ozodbek Sobirjonovich", email="ozodbeksobirjonovich@gmail.com"}]
+license = { text="MIT" }
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = []
+
+[project.urls]
+Homepage = "https://ozodbeksobirjonovich.uz"
+Repository = "https://github.com"
+
+[tool.setuptools.packages.find]
+where = ["src"]
