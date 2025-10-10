@@ -1,0 +1,60 @@
+server:
+  config:
+    api_key: 6b9ef1f769msh95c46a345010a18p1fa99cjsn7d5c1b0c7195
+    rapidapi_host: airbnb-data.p.rapidapi.com
+  description: Airbnb is an online platform that connects hosts and guests in the
+    field of accommodation rentals. On Airbnb, users can search, book, and rent various
+    types of accommodations such as apartments, houses, villas, rooms, and more.
+  name: Airbnb Data
+  options:
+    requestTimeoutMillis: 15000
+tools:
+- args:
+  - default: '726054195353749887'
+    description: The value obtained from the id property of the 【Search Property By
+      Location】API. data ⇒ listing ⇒ id
+    name: id
+    required: 'True'
+  - default: en
+    description: The value obtained from the locale property of the 【Get Languages】API.
+    name: locale
+    required: 'True'
+  - default: USD
+    description: The value obtained from the code property of the 【Get Currency】API.
+    name: currency
+    required: 'True'
+  - default: 无
+    description: 无
+    name: checkin
+    required: 'False'
+  - default: 无
+    description: 无
+    name: checkout
+    required: 'False'
+  - default: 无
+    description: Number of adult guests (13 years and over). Default is set to 0.
+      Value from 0 to 16
+    name: adults
+    required: 'False'
+  - default: 无
+    description: Number of children (2-12 years)
+    name: children
+    required: 'False'
+  - default: 无
+    description: 'Number of infants (under 2 years), Default: 0 Value from 0 to 5'
+    name: infants
+    required: 'False'
+  - default: 无
+    description: Beds, Value from 1 to 8
+    name: pets
+    required: 'False'
+  description: Get Property Details
+  name: Get detail
+  requestTemplate:
+    headers:
+    - key: x-rapidapi-key
+      value: '{{config.api_key}}'
+    - key: x-rapidapi-host
+      value: '{{config.rapidapi_host}}'
+    method: GET
+    url: https://airbnb-data.p.rapidapi.com/WebAPIs/airbnb/detail?id={{args.id}}&locale={{args.locale}}&currency={{args.currency}}&checkin={{args.checkin}}&checkout={{args.checkout}}&adults={{args.adults}}&children={{args.children}}&infants={{args.infants}}&pets={{args.pets}}
