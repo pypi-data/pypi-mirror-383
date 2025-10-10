@@ -1,0 +1,8 @@
+[console_scripts]
+hx = hyperx.bin.hx_cli:main
+hx-find = hyperx.bin.autodiscover:main
+hx-install = bin.install_hyperx:main
+hyperx = hyperx.bin.hx_cli:main
+
+[django.apps]
+hyperx = hyperx.apps.HyperXConfig
