@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "news_bigdata_mcp"
+version = "1.0.0"
+description = "🔥 舆情大数据 MCP 服务 - 企业舆情监控、情感分析和新闻舆情查询"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "handaas"},
+]
+keywords = ["mcp", "news", "sentiment", "analysis", "enterprise", "monitoring"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "mcp>=1.6.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.28.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/handaas/news-mcp-server"
+Repository = "https://github.com/handaas/news-mcp-server"
+Issues = "https://github.com/handaas/news-mcp-server/issues"
+
+[project.scripts]
+news-bigdata-mcp = "news_mcp_server.server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["news_mcp_server*"]
+
