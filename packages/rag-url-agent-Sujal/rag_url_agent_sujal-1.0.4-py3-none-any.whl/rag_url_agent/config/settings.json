@@ -1,0 +1,66 @@
+{
+  "llm": {
+    "providers": {
+      "primary": {
+        "provider": "ollama",
+        "model": "mixtral:8x7b",
+        "base_url": "http://localhost:11434"
+      },
+      "secondary": {
+        "provider": "groq",
+        "api_key": "${GROQ_API_KEY}",
+        "model": "mixtral-8x7b-32768"
+      },
+      "tertiary": {
+        "provider": "openrouter",
+        "api_key": "${OPENROUTER_API_KEY}",
+        "model": "mistralai/mistral-7b-instruct"
+      }
+    },
+    "use_fallback": true,
+    "temperature": 0.7,
+    "max_tokens": 1024
+  },
+
+  "embeddings": {
+    "model": "all-MiniLM-L6-v2",
+    "batch_size": 16,
+    "max_length": 512
+  },
+
+  "processing": {
+    "chunk_size": 400,
+    "chunk_overlap": 40,
+    "max_content_size": 5242880,
+    "max_chunks_per_url": 500
+  },
+
+  "security": {
+    "virustotal_api_key": "${VIRUSTOTAL_API_KEY}",
+    "google_safe_browsing_api_key": "${GOOGLE_SAFE_BROWSING_API_KEY}",
+    "enable_virustotal": false,
+    "enable_safe_browsing": false,
+    "cache_duration_hours": 24,
+    "max_redirects": 5
+  },
+
+  "storage": {
+    "database_path": "data/urls.db",
+    "vector_index_path": "data/vectors/faiss_index",
+    "backup_enabled": true,
+    "max_db_size_mb": 1000
+  },
+
+  "memory": {
+    "max_memory_mb": 2048,
+    "cleanup_threshold_mb": 1536,
+    "enable_monitoring": true
+  },
+
+  "logging": {
+    "level": "INFO",
+    "file": "logs/agent.log",
+    "max_size_mb": 100,
+    "backup_count": 5
+  }
+}
