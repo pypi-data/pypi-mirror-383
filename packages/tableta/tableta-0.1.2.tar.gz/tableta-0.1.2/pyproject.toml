@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tableta"
+version = "0.1.2"
+description = "Extractor de tablas desde notas en PDFs de estados financieros"
+readme = "README.md"
+authors = [
+    {name = "Diego Jiménez", email = "diego.jimenez.g@gmail.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Text Processing :: General",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+keywords = ["pdf", "table-extraction", "financial", "notes", "estados-financieros"]
+requires-python = ">=3.8"
+
+dependencies = [
+    "pandas>=1.3.0",
+    "pdfplumber>=0.7.0",
+    "openpyxl>=3.0.0",
+]
+
+[project.optional-dependencies]
+camelot = [
+    "camelot-py[cv]>=0.11.0",
+]
+tabula = [
+    "tabula-py>=2.5.0",
+]
+all = [
+    "camelot-py[cv]>=0.11.0",
+    "tabula-py>=2.5.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "build>=0.10.0",
+    "twine>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/diegonov1/tableta"
+Documentation = "https://github.com/diegonov1/tableta#readme"
+Repository = "https://github.com/diegonov1/tableta"
+"Bug Tracker" = "https://github.com/diegonov1/tableta/issues"
+
+[project.scripts]
+tableta = "pdf_notes_extractor.cli:main"
+
+[tool.setuptools]
+packages = ["pdf_notes_extractor"]
+
+[tool.setuptools.package-data]
+pdf_notes_extractor = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=pdf_notes_extractor --cov-report=term-missing"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

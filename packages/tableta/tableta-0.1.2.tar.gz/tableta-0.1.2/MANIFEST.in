@@ -1,0 +1,12 @@
+include README.md
+include LICENSE
+include pyproject.toml
+include setup.py
+
+recursive-include pdf_notes_extractor *.py
+recursive-include tests *.py
+recursive-include examples *.py *.md
+
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
