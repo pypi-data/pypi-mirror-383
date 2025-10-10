@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markitdown-chunker"
+version = "0.1.0"
+description = "Convert documents to markdown, chunk them intelligently, and export structured data"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+keywords = ["markdown", "converter", "chunker", "document-processing", "langchain", "markitdown"]
+authors = [
+    {name = "Naveen Kumar Rajarajan", email = "rajarajannaveenkumar@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "markitdown>=0.0.1",
+    "langchain>=0.1.0",
+    "langchain-text-splitters>=0.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+images = [
+    "pymupdf>=1.23.0",
+    "python-docx>=0.8.11",
+    "python-pptx>=0.6.21",
+]
+
+[project.scripts]
+markitdown-chunker = "markitdown_chunker.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Naveenkumarar/markitdown-chunker"
+"Bug Reports" = "https://github.com/Naveenkumarar/markitdown-chunker/issues"
+"Source Code" = "https://github.com/Naveenkumarar/markitdown-chunker"
+
+[tool.setuptools.packages.find]
+exclude = ["tests", "tests.*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
