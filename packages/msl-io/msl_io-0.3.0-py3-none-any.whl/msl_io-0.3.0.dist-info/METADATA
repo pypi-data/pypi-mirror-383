@@ -1,0 +1,102 @@
+Metadata-Version: 2.4
+Name: msl-io
+Version: 0.3.0
+Summary: Read and write data files
+Project-URL: Changes, https://mslnz.github.io/msl-io/latest/release-notes/
+Project-URL: Documentation, https://mslnz.github.io/msl-io/latest/
+Project-URL: Homepage, https://mslnz.github.io/msl-io/latest/
+Project-URL: Source, https://github.com/MSLNZ/msl-io/
+Project-URL: Tracker, https://github.com/MSLNZ/msl-io/issues
+Author-email: Measurement Standards Laboratory of New Zealand <info@measurement.govt.nz>
+Maintainer-email: Joseph Borbely <joseph.borbely@measurement.govt.nz>
+License: MIT License
+        
+        Copyright (c) 2018 - 2025, Measurement Standards Laboratory of New Zealand
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE.txt
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Software Development
+Requires-Python: >=3.9
+Requires-Dist: numpy
+Provides-Extra: google
+Requires-Dist: google-api-python-client; extra == 'google'
+Requires-Dist: google-auth-httplib2; extra == 'google'
+Requires-Dist: google-auth-oauthlib; extra == 'google'
+Provides-Extra: h5py
+Requires-Dist: h5py; extra == 'h5py'
+Description-Content-Type: text/markdown
+
+# MSL-IO
+
+[![CI Status](https://github.com/MSLNZ/msl-io/actions/workflows/ci.yml/badge.svg)](https://github.com/MSLNZ/msl-io/actions/workflows/ci.yml)
+[![Docs Status](https://github.com/MSLNZ/msl-io/actions/workflows/docs.yml/badge.svg)](https://github.com/MSLNZ/msl-io/actions/workflows/docs.yml)
+[![PyPI - Version](https://img.shields.io/pypi/v/msl-io?logo=pypi&logoColor=gold&label=PyPI&color=blue)](https://pypi.org/project/msl-io/)
+[![PyPI - Python Versions](https://img.shields.io/pypi/pyversions/msl-io.svg?logo=python&label=Python&logoColor=gold)](https://pypi.org/project/msl-io/)
+
+`msl-io` follows the data model used by [HDF5] to read and write data files &mdash; where there are [Groups] and [Datasets] and each item has [Metadata]
+
+![hdf5_data_model.png](https://raw.githubusercontent.com/MSLNZ/msl-io/main/docs/assets/images/hdf5_data_model.png)
+
+The tree structure is similar to the file-system structure used by operating systems. [Groups] are analogous to directories (where [Root] is the root [Group]) and [Datasets] are analogous to files.
+
+The data files that can be read or written are not restricted to [HDF5] files, but any file format that has a [Reader] implemented can be read and data files can be created using any of the [Writers].
+
+## Install
+
+`msl-io` is available for installation via the [Python Package Index]
+
+```console
+pip install msl-io
+```
+
+### Dependencies
+
+* Python 3.9+
+* [numpy]
+* [xlrd] (bundled with `msl-io`)
+
+## Documentation
+
+The documentation for `msl-io` can be found [here](https://mslnz.github.io/msl-io/latest/).
+
+[numpy]: https://www.numpy.org/
+[xlrd]: https://xlrd.readthedocs.io/en/stable/
+[HDF5]: https://www.hdfgroup.org/
+[Root]: https://mslnz.github.io/msl-io/latest/api/base/#msl.io.base.Root
+[Group]: https://mslnz.github.io/msl-io/latest/api/node/#msl.io.node.Group
+[Groups]: https://mslnz.github.io/msl-io/latest/items/groups/#msl-io-group
+[Datasets]: https://mslnz.github.io/msl-io/latest/items/datasets/#msl-io-dataset
+[Metadata]: https://mslnz.github.io/msl-io/latest/items/metadata/#msl-io-metadata
+[Reader]: https://mslnz.github.io/msl-io/latest/readers/#msl-io-readers
+[Writers]: https://mslnz.github.io/msl-io/latest/writers/#msl-io-writers
+[Python Package Index]: https://pypi.org/project/msl-io/
