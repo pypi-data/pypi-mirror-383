@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<!-- Michael Wollensack METAS UncLib V2.8.3 - 2.08.2024 -->	
+
+	<!-- definition of IdType -->
+	<xs:simpleType name="IdType">
+		<!-- unique identifier -->
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9a-fA-F][0-9a-fA-F][\-]?)+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- definition of Distribution -->
+	<xs:complexType name="Distribution" abstract="true"/>
+
+	<!-- definition of StandardNormal -->
+	<xs:complexType name="StandardNormal">
+		<!-- mu = 0, sigma = 1 -->
+		<!-- mean = mu -->
+		<!-- stdunc = sigma -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of Normal -->
+	<xs:complexType name="Normal">
+		<!-- mean = mu -->
+		<!-- stdunc = sigma -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="mu" type="xs:double" />
+					<xs:element name="sigma" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of StandardUniform -->
+	<xs:complexType name="StandardUniform">
+		<!-- a = 0, b = 1 -->
+		<!-- mean = (a + b) / 2 -->
+		<!-- stdunc = (b - a) / sqrt(12) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of Uniform -->
+	<xs:complexType name="Uniform">
+		<!-- mean = (a + b) / 2 -->
+		<!-- stdunc = (b - a) / sqrt(12) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="a" type="xs:double" />
+					<xs:element name="b" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of CurvilinearTrapezoid -->
+	<xs:complexType name="CurvilinearTrapezoid">
+		<!-- mean = (a + b) / 2 -->
+		<!-- stdunc = sqrt((b - a)^2 / 12 + d^2 / 9) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="a" type="xs:double" />
+					<xs:element name="b" type="xs:double" />
+					<xs:element name="d" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of Trapezoidal -->
+	<xs:complexType name="Trapezoidal">
+		<!-- mean = (a + b) / 2 -->
+		<!-- stdunc = (b - a) * sqrt((1 + beta^2) / 24) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="a" type="xs:double" />
+					<xs:element name="b" type="xs:double" />
+					<xs:element name="beta" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of Triangular -->
+	<xs:complexType name="Triangular">
+		<!-- mean = (a + b) / 2 -->
+		<!-- stdunc = (b - a) / sqrt(24) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="a" type="xs:double" />
+					<xs:element name="b" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of ArcSine -->
+	<xs:complexType name="ArcSine">
+		<!-- mean = (a + b) / 2 -->
+		<!-- stdunc = (b - a) / sqrt(8) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="a" type="xs:double" />
+					<xs:element name="b" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of Exponential -->
+	<xs:complexType name="Exponential">
+		<!-- mean = mu -->
+		<!-- stdunc = mu -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="mu" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of Gamma -->
+	<xs:complexType name="Gamma">
+		<!-- mean = a * b -->
+		<!-- stdunc = sqrt(a) * b -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="a" type="xs:double" />
+					<xs:element name="b" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of ChiSquared -->
+	<xs:complexType name="ChiSquared">
+		<!-- mean = k -->
+		<!-- stdunc = sqrt(2 * k) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="k" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of StudentT -->
+	<xs:complexType name="StudentT">
+		<!-- mean = mu for n > 2 with n = dof + 1 -->
+		<!-- stdunc = sigma * sqrt((n - 1) / (n - 3)) for n > 3 with n = dof + 1 -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="mu" type="xs:double" />
+					<xs:element name="sigma" type="xs:double" />
+					<xs:element name="dof" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of StudentTFromSamples -->
+	<xs:complexType name="StudentTFromSamples">
+		<!-- mean = mean(samples) for n > 2 with n = dof + 1 -->
+		<!-- stdunc = sigma * sqrt((n - 1) / (n - 3)) for n > 3 with n = length(samples) and sigma = std(samples) / sqrt(n) -->
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="Samples">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="Sample" type="xs:double" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of RandomChoicesFromSamples -->
+	<xs:complexType name="RandomChoicesFromSamples">
+		<xs:complexContent>
+			<xs:extension base="Distribution">
+				<xs:sequence>
+					<xs:element name="Seed" type="IdType" />
+					<xs:element name="Samples">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="Sample" type="xs:double" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of InputType -->
+	<xs:complexType name="InputType">
+		<xs:sequence>
+			<xs:element name="Id" type="IdType" />
+			<xs:element name="Description" type="xs:string" />
+			<xs:choice>
+				<xs:element name="Distribution" type="Distribution" />
+				<!-- obsolete -->
+				<xs:element name="IDof" type="xs:double" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of LinPropUncNumberType -->
+	<xs:complexType name="LinPropUncNumberType">
+		<xs:sequence>
+			<xs:element name="Value" type="xs:double" />
+			<xs:element name="Dependencies">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="DependsOn">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Input" type="InputType" />
+									<xs:element name="Jacobi" type="xs:double" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of MCPropUncNumberType -->
+	<xs:complexType name="MCPropUncNumberType">
+		<xs:sequence>
+			<xs:element name="FunctionValue" type="xs:double" />
+			<xs:element name="Values">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="Value" type="xs:double" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Dependencies">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="DependsOn">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Input" type="InputType" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of LinPropComplexUncNumberType -->
+	<xs:complexType name="LinPropComplexUncNumberType">
+		<xs:sequence>
+			<xs:element name="Real" type="LinPropUncNumberType" />
+			<xs:element name="Imag" type="LinPropUncNumberType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of MCPropComplexUncNumberType -->
+	<xs:complexType name="MCPropComplexUncNumberType">
+		<xs:sequence>
+			<xs:element name="Real" type="MCPropUncNumberType" />
+			<xs:element name="Imag" type="MCPropUncNumberType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of NArrayType -->
+	<xs:complexType name="NArrayType" abstract="true">
+		<xs:sequence>
+			<xs:element name="NDims" type="xsd:int" />
+			<xs:element name="Size">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of LinPropRealNArrayType -->
+	<xs:complexType name="LinPropRealNArrayType">
+		<xs:complexContent>
+			<xs:extension base="NArrayType">
+				<xs:sequence>
+					<xs:element name="Data">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="UncNumber" type="LinPropUncNumberType" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of MCPropRealNArrayType -->
+	<xs:complexType name="MCPropRealNArrayType">
+		<xs:complexContent>
+			<xs:extension base="NArrayType">
+				<xs:sequence>
+					<xs:element name="Data">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="UncNumber" type="MCPropUncNumberType" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of LinPropComplexNArrayType -->
+	<xs:complexType name="LinPropComplexNArrayType">
+		<xs:complexContent>
+			<xs:extension base="NArrayType">
+				<xs:sequence>
+					<xs:element name="Data">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="ComplexOfUncNumber" type="LinPropComplexUncNumberType" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of MCPropComplexNArrayType -->
+	<xs:complexType name="MCPropComplexNArrayType">
+		<xs:complexContent>
+			<xs:extension base="NArrayType">
+				<xs:sequence>
+					<xs:element name="Data">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="ComplexOfUncNumber" type="MCPropComplexUncNumberType" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of LinProp elements -->
+	<xs:element name="LinPropUncNumber" type="LinPropUncNumberType" />
+	<xs:element name="LinPropComplexOfUncNumber" type="LinPropComplexUncNumberType" />
+	<xs:element name="LinPropRealNArray" type="LinPropRealNArrayType" />
+	<xs:element name="LinPropComplexNArray" type="LinPropComplexNArrayType" />
+
+	<!-- definition of MCProp elements -->
+	<xs:element name="MCPropUncNumber" type="MCPropUncNumberType" />
+	<xs:element name="MCPropComplexOfUncNumber" type="MCPropComplexUncNumberType" />
+	<xs:element name="MCPropRealNArray" type="MCPropRealNArrayType" />
+	<xs:element name="MCPropComplexNArray" type="MCPropComplexNArrayType" />
+
+	<!-- definition of default elements -->
+	<xs:element name="UncNumber" type="LinPropUncNumberType" />
+	<xs:element name="ComplexOfUncNumber" type="LinPropComplexUncNumberType" />
+	<xs:element name="RealNArray" type="LinPropRealNArrayType" />
+	<xs:element name="ComplexNArray" type="LinPropComplexNArrayType" />
+
+</xsd:schema>
