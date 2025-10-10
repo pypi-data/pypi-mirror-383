@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: edubaseid
+Version: 1.0.0
+Summary: EduBaseID OAuth2/OpenID Connect client SDK for Python
+Home-page: https://github.com/dev-723743344
+Author: Sadriddin Axmadullayev
+Author-email: Sadriddin Axmadullayev <your.email@example.com>
+Project-URL: Homepage, https://github.com/your-repo/edubaseid
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: click>=8.0.0
+Provides-Extra: django
+Requires-Dist: django>=4.0.0; extra == "django"
+Requires-Dist: djangorestframework>=3.13.0; extra == "django"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# EduBaseID SDK
+
+EduBaseID OAuth2 client for Python.
+
+## Installation
+pip install edubaseid
+
+## Usage
+from edubaseid import EduBaseIDClient
+client = EduBaseIDClient()
+url = client.get_authorize_url()
