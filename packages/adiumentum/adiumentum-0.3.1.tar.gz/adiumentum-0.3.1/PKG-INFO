@@ -1,0 +1,60 @@
+Metadata-Version: 2.3
+Name: adiumentum
+Version: 0.3.1
+Summary: 
+Author: Isaac Riley
+Author-email: Isaac Riley <yelircaasi@proton.me>
+Requires-Dist: pydantic>=2.11
+Requires-Dist: multipledispatch>=1
+Requires-Dist: loguru>=0.7.3
+Requires-Python: >=3.11, <3.15
+Description-Content-Type: text/markdown
+
+# adiumentum
+
+
+With Nix installed, you can enter a development environment with all dependencies installed:
+
+```sh
+nix develop
+```
+
+Once in this dev shell, you have a number of development utils you can try out (via just):
+
+```sh
+✔just
+✔just format
+✔just check
+✔just fix
+✔just typecheck
+✔just lint
+✔just deal
+✔just vulture
+✔just pydeps-full
+✔just pydeps
+✔just pydeps-simple
+✔just view-deps
+✔just snakefood
+✔just deply
+✔just bandit
+✔just bandit-html
+✔just bandit-view
+✔just pyflame
+✔just flamegraph
+✔just perf-flamegraph
+✔just check-structure
+✔just check-imports
+✔just smoke
+✔just unit
+✔just test
+✔just test-cov
+✔just docs
+✔just scalene
+✔just view-cov
+✔just view-docs
+✔just view-flamegraphs
+✔just sbom
+
+lefthook validate
+lefthook run all
+```
