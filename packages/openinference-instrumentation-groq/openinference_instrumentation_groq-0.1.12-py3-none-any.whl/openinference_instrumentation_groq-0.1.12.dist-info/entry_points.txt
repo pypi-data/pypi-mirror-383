@@ -1,0 +1,5 @@
+[openinference_instrumentor]
+groq = openinference.instrumentation.groq:GroqInstrumentor
+
+[opentelemetry_instrumentor]
+groq = openinference.instrumentation.groq:GroqInstrumentor
