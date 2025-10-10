@@ -1,0 +1,41 @@
+Metadata-Version: 2.4
+Name: xdb_location
+Version: 0.1.5
+Summary: a geographic information database
+Author-email: hongjian fang <fanghongjian@geetest.com>
+Maintainer-email: hongjian fang <fanghongjian@geetest.com>
+License: MIT
+Project-URL: bugs, https://github.com/gunhe/xdb_location/issues
+Project-URL: changelog, https://github.com/gunhe/xdb_location/blob/master/changelog.md
+Project-URL: homepage, https://github.com/gunhe/xdb_location
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: typer
+Provides-Extra: test
+Requires-Dist: coverage; extra == "test"
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: ruff; extra == "test"
+Requires-Dist: ty; extra == "test"
+Requires-Dist: ipdb; extra == "test"
+Dynamic: license-file
+
+# Xdb_Location
+
+![PyPI version](https://img.shields.io/pypi/v/xdb_location.svg)
+[![Documentation Status](https://readthedocs.org/projects/xdb_location/badge/?version=latest)](https://xdb_location.readthedocs.io/en/latest/?version=latest)
+
+a geographic information database
+
+* PyPI package: https://pypi.org/project/xdb_location/
+* Free software: MIT License
+* Documentation: https://xdb_location.readthedocs.io.
+
+## Features
+
+* TODO
+
+## Credits
+
+This package was created with [Cookiecutter](https://github.com/audreyfeldroy/cookiecutter) and the [audreyfeldroy/cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage) project template.
+# xdb_location
