@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: nifti_dynamic
+Version: 0.1.1
+Summary: A package for dynamic NIFTI analysis
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: nibabel
+Requires-Dist: indexed_gzip
+Requires-Dist: scipy
+Requires-Dist: scikit-learn
+Requires-Dist: tqdm
+Requires-Dist: ipython>=8.12.3
+Requires-Dist: scikit-image>=0.21.0
+Requires-Dist: matplotlib>=3.7.5
+Requires-Dist: pandas>=2.0.3
+Requires-Dist: opencv-python>=4.12.0.88
+
+# nifti_dynamic
+
+A Python package for dynamic NIFTI analysis.
+
+## Installation
+
+```bash
+pip install nifti_dynamic
+```
+
+## Usage
+
+See example.py
+
+
