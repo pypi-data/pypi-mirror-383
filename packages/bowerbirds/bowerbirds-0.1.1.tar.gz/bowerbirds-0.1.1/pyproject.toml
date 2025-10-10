@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bowerbirds"
+version = "0.1.1"
+description = "Convert unstructured AI project directories into structured, professional-ready directories."
+authors = [
+    { name = "Shubham Aggarwal", email = "shubham_agg@alumni.iitm.ac.in" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+
+dependencies = [
+  "transformers>=4.30.0",
+  "torch>=1.13.0",
+  "litellm"
+]
+
+
+[project.scripts]
+bowerbirds = "bowerbirds.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
