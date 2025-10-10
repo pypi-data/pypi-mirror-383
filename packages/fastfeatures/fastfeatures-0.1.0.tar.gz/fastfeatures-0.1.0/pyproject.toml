@@ -1,0 +1,26 @@
+[project]
+name = "fastfeatures"
+version = "0.1.0"
+description = "Modular features discovery system for FastAPI projects."
+authors = [
+    {name = "Yuri Seki",email = "yuriseki@gmail.com"}
+]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.12"
+dependencies = [
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project.urls]
+Homepage = "https://github.com/yuriseki/fastfeatures"
+Issues = "https://github.com/yuriseki/fastfeatures/issues"
