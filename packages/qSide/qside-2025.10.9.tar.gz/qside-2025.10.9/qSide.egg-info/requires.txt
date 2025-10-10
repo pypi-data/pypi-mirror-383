@@ -1,0 +1,15 @@
+qtpy
+qdarkstyle
+qstylizer
+PySide6
+tree-sitter
+tree-sitter-python
+
+[:sys_platform == "darwin"]
+darkdetect[macos-listener]
+pyobjc-framework-Cocoa
+pyobjc-framework-Quartz
+
+[:sys_platform == "win32"]
+darkdetect
+pywin32==304
