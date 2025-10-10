@@ -1,0 +1,12 @@
+import xproject
+
+
+class {{ class_name }}(xproject.Handler):
+    def action(self, *args, **kwargs):
+        pass
+
+
+if __name__ == '__main__':
+    {{ instance_name }} = {{ class_name }}()
+    {{ instance_name }}.run()
+
