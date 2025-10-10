@@ -1,0 +1,5 @@
+[openinference_instrumentor]
+autogen = openinference.instrumentation.autogen:AutogenInstrumentor
+
+[opentelemetry_instrumentor]
+autogen = openinference.instrumentation.autogen:AutogenInstrumentor
