@@ -1,0 +1,5 @@
+[openinference_instrumentor]
+guardrails = openinference.instrumentation.guardrails:GuardrailsInstrumentor
+
+[opentelemetry_instrumentor]
+guardrails = openinference.instrumentation.guardrails:GuardrailsInstrumentor
