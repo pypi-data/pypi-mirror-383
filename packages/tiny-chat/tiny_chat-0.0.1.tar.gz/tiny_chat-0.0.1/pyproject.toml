@@ -1,0 +1,79 @@
+[tool.poetry]
+name = "tiny-chat"
+version = "0.0.1"
+description = "A lightweight platform for realistic social simulations"
+authors = ["Yining Zhao"]
+license = "MIT License"
+readme = "README.md"
+packages = [
+    { include = "tiny_chat" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.13"
+mypy = "^1.17.1"
+beartype = "^0.17.1"
+pydantic = "^2.8.2"
+openai = "^1.12.0"
+asyncio = "^3.4.3"
+typing-extensions = "^4.9.0"
+gymnasium = "^0.29.0"
+pettingzoo = "^1.24.0"
+litellm = "^1.75.0"
+json-repair = "^0.48.0"
+rich = "^14.1.0"
+datasets = "^4.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "*"
+nbmake = "*"
+types-setuptools = "*"
+types-pyyaml = "^6.0.12.20250402"
+types-requests = "^2.31"
+types-toml = "^0.10"
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+ignore_missing_imports = true
+check_untyped_defs = true
+follow_imports = "normal"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.codespell]
+ignore-words-list = "dout, te, indicies, astroid"
+skip = ["data"]
+
+[tool.isort]
+profile = "black"
+use_parentheses = true
+skip_gitignore = true
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+line_length = 88
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39', 'py310']
+
+[tool.ruff]
+line-length = 88
+fix = true
+target-version = "py310"
+
+[tool.ruff.format]
+indent-style = "space"
