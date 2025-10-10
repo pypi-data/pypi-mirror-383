@@ -1,0 +1,58 @@
+Metadata-Version: 2.4
+Name: twobitreader
+Version: 3.1.8
+Summary: A fast python package for reading .2bit files (used by the UCSC genome browser)
+Author-email: Benjamin Schiller <ben.j.schiller@gmail.com>
+License-Expression: Artistic-2.0
+Project-URL: Homepage, https://github.com/benjschiller/twobitreader
+Project-URL: Repository, https://github.com/benjschiller/twobitreader
+Keywords: genomics,ucsc,2bit,bioinformatics
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+License-File: COPYRIGHT
+Requires-Dist: setuptools>=80
+Provides-Extra: docs
+Requires-Dist: sphinx>=7.3; extra == "docs"
+Requires-Dist: furo>=2024.1.29; extra == "docs"
+Requires-Dist: myst-parser>=2.0; extra == "docs"
+Requires-Dist: sphinx-autodoc-typehints>=2.1.0; extra == "docs"
+Requires-Dist: sphinx-copybutton>=0.5.2; extra == "docs"
+Dynamic: license-file
+
+[![Build Status](https://travis-ci.org/benjschiller/twobitreader.svg?branch=master)](https://travis-ci.org/benjschiller/twobitreader)
+
+twobitreader is a fast python package for reading .2bit files (used by UCSC genome browser)
+
+To install (recommended):
+
+```bash
+    pip install .
+```
+
+Can be run as a script
+
+```bash
+    python -m twobitreader example.2bit < example.bed
+```
+
+Or imported as a module ("twobitreader")
+
+
+Licensed under Perl Artistic License 2.0
+
+No warranty is provided, express or implied

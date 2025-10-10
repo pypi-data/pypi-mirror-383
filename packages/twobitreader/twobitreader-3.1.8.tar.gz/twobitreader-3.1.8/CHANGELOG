@@ -1,0 +1,20 @@
+04-17-12
+Some modifications to cmdline_reader and download module so that they can be run
+as functions too. added more flexible twobit_reader which can write to files too
+
+03-01-12
+Fixed super() syntax to remove warning
+
+02-29-12
+Added ability to run as a script, e.g.
+python -m twobitreader example.2bit < example.bed
+
+Added download module to fetch genomes from UCSC
+
+Bugfixes: max/min in get_slice (thought that was fixed)
+Updated version to 2.0
+Downgraded status to Beta
+
+02-10-2012
+Minor bugfixes
+Updated version to 1.05
