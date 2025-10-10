@@ -1,0 +1,144 @@
+.\" SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+.\" SPDX-License-Identifier: BSD-2-Clause
+.Dd November 15, 2024
+.Dt VENV-RETARGET 1
+.Os
+.Sh NAME
+.Nm venv-retarget
+.Nd prepare a virtual environment for moving to another directory
+.Sh SYNOPSIS
+.Nm
+.Op Fl qv
+.Cm detect
+.Op Fl Fl use\-prefix
+.Ar path/to/venv
+.Nm
+.Op Fl qv
+.Cm retarget
+.Op Fl Fl venvdst Ar /dest/venv | Fl d Ar /dest/venv
+.Op Fl Fl venvsrc Ar /src/venv | Fl d Ar /src/venv
+.Ar path/to/venv
+.Nm
+.Fl Fl features
+.Nm
+.Fl Fl help
+.Sh DESCRIPTION
+The
+.Nm
+tool modifies several files within a virtual environment so that
+their contents will correspond to what the
+.Nm venv
+module would have done if that
+virtual environment were created in a different directory.
+This may be useful if a virtual environment is created with the intention of being
+packaged and copied over to other systems in a shared path.
+.Sh SUBCOMMANDS
+.Ss detect - detect the path stored into a virtual environment's files
+The
+.Cm detect
+subcommand causes
+.Nm
+to examine the files within
+the virtual environment and check several places where
+.Nm venv
+records
+the path to the virtual environment:
+.Bl -tag -width *
+.It *
+the
+.Cm command = ...
+line in the
+.Pa pyvenv.cfg file
+.It *
+the paths to the source files stored in the precompiled
+.Pa __pycache__/*.pyc
+files
+.It *
+if
+.Fl Fl use\-prefix
+is specified, the
+.Ev sys.prefix
+value from the Python interpreter within the virtual environment
+.El
+.Pp
+Note that the
+.Ev sys.prefix
+value will reflect the current location of the virtual
+environment, so if it has already been moved, this path will differ from the rest and
+result in the
+.Cm detect
+subcommand failing because of inconsistent paths.
+.Ss retarget - change the paths to reflect a new location for the virtual environment
+The main purpose of the
+.Nm
+tool is the
+.Cm retarget
+subcommand: look for
+files within the virtual environment that record the source path (either specified with
+the
+.Fl s
+/
+.Fl Fl venvsrc
+command-line option, or autodetected as per the
+.Cm detect
+subcommand),
+and modifies those files to refer to the destination path (either specified with
+the
+.Fl d
+/
+.Fl Fl venvdst
+command-line option, or the current path to the virtual environment).
+This allows
+.Cm retarget
+to be used in three ways:
+.Bl -tag -width *
+.It *
+after the virtual environment was created in a temporary location, in order to
+prepare to move it to either a temporary buildroot location or its final one
+.It *
+after the virtual environment has been moved to a temporary buildroot location
+.It *
+after the virtual environment has been moved to its final location
+.El
+.Pp
+In each of the three cases, the source directly should generally not need to be specified.
+In any but the last case, the destination directory should be specified, or
+.Nm
+will record the temporary location of the virtual environment instead.
+.Sh FILES
+The
+.Nm
+tool examines various files within the virtual environment:
+.Bl -tag -width *
+.It * Pa pyvenv.cfg
+.It * Pa bin/*
+.It * Pa lib/**/__pycache__/*.pyc
+.El
+.Sh EXAMPLES
+Figure out what the files within a virtual environment think about where it is at:
+.Pp
+.Dl venv-retarget detect /path/to/venv
+.Pp
+Prepare the files in an existing virtual environment to be moved somewhere else:
+.Pp
+.Dl venv-retarget retarget -d /usr/libexec/venvs/agent agent-venv
+.Pp
+Update the files after a virtual environment has been moved:
+.Pp
+.Dl venv-retarget retarget -s /home/build/program/agent-venv buildroot/usr/libexec/venvs/agent
+.Pp
+The same, but let the
+.Nm
+tool figure out the source directory by
+examining the contents of the files within the virtual environment, e.g.
+when the installation program was able to copy the files directly to
+the destination directory instead of a temporary buildroot:
+.Pp
+.Dl venv-retarget retarget /usr/libexec/venvs/agent
+.Pp
+.Sh AUTHORS
+The
+.Nm
+tool was written by
+.An Peter Pentchev
+.Aq roam@ringlet.net .

@@ -1,0 +1,285 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+[build-system]
+requires = [
+  "hatchling >= 1.26, < 2",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "venv-retarget"
+description = "Prepare a virtual environment for moving to another directory"
+readme = "README.md"
+license = "BSD-2-Clause"
+license-files = ["LICENSES/BSD-2-Clause.txt"]
+requires-python = ">= 3.11"
+dynamic = ["version"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Operating System :: POSIX",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: System :: Filesystems",
+  "Topic :: System :: Installation/Setup",
+  "Topic :: System :: Software Distribution",
+  "Topic :: Utilities",
+  "Typing :: Typed",
+]
+dependencies = [
+  "click >= 8, < 9",
+]
+
+[[project.authors]]
+name = "Peter Pentchev"
+email = "roam@ringlet.net"
+
+[project.scripts]
+"venv-retarget" = "venv_retarget.__main__:main"
+
+[project.urls]
+Homepage = "https://devel.ringlet.net/sysutils/venv-retarget/"
+Changes = "https://devel.ringlet.net/sysutils/venv-retarget/changes/"
+"Issue Tracker" = "https://gitlab.com/ppentchev/venv-retarget/-/issues"
+"Source Code" = "https://gitlab.com/ppentchev/venv-retarget"
+
+[dependency-groups]
+docs = [
+  "mkdocs >= 1.5, < 2",
+  "mkdocs-material >= 9.3, < 10",
+  "mkdocstrings >= 0.27, < 0.31",
+  "mkdocstrings-python >= 1.4, < 2",
+
+  # Transitive to avoid segfaults with Python 3.14 and `uv --resolution=lowest`
+  "markupsafe >= 2.1",
+]
+testenv-mypy = [
+  {include-group = "testenv-unit-tests"},
+  "mypy >= 1.5, < 2",
+]
+testenv-pyupgrade = [
+  "pyupgrade >= 3, < 4",
+]
+testenv-reuse = [
+  "reuse >= 6, < 7",
+]
+testenv-ruff = [
+  "ruff == 0.14.0",
+]
+testenv-unit-tests = [
+  "packaging >= 21.3, < 26",
+  "pygments >= 2.7, < 3",
+  "pytest >= 8, < 9",
+  "uv >= 0.5, < 0.10",
+]
+testenv-uvoxen = [
+  "uvoxen >= 0.2.1, < 0.3",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/venv_retarget"]
+
+[tool.hatch.version]
+path = "src/venv_retarget/defs.py"
+pattern = '(?x) ^ VERSION \s* (?: : \s* Final \s* )? = \s* " (?P<version> [^\s"]+ ) " \s* $'
+
+[tool.mypy]
+strict = true
+
+[tool.publync.format.version]
+major = 0
+minor = 1
+
+[tool.publync.build.tox]
+
+[tool.publync.sync.rsync]
+remote = "marla.ludost.net:vhosts/devel.ringlet.net/public_html/sysutils/venv-retarget"
+
+[tool.ruff]
+extend = "ruff-base.toml"
+output-format = "concise"
+preview = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+[tool.test-stages]
+stages = [
+  "(@check or @docs) and @quick and not @manual",
+  "(@check or @docs) and not @manual",
+  "@tests and not @manual",
+]
+
+[tool.uvoxen]
+mediaType = "vnd.ringlet.devel.uvoxen.config/uvoxen.v0.3+toml"
+envlist = [
+  "ruff",
+  "format",
+  "reuse",
+  "uvoxen-sync-check",
+  "mypy",
+  "unit-tests",
+  "docs",
+]
+
+[tool.uvoxen.defs]
+pyfiles = [
+  "src/venv_retarget",
+  "tests/unit",
+]
+
+[tool.uvoxen.req]
+header = """
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+"""
+
+[tool.uvoxen.tox]
+env-order = [
+  "ruff",
+  "format",
+  "reformat",
+  "mypy",
+  "pyupgrade",
+  "unit-tests",
+  "docs",
+  "reuse",
+]
+
+header = """
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+"""
+
+[tool.uvoxen.env.docs]
+tags = [
+  "docs",
+]
+dependency-groups = [
+  "docs",
+]
+commands = [
+  "mkdocs build",
+]
+
+[tool.uvoxen.env.ruff]
+tags = [
+  "check",
+  "ruff",
+  "quick",
+]
+dependency-groups = [
+  "testenv-ruff",
+]
+commands = [
+  "ruff check -- {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.format]
+tags = [
+  "check",
+  "quick",
+]
+dependency-groups = [
+  "testenv-ruff",
+]
+commands = [
+  "ruff check --config ruff-base.toml --select=D,I --diff -- {[defs]pyfiles}",
+  "ruff format --config ruff-base.toml --check --diff -- {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.reformat]
+tags = [
+  "format",
+  "manual",
+]
+dependency-groups = [
+  "testenv-ruff",
+]
+commands = [
+  "ruff check --config ruff-base.toml --select=D,I --fix -- {[defs]pyfiles}",
+  "ruff format --config ruff-base.toml -- {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.reuse]
+tags = [
+  "check",
+  "quick",
+]
+dependency-groups = [
+  "testenv-reuse",
+]
+commands = [
+  "reuse lint",
+]
+
+[tool.uvoxen.env.mypy]
+tags = [
+  "check",
+]
+dependency-groups = [
+  "testenv-mypy",
+]
+install-dependencies = true
+commands = [
+  "mypy {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.mypy.setenv]
+MYPYPATH = "{toxinidir}/stubs"
+
+[tool.uvoxen.env.uvoxen-sync-check]
+tags = [
+  "check",
+  "quick",
+]
+dependency-groups = [
+  "testenv-uvoxen",
+]
+commands = [
+  "uvoxen req generate -g testenv-mypy -o -",
+  "uvoxen req generate --check -g docs",
+  "uvoxen tox generate --check",
+]
+
+[tool.uvoxen.env.unit-tests]
+tags = [
+  "tests",
+]
+dependency-groups = [
+  "testenv-unit-tests",
+]
+install-project = true
+passenv = [
+  "VENV_PYTHON",
+]
+commands = [
+  "pytest {posargs} tests/unit",
+]
+
+[tool.uvoxen.env.pyupgrade]
+tags = [
+  "check",
+  "manual",
+]
+dependency-groups = [
+  "testenv-pyupgrade",
+]
+allowlist-externals = [
+  "sh",
+]
+commands = [
+  "sh -c 'pyupgrade --py311-plus src/venv_retarget/*.py tests/unit/*.py'",
+]

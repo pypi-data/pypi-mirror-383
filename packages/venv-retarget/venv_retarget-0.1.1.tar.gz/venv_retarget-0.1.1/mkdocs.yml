@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - toc.integrate
+    - toc.follow
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+site_name: venv-retarget
+repo_url: https://gitlab.com/ppentchev/venv-retarget
+repo_name: venv-retarget
+site_author: ppentchev
+site_url: https://devel.ringlet.net/sysutils/venv-retarget/
+site_dir: site/docs
+nav:
+  - 'index.md'
+  - 'Changelog': 'changes.md'
+  - 'Download': 'download.md'
+  - 'Python API': 'api/python.md'
+markdown_extensions:
+  - toc:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite:
+  - pymdownx.superfences:
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            heading_level: 3
+            show_root_heading: true
+  - search
+watch:
+  - 'src/venv_retarget'
