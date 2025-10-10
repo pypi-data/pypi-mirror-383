@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comping-test"
+version = "0.1.0"
+description = "A lightweight concept drift detection library"
+authors = [{ name = "Gyujin Kim", email = "gj.kim@comping.ai" }]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
