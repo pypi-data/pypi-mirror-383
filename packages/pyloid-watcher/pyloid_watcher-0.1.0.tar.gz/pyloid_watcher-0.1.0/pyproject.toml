@@ -1,0 +1,22 @@
+[project]
+name = "pyloid-watcher"
+version = "0.1.0"
+readme = "README.md"
+description = "크로스플랫폼 Pyloid 백엔드 파일 감시자"
+requires-python = ">=3.9"
+
+dependencies = [
+    "watchdog>=6.0.0",
+]
+
+[project.scripts]
+pyloid-watcher = "pyloid_watcher.cli:main"
+
+[dependency-groups]
+dev = [
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
