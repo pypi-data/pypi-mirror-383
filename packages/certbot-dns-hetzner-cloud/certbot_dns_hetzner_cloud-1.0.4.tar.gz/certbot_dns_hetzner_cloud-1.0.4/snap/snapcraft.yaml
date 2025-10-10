@@ -1,0 +1,31 @@
+# snap/snapcraft.yaml
+name: certbot-dns-hetzner-cloud
+title: Certbot Hetzner Cloud DNS Plugin
+base: core24
+summary: Certbot DNS-01 authenticator for Hetzner Cloud DNS.
+description: |
+  This is a Certbot DNS plugin for the new Hetzner Cloud DNS, which allows you to automate the process of obtaining and 
+  renewing SSL/TLS certificates using the DNS-01 challenge method. This Plugin is not compatible with the old Hetzner DNS
+grade: stable
+confinement: strict
+license: MIT
+contact: https://github.com/rolschewsky/certbot-dns-hetzner-cloud
+source-code: https://github.com/rolschewsky/certbot-dns-hetzner-cloud
+website: https://github.com/rolschewsky/certbot-dns-hetzner-cloud
+donation: https://www.sos-kinderdorf.de/spenden
+adopt-info: plugin
+parts:
+  plugin:
+    plugin: python
+    source: .
+    override-pull: |
+      craftctl default
+      version=$(git describe --tags --abbrev=0)
+      craftctl set version="$version"
+
+slots:
+  plugin:
+    interface: content
+    content: certbot-1
+    read:
+      - $SNAP/lib/python3.12/site-packages
