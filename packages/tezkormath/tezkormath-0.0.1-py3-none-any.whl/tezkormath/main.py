@@ -1,0 +1,9 @@
+def matematika(x, amal, y):
+    if amal == "+":
+        return x + y
+    elif amal == "-":
+        return x - y
+    elif amal == "*":
+        return x * y
+    elif amal == "/":
+        return x / y
