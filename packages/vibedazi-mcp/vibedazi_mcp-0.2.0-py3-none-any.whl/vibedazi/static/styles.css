@@ -1,0 +1,26 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: #111; }
+header { padding: 12px 16px; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; }
+main { display: grid; grid-template-columns: 300px 1fr; gap: 0; height: calc(100vh - 60px); }
+aside { border-right: 1px solid #eee; overflow: auto; padding: 12px; }
+#details { overflow: auto; padding: 12px; }
+ul { list-style: none; padding: 0; margin: 0; }
+li { padding: 6px 8px; border-radius: 6px; cursor: pointer; }
+li:hover { background: #f5f7fb; }
+li.active { background: #eef3ff; }
+.badge { font-size: 11px; color: #935; border: 1px solid #e5c; padding: 0 6px; border-radius: 999px; background: #fff1fa; margin-right: 4px; }
+.badge.breaking { color: #fff; background: #b00020; border-color: #b00020; }
+.badge.high { color: #fff; background: #e65100; border-color: #e65100; }
+.badge.med, .badge.medium { color: #043; background: #c8f7e5; border-color: #7ee0bc; }
+.badge.low { color: #234; background: #eaf1ff; border-color: #bcd3ff; }
+.round-title { display: flex; gap: 6px; align-items: baseline; }
+.round-title .time { font-size: 12px; color: #666; }
+.round-title .branch { font-size: 12px; color: #2c5; border: 1px solid #2c5; padding: 0 6px; border-radius: 999px; }
+pre { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 12px; overflow: auto; }
+.diff { white-space: pre-wrap; }
+.diff .add { color: #127a2a; background: #e7f7ea; display: block; }
+.diff .del { color: #a0260f; background: #fdeceb; display: block; }
+.kv { display: grid; grid-template-columns: 120px 1fr; gap: 8px; }
+.kv .k { color: #555; text-align: right; }
+.kv .v { font-weight: 600; }
+
