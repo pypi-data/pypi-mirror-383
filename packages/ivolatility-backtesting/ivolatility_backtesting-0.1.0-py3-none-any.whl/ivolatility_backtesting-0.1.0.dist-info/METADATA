@@ -1,0 +1,93 @@
+Metadata-Version: 2.1
+Name: ivolatility_backtesting
+Version: 0.1.0
+Summary: Universal Backtest Framework with One-Command Runner for IVolatility API
+Author-email: Your Name <your.email@example.com>
+License: MIT License
+        
+        Copyright (c) 2025 Your Name
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://github.com/yourusername/ivolatility_backtesting
+Project-URL: Bug Tracker, https://github.com/yourusername/ivolatility_backtesting/issues
+Keywords: backtesting,finance,trading,ivolatility
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas>=1.5.0
+Requires-Dist: numpy>=1.21.0
+Requires-Dist: matplotlib>=3.5.0
+Requires-Dist: seaborn>=0.11.0
+Requires-Dist: ivolatility
+
+# IVolatility Backtesting
+A universal backtesting framework for financial strategies using the IVolatility API.
+
+## Installation
+```bash
+pip install ivolatility_backtesting
+```
+
+**Note**: The `ivolatility` package is required but may not be available on PyPI. Contact IVolatility to obtain their SDK and install it manually before using this package.
+
+## Usage
+```python
+from ivolatility_backtesting import run_backtest, init_api
+
+# Initialize API
+init_api("your-api-key")
+
+# Define your strategy
+def my_strategy(config):
+    # Strategy logic
+    return BacktestResults(
+        equity_curve=[100000, 110000],
+        equity_dates=["2023-01-01", "2023-01-02"],
+        trades=[{"pnl": 1000, "entry_date": "2023-01-01", "exit_date": "2023-01-02"}],
+        initial_capital=100000,
+        config=config
+    )
+
+# Run backtest
+CONFIG = {
+    "initial_capital": 100000,
+    "start_date": "2023-01-01",
+    "end_date": "2024-01-01",
+    "strategy_name": "My Strategy"
+}
+analyzer = run_backtest(my_strategy, CONFIG)
+
+# Access metrics
+print(f"Sharpe Ratio: {analyzer.metrics['sharpe']:.2f}")
+```
+
+## Requirements
+- Python >= 3.10
+- pandas >= 1.5.0
+- numpy >= 1.21.0
+- matplotlib >= 3.5.0
+- seaborn >= 0.11.0
+- ivolatility (contact IVolatility for SDK)
+
+## License
+MIT License
