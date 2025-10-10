@@ -1,0 +1,4 @@
+[console_scripts]
+fai-rl-eval = evaluations.eval:main
+fai-rl-inference = scripts.run_inference:main
+fai-rl-train = scripts.train:main
