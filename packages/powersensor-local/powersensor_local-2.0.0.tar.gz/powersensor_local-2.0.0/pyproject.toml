@@ -1,0 +1,30 @@
+[project]
+name = "powersensor-local"
+version = "2.0.0"
+description = "Network-local (non-cloud) interface for Powersensor devices"
+authors = [
+  { name = "Jade Mattsson", email = "jmattsson@dius.com.au" },
+]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Home Automation",
+]
+
+[project.urls]
+Repository = "https://github.com/DiUS/python-powersensor_local.git"
+Homepage = "https://github.com/DiUS/python-powersensor_local"
+Issues = "https://github.com/DiUS/python-powersensor_local/issues"
+
+[project.scripts]
+ps-events = "powersensor_local.events:app"
+ps-rawplug = "powersensor_local.rawplug:app"
+ps-plugevents = "powersensor_local.plugevents:app"
+
+[build-system]
+requires = [ "hatchling" ]
+build-backend = "hatchling.build"
