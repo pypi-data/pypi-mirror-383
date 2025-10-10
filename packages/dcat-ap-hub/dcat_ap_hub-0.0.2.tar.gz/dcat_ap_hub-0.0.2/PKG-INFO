@@ -1,0 +1,58 @@
+Metadata-Version: 2.4
+Name: dcat-ap-hub
+Version: 0.0.2
+Summary: Add your description here
+Author-email: maxbrzr <maximilian.burzer@kit.edu>
+License-File: LICENSE
+Requires-Python: >=3.11
+Requires-Dist: beautifulsoup4>=4.13.5
+Requires-Dist: ipykernel>=6.30.0
+Requires-Dist: opencv-python>=4.12.0.88
+Requires-Dist: pandas-stubs>=2.3.0.250703
+Requires-Dist: pandas>=2.3.1
+Requires-Dist: pypdf>=6.1.0
+Requires-Dist: rdflib>=7.1.4
+Requires-Dist: requests>=2.32.4
+Requires-Dist: tqdm>=4.67.1
+Requires-Dist: types-requests>=2.32.4.20250611
+Requires-Dist: types-tqdm>=4.67.0.20250516
+Description-Content-Type: text/markdown
+
+# DCAT-AP Hub
+
+This library enables easy downloading and loading of datasets whose metadata is provided in the DCAT-AP format. Currently, only JSON-LD is supported.
+
+### How To Install
+
+<!-- ```bash
+pip install git+https://github.com/maxbrzr/dcat-ap-hub.git
+``` -->
+
+```bash
+pip install dcat-ap-hub
+```
+
+### How To Download & Load Data
+
+```python
+from dcat_ap_hub import download_data, load_data
+
+url = "https://ki-daten.hlrs.de/hub/repo/datasets/dcc5faea-10fd-430b-944b-4ac03383ca9f~~1.jsonld"
+
+dataset_dir = download_data(url, base_dir="../datasets")
+data = load_data(dataset_dir, summarize=True, lazy=True)
+```
+
+### Funding
+
+This project is funded by the European High Performance Computing Joint Undertaking under Grant Agreement No. 101234027.
+
+<!-- ### With Custom Parsing
+
+```python
+from dcat_ap_hub import download_data, apply_parsing
+
+json_ld_metadata = "http://localhost:8081/datasets/uci-har.jsonld"
+metadata = download_data(json_ld_metadata)
+df = apply_parsing(metadata)
+``` -->
