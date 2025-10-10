@@ -1,0 +1,7 @@
+[console_scripts]
+homodyne = homodyne.cli.run_homodyne:main
+homodyne-config = homodyne.cli.create_config:main
+homodyne-import-analyzer = homodyne.tests.import_analyzer:main
+homodyne-imports = homodyne.cli.import_manager:main
+homodyne-test = homodyne.tests.test_runner:main
+homodyne-workflow-setup = homodyne.tests.import_workflow_integrator:main
