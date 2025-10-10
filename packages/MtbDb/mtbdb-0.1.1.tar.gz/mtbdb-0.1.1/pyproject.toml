@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "MtbDb"
+version = "0.1.1"
+authors = [{ name = "HengyuZhou", email = "zhouhengyu23@mails.ucas.ac.cn" }]
+description = "MtbDb: Genomics Database Toolkit for Mycobacterium Tuberculosis."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "intervaltree>=3.0.2",
+    "numpy>=1.20.0",
+    "pandas>=1.2.0",
+    "scipy>=1.6.0",
+    "statsmodels>=0.12.0",
+]
+
+[project.optional-dependencies]
+# ==================================================================================
+# 外部生物信息学工具依赖说明
+# ==================================================================================
+#
+# 注意：以下工具是系统二进制程序，无法通过pip安装
+# 这些工具对于FASTA/FASTQ到VCF转换功能是必需的
+#
+# 【推荐安装方式 - 使用Conda】
+# ---------------------------------
+# Conda可以自动管理所有Python包和二进制工具依赖，这是最简单的方式：
+#
+#   1. 使用项目提供的环境配置（推荐）：
+#      conda env create -f environment.yml
+#      conda activate mtbdb
+#
+#   2. 或手动安装：
+#      conda install -c bioconda mummer bwa samtools varscan fastp sra-tools
+#
+# 【其他安装方式】
+# ---------------------------------
+# Homebrew (macOS):
+#   brew install brewsci/bio/mummer bwa samtools fastp
+#   # varscan需单独下载JAR文件
+#
+# 源码编译：
+#   请参考各工具官方文档
+#
+# 【必需工具列表】
+# ---------------------------------
+# FASTA转VCF工具（MUMmer套件）：
+#   - nucmer: 全基因组比对
+#   - delta-filter: 过滤比对结果
+#   - show-snps: 提取SNP位点
+#
+# FASTQ转VCF工具（NGS分析流程）：
+#   - bwa: 短reads比对
+#   - samtools: SAM/BAM文件处理
+#   - varscan: 变异检测
+#   - fastp: 质量控制
+#   - fastq-dump: SRA文件解压（可选，来自sra-tools）
+#
+# 【验证安装】
+# ---------------------------------
+# 安装完成后，运行以下命令检查依赖：
+#   python -c "from mtbdb.tbva import check_all_dependencies; check_all_dependencies()"
+#
+# ==================================================================================
+bioinformatics = []
+
+[tool.setuptools.package-data]
+"mtbdb" = [
+    "data/*.json",
+    "data/reference/*"
+]
+[tool.setuptools]
+include-package-data = true
+
+[project.urls]
+Homepage = "https://github.com/16627517673/mtbdb"
