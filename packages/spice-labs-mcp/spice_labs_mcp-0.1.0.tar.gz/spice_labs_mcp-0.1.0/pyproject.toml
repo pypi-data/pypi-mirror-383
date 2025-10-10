@@ -1,0 +1,11 @@
+[project]
+name = "spice-labs-mcp"
+version = "0.1.0"
+description = "The MCP server from Spice Labs to expand on the usability of our tools"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.12.2",
+    "requests>=2.32.4",
+]
