@@ -1,0 +1,317 @@
+# Quillmark MCP Server
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![MCP](https://img.shields.io/badge/MCP-compatible-green.svg)](https://modelcontextprotocol.io/)
+
+A Model Context Protocol (MCP) server that exposes Quillmark's document rendering capabilities to AI models and MCP clients.
+
+## Overview
+
+The Quillmark MCP server enables AI assistants to:
+- Discover available document templates (Quills)
+- Understand template requirements and frontmatter schemas
+- Validate document frontmatter before rendering
+- Render markdown documents to PDF or SVG formats
+- Receive rich error diagnostics to help users fix issues
+
+## Installation
+
+Run with uvx (recommended):
+```bash
+uvx quillmark-mcp
+```
+
+```bash
+# Using uv (recommended)
+uv pip install quillmark-mcp
+
+# Using pip
+pip install quillmark-mcp
+```
+
+## Quick Start
+
+### Running the Server
+
+```bash
+# Run using Python module
+python -m quillmark_mcp
+
+# Or using uv
+uvx quillmark-mcp
+```
+
+### MCP Client Configuration
+
+Add to your MCP client configuration (e.g., Claude Desktop):
+
+```json
+{
+  "mcpServers": {
+    "quillmark": {
+      "command": "python",
+      "args": ["-m", "quillmark_mcp"]
+    }
+  }
+}
+```
+
+## Available Tools
+
+### 1. `list_quills`
+
+List all registered Quill templates with metadata.
+
+```json
+{}
+```
+
+Returns:
+```json
+{
+  "quills": [
+    {
+      "name": "taro",
+      "backend": "typst",
+      "description": "",
+      "tags": []
+    },
+    {
+      "name": "usaf_memo",
+      "backend": "typst",
+      "description": "",
+      "tags": []
+    }
+  ]
+}
+```
+
+### 2. `get_quill_info`
+
+Get detailed information about a specific Quill template.
+
+```json
+{
+  "quill_name": "taro"
+}
+```
+
+Returns frontmatter schema, required fields, and the example markdown content.
+
+### 3. `get_markdown_template`
+
+Get markdown template content by template name from the templates collection.
+
+```json
+{
+  "template_name": "U.S. Air Force Memo"
+}
+```
+
+Returns the markdown content of the specified template from `list_markdown_templates`.
+
+### 4. `list_markdown_templates`
+
+List available markdown templates from the templates.json manifest.
+
+```json
+{}
+```
+
+Returns:
+```json
+{
+  "templates": [
+    {
+      "name": "U.S. Air Force Memo",
+      "description": "AFH 33-337 compliant official memorandum for the U.S. Air Force."
+    },
+    {
+      "name": "U.S. Space Force Memo",
+      "description": "Official memorandum template for the U.S. Space Force."
+    }
+  ]
+}
+```
+
+### 5. `render_document`
+
+Render a markdown document to PDF or SVG.
+
+```json
+{
+  "markdown": "---\nQUILL: taro\nauthor: John\nice_cream: Taro\ntitle: My Favorite\n...",
+  "output_format": "PDF"
+}
+```
+
+The `quill_name` parameter is optional if the markdown contains a `QUILL:` directive in the frontmatter.
+
+### 6. `validate_frontmatter`
+
+Validate frontmatter without rendering.
+
+```json
+{
+  "markdown": "---\nQUILL: taro\nauthor: John\n..."
+}
+```
+
+Returns validation status and any missing required fields.
+
+## Usage Examples
+
+### AI-Assisted Document Writing
+
+**User:** "Help me create a document using the taro template"
+
+**AI Workflow:**
+1. Call `list_quills()` to discover available quill templates
+2. Call `get_quill_info("taro")` to learn requirements and get the example markdown
+3. Generate markdown based on user's input
+4. Call `validate_frontmatter()` to check correctness
+5. Call `render_document()` to produce the final PDF
+
+**Note:** For general-purpose templates like "U.S. Air Force Memo", use:
+1. Call `list_markdown_templates()` to discover available templates
+2. Call `get_markdown_template("U.S. Air Force Memo")` to get the template content
+3. Modify the template for the specific use case
+4. Call `render_document()` to produce the final PDF
+
+### Error Handling
+
+The server provides rich diagnostics when errors occur:
+
+```json
+{
+  "success": false,
+  "error_type": "ValidationError",
+  "error_message": "Required fields missing",
+  "diagnostics": [
+    {
+      "severity": "ERROR",
+      "message": "Required field 'recipient' is missing",
+      "code": "missing_field",
+      "hint": "Add 'recipient: <value>' to your frontmatter"
+    }
+  ]
+}
+```
+
+## Extended YAML Metadata Standard
+
+Quillmark supports structured content with the Extended YAML Metadata Standard:
+
+- **QUILL key**: Specifies which template to use
+- **SCOPE key**: Creates collections of content blocks
+
+Example:
+```markdown
+---
+title: Product Catalog
+---
+
+Main description.
+
+---
+SCOPE: products
+name: Widget
+price: 19.99
+---
+
+Widget description.
+
+---
+SCOPE: products
+name: Gadget
+price: 29.99
+---
+
+Gadget description.
+```
+
+## Architecture
+
+```
+┌──────────────────────────────┐
+│       AI Model / Client      │
+│    (via MCP protocol)        │
+└──────────────┬───────────────┘
+               │ MCP JSON-RPC
+               ▼
+┌──────────────────────────────┐
+│     Quillmark MCP Server     │
+│  - list_quills               │
+│  - get_quill_info            │
+│  - get_quill_template        │
+│  - render_document           │
+│  - validate_frontmatter      │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│    Quillmark Engine          │
+│  (Python package)            │
+└──────────────────────────────┘
+```
+
+## Design Principles
+
+1. **MCP-Native**: Follows MCP protocol specifications
+2. **Rich Diagnostics**: Provides helpful error messages with hints
+3. **Stateless**: Each tool call is independent
+4. **JSON-Based**: All data exchanged via JSON for compatibility
+
+## Development
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/nibsbin/quillmark-mcp.git
+cd quillmark-mcp
+
+# Install dependencies
+uv pip install -e ".[dev]"
+```
+
+### Testing
+
+```bash
+# Run tests
+pytest
+
+# Run type checking
+mypy src/quillmark_mcp
+
+# Run linting
+ruff check src/quillmark_mcp
+```
+
+## Security Considerations
+
+- **Input Validation**: Markdown size limits, YAML depth limits
+- **Output Safety**: Binary outputs are base64-encoded
+- **Read-Only**: All MCP tools are read-only operations
+- **Sandboxing**: Consider running rendering in isolated environment
+
+## License
+
+See LICENSE file for details.
+
+## References
+
+- [MCP Specification](https://spec.modelcontextprotocol.io/)
+- [Quillmark Documentation](https://github.com/nibsbin/quillmark)
+- [Design Document](designs/OVERALL.md)
+
+## Contributing
+
+Contributions are welcome! Please see CONTRIBUTING.md for guidelines.
+
+## Status
+
+**Version**: 0.1.0  
+**Status**: Implementation Phase  
+**Python**: 3.10+  
+**Protocol**: Model Context Protocol (MCP)
