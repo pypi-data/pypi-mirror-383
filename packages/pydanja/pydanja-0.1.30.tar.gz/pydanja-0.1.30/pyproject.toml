@@ -1,0 +1,50 @@
+[project]
+name = "pydanja"
+version = "0.1.30"
+description = "JSON:API Support for Pydantic"
+authors = [
+    {name = "Chris Read",email = "centurix@gmail.com"},
+]
+dependencies = [
+    "dpath>=2.1.6",
+    "pydantic>=2.10.2",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["pydantic", "jsonapi", "json:api", "openapi", "fastapi"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Topic :: File Formats :: JSON",
+    "Topic :: File Formats :: JSON :: JSON Schema",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries"
+]
+
+[project.urls]
+homepage = "https://github.com/Centurix/pydanja"
+repository = "https://github.com/Centurix/pydanja"
+documentation = "https://pydanja.readthedocs.io/en/latest/"
+
+[tool.ty.src]
+exclude = ["src/examples", "tests"]
+
+[tool.ruff]
+line-length = 119
+
+[tool.setuptools]
+license-files = []
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4.0",
+    "sphinx>=7.1.2",
+    "ruff>=0.8.1",
+]
