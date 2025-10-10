@@ -1,0 +1,162 @@
+#  Copyright 2022 The HuggingFace Team. All rights reserved.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+[build-system]
+requires = ["setuptools==69.5.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optimum-neuron"
+dynamic = ["version"]
+description = "Optimum Neuron serves as the bridge between Hugging Face libraries, such as Transformers, Diffusers, and PEFT, and AWS Trainium and Inferentia accelerators. It provides a set of tools enabling easy model loading, training, and inference on both single and multiple Neuron core configurations, across a wide range of downstream tasks."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "HuggingFace Inc. Special Ops Team", email = "hardware@huggingface.co"},
+]
+keywords = ["transformers", "diffusers", "mixed-precision training", "fine-tuning", "inference", "trainium", "inferentia", "aws"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "transformers ~= 4.55.4",
+    "accelerate == 1.8.1",
+    "optimum ~= 1.24.0",
+    "huggingface_hub >= 0.29.0",
+    "numpy>=1.22.2, <=1.26.4",
+    "protobuf>=3.20.3, <4",
+]
+
+[project.urls]
+Homepage = "https://huggingface.co/docs/optimum-neuron/index"
+
+[project.optional-dependencies]
+tests = [
+    "pytest <= 8.0.0",
+    "pytest-rerunfailures",
+    "cloudpickle",
+    "pytest-timeout",
+    "pytest-forked",
+    "psutil",
+    "parameterized",
+    "GitPython",
+    "sentencepiece",
+    "datasets",
+    "sacremoses",
+    "safetensors",
+    "sentence-transformers >= 2.2.0",
+    "rjieba",
+    "soundfile",
+    "librosa",
+    "controlnet-aux",
+    "hf_transfer",
+]
+quality = [
+    "pre-commit",
+    "ruff==0.13.0",
+    "isort",
+]
+training = [
+    "trl == 0.11.4",
+    "peft == 0.17.0",
+    "evaluate == 0.4.3",
+]
+neuron = [
+    "wheel",
+    "torch-neuron==1.13.1.2.9.74.0",
+    "torch==1.13.1.*",
+    "neuron-cc[tensorflow]==1.22.0.0",
+    "protobuf",
+    "torchvision",
+    "numpy==1.22.3",
+]
+neuronx = [
+    "wheel",
+    "neuronx-cc==2.21.18209.0",
+    "torch-neuronx==2.8.0.2.10.13553",
+    "torch==2.8.0.*",
+    "torchvision==0.23.*",
+    "neuronx_distributed==0.15.22404",
+    "libneuronxla==2.2.12677.0",
+]
+diffusers = [
+    "diffusers==0.35.*",
+    "peft==0.17.0",
+]
+diffusers-tests = [
+    "compel==2.1.1",
+]
+sentence-transformers = [
+    "sentence-transformers >= 2.2.0",
+]
+vllm = [
+    "vllm == 0.10.2",
+]
+vllm-tests = [
+    "docker",
+    "pytest-asyncio",
+    "openai",
+]
+
+[project.scripts]
+optimum-cli = "optimum.commands.optimum_cli:main"
+neuron_parallel_compile = "optimum.neuron.utils.neuron_parallel_compile:main"
+
+[project.entry-points."vllm.platform_plugins"]
+optimum_neuron = "optimum.neuron.vllm.plugin:register"
+
+[tool.setuptools.dynamic]
+version = {attr = "optimum.neuron.version.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["optimum*"]
+
+[tool.setuptools.package-data]
+"*" = ["*"]
+
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+# Never enforce `E501` (line length violations).
+ignore = ["C901", "E501", "E741", "W605"]
+select = ["C", "E", "F", "I", "W"]
+exclude = ["*.ipynb"]
+
+[tool.ruff.format]
+exclude = ["*.ipynb"]
+
+# Ignore import violations in all `__init__.py` files.
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401", "F403", "F811"]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+known-first-party = ["optimum.neuron"]
+
+[tool.pytest.ini_options]
+markers = [
+    "is_staging_test",
+    "is_trainium_test",
+    "is_inferentia_test",
+    "neuron_parallel_compile",
+    "flagship_model",
+]
