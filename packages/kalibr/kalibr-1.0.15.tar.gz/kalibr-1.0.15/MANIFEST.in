@@ -1,0 +1,5 @@
+include README.md
+include LICENSE.txt
+include KALIBR_SDK_COMPLETE.md
+recursive-include examples *.py
+global-exclude __pycache__ *.py[cod] .DS_Store
