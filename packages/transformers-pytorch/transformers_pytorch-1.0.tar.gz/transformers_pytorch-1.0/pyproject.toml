@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "transformers-pytorch"
+version = "1.0"
+description = "Transformers in Pytorch"
+authors = [
+  { name = "Richard Hsieh", email = "rzhsieh@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+keywords = [
+  'artificial intelligence',
+  'transformers'
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License", # Change if you use a different license
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+  'torch>=2.0',
+]
+
+[project.urls]
+Homepage = "https://pypi.org/project/transformers-pytorch/"
+Repository = "https://github.com/richsi/transformers-pytorch"
+
+[project.optional-dependencies]
+test = [
+  "pytest",
+]
