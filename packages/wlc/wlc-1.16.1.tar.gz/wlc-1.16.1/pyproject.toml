@@ -1,0 +1,167 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=78.0.2"]
+
+[project]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Internationalization",
+  "Topic :: Software Development :: Localization",
+  "Topic :: Utilities"
+]
+dependencies = [
+  "argcomplete",
+  "python-dateutil",
+  "pyxdg",
+  "requests>=2.25.0",
+  "urllib3>=1.26"
+]
+description = "A command-line utility for Weblate, translation tool with tight version control integration"
+dynamic = ["version"]
+keywords = [
+  "i18n",
+  "l10n",
+  "gettext",
+  "git",
+  "mercurial",
+  "translate"
+]
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+name = "wlc"
+requires-python = ">=3.10"
+
+[[project.authors]]
+email = "michal@weblate.org"
+name = "Michal Čihař"
+
+[project.optional-dependencies]
+lint = ["pre-commit==4.3.0"]
+test = [
+  "pytest-cov==7.0.0",
+  "pytest-github-actions-annotate-failures==0.3.0",
+  "pytest==8.4.2",
+  "responses==0.25.8"
+]
+types = [
+  "mypy==1.18.2",
+  "types-python-dateutil==2.9.0.20251008",
+  "types-requests==2.32.4.20250913"
+]
+
+[project.readme]
+content-type = "text/markdown"
+file = "README.md"
+
+[project.scripts]
+wlc = "wlc.main:main"
+
+[project.urls]
+Documentation = "https://docs.weblate.org/"
+Download = "https://github.com/WeblateOrg/wlc"
+Funding = "https://weblate.org/donate/"
+Homepage = "https://weblate.org/"
+"Issue Tracker" = "https://github.com/WeblateOrg/wlc/issues"
+"Source Code" = "https://github.com/WeblateOrg/wlc"
+Twitter = "https://twitter.com/WeblateOrg"
+
+[tool.check-manifest]
+ignore = [
+  ".dockerignore",
+  "Dockerfile",
+  ".well-known/*",
+  ".editorconfig",
+  "*.toml",
+  "*.yaml",
+  "*.yml"
+]
+
+[tool.check-wheel-contents]
+ignore = [
+  "W002"  # Triggered by API mocks
+]
+
+[tool.coverage.paths]
+source = [
+  "."
+]
+
+[tool.coverage.report]
+exclude_also = [
+  "@(abc\\.)?abstractmethod",
+  # Don't complain about missing debug-only code:
+  "def __repr__",
+  # Don't complain if non-runnable code isn't run:
+  "if 0:",
+  "if __name__ == .__main__.:",
+  "if self\\.debug",
+  # Type checking
+  "if TYPE_CHECKING:",
+  # Have to re-enable the standard pragma
+  "pragma: no cover",
+  # Don't complain if tests don't hit defensive assertion code:
+  "raise AssertionError",
+  "raise NotImplementedError"
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+target-version = "py38"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+ignore = [
+  "D10",  # TODO: we are missing many docstrings
+  "D203",  # CONFIG: incompatible with D211
+  "D212",  # CONFIG: incompatible with D213
+  "D401",  # TODO: many strings need rephrasing
+  "T201",  # WONTFIX: using print() (maybe add noqa)
+  "TRY003",  # WONTFIX: Avoid specifying long messages outside the exception class
+  "PLR0913",  # WONTFIX: Too many arguments to function call
+  "PLR2004",  # TODO: Magic value used in comparison, consider replacing 201 with a constant variable
+  "COM",  # CONFIG: No trailing commas
+  "PT",  # CONFIG: Not using pytest
+  "PTH",  # TODO: Not using pathlib
+  "EM",  # TODO: Exception strings
+  "FBT",  # TODO: Boolean in function definition
+  "ANN",  # TODO: type annotations
+  "N818"  # TODO: exception naming
+]
+select = ["ALL"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 16
+
+[tool.setuptools]
+include-package-data = true
+platforms = ["any"]
+
+[tool.setuptools.dynamic.version]
+attr = "wlc.__version__"
+
+[tool.setuptools.package-dir]
+wlc = "wlc"
+
+[tool.setuptools.packages.find]
+include = ["wlc*"]
+namespaces = true
+
+[tool.typos.default]
+extend-ignore-re = [
+  "\"shortrevision\": \"[a-f0-9]+\"",
+  "code\": \"[a-z]+\""
+]
