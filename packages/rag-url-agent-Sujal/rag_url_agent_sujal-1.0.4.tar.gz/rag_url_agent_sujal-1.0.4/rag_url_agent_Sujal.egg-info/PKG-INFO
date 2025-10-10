@@ -1,0 +1,47 @@
+Metadata-Version: 2.4
+Name: rag-url-agent-Sujal
+Version: 1.0.4
+Summary: Simple RAG for URLs - 1-line setup, LangChain/LlamaIndex ready
+Author-email: Sujal <sujal@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/sujal/rag-url-agent
+Project-URL: Repository, https://github.com/sujal/rag-url-agent
+Project-URL: Documentation, https://github.com/sujal/rag-url-agent#readme
+Project-URL: Bug Tracker, https://github.com/sujal/rag-url-agent/issues
+Keywords: rag,llm,ai,langchain,llamaindex,url-processing,ollama,machine-learning
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy<2.0.0,>=1.24.0
+Requires-Dist: sentence-transformers<3.0.0,>=2.2.0
+Requires-Dist: faiss-cpu>=1.7.4
+Requires-Dist: requests>=2.31.0
+Requires-Dist: beautifulsoup4>=4.12.0
+Requires-Dist: lxml<6.0.0,>=4.9.0
+Requires-Dist: pypdf>=3.17.0
+Requires-Dist: validators>=0.22.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: psutil>=5.9.0
+Requires-Dist: rich>=13.7.0
+Provides-Extra: langchain
+Requires-Dist: langchain>=0.1.0; extra == "langchain"
+Requires-Dist: langchain-community>=0.0.1; extra == "langchain"
+Provides-Extra: llamaindex
+Requires-Dist: llama-index>=0.9.0; extra == "llamaindex"
+Provides-Extra: all
+Requires-Dist: langchain>=0.1.0; extra == "all"
+Requires-Dist: llama-index>=0.9.0; extra == "all"
+Requires-Dist: openai>=1.0.0; extra == "all"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: black>=23.12.0; extra == "dev"
+Requires-Dist: build>=1.0.0; extra == "dev"
+Requires-Dist: twine>=4.0.0; extra == "dev"
