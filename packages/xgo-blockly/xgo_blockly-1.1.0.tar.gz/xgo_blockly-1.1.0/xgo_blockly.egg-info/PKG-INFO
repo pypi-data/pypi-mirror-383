@@ -1,0 +1,91 @@
+Metadata-Version: 2.4
+Name: xgo-blockly
+Version: 1.1.0
+Summary: XGO Blockly - 图形化编程Web服务器
+Home-page: https://github.com/xgo-robotics/xgo-blockly
+Author: XGO Team
+Author-email: XGO Team <support@xgo.com>
+License: MIT
+Project-URL: Homepage, https://github.com/xgo-robotics/xgo-blockly
+Project-URL: Bug Reports, https://github.com/xgo-robotics/xgo-blockly/issues
+Project-URL: Source, https://github.com/xgo-robotics/xgo-blockly
+Project-URL: Documentation, https://docs.xgo.com/
+Keywords: xgo,robot,blockly,programming,education
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Education
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Framework :: Flask
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: flask>=2.3.0
+Requires-Dist: flask-cors>=4.0.0
+Requires-Dist: psutil>=5.9.0
+Requires-Dist: xgo-pythonlib
+Requires-Dist: agentscope
+Requires-Dist: mem0ai==0.1.113
+Requires-Dist: protobuf<5,>=4.25.3
+Requires-Dist: pyserial
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
+# XGO Blockly 图形化编程服务器
+
+## 简介
+
+XGO Blockly 是专为陆吾机器人系列设计的图形化编程和AI编程服务器。通过简单的安装和启动，您可以在电脑浏览器中进行图形化编程，控制您的陆吾机器人。
+
+## 安装要求
+
+该 pip 包需要安装在陆吾机器人系列的树莓派机器上。
+
+## 安装步骤
+
+1. **进入指定目录**
+   ```bash
+   cd /home/pi/RaspberryPi-CM5/
+   ```
+
+2. **激活虚拟环境**
+   ```bash
+   source xgovenv/bin/activate
+   ```
+
+3. **安装 xgo-blockly 包**
+   ```bash
+   pip install xgo-blockly
+   ```
+
+## 启动服务
+
+安装成功后，运行以下命令启动图形化编程和AI编程服务器：
+
+```bash
+xgo-blockly
+```
+
+## 使用方法
+
+服务器启动后，在电脑上打开浏览器，访问树莓派的IP地址即可开始图形化编程和AI编程。
+
+## 功能特性
+
+- 🎯 **图形化编程**：拖拽式编程界面，简单易用
+- 🤖 **AI编程辅助**：智能代码生成和优化建议
+- 🔗 **实时控制**：直接控制陆吾机器人硬件
+- 🌐 **Web界面**：跨平台浏览器访问
+- 📱 **响应式设计**：支持电脑、平板等设备
+
+## 技术支持
+
+如有问题或需要技术支持，请联系陆吾机器人技术团队。
