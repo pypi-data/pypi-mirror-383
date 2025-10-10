@@ -1,0 +1,11 @@
+prune doc
+prune assets
+include COPYING
+include README.md
+include pyproject.toml
+include .flake8
+include *.ini
+recursive-include lowatt_enedis *.wsdl
+recursive-include lowatt_enedis *.xsd
+recursive-include test/data *.xml *.yaml
+recursive-include test *.py
