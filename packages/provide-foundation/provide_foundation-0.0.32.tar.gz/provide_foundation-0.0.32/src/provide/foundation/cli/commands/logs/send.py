@@ -1,0 +1,160 @@
+from __future__ import annotations
+
+import sys
+from typing import Any
+
+from provide.foundation.cli.deps import click
+from provide.foundation.cli.helpers import (
+    build_attributes_from_args,
+    get_message_from_stdin,
+    requires_click,
+)
+from provide.foundation.cli.shutdown import with_cleanup
+from provide.foundation.logger import get_logger
+from provide.foundation.process import exit_error, exit_success
+
+"""Send logs command for Foundation CLI."""
+
+log = get_logger(__name__)
+
+
+def _get_message_from_input(message: str | None) -> tuple[str | None, int]:
+    """Get message from argument or stdin. Returns (message, error_code)."""
+    if message:
+        return message, 0
+
+    # Try to read from stdin using shared helper
+    stdin_message, error_code = get_message_from_stdin()
+
+    # If stdin is TTY (no piped input), show helpful error
+    if error_code != 0 and sys.stdin.isatty():
+        click.echo("Error: No message provided. Use -m or pipe input.", err=True)
+
+    return stdin_message, error_code
+
+
+def _send_log_entry(
+    message: str,
+    level: str,
+    service: str | None,
+    attributes: dict[str, Any],
+    trace_id: str | None,
+    span_id: str | None,
+) -> int:
+    """Send the log entry using appropriate method."""
+    try:
+        from provide.foundation.integrations.openobserve.otlp import send_log
+    except ImportError:
+        # Fall back to package-level import for testing compatibility
+        from provide.foundation.integrations.openobserve import send_log
+
+    try:
+        # Send via OTLP (only supported method)
+        send_log(
+            message=message,
+            level=level,
+            service_name=service,
+            attributes=attributes,
+            trace_id=trace_id,
+            span_id=span_id,
+        )
+        click.echo("✓ Log sent via OTLP")
+        return 0
+    except Exception as e:
+        click.echo(f"✗ Failed to send log: {e}", err=True)
+        return 1
+
+
+@click.command("send")
+@click.option(
+    "--message",
+    "-m",
+    help="Log message to send (reads from stdin if not provided)",
+)
+@click.option(
+    "--level",
+    "-l",
+    type=click.Choice(["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]),
+    default="INFO",
+    help="Log level",
+)
+@click.option(
+    "--service",
+    "-s",
+    help="Service name (uses config default if not provided)",
+)
+@click.option(
+    "--json",
+    "-j",
+    "json_attrs",
+    help="Additional attributes as JSON",
+)
+@click.option(
+    "--attr",
+    "-a",
+    multiple=True,
+    help="Additional attributes as key=value pairs",
+)
+@click.option(
+    "--trace-id",
+    help="Explicit trace ID to use",
+)
+@click.option(
+    "--span-id",
+    help="Explicit span ID to use",
+)
+@click.pass_context
+@requires_click
+@with_cleanup
+def send_command(
+    ctx: click.Context,
+    message: str | None,
+    level: str,
+    service: str | None,
+    json_attrs: str | None,
+    attr: tuple[str, ...],
+    trace_id: str | None,
+    span_id: str | None,
+) -> int | None:
+    """Send a log entry to OpenObserve.
+
+    Examples:
+        # Send a simple log
+        foundation logs send -m "User logged in" -l INFO
+
+        # Send with attributes
+        foundation logs send -m "Payment processed" --attr user_id=123 --attr amount=99.99
+
+        # Send from stdin
+        echo "Application started" | foundation logs send -l INFO
+
+        # Send with JSON attributes
+        foundation logs send -m "Error occurred" -j '{"error_code": 500, "path": "/api/users"}'
+
+    """
+    # Get message from input
+    final_message, error_code = _get_message_from_input(message)
+    if error_code != 0:
+        exit_error("No message provided", code=error_code)
+
+    # Build attributes using shared helper
+    attributes, error_code = build_attributes_from_args(json_attrs, attr)
+    if error_code != 0:
+        exit_error("Invalid attributes", code=error_code)
+
+    # Send the log entry
+    result = _send_log_entry(
+        final_message,  # type: ignore[arg-type]
+        level,
+        service,
+        attributes,
+        trace_id,
+        span_id,
+    )
+
+    if result == 0:
+        exit_success()
+    else:
+        exit_error("Failed to send log", code=result)
+
+    return None
