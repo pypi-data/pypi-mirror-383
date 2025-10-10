@@ -1,0 +1,10 @@
+include MANIFEST.in file contents:
+
+include README.md
+include CHANGELOG.md
+include LICENSE
+include docs/*
+include tests/*
+recursive-include src/spark_pipelines *.py
+exclude *.pyc
+exclude __pycache__/*

@@ -1,0 +1,19 @@
+[tool]
+name = "spark-pipelines"
+version = "1.6.6"
+description = "A Python package for validating Spark DataFrames against data quality rules."
+authors = "Nilesh Pise"
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/NileshPise/spark_pipelines"
+repository = "https://github.com/NileshPise/spark_pipelines"
+keywords = ["spark", "data quality", "data validation", "data pipelines","pyspark"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
