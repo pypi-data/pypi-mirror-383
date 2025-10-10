@@ -1,0 +1,78 @@
+# Project Name: markdown_example
+
+## Short description here.
+
+### Author: Jason Krist
+
+### Date: Sept 18th, 2023
+
+## Description
+
+Long project description here.
+
+## Install
+
+```
+pip install packagename
+```
+
+## Usage
+
+### Convert README to HTML
+
+* Use following command:
+    * pandoc markdown_file_name.md -f markdown -t html -s -o html_file_name.html
+
+### Hyperlinks
+
+* Put text in brackets and link in parenthesis after, i.e. \[text\]\(link\)
+[Markdown Basic Syntax](https://www.markdownguide.org/basic-syntax/)
+[Markdown Extended Syntax](https://www.markdownguide.org/extended-syntax/)
+
+### Bullets
+
+* Use star * and a space after
+* Use 4 spaces before for sub-bullets
+* bullet 1
+    * sub-bullet 1
+* bullet 2
+
+### Tables
+
+* Use hyphens under headers and pipes between columns
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+### Code Blocks
+
+* Use 3 backticks ` before and after code
+
+```
+print("copy my code here")
+
+```
+
+## Other Sub-Heading
+
+### Command Line Usage
+
+### Python In-Line Usage
+
+## Read The Docs
+
+Download "docs" folder or [check preview](https://htmlpreview.github.io/?https://github.com/jkrist2696/cleandoc/blob/main/docs/index.html).
+
+## Contributing
+
+Message me on Github.
+
+## License
+
+[GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
+
+## Copyright:
+
+(c) 2023, Jason Krist
