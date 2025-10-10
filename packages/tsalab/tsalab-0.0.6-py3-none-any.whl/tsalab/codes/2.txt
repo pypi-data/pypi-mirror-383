@@ -1,0 +1,153 @@
+CORPUS = [
+    "I love playing football",
+    "Football is a great sport",
+    "I also love watching cricket",
+    "Cricket and football are popular games"
+]
+
+new_doc = ["Football and cricket are exciting to watch"]
+
+from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
+
+def bow_extractor(corpus, ngram_range=(1,1)):
+    vectorizer = CountVectorizer(min_df=1, ngram_range=ngram_range)
+    features = vectorizer.fit_transform(corpus)
+    return vectorizer, features
+
+def display_features(features, feature_names):
+    df = pd.DataFrame(data=features, columns=feature_names)
+    print(df)
+
+bow_vectorizer, bow_features = bow_extractor(CORPUS)
+features = bow_features.todense()
+
+feature_names = bow_vectorizer.get_feature_names_out()
+display_features(features, feature_names)
+
+new_doc_features = bow_vectorizer.transform(new_doc).todense()
+display_features(new_doc_features, feature_names)
+
+# Second corpus for TF-IDF
+CORPUS = [
+    "Data science is fun",
+    "Machine learning is a part of data science",
+    "Python is popular for machine learning",
+    "I love learning new data techniques"
+]
+
+new_doc = ["Python makes data science easier"]
+
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+import pandas as pd
+import numpy as np
+
+def bow_extractor(corpus, ngram_range=(1,1)):
+    vectorizer = CountVectorizer(min_df=1, ngram_range=ngram_range)
+    features = vectorizer.fit_transform(corpus)
+    return vectorizer, features
+
+def tfidf_transformer(bow_matrix):
+    transformer = TfidfTransformer(norm='l2', smooth_idf=True, use_idf=True)
+    tfidf_matrix = transformer.fit_transform(bow_matrix)
+    return transformer, tfidf_matrix
+
+def display_features(features, feature_names):
+    df = pd.DataFrame(data=features, columns=feature_names)
+    print(df)
+
+bow_vectorizer, bow_features = bow_extractor(CORPUS)
+feature_names = bow_vectorizer.get_feature_names_out()
+
+tfidf_trans, tfidf_features = tfidf_transformer(bow_features)
+features = np.round(tfidf_features.todense(), 2)
+
+print("TF-IDF Features for Training Corpus:")
+display_features(features, feature_names)
+
+new_doc_features = bow_vectorizer.transform(new_doc)
+nd_tfidf = tfidf_trans.transform(new_doc_features)
+nd_features = np.round(nd_tfidf.todense(), 2)
+
+print("\nTF-IDF Features for New Document:")
+display_features(nd_features, feature_names)
+
+# Package installation commands (commented out since they're already installed)
+# !python -m pip install --upgrade pip wheel setuptools
+# !python -m pip install "numpy>=2.3.3"
+# !python -m pip install gensim
+# !pip install --upgrade pip
+# !pip install --upgrade numpy
+# !pip install gensim
+# pip install --upgrade gensim
+
+# Word2Vec implementation
+import nltk
+import gensim
+
+# Your corpus
+CORPUS = [
+    "Data science is fun",
+    "Machine learning is a part of data science",
+    "Python is popular for machine learning",
+    "I love learning new data techniques"
+]
+
+new_doc = ["Machine learning improves data analysis"]
+
+# Tokenize
+TOKENIZED_CORPUS = [nltk.word_tokenize(sentence) for sentence in CORPUS]
+tokenized_new_doc = [nltk.word_tokenize(sentence) for sentence in new_doc]
+
+# Train Word2Vec model
+model = gensim.models.Word2Vec(
+    TOKENIZED_CORPUS,
+    vector_size=10,
+    window=10,
+    min_count=2,
+    sample=1e-3
+)
+
+print("Model vocabulary:", model.wv.index_to_key)
+
+# Word vector averaging functions
+import numpy as np
+
+def average_word_vectors(words, model, vocabulary, num_features):
+    feature_vector = np.zeros((num_features,), dtype="float64")
+    nwords = 0.
+    for word in words:
+        if word in vocabulary:
+            nwords += 1.
+            feature_vector = np.add(feature_vector, model.wv[word])
+    if nwords:
+        feature_vector = np.divide(feature_vector, nwords)
+    return feature_vector
+
+def averaged_word_vectorizer(corpus, model, num_features):
+    vocabulary = set(model.wv.index_to_key)
+    features = [average_word_vectors(sentence, model, vocabulary, num_features)
+                for sentence in corpus]
+    return np.array(features)
+
+# Generate averaged word vector features
+avg_word_vec_features = averaged_word_vectorizer(
+    corpus=TOKENIZED_CORPUS,
+    model=model,
+    num_features=10
+)
+
+nd_avg_word_vec_features = averaged_word_vectorizer(
+    corpus=tokenized_new_doc,
+    model=model,
+    num_features=10
+)
+
+print("Training Corpus Features:")
+print(np.round(avg_word_vec_features, 3))
+
+print("\nNew Document Features:")
+print(np.round(nd_avg_word_vec_features, 3))
+
+
+
