@@ -1,0 +1,23 @@
+---
+- name: Ensure SSH key exists on remote server
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user }}/.ssh/id_ed25519"
+  register: ssh_key_check
+
+- name: Start containers with Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ deploy_dir }}"
+    state: present
+    build: always
+    remove_orphans: true
+  environment:
+    HOME: "/home/{{ ansible_user }}"
+    DOCKER_BUILDKIT: "1"
+
+- name: Prune unused Docker images and build cache
+  ansible.builtin.command:
+    cmd: "python3 {{ deploy_dir }}/ansible/tasks/docker_prune_once.py"
+  environment:
+    DOCKER_PRUNE_LOCK_FILE: "/tmp/docker_prune.lock"
+  register: prune_cmd
+  changed_when: prune_cmd.stdout is search('\\[docker-prune-once\\] Completed successfully')
