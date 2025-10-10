@@ -1,0 +1,754 @@
+# SemanticScout 🔍
+
+> A powerful semantic code search engine for AI agents, built as an MCP server
+
+[![Tests](https://img.shields.io/badge/tests-172%20passing-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-74%25-yellow)]()
+[![Python](https://img.shields.io/badge/python-3.12-blue)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)]()
+
+SemanticScout is a **Model Context Protocol (MCP) server** that enables AI agents to understand and search codebases using semantic search. It indexes code files, generates embeddings, and provides natural language search capabilities.
+
+## ✨ Features
+
+- 🔍 **Semantic Code Search** - Find code using natural language queries
+- 🌳 **AST-Based Chunking** - Intelligent code splitting that preserves semantic meaning
+- 🌐 **Multi-Language Support** - Python, JavaScript, TypeScript, Java, C++, Go, Rust, C#, and more
+- 🏠 **Local or Cloud Embeddings** - Use Ollama (free, local) or OpenAI (cloud, paid)
+- ⚡ **GPU Acceleration** - Uses your host's Ollama with GPU support automatically
+- 🔒 **Security Built-in** - Path validation, rate limiting, and resource limits
+- 📊 **Progress Reporting** - Real-time feedback during indexing
+- 🤖 **MCP Integration** - Works with Claude Desktop and other MCP clients
+
+## 🚀 Quick Start
+
+**Choose your deployment method:**
+
+- **⚡ [uvx Installation](#uvx-installation-fastest)** - One command, no setup (fastest, recommended)
+- **🐳 [Docker Installation](#docker-installation)** - Isolated, portable, easy to manage
+- **🐍 [Native Python Installation](#native-python-installation)** - Direct installation, full control
+
+---
+
+## ⚡ uvx Installation (Fastest)
+
+The quickest way to get started! No installation, no setup, just run:
+
+### Prerequisites
+
+- **uv** - [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+- **Ollama** (running locally) - [Install Ollama](https://ollama.ai/)
+- **Claude Desktop** (or other MCP client) - [Install Claude Desktop](https://claude.ai/download)
+
+### 1. Setup Ollama
+
+```bash
+# Start Ollama service
+ollama serve
+
+# Pull the embedding model
+ollama pull nomic-embed-text
+```
+
+### 2. Configure Claude Desktop
+
+Add to your Claude Desktop MCP configuration (`%APPDATA%\Claude\claude_desktop_config.json` on Windows or `~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"],
+      "env": {
+        "OLLAMA_BASE_URL": "http://localhost:11434"
+      }
+    }
+  }
+}
+```
+
+**Note:** We specify `--python 3.12` because some dependencies don't yet support Python 3.13. If you only have Python 3.13, install Python 3.12 with `brew install python@3.12` (Mac) or download from [python.org](https://www.python.org/downloads/) (Windows).
+
+**Optional: Custom Data Directory**
+
+By default, uvx stores data in `~/.semanticscout/`. To use a custom location:
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": [
+        "--python", "3.12",
+        "semanticscout@latest",
+        "--data-dir", "/path/to/your/data"
+      ],
+      "env": {
+        "OLLAMA_BASE_URL": "http://localhost:11434"
+      }
+    }
+  }
+}
+```
+
+### 3. Restart Claude Desktop
+
+That's it! SemanticScout will be automatically downloaded and run when Claude needs it.
+
+**✨ Benefits:**
+- ✅ No manual installation
+- ✅ Always uses latest version
+- ✅ Automatic dependency management
+- ✅ Isolated environment per run
+- ✅ Works on Windows, Mac, and Linux
+- ✅ Data stored in `~/.semanticscout/` (or custom location)
+
+---
+
+## 🐳 Docker Installation (Recommended)
+
+### Prerequisites
+
+- **Docker** - [Install Docker](https://docs.docker.com/get-docker/)
+- **Ollama** (running on host) - [Install Ollama](https://ollama.ai/)
+- **Claude Desktop** (or other MCP client) - [Install Claude Desktop](https://claude.ai/download)
+
+### 1. Setup Ollama on Host
+
+Make sure Ollama is running on your host machine:
+
+```bash
+# Start Ollama service
+ollama serve
+
+# Pull the embedding model
+ollama pull nomic-embed-text
+```
+
+**⚡ GPU Acceleration:** If your host has a GPU (NVIDIA/AMD/Apple Silicon), Ollama will automatically detect and use it for 10-100x faster embeddings!
+
+### 2. Build Docker Image
+
+```bash
+# Clone the repository
+git clone https://github.com/Psynosaur/SemanticScout.git
+cd SemanticScout
+
+# Build the Docker image
+docker build -t semanticscout:latest .
+```
+
+### 3. Configure Claude Desktop
+
+Add the MCP server to your Claude Desktop configuration file:
+
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+**Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "OLLAMA_BASE_URL=http://host.docker.internal:11434",
+        "-e", "WORKSPACE_PATH=/workspace",
+        "-v", "C:/git/YourProject:/workspace:ro",
+        "-v", "semanticscout-data:/app/data",
+        "semanticscout:latest"
+      ]
+    }
+  }
+}
+```
+
+**Important Configuration Notes:**
+
+1. **Project Path** (`-v C:/git/YourProject:/workspace:ro`):
+   - Replace `C:/git/YourProject` with the path to the codebase you want to index
+   - The `:ro` makes it read-only for security
+   - On Linux/Mac: use `/home/user/projects/myproject:/workspace:ro`
+
+2. **Data Persistence** (`-v semanticscout-data:/app/data`):
+   - Uses a **Docker named volume** to store vector database and logs
+   - **Data persists even with `--rm` flag** (see explanation below)
+   - Shared across all projects (efficient!)
+   - No need to specify a host path
+
+3. **The `--rm` Flag** (`"run", "-i", "--rm"`):
+   - **Removes the container** when it stops (keeps your system clean)
+   - **Does NOT remove the named volume** - your indexed data is safe!
+   - Prevents "container name already in use" errors
+   - Recommended for MCP usage
+
+4. **For Multiple Projects:**
+   - You can create multiple MCP server entries, one per project:
+   ```json
+   {
+     "mcpServers": {
+       "semanticscout-project1": {
+         "command": "docker",
+         "args": [
+           "run", "-i", "--rm",
+           "-e", "OLLAMA_BASE_URL=http://host.docker.internal:11434",
+           "-v", "C:/git/Project1:/workspace:ro",
+           "-v", "semanticscout-data:/app/data",
+           "semanticscout:latest"
+         ]
+       },
+       "semanticscout-project2": {
+         "command": "docker",
+         "args": [
+           "run", "-i", "--rm",
+           "-e", "OLLAMA_BASE_URL=http://host.docker.internal:11434",
+           "-v", "C:/git/Project2:/workspace:ro",
+           "-v", "semanticscout-data:/app/data",
+           "semanticscout:latest"
+         ]
+       }
+     }
+   }
+   ```
+
+### 4. Restart Claude Desktop
+
+Restart Claude Desktop to load the new MCP server configuration.
+
+### 5. Test the Connection
+
+In Claude Desktop, you should now see the **semanticscout** MCP server available. Try:
+
+```
+Index my codebase at /workspace
+```
+
+Claude will call the `index_codebase` tool and start indexing your project!
+
+---
+
+## 🐍 Native Python Installation
+
+**Prefer to run without Docker?** Follow these steps for a native Python installation.
+
+### Prerequisites
+
+- **Python 3.10+** - [Download Python](https://www.python.org/downloads/)
+- **Ollama** - [Install Ollama](https://ollama.ai/)
+- **Claude Desktop** (or other MCP client) - [Install Claude Desktop](https://claude.ai/download)
+- **Git** - [Install Git](https://git-scm.com/downloads)
+
+### 1. Verify Python Version
+
+```bash
+python --version  # Should be 3.10 or higher
+```
+
+**Windows users:** You might need to use `python` or `py` depending on your installation.
+
+### 2. Setup Ollama
+
+```bash
+# Start Ollama service
+ollama serve
+
+# Pull the embedding model
+ollama pull nomic-embed-text
+```
+
+### 3. Clone and Install
+
+```bash
+# Clone the repository
+git clone https://github.com/Psynosaur/SemanticScout.git
+cd SemanticScout
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+# Windows (CMD):
+.\venv\Scripts\activate.bat
+# Linux/Mac:
+source venv/bin/activate
+
+# Install dependencies
+pip install -e .
+```
+
+### 4. Configure Environment
+
+Create a `.env` file in the project root:
+
+```bash
+# Embedding Provider
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=nomic-embed-text
+
+# Data Storage
+VECTOR_STORE_PATH=./data/chroma_db
+LOG_FILE=./data/logs/mcp_server.log
+
+# Resource Limits
+MAX_FILE_SIZE_MB=10.0
+MAX_CODEBASE_SIZE_GB=10.0
+
+# Logging
+LOG_LEVEL=INFO
+```
+
+**See `.env.example` for all available options.**
+
+### 5. Create Data Directories
+
+```bash
+# Windows (PowerShell):
+New-Item -ItemType Directory -Force -Path data\chroma_db, data\logs
+
+# Linux/Mac:
+mkdir -p data/chroma_db data/logs
+```
+
+### 6. Configure Claude Desktop for Native Mode
+
+Add to your Claude Desktop configuration file:
+
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+**Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "C:/git/SemanticScout/venv/Scripts/semanticscout.exe",
+      "args": [],
+      "env": {
+        "OLLAMA_BASE_URL": "http://localhost:11434",
+        "VECTOR_STORE_PATH": "C:/git/SemanticScout/data/chroma_db",
+        "LOG_FILE": "C:/git/SemanticScout/data/logs/mcp_server.log"
+      }
+    }
+  }
+}
+```
+
+**Important:** Replace `C:/git/SemanticScout` with your actual installation path.
+
+**Platform-specific paths:**
+- **Windows:** `C:/git/SemanticScout/venv/Scripts/semanticscout.exe`
+- **Linux/Mac:** `/home/user/SemanticScout/venv/bin/semanticscout`
+
+### 7. Restart Claude Desktop
+
+Restart Claude Desktop to load the new MCP server configuration.
+
+### 8. Test the Connection
+
+In Claude Desktop, try:
+
+```
+List all indexed collections
+```
+
+If you see the semanticscout server respond, you're all set!
+
+### Troubleshooting Native Installation
+
+**Issue:** `semanticscout: command not found`
+- **Solution:** Make sure virtual environment is activated and you ran `pip install -e .`
+
+**Issue:** `ModuleNotFoundError: No module named 'semanticscout'`
+- **Solution:** Install in editable mode: `pip install -e .` from the project root
+
+**Issue:** `Connection refused to Ollama`
+- **Solution:** Make sure Ollama is running: `ollama serve`
+
+**Issue:** `Permission denied` on data directories
+- **Solution:** Create directories manually or run with appropriate permissions
+
+**Issue:** Claude Desktop can't find the executable
+- **Solution:** Use absolute paths in MCP JSON configuration
+
+### Deployment Comparison
+
+| Feature | ⚡ uvx | 🐳 Docker | 🐍 Native Python |
+|---------|--------|-----------|------------------|
+| **Setup Complexity** | ✅ Minimal (one command) | Medium (Docker + build) | Low (pip install) |
+| **Installation Required** | ✅ No (auto-downloads) | ⚠️ Yes (Docker) | ⚠️ Yes (Python + venv) |
+| **Isolation** | ✅ Fully isolated | ✅ Fully isolated | ❌ Shares Python environment |
+| **Portability** | ✅ Works anywhere | ✅ Works anywhere | ⚠️ Platform-dependent |
+| **Performance** | ✅ Native speed | ~5% overhead | ✅ Native speed |
+| **GPU Access** | ✅ Via host Ollama | ✅ Via host Ollama | ✅ Direct access |
+| **Updates** | ✅ Automatic (`@latest`) | Rebuild image | `git pull && pip install -e .` |
+| **Disk Space** | ~200MB (cached) | ~1GB (image) | ~200MB (dependencies) |
+| **Data Location** | Local directory | Named volume | Local directory |
+| **Multiple Versions** | ✅ Easy (`@version`) | ✅ Easy (different images) | ⚠️ Requires separate venvs |
+| **First Run** | Downloads package | Uses built image | Already installed |
+
+**When to use uvx:** ⭐ **Recommended for most users**
+- ✅ You want the simplest setup
+- ✅ You want automatic updates
+- ✅ You don't want to manage installations
+- ✅ You want to try it quickly
+
+**When to use Docker:**
+- ✅ You want full control over the environment
+- ✅ You deploy to multiple machines
+- ✅ You prefer containerized workflows
+- ✅ You want easy cleanup (just delete the image)
+
+**When to use Native:**
+- ✅ You're developing/contributing to SemanticScout
+- ✅ You prefer direct Python development
+- ✅ You want to customize the code
+- ✅ You're comfortable managing Python environments
+
+---
+
+## 💾 Understanding Data Persistence
+
+**"Will I lose my indexed data when the container stops?"** - No! Here's why:
+
+### How Docker Storage Works
+
+Docker has two types of storage:
+
+1. **Container Filesystem** (Ephemeral):
+   - Created when container starts
+   - **Deleted when container stops** (with `--rm` flag)
+   - Temporary, not meant for data storage
+
+2. **Named Volumes** (Persistent):
+   - Created independently of containers
+   - **Survives container deletion** (even with `--rm`)
+   - Shared across multiple containers
+   - Managed by Docker, stored on host
+
+### Your Configuration
+
+```bash
+-v semanticscout-data:/app/data  # Named volume (persistent!)
+--rm                              # Remove container (safe!)
+```
+
+**What happens:**
+- ✅ Container is removed after it stops → **Clean system, no orphaned containers**
+- ✅ Volume `semanticscout-data` remains intact → **All your indexed data persists**
+- ✅ Next run reuses the same volume → **Instant access to previous indexes**
+
+### Verifying Data Persistence
+
+Check your volume contents anytime:
+
+```bash
+# List volume contents
+docker run --rm -v semanticscout-data:/data alpine ls -laR /data
+
+# Should show:
+# /data/chroma_db/chroma.sqlite3  (your vector database)
+# /data/chroma_db/<collection-id>/ (indexed code chunks)
+# /data/logs/mcp_server.log       (server logs)
+```
+
+### When Data IS Lost
+
+Data is only lost if you:
+- ❌ Delete the volume: `docker volume rm semanticscout-data`
+- ❌ Use a host path instead of named volume (and delete the directory)
+- ❌ Don't mount the volume at all
+
+**Bottom line:** Using `--rm` with named volumes is the **recommended approach** for MCP servers!
+
+## 📖 Usage
+
+Once configured in Claude Desktop, you can use natural language to interact with the MCP server:
+
+### Example Conversations
+
+**Index a codebase:**
+```
+You: "Index my codebase at /workspace"
+Claude: [Calls index_codebase tool and shows indexing progress]
+```
+
+**Search for code:**
+```
+You: "Find the authentication logic"
+Claude: [Calls search_code tool and shows relevant code snippets]
+```
+
+**List indexed projects:**
+```
+You: "What codebases have been indexed?"
+Claude: [Calls list_collections tool and shows all indexed projects]
+```
+
+**Clear an index:**
+```
+You: "Delete the index for my old project"
+Claude: [Calls clear_index tool after confirmation]
+```
+
+### Available MCP Tools
+
+The server exposes these tools to Claude (you don't call them directly):
+
+| Tool | Description | Parameters |
+|------|-------------|------------|
+| `index_codebase` | Index a codebase for semantic search | `path` (optional, defaults to `/workspace`) |
+| `search_code` | Search indexed code with natural language | `query`, `collection_name`, `top_k` |
+| `list_collections` | List all indexed codebases | None |
+| `get_indexing_status` | Get statistics for a collection | `collection_name` |
+| `clear_index` | Delete a collection (permanent) | `collection_name` |
+
+## ⚙️ Configuration
+
+Configuration is done via environment variables in the MCP JSON config or docker-compose.yml:
+
+### MCP JSON Configuration
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "OLLAMA_BASE_URL=http://host.docker.internal:11434",
+        "-e", "OLLAMA_MODEL=nomic-embed-text",
+        "-e", "WORKSPACE_PATH=/workspace",
+        "-e", "MAX_FILE_SIZE_MB=10.0",
+        "-v", "/path/to/your/project:/workspace:ro",
+        "-v", "/path/to/SemanticScout/chroma_db:/app/chroma_db",
+        "-v", "/path/to/SemanticScout/logs:/app/logs",
+        "semanticscout:latest"
+      ]
+    }
+  }
+}
+```
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `OLLAMA_BASE_URL` | `http://host.docker.internal:11434` | Host Ollama URL (Windows/Mac) |
+| `OLLAMA_MODEL` | `nomic-embed-text` | Embedding model to use |
+| `WORKSPACE_PATH` | `/workspace` | Default path to index |
+| `MAX_FILE_SIZE_MB` | `10.0` | Skip files larger than this |
+| `MAX_CODEBASE_SIZE_GB` | `10.0` | Maximum total codebase size |
+| `MAX_FILES` | `100000` | Maximum number of files |
+| `CHUNK_SIZE_MIN` | `500` | Minimum chunk size (chars) |
+| `CHUNK_SIZE_MAX` | `1500` | Maximum chunk size (chars) |
+| `LOG_LEVEL` | `INFO` | Logging level |
+
+### Platform-Specific Configuration
+
+**Linux:** Change `OLLAMA_BASE_URL` to use host IP or network mode:
+
+```json
+"-e", "OLLAMA_BASE_URL=http://172.17.0.1:11434"
+```
+
+Or use host network mode in docker-compose.yml (see [docs/HOST_OLLAMA.md](docs/HOST_OLLAMA.md)).
+
+## 🐳 Advanced Docker Usage
+
+### Using docker-compose (Alternative to MCP)
+
+If you want to run the server standalone (not via MCP):
+
+```bash
+# Clone and navigate to project
+git clone https://github.com/Psynosaur/SemanticScout.git
+cd SemanticScout
+
+# Make sure host Ollama is running
+ollama serve
+ollama pull nomic-embed-text
+
+# Start with Docker Compose
+docker compose up -d
+
+# View logs
+docker logs -f semanticscout-mcp-server
+```
+
+### Pull from Docker Hub
+
+```bash
+# Pull the image
+docker pull psynosaur/semanticscout:latest
+
+# Run the container
+docker run -it --rm \
+  -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
+  -v $(pwd)/chroma_db:/app/chroma_db \
+  -v $(pwd)/logs:/app/logs \
+  psynosaur/semanticscout:latest
+```
+
+**For detailed Docker instructions, see [docs/HOST_OLLAMA.md](docs/HOST_OLLAMA.md)**
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐
+│   MCP Client    │  (Claude Desktop, etc.)
+│  (AI Agent)     │
+└────────┬────────┘
+         │ JSON-RPC over STDIO
+         │
+┌────────▼────────┐
+│   MCP Server    │
+│  (FastMCP)      │
+└────────┬────────┘
+         │
+    ┌────┴────┬────────┬──────────┐
+    │         │        │          │
+┌───▼───┐ ┌──▼──┐ ┌───▼────┐ ┌──▼────┐
+│Indexer│ │Query│ │Security│ │Vector │
+│       │ │Proc │ │        │ │ Store │
+└───┬───┘ └──┬──┘ └────────┘ └───┬───┘
+    │        │                    │
+┌───▼────────▼────────────────────▼───┐
+│         ChromaDB (Vector DB)        │
+└─────────────────────────────────────┘
+```
+
+### Components
+
+- **File Discovery**: Finds code files, respects `.gitignore`
+- **Code Chunker**: AST-based semantic chunking with tree-sitter
+- **Embedding Provider**: Generates vector embeddings (Ollama/OpenAI)
+- **Vector Store**: Stores and searches embeddings (ChromaDB)
+- **Query Processor**: Converts queries to embeddings, caching
+- **Semantic Searcher**: Finds relevant code chunks
+- **Security Validators**: Path validation, rate limiting, input sanitization
+
+## 🧪 Development
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov
+
+# Run specific test file
+pytest tests/unit/test_semantic_search.py -v
+```
+
+### Test Coverage
+
+Current coverage: **74%** (172 tests passing)
+
+- File Discovery: 83%
+- Code Chunker: 92%
+- Ollama Provider: 92%
+- Vector Store: 100%
+- Query Processor: 100%
+- Semantic Search: 99%
+- Security Validators: 95%
+
+### Project Structure
+
+```
+semanticscout/
+├── src/semanticscout/
+│   ├── mcp_server.py          # MCP server entry point
+│   ├── config.py              # Configuration management
+│   ├── logging_config.py      # Logging setup
+│   ├── indexer/               # Indexing components
+│   │   ├── file_discovery.py
+│   │   ├── code_chunker.py
+│   │   └── pipeline.py
+│   ├── embeddings/            # Embedding providers
+│   │   ├── base.py
+│   │   └── ollama_provider.py
+│   ├── vector_store/          # Vector database
+│   │   └── chroma_store.py
+│   ├── retriever/             # Search components
+│   │   ├── query_processor.py
+│   │   └── semantic_search.py
+│   └── security/              # Security & validation
+│       └── validators.py
+├── tests/                     # Unit tests
+├── examples/                  # Example scripts
+└── docs/                      # Documentation
+```
+
+## 📚 Examples
+
+See the [examples/](examples/) directory for working examples:
+
+- `test_full_pipeline.py` - Complete indexing and search workflow
+- `test_retrieval_system.py` - Advanced search with filtering
+- `index_weather_unified.py` - Real-world codebase indexing
+
+## 🐛 Troubleshooting
+
+### Python Version Issues
+
+**Error:** `No module named 'onnxruntime'` or tree-sitter compatibility issues
+
+**Solution:** Use Python 3.12 (not 3.14). See [PYTHON_VERSION_ISSUE.md](PYTHON_VERSION_ISSUE.md).
+
+### Ollama Not Running
+
+**Error:** `Ollama server not available`
+
+**Solution:** Start Ollama and pull the model:
+```bash
+ollama serve
+ollama pull nomic-embed-text
+```
+
+### Rate Limit Exceeded
+
+**Error:** `Rate limit exceeded: Maximum X requests per hour`
+
+**Solution:** Adjust rate limits in `.env`:
+```bash
+MAX_INDEXING_REQUESTS_PER_HOUR=20
+MAX_SEARCH_REQUESTS_PER_MINUTE=200
+```
+
+### Path Not Allowed
+
+**Error:** `Path is not within allowed directories`
+
+**Solution:** The server only allows indexing within the current working directory by default.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new functionality
+4. Ensure all tests pass
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 🙏 Acknowledgments
+
+- [Anthropic](https://anthropic.com/) for the MCP protocol
+- [Ollama](https://ollama.ai/) for local embeddings
+- [ChromaDB](https://www.trychroma.com/) for vector storage
+- [Tree-sitter](https://tree-sitter.github.io/) for code parsing
+
+---
+
+**Built with ❤️ for the AI agent ecosystem**
+
