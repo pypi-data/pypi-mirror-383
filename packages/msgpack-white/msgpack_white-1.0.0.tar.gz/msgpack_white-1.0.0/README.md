@@ -1,0 +1,142 @@
+# msgpack-white
+
+"MessagePack -- WHere Is The End?"
+
+This package allows quickly determining the end of a MessagePack message.
+
+## Usage
+
+After installation, a single module `msgpack_white` is available, itself
+containing a single class `White`.  A `White` object maintains the state of a
+MessagePack stream:
+
+```python
+>>> import msgpack_white
+>>> w = msgpack_white.White()
+```
+
+Suppose we have three objects:
+
+```python
+>>> o1 = bytes.fromhex("81A17801")
+>>> o2 = bytes.fromhex("81A179A3616263")
+>>> o3 = bytes.fromhex("C3")
+>>> import msgpack
+>>> msgpack.loads(o1)
+{'x': 1}
+>>> msgpack.loads(o2)
+{'y': 'abc'}
+>>> msgpack.loads(o3)
+True
+```
+
+But we've packed them together into a stream:
+
+```python
+>>> stream = o1 + o2 + o3
+```
+
+msgpack-white will let you split this back out into the separate components o1,
+o2, and o3, so that they can be decoded individually.
+
+`White` objects have only a single method, `feed`.  You provide a byte string
+(or other object supporting the buffer interface).  There are three possible
+outcomes:
+
+* The byte string you provided includes the end of an object.  In this case,
+  `feed` will return the index into the byte string you provided at which the
+  object ends.  The `White` object is automatically reset at this point, so to
+  extract further objects, you'll need to re-feed the portion of the string
+  after this point.
+* The byte string you provided does not include the end of an object.  In this
+  case, `feed` returns `None`.  The `White` object remembers everything that
+  has been provided to it so far, so when you receive more data, you should
+  only `feed` the new data you receive and not repeat any data that has already
+  been provided to `feed`.
+* The byte string you provided does not represent valid MessagePack data.  In
+  this case, a `ValueError` is raised.  Since msgpack-white only does a very
+  minimal parse of the data, this is not guaranteed to catch all invalid
+  MessagePack messages, but it can catch some.
+
+Let's say that our `stream` was broken up into 4 pieces of 3 bytes each:
+
+```python
+>>> p1 = stream[:3]
+>>> p2 = stream[3:6]
+>>> p3 = stream[6:9]
+>>> p4 = stream[9:]
+```
+
+You feed data in piece-by-piece.  (Note that pieces need not all be the same
+size; this is just an example.)
+
+```python
+>>> w.feed(p1)
+```
+
+`feed` first returned `None`.  This means that `p1` contains the prefix of an
+object, not a complete object.
+
+```python
+>>> w.feed(p2)
+1
+```
+
+`feed` returned 1 for `p2`.  This means that `p1 + p2[:1]` represents a valid
+object, and indeed it does:
+
+```python
+>>> msgpack.loads(p1 + p2[:1])
+{'x': 1}
+```
+
+To decode the next object, we need to start by feeding the remainder of `p2`
+in:
+
+```python
+>>> w.feed(p2[1:])
+```
+
+We get `None`, so there is no end of an object here.  Same for `p3`, but not
+`p4`:
+
+```python
+>>> w.feed(p3)
+>>> w.feed(p4)
+2
+```
+
+Hence, the next object is `p2[1:] + p3 + p4[:2]`:
+
+```python
+>>> w.feed(p2[1:] + p3 + p4[:2])
+{'y': 'abc'}
+```
+
+Then to extract the last object:
+
+```python
+>>> w.feed(p4[2:])
+1
+```
+
+Hence `p4[2:][:1]` is the last object:
+
+```python
+>>> msgpack.decode(p4[2:][:1])
+True
+```
+
+If there was an error in the stream, we'd get a `ValueError`:
+
+```python
+>>> w.feed(b"\xC1")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: Invalid MessagePack message
+```
+
+msgpack-white is completely agnostic to whichever library you use to eventually
+decode your MessagePack data.  You can use it with the official msgpack Python
+library, the MessagePack implementation inside msgspec, or no library at all if
+you simply care about splitting valid MessagePack messages out of a stream.
