@@ -1,0 +1,13 @@
+{
+  "id": "novelaigen-http",
+  "name": "NovelAI Gen (HTTP)",
+  "type": "StreamableHTTP",
+  "command": "mcp-novelaigen",
+  "args": [],
+  "env": {
+    "NOVELAI_API_KEY": "pst-TNCWt9J0JPKj2eqlqohP0RXVTW49LCxQauFnwiQ1zftEH4HclE1vPlKi6UrNPgqD"
+  },
+  "metadata": {
+    "description": "通过 HTTP 协议运行的 NovelAI 图片生成服务。"
+  }
+}
