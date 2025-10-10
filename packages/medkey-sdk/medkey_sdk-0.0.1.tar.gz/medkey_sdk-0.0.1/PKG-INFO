@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: medkey-sdk
+Version: 0.0.1
+Summary: MedKey SDK: OAuth + consent proxy client for healthcare FHIR APIs
+Project-URL: Homepage, https://github.com/usemedkey/medkey-sdk-python
+Project-URL: Issues, https://github.com/usemedkey/medkey-sdk-python/issues
+Author-email: Samuel Oh <you@medkey.dev>
+License: MIT
+License-File: LICENSE
+Keywords: fhir,healthcare,medicare,oauth2,sdk
+Requires-Python: >=3.9
+Requires-Dist: httpx>=0.27.0
+Description-Content-Type: text/markdown
+
+# medkey-sdk (Python)
+
+Pre-release placeholder for MedKey Python SDK.
+
+```python
+from medkey_sdk import MedKey
+client = MedKey(base_url="https://api.usemedkey.com", api_key="YOUR_KEY")
