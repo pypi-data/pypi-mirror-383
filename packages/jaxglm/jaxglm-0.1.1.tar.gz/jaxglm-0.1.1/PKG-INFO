@@ -1,0 +1,26 @@
+Metadata-Version: 2.3
+Name: jaxglm
+Version: 0.1.1
+Summary: Add your description here
+Requires-Dist: arviz>=0.22.0
+Requires-Dist: jax>=0.7.2
+Requires-Dist: numpyro>=0.19.0
+Requires-Dist: pandas>=2.3.3
+Requires-Dist: patsy>=1.0.1
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+
+# Jax GLM
+
+Bayesian Generalized Linear Models with a statsmodels-like API built on NumPyro.
+
+## Features
+
+- Standard GLM families (Gaussian, Binomial, Poisson, Gamma, etc.)
+- Ordinal logistic regression
+- Flexible link functions
+- Patsy formula interface
+- ArviZ integration for diagnostics
+- Full posterior inference with NUTS
+
+## Installation
