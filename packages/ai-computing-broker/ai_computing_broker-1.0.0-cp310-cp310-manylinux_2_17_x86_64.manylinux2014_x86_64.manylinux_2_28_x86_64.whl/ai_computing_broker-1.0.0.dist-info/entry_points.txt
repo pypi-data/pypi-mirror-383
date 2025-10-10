@@ -1,0 +1,9 @@
+[console_scripts]
+acb_sim_result_analyzer = acb_tools.simulator.analyze_sim_result:main
+acb_simulator = acb_tools.simulator.run_simulation:run_simulation
+acb_visualizer = acb_tools.visualizer:main
+agarun = adaptive_gpu_allocator.agarun:main
+gpu_assigner = gpu_assigner.cli:main
+run_acb_assessment = acb_tools.assessment_tool:assessment_tool
+run_acb_sim = acb_tools.simulator.sim_acb:sim_acb
+run_acb_vis_sim = acb_tools.vis_sim_acb:vis_sim_acb
