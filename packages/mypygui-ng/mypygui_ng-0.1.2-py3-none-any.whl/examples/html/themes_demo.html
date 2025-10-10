@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPyGUI - Theme Demo</title>
+    <style>
+        /* Include a theme CSS here */
+        /* You can also load themes programmatically with:
+           from mypygui_ng.themes import get_theme_css
+           theme_css = get_theme_css('bootstrap-lite')
+        */
+
+        /* For demo purposes, we'll use a minimal theme inline */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #212529;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-showcase {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .theme-card {
+            flex: 1;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-card.bootstrap {
+            border-color: #007bff;
+            background-color: #f8f9ff;
+        }
+
+        .theme-card.material {
+            border-color: #2196F3;
+            background-color: #f3f9ff;
+        }
+
+        .theme-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .code-example {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 style="text-align: center; color: #2c3e50; margin-bottom: 2rem;">
+            🎨 MyPyGUI-NG Theme System
+        </h1>
+
+        <div class="theme-showcase">
+            <div class="theme-card bootstrap">
+                <div class="theme-title">Bootstrap Lite</div>
+                <div class="theme-description">Clean, modern styling inspired by Bootstrap</div>
+            </div>
+
+            <div class="theme-card material">
+                <div class="theme-title">Material Lite</div>
+                <div class="theme-description">Material Design inspired styling</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <h2>🚀 Ready to use in your applications!</h2>
+        </div>
+
+        <div class="code-example">
+# Example usage in Python:
+from mypygui_ng.themes import get_theme_css
+
+# Get Bootstrap Lite theme
+bootstrap_css = get_theme_css('bootstrap-lite')
+
+# Get Material Lite theme
+material_css = get_theme_css('material-lite')
+
+# Use in your HTML
+html_content = f"""
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;{bootstrap_css}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h3 class="card-title"&gt;Hello MyPyGUI!&lt;/h3&gt;
+        &lt;p&gt;Styled with Bootstrap Lite theme&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"""
+        </div>
+
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-title">📦 Pre-built Themes</div>
+                <div class="feature-desc">Ready-to-use CSS themes for consistent styling</div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-title">🎯 Easy Integration</div>
+                <div class="feature-desc">Load themes programmatically or include in HTML</div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-title">🔧 Customizable</div>
+                <div class="feature-desc">Extend themes or create your own variations</div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-title">⚡ Lightweight</div>
+                <div class="feature-desc">Minimal CSS footprint for fast loading</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background-color: #e9ecef; border-radius: 8px;">
+            <h3>🚀 Get Started Today!</h3>
+            <p style="margin: 1rem 0;">Install MyPyGUI-NG and start building modern GUIs in Python</p>
+            <code style="background-color: #fff; padding: 0.5rem; border-radius: 3px; color: #495057;">
+                pip install mypygui-ng
+            </code>
+        </div>
+    </div>
+</body>
+</html>
