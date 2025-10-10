@@ -1,0 +1,295 @@
+server:
+  config:
+    api_key: 6b9ef1f769msh95c46a345010a18p1fa99cjsn7d5c1b0c7195
+    rapidapi_host: agoda-travel.p.rapidapi.com
+  description: Agoda offers a range of travel services, including hotel and vacation
+    rental bookings, flights, and airport transfers. Its platform also provides exclusive
+    deals, last-minute discounts, and a loyalty program for frequent travelers. Agoda
+    Homes allows users to book unique stays, while Agoda VIP grants access to special
+    rates and perks at select properties. Additionally, the platform supports travel
+    bundles, combining flights and accommodations for cost savings.
+  name: Agoda Travel
+  options:
+    requestTimeoutMillis: 15000
+tools:
+- args:
+  - default: '31449830'
+    description: 'Default: 20'
+    name: propertyId
+    required: 'True'
+  - default: 无
+    description: 'Default: Today'
+    name: checkin_date
+    required: 'False'
+  - default: 无
+    description: 'Default: 2 days after today'
+    name: checkout_date
+    required: 'False'
+  - default: 无
+    description: 无
+    name: page
+    required: 'False'
+  - default: 无
+    description: The value of language_code is obtained from the CultureCode field
+      in the 【languages】 API.
+    name: language_code
+    required: 'False'
+  - default: 无
+    description: The value of currency_code is obtained from the code field in the
+      【currencies】 API.
+    name: currency_code
+    required: 'False'
+  - default: 无
+    description: 'Default: 1'
+    name: room
+    required: 'False'
+  - default: 无
+    description: 'Default: 1'
+    name: adult
+    required: 'False'
+  - default: 无
+    description: 'Accepts ages from 0 to 17. You can enter multiple ages, separated
+      by commas. Example: 0, 17'
+    name: children_age
+    required: 'False'
+  description: Get rooms
+  name: Get rooms
+  requestTemplate:
+    headers:
+    - key: x-rapidapi-key
+      value: '{{config.api_key}}'
+    - key: x-rapidapi-host
+      value: '{{config.rapidapi_host}}'
+    method: GET
+    url: https://agoda-travel.p.rapidapi.com/agoda-app/hotels/details/get-rooms?propertyId={{args.propertyId}}&checkin_date={{args.checkin_date}}&checkout_date={{args.checkout_date}}&page={{args.page}}&language_code={{args.language_code}}&currency_code={{args.currency_code}}&room={{args.room}}&adult={{args.adult}}&children_age={{args.children_age}}
+- args:
+  - default: LON
+    description: The value of origin can be retrieved from 【 /Flights/flight/auto-complete】endpoint
+      (data->Code)
+    name: origin
+    required: 'True'
+  - default: NYC
+    description: The value of destination can be retrieved from 【 /Flights/flight/auto-complete】endpoint
+      (data->Code)
+    name: destination
+    required: 'True'
+  - default: 无
+    description: 'Format: YYYY-MM-DD'
+    name: departureDate
+    required: 'True'
+  - default: 无
+    description: 'Default value: Best Best : Best: Cheap short flights Price : Price
+      per person: Cheapest first Duration : Total journey time: Fastest first OnwardDepartureTime
+      : Outbound departure time: Earliest first OnwardArrivalTime : Outbound arrival
+      time: Earliest first ReturnDepartureTime : Return departure time: Earliest first
+      ReturnArrivalTime : Return arrival time: Earliest first Stops: Stops : Fewest
+      stops first'
+    name: sort
+    required: 'False'
+  - default: 无
+    description: 无
+    name: page
+    required: 'False'
+  - default: 无
+    description: 'Default value: 20'
+    name: page_size
+    required: 'False'
+  - default: 无
+    description: 无
+    name: language_code
+    required: 'False'
+  - default: 无
+    description: 无
+    name: currency_code
+    required: 'False'
+  - default: 无
+    description: 'Default value: 1'
+    name: adult
+    required: 'False'
+  - default: 无
+    description: 'Default value: 0'
+    name: children
+    required: 'False'
+  - default: 无
+    description: 'Default value: 0'
+    name: infants
+    required: 'False'
+  - default: 无
+    description: 'Default value: Economy Economy : Economy PremiumEconomy : Premium
+      economy Business : Business First : First'
+    name: cabinType
+    required: 'False'
+  - default: 无
+    description: '0 : Direct 1 : 1 stop (It will include direct ) -1 : 2+ stops (It
+      will include direct and 1 stop)'
+    name: stops
+    required: 'False'
+  - default: 无
+    description: 'Departure time: Enter in the format HH:MM,HH:MM (separated by a
+      comma). Example: 04:00,18:00 Only minimum departure time : Example: 04:00 (Maximum
+      default: 23:59) Only maximum departure time : Example: ,18:00 (Minimum default:
+      00:00)'
+    name: departureTime
+    required: 'False'
+  - default: 无
+    description: 'Arrival time : Enter in the format HH:MM,HH:MM (separated by a comma).
+      Example: 10:00,23:00 Only minimum arrival time : Example: 10:00 (Maximum default:
+      23:59) Only maximum arrival time: Example: ,23:00 (Minimum default: 00:00)'
+    name: arrivalTime
+    required: 'False'
+  - default: 无
+    description: 'The value of airlines can be retrieved from the response of this
+      endpoint: data->filters->carriers->id Multiple airline values can be input,
+      separated by commas. Example: BX,CX Example airline codes: BX : Air Busan CX
+      : Cathay Pacific LJ : Jin Air'
+    name: airlines
+    required: 'False'
+  - default: 无
+    description: 'Maximum price can be found in the response of this endpoint: data->filters->price->to'
+    name: pricePerPerson
+    required: 'False'
+  description: search-one-way
+  name: search-one-way
+  requestTemplate:
+    headers:
+    - key: x-rapidapi-key
+      value: '{{config.api_key}}'
+    - key: x-rapidapi-host
+      value: '{{config.rapidapi_host}}'
+    method: GET
+    url: https://agoda-travel.p.rapidapi.com/agoda-app/flight/search-one-way?origin={{args.origin}}&destination={{args.destination}}&departureDate={{args.departureDate}}&sort={{args.sort}}&page={{args.page}}&page_size={{args.page_size}}&language_code={{args.language_code}}&currency_code={{args.currency_code}}&adult={{args.adult}}&children={{args.children}}&infants={{args.infants}}&cabinType={{args.cabinType}}&stops={{args.stops}}&departureTime={{args.departureTime}}&arrivalTime={{args.arrivalTime}}&airlines={{args.airlines}}&pricePerPerson={{args.pricePerPerson}}
+- args:
+  - default: LON
+    description: The value of origin can be retrieved from 【 /Flights/flight/auto-complete】endpoint
+      (data->Code)
+    name: origin
+    required: 'True'
+  - default: NYC
+    description: The value of destination can be retrieved from 【 /Flights/flight/auto-complete】endpoint
+      (data->Code)
+    name: destination
+    required: 'True'
+  - default: 无
+    description: 'Format: YYYY-MM-DD'
+    name: departureDate
+    required: 'True'
+  - default: 无
+    description: 'Format: YYYY-MM-DD'
+    name: returnDate
+    required: 'True'
+  - default: 无
+    description: 'Default value: Best Best : Best: Cheap short flights Price : Price
+      per person: Cheapest first Duration : Total journey time: Fastest first OnwardDepartureTime
+      : Outbound departure time: Earliest first OnwardArrivalTime : Outbound arrival
+      time: Earliest first ReturnDepartureTime : Return departure time: Earliest first
+      ReturnArrivalTime : Return arrival time: Earliest first Stops: Stops : Fewest
+      stops first'
+    name: sort
+    required: 'False'
+  - default: 无
+    description: 无
+    name: page
+    required: 'False'
+  - default: 无
+    description: 'Default value: 20'
+    name: page_size
+    required: 'False'
+  - default: 无
+    description: 无
+    name: language_code
+    required: 'False'
+  - default: 无
+    description: 无
+    name: currency_code
+    required: 'False'
+  - default: 无
+    description: 'Default value: 1'
+    name: adult
+    required: 'False'
+  - default: 无
+    description: 'Default value: 0'
+    name: children
+    required: 'False'
+  - default: 无
+    description: 'Default value: 0'
+    name: infants
+    required: 'False'
+  - default: 无
+    description: 'Default value: Economy Economy : Economy PremiumEconomy : Premium
+      economy Business : Business First : First'
+    name: cabinType
+    required: 'False'
+  - default: 无
+    description: '0 : Direct 1 : 1 stop (It will include direct ) -1 : 2+ stops (It
+      will include direct and 1 stop)'
+    name: stops
+    required: 'False'
+  - default: 无
+    description: 'Departure time: Enter in the format HH:MM,HH:MM (separated by a
+      comma). Example: 04:00,18:00 Only minimum departure time : Example: 04:00 (Maximum
+      default: 23:59) Only maximum departure time : Example: ,18:00 (Minimum default:
+      00:00)'
+    name: departureTime
+    required: 'False'
+  - default: 无
+    description: 'Arrival time : Enter in the format HH:MM,HH:MM (separated by a comma).
+      Example: 10:00,23:00 Only minimum arrival time : Example: 10:00 (Maximum default:
+      23:59) Only maximum arrival time: Example: ,23:00 (Minimum default: 00:00)'
+    name: arrivalTime
+    required: 'False'
+  - default: 无
+    description: 'The value of airlines can be retrieved from the response of this
+      endpoint: data->filters->carriers->id Multiple airline values can be input,
+      separated by commas. Example: BX,CX Example airline codes: BX : Air Busan CX
+      : Cathay Pacific LJ : Jin Air'
+    name: airlines
+    required: 'False'
+  - default: 无
+    description: 'Maximum price can be found in the response of this endpoint: data->filters->price->to'
+    name: pricePerPerson
+    required: 'False'
+  description: search-roundtrip
+  name: search-roundtrip
+  requestTemplate:
+    headers:
+    - key: x-rapidapi-key
+      value: '{{config.api_key}}'
+    - key: x-rapidapi-host
+      value: '{{config.rapidapi_host}}'
+    method: GET
+    url: https://agoda-travel.p.rapidapi.com/agoda-app/flight/search-roundtrip?origin={{args.origin}}&destination={{args.destination}}&departureDate={{args.departureDate}}&returnDate={{args.returnDate}}&sort={{args.sort}}&page={{args.page}}&page_size={{args.page_size}}&language_code={{args.language_code}}&currency_code={{args.currency_code}}&adult={{args.adult}}&children={{args.children}}&infants={{args.infants}}&cabinType={{args.cabinType}}&stops={{args.stops}}&departureTime={{args.departureTime}}&arrivalTime={{args.arrivalTime}}&airlines={{args.airlines}}&pricePerPerson={{args.pricePerPerson}}
+- args:
+  - default: 无
+    description: 'The value of itineraryId can be retrieved from: /flights/search-one-way:
+      Access it via the path data -> bundles -> itineraries -> itineraryInfo -> id.
+      /flights/search-roundtrip: Access it via the path data -> bundles -> itineraries
+      -> itineraryInfo -> id. Example of Itinerary ID format: A:JFK_20240615_A:BGY__1-0-0_ECO___1709477202'
+    name: itineraryId
+    required: 'True'
+  - default: 无
+    description: 'The value of token can be retrieved from: /flights/search-one-way:
+      Access it via the path data -> bundles -> itineraries -> itineraryInfo -> token.
+      /flights/search-roundtrip: Access it via the path data -> bundles -> itineraries
+      -> itineraryInfo -> token. Example of token format: AAAA.AAAADHSeU7tKM6NRJqA3BdnBbMdmG6sWGqujNtonSyiZmAm9IsZ0NJ6ooVcJMEpie0rTt6BSw4J+Yjrb8xxY/PZA8CaBwh8eAMbVc/g3vGyRTEDExnjBhcNdW4bszrheB0U6MX2B+9bTRq0RForzqBEYxobzkNOYrNmrg1AET2/8HsRYj1c2DizcPem0C1YxiGqJ0hjovolDrkOMUqlZ7ww7jt2FWQINIgYoJMdevXVKF4Mq3IQxajZKmnW3FvuKqb3UfSw7siQCcNXwAsnOd3Ejnt35vuj8dfSlQKssKuq0tWXUAFf/gZUh0YSTG6JHz+ylruy0Fwx1JxhZp4yurLVf/0GmAaUXSAuAdeSk5U9ATcY4prjJBLY6RC/EnMS2QeWavqs28lsK1z3Lql3lrHzC1TTjTg6VX6RVTKw+xViMOPHOscX2M3HC2+doip83yd0mKX8KLuhKn0OP7Cvgq3Fxjq42toeJWQ6kX9KC9PGrgWvptWlkFGOV7MZuJU2rqRn5z2JTkvnclb2Hs2PbI6FAXWWhae/Itpx3jhhlqpSg0Z9lPekZhLi6/XRROjYzMp1zxRMBE1c5NJUbVfWUbCyd2CIUrSQYnywRWi0o9/Fw7Jz6x4IPgXHPgMMILDzy0aMqfQMD6eylLL67tr7zJRaSutwsHhjuxsnBpmX7XBgegyqGR5+Pgg=='
+    name: token
+    required: 'True'
+  - default: 无
+    description: The value of language_code is obtained from the CultureCode field
+      in the 【languages】 API.
+    name: language_code
+    required: 'False'
+  - default: 无
+    description: The value of currency_code is obtained from the code field in the
+      【currencies】 API.
+    name: currency_code
+    required: 'False'
+  description: details
+  name: details
+  requestTemplate:
+    headers:
+    - key: x-rapidapi-key
+      value: '{{config.api_key}}'
+    - key: x-rapidapi-host
+      value: '{{config.rapidapi_host}}'
+    method: GET
+    url: https://agoda-travel.p.rapidapi.com/agoda-app/flight/details?itineraryId={{args.itineraryId}}&token={{args.token}}&language_code={{args.language_code}}&currency_code={{args.currency_code}}

@@ -1,0 +1,26 @@
+## Here's my code: 
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iflow-mcp-agoda_travel"
+version = "0.2.0"
+description = "Agoda offers a range of travel services, including hotel and vacation rental bookings, flights, and airport transfers. Its platform also provides exclusive deals, last-minute discounts, and a loyalty program for frequent travelers. Agoda Homes allows users to book unique stays, while Agoda VIP grants access to special rates and perks at select properties. Additionally, the platform supports travel bundles, combining flights and accommodations for cost savings."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.6.0",
+    "pyyaml>=6.0.2",
+    "jinja2>=3.0.0",
+]
+
+[project.scripts]
+mcp-gateway = "mcp_gateway.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mcp_gateway*"]
+
+[tool.setuptools.package-data]
+mcp_gateway = ["data/*.yaml", "data/*.yml"]
