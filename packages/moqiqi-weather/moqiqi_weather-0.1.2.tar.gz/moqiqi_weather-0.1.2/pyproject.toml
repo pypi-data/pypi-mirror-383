@@ -1,0 +1,21 @@
+[project]
+name = "moqiqi-weather"
+version = "0.1.2"
+description = "a weather search service"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "build>=1.2.2.post1",
+    "mcp[cli]>=1.9.2",
+    "twine>=6.1.0",
+]
+
+[project.scripts]
+mcp_calculator_kel = "mcp_calculator_kel:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_calculator_kel"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
