@@ -1,0 +1,167 @@
+
+# This file implements text classification for SMS spam detection and airline sentiment analysis using machine learning.
+# Uses sklearn LogisticRegression with CountVectorizer for binary and multi-class text classification with preprocessing and evaluation.
+
+# Combined Text Classification and Sentiment Analysis Notebook
+
+# SMS Spam Classification
+import pandas as pd
+
+data = pd.read_csv('https://raw.githubusercontent.com/mohitgupta-omg/Kaggle-SMS-Spam-Collection-Dataset-/master/spam.csv', encoding='latin-1')
+
+print("SMS Spam Dataset - First 5 rows:")
+print(data.head())
+
+# drop unnecessary columns and rename cols
+data.drop(['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], axis=1, inplace=True)
+data.columns = ['label', 'text']
+print("\nAfter cleaning columns:")
+print(data.head())
+
+# check missing values
+print("\nMissing values:")
+print(data.isna().sum())
+
+# check data shape
+print(f"\nData shape: {data.shape}")
+
+# download nltk
+import nltk
+#nltk.download('all')
+# create a list text
+text = list(data['text'])
+# preprocessing loop
+import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+corpus = []
+for i in range(len(text)):
+    r = re.sub('[^a-zA-Z]', ' ', text[i])
+    r = r.lower()
+    r = r.split()
+    r = [word for word in r if word not in stopwords.words('english')]
+    r = [lemmatizer.lemmatize(word) for word in r]
+    r = ' '.join(r)
+    corpus.append(r)
+#assign corpus to data['text']
+data['text'] = corpus
+print("\nAfter text preprocessing:")
+print(data.head())
+
+# Create Feature and Label sets
+X = data['text']
+y = data['label']
+# train test split (66% train - 33% test)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=123)
+print(f'\nTraining Data : {X_train.shape}')
+print(f'Testing Data :  {X_test.shape}')
+
+from sklearn.feature_extraction.text import CountVectorizer
+cv = CountVectorizer()
+X_train_cv = cv.fit_transform(X_train)
+print(f"\nCount Vectorizer shape: {X_train_cv.shape}")
+
+# Training Logistic Regression model
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression()
+lr.fit(X_train_cv, y_train)
+# transformX_test using CV
+X_test_cv = cv.transform(X_test)
+# generate predictions
+predictions = lr.predict(X_test_cv)
+print(f"\nPredictions sample: {predictions[:10]}")
+
+# confusion matrix
+import pandas as pd
+from sklearn import metrics
+df = pd.DataFrame(metrics.confusion_matrix(y_test,predictions), index=['ham','spam'], columns=['ham','spam'])
+print("\nConfusion Matrix (SMS Spam):")
+print(df)
+
+# Airline Sentiment Analysis
+print("\n" + "="*50)
+print("AIRLINE SENTIMENT ANALYSIS")
+print("="*50)
+
+data = pd.read_csv('https://raw.githubusercontent.com/satyajeetkrjha/kaggle-Twitter-US-Airline-Sentiment-/master/Tweets.csv', encoding='latin-1')
+
+print("\nAirline Sentiment Dataset - First 5 rows:")
+print(data.head())
+
+data.drop(['tweet_id', 'airline_sentiment_confidence', 'negativereason','negativereason_confidence','airline','airline_sentiment_gold','name','negativereason_gold','retweet_count','tweet_coord','tweet_created','tweet_location','user_timezone'], axis=1, inplace=True)
+
+data.columns = ['airline_sentiment', 'text']
+
+print("\nAfter cleaning columns:")
+print(data.head())
+
+print(f"\nMissing values: {data.isna().sum()}")
+print(f"Data shape: {data.shape}")
+
+# check target balance
+print("\nTarget distribution:")
+print(data['airline_sentiment'].value_counts(normalize = True))
+
+#text preprocessing
+# download nltk
+import nltk
+#nltk.download('all')
+# create a list text
+text = list(data['text'])
+# preprocessing loop
+import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+corpus = []
+for i in range(len(text)):
+    r = re.sub('[^a-zA-Z]', ' ', text[i])
+    r = r.lower()
+    r = r.split()
+    r = [word for word in r if word not in stopwords.words('english')]
+    r = [lemmatizer.lemmatize(word) for word in r]
+    r = ' '.join(r)
+    corpus.append(r)
+#assign corpus to data['text']
+data['text'] = corpus
+print("\nAfter text preprocessing:")
+print(data.head())
+
+# Create Feature and Label sets
+X = data['text']
+y = data['airline_sentiment']
+# train test split (66% train - 33% test)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=123)
+print(f'\nTraining Data : {X_train.shape}')
+print(f'Testing Data :  {X_test.shape}')
+print(f'Training Label: {y_train.shape}')
+print(f'Test Label: {y_test.shape}')
+
+from sklearn.feature_extraction.text import CountVectorizer
+cv = CountVectorizer()
+X_train_cv = cv.fit_transform(X_train)
+print(f"\nCount Vectorizer shape: {X_train_cv.shape}")
+
+# Training Logistic Regression model
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression()
+lr.fit(X_train_cv, y_train)
+# transformX_test using CV
+X_test_cv = cv.transform(X_test)
+# generate predictions
+predictions = lr.predict(X_test_cv)
+print(f"\nPredictions sample: {predictions[:10]}")
+
+import pandas as pd
+from sklearn import metrics
+df = pd.DataFrame(metrics.confusion_matrix(y_test,predictions),index=['neutral','positive','negative'], columns=['neutral','positive','negative'])
+
+print("\nConfusion Matrix (Airline Sentiment):")
+print(df)
+
+print("\nBoth classification tasks completed successfully!")
+
+

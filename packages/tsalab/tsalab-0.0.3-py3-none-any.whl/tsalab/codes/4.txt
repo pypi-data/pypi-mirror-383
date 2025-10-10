@@ -1,0 +1,197 @@
+# This file demonstrates three topic modeling techniques: LSI (Latent Semantic Indexing), LDA (Latent Dirichlet Allocation), and NMF (Non-negative Matrix Factorization).
+# Uses Gensim for LSI/LDA with TF-IDF preprocessing and sklearn for NMF with TfidfVectorizer to extract topics from text corpora.
+
+# Combined Topic Modeling Notebook - LSI, LDA, and NMF
+
+# Package installation
+# !pip install --upgrade pip
+# !pip install --upgrade numpy
+# !pip install gensim
+
+# LSI Topic Modeling with Gensim
+from gensim import corpora, models
+from nltk.corpus import stopwords
+import nltk
+import string
+
+# Download stopwords
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
+
+sample_corpus = [
+    "The quick brown fox jumps over the lazy dog",
+    "Never stop learning because life never stops teaching",
+    "Artificial intelligence is transforming the world",
+    "Natural language processing enables computers to understand human language",
+    "Time and tide wait for none",
+    "Data is the new oil in the modern digital economy",
+    "Machine learning algorithms improve with more data",
+    "Health is wealth and prevention is better than cure",
+    "The future belongs to those who prepare for it today",
+    "Knowledge is power but wisdom is using that knowledge wisely"
+]
+
+# Preprocess: tokenize, normalize, remove stopwords and punctuation
+def normalize_corpus(corpus):
+    normalized = []
+    for doc in corpus:
+        words = [word.lower().strip(string.punctuation) for word in doc.split()
+                 if word.lower() not in stop_words and word.strip(string.punctuation)]
+        normalized.append(words)
+    return normalized
+
+norm_tokenized_corpus = normalize_corpus(sample_corpus)
+print("Tokenized & normalized corpus:")
+print(norm_tokenized_corpus)
+
+# Build dictionary
+dictionary = corpora.Dictionary(norm_tokenized_corpus)
+print("\nDictionary:")
+print(dictionary)
+
+# Convert to bag-of-words
+corpus = [dictionary.doc2bow(text) for text in norm_tokenized_corpus]
+print("\nBag-of-words corpus:")
+print(corpus)
+
+# Build TF-IDF model
+tfidf = models.TfidfModel(corpus)
+corpus_tfidf = tfidf[corpus]
+
+# Fix number of topics
+total_topics = 2
+
+# Build LSI model
+lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=total_topics)
+
+# Print topics
+print("\nLSI Topics:")
+for idx, topic in lsi.print_topics(total_topics):
+    print(f"Topic {idx+1}: {topic}")
+
+print("\n" + "="*50)
+print("LDA TOPIC MODELING")
+print("="*50)
+
+# LDA Topic Modeling with Gensim
+from gensim import corpora, models
+from nltk.corpus import stopwords
+import nltk
+
+# Download NLTK stopwords if not already done
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
+
+toy_corpus = [
+    "The quick brown fox jumps over the lazy dog",
+    "Never stop learning because life never stops teaching",
+    "Artificial intelligence is transforming the world",
+    "Natural language processing enables computers to understand human language",
+    "Time and tide wait for none",
+    "Data is the new oil in the modern digital economy",
+    "Machine learning algorithms improve with more data",
+    "Health is wealth and prevention is better than cure",
+    "The future belongs to those who prepare for it today",
+    "Knowledge is power but wisdom is using that knowledge wisely"
+]
+
+# Preprocess with stopwords removal
+def normalize_corpus(corpus, tokenize=False):
+    norm = [
+        [word.lower() for word in doc.split() if word.lower() not in stop_words]
+        for doc in corpus
+    ]
+    return norm if tokenize else [" ".join(doc) for doc in norm]
+
+def train_lda_model_gensim(corpus, total_topics=2):
+    norm_tokenized_corpus = normalize_corpus(corpus, tokenize=True)
+    dictionary = corpora.Dictionary(norm_tokenized_corpus)
+    mapped_corpus = [dictionary.doc2bow(text) for text in norm_tokenized_corpus]
+
+    lda = models.LdaModel(
+        mapped_corpus,
+        id2word=dictionary,
+        iterations=1000,
+        num_topics=total_topics,
+        random_state=42
+    )
+    return lda, dictionary, mapped_corpus
+
+# Train model
+lda_gensim, dictionary, mapped_corpus = train_lda_model_gensim(toy_corpus, total_topics=2)
+
+# Print topics
+print("\nLDA Topics:")
+for idx, topic in lda_gensim.print_topics(num_topics=2, num_words=5):
+    print(f"Topic {idx+1}: {topic}")
+
+print("\n" + "="*50)
+print("NMF TOPIC MODELING")
+print("="*50)
+
+# NMF Topic Modeling with Scikit-learn
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.decomposition import NMF
+import string
+
+# -------- Toy corpus (8 sentences) --------
+toy_corpus = [
+    "The quick brown fox jumps over the lazy dog",
+    "Never stop learning because life never stops teaching",
+    "Artificial intelligence is transforming the world",
+    "Natural language processing enables computers to understand human language",
+    "Time and tide wait for none",
+    "Data is the new oil in the modern digital economy",
+    "Machine learning algorithms improve with more data",
+    "Health is wealth and prevention is better than cure",
+    "The future belongs to those who prepare for it today",
+    "Knowledge is power but wisdom is using that knowledge wisely"
+]
+
+# -------- Step 1: Normalize corpus (lowercase & remove punctuation) --------
+def normalize_corpus(corpus):
+    normalized = []
+    for doc in corpus:
+        doc = doc.lower()
+        doc = "".join([ch for ch in doc if ch not in string.punctuation])
+        normalized.append(doc)
+    return normalized
+
+norm_corpus = normalize_corpus(toy_corpus)
+
+# -------- Step 2: Build TF-IDF matrix (with stopwords) --------
+vectorizer = TfidfVectorizer(stop_words='english')
+tfidf_matrix = vectorizer.fit_transform(norm_corpus)
+
+# -------- Step 3: Fit NMF model --------
+total_topics = 2
+nmf = NMF(n_components=total_topics, random_state=42)
+nmf.fit(tfidf_matrix)
+
+# -------- Step 4: Extract terms & weights --------
+feature_names = vectorizer.get_feature_names_out()
+weights = nmf.components_
+
+# -------- Helper functions --------
+def get_topics_terms_weights(weights, feature_names, num_terms=8):
+    topics = []
+    for topic_weights in weights:
+        top_indices = topic_weights.argsort()[::-1][:num_terms]
+        topic_terms = [(feature_names[i], round(topic_weights[i], 4)) for i in top_indices]
+        topics.append(topic_terms)
+    return topics
+
+def print_topics_udf(topics, total_topics=2, display_weights=True):
+    for idx, topic in enumerate(topics[:total_topics], start=1):
+        print(f"\nTopic #{idx}")
+        if display_weights:
+            print(topic)
+        else:
+            print([term for term, wt in topic])
+
+# -------- Step 5: Generate and print topics --------
+topics = get_topics_terms_weights(weights, feature_names)
+print("\nNMF Topics:")
+print_topics_udf(topics=topics, total_topics=total_topics, display_weights=True)
+
+print("\nAll topic modeling approaches completed successfully!")
