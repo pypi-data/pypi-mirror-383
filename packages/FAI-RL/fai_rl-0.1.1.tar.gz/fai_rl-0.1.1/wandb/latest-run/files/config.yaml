@@ -1,0 +1,231 @@
+_wandb:
+    value:
+        cli_version: 0.22.2
+        e:
+            mmtctnaddq6yko5q4j9zdyqnbtcbptae:
+                args:
+                    - --config
+                    - configs/training/sft/llama3_3B_lora_recipe.yaml
+                cpu_count: 48
+                cpu_count_logical: 96
+                cudaVersion: "12.4"
+                disk:
+                    /:
+                        total: "536858308608"
+                        used: "363048890368"
+                docker: .artifactory.rbx.com/istio/proxyv2@sha256:f6f97fa4fb77a3cbe1e3eca0fa46bd462ad6b284c129cf57bf91575c4fb50cf9
+                email: ylim@roblox.com
+                executable: /home/jovyan/runs/FAI-RL-OSS/test_env/bin/python
+                git:
+                    commit: dcb1ca4890ba3cf13c6e23739701e358d39dbd16
+                    remote: https://github.com/Roblox/FAI-RL.git
+                gpu: NVIDIA A100-SXM4-80GB
+                gpu_count: 8
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-272151fd-ff3e-3e2f-38a6-1d380e27e21e
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-f4981251-f954-2f55-3b17-52de398fe8b7
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-1ed9ae35-5a28-1095-36ac-aff75a7f4ed4
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-ee5d481f-f3ec-4353-c59a-eb841966b4f3
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-1894a85f-65c5-a318-1ed7-775d322e07db
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-7022241d-e830-cf93-2aa3-8a224b798f2e
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-0e9e659d-9fd0-37a8-36ac-ddc5e71380f1
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-29595d55-b2c6-5137-61eb-a69a49f798ab
+                host: ylim-beaver-training-0
+                memory:
+                    total: "1204529889280"
+                os: Linux-5.10.233-224.894.amzn2.x86_64-x86_64-with-glibc2.31
+                program: /home/jovyan/runs/FAI-RL-OSS/test_env/bin/fai-rl-train
+                python: CPython 3.10.8
+                root: /home/jovyan/runs/FAI-RL-OSS-PACKAGING
+                startedAt: "2025-10-09T23:27:15.047006Z"
+                writerId: mmtctnaddq6yko5q4j9zdyqnbtcbptae
+        m: []
+        python_version: 3.10.8
+        t:
+            "1":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 51
+                - 71
+                - 84
+                - 98
+            "2":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 51
+                - 71
+                - 84
+                - 98
+            "3":
+                - 2
+                - 13
+                - 15
+                - 16
+            "4": 3.10.8
+            "5": 0.22.2
+            "6": 4.57.0
+            "12": 0.22.2
+            "13": linux-x86_64
+algorithm:
+    value: sft
+base_model_name:
+    value: meta-llama/Llama-3.2-3B-Instruct
+beta:
+    value: 0
+bf16:
+    value: true
+bnb_4bit_compute_dtype:
+    value: bfloat16
+bnb_4bit_quant_type:
+    value: nf4
+bnb_4bit_use_double_quant:
+    value: true
+cliprange:
+    value: 0.2
+cliprange_value:
+    value: 0.2
+dataloader_drop_last:
+    value: true
+dataloader_num_workers:
+    value: 0
+dataloader_pin_memory:
+    value: false
+dataset_num_proc:
+    value: 1
+datasets:
+    value:
+        - answer_column: answer
+          chosen_column: chosen
+          dataset_columns:
+            - prompt
+            - response
+            - prompt_label
+            - response_label
+          name: nvidia/Aegis-AI-Content-Safety-Dataset-2.0
+          prompt_column: prompt
+          rejected_column: rejected
+          split: train
+          subset: null
+deepspeed_config:
+    value: null
+epsilon:
+    value: 0.0003
+epsilon_high:
+    value: 0.0004
+eval_steps:
+    value: 50
+fp16:
+    value: false
+gamma:
+    value: 1
+gradient_accumulation_steps:
+    value: 16
+gradient_checkpointing:
+    value: true
+group_size:
+    value: 4
+importance_sampling_level:
+    value: sequence
+lam:
+    value: 0.95
+learning_rate:
+    value: 0.0001
+load_in_4bit:
+    value: false
+load_in_8bit:
+    value: false
+logging_steps:
+    value: 5
+lora_alpha:
+    value: 16
+lora_bias:
+    value: none
+lora_dropout:
+    value: 0.05
+lora_r:
+    value: 8
+lora_target_modules:
+    value:
+        - q_proj
+        - v_proj
+        - k_proj
+        - o_proj
+        - gate_proj
+        - up_proj
+        - down_proj
+low_cpu_mem_usage:
+    value: true
+max_length:
+    value: 2048
+max_prompt_length:
+    value: 1024
+max_steps:
+    value: -1
+num_train_epochs:
+    value: 1
+output_dir:
+    value: models/llama3_3B_Inst_SFT_lora_v1
+per_device_train_batch_size:
+    value: 1
+prediction_loss_only:
+    value: true
+prompt_column:
+    value: prompt
+remove_unused_columns:
+    value: false
+save_only_model:
+    value: true
+save_steps:
+    value: 50
+steps_per_generation:
+    value: 4
+system_prompt:
+    value: "You are a skilled content moderator responsible for evaluating the dialog below.\n  \nAssess the dialogue between the `user` and the `response`.\n\n<BEGIN CONVERSATION>\nUser: {prompt}\nResponse: {response}\n<END CONVERSATION>\n\nProvide your safety assessment for the above conversation in the following JSON format. Include only the specified fields.\n{{\n  \"User Safety\": \"safe\" or \"unsafe\",\n  \"Response Safety\": \"safe\" or \"unsafe\"\n}}  \n\nDo not include anything other than the output JSON in your response.\nOutput JSON:\n{{\n  \"User Safety\": \"{prompt_label}\",\n  \"Response Safety\": \"{response_label}\"\n}}\n"
+torch_dtype:
+    value: bfloat16
+use_flash_attention:
+    value: false
+use_lora:
+    value: true
+value_model_name:
+    value: null
+vf_coef:
+    value: 0.1
+warmup_steps:
+    value: 100
