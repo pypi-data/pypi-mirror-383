@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "mr-kot-fs-validators"
+version = "0.1.0"
+description = "Reusable filesystem validators for Mr. Kot checks."
+authors = ["Alexander Presniakov <alexander.presniakov@mariadb.com>"]
+readme = "README.md"
+license = "MIT"
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Testing",
+  "Environment :: Console",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+# Use the released core package for publishing
+mr-kot = "^0.8.1"
+
+# No entry points are required for this library-only package.
+[tool.poetry.scripts]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+ruff = "^0.5.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "W",   # pycodestyle warnings
+  "I",   # isort
+  "N",   # pep8-naming
+  "B",   # flake8-bugbear
+  "UP",  # pyupgrade
+  "SIM", # flake8-simplify
+  "RUF", # Ruff-specific rules
+]
+ignore = [
+  "N802",   # Function names can be uppercase (all validators)
+  "UP006",
+  "UP035",
+  "UP007",
+  "UP045",
+]
