@@ -1,0 +1,40 @@
+Metadata-Version: 2.4
+Name: vmipy
+Version: 25.9.17
+Summary: SDK for vmilabs
+Home-page: https://github.com/openvmi/vmipy
+Author: vmilabs
+Author-email: zeekzhou@163.com
+License: Apache-2.0
+Keywords: vmilabs python SDK
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyserial
+Requires-Dist: paho-mqtt
+Requires-Dist: websocket-client
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# vmipy
+
+[![Upload Python Package](https://github.com/openvmi/vmipy/actions/workflows/python-publish.yml/badge.svg)](https://github.com/openvmi/vmipy/actions/workflows/python-publish.yml)
+
+SDK for openvmi org.
+
+## Note
+
+To reduce the installation issue, please install the below dependency by maunal if need to use `ohand` or  `gforce` SDK:
+
+* bleak==0.20.2
+* bleak-winrt==1.2.0
+* numpy==1.25.2
