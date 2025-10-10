@@ -1,0 +1,12 @@
+malac-utils>=1.2.0
+malac-models-fhir>=1.1.0
+malac-models-cda>=1.1.0
+malac-transformer-fhir>=1.1.0
+antlr4-python3-runtime>=4.13.0
+antlr4-tools>=0.2.1
+
+[cda]
+malac-models-cda>=1.1.0
+
+[test]
+pytest>=7.0.0

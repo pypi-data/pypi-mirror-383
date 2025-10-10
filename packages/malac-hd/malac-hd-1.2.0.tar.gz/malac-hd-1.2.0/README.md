@@ -1,0 +1,149 @@
+# MaLaC-HD
+
+MaLaC-HD (MApping LAnguage Compiler for Health Data) is a tool that you can use to convert mappings between different health data formats to executable code. It can also be used as a library to dynamically execute mappings.
+
+[TOC]
+
+## Contributing and Support
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for contributing to cdeHealth projects which are hosted in the [cdeHealth group](https://gitlab.com/cdehealth) on GitLab.com.
+Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) to make participation in our community a harassment free experience for everyone.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running.
+
+### Installation
+
+Install malac-hd and its dependencies via pip, e.g. with CDA support:
+
+```
+pip install malac-hd[cda]
+```
+
+... or, if you want to build from source:
+
+
+```
+git clone https://gitlab.com/cdehealth/malac/models.git
+pip install -e models/fhir
+
+git clone https://gitlab.com/cdehealth/malac/utils.git
+pip install -e utils
+
+git clone https://gitlab.com/cdehealth/malac/transformer.git
+pip install -e transformer/fhir
+
+git clone https://gitlab.com/cdehealth/malac-hd.git
+pip install -e malac-hd
+```
+
+... and if you need to transform to or from cda:
+```
+git clone https://gitlab.com/cdehealth/malac/models.git
+pip install -e models/cda
+```
+
+
+### Using MaLaC-HD
+
+with `malac-hd --help` you will get an overview:
+
+```
+____________________ MaLaC-HD 1.2.0 started ____________________
+usage: malac-hd [-h] -m MAPPING [-co CONVERT_OUTPUT] [-ti TRANSFORM_INPUT] [-to TRANSFORM_OUTPUT] [-s]
+
+You are using the MApping LAnguage Compiler for Health Data, short MaLaC-HD.
+We differentiate between two modes, CONVERTING and TRANSFORMING.
+The CONVERSION is done by compiling a given mapping to python code, that itself can be run with its own argument handling for TRANSFORMING input files.
+Additionally, the TRANSFORMATION can also be be done by MaLaC-HD directly after CONVERSION, i.e. for direct testing purposes.
+
+options:
+  -h, --help            show this help message and exit
+  -m MAPPING, --mapping MAPPING
+                        the mapping file path, the conversion/mapping rule language is detected by file ending, right now FML maps (*.map), FHIR R4 (*.4.fhir.xml) StructureMaps and ConceptMaps can be given as mappings
+  -co CONVERT_OUTPUT, --convert_output CONVERT_OUTPUT
+                        the conversion python file path, if not given, saved in the working directory with the map-file name
+  -ti TRANSFORM_INPUT, --transform_input TRANSFORM_INPUT
+                        the transformation input file path, the ressource type is detected by its root node inside the xml
+  -to TRANSFORM_OUTPUT, --transform_output TRANSFORM_OUTPUT
+                        the transformation output file path, the ressource type is detected by its root node inside the xml
+  -s, --silent          do not print the converted python mapping to console
+```
+
+#### Example Usage 
+
+Convert an FML map to Python and directly execute it:
+```
+malac-hd -m tests/fml/r4/aut_lab/CdaToBundle.4.map -co cdaToBundle.py -ti tests/structuremap/r4/aut_lab/Lab_Allgemeiner_Laborbefund.at.cda.xml -to bundle.4.fhir.xml
+```
+
+Execute the generated Python code:
+```
+python cdaToBundle.py -s tests/structuremap/r4/aut_lab/Lab_Allgemeiner_Laborbefund.at.cda.xml -t bundle.4.fhir.xml
+```
+
+The input files for the example are included in the source.
+
+## Why?
+
+When having parallel operations of some sort or another, there is one requirement that is challenging in the context of standardized APIs: mapping data, to make it accessible to the different worlds at least.
+
+There are many methods to map from one semi-structured data format to another. Most of the times, when a mapping requirement reveals, it is solved by a quick small script. After some time, that script needs technical or rule updates. As the rules are directly coded, they can only be altered by someone having knowledge about the mapping content, the mapping rules and the mapping technology. 
+
+To divide these concerns, HL7 FHIR created resources for mapping purposes, like the [StructureMap](https://www.hl7.org/fhir/structuremap.html) for [transformation](https://www.hl7.org/fhir/structuremap-operation-transform.html) and [ConceptMap](https://www.hl7.org/fhir/conceptmap.html) for [translation](https://www.hl7.org/fhir/conceptmap-operation-translate.html). Additionally a more human readable metalanguage for creating such StructureMap and ConceptMap resources was created, called [FHIR Mapping Language, or in short FML](https://www.hl7.org/fhir/mapping-language.html). Interestingly enough, FML is not restricted to FHIR as a source or target for the mapping. It could also be used i.e. to map from HL7 CDA to OHDSI OMOP CDM.
+
+Current FML or StructureMap/ConceptMap tools are quite slow in the transformation/translation of the content to be mapped, as both steps, the processing of the rules and the transformation/translation itself is done every time. As a gold standard and sparring partner for this project, the Canadian open source project [HAPI](https://github.com/hapifhir) with its Suisse extension [matchbox](https://www.matchbox.health/) has been used. Additionally, we got notice about some Italian project speeding up matchbox, but couldn't find any public references.
+
+We can't use current tools to map data synchronously, as nearly all mapping executions need more time than the [dorethy threshold of 0.4 seconds](https://lawsofux.com/doherty-threshold/), resulting in the users perception of "it got stuck". Also the practical, but restricted FHIR mapping language does not offer any possibilities to extend it with further functions, in contrast to the StructureMap and ConceptMap resources themselves, that could be easily extended.
+
+## How?
+
+Focusing on but not restricting to the health information technology world, a partnership was created out of the experts in the CDA2FHIR HL7 Austria Working Group, to solve this issue. On one side with expertise in research and on the other side with expertise in EHRs.
+
+By applying the MVP concept of build-measure-learn-repeat, first versions were created and tested against already existing FML-mappings in the HL7 community and matchbox as a mapping tool. 
+
+As the partners are themselves heavy users of the resulting MVPs, using them immediately after release, quick iterations of four months are planned.
+
+## What?
+
+MaLaC-HD is intended to focus on transformation speed and easy extensibility after compilation/conversion. This is achieved by seperation of 
+* the processing from FML to StructureMap/ConceptMap, 
+* the conversion from StructureMap/ConceptMap to python code, 
+* the execution of the translation itself from source to target. 
+It uses the mappings and requirements of some preliminary projects (i.e. https://github.com/HL7Austria/CDA2FHIR) as testing data.
+
+MaLaC-HD is not limited to the use of FML or StructureMap/ConceptMap for the translation, but has already implemented a conversion from StructureMap/ConceptMaps to python code. It can be used to transform/translate different input formats to different output formats, using some conversion/mapping rule language and the XSD or JSON schemas of the input and output format. It also makes it easier to develop new conversion or mapping rule languages, further input formats and/or extensions.
+
+## Detailed Workflow
+
+The processing and conversion from FML/StructureMap/ConceptMap to Python code is handled in different components of MaLaC-HD. The following graph shows which components are responsible and in what order they are called.
+
+[![Detailed workflow of conversion process](images/workflow.drawio.svg){: style="width: 100%"}](images/workflow.drawio.svg)
+
+Our pipeline is able to directly process FML code, but can also convert StructureMap or ConceptMap ressources to Python. For the FML to StructureMap/ConceptMap conversion and the ConceptMap to Python conversion, individual generators/parsers for the supported FHIR versions exist. Even though they share a lot of code, they contain specific logic for each FHIR version. For the StructureMap to Python conversion, only a generator for the latest FHIR version exists. Legacy StructureMaps are internally transformed to the latest version, to ensure backwards compatibility. As this is the most complex step in the conversion, this allows us to simplify things by only having a single codebase.
+
+## Pursued Objectives
+The development of MaLaC-HD focuses on the following three main objectives and their respective sub-objectives:
+
+- The compilation of the conversion/mapping rules by MaLaC-HD and the resulting mapping of these rules in a common programming language must be easily readable and directly related to the conversion/mapping rules.
+  - The conversion/mapping rules must be ballotable so that they can be queried and discussed for completeness and correctness as part of a guideline or even as a standalone part in a community, such as the HL7 community.
+- MaLaC-HD must not be dependent on any conversion rule language in order to be able to easily process conversion/mapping rules that can be mapped in different conversion rule languages.
+  - In particular, the limits of the respective conversion rule language require simple narrative extensibility in order to draw attention to the fact that further code must be added manually in the respective generated code by means of placeholders.
+- The result of compiling the conversion/mapping rules must be trimmed for speed and stability so as not to add any obstructive delays.
+  - The compiled conversion/mapping rules should be executable as stand-alone program code without MaLaC-HD.
+
+## Timeline
+
+[![Timeline of the MaLaC-HD project](images/timeline.png){: style="width: 100%"}](images/timeline.png)
+
+## Authors and acknowledgment
+We want to thank
+- [ELGA GmbH](https://www.elga.gv.at/) with their [CDA2FHIR](https://collab.hl7.at/display/BAL/AG+ELGA+CDA+Laborbefund+zu+FHIR) projects and
+- [AIT Austrian Institute of Technology GmbH](https://www.ait.ac.at/) with their [SmartFOX](https://www.smart-fox.at/) project.
+
+Additionally, we want to thank 
+- [Dave Kuhlman](https://davekuhlman.org/) with his open source implementation of [generateDS](https://www.davekuhlman.org/generateDS.html), making quick serializations of new data structures from their XSD schemas possible. 
+
+## License
+This is a LGPL licensed project, with a small addition that any usage of this project or the results of this project should contain a malac icon which is visible for the consumer. Multiple versions of the malac icon can be found in [images](images/). Changing the color of any malac_simple version is allowed, if the icon itself is still visible on your background.
