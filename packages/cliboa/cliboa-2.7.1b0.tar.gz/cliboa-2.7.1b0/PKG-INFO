@@ -1,0 +1,84 @@
+Metadata-Version: 2.4
+Name: cliboa
+Version: 2.7.1b0
+Summary: application framework for ETL(ELT) processing
+License-Expression: MIT
+License-File: LICENSE
+Keywords: etl,elt,data pipeline,workflow,automation,framework
+Author: BrainPad
+Author-email: cliboa@brainpad.co.jp
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Dist: PyMySQL (>=1.0.2,<2.0.0)
+Requires-Dist: PyYaml (>=6.0.2,<7.0.0)
+Requires-Dist: azure-storage-blob (>=12.9.0,<13.0.0)
+Requires-Dist: boto3 (>=1.20.16,<2.0.0)
+Requires-Dist: chardet (>=4.0.0)
+Requires-Dist: cloudpickle (>=2.0.0)
+Requires-Dist: cryptography (>=44.0.1,<45.0.0)
+Requires-Dist: dask (>=2025.7.0)
+Requires-Dist: google-auth (>=2.3.3,<3.0.0)
+Requires-Dist: google-cloud-bigquery (>=2.30.1)
+Requires-Dist: google-cloud-firestore (>=2.3.4,<3.0.0)
+Requires-Dist: google-cloud-storage (>=1.43.0)
+Requires-Dist: jsonlines (>=2.0.0)
+Requires-Dist: multiprocessing-logging (>=0.3.1,<0.4.0)
+Requires-Dist: numpy (<2)
+Requires-Dist: pandas (>=1.3.4)
+Requires-Dist: paramiko (>=2.10.5)
+Requires-Dist: psycopg2-binary (>=2.9.1,<3.0.0)
+Requires-Dist: pyarrow (>=14.0.1)
+Requires-Dist: python-dateutil (>=2.9.0,<3.0.0)
+Requires-Dist: python-gnupg (>=0.5.4,<0.6.0)
+Requires-Dist: requests (>=2.26.0,<3.0.0)
+Project-URL: ChangeLog, https://github.com/BrainPad/cliboa/releases
+Project-URL: Documentation, https://github.com/BrainPad/cliboa/wiki
+Project-URL: Homepage, https://github.com/BrainPad/cliboa
+Project-URL: Issues, https://github.com/BrainPad/cliboa/issues
+Project-URL: Repository, https://github.com/BrainPad/cliboa
+Description-Content-Type: text/markdown
+
+[![PyPI](https://img.shields.io/pypi/v/cliboa?style=flat-square)](https://pypi.org/project/cliboa)
+[![PyPI - Implementation](https://img.shields.io/pypi/implementation/cliboa?style=flat-square)](https://pypi.org/project/cliboa)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cliboa?style=flat-square)](https://pypi.org/project/cliboa)
+[![GitHub Actions](https://github.com/BrainPad/cliboa/actions/workflows/test.yaml/badge.svg)](https://github.com/BrainPad/cliboa/actions/workflows/test.yaml)
+[![Code Style:
+black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![Contributions Welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3&style=flat-square)](https://github.com/BrainPad/cliboa/blob/master/CONTRIBUTING.md)
+[![Repo Size](https://img.shields.io/github/repo-size/BrainPad/cliboa)](https://github.com/BrainPad/cliboa)
+[![Gitter](https://badges.gitter.im/cliboa/users.svg)](https://gitter.im/cliboa/users?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
+# Table of Contents
+* [Introduction](#introduction)
+  * [What is cliboa](#what-is-cliboa)
+  * [Features](#features)
+* [Documentation](#documentation)
+
+# Introduction
+## What is cliboa
+cliboa is an application framework which can implement ETL(ELT) pipeline. It eases the implementation of ETL(ELT) pipeline. In this case, ETL(ELT) pipeline means the processings like fetch, transform and transfer of data between various databases, storages, and other services.
+![](/img/cliboa_brief.png)
+
+## Features
+- Python based framework.
+- ETL(ELT) processing is executable by YAML based configuration.
+- Additional modules for ETL(ELT) pipeline can be implemented by only a few steps if default modules not enough.
+
+# Documentation
+
+* [QuickStart](/docs/quick_start.md)
+* [MANUAL](/docs/manual.md)
+  * [YAML Configuration](/docs/yaml_configuration.md)
+  * [Default ETL Modules](/docs/default_etl_modules.md)
+* [How to Contribute](/CONTRIBUTING.md)
+  * [Coding Style Guide](/docs/developers/coding_style_guide.md)
+  * [Layered Architecture](/docs/developers/layered_architecture.md)
+  * [How to Implement Additional ETL Modules](/docs/additional_etl_modules.md)
+    * [Step Class Extention](/docs/developers/step_class_extention.md)
+
