@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>vibeDazi Logs</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>vibeDazi</h1>
+      <div id="status"></div>
+    </header>
+    <main>
+      <aside>
+        <h2>Rounds</h2>
+        <ul id="rounds"></ul>
+        <h2>Flight Log</h2>
+        <ul id="flight"></ul>
+      </aside>
+      <section id="details">
+        <div id="summary"></div>
+        <h3>Prompt</h3>
+        <pre id="prompt"></pre>
+        <h3>Events</h3>
+        <ul id="events"></ul>
+        <h3>Commits since last log</h3>
+        <ul id="commits"></ul>
+        <h3>Diffs</h3>
+        <pre id="diffs" class="diff"></pre>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+  </html>
+
