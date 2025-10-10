@@ -1,0 +1,145 @@
+Metadata-Version: 2.4
+Name: cryptocom_agent_plugin_telegram
+Version: 1.1.6
+Summary: Telegram plugin for Crypto.com Agent Client
+Author: Ric Arcifa
+Author-email: ricardo.arcifa@crypto.com
+Requires-Python: >=3.12,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: cryptocom-agent-client (>=1.2.1)
+Requires-Dist: python-telegram-bot (==21.11.1)
+Description-Content-Type: text/markdown
+
+# Crypto.com Agent Plugin – Telegram
+
+The **Crypto.com Agent Plugin – Telegram** adds support for Telegram bots to the [Crypto.com Agent Client](https://pypi.org/project/cryptocom-agent-client/) ecosystem. This plugin enables conversational agents to operate directly within Telegram chats using the standard Agent SDK lifecycle and plugin system.
+
+## Features
+
+### Telegram Integration
+
+- Create conversational agents that respond directly to Telegram messages.
+- Handles `/start` and free-text message commands.
+- Automatically splits long messages (>4096 characters).
+- Uses Telegram’s polling API.
+
+### Plugin Architecture
+
+- Packaged as a standalone Python plugin.
+- Uses Python entry points and PEP 621 standards (`pyproject.toml`).
+- Implements the standard `AgentPlugin` interface with `setup()` and `run()` lifecycle hooks.
+- Declares its role as a `primary` plugin — meaning it can control the main execution loop (only one such plugin is allowed at a time).
+
+### Easy to Install and Extend
+
+- Fully decoupled from the core agent client.
+- Compatible with other plugins (e.g., storage, LangFuse, CLI).
+- Automatically discovered and initialized by the SDK.
+
+## Installation
+
+Install the plugin into your environment:
+
+```bash
+pip install cryptocom-agent-plugin-telegram
+```
+
+## Usage
+
+### Importing the Plugin
+
+```python
+from crypto_com_agent_plugin_telegram import TelegramPlugin
+```
+
+### Using with the Agent SDK
+
+```python
+from crypto_com_agent_client import Agent
+
+telegram_plugin = TelegramPlugin(bot_token="YOUR_TELEGRAM_BOT_TOKEN")
+
+agent = Agent.init(
+    llm_config={...},
+    blockchain_config={...},
+    plugins={...},
+    plugin_instances=[telegram_plugin],
+)
+
+agent.start()
+```
+
+## Plugin Lifecycle
+
+This plugin defines:
+
+- `mode = "primary"` — only one primary plugin is started with `agent.start()`.
+- `setup(handler)` — sets up Telegram handlers for messages and commands.
+- `run()` — starts the Telegram polling loop.
+- Optional `on_ready(handler)` for support-mode plugins (not used here).
+
+## Example
+
+```python
+from crypto_com_agent_client import Agent
+from crypto_com_agent_plugin_telegram import TelegramPlugin
+
+telegram = TelegramPlugin(bot_token="123:abc...")
+
+agent = Agent.init(
+    llm_config={
+        "provider": "OpenAI",
+        "model": "gpt-4",
+        "provider-api-key": "sk-...",
+    },
+    blockchain_config={
+        "api-key": "YOUR_SDK_API_KEY",
+    },
+    plugins={
+        "personality": {
+            "tone": "friendly",
+            "language": "English",
+            "verbosity": "high",
+        },
+        "instructions": "Be helpful and concise.",
+    },
+    plugin_instances=[telegram],
+)
+
+agent.start()
+```
+
+## Entry Point Declaration
+
+This plugin is auto-discoverable via `pyproject.toml`:
+
+```toml
+[tool.poetry.plugins."crypto_com_agent.plugins"]
+telegram = "crypto_com_agent_plugin_telegram:TelegramPlugin"
+```
+
+The Agent SDK uses this to dynamically discover and load plugins.
+
+## File Structure
+
+```
+crypto_com_agent_plugin_telegram/
+├── __init__.py
+└── telegram.py  # Main plugin implementation
+```
+
+## Contributing
+
+We welcome contributions! Please ensure your plugin follows the `AgentPlugin` interface and includes proper setup and lifecycle hooks.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
+Let me know if you’d like a `pyproject.toml` snippet included too, or a quickstart test script.
+
