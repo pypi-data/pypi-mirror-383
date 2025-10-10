@@ -1,0 +1,134 @@
+Metadata-Version: 2.4
+Name: data-syncmaster
+Version: 0.2.5
+Summary: Syncmaster REST API + Worker
+License: Apache-2.0
+License-File: LICENSE.txt
+Keywords: Syncmaster,REST,API,Worker,Spark,Transfer,ETL
+Author: DataOps.ETL
+Author-email: onetools@mts.ru
+Requires-Python: >=3.11,<4.0
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: FastAPI
+Classifier: Framework :: Pydantic
+Classifier: Framework :: Pydantic :: 2
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Typing :: Typed
+Provides-Extra: scheduler
+Provides-Extra: server
+Provides-Extra: worker
+Requires-Dist: alembic (>=1.15.2,<2.0.0) ; extra == "server"
+Requires-Dist: apscheduler (>=3.11.0,<4.0.0) ; extra == "scheduler"
+Requires-Dist: asgi-correlation-id (>=4.3.4,<5.0.0) ; extra == "server" or extra == "worker"
+Requires-Dist: asyncpg (>=0.30.0,<0.31.0) ; extra == "server" or extra == "scheduler"
+Requires-Dist: celery (>=5.5.0,<6.0.0) ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: coloredlogs ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: fastapi (>=0.115.12,<0.119.0) ; extra == "server"
+Requires-Dist: horizon-hwm-store (>=1.1.2,<2.0.0) ; extra == "worker"
+Requires-Dist: itsdangerous (>=2.2.0,<3.0.0) ; extra == "server"
+Requires-Dist: jinja2 (>=3.1.6,<4.0.0) ; extra == "server" or extra == "worker"
+Requires-Dist: onetl[all] (>=0.13.5,<0.15.0) ; extra == "worker"
+Requires-Dist: psycopg2-binary (>=2.9.10,<3.0.0) ; extra == "server" or extra == "worker"
+Requires-Dist: pydantic (>=2.11.7,<3.0.0)
+Requires-Dist: pydantic-settings (>=2.8.1,<3.0.0) ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: pyjwt (>=2.10.1,<3.0.0) ; extra == "server"
+Requires-Dist: pyspark (<4.0.0) ; extra == "worker"
+Requires-Dist: python-json-logger ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: python-keycloak (>=5.3.1,<6.0.0) ; extra == "server"
+Requires-Dist: python-multipart (>=0.0.20,<0.0.21) ; extra == "server"
+Requires-Dist: pyyaml ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: sqlalchemy (>=2.0.40,<3.0.0) ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: sqlalchemy-utils (>=0.41.2,<0.43.0) ; extra == "server" or extra == "worker" or extra == "scheduler"
+Requires-Dist: starlette-exporter (>=0.23.0,<0.24.0) ; extra == "server"
+Requires-Dist: uuid6 (>=2025.0.0,<2026.0.0) ; extra == "server" or extra == "worker"
+Requires-Dist: uvicorn (>=0.34,<0.38) ; extra == "server"
+Project-URL: CI/CD, https://github.com/MobileTeleSystems/syncmaster/actions
+Project-URL: Documentation, https://syncmaster.readthedocs.io
+Project-URL: Homepage, https://github.com/MobileTeleSystems/syncmaster
+Project-URL: Source, https://github.com/MobileTeleSystems/syncmaster
+Project-URL: Tracker, https://github.com/MobileTeleSystems/syncmaster/issues
+Description-Content-Type: text/x-rst
+
+.. _readme:
+
+Data.SyncMaster
+===============
+
+|Repo Status| |Docker image| |PyPI| |PyPI License| |PyPI Python Version| |Documentation|
+|Build Status| |Coverage| |pre-commit.ci|
+
+.. |Repo Status| image:: https://www.repostatus.org/badges/latest/wip.svg
+    :target: https://www.repostatus.org/#wip
+.. |Docker image| image:: https://img.shields.io/docker/v/mtsrus/syncmaster-server?sort=semver&label=docker
+    :target: https://hub.docker.com/r/mtsrus/syncmaster-server
+.. |PyPI| image:: https://img.shields.io/pypi/v/data-syncmaster
+    :target: https://pypi.org/project/data-syncmaster/
+.. |PyPI License| image:: https://img.shields.io/pypi/l/data-syncmaster.svg
+    :target: https://github.com/MobileTeleSystems/syncmaster/blob/develop/LICENSE.txt
+.. |PyPI Python Version| image:: https://img.shields.io/pypi/pyversions/data-syncmaster.svg
+    :target: https://badge.fury.io/py/data-syncmaster
+.. |Documentation| image:: https://readthedocs.org/projects/syncmaster/badge/?version=stable
+    :target: https://syncmaster.readthedocs.io
+.. |Build Status| image:: https://github.com/MobileTeleSystems/syncmaster/workflows/Run%20All%20Tests/badge.svg
+    :target: https://github.com/MobileTeleSystems/syncmaster/actions
+.. |Coverage| image:: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/
+    MTSOnGithub/03e73a82ecc4709934540ce8201cc3b4/raw/syncmaster_badge.json
+    :target: https://github.com/MobileTeleSystems/syncmaster/actions
+.. |pre-commit.ci| image:: https://results.pre-commit.ci/badge/github/MobileTeleSystems/syncmaster/develop.svg
+    :target: https://results.pre-commit.ci/latest/github/MobileTeleSystems/syncmaster/develop
+
+
+What is Data.SyncMaster?
+------------------------
+
+Data.SyncMaster is as low-code ETL tool for transfering data between databases and file systems.
+List of currently supported connections:
+
+* Apache Hive
+* Clickhouse
+* Postgres
+* Oracle
+* MSSQL
+* MySQL
+* HDFS
+* S3
+* FTP
+* FTPS
+* SFTP
+* Samba
+* WebDAV
+
+Based on `onETL <https://onetl.readthedocs.io/>`_ and `Apache Spark <https://spark.apache.org/>`_.
+
+**Note**: service is under active development, and is not ready to use.
+
+Goals
+-----
+
+* Make transfering data between databases and file systems as simple as possible
+* Provide a lot of builtin connectors to transfer data in heterogeneous environment
+* RBAC and multitenancy support
+
+Non-goals
+---------
+
+* This is not a backup system
+* Only batch, no streaming
+
+.. documentation
+
+Documentation
+-------------
+
+See https://syncmaster.readthedocs.io
+
