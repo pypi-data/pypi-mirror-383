@@ -1,0 +1,33 @@
+[project]
+name = "counterpy"
+version = "1.0.0"
+description = "Simple CLI cantus firmus generator based on a genetic algorithm"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+authors = [{ name = "Matias Ceau", email = "matias@ceau.net" }]
+license = { text = "GPL-3.0-or-later" }
+dependencies = ["click>=8.3.0", "numpy>=2.3.3", "sounddevice>=0.5.2"]
+keywords = ["counterpoint", "cantus firmus", "genetic algorithm"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX",
+  "Operating System :: Unix",
+  "Operating System :: MacOS",
+]
+urls = { "Homepage" = "https://github.com/matias-ceau/counterpy" }
+
+[project.scripts]
+counterpy = "counterpy:main"
+
+[build-system]
+requires = ["uv_build>=0.9.1,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "sphinx-click>=6.1.0",
+]
