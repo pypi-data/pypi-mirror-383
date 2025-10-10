@@ -1,0 +1,34 @@
+server:
+  config:
+    api_key: 6b9ef1f769msh95c46a345010a18p1fa99cjsn7d5c1b0c7195
+    rapidapi_host: travelling-salesman-problem-best-route-finder.p.rapidapi.com
+  description: 'The travelling salesman problem (TSP) asks the following question:
+    Given a list of cities and the distances between each pair of cities, what is
+    the shortest possible route that visits each city exactly once and returns to
+    the origin city? It is an NP-hard problem in combinatorial optimization, important
+    in theoretical computer science and operations research.'
+  name: Travelling Salesman Problem. Best Route Finder
+  options:
+    requestTimeoutMillis: 15000
+tools:
+- args:
+  - default: M
+    description: 'Distance units: M - miles or K - kilometers'
+    name: units
+    required: 'False'
+  description: Find the best (shortest) route
+  name: go
+  requestTemplate:
+    body: '[[-33.91999211736843, 151.26079376999053, "Giles Baths, AU"], [-33.919396335569076,
+      151.2604308128357, "Bali Memorial, AU"], [-33.9183457704342, 151.25914335250854,
+      "Dunningham Reserve, AU"], [-33.91682331831124, 151.26137495040894, "Jesse Shop,
+      AU"], [-33.92034005252707, 151.25825822353363, "Coogee Beach, AU"]]'
+    headers:
+    - key: x-rapidapi-key
+      value: '{{config.api_key}}'
+    - key: x-rapidapi-host
+      value: '{{config.rapidapi_host}}'
+    - key: Content-Type
+      value: application/json
+    method: POST
+    url: https://travelling-salesman-problem-best-route-finder.p.rapidapi.com/?units={{args.units}}
