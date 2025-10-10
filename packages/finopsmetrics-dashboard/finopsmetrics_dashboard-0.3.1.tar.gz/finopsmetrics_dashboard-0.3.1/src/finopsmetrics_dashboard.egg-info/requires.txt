@@ -1,0 +1,15 @@
+finopsmetrics>=0.3.0
+flask>=2.0.0
+flask-socketio>=5.3.0
+flask-cors>=4.0.0
+eventlet>=0.33.0
+pyyaml>=6.0
+
+[dev]
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+ruff>=0.1.0
+
+[enterprise]
+finopsmetrics-enterprise>=0.3.0

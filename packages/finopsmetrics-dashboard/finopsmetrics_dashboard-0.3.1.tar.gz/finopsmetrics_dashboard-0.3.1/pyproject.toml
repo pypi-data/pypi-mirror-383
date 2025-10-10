@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finopsmetrics-dashboard"
+version = "0.3.1"
+description = "FinOpsMetrics Dashboard - Web UI for FinOps Cost Monitoring & Analytics"
+readme = "README.md"
+license = {text = "Proprietary"}
+authors = [
+    {name = "FinOpsMetrics", email = "durai@infinidatum.net"},
+]
+maintainers = [
+    {name = "FinOpsMetrics", email = "durai@infinidatum.net"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: System :: Monitoring",
+    "Topic :: Office/Business :: Financial",
+    "Framework :: Flask",
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+keywords = [
+    "finops", "dashboard", "web-ui", "monitoring", "visualization",
+    "iam", "rbac", "real-time", "websocket"
+]
+requires-python = ">=3.8"
+dependencies = [
+    "finopsmetrics>=0.3.0",  # Requires community edition
+    "flask>=2.0.0",
+    "flask-socketio>=5.3.0",
+    "flask-cors>=4.0.0",
+    "eventlet>=0.33.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Enterprise features (enhanced dashboards)
+enterprise = [
+    "finopsmetrics-enterprise>=0.3.0",
+]
+
+# Development and testing
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/rdmurugan/finopsmetrics-dashboard"
+Documentation = "https://finopsmetrics.readthedocs.io/dashboard"
+Repository = "https://github.com/rdmurugan/finopsmetrics-dashboard"
+
+[project.scripts]
+finopsmetrics-dashboard = "finopsmetrics.cli:dashboard_command"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+finopsmetrics = [
+    "webui/templates/*.html",
+    "webui/static/*.js",
+    "webui/static/*.css",
+    "dashboard/*.yaml",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
