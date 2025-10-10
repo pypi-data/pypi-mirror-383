@@ -1,0 +1,65 @@
+[project]
+name = "bencode.cy"
+version = "1.2.2"
+description = "A fast bencode implementation in Cython that supports Python 3. It uses Cython's pure Python syntax."
+readme = "README.md"
+requires-python = ">=3.9"
+license = 'MIT'
+keywords = [
+    'bencode',
+    'bencoder',
+    'bdecode',
+    'bittorrent',
+    'bencoding',
+    'cython',
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/touxiaoling/bencode.cy"
+Repository = "https://github.com/touxiaoling/bencode.cy"
+Issues = "https://github.com/touxiaoling/bencode.cy/issues"
+
+[build-system]
+requires = ["setuptools", "cython"]
+build-backend = "setuptools.build_meta"
+
+# [[tool.setuptools.ext-modules]]
+# name = "bencoder._bencode"
+# sources = ["bencoder/_bencode.py"]
+
+[tool.setuptools.packages.find]
+exclude = ["tests", "tests.*", "dist","build"]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+[dependency-groups]
+dev = [
+    "setuptools>=80.9.0",
+    "pytest>=8.4.2",
+    "pytest-benchmark>=5.1.0",
+    "bencoder-pyx>=3.0.1;python_version <= '3.11'",
+    "cython>=3.1.4",
+    "fastbencode>=0.3.6",
+    "bcoding>=1.5",
+    "bencodepy>=0.9.5",
+    "better-bencode>=0.2.1",
+    "bencode-rs>=0.0.5;python_version < '3.14'",
+    "bencode2>=0.3.26",
+]
+
+[tool.ruff]
+line-length = 128
+target-version = "py313"
+
+[tool.ruff.lint]
+ignore = ["F401"]
