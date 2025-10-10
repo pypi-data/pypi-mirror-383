@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rooctl"
+version = "1.0.0"
+description = "Official CLI for FounderX-AI Orchestration System - Execute templates, manage artifacts, and monitor workflows from the command line"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "rc-orchestration-sdk>=1.1.0",
+    "click>=8.0.0",
+    "rich>=13.0.0",
+    "tabulate>=0.9.0"
+]
+authors = [{name="FounderX-AI", email="dev@founderx.ai"}]
+maintainers = [{name="FounderX-AI", email="dev@founderx.ai"}]
+license = "MIT"
+keywords = ["orchestration", "cli", "founderx", "automation", "workflow", "command-line", "founderx-ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/founderx-ai/RooCommands"
+Documentation = "https://docs.founderx.ai/cli"
+"Source Code" = "https://github.com/founderx-ai/RooCommands/tree/main/orchestration-system/cli"
+"Bug Tracker" = "https://github.com/founderx-ai/RooCommands/issues"
+
+[project.scripts]
+rooctl = "cli.rooctl:main"
+
+[tool.setuptools]
+packages = ["cli"]
+package-dir = {"cli" = "."}
+
