@@ -1,0 +1,52 @@
+Metadata-Version: 2.4
+Name: ai-computing-broker
+Version: 1.0.1
+Platform: linux_x86_64
+Description-Content-Type: text/markdown
+Requires-Dist: grpcio!=1.68.1
+Requires-Dist: grpcio-tools!=1.68.1
+Requires-Dist: numpy
+Requires-Dist: nvidia-ml-py
+Requires-Dist: optree
+Requires-Dist: scipy
+Requires-Dist: toml
+Requires-Dist: cryptography>=41.0.0
+Requires-Dist: requests
+Requires-Dist: typing-extensions
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: platform
+Dynamic: requires-dist
+
+# Fujitsu AI Computing Broker (ACB)
+
+**Runtime-aware GPU resource management middleware for AI workloads**
+
+## What is ACB?
+
+Fujitsu AI Computing Broker (ACB) is an intelligent middleware that dynamically optimizes GPU allocation and manages memory oversubscription for AI/ML workloads. It monitors your AI framework in real-time to allocate GPUs only when needed, maximizing efficiency and reducing computing costs.
+
+## Key Benefits
+- **Improved GPU Utilization**: Automatically reclaims idle GPU time during CPU-bound phases (preprocessing, data loading)
+- **Higher Throughput**: Advanced scheduling with backfill optimization enables running more jobs concurrently
+- **Zero Code Changes**: Deploy with automatic mode - no modification to existing PyTorch programs required
+- **Memory Oversubscription**: Run multiple models on a single GPU when memory allows
+- **Cost Reduction**: Get more value from your GPU infrastructure through better resource utilization
+
+## Core Features
+- **Runtime-Aware Allocation**: Monitors PyTorch framework to assign GPUs dynamically during compute-intensive phases
+- **Full Memory Access**: Active programs get complete GPU memory without virtualization constraints (unlike MIG/vGPU)
+- **Intelligent Scheduling**: FIFO, GPU-sharing, and GPU-affinity schedulers with backfill support
+- **Multi-GPU & Multi-Node**: Supports distributed training with PyTorch DDP across multiple nodes
+- **Fast Deployment**: Works with unmodified programs via automatic interception or manual API integration
+
+## Quick Start
+```bash
+# Install
+pip install ai-computing-broker
+
+# Start GPU Assigner
+gpu_assigner start
+
+# Run your existing PyTorch program (no code changes!)
+AGA_ENABLE_AUTO=1 agarun python your_training_script.py
