@@ -1,0 +1,47 @@
+Metadata-Version: 2.4
+Name: haikufy
+Version: 0.1.0
+Project-URL: Documentation, https://github.com/andrewhall1124/haikufy#readme
+Project-URL: Issues, https://github.com/andrewhall1124/haikufy/issues
+Project-URL: Source, https://github.com/andrewhall1124/haikufy
+Author-email: andrewhall1124 <andrewmartinhall2@gmail.com>
+License-Expression: MIT
+License-File: LICENSE.txt
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.8
+Requires-Dist: huggingface-hub>=0.35.3
+Requires-Dist: pyperclip>=1.8.2
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: syllables>=1.0.9
+Requires-Dist: textual>=0.73.0
+Description-Content-Type: text/markdown
+
+# haikufy
+
+[![PyPI - Version](https://img.shields.io/pypi/v/haikufy.svg)](https://pypi.org/project/haikufy)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/haikufy.svg)](https://pypi.org/project/haikufy)
+
+-----
+
+## Table of Contents
+
+- [Installation](#installation)
+- [License](#license)
+
+## Installation
+
+```console
+pip install haikufy
+```
+
+## License
+
+`haikufy` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
