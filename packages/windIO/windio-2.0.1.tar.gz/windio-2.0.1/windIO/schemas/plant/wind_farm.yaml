@@ -1,0 +1,145 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "windIO/plant/wind_farm"
+title: Definition of the wind energy conversion system
+description: A file used to define either a single wind farm or multiple wind farms with turbine type mappings and additional built environment components
+required:
+  - name
+  - layouts
+optional:
+  - electrical_substations
+  - electrical_collection_array
+  - foundations
+  - O_&_M
+
+# PROPERTIES
+properties:
+  name:
+    description: Name of the wind farm or wind farm system
+    type: string
+
+  layouts:
+    description: Position of wind turbines. Supports single or multiple layouts.
+    oneOf:  # Allow either single layout as an object or multiple layouts as an array
+      - type: object
+        required:
+          - coordinates
+        properties:
+          coordinates:
+            description: List of turbine coordinates for this layout
+            $ref: "./common.yaml#/definitions/coordinates"
+      - type: array
+        items:
+          type: object
+          required:
+            - coordinates
+          properties:
+            coordinates:
+              description: List of turbine coordinates for this layout
+              $ref: "./common.yaml#/definitions/coordinates"
+            turbine_types:
+              description: (Optional) List of turbine types corresponding to turbine positions.
+              type: array
+              items:
+                type: integer
+
+  turbine_identifiers:
+    description: List of turbine id/tags
+    type: array
+    items:
+      type: string
+
+  turbines:
+    description: (Optional) The full turbine definition for the entire wind farm
+    $ref: "./turbine.yaml#"
+
+  turbine_types:
+    description: (Optional) List of turbine types used for layouts. Required if turbine_types is used in layouts.
+    type: object
+    additionalProperties:
+      $ref: "./turbine.yaml#"
+
+  electrical_substations:
+    description: Information about electrical substations
+    type: array
+    items:
+      type: object
+      required:
+        - electrical_substation
+      properties:
+        electrical_substation:
+          $ref: "#/definitions/electrical_substation"
+
+  electrical_collection_array:
+    title: Electrical collection array
+    description: Definition of electrical collection array (cable layout) for wind farm.
+    type: object
+    required:
+      - edges
+      - cables
+    properties:
+      edges:
+        title: Edges of cable layout
+        description: List of edges (branches) in the cable layout [[from_node, to_node, cable_type], ...].
+        type: array
+      cables:
+        title: Cables
+        description: List of the cables
+        type: object
+        required:
+          - cable_type
+          - cross_section
+          - capacity
+          - cost
+        properties:
+          cable_type:
+            title: Cable type
+            description: List of available cable types
+            type: array
+            units: mm^2
+          cross_section:
+            title: Cross section
+            description: List of cable cross sections
+            type: array
+            units: mm^2
+          capacity:
+            title: Cable capacity
+            description: List of cable capacities
+            type: array
+          cost:
+            title: Cable cost
+            description: List of cable costs
+            type: array
+            units: USD/m
+
+definitions:
+  coordinates:
+    title: Wind turbine or substation coordinates
+    type: object
+    required:
+      - coordinates
+    properties:
+      x:
+        type: array
+        items:
+          type: number
+      y:
+        type: array
+        items:
+          type: number
+
+  electrical_substation:
+    title: Electrical substation
+    type: object
+    required:
+      - coordinates
+    optional:
+      - capacity
+    properties:
+      coordinates:
+        title: Substation coordinates
+        $ref: "./common.yaml#/definitions/coordinates"
+      capacity:
+        title: Substation capacity
+        description: Capacity of the electrical substation in megawatts
+        type: number
+        units: MW

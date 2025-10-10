@@ -1,0 +1,131 @@
+{% from 'content.html' import content with context %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    $(document).on('click', 'a[href^="#"]', function(event) {
+  event.preventDefault();
+  history.pushState({}, '', this.href);
+});
+
+function flashElement(elementId) {
+    // $( "#" + elementId ).fadeOut(100).fadeIn(200).fadeOut(100).fadeIn(500);
+    myElement = document.getElementById(elementId);
+    myElement.classList.add("jsfh-animated-property");
+    setTimeout(function() {
+        myElement.classList.remove("jsfh-animated-property");
+    }, 1000);
+}
+
+function setAnchor(anchorLinkDestination) {
+    // Set anchor link without reloading
+    history.pushState({}, '', anchorLinkDestination);
+}
+
+function anchorOnLoad() {
+    // Added to onload on body, checks if there is an anchor link and if so, expand
+    let linkTarget = decodeURIComponent(window.location.hash.split("?")[0].split("&")[0]);
+    if (linkTarget[0] === "#") {
+        linkTarget = linkTarget.substr(1);
+    }
+
+    if (linkTarget.length > 0) {
+        anchorLink(linkTarget);
+    }
+}
+
+function anchorLink(linkTarget) {
+    const target = $( "#" + linkTarget );
+    // Find the targeted element to expand and all its parents that can be expanded
+    target.parents().addBack().filter(".collapse:not(.show), .tab-pane, [role='tab']").each(
+        function(index) {
+            if($( this ).hasClass("collapse")) {
+                $( this ).collapse("show");
+            } else if ($( this ).hasClass("tab-pane")) {
+                // We have the pane and not the tab itself, find the tab
+                const tabToShow = $( "a[href='#" + $( this ).attr("id") + "']" );
+                if (tabToShow) {
+                    tabToShow.tab("show");
+                }
+            } else if ($( this ).attr("role") === "tab") {
+                // The tab is not a parent of underlying elements, the tab pane is
+                // However, it can still be linked directly
+                $( this ).tab("show");
+            }
+        }
+    );
+
+    // Wait a little so the user has time to see the page scroll
+    // Or maybe it is to be sure everything is expanded before scrolling and I was not able to bind to the bootstrap
+    // events in a way that works all the time, we may never know
+    setTimeout(function() {
+        let targetElement = document.getElementById(linkTarget);
+        if (targetElement) {
+            targetElement.scrollIntoView({ block: "center", behavior:"smooth" });
+            // Flash the element so that the user notices where the link points to
+            setTimeout(function() {
+                flashElement(linkTarget);
+            }, 500);
+        }
+    }, 1000);
+}
+</script>
+<style>
+.badge-warning {
+    background-color: var(--pst-color-warning);
+    color: var(--pst-color-warning-text)
+}
+
+.badge-success {
+    background-color: var(--pst-color-success);
+    color: var(--pst-color-success-text)
+}
+
+.badge-dark {
+    background-color: var(--pst-color-info);
+    color: var(--pst-color-info-text)
+}
+
+.badge {
+    --bs-badge-font-size: unset;
+    --bs-badge-color: var(--pst-color); 
+}
+
+.card h2, h4 {
+    margin: unset;
+}
+
+.list-group-item{
+    background-color: unset;
+    color: unset;
+}
+
+.card {
+    --bs-card-bg: var(--pst-color-surface); 
+    --bs-card-color: var(--pst-color); 
+}
+
+#expand_buttons {
+    display: inline;
+    float: right;
+}
+
+:root {
+    --bs-link-color: var(--pst-color-link);   
+    --bs-card-bg: var(--pst-color-background); 
+    --bs-body-bg: var(--pst-color-background); 
+    --bs-body-color: var(--pst-color); 
+    --bs-emphasis-color: var(--pst-color); 
+    --bs-border-color: var(--pst-color-border);
+    --bs-border-color-translucent: var(--pst-color-border);
+}
+
+</style>
+
+
+{{ content(schema) }}
+
+
+<script defer>
+    anchorOnLoad();
+</script>

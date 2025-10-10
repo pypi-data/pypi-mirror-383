@@ -1,0 +1,21 @@
+{
+    "$schema": "jsfh_template/config_schema.json",
+    "minify":false,
+    "copy_css":true,
+    "copy_js":true,
+    "expand_buttons":true,
+    "show_breadcrumbs":false,     "$comment1": "true doesn't seem to work",
+    "show_toc":true,
+    "collapse_long_descriptions":true,
+    "collapse_long_examples":true,
+    "description_is_markdown":true,
+    "examples_as_yaml":true,
+    "link_to_reused_ref":true,    "$comment2": "Should we do this or duplicate the entry?",
+    "deprecated_from_description":true,
+    "template_md_options":{
+    "badge_as_image": true,
+        "show_heading_numbers": true
+    },
+    "custom_template_path":"jsfh_template/base.html",
+    "schema_title": false
+}
