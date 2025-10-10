@@ -1,0 +1,42 @@
+[project]
+name = "spotter"
+version = "0.0.11"
+description = "Approximate forward models of fluxes and spectra time-series of non-uniform stars."
+authors = [{ name = "Lionel Garcia" }, { name = "Benjamin Rackham" }]
+license = "MIT"
+readme = "readme.md"
+requires-python = ">=3.10"
+dependencies = ["numpy", "healpy", "jax", "jaxlib", "equinox", "tinygp", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["black", "pytest", "nox", "ipykernel", "matplotlib"]
+test = ["pytest", "jaxoplanet>=0.1.0", "pytest-xdist"]
+docs = [
+    "matplotlib",
+    "sphinx",
+    "docutils",
+    "jupyterlab",
+    "myst-parser",
+    "sphinx-book-theme",
+    "myst-nb",
+    "sphinx-copybutton",
+    "toml",
+    "ipywidgets",
+    "sphinx-autoapi<3.2.0",
+    "ipykernel",
+    "numpyro-ext",
+    "jaxoplanet",
+    "corner",
+    "arviz",
+    "jaxopt"
+]
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["spotter"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
