@@ -1,0 +1,192 @@
+Metadata-Version: 2.4
+Name: brainary
+Version: 0.0.12
+Summary: A cognitive architecture framework integrating LLMs, capabilities, and self-regulation.
+Home-page: https://github.com/cs-wangchong/Promptware
+Author: NTU Brainary Team
+Author-email: chong.wang@ntu.edu.sg
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: aiohappyeyeballs==2.6.1
+Requires-Dist: aiohttp==3.11.16
+Requires-Dist: aiosignal==1.3.2
+Requires-Dist: annotated-types==0.7.0
+Requires-Dist: antlr4-python3-runtime==4.13.2
+Requires-Dist: antlr4-tools==0.2.2
+Requires-Dist: anyio==4.9.0
+Requires-Dist: async-timeout==4.0.3
+Requires-Dist: attrs==25.3.0
+Requires-Dist: blis==1.3.0
+Requires-Dist: catalogue==2.0.10
+Requires-Dist: certifi==2025.1.31
+Requires-Dist: charset-normalizer==3.4.1
+Requires-Dist: click==8.2.1
+Requires-Dist: cloudpathlib==0.21.1
+Requires-Dist: confection==0.1.5
+Requires-Dist: contourpy==1.3.2
+Requires-Dist: cycler==0.12.1
+Requires-Dist: cymem==2.0.11
+Requires-Dist: dataclasses-json==0.6.7
+Requires-Dist: datasets==3.5.0
+Requires-Dist: dill==0.3.8
+Requires-Dist: distro==1.9.0
+Requires-Dist: exceptiongroup==1.2.2
+Requires-Dist: fastapi==0.116.0
+Requires-Dist: filelock==3.18.0
+Requires-Dist: fonttools==4.58.1
+Requires-Dist: frozenlist==1.5.0
+Requires-Dist: fsspec==2024.12.0
+Requires-Dist: gitdb==4.0.12
+Requires-Dist: GitPython==3.1.44
+Requires-Dist: graphviz==0.20.3
+Requires-Dist: greenlet==3.1.1
+Requires-Dist: gritql==0.2.0
+Requires-Dist: h11==0.14.0
+Requires-Dist: httpcore==1.0.8
+Requires-Dist: httpx==0.28.1
+Requires-Dist: httpx-sse==0.4.0
+Requires-Dist: huggingface-hub==0.30.2
+Requires-Dist: idna==3.10
+Requires-Dist: install-jdk==1.1.0
+Requires-Dist: Jinja2==3.1.6
+Requires-Dist: jiter==0.9.0
+Requires-Dist: jsonpatch==1.33
+Requires-Dist: jsonpointer==3.0.0
+Requires-Dist: kiwisolver==1.4.8
+Requires-Dist: langchain==0.3.25
+Requires-Dist: langchain-cli==0.0.36
+Requires-Dist: langchain-community==0.3.21
+Requires-Dist: langchain-core==0.3.65
+Requires-Dist: langchain-openai==0.3.12
+Requires-Dist: langchain-text-splitters==0.3.8
+Requires-Dist: langcodes==3.5.0
+Requires-Dist: langid==1.1.6
+Requires-Dist: langserve==0.3.1
+Requires-Dist: langsmith==0.3.45
+Requires-Dist: language_data==1.3.0
+Requires-Dist: marisa-trie==1.2.1
+Requires-Dist: markdown-it-py==3.0.0
+Requires-Dist: MarkupSafe==3.0.2
+Requires-Dist: marshmallow==3.26.1
+Requires-Dist: matplotlib==3.10.3
+Requires-Dist: mdurl==0.1.2
+Requires-Dist: multidict==6.4.3
+Requires-Dist: multiprocess==0.70.16
+Requires-Dist: murmurhash==1.0.13
+Requires-Dist: mypy-extensions==1.0.0
+Requires-Dist: networkx==3.4.2
+Requires-Dist: numpy==2.2.4
+Requires-Dist: openai==1.73.0
+Requires-Dist: orjson==3.10.16
+Requires-Dist: packaging==24.2
+Requires-Dist: pandas==2.2.3
+Requires-Dist: pillow==11.2.1
+Requires-Dist: preshed==3.0.10
+Requires-Dist: propcache==0.3.1
+Requires-Dist: pyarrow==19.0.1
+Requires-Dist: pydantic==2.11.3
+Requires-Dist: pydantic-settings==2.8.1
+Requires-Dist: pydantic_core==2.33.1
+Requires-Dist: Pygments==2.19.1
+Requires-Dist: pyparsing==3.2.3
+Requires-Dist: python-dateutil==2.9.0.post0
+Requires-Dist: python-dotenv==1.1.0
+Requires-Dist: pytz==2025.2
+Requires-Dist: PyYAML==6.0.2
+Requires-Dist: regex==2024.11.6
+Requires-Dist: requests==2.32.3
+Requires-Dist: requests-toolbelt==1.0.0
+Requires-Dist: rich==14.0.0
+Requires-Dist: shellingham==1.5.4
+Requires-Dist: six==1.17.0
+Requires-Dist: smart-open==7.1.0
+Requires-Dist: smmap==5.0.2
+Requires-Dist: sniffio==1.3.1
+Requires-Dist: spacy==3.8.7
+Requires-Dist: spacy-legacy==3.0.12
+Requires-Dist: spacy-loggers==1.0.5
+Requires-Dist: SQLAlchemy==2.0.40
+Requires-Dist: srsly==2.5.1
+Requires-Dist: sse-starlette==1.8.2
+Requires-Dist: starlette==0.46.2
+Requires-Dist: tenacity==9.1.2
+Requires-Dist: thinc==8.3.6
+Requires-Dist: tiktoken==0.9.0
+Requires-Dist: tomlkit==0.13.3
+Requires-Dist: tqdm==4.67.1
+Requires-Dist: typer==0.16.0
+Requires-Dist: typing-inspect==0.9.0
+Requires-Dist: typing-inspection==0.4.0
+Requires-Dist: typing_extensions==4.13.2
+Requires-Dist: tzdata==2025.2
+Requires-Dist: urllib3==2.4.0
+Requires-Dist: uvicorn==0.35.0
+Requires-Dist: wasabi==1.1.3
+Requires-Dist: weasel==0.4.1
+Requires-Dist: wrapt==1.17.2
+Requires-Dist: xxhash==3.5.0
+Requires-Dist: yarl==1.19.0
+Requires-Dist: zstandard==0.23.0
+
+# Brainary
+
+Brainary is a Python framework for building cognitive architectures that integrate LLMs, self-regulation, and multiple capabilities such as reasoning, planning, and evaluation.
+
+
+## Archtecture Overview
+<img src="./brainary-arch.png" alt="Arch Overview" style="width:75%;height:auto;">
+
+## Installation
+
+```bash
+pip install brainary
+```
+
+## Usage
+
+Create a configure file **llm.yml** to specify the `API key` or `Base Url` for OpenAI client creation. Note that, many LLM services (e.g., DeepSeek) or serving frameworks (e.g., vLLM) are compatible with OpenAI client library, you can refer to their docs to configure the `API key` or `Base Url`.
+
+```yaml
+# llm.yml
+api-key: sk-proj-...
+
+# base-url: http://...
+```
+
+An example:
+```python
+from typing import List
+import brainary
+from brainary.util.logging_util import init_logging
+
+init_logging()
+
+brainary.install_vm("gpt-4o-mini")
+
+Review = brainary.define_type(
+    type_name="Review",
+    text={"type": str, "desc": "review content"},
+    author={"type": str, "desc": "reviewer name"}
+)
+Movie = brainary.define_type(
+    type_name="Movie",
+    name={"type": str, "desc": ""},
+    year={"type": int, "desc": "release year"},
+    reviews={"type": List[Review], "desc": "reviews of the movie"}
+)
+r1 = Review(text="When this came out, I was living with a roommate. He went out and saw it, came home and said, \"Dude, you have to go see The Matrix.\" So we left and he sat through it a second time. This movie is splendidly done. The mystery about what the Matrix is, unravels and you see a dystopian future unlike any we as a race would want. I have watched this over and over and never tire of it. Everyone does a great job acting in this, the special effects are above par and the story is engaging.", author="acedj")
+r2 = Review(text="This was a real change in filmmaking. Like watching it again in 2020, i.e. after 21 years and it still feels fresh. Iconic scenes are still having benchmarks setting up.\n\nIf we say it sci-fi at its best, it won't be wrong. The hype was real, it is still not easy to match the level of Matrix where we experience the connection of humans and science, that too with amazing action fight and chase scenes, not just normal scenes they were, multiple exposures, slow motion 3D moves, Oh My God, and it's understandable as well like what are the characters up to and what storyline they are entering into. The script was very well written and executed otherwise it could have been a mess. A special appreciation in managing the theme with those black color costumes and a scientific zone with unimaginable equipment and props doing unbelievable things in the two worlds created. No spoilers, but the action scenes in the climax where the protagonist goes to save someone from agents are really breathtaking. The technology used at its best.\n\nA salute to Wachowski Brothers and the team for creating this masterpiece. It will be a great competition and motivation as well for many films coming in the future.", author="suryanmukul")
+m = Movie(name="Matrix", year=1999, reviews=[r1, r2])
+
+if brainary.examine("The sentiment of the review is negative.", review=r1):
+    print("===== Negative Review =====")
+
+summarize = brainary.define_action("Summarize the movie reviews.", "movie", attentions=["sentiment", "character"], output_constraints={"tone": "grandiloquent"})
+summarize(movie=m)
+```
