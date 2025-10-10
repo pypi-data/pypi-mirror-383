@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nosqlpy"
+version = "0.1.1"
+description = "A lightweight NoSQL-like database in Python"
+readme = "README.md"
+authors = [
+  { name = "Hoang V. Nguyen" },
+]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Topic :: Database",
+    "Topic :: Database :: Database Engines/Servers",
+    "Topic :: Software Development :: Libraries",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+keywords = [
+    "nosqlpy",
+    "nosqlite",
+    "nosql",
+    "async nosql",
+    "python nosql",
+    "async database",
+    "document-store",
+    "database",
+    "mongodb",
+    "mql",
+    "query-language",
+    "asyncio",
+    "lightweight",
+]
+
+dependencies = [
+    "aiofiles>=22.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/viehoang/nosqlpy"
+
+[project.optional-dependencies]
+dev = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["nosqlite*"]
