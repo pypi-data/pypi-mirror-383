@@ -1,0 +1,82 @@
+# Include the README and license files
+include README.md
+include LICENSE
+
+# Include the traffic image
+include traffic_image.png
+
+# Include documentation files
+recursive-include docs *.md *.rst *.txt *.py *.ipynb
+recursive-include docs *.png *.jpg *.jpeg *.gif *.svg
+
+# Include example files
+recursive-include examples *.py *.ipynb *.md
+recursive-include examples *.png *.jpg *.jpeg *.gif *.svg
+
+# Include test files
+recursive-include pytrafficflow/tests *.py
+
+# Include configuration files
+include pyproject.toml
+include setup.py
+include setup.cfg
+include tox.ini
+include .flake8
+include .isort.cfg
+include .pre-commit-config.yaml
+
+# Include CI/CD files
+recursive-include .github *.yml *.yaml *.md
+
+# Include any data files that might be needed
+recursive-include pytrafficflow/data *.csv *.json *.txt *.dat *.h5 *.hdf5
+recursive-include pytrafficflow/data *.png *.jpg *.jpeg *.gif *.svg
+
+# Include any configuration files in the package
+recursive-include pytrafficflow *.cfg *.ini *.toml *.yaml *.yml
+
+# Exclude common unwanted files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude __pycache__
+global-exclude .git*
+global-exclude .DS_Store
+global-exclude .coverage
+global-exclude .pytest_cache
+global-exclude .mypy_cache
+global-exclude .tox
+global-exclude .venv
+global-exclude venv
+global-exclude env
+global-exclude .env
+global-exclude *.egg-info
+global-exclude build
+global-exclude dist
+global-exclude *.egg
+global-exclude .eggs
+global-exclude .idea
+global-exclude .vscode
+global-exclude *.swp
+global-exclude *.swo
+global-exclude *~
+global-exclude .coverage.*
+global-exclude htmlcov
+global-exclude .nyc_output
+global-exclude .cache
+global-exclude .pytest_cache
+global-exclude .mypy_cache
+global-exclude .tox
+global-exclude .coverage
+global-exclude .coverage.*
+global-exclude coverage.xml
+global-exclude *.cover
+global-exclude .hypothesis
+global-exclude .pytest_cache
+global-exclude .mypy_cache
+global-exclude .tox
+global-exclude .coverage
+global-exclude .coverage.*
+global-exclude coverage.xml
+global-exclude *.cover
+global-exclude .hypothesis

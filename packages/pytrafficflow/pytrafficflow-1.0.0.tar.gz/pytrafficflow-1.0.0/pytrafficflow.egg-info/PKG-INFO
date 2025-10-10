@@ -1,0 +1,87 @@
+Metadata-Version: 2.4
+Name: pytrafficflow
+Version: 1.0.0
+Summary: A Python library for traffic flow simulation with PDE models, particle-based models, and real-world data pipelines
+Home-page: https://github.com/tiagomonteiro0715/pytrafficflow
+Author: Tiago Monteiro
+Author-email: Tiago Monteiro <tiagomonteiro0715@gmail.com>
+Maintainer-email: Tiago Monteiro <tiagomonteiro0715@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/tiagomonteiro0715/pytrafficflow
+Project-URL: Repository, https://github.com/tiagomonteiro0715/pytrafficflow.git
+Project-URL: Issues, https://github.com/tiagomonteiro0715/pytrafficflow/issues
+Project-URL: Documentation, https://pytrafficflow.readthedocs.io/
+Keywords: traffic,simulation,pde,particle,idm,lwr,transportation
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: matplotlib>=3.3.0
+Requires-Dist: dataclasses>=0.6; python_version < "3.7"
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.800; extra == "dev"
+Requires-Dist: isort>=5.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=4.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=1.0; extra == "docs"
+Requires-Dist: nbsphinx>=0.8; extra == "docs"
+Provides-Extra: test
+Requires-Dist: pytest>=6.0; extra == "test"
+Requires-Dist: pytest-cov>=2.0; extra == "test"
+Requires-Dist: pytest-xdist>=2.0; extra == "test"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# pytrafficflow
+
+A Python library for traffic flow simulation with PDE models, particle-based models, and real-world data pipelines
+
+
+![car image](https://github.com/tiagomonteiro0715/pytrafficflow/blob/main/traffic_image.png)
+
+
+## Architecture
+
+```
+pytrafficflow/
+├── __init__.py
+├── core/
+│   ├── base_model.py
+│   ├── vehicle.py
+│   └── velocity.py
+├── data/
+│   ├── loader.py
+│   ├── preprocess.py
+│   └── synthetic/
+│       └── one_road.py
+├── models/
+│   └── particle.py
+├── tests/
+│   └── lwr_tests.py
+└── utils/
+    └── visualization.py
+```
+
+## Citation
+
+
+## BibTeX
