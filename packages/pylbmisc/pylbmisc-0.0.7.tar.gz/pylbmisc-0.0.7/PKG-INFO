@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: pylbmisc
+Version: 0.0.7
+Summary: Personal functions
+Project-URL: Documentation, https://github.com/lbraglia/pylbmisc#readme
+Project-URL: Issues, https://github.com/lbraglia/pylbmisc/issues
+Project-URL: Source, https://github.com/lbraglia/pylbmisc
+Author-email: Luca Braglia <lbraglia@gmail.com>
+License-Expression: MIT
+License-File: LICENSE.txt
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.11
+Requires-Dist: lifelines
+Requires-Dist: matplotlib
+Requires-Dist: openpyxl
+Requires-Dist: pandas
+Requires-Dist: pyarrow
+Description-Content-Type: text/markdown
+
+# pylbmisc
+
+Package of personal function.
+
+## License
+
+`pylbmisc` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
