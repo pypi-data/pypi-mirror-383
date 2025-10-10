@@ -1,0 +1,234 @@
+Metadata-Version: 2.1
+Name: shuggie
+Version: 0.0.2
+Summary: Standard Human Understandable Generative Grammar Interpreter and Executor
+Author: Josie Yaconelli
+License: MIT License
+        
+        Copyright (c) 2024 SHUGGIE Contributors
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/jyaconelli/shuggie
+Project-URL: Repository, https://github.com/jyaconelli/shuggie
+Project-URL: Issue Tracker, https://github.com/jyaconelli/shuggie/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4; extra == "dev"
+Requires-Dist: pytest-cov>=4.1; extra == "dev"
+Requires-Dist: pre-commit>=3.4; extra == "dev"
+Requires-Dist: black>=23.9; extra == "dev"
+Requires-Dist: isort>=5.12; extra == "dev"
+
+# SHUGGIE
+
+**Standard Human Understandable Generative Grammar Interpreter and Executor**
+
+SHUGGIE is a Python library that makes it easy to define, manipulate, and execute
+probabilistic or nondeterministic generative grammars in a human-readable format.
+It provides a concise `.shuggie` file syntax, a type-hinted Python API, and tools
+for validation, sampling, and analysis.
+
+---
+
+## Key Features
+- **Readable grammar files:** simple comma-separated rules with inline comments.
+- **Rich Python API:** build grammars in code or load them from disk.
+- **Weighted execution:** sample outputs with top-k/top-p constraints or pick the
+  highest-weight derivation deterministically.
+- **Validation & analysis:** detect unreachable symbols, visualize rule graphs,
+  and compute useful grammar statistics.
+- **File helpers:** seamless `load_shuggie` / `dump_shuggie` functions for real projects.
+
+---
+
+## Installation
+
+```bash
+pip install shuggie
+```
+
+To work on SHUGGIE locally (tests, development extras):
+
+```bash
+git clone https://github.com/<your-org>/shuggie.git
+cd shuggie
+pip install -e .[dev]
+```
+
+---
+
+## Quick Start
+
+### 1. Author a grammar
+
+```text
+# examples/sentences.shuggie
+SENTENCE, 2 = SUBJECT_PHRASE PRESENT_CLAUSE
+SENTENCE, 1 = SUBJECT_PHRASE FUTURE_CLAUSE
+
+SUBJECT_PHRASE, 3 = INTRO SUBJECT
+SUBJECT_PHRASE, 1 = SUBJECT
+
+INTRO, 1 = "Perhaps"
+INTRO, 1 = "Occasionally"
+```
+
+Lines starting with `#` (or empty lines) are ignored. Tokens in quotes remain
+as literals; any symbol that is never defined is treated as a literal automatically.
+
+### 2. Load, validate, and explore
+
+```python
+from pathlib import Path
+from shuggie import (
+    GrammarExecutor,
+    grammar_statistics,
+    load_shuggie,
+)
+
+grammar = load_shuggie("examples/sentences.shuggie")
+grammar.verify(raise_on_error=True)  # raises if the grammar is malformed
+
+print(grammar_statistics(grammar))
+# GrammarStatistics(nonterminal_count=8, terminal_count=11, ...)
+```
+
+### 3. Generate text
+
+```python
+from shuggie import GrammarExecutor
+
+executor = GrammarExecutor(grammar)
+print(executor.sample())                   # weighted sampling
+print(executor.sample(top_k=2))            # restrict to top-k productions
+print(executor.sample(top_p=0.8))          # nucleus sampling
+print(executor.generate_best())            # highest-weight derivation
+
+trace = executor.trace_sample(return_trace=True)
+for step in trace.trace:
+    print(step.symbol, "->", step.production.symbols)
+```
+
+---
+
+## `.shuggie` File Format
+
+Each rule lives on a single line:
+
+```
+SYMBOL, <unnormalized weight> = <space-separated tokens>
+```
+
+- The **first rule** declares the start symbol.
+- Tokens on the right-hand side are either other symbols or string literals.
+- Weights are non-negative integers; they are normalized automatically at runtime.
+- Comments beginning with `#` can appear on their own line or after a rule.
+
+See the `examples/` directory for ready-to-use grammars.
+
+---
+
+## Working Programmatically
+
+```python
+from shuggie import Grammar, Production, Rule
+
+grammar = Grammar(
+    "START",
+    [
+        Rule("START", [Production(["GREETING", "TARGET"], weight=3)]),
+        Rule("GREETING", [Production(["hello"]), Production(["hi"], weight=2)]),
+        Rule("TARGET", [Production(["world"]), Production(["friend"])]),
+    ],
+)
+
+for production, prob in grammar.production_probabilities("GREETING"):
+    print(production.symbols, prob)
+```
+
+### Validation & Analysis
+
+```python
+from shuggie import validate_grammar, grammar_statistics, estimate_depth_bounds, grammar_to_dot
+
+result = validate_grammar(grammar)
+print(result.summary())
+
+stats = grammar_statistics(grammar)
+depths = estimate_depth_bounds(grammar)
+dot = grammar_to_dot(grammar)
+Path("grammar.dot").write_text(dot)
+```
+
+### Saving & Loading
+
+```python
+from shuggie import dump_shuggie, load_shuggie
+
+dump_shuggie(grammar, "grammar.shuggie")
+same_grammar = load_shuggie("grammar.shuggie")
+```
+
+---
+
+## Contributing
+
+Bug reports, feature ideas, and pull requests are always welcome!
+
+- Fork the repository and create a feature branch.
+- Install dev dependencies with `pip install -e .[dev]`.
+- Run the test suite with `pytest`.
+- (Recommended) Install git hooks with `pre-commit install`.
+- Open a pull request and share context for your change.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
+---
+
+## Continuous Integration
+
+Every push and pull request runs the GitHub Actions workflow defined in
+`.github/workflows/ci.yml`. The workflow installs SHUGGIE with development
+dependencies, executes all pre-commit checks, and runs `pytest`. Keeping the
+hooks installed locally ensures CI passes on the first try.
+
+---
+
+## Releasing
+
+1. Update `pyproject.toml` and `src/shuggie/__init__.py` with the new version.
+2. Run `python -m build` locally and verify the artifacts in `dist/`.
+3. Create a Git tag (e.g., `git tag v0.2.0`) and push it to GitHub.
+4. Draft a GitHub Release; when you publish it, the workflow in
+   `.github/workflows/release.yml` builds the package and uploads it to PyPI.
+
+The publish workflow uses PyPI Trusted Publishers via GitHub’s OpenID Connect. In
+PyPI, link this repository and workflow to your project; no API token or password
+is required once the trust relationship is configured.
+
+---
+
+## License
+
+SHUGGIE is released under the [MIT License](LICENSE).
