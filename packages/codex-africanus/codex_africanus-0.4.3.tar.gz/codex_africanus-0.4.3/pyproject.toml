@@ -1,0 +1,104 @@
+[project]
+name = "codex-africanus"
+description = "Radio Astronomy Building Blocks"
+version = "0.4.3"
+readme = "README.rst"
+authors = [{name = "Simon Perkins", email = "simon.perkins@gmail.com"}]
+requires-python = '>=3.10,<4.0'
+dependencies = ['appdirs >=1.4.4', 'decorator >=5.1.1', 'numpy >=2.0', 'numba >=0.60']
+
+[project.optional-dependencies]
+astropy = ['astropy >=6.1.4']
+cuda = ['cupy >=13.3.0', 'jinja2 >=3.1.4']
+dask = ['dask[array] >=2024.0']
+ducc0 = ['ducc0 >=0.35.0']
+jax = ['jax >=0.4.35', 'jaxlib >=0.4.35']
+scipy = ['scipy >=1.14.1']
+testing = ['flaky >=3.8.1', 'pytest >=8.0.0']
+python-casacore = ['python-casacore >=3.6.1']
+complete = ['astropy', 'dask', 'ducc0', 'jax', 'jaxlib', 'python-casacore', 'scipy']
+complete-cuda = ['astropy', 'cupy', 'jinja2', 'dask', 'ducc0', 'jax', 'jaxlib', 'python-casacore', 'scipy']
+dev = [
+    "pre-commit>=4.3.0",
+    "ruff>=0.14.0",
+    "tbump>=6.11.0",
+]
+doc = [
+    "numpydoc>=1.9.0",
+    "pydata-sphinx-theme>=0.16.1",
+    "pygments>=2.19.2",
+    "ruff>=0.14.0",
+    "sphinx>=8.1.3",
+    "sphinx-copybutton>=0.5.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["africanus"]
+
+[tool.ruff]
+exclude = ["turbo-sim.py"]
+line-length = 88
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+extend-select = ["I"]
+select = [
+    # flake8-builtins
+    "A",
+    # flake8-bugbear
+    "B",
+    # isort
+    "I001",
+    "I002",
+    # tidy imports
+    "TID"
+]
+
+[tool.tbump.version]
+current = "0.4.3"
+
+# Example of a semver regexp.
+# Make sure this matches current_version before
+# using tbump
+regex = '''
+  (?P<major>\d+)
+  \.
+  (?P<minor>\d+)
+  \.
+  (?P<patch>\d+)
+  '''
+
+[tool.tbump.git]
+message_template = "Bump to {new_version}"
+tag_template = "{new_version}"
+
+# For each file to patch, add a [[tool.tbump.file]] config
+# section containing the path of the file, relative to the
+# tbump.toml location.
+[[tool.tbump.file]]
+src = "pyproject.toml"
+
+[[tool.tbump.file]]
+src = "africanus/__init__.py"
+
+[[tool.tbump.file]]
+src = "docs/conf.py"
+
+# You can specify a list of commands to
+# run after the files have been patched
+# and before the git commit is made
+
+#  [[tool.tbump.before_commit]]
+#  name = "check changelog"
+#  cmd = "grep -q {new_version} Changelog.rst"
+
+# Or run some commands after the git tag and the branch
+# have been pushed:
+#  [[tool.tbump.after_push]]
+#  name = "publish"
+#  cmd = "./publish.sh"
