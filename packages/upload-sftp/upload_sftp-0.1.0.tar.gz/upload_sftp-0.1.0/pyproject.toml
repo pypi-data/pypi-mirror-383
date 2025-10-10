@@ -1,0 +1,14 @@
+[project]
+name = "upload-sftp"
+version = "0.1.0"
+description = "Async SFTP uploader CLI with parallel uploads and retry logic"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "asyncssh>=2.21.1",
+    "rich>=14.2.0",
+    "typer>=0.19.2",
+]
+
+[project.scripts]
+upload-sftp = "upload_sftp.cli:app"
