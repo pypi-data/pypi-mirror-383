@@ -1,0 +1,5 @@
+[console_scripts]
+hx = hyperx.bin.cli.main:main
+hx-find = hyperx.bin.autodiscover:Command.run
+hx-install = hyperx.bin.cli.commands.install:main
+hyperx = hyperx.bin.hx_cli:main
