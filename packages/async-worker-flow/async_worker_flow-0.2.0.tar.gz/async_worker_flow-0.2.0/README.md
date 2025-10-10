@@ -1,0 +1,689 @@
+# async-worker-flow
+
+**Stop waiting for the slowest task. Start processing smarter.**
+
+<p align="center">
+  <img src="docs/images/worker-pool-concept.png" alt="async-worker-flow Worker Pool Concept" width="600">
+</p>
+
+<p align="center">
+  <em>async-worker-flow: Modern async execution library with concurrent.futures-style API and advanced pipelines</em>
+</p>
+
+---
+
+## The Problem I Had to Solve
+
+I was processing massive amounts of data using OpenAI's Batch API. The workflow was complex:
+1. Upload batches of data to OpenAI
+2. Wait for processing to complete
+3. Download the results
+4. Save to database
+5. Repeat for the next batch
+
+Initially, I processed 10 batches at a time using basic async. But here's the problem: **I had to wait for ALL 10 batches to complete before starting the next group**.
+
+### The Bottleneck
+
+Imagine this scenario:
+- 9 batches complete in 5 minutes
+- 1 batch gets stuck and takes 30 minutes
+- **I waste 25 minutes waiting** for that one slow batch while my system sits idle
+
+With hundreds of batches to process, these delays accumulated into **hours of wasted time**. Even worse, one failed batch would block the entire pipeline.
+
+### The Solution: async-worker-flow
+
+I built async-worker-flow to solve this exact problem. Instead of batch-by-batch processing, **async-worker-flow uses worker pools** where:
+
+- ✅ **Each worker handles tasks independently**
+- ✅ **When a worker finishes, it immediately grabs the next task**
+- ✅ **Slow tasks don't block fast ones**
+- ✅ **Always maintain optimal concurrency (e.g., 10 tasks running simultaneously)**
+- ✅ **Built-in retry logic for failed tasks**
+- ✅ **Multi-stage pipelines for complex workflows**
+
+**Result**: My OpenAI batch processing went from taking hours to completing in a fraction of the time, with automatic retry handling and zero idle time.
+
+---
+
+## Quick Install
+
+```bash
+pip install async-worker-flow
+```
+
+---
+
+## Quick Example
+
+```python
+import asyncio
+from asyncflow import Pipeline, Stage
+
+# Your actual work
+async def upload_batch(batch_data):
+    # Upload to OpenAI API
+    return batch_id
+
+async def check_status(batch_id):
+    # Check if batch is ready
+    return result_url
+
+async def download_results(result_url):
+    # Download processed data
+    return processed_data
+
+async def save_to_db(processed_data):
+    # Save results
+    return "saved"
+
+# Build the pipeline
+upload_stage = Stage(name="Upload", workers=10, tasks=[upload_batch])
+check_stage = Stage(name="Check", workers=10, tasks=[check_status])
+download_stage = Stage(name="Download", workers=10, tasks=[download_results])
+save_stage = Stage(name="Save", workers=5, tasks=[save_to_db])
+
+pipeline = Pipeline(stages=[upload_stage, check_stage, download_stage, save_stage])
+
+# Process 1000 batches efficiently
+results = await pipeline.run(my_1000_batches)
+```
+
+**What happens**: 10 workers process uploads simultaneously. As soon as one finishes, it picks the next batch. No waiting. No idle time. Maximum throughput.
+
+---
+
+## Installation
+
+```bash
+pip install async-worker-flow
+```
+
+## Key Features
+
+### 🚀 **Worker Pool Architecture**
+- Independent workers that never block each other
+- Automatic task distribution
+- Optimal resource utilization
+
+### 🔄 **Multi-Stage Pipelines**
+- Chain operations with configurable worker pools per stage
+- Each stage runs independently
+- Data flows automatically between stages
+
+### 💪 **Built-in Resilience**
+- Per-task retry with exponential backoff
+- Per-stage retry for transactional operations
+- Failed tasks don't stop the pipeline
+
+### 📊 **Real-time Monitoring**
+- StatusTracker for real-time item tracking
+- Query item status, history, and statistics
+- Event-driven monitoring with callbacks
+- Pipeline metrics and queue insights
+
+### 🎯 **Familiar API**
+- Drop-in async replacement for `concurrent.futures`
+- `submit()`, `map()`, `as_completed()` methods
+- Clean, intuitive interface
+
+---
+
+## Use Cases
+
+### ✅ **Perfect for:**
+- **Batch API Processing** - OpenAI, Anthropic, any batch API
+- **ETL Pipelines** - Extract, transform, load at scale
+- **Web Scraping** - Fetch, parse, store web data efficiently
+- **Data Processing** - Process large datasets with retry logic
+- **Microservices** - Chain async service calls with error handling
+
+### ⚡ **Real-world Impact:**
+- Process 1000+ items without bottlenecks
+- Automatic retry for transient failures
+- Zero idle time = maximum throughput
+- Clear observability with metrics and callbacks
+
+---
+
+## AsyncExecutor: Simple Concurrent Execution
+
+For straightforward parallel processing, AsyncExecutor provides a `concurrent.futures`-style API:
+
+### Basic Usage
+
+```python
+import asyncio
+from asyncflow import AsyncExecutor
+
+async def process_item(x):
+    await asyncio.sleep(0.1)
+    return x * 2
+
+async def main():
+    async with AsyncExecutor(max_workers=10) as executor:
+        # Using map() for parallel processing
+        results = []
+        async for result in executor.map(process_item, range(100)):
+            results.append(result)
+        print(f"Processed {len(results)} items")
+
+asyncio.run(main())
+```
+
+### Racing Tasks with wait()
+
+Get the fastest result from multiple concurrent operations:
+
+```python
+from asyncflow import AsyncExecutor, WaitStrategy
+
+async def main():
+    async with AsyncExecutor(max_workers=10) as executor:
+        # Submit same request to multiple API regions
+        futures = [
+            executor.submit(call_api_region_1, query),
+            executor.submit(call_api_region_2, query),
+            executor.submit(call_api_region_3, query),
+        ]
+
+        # Get the first result
+        done, pending = await executor.wait(
+            futures,
+            return_when=WaitStrategy.FIRST_COMPLETED
+        )
+
+        fastest_result = await list(done)[0].result()
+        print(f"Got result from fastest region: {fastest_result}")
+```
+
+### Waiting for Multiple Futures
+
+```python
+from asyncflow import WaitStrategy
+
+# Wait for all to complete
+done, pending = await executor.wait(futures)
+
+# Wait for first to complete
+done, pending = await executor.wait(
+    futures,
+    return_when=WaitStrategy.FIRST_COMPLETED
+)
+
+# Wait for first exception
+done, pending = await executor.wait(
+    futures,
+    return_when=WaitStrategy.FIRST_EXCEPTION
+)
+
+# Wait with timeout
+done, pending = await executor.wait(
+    futures,
+    timeout=5.0
+)
+```
+
+---
+
+## Pipeline: Multi-Stage Processing
+
+For complex workflows with multiple steps:
+
+```python
+import asyncio
+from asyncflow import Pipeline, Stage
+
+async def fetch(x):
+    await asyncio.sleep(0.1)
+    return f"data_{x}"
+
+async def process(x):
+    await asyncio.sleep(0.1)
+    return x.upper()
+
+async def save(x):
+    await asyncio.sleep(0.1)
+    return f"saved_{x}"
+
+async def main():
+    # Define stages with different worker counts
+    fetch_stage = Stage(name="Fetch", workers=10, tasks=[fetch])
+    process_stage = Stage(name="Process", workers=5, tasks=[process])
+    save_stage = Stage(name="Save", workers=3, tasks=[save])
+
+    # Build pipeline
+    pipeline = Pipeline(stages=[fetch_stage, process_stage, save_stage])
+
+    # Process 100 items through all stages
+    results = await pipeline.run(range(100))
+
+    print(f"Completed: {len(results)} items")
+    print(f"Stats: {pipeline.get_stats()}")
+
+asyncio.run(main())
+```
+
+**Why different worker counts?**
+- **Fetch**: I/O bound, use more workers (10)
+- **Process**: CPU bound, moderate workers (5)
+- **Save**: Rate-limited API, fewer workers (3)
+
+---
+
+## How It Works: Data Flow & Execution
+
+### Pipeline is Like a DAG
+
+async-worker-flow creates a **sequential pipeline** where each stage's output becomes the next stage's input:
+
+```
+Stage 1 → Queue → Stage 2 → Queue → Stage 3 → Results
+```
+
+**Key Point**: Stages are connected, but workers never wait for all items to complete before processing the next one!
+
+### What Does Each Stage Receive?
+
+**Simple rule**: Each stage receives the `return` value from the last task of the previous stage.
+
+```python
+# Stage 1: Returns a dictionary
+async def fetch_user(user_id: int) -> dict:
+    return {"id": user_id, "name": "João", "email": "joao@example.com"}
+
+stage1 = Stage(name="Fetch", workers=5, tasks=[fetch_user])
+
+# Stage 2: Receives the DICTIONARY that Stage 1 returned
+async def validate_user(user_data: dict) -> dict:
+    # user_data IS the dict that fetch_user returned!
+    # user_data = {"id": 123, "name": "João", "email": "joao@example.com"}
+
+    if "@" not in user_data["email"]:
+        raise ValueError("Invalid email")
+
+    return {**user_data, "validated": True}
+
+stage2 = Stage(name="Validate", workers=3, tasks=[validate_user])
+
+# Stage 3: Receives the DICTIONARY that Stage 2 returned
+async def save_user(user_data: dict) -> str:
+    # user_data = {"id": 123, "name": "João", "email": "...", "validated": True}
+    return f"saved_user_{user_data['id']}"
+
+stage3 = Stage(name="Save", workers=2, tasks=[save_user])
+```
+
+**Data flow:**
+```
+Input: 123
+    ↓
+Stage 1: fetch_user(123)
+    returns: {"id": 123, "name": "João", "email": "..."}
+    ↓ (via Queue)
+Stage 2: validate_user({"id": 123, ...})
+    returns: {"id": 123, "name": "João", "validated": True}
+    ↓ (via Queue)
+Stage 3: save_user({"id": 123, "validated": True})
+    returns: "saved_user_123"
+    ↓
+Final Result: "saved_user_123"
+```
+
+### Multiple Tasks in One Stage
+
+When a stage has multiple tasks, they execute **sequentially** per item, but workers process items in **parallel**:
+
+```python
+validation_stage = Stage(
+    name="Validation",
+    workers=5,  # 5 workers in PARALLEL
+    tasks=[check_schema, validate_rules, sanitize]  # SEQUENTIAL per item
+)
+```
+
+**Execution model:**
+- ✅ **Workers = PARALLEL** → Process different items simultaneously
+- ✅ **Tasks = SEQUENTIAL** → Each item goes through task1 → task2 → task3
+- ✅ **Stages = CONNECTED** → Output of one stage feeds into the next via queues
+
+**Example flow:**
+```
+Worker 1: Item A → check_schema → validate_rules → sanitize → next stage
+Worker 2: Item B → check_schema → validate_rules → sanitize → next stage
+Worker 3: Item C → check_schema → validate_rules → sanitize → next stage
+```
+
+### The Bottleneck Solution Explained
+
+**Problem (Traditional Batch):**
+```python
+# Process 10 items, wait for ALL to finish
+batch = await asyncio.gather(*[process(i) for i in range(10)])
+# If 9 finish in 1 min and 1 takes 30 min → 29 min wasted! 😢
+```
+
+**Solution (async-worker-flow):**
+```python
+# Workers continuously grab new items as they finish
+stage = Stage(name="Process", workers=10, tasks=[process])
+pipeline = Pipeline(stages=[stage])
+results = await pipeline.run(range(100))
+# Fast items don't wait for slow ones → Zero idle time! 🎉
+```
+
+**Why it's faster:**
+1. Worker finishes fast item (1 min) → immediately grabs next item
+2. Slow item (30 min) processes on one worker
+3. Other 9 workers keep processing new items in parallel
+4. **Result**: Maximum throughput, no wasted time
+
+---
+
+## Advanced Features
+
+### Retry Strategies
+
+**Per-Task Retry** (for independent operations):
+```python
+stage = Stage(
+    name="APICall",
+    workers=10,
+    tasks=[call_api],
+    retry="per_task",
+    task_attempts=5,
+    task_wait_seconds=2.0
+)
+```
+
+**Per-Stage Retry** (for transactional operations):
+```python
+stage = Stage(
+    name="Transaction",
+    workers=3,
+    tasks=[begin_tx, update_db, commit_tx],
+    retry="per_stage",
+    stage_attempts=3
+)
+```
+
+### Real-Time Monitoring with StatusTracker
+
+Track every item as it flows through your pipeline with **StatusTracker**. Get real-time status updates, query current states, and access complete event history.
+
+#### How It Works
+
+Every item in the pipeline goes through these states:
+- `queued` - Waiting in a stage's queue
+- `in_progress` - Being processed by a worker
+- `completed` - Successfully finished a stage
+- `failed` - Failed to complete a stage
+
+#### Basic Usage
+
+```python
+from asyncflow import Pipeline, Stage, StatusTracker
+
+tracker = StatusTracker()
+
+pipeline = Pipeline(
+    stages=[stage1, stage2, stage3],
+    status_tracker=tracker
+)
+
+results = await pipeline.run(items)
+
+# Query current status
+stats = tracker.get_stats()
+print(f"Completed: {stats['completed']}")
+print(f"Failed: {stats['failed']}")
+print(f"In Progress: {stats['in_progress']}")
+```
+
+#### Real-Time Event Monitoring
+
+Get notified immediately when items change status:
+
+```python
+async def on_status_change(event):
+    """Called whenever an item changes status"""
+    print(f"{event.status.upper()}: Item {event.item_id} @ {event.stage}")
+
+    if event.status == "failed":
+        error = event.metadata.get("error")
+        print(f"  Error: {error}")
+
+    if event.status == "in_progress":
+        print(f"  Worker: {event.worker}")
+
+tracker = StatusTracker(on_status_change=on_status_change)
+pipeline = Pipeline(stages=[...], status_tracker=tracker)
+```
+
+#### Query Methods
+
+```python
+# Get status of a specific item
+status = tracker.get_status(item_id=42)
+print(f"Item 42 is {status.status} at {status.stage}")
+
+# Get all items in a specific status
+failed_items = tracker.get_by_status("failed")
+for event in failed_items:
+    print(f"Item {event.item_id} failed: {event.metadata['error']}")
+
+# Get complete event history for an item
+history = tracker.get_history(item_id=42)
+for event in history:
+    print(f"{event.timestamp}: {event.status} @ {event.stage}")
+
+# Get aggregate statistics
+stats = tracker.get_stats()
+# Returns: {"queued": 5, "in_progress": 10, "completed": 985, "failed": 0}
+```
+
+#### Real-World Example: Dashboard Integration
+
+```python
+from asyncflow import Pipeline, StatusTracker
+
+# Track status changes for live dashboard
+async def update_dashboard(event):
+    """Send status updates to your dashboard"""
+    await websocket.send_json({
+        "item_id": event.item_id,
+        "stage": event.stage,
+        "status": event.status,
+        "timestamp": event.timestamp
+    })
+
+tracker = StatusTracker(on_status_change=update_dashboard)
+pipeline = Pipeline(stages=[...], status_tracker=tracker)
+
+# Monitor progress in real-time
+async def monitor():
+    while True:
+        await asyncio.sleep(1)
+        stats = tracker.get_stats()
+        print(f"Progress: {stats['completed']}/{total_items}")
+
+async with asyncio.TaskGroup() as tg:
+    tg.create_task(monitor())
+    results = await pipeline.run(items)
+```
+
+#### Integration Examples
+
+**Prometheus Metrics:**
+```python
+from prometheus_client import Gauge
+
+items_by_status = Gauge("pipeline_items", "Items by status", ["status"])
+
+async def update_metrics(event):
+    items_by_status.labels(status=event.status).inc()
+
+tracker = StatusTracker(on_status_change=update_metrics)
+```
+
+**Database Logging:**
+```python
+async def log_to_db(event):
+    await db.execute("""
+        INSERT INTO pipeline_events (item_id, stage, status, timestamp)
+        VALUES ($1, $2, $3, $4)
+    """, event.item_id, event.stage, event.status, event.timestamp)
+
+tracker = StatusTracker(on_status_change=log_to_db)
+```
+
+### Worker-Level Tracking
+
+Track which specific worker is processing each item:
+
+```python
+from asyncflow import Pipeline, Stage, StatusTracker
+
+worker_assignments = {}
+
+async def on_status_change(event):
+    if event.status == "in_progress":
+        print(f"Worker {event.worker_id} is processing {event.item_id}")
+        worker_assignments[event.item_id] = event.worker_id
+
+tracker = StatusTracker(on_status_change=on_status_change)
+
+stage = Stage(name="Process", workers=10, tasks=[process])
+pipeline = Pipeline(stages=[stage], status_tracker=tracker)
+
+worker_names = pipeline.get_worker_names()
+
+results = await pipeline.run(items)
+```
+
+#### Custom Item IDs (Optional)
+
+By default, items are assigned sequential IDs (0, 1, 2, ...). You can provide custom IDs for better tracking:
+
+```python
+items = [
+    {"id": "batch_0001", "value": data1},
+    {"id": "batch_0002", "value": data2},
+    {"id": "user_12345", "value": user_data},
+]
+
+results = await pipeline.run(items)
+```
+
+**Note**: Custom IDs are optional. If you don't need tracking, just pass regular values:
+
+```python
+items = [data1, data2, data3]
+results = await pipeline.run(items)
+```
+
+### Order Preservation
+
+```python
+# Maintain input order in results
+pipeline = Pipeline(stages=[stage1, stage2], preserve_order=True)
+
+# Or allow reordering for better performance
+pipeline = Pipeline(stages=[stage1, stage2], preserve_order=False)
+```
+
+### Real-time Statistics
+
+```python
+stats = pipeline.get_stats()
+print(f"Processed: {stats.items_processed}")
+print(f"Failed: {stats.items_failed}")
+print(f"In-flight: {stats.items_in_flight}")
+print(f"Queue sizes: {stats.queue_sizes}")
+```
+
+---
+
+## Comparison: Before vs After
+
+### Before async-worker-flow ❌
+```python
+# Process batches sequentially in groups
+for batch_group in chunks(batches, 10):
+    results = await asyncio.gather(*[process(b) for b in batch_group])
+    # Wait for ALL 10 to complete before continuing
+    # One slow task blocks 9 fast ones
+```
+
+**Problems:**
+- Idle workers waiting for slowest task
+- No automatic retry
+- Difficult to monitor progress
+- Hard to optimize worker counts per stage
+
+### After async-worker-flow ✅
+```python
+# Workers continuously process available tasks
+stage = Stage(name="Process", workers=10, tasks=[process])
+pipeline = Pipeline(stages=[stage])
+results = await pipeline.run(batches)
+```
+
+**Benefits:**
+- Zero idle time
+- Automatic retry with backoff
+- Real-time monitoring
+- Easy to tune performance
+
+---
+
+## Documentation
+
+📚 **Full documentation available at:** [asyncflow.readthedocs.io](https://asyncflow.readthedocs.io)
+
+- [Getting Started Guide](docs/getting-started/quickstart.md)
+- [AsyncExecutor Guide](docs/user-guide/executor.md)
+- [Pipeline Guide](docs/user-guide/pipeline.md)
+- [Error Handling & Retries](docs/user-guide/error-handling.md)
+- [API Reference](docs/api/index.md)
+- [Examples & Patterns](docs/examples/basic.md)
+
+---
+
+## Requirements
+
+- Python 3.9+
+- tenacity >= 8.0.0
+
+**Note**: For Python 3.9-3.10, the `taskgroup` backport is automatically installed.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md).
+
+---
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## Why async-worker-flow?
+
+I built async-worker-flow because I was tired of waiting for the slowest task in my batch processing pipelines. Every data engineer and ML engineer has faced this: you're processing hundreds or thousands of API calls, and one slow response blocks everything.
+
+async-worker-flow solves this with a simple concept: **independent workers that never wait**. When a worker finishes a task, it immediately grabs the next one. No coordination overhead. No waiting. Just continuous, efficient processing.
+
+If you're processing data through APIs, building ETL pipelines, or running any kind of batch async operations, async-worker-flow will save you time.
+
+**Start processing smarter, not harder.** 🚀
+
+---
+
+<p align="center">
+  Made with ❤️ to solve real problems in production
+</p>
