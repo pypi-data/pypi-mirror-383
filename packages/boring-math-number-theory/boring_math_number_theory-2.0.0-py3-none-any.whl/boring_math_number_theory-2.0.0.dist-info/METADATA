@@ -1,0 +1,52 @@
+Metadata-Version: 2.4
+Name: boring-math-number-theory
+Version: 2.0.0
+Summary: Number Theory Library
+Keywords: gcd,lcm,number-theory,primes
+Author-email: "Geoffrey R. Scheller" <geoffrey@scheller.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/x-rst
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: Pytest
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+License-File: LICENSE
+Requires-Dist: pythonic-fp-circulararray>=6.0.0
+Requires-Dist: pythonic-fp-iterables>=5.1.2
+Requires-Dist: pytest>=8.4.1 ; extra == "test"
+Project-URL: Changelog, https://github.com/grscheller/boring-math-number-theory/blob/main/CHANGELOG.md
+Project-URL: Documentation, https://grscheller.github.io/boring-math/number_theory/development/build/html
+Project-URL: Homepage, https://grscheller.github.io/boring-math
+Project-URL: Source, https://github.com/grscheller/boring-math-number-theory
+Provides-Extra: test
+
+Boring Math - Number Theory
+===========================
+
+PyPI project
+`boring-math-number-theory
+<https://pypi.org/project/boring-math-number-theory>`_.
+
+Python module implementing a number theory library.
+
+This PyPI project is part of the
+`Boring Math
+<https://grscheller.github.io/boring-math>`_ projects.
+
+Documentation
+-------------
+
+Documentation for this project is hosted on
+`GitHub Pages
+<https://grscheller.github.io/boring-math/number-theory/development/build/html>`_.
+
+Copyright and License
+---------------------
+
+Copyright (c) 2023-2025 Geoffrey R. Scheller. Licensed under the Apache
+License, Version 2.0. See the LICENSE file for details.
+
