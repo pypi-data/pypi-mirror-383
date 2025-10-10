@@ -1,0 +1,19 @@
+# This file demonstrates speech recognition using the speech_recognition library to convert audio files to text.
+# Uses Google's speech recognition API to transcribe audio from WAV files with error handling for recognition failures.
+
+#exp-6
+#pip install speech_recognition
+import speech_recognition as sr
+print(sr.__version__)
+r=sr.Recognizer()
+harward=sr.AudioFile("D:/new/male.wav")
+with harward as source:
+    audio=r.record(harward)
+print(type(audio))
+try:
+    text=r.recognize_google(audio)
+    print(text)
+except sr.UnknownValueError as e:
+    print(Error)
+except sr.RequestError as e:
+    print(e)
