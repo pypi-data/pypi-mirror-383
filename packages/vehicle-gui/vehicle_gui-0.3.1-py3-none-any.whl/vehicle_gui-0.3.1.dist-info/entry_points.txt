@@ -1,0 +1,8 @@
+[console_scripts]
+vehicle_gui = vehicle_gui.__main__:main
+
+[pygments.lexers]
+external = vehicle_gui.external.lexer:ExternalLexer
+
+[pygments.styles]
+vse-style = vehicle_gui.external.vse_style:VSE
