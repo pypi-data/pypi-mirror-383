@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comping"
+version = "0.1.0"
+description = "MLOps concept drift detection & adaptation library"
+authors = [{ name = "Gyujin Kim", email = "gj.kim@comping.ai" }]
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://comping.ai"
+Repository = "https://github.com/technometrics/comping"
