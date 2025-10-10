@@ -1,0 +1,223 @@
+/* Material Lite Theme for MyPyGUI-NG */
+
+/* Base styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    color: #212121;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 1rem;
+}
+
+/* Material Design Colors */
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #FFC107;
+    --success-color: #4CAF50;
+    --error-color: #F44336;
+    --background-color: #FAFAFA;
+    --surface-color: #FFFFFF;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+}
+
+/* Cards (Material Design Cards) */
+.card {
+    background-color: var(--surface-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    margin-bottom: 16px;
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.card-title {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Buttons (Material Design Buttons) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.0892857143em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: currentColor;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.btn:hover::before {
+    opacity: 0.04;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.5);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #1976D2;
+}
+
+.btn-secondary {
+    background-color: #9E9E9E;
+    color: #000;
+}
+
+.btn-secondary:hover {
+    background-color: #757575;
+}
+
+/* Form elements (Material Design) */
+.form-field {
+    margin-bottom: 16px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px 14px 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--surface-color);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.form-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 16px 14px 14px;
+    pointer-events: none;
+    border: 1px solid transparent;
+    color: #757575;
+    font-size: 1rem;
+    transition: transform 0.15s ease-in-out, color 0.15s ease-in-out;
+    transform-origin: 0 100%;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+    transform: translateY(-50%) scale(0.75);
+    color: var(--primary-color);
+}
+
+/* Chips */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    background-color: #E3F2FD;
+    color: #1976D2;
+    margin: 4px;
+}
+
+.chip-primary {
+    background-color: #E3F2FD;
+    color: #1976D2;
+}
+
+.chip-secondary {
+    background-color: #FFF3E0;
+    color: #F57C00;
+}
+
+/* Grid system */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -8px;
+}
+
+.grid-item {
+    padding: 8px;
+}
+
+.grid-item-1 { flex: 0 0 8.333333%; max-width: 8.333333%; }
+.grid-item-2 { flex: 0 0 16.666667%; max-width: 16.666667%; }
+.grid-item-3 { flex: 0 0 25%; max-width: 25%; }
+.grid-item-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.grid-item-6 { flex: 0 0 50%; max-width: 50%; }
+.grid-item-12 { flex: 0 0 100%; max-width: 100%; }
+
+/* Utilities */
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--text-secondary); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.elevation-1 { box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12); }
+.elevation-2 { box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+.elevation-3 { box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12); }
+
+.rounded-sm { border-radius: 4px; }
+.rounded { border-radius: 8px; }
+.rounded-lg { border-radius: 12px; }
+.rounded-full { border-radius: 9999px; }
+
+.m-0 { margin: 0; }
+.m-1 { margin: 4px; }
+.m-2 { margin: 8px; }
+.m-3 { margin: 16px; }
+.m-4 { margin: 24px; }
+.m-5 { margin: 48px; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: 4px; }
+.p-2 { padding: 8px; }
+.p-3 { padding: 16px; }
+.p-4 { padding: 24px; }
+.p-5 { padding: 48px; }
