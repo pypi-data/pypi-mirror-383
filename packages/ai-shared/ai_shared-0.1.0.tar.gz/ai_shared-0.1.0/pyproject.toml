@@ -1,0 +1,14 @@
+[project]
+name = "ai-shared"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.2.6",
+    "pydantic>=2.11.7",
+    "ultralytics>=8.3.193",
+]
+
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/"
