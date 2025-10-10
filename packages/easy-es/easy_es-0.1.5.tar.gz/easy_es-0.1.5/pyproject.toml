@@ -1,0 +1,31 @@
+[project]
+name = "easy-es"
+version = "0.1.5"
+description = "A package to conduct financial event study with few lines of code."
+readme = "README.md"
+authors = [
+    { name = "Vladislav Pyzhov", email = "vladpyzhov@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "nbformat>=5.10.4",
+    "numpy>=1.26,<3",
+    "pandas>=2.3.3",
+    "plotly>=6.3.1",
+    "pytest>=8.4.2",
+    "python-dateutil>=2.9.0.post0",
+    "scikit-learn>=1.7.2",
+    "scipy>=1.16.2",
+    "setuptools==70.0.0",
+    "statsmodels>=0.14.5",
+    "tqdm>=4.67.1",
+    "typing-extensions>=4.15.0",
+    "yfinance>=0.2.66",
+]
+
+[project.scripts]
+easy-event-study = "easy_event_study:main"
+
+[build-system]
+requires = ["uv_build>=0.8.12,<0.9.0"]
+build-backend = "uv_build"
