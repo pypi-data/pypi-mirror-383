@@ -1,0 +1,79 @@
+{
+    "config_version": "0.0.1",
+    "etl_directory": "./etl/migman",
+    "extract_active": true,
+    "transform_active": true,
+    "load_active": true,
+    "extract": {
+        "source": {
+            "adapter_type": "<type_of_adapter>",
+            "adapter_config_json": "<path_to_adapter_config_json>",
+            "duckdb_path": "<path_to_duckdb_file>"
+        },
+        "tables": {
+            "Customers": {
+                "active": true
+            },
+            "Suppliers": {
+                "active": false
+            }
+        }
+    },
+    "transform": {
+        "duplicates": {
+            "Customers": {
+                "active": true,
+                "primary_key": "S_Kunde.Kunde",
+                "fields": [
+                    "S_Adresse.Name1",
+                    "S_Adresse.Staat",
+                    "S_Adresse.Ort",
+                    "S_Adresse.Name2",
+                    "S_Adresse.Name3",
+                    "S_Adresse.PLZ",
+                    "S_Adresse.Strasse",
+                    "S_Adresse.Hausnummer"
+                ]
+            },
+            "Suppliers": {
+                "active": false,
+                "primary_key": "S_Lieferant.Lieferant",
+                "fields": [
+                    "S_Adresse.Name1",
+                    "S_Adresse.Staat",
+                    "S_Adresse.Ort",
+                    "S_Adresse.Name2",
+                    "S_Adresse.Name3",
+                    "S_Adresse.PLZ",
+                    "S_Adresse.Strasse",
+                    "S_Adresse.Hausnummer"
+                ]
+            },
+            "Prospects": {
+                "active": false,
+                "primary_key": "VC_Interessent.Interessent",
+                "fields": [
+                    "S_Adresse.Name1",
+                    "S_Adresse.Staat",
+                    "S_Adresse.Ort",
+                    "S_Adresse.Name2",
+                    "S_Adresse.Name3",
+                    "S_Adresse.PLZ",
+                    "S_Adresse.Strasse",
+                    "S_Adresse.Hausnummer"
+                ]
+            },
+            "Parts": {
+                "active": false,
+                "primary_key": "S_Artikel.Artikel",
+                "fields": [
+                    "S_ArtikelSpr.Bezeichnung1",
+                    "S_ArtikelSpr.Bezeichnung2",
+                    "S_ArtikelSpr.Bezeichnung3",
+                    "S_ArtikelSpr.Bezeichnung4"
+                ]
+            }
+        }        
+    },
+    "load": {}
+}
