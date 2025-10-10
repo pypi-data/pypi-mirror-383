@@ -1,0 +1,5 @@
+[console_scripts]
+playbook = playbook.cli.main:app
+
+[playbook.plugins]
+python = playbook.infrastructure.plugins.python_plugin:PythonPlugin
