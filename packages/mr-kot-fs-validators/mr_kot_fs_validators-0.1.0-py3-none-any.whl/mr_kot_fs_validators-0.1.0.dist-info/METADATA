@@ -1,0 +1,80 @@
+Metadata-Version: 2.3
+Name: mr-kot-fs-validators
+Version: 0.1.0
+Summary: Reusable filesystem validators for Mr. Kot checks.
+License: MIT
+Author: Alexander Presniakov
+Author-email: alexander.presniakov@mariadb.com
+Requires-Python: >=3.9,<4.0
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Software Development :: Testing
+Requires-Dist: mr-kot (>=0.8.1,<0.9.0)
+Description-Content-Type: text/markdown
+
+# mr-kot-fs-validators
+
+Reusable filesystem validator factories for Mr. Kot checks.
+This package provides a set of validator factories that you compose inside your own checks using `check_all()`.
+
+## Usage
+
+```python
+from mr_kot import check, check_all
+from mr_kot_fs_validators import (
+    Exists, IsFile, HasMode, OwnerIs, GroupIs
+)
+
+@check
+def hosts_file_state():
+    return check_all(
+        "/etc/hosts",
+        Exists(),
+        IsFile(),
+        HasMode("0644"),
+        OwnerIs("root"),
+        GroupIs("root"),
+    )
+```
+
+Each validator is a small factory returning a callable: `validator(target_path) -> (status, evidence)`.
+Statuses follow Mr. Kot conventions: `PASS`, `FAIL`, `ERROR` (and occasionally `WARN`).
+
+## Evidence style
+
+- PASS: `path=/etc/hosts exists`
+- FAIL: `path=/data mode expected=0755 actual=0775`
+- FAIL(recursive): `path=/data child=/data/logs/old owner expected=mysql actual=root`
+- ERROR: `path=/var/log error=PermissionError: [Errno 13] Permission denied`
+
+## Validators
+
+- **Existence and type**: `Exists`, `IsFile`, `IsDir`, `IsSymlink`, `IsSocket`, `IsBlockDevice`, `IsCharDevice`.
+- **Permissions/ownership**: `HasMode`, `OwnerIs`, `GroupIs`, `IsExecutable`, `IsReadable`, `IsWritable`.
+- **Content/size**: `Empty`, `SizeBetween`.
+- **State/links**: `SymlinkPointsTo`, `RecentThan`, `HasSubdirs`, `HasFiles`.
+- Mounts/devices/capacity: `FSTypeIs`, `MountExists`, `FreeSpaceAtLeast`, `DeviceAvailable`.
+- I/O smoke: `CanReadFile`, `CanWriteFile`.
+
+## Notes
+
+- `recursive=True` in `HasMode`, `OwnerIs`, `GroupIs` traverses directories with `os.walk` and fails on the first mismatch.
+- `follow_symlinks` controls stat-like checks; default `False` unless stated otherwise.
+- `RecentThan()` accepts a file path or an epoch timestamp (float or int).
+- `FSTypeIs`/`MountExists` parse `/proc/self/mountinfo` on Linux.
+- I/O smoke tests avoid leaving artifacts; `CanWriteFile()` always removes the temporary file it creates.
+
+### Permissions shortcuts
+
+`IsExecutable(by_user=True, by_group=False, by_others=False)`, `IsReadable(...)`, and `IsWritable(...)` accept flags to select which bits to require. If all flags are `False`, they fall back to checking any of the three categories.
+
