@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: modelmetricsdk
+Version: 0.4.0
+Summary: model store SDK for Training Host
+Home-page: 
+Author: O-RAN Software Community
+Author-email: O-RAN Software Community <discuss@lists.o-ran-sc.org>
+License: Apache-2.0
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSES.txt
+Requires-Dist: boto3
+Requires-Dist: kubernetes
+Requires-Dist: pyyaml
+Dynamic: author
+Dynamic: license-file
+Dynamic: requires-python
+
+# Model Storage
