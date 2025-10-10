@@ -1,0 +1,70 @@
+### Custom matplotlib plotting style - written by Matt Nagle (Sept 2024)
+
+
+### LINES
+# See https://matplotlib.org/api/artist_api.html#module-matplotlib.lines for more
+# information on line properties.
+lines.linewidth   : 2     # line width in points
+lines.solid_capstyle : round   # butt|round|projecting
+
+
+### TEXT
+# text properties used by text.Text.  See
+# https://matplotlib.org/api/artist_api.html#module-matplotlib.text for more
+# information on text properties
+text.color          : .15
+
+
+### AXES
+# default face and edge color, default tick sizes,
+# default fontsizes for ticklabels, and so on.  See
+# https://matplotlib.org/api/axes_api.html#module-matplotlib.axes
+axes.edgecolor      : 0.15       # axes edge color
+axes.grid           : True   # display grid or not
+axes.titlesize      : 20   # fontsize of the axes title
+axes.labelsize      : 14  # fontsize of the x and y labels
+axes.labelcolor     : .15
+axes.prop_cycle    : cycler('color', ["#5e81b5","#e19c24","#3ba545","#ff6b97","#2bbcce"])
+                                           # color cycle for plot lines
+                                           # as list of string colorspecs:
+                                           # single letter, long name, or
+                                           # web-style hex
+
+
+### TICKS
+# see https://matplotlib.org/api/axis_api.html#matplotlib.axis.Tick
+xtick.color          : 0.15      # color of the tick labels
+xtick.labelsize      : 12 # fontsize of the tick labels
+xtick.direction      : out     # direction: in, out, or inout
+ytick.color          : 0.15      # color of the tick labels
+ytick.labelsize      : 12 # fontsize of the tick labels
+ytick.direction      : out     # direction: in, out, or inout
+
+
+### GRIDS
+grid.color       :   0.9       # grid color
+grid.linewidth   :   1.0     # in points
+
+### Legend
+legend.fontsize      : 12
+legend.framealpha    : 0.75    # opacity of legend frame
+legend.edgecolor     : 0.5   # legend edge color (when 'inherit' uses axes.edgecolor)
+
+
+### FIGURE
+# See https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure
+figure.dpi       : 120      # figure dots per inch
+
+
+### SAVING FIGURES
+# the default savefig params can be different from the display params
+# e.g., you may want a higher resolution, or to make the figure
+# background white
+savefig.dpi         : 300      # figure dots per inch
+savefig.facecolor   : w        # figure facecolor when saving
+savefig.edgecolor   : w        # figure edgecolor when saving
+savefig.format      : png      # png, ps, pdf, svg
+savefig.bbox        : tight # 'tight' or 'standard'.
+                               # 'tight' is incompatible with pipe-based animation
+                               # backends (e.g. 'ffmpeg') but will work with those
+                               # based on temporary files (e.g. 'ffmpeg_file')
