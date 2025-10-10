@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright © 2025 Rajeshwar Dhayalan and Contributors
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-evidence-sdk"
+version = "0.1.0"
+description = "Python SDK for Agentic Evidence Logger"
+requires-python = ">=3.10"
+authors = [{ name = "Rajeshwar Dhayalan" }]
+license = { file = "LICENSE" }
+readme = { file = "README.md", content-type = "text/markdown" }
+dependencies = [
+  "pydantic>=2.0",
+]
+keywords = ["ai", "agentic", "evidence", "sdk", "logging"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://rajeshwar77.github.io/open-agent-evidence-docs/"
+Repository = "https://github.com/Rajeshwar77/open-agent-evidence"
+Documentation = "https://rajeshwar77.github.io/open-agent-evidence-docs/"
+Changelog = "https://github.com/Rajeshwar77/open-agent-evidence-docs/blob/main/docs/RELEASE-NOTES.md"
+
+[project.optional-dependencies]
+dev = ["build", "twine", "pytest", "ruff", "mypy"]
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agentic_evidence_sdk*"]
