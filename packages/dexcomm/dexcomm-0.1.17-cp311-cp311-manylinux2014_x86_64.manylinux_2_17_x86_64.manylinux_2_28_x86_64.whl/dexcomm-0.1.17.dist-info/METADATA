@@ -1,0 +1,316 @@
+Metadata-Version: 2.4
+Name: dexcomm
+Version: 0.1.17
+Summary: Communication library using Zenoh with ROS-like functionality
+Author-email: Dexmate <contact@dexmate.ai>
+Maintainer-email: Dexmate <contact@dexmate.ai>
+License: Dual licensed: AGPL-3.0 and Commercial
+Project-URL: Homepage, https://github.com/dexmate/dexcomm
+Project-URL: Documentation, https://github.com/dexmate/dexcomm#readme
+Project-URL: Repository, https://github.com/dexmate/dexcomm.git
+Project-URL: Issues, https://github.com/dexmate/dexcomm/issues
+Keywords: communication,robotics,AI
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Distributed Computing
+Classifier: Topic :: System :: Networking
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: eclipse-zenoh>=1.5.0
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: loguru>=0.6.0
+Requires-Dist: protobuf>=6.32.1
+Requires-Dist: zstandard>=0.25.0
+Provides-Extra: image
+Requires-Dist: opencv-python>=4.5.0; extra == "image"
+Provides-Extra: fast
+Requires-Dist: PyTurboJPEG>=1.6.0; extra == "fast"
+Provides-Extra: yaml
+Requires-Dist: PyYAML>=6.0; extra == "yaml"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-timeout>=2.1.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Requires-Dist: types-protobuf>=4.0.0; extra == "dev"
+Requires-Dist: Pillow>=9.0.0; extra == "dev"
+Provides-Extra: all
+Requires-Dist: dexcomm[fast,image,yaml]; extra == "all"
+Dynamic: license-file
+
+# DexComm - Zenoh-based Communication Library
+
+A high-performance communication library built on top of Zenoh, providing three levels of abstraction for distributed systems. Designed for robotics and real-time applications.
+
+## Features
+
+- **Three Abstraction Levels**:
+  - **Raw API**: Direct publisher/subscriber for simple scripts
+  - **Node Pattern**: ROS-like component organization with namespaces
+  - **Manager Pattern**: Dynamic topic management for gateways and monitoring
+- **Shared Session Management**: Efficient resource usage with singleton Zenoh session
+- **High-Precision Rate Limiting**: Nanosecond-precision rate control with adaptive processing compensation
+- **Flexible Configuration**: Support for all Zenoh configuration options with config file loading
+- **Quality of Service**: Configurable reliability, congestion control, and priority
+- **Service Support**: Request-reply pattern with timeout and async calls
+
+## Installation
+
+```bash
+pip install dexcomm
+```
+
+### Platform Support
+
+- **Python**: 3.10, 3.11, 3.12, 3.13
+- **Operating Systems**: Linux, macOS, Windows
+- **Architectures**: x86_64, ARM64 (Apple Silicon), AArch64 (Linux)
+
+## Quick Start
+
+> **Important**: All imports are available directly from the `dexcomm` module, regardless of which pattern you use.
+
+### Choosing the Right Pattern
+
+| Use Case | Recommended Pattern | Why |
+|----------|-------------------|-----|
+| Simple script with 1-2 topics | Raw API | Minimal code, direct control |
+| Robot/device controller | Node | Component encapsulation, namespaces |
+| ROS/ROS2 migration | Node | Familiar interface |
+| Data logger/recorder | Manager | Dynamic topic management |
+| Gateway/bridge service | Manager | Runtime topic addition/removal |
+| Microservice | Node | Clean interfaces, lifecycle management |
+| Quick prototype | Raw API | Zero boilerplate |
+
+### Pattern 1: Raw API (Simplest)
+
+```python
+from dexcomm import Publisher, Subscriber
+
+# Create publisher anywhere in your code
+pub = Publisher("sensor/temperature")
+pub.publish(25.5)
+
+# Create subscriber anywhere else
+sub = Subscriber("sensor/temperature", lambda msg: print(f"Temp: {msg}°C"))
+
+# Quick functions for one-off operations
+from dexcomm import publish, wait_for_message
+publish("alert", "High temperature detected!")
+msg = wait_for_message("alert", timeout=1.0)
+```
+
+### Pattern 2: Node-based (ROS-like)
+
+```python
+from dexcomm import Node
+
+class RobotController:
+    def __init__(self):
+        # Create node with namespace
+        self.node = Node("controller", namespace="robot1")
+        
+        # Publishers and subscribers are namespaced
+        self.cmd_pub = self.node.create_publisher("cmd_vel")
+        self.odom_sub = self.node.create_subscriber("odometry", self.on_odometry)
+        
+        # Services
+        self.node.create_service("reset", self.handle_reset)
+        
+    def on_odometry(self, msg):
+        # Process odometry and publish commands
+        self.cmd_pub.publish({"linear": 0.5, "angular": 0.0})
+        
+    def handle_reset(self, request):
+        # Reset robot state
+        return {"success": True}
+        
+    def run(self):
+        self.node.spin()  # Process callbacks
+
+# Usage
+controller = RobotController()
+controller.run()
+```
+
+### Pattern 3: Manager Pattern (Dynamic Topics)
+
+```python
+from dexcomm import PublisherManager, SubscriberManager
+
+class DataLogger:
+    def __init__(self):
+        self.subscribers = SubscriberManager()
+        self.recording = {}
+        
+    def start_recording(self, topics):
+        """Dynamically subscribe to topics"""
+        for topic in topics:
+            self.subscribers.add(
+                topic, 
+                callback=lambda msg, t=topic: self.record(t, msg),
+                buffer_size=100
+            )
+            
+    def record(self, topic, msg):
+        if topic not in self.recording:
+            self.recording[topic] = []
+        self.recording[topic].append(msg)
+        
+    def stop_recording(self, topic):
+        """Dynamically unsubscribe"""
+        self.subscribers.remove(topic)
+        
+    def get_latest_all(self):
+        """Get latest message from all topics"""
+        return self.subscribers.get_all_latest()
+
+# Usage
+logger = DataLogger()
+logger.start_recording(["sensors/lidar", "sensors/camera", "robot/pose"])
+# Topics can be added/removed at runtime
+logger.start_recording(["sensors/imu"])
+logger.stop_recording("sensors/camera")
+```
+
+## Configuration
+
+### Zenoh Configuration
+
+```python
+from dexcomm import Publisher, ZenohConfig
+
+# Peer mode (default) - automatic discovery
+config = ZenohConfig.default_peer()
+
+# Client mode - connect to router
+config = ZenohConfig.default_client("tcp/localhost:7447")
+
+# Custom configuration
+config = ZenohConfig(
+    mode="peer",
+    connect=["tcp/192.168.1.100:7447"],
+    multicast_scouting=True
+)
+
+# Use config with any component
+pub = Publisher("my/topic", config=config)
+```
+
+### Quality of Service
+
+```python
+from dexcomm import Publisher
+
+# Publisher with QoS settings
+pub = Publisher(
+    "important/topic",
+    qos={
+        "reliability": "reliable",
+        "congestion_control": "block",
+        "priority": "real_time"
+    }
+)
+```
+
+### Rate Limiting
+
+```python
+from dexcomm.utils import RateLimiter
+from dexcomm import Node
+
+# High-precision rate limiter
+limiter = RateLimiter(rate_hz=30.0)  # 30 Hz
+for data in sensor_stream:
+    limiter.sleep()  # Maintain 30 Hz
+    process(data)
+
+# Adaptive mode - automatically compensates for processing time
+limiter = RateLimiter(rate_hz=30.0, adaptive=True)
+for data in sensor_stream:
+    limiter.sleep()  # Automatically learns and adjusts
+    result = heavy_processing(data)  # Variable 10-50ms
+
+# Rate-limited publisher
+node = Node("my_node")
+pub = node.create_rate_limited_publisher("sensor/data", rate=20.0)
+for data in stream:
+    pub.publish(data)  # Automatically rate-limited to 20 Hz
+```
+
+## Services
+
+```python
+from dexcomm import Service, ServiceClient
+
+# Create service
+service = Service("math/add", lambda req: {"sum": req["a"] + req["b"]})
+
+# Call service
+client = ServiceClient("math/add")
+result = client.call({"a": 5, "b": 3})
+print(result)  # {"sum": 8}
+
+# Quick one-off call
+from dexcomm import call_service
+result = call_service("math/add", {"a": 10, "b": 20})
+```
+
+### Environment Variables
+
+DexComm can be configured using environment variables. See ENVIRONMENT_VARIABLES.md for complete documentation of all available variables.
+
+Quick setup:
+```bash
+# Copy the example environment file
+cp .env.example .env
+# Edit .env with your configuration
+# Your application will automatically use these settings
+```
+
+### Using Configuration Files
+
+DexComm can load Zenoh configuration from files via environment variables:
+
+```bash
+# Using DEXCOMM_ZENOH_CONFIG (preferred)
+export DEXCOMM_ZENOH_CONFIG=/path/to/zenoh_config.json
+python your_script.py
+
+# Or using ZENOH_CONFIG (fallback)
+export ZENOH_CONFIG=/path/to/zenoh_config.json
+python your_script.py
+```
+
+Configuration priority order:
+1. Programmatic configuration (passed to constructors)
+2. Config file from `DEXCOMM_ZENOH_CONFIG` or `ZENOH_CONFIG`
+3. Mode from `ZENOH_MODE` environment variable
+4. Default configuration (peer mode with multicast)
+
+## License
+
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0) - see the `LICENSE` file for details.
+
+Copyright (C) 2025 Dexmate Inc.
+
+For commercial licensing options, please contact: contact@dexmate.ai
+
+
