@@ -1,0 +1,19 @@
+[weblate]
+url = https://example.net/
+retries = 999
+method_whitelist = PUT,POST
+backoff_factor = 0.2
+status_forcelist = 429,500,502,503,504
+timeout = 30
+
+[withkey]
+url = http://127.0.0.1:8000/api/
+key = KEY
+
+[withcomponent]
+url = http://127.0.0.1:8000/api/
+translation = hello/weblate
+
+[withproject]
+url = http://127.0.0.1:8000/api/
+translation = hello

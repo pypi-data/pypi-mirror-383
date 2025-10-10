@@ -1,0 +1,39 @@
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "name": "ACL",
+            "slug": "acl",
+            "web": "https://weblate.org/",
+            "source_language": {
+                "code": "en",
+                "name": "English",
+                "nplurals": 2,
+                "pluralequation": "n != 1",
+                "direction": "ltr",
+                "web_url": "http://127.0.0.1:8000/languages/en/",
+                "url": "http://127.0.0.1:8000/api/languages/en/"
+            },
+            "web_url": "http://127.0.0.1:8000/projects/acl/",
+            "url": "http://127.0.0.1:8000/api/projects/acl/"
+        },
+        {
+            "name": "Hello",
+            "slug": "hello",
+            "web": "http://weblate.org/",
+            "source_language": {
+                "code": "en",
+                "name": "English",
+                "nplurals": 2,
+                "pluralequation": "n != 1",
+                "direction": "ltr",
+                "web_url": "http://127.0.0.1:8000/languages/en/",
+                "url": "http://127.0.0.1:8000/api/languages/en/"
+            },
+            "web_url": "http://127.0.0.1:8000/projects/hello/",
+            "url": "http://127.0.0.1:8000/api/projects/hello/"
+        }
+    ]
+}
