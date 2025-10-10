@@ -1,0 +1,317 @@
+# MtbDb: Genomics Database Toolkit for Mycobacterium Tuberculosis
+
+MtbDb是一个专门为结核分枝杆菌（Mycobacterium Tuberculosis）基因组分析设计的Python工具包，提供了结核菌基因组数据库的高效查询和分析功能。
+
+## 功能特性
+
+- 🧬 结核菌基因组数据库查询
+- 📊 基因变异分析(TBVA)
+- 🔍 基因表达分析(TBGEA)
+- 📈 统计分析和可视化
+- 🔗 支持多种数据格式
+- 🧪 FASTA/FASTQ/SNP到VCF转换
+- 📦 内置H37Rv参考基因组（开箱即用）
+
+## 安装
+
+### 快速开始：使用Conda（强烈推荐）
+
+如果您需要使用FASTA/FASTQ转VCF功能，推荐使用Conda安装，可以自动配置所有Python包和生物信息学工具：
+
+```bash
+# 克隆仓库
+git clone https://github.com/16627517673/mtbdb.git
+cd mtbdb
+
+# 创建并激活conda环境
+conda env create -f environment.yml
+conda activate mtbdb
+
+# 验证安装
+python -c "from mtbdb.tbva import check_all_dependencies; check_all_dependencies()"
+```
+
+### 仅安装Python包（不含外部工具）
+
+如果只需要VCF解析和注释功能，可以仅通过pip安装：
+
+#### 从PyPI安装
+```bash
+pip install MtbDb
+```
+
+#### 从TestPyPI安装
+```bash
+pip install -i https://test.pypi.org/simple/ MtbDb
+```
+
+#### 从源码安装
+```bash
+git clone https://github.com/16627517673/mtbdb.git
+cd mtbdb
+pip install -e .
+```
+
+## 环境配置与依赖
+
+### Python依赖
+- Python >= 3.8
+- intervaltree >= 3.0.2
+- numpy >= 1.20.0
+- pandas >= 1.2.0
+- scipy >= 1.6.0
+- statsmodels >= 0.12.0
+
+### 外部生物信息学工具（FASTA/FASTQ转VCF功能所需）
+
+⚠️ **重要**: 以下工具是系统二进制程序，**无法通过pip安装**
+
+#### FASTA转VCF所需工具
+- **MUMmer套件** (nucmer, delta-filter, show-snps)
+  - 用于全基因组比对和SNP提取
+
+#### FASTQ转VCF所需工具
+- **bwa**: 短reads比对
+- **samtools**: SAM/BAM文件处理
+- **varscan**: 变异检测
+- **fastp**: 质量控制
+- **fastq-dump** (可选): SRA文件解压
+
+#### 安装这些工具的方式
+
+**方案1: 使用Conda（推荐）**
+```bash
+# 方式A: 使用提供的环境配置文件
+conda env create -f environment.yml
+conda activate mtbdb
+
+# 方式B: 手动安装
+conda install -c bioconda mummer bwa samtools varscan fastp sra-tools
+```
+
+**方案2: 使用Homebrew (macOS)**
+```bash
+brew install brewsci/bio/mummer bwa samtools fastp
+# varscan需要单独下载JAR文件
+```
+
+**方案3: 从源码编译**
+- 参考各工具官方文档
+
+#### 验证工具安装
+
+```python
+from mtbdb.tbva import check_all_dependencies
+check_all_dependencies()
+```
+
+输出示例：
+```
+正在检查MtbDb外部工具依赖...
+
+【FASTA转VCF工具】
+  nucmer: ✓ 已安装 4.0.0beta2
+  delta-filter: ✓ 已安装
+  show-snps: ✓ 已安装
+
+【FASTQ转VCF工具】
+  bwa: ✓ 已安装 0.7.17
+  samtools: ✓ 已安装 1.15
+  varscan: ✓ 已安装 2.4.4
+  fastp: ✓ 已安装 0.23.2
+  fastq-dump: ✓ 已安装 (可选)
+
+总结: 8/8 工具可用
+✓ 所有必需工具均已正确安装！
+```
+
+## 快速开始
+
+### 内置参考基因组
+
+MtbDb内置了标准H37Rv参考基因组（NC_000962.3，4.4MB），包括所有必要的索引文件：
+- H37Rv完整基因组序列（.fa）
+- BWA索引文件（.bwt, .pac, .sa, .amb, .ann）
+- samtools索引（.fai）
+
+**优势：**
+- ✅ 无需手动下载或配置参考基因组
+- ✅ 开箱即用，一行代码完成转换
+- ✅ 同时支持自定义参考基因组
+
+```python
+from mtbdb.tbva import get_default_reference_fasta
+
+# 查看内置参考基因组路径
+ref_path = get_default_reference_fasta()
+print(f"内置参考基因组: {ref_path}")
+# 输出: /path/to/mtbdb/data/reference/H37Rv_complete_genome.fa
+```
+
+### 基础VCF解析和注释
+
+```python
+from mtbdb.tbva import VCFParser, VariantAnnotator
+
+# 解析VCF文件
+parser = VCFParser('sample.vcf', filter_pass=True)
+snps = parser.get_snps()
+indels = parser.get_indels()
+
+# 变异注释
+annotator = VariantAnnotator('sample.vcf')
+annotated_variants = annotator.annotate()
+```
+
+### FASTA转VCF（比较基因组学）
+
+使用MUMmer工具链比较两个基因组并生成VCF文件：
+
+```python
+from mtbdb.tbva import fasta_to_vcf
+
+# 方式1：使用内置H37Rv参考基因组（最简单）
+vcf_file = fasta_to_vcf(
+    query_fasta='sample_genome.fasta',
+    output_vcf='output/sample.vcf'
+)
+
+# 方式2：使用自定义参考基因组
+vcf_file = fasta_to_vcf(
+    query_fasta='sample_genome.fasta',
+    output_vcf='output/sample.vcf',
+    reference_fasta='custom_reference.fasta',
+    chrom_id='custom_chrom_id'
+)
+
+print(f"VCF文件已生成: {vcf_file}")
+```
+
+**前置要求：** MUMmer工具套件（参见[环境配置](#环境配置与依赖)章节）
+
+### FASTQ转VCF（重测序分析）
+
+从FASTQ测序数据检测变异并生成VCF文件：
+
+```python
+from mtbdb.tbva import fastq_to_vcf
+
+# 方式1：使用内置H37Rv参考基因组（最简单）
+vcf_file = fastq_to_vcf(
+    output_dir='output',
+    sample_name='ERR181314',
+    fastq1='ERR181314_1.fastq.gz',
+    fastq2='ERR181314_2.fastq.gz',
+    threads=8
+)
+
+# 方式2：使用自定义参考基因组
+vcf_file = fastq_to_vcf(
+    output_dir='output',
+    sample_name='sample001',
+    fastq1='sample_R1.fastq',
+    fastq2='sample_R2.fastq',
+    reference_fasta='custom_reference.fa',
+    threads=16
+)
+
+print(f"VCF文件已生成: {vcf_file}")
+```
+
+**前置要求：** bwa, samtools, fastp, varscan等工具（参见[环境配置](#环境配置与依赖)章节）
+
+### SNP转VCF（已有show-snps输出）
+
+如果您已经有MUMmer show-snps生成的SNP文件，可以直接转换为VCF格式：
+
+```python
+from mtbdb.tbva import snp_to_vcf
+
+# 基础用法：最简单的转换（使用H37Rv默认设置）
+vcf_file = snp_to_vcf(
+    snp_file='sample.snps',
+    output_vcf='sample.vcf'
+)
+
+# 完整用法：自定义染色体ID和参考信息
+vcf_file = snp_to_vcf(
+    snp_file='sample.snps',
+    output_vcf='sample.vcf',
+    chrom_id='NC_000962.3',
+    reference_name='H37Rv_genome.fasta',
+    filter_indels=True  # 过滤indel，只保留SNP
+)
+
+print(f"VCF文件已生成: {vcf_file}")
+```
+
+**优势：**
+- ✅ 无需外部工具依赖（纯Python实现）
+- ✅ 快速转换（秒级完成）
+- ✅ 适用于已有show-snps输出的场景
+- ✅ 可配置染色体ID和参考基因组信息
+
+**使用场景：**
+- 已通过其他方式运行了MUMmer比对
+- 需要将SNP数据转换为标准VCF格式
+- 与其他VCF分析工具集成
+
+### 完整分析流程示例
+
+从FASTQ原始数据到变异注释的完整流程：
+
+```python
+from mtbdb.tbva import fastq_to_vcf, VCFParser, VariantAnnotator
+
+# 第1步：生成VCF（使用内置H37Rv参考基因组）
+vcf_file = fastq_to_vcf(
+    output_dir='analysis',
+    sample_name='sample001',
+    fastq1='sample001_R1.fastq',
+    fastq2='sample001_R2.fastq',
+    threads=16
+)
+
+# 第2步：解析VCF
+parser = VCFParser(vcf_file)
+snps = parser.get_snps()
+print(f"检测到 {len(snps)} 个SNP变异")
+
+# 第3步：变异注释
+annotator = VariantAnnotator(vcf_file)
+results = annotator.annotate()
+```
+
+### 配置参考基因组和工具路径
+
+```python
+from mtbdb.tbva import set_reference_fasta, set_tool_path
+
+# 设置默认参考基因组
+set_reference_fasta('/path/to/H37Rv_complete_genome.fa')
+
+# 设置外部工具路径（如果不在系统PATH中）
+set_tool_path('bwa', '/usr/local/bin/bwa')
+set_tool_path('samtools', '/usr/local/bin/samtools')
+set_tool_path('nucmer', '/opt/mummer/bin/nucmer')
+```
+
+或通过环境变量配置：
+
+```bash
+export MTBDB_REFERENCE_FASTA=/path/to/H37Rv.fa
+export MTBDB_BWA_PATH=/usr/local/bin/bwa
+export MTBDB_SAMTOOLS_PATH=/usr/local/bin/samtools
+```
+
+## 许可证
+
+本项目采用 Apache License 2.0 许可证。详见 [LICENSE](LICENSE) 文件。
+
+## 作者
+
+HengyuZhou (zhouhengyu23@mails.ucas.ac.cn)
+
+## 项目主页
+
+https://github.com/16627517673/mtbdb
