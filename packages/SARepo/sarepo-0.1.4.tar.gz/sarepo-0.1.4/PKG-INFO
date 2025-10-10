@@ -1,0 +1,90 @@
+Metadata-Version: 2.4
+Name: SARepo
+Version: 0.1.4
+Summary: Minimal, explicit Repository & Unit-of-Work layer over SQLAlchemy 2.x
+Author: nurbergenovv
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: SQLAlchemy>=2.0
+Dynamic: license-file
+
+
+# SARepo
+
+Minimal, explicit **Repository** + **Unit of Work** layer on top of **SQLAlchemy 2.x** (sync & async).
+No magic method-names, just clean typed APIs, composable specs, pagination, and optional soft-delete.
+
+## Install (editable)
+
+```bash
+pip install -e .
+```
+
+## Quick Start (sync)
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import String
+
+from SARepo.sa_repo import SARepository
+from SARepo.base import PageRequest
+from SARepo.specs import and_specs, ilike
+
+class Base(DeclarativeBase): pass
+
+class Request(Base):
+    __tablename__ = "requests"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    title: Mapped[str] = mapped_column(String(255))
+    status: Mapped[str] = mapped_column(String(50))
+
+engine = create_engine("sqlite+pysqlite:///:memory:", echo=False)
+Base.metadata.create_all(engine)
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
+
+with SessionLocal() as session:
+    repo = SARepository(Request, session)
+    # create
+    r = repo.add(Request(title="Hello", status="NEW"))
+    session.commit()
+
+    # search + paginate
+    page = repo.page(PageRequest(0, 10), spec=ilike(Request.title, "%He%"))
+    print(page.total, [i.title for i in page.items])
+```
+
+## Async Quick Start
+
+```python
+import asyncio
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from SARepo.sa_repo import SAAsyncRepository
+from SARepo.base import PageRequest
+
+async def main():
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:", echo=False)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
+    async with SessionLocal() as session:
+        repo = SAAsyncRepository(Request, session)
+        await repo.add(Request(title="Hello", status="NEW"))
+        await session.commit()
+        page = await repo.page(PageRequest(0, 10))
+        print(page.total)
+
+asyncio.run(main())
+```
+
+## Features
+- `SARepository` and `SAAsyncRepository` (CRUD, `page()` with total count)
+- Composable **specs** (`eq`, `ilike`, `and_specs`, `not_deleted`)
+- Optional **soft-delete** if the entity has `is_deleted: bool`
+- Minimal **Unit of Work** helpers (sync & async)
+
+## License
+MIT

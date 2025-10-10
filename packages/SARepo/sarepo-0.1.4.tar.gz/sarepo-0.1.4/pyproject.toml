@@ -1,0 +1,20 @@
+
+[project]
+name = "SARepo"
+version = "0.1.4"
+description = "Minimal, explicit Repository & Unit-of-Work layer over SQLAlchemy 2.x"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "nurbergenovv"}]
+license = {text = "MIT"}
+dependencies = [
+  "SQLAlchemy>=2.0"
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["SARepo"]
+include-package-data = true
