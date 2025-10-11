@@ -1,0 +1,27 @@
+[project]
+name = "pure-python-example"
+version = "0.1.0"
+description = "Compiling .py files to binary extensions with Cython"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["hatchling", "hatch-simple-cython"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pure_python"]
+# When compile_py is enabled, exclude source .py and intermediate .c files from wheel
+# Only the compiled .pyd/.so extensions will be included
+exclude = [
+    "**/*.c",
+    "**/*.cpp",
+    "**/*.py",  # Exclude source .py files when compiling to binary
+]
+
+[tool.hatch.build.targets.wheel.hooks.simple-cython]
+# Compile .py files (not just .pyx) to Cython extensions
+compile_py = true
+
+directives = { language_level = "3", boundscheck = false }
+compile_args = ["-O3"]

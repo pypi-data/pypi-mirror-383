@@ -1,0 +1,81 @@
+# hatch-simple-cython
+
+[![PyPI - Version](https://img.shields.io/pypi/v/hatch-simple-cython)](https://pypi.org/project/hatch-simple-cython/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-simple-cython)](https://pypi.org/project/hatch-simple-cython/)
+[![GitHub](https://img.shields.io/github/license/Sun-ZhenXing/hatch-simple-cython)](./LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Sun-ZhenXing/hatch-simple-cython/test.yml?branch=main)](https://github.com/Sun-ZhenXing/hatch-simple-cython/actions)
+
+A minimalist Hatch plugin for building Cython extensions, optimized for uv projects.
+
+## Features
+
+- **Zero-config** - Auto-discovers and compiles `.pyx` files
+- **Simple** - Focused on core functionality without complex configuration
+- **Full Cython support** - Compiler directives, include directories, and linking options
+- **uv-friendly** - Perfect integration with uv workflow
+
+## Installation
+
+```bash
+uv add --dev hatch-simple-cython
+```
+
+## Quick Start
+
+Add to your `pyproject.toml`:
+
+```toml
+[build-system]
+requires = ["hatchling", "hatch-simple-cython", "Cython>=3.0.0", "setuptools"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel.hooks.simple-cython]
+```
+
+That's it! The plugin will automatically discover and compile your `.pyx` files.
+
+## Configuration
+
+### Basic Example
+
+```toml
+[tool.hatch.build.targets.wheel.hooks.simple-cython]
+directives = { language_level = "3", boundscheck = false }
+compile_args = ["-O3"]
+include_dirs = ["include"]
+compile_py = false  # Only compile .pyx files by default
+```
+
+### NumPy Support
+
+```toml
+[tool.hatch.build.targets.wheel.hooks.simple-cython]
+include_numpy = true
+```
+
+### All Options
+
+| Option             | Type      | Default               | Description                       |
+| ------------------ | --------- | --------------------- | --------------------------------- |
+| `directives`       | dict      | `{language_level: 3}` | Cython compiler directives        |
+| `compile_args`     | list[str] | `["-O2"]`             | Compiler arguments                |
+| `link_args`        | list[str] | `[]`                  | Linker arguments                  |
+| `include_dirs`     | list[str] | `[]`                  | Include directories               |
+| `libraries`        | list[str] | `[]`                  | Libraries to link                 |
+| `library_dirs`     | list[str] | `[]`                  | Library search directories        |
+| `define_macros`    | list      | `[]`                  | Preprocessor macro definitions    |
+| `compile_py`       | bool      | `false`               | Compile `.py` files               |
+| `include_numpy`    | bool      | `false`               | Include NumPy headers             |
+| `cythonize_kwargs` | dict      | `{}`                  | Additional `cythonize()` kwargs   |
+
+## Examples
+
+See the `examples/` directory for complete example projects:
+
+- **`pure_python/`** - Compiling `.py` files to binary extensions
+- **`simple_example/`** - Basic Cython usage with `.pyx` files
+- **`numpy_example/`** - Cython with NumPy integration
+
+## MIT License
+
+See [LICENSE](./LICENSE) file for details.

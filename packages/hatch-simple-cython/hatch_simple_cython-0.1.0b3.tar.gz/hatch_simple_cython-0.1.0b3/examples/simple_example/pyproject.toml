@@ -1,0 +1,23 @@
+[project]
+name = "simple-example"
+version = "0.1.0"
+description = "A simple example using hatch-simple-cython"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["hatchling", "hatch-simple-cython"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+# Exclude intermediate C files and Cython source files from wheel
+exclude = [
+    "**/*.c",
+    "**/*.cpp",
+    "**/*.pyx",
+]
+
+[tool.hatch.build.targets.wheel.hooks.simple-cython]
+# Minimal configuration - uses defaults
+directives = { language_level = "3", boundscheck = false }
+compile_args = ["-O3"]
