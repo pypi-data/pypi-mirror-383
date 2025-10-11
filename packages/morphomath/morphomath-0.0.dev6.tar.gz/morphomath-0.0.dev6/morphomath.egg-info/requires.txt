@@ -1,0 +1,9 @@
+networkx>=3.0
+numpy>=2.0
+tqdm
+
+[test]
+colour-science
+pydocstyle<=6.1.1
+pylama[all,toml]
+pytest
