@@ -1,0 +1,19 @@
+[project]
+name = "fire-prox"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Nehal Patel", email = "nehal@alum.mit.edu" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "hatch>=1.14.2",
+]
