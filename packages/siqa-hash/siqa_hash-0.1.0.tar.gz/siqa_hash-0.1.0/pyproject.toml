@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "siqa-hash"
+version = "0.1.0"
+description = "Quantum hash function built using Qiskit"
+readme = "README.md"
+
+requires-python = ">=3.8"
+authors = [
+  { name = "Mohana Priya Thinesh Kumar", email = "manthramohana1@gmail.com" }
+]
+dependencies = [
+  "qiskit>=1.0.0",
+  "qiskit-aer",
+  "numpy"
+]
+
+[project.urls] #MUST EDIT
+Homepage = "https://github.com/yourusername/siqa_hash"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["siqa_hash"]
+
+[project.scripts]
+siqa-hash = "siqa_hash.siqa_hashcode:main"
+
+[project.license]
+text = "MIT"
+
+
+
