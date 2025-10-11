@@ -1,0 +1,101 @@
+Metadata-Version: 2.4
+Name: delta-microscopy
+Version: 3.0.0a5
+Summary: Segments and tracks bacteria
+Project-URL: repository, https://gitlab.com/delta-microscopy/delta
+Project-URL: documentation, https://delta.readthedocs.io
+Author-email: Jean-Baptiste Lugagne <jblugagne@bu.edu>, Owen OConnor <ooconnor@bu.edu>, Virgile Andreani <andreani@bu.edu>
+License: MIT License
+License-File: LICENSE
+Keywords: bacteria,fluorescence,microscopy
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Requires-Python: >=3.11
+Requires-Dist: bioio-imageio>=1.0
+Requires-Dist: bioio-nd2>=1.0
+Requires-Dist: bioio-tifffile>=1.0
+Requires-Dist: bioio>=1.4
+Requires-Dist: elasticdeform>=0.5
+Requires-Dist: ffmpeg-python>=0.2
+Requires-Dist: keras>=3.4
+Requires-Dist: matplotlib<4,>=3.10.1
+Requires-Dist: netcdf4>=1.7
+Requires-Dist: numpy>=2.0
+Requires-Dist: ome-types<0.7,>=0.6.1
+Requires-Dist: opencv-python-headless>=4.8
+Requires-Dist: pip>=24.0
+Requires-Dist: pooch>=1.8
+Requires-Dist: pre-commit>=3.4
+Requires-Dist: pytest-cov>=4.2
+Requires-Dist: pytest>=7.5
+Requires-Dist: scikit-image>=0.25
+Requires-Dist: scipy>=1.12
+Requires-Dist: termcolor>=2.4
+Requires-Dist: tomli-w<2,>=1.1.0
+Requires-Dist: tqdm>=4.66
+Requires-Dist: xarray<2025.09,>=2023.09
+Provides-Extra: docs
+Requires-Dist: furo>=2024.8.6; extra == 'docs'
+Requires-Dist: numpydoc>=1.8; extra == 'docs'
+Requires-Dist: sphinx-design>=0.6; extra == 'docs'
+Requires-Dist: sphinx>=8.0; extra == 'docs'
+Requires-Dist: torch>=2.5; extra == 'docs'
+Provides-Extra: jax-cpu
+Requires-Dist: jax>=0.7; extra == 'jax-cpu'
+Provides-Extra: jax-gpu
+Requires-Dist: jax[cuda12]>=0.7; extra == 'jax-gpu'
+Provides-Extra: tf-cpu
+Requires-Dist: tensorflow>=2.18; extra == 'tf-cpu'
+Provides-Extra: tf-gpu
+Requires-Dist: tensorflow[and-cuda]>=2.18; extra == 'tf-gpu'
+Provides-Extra: torch-cpu
+Requires-Dist: torch>=2.5; extra == 'torch-cpu'
+Provides-Extra: torch-gpu
+Requires-Dist: torch>=2.5; extra == 'torch-gpu'
+Description-Content-Type: text/markdown
+
+# DeLTA
+
+DeLTA (Deep Learning for Time-lapse Analysis) is a deep learning-based image processing pipeline for segmenting and tracking single cells in time-lapse microscopy movies.
+
+![](docs/source/_static/DeLTAexample.gif)
+
+:scroll: To get started check out the documentation at [delta.readthedocs.io](https://delta.readthedocs.io)
+
+:bug: If you encounter bugs or have questions about the software, please use [Gitlab's issue system](https://gitlab.com/delta-microscopy/delta/-/issues)
+
+You can also quickly test DeLTA on our data or your own with Google Colab
+for free [here](https://colab.research.google.com/drive/1UL9oXmcJFRBAm0BMQy_DMKg4VHYGgtxZ?usp=sharing)
+
+---
+
+See also our papers for more details:
+
+Version 2: [O’Connor OM, Alnahhas RN, Lugagne J-B, Dunlop MJ (2022) DeLTA 2.0: A deep learning pipeline for quantifying single-cell spatial and temporal dynamics. _PLoS Comput Biol_ 18(1): e1009797](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009797)
+
+Version 1:
+[Lugagne J-B, Lin H, & Dunlop MJ (2020) DeLTA: Automated cell segmentation, tracking, and lineage reconstruction using deep learning. _PLoS Comput Biol_ 16(4): e1007673](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007673)
+
+---
+
+## Contributions
+
+A big thank you to the following people who shared their data and training
+sets with us, they help us make DeLTA more generalizable:
+
+- [Simon van Vliet](https://vanvlietlab.ch/) at University of Basel
+- [Zoran Marinković](https://scholar.google.com/citations?user=FKKQ64oAAAAJ&hl=en) and [Marianne Grognot](https://scholar.google.com/citations?user=vT4Tr-kAAAAJ&hl=en) in [Philippe Nghe's group](https://scholar.google.com/citations?user=MF7e9eAAAAAJ&hl=en) at ESPCI Paris
+- [Noah Olsman](http://nolsman.com/) and [Daniel Eaton](https://paulsson.med.harvard.edu/people/daniel-eaton) in [Johan Paulsson's group](https://paulsson.med.harvard.edu/) at Harvard
+- [Shuai Yang](http://jin.isynbio.siat.ac.cn/wordpress/?p=476) in [Fan Jin's group](http://jin.isynbio.siat.ac.cn/wordpress/) at Shenzhen Institutes of Advanced Technology
+- [Jordi van Gestel](https://scholar.google.ch/citations?user=73pVatUAAAAJ&hl=en) and [Noam Golan](https://www.eldarmicrolab.com/team) in [Avigdor Eldar's group](https://www.eldarmicrolab.com/) at Tel-Aviv University
+
+Please reach out if you have created your own sets and think they would be
+helpful to the community!
