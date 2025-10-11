@@ -1,0 +1,169 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="redturtle.bandi"
+    >
+
+  <include package="plone.app.contentmenu" />
+
+  <!-- -*- extra stuff goes here -*- -->
+
+  <!-- custom Add form per bandi -->
+  <adapter
+      factory=".bando.AddView"
+      provides="zope.publisher.interfaces.browser.IBrowserPage"
+      for="Products.CMFCore.interfaces.IFolderish
+           redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer
+           plone.dexterity.interfaces.IDexterityFTI"
+      name="Bando"
+      />
+
+  <!-- custom Edit form per bandi -->
+  <browser:page
+      name="edit"
+      for="redturtle.bandi.interfaces.bando.IBando"
+      class=".bando.EditView"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:page
+      name="bando_view"
+      for="..interfaces.IBando"
+      class=".bando.BandoView"
+      template="bando.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+  <browser:menuItem
+      menu="plone_displayviews"
+      title="Default"
+      description="Vista predefinita, altre informazioni sotto"
+      for="..interfaces.IBando"
+      action="@@bando_view"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+
+  <browser:page
+      name="bando_right_view"
+      for="..interfaces.IBando"
+      class=".bando.BandoView"
+      template="bando-right.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+  <browser:menuItem
+      menu="plone_displayviews"
+      title="Sulla destra"
+      description="Mostra altre informazioni a destra"
+      for="..interfaces.IBando"
+      action="@@bando_right_view"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+
+  <browser:page
+      name="search_bandi_form"
+      for="*"
+      class=".search.SearchBandiForm"
+      template="search_form.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:page
+      name="search_bandi"
+      for="*"
+      class=".search.SearchBandi"
+      template="search.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <!-- Viste per le nuove collezioni -->
+
+  <browser:page
+      name="collection_bandi_view"
+      for="plone.app.contenttypes.interfaces.ICollection"
+      class=".collection.CollectionBandiView"
+      template="collection.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:page
+      name="collection_bandi_tipologia_view"
+      for="plone.app.contenttypes.interfaces.ICollection"
+      class=".collection.CollectionBandiView"
+      template="collection.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:menuItems
+      menu="plone_displayviews"
+      for="plone.app.contenttypes.interfaces.ICollection"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      >
+
+    <browser:menuItem
+        title="Bandi con scadenza"
+        action="collection_bandi_view"
+        i18n:translate="title"
+        />
+
+    <browser:menuItem
+        title="Bandi con tipologia e scadenza"
+        action="collection_bandi_tipologia_view"
+        i18n:translate="title"
+        />
+  </browser:menuItems>
+
+  <!--DIRECTORY REGISTRATION-->
+  <plone:static
+      directory="images"
+      name="redturtle.bandi.images"
+      type="plone"
+      />
+
+  <plone:static
+      directory="css"
+      name="redturtle.bandi.styles"
+      type="plone"
+      />
+
+  <browser:resource
+      name="searchbandi.js"
+      file="searchbandi.js"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:page
+      name="plone_context_state"
+      for="redturtle.bandi.interfaces.IBando"
+      class=".context.ContextState"
+      allowed_interface="plone.app.layout.globals.interfaces.IContextState"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:page
+      name="bandi-settings"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      class=".controlpanel.BandiControlPanel"
+      permission="cmf.ManagePortal"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+  <browser:page
+      name="migration-from-rer"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      class=".migrator.RERMigrationView"
+      permission="cmf.ManagePortal"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+</configure>
