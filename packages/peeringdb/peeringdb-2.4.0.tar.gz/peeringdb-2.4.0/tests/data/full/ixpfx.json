@@ -1,0 +1,54 @@
+[
+    {
+        "model": "django_peeringdb.ixlanprefix",
+        "pk": 1,
+        "fields": {
+            "ixlan_id": 1,
+            "protocol": "IPv4",
+            "prefix": "206.223.116.0/23",
+            "in_dfz": true,
+            "created": "2023-04-21T13:46:31.682621",
+            "updated": "2023-04-21T13:46:32.090235",
+            "status": "ok"
+        }
+    },
+    {
+        "model": "django_peeringdb.ixlanprefix",
+        "pk": 2,
+        "fields": {
+            "ixlan_id": 1,
+            "protocol": "IPv6",
+            "prefix": "2001:504:0:1::/64",
+            "in_dfz": true,
+            "created": "2023-04-21T13:46:31.689241",
+            "updated": "2023-04-21T13:46:32.093210",
+            "status": "ok"
+        }
+    },
+    {
+        "model": "django_peeringdb.ixlanprefix",
+        "pk": 3,
+        "fields": {
+            "ixlan_id": 2,
+            "protocol": "IPv4",
+            "prefix": "206.223.123.0/24",
+            "in_dfz": true,
+            "created": "2023-04-21T13:46:31.799237",
+            "updated": "2023-04-21T13:46:32.186992",
+            "status": "ok"
+        }
+    },
+    {
+        "model": "django_peeringdb.ixlanprefix",
+        "pk": 4,
+        "fields": {
+            "ixlan_id": 2,
+            "protocol": "IPv6",
+            "prefix": "2001:504:0:3::/64",
+            "in_dfz": true,
+            "created": "2023-04-21T13:46:31.804216",
+            "updated": "2023-04-21T13:46:32.191110",
+            "status": "ok"
+        }
+    }
+]

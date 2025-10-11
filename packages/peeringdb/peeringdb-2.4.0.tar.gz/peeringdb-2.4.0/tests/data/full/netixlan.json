@@ -1,0 +1,38 @@
+[
+    {
+        "model": "django_peeringdb.networkixlan",
+        "pk": 1,
+        "fields": {
+            "net_id": 1,
+            "ixlan_id": 1,
+            "notes": "Some notes",
+            "speed": 1000,
+            "asn": 63312,
+            "ipaddr4": "206.223.116.101",
+            "ipaddr6": "2001:504:0:1::65",
+            "is_rs_peer": true,
+            "operational": true,
+            "created": "2023-04-21T13:46:31.718816",
+            "updated": "2023-04-21T13:46:32.108511",
+            "status": "ok"
+        }
+    },
+    {
+        "model": "django_peeringdb.networkixlan",
+        "pk": 2,
+        "fields": {
+            "net_id": 2,
+            "ixlan_id": 2,
+            "notes": "Some notes",
+            "speed": 1000,
+            "asn": 63313,
+            "ipaddr4": "206.223.123.101",
+            "ipaddr6": "2001:504:0:3::65",
+            "is_rs_peer": true,
+            "operational": true,
+            "created": "2023-04-21T13:46:31.831132",
+            "updated": "2023-04-21T13:46:32.209023",
+            "status": "ok"
+        }
+    }
+]
