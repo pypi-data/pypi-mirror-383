@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(python:*)",
+      "Bash(basedpyright:*)",
+      "Bash(mkdocs:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:mkdocstrings.github.io)",
+      "Bash(grep:*)",
+      "WebFetch(domain:127.0.0.1)",
+      "Bash(pkill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
