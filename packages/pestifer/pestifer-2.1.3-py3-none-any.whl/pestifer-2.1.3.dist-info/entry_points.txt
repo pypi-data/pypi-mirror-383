@@ -1,0 +1,5 @@
+[console_scripts]
+pestifer = pestifer.core.pestifer:cli
+
+[pytest11]
+pestifer = pestifer.util.pytest_plugin
