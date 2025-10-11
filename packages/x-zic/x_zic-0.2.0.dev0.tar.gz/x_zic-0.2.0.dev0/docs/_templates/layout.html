@@ -1,0 +1,34 @@
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+{{ super() }}
+<!-- Custom meta tags -->
+<meta name="keywords" content="timezone, tzdb, iana, python, parser, dst">
+{% endblock %}
+
+{% block menu %}
+    {{ super() }}
+    
+    <p class="caption">
+        <span class="caption-text">External Links</span>
+    </p>
+    <ul>
+        <li class="toctree-l1">
+            <a class="reference external" href="https://github.com/your-username/x-zic">GitHub Repository</a>
+        </li>
+        <li class="toctree-l1">
+            <a class="reference external" href="https://pypi.org/project/x-zic/">PyPI Package</a>
+        </li>
+        <li class="toctree-l1">
+            <a class="reference external" href="https://www.iana.org/time-zones">IANA Time Zone Database</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+    
+    <script>
+    // Add custom analytics or tracking here
+    </script>
+{% endblock %}

@@ -1,0 +1,12 @@
+include LICENSE
+include README.md
+include pyproject.toml
+include requirements*.txt
+
+recursive-include src/x_zic/data/tzdb-2025b *
+recursive-include tests *.py
+recursive-include examples *.py
+
+recursive-exclude __pycache__ *
+recursive-exclude *.pyc *.pyo
+recursive-exclude .git *
