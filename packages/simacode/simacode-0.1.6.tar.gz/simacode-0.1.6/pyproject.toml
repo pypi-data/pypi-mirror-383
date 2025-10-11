@@ -1,0 +1,148 @@
+[tool.poetry]
+name = "simacode"
+version = "0.1.6"
+description = "SIMA(思码) is a modern AI orchestration workflow framework with intelligent ReAct mechanisms and comprehensive workflow orchestration capabilities"
+authors = ["SimaCode Team <sima@quseit.com>"]
+readme = "README.md"
+packages = [{include = "simacode", from = "src"}]
+homepage = "https://github.com/QUSEIT/simacode"
+repository = "https://github.com/QUSEIT/simacode"
+documentation = "https://simacode.quseit.com"
+keywords = ["ai", "workflow", "orchestration", "react", "mcp", "automation", "cli", "api", "assistant"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.7"
+pydantic = {version = "^2.5.0", optional = true}
+pyyaml = "^6.0.1"
+rich = "^13.7.0"
+aiofiles = "^23.2.1"
+
+# HTTP and async dependencies
+httpx = "^0.27.0"
+aiohttp = {version = "^3.12.14", optional = true}
+
+# MCP (Model Context Protocol) dependencies
+mcp = {version = "^1.13.0", optional = true}
+websockets = "^11.0.3"
+cachetools = "^5.3.2"
+
+# API service dependencies
+fastapi = {version = "^0.115.0", optional = true}
+uvicorn = "^0.32.0"
+
+# File processing and OCR dependencies
+chardet = "^5.2.0"
+pillow = {version = "^10.1.0", optional = true}
+
+# AI client dependencies - compatible version
+anthropic = {version = "^0.37.0", optional = true}
+openai = {version = "^1.0.0", optional = true}
+
+# QPython-specific dependencies (alternatives to standard libraries)
+# These require Python 3.12+ and are only used with qpython extra
+pydantic-qpython = {version = "^2.5.0", optional = true, python = "==3.12.*"}
+aiohttp-qpython = {version = "^3.10.10", optional = true, python = "==3.12.*"}
+mcp-qpython = {version = "^1.9.0", optional = true, python = "==3.12.*"}
+fastapi-qpython = {version = "^0.115.0", optional = true, python = "==3.12.*"}
+pillow-qpython = {version = "^10.1.0", optional = true, python = "==3.12.*"}
+anthropic-qpython = {version = "^0.49.0", optional = true, python = "==3.12.*"}
+openai-qpython = {version = "^1.0.0", optional = true, python = "==3.12.*"}
+
+# MCP tools dependencies
+email-validator = {version = "^2.0.0", optional = true}
+aiosmtplib = {version = "^3.0.0", optional = true}
+bleach = {version = "6.2.0", optional = true}
+python-dotenv = {version = "^1.0.0", optional = true}
+
+[tool.poetry.extras]
+# Default installation uses standard libraries (supports Python 3.10+)
+default = ["pydantic", "aiohttp", "mcp", "fastapi", "pillow", "anthropic", "openai"]
+# MCP tools with email functionality
+mcp = ["email-validator", "aiosmtplib", "bleach", "python-dotenv"]
+# QPython installation uses QPython-compatible alternatives (requires Python 3.12+)
+qpython = ["pydantic-qpython", "aiohttp-qpython", "mcp-qpython", "fastapi-qpython", "pillow-qpython", "anthropic-qpython", "openai-qpython"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
+black = "^23.11.0"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+mypy = "^1.7.1"
+pre-commit = "^3.5.0"
+
+[tool.poetry.scripts]
+simacode = "simacode.cli:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=simacode",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+asyncio_mode = "auto"
