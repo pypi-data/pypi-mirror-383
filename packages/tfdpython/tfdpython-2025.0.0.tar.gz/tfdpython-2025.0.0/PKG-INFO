@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: tfdpython
+Version: 2025.0.0
+Summary: Python wrapper for tinyfiledialogs.
+Author-email: Annes <anneswidow@gmail.com>
+Maintainer-email: Annes <anneswidow@gmail.com>
+License-Expression: MIT
+License-File: LICENSE
+Keywords: annes,tinyfiledialogs,wrapper
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# tfdpy
+A python wrapper for tinyfiledialogs, a c library for cross-platform file dialogs.
+
+Supports: Windows (untested), and MacOS (Sillicon), and Linux (x86 untested)
+
+every other os does not have a compiled library yet.
+
+## Installation
+
+```bash
+pip install tfdpy
+```
+
+## Usage
+
+```python
+import tfdpy
+tfdpy.message_box("Title", "Message")
+```
+
+No dependencies, just a single file and the dylibs.

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tfdpython"
+version = "2025.0.0"
+dependencies = [
+]
+requires-python = ">=3.8"
+authors = [
+  {name = "Annes", email = "anneswidow@gmail.com"},
+]
+maintainers = [
+    {name = "Annes", email = "anneswidow@gmail.com"},
+]
+description = "Python wrapper for tinyfiledialogs."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["tinyfiledialogs", "wrapper", "annes"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
