@@ -1,0 +1,38 @@
+[project]
+name = "netbek-periodic-table"
+version = "0.2.1"
+description = "Periodic table with responsive layout"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jinja2>=3.1.6",
+]
+
+[dependency-groups]
+dev = [
+    "mendeleev>=1.1.0",
+    "pandas>=2.3.3",
+    "pyyaml>=6.0.3",
+    "twine>=6.2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+packages = ["python/src"]
+include = ["**/*.jinja2"]
+
+[tool.isort]
+force_alphabetical_sort = true
+line_length = 100
+profile = "black"
+py_version = 310
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+ignore = ["D100", "D101", "D102", "D103", "D104", "D107", "D205"]
