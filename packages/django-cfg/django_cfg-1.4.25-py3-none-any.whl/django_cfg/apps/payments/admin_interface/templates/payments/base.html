@@ -1,0 +1,464 @@
+{% extends 'django_tailwind/app.html' %}
+{% load static %}
+
+{% block title %}{% block page_title_text %}Dashboard{% endblock %} - Payment Admin - Django CFG{% endblock %}
+
+{# Navbar configuration #}
+{% block header %}
+{% with navbar_items=payment_nav_items %}
+{% include 'django_tailwind/components/navbar.html' with title="Payment Admin" icon='<span class="material-icons-outlined text-blue-600">payment</span>' nav_items=navbar_items full_width=True %}
+{% endwith %}
+{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+{% endblock %}
+
+{% block alpine_data_extra %}, showNgrokHelp: false{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+        {% block page_title %}Dashboard{% endblock %}
+    </h2>
+    {% block page_subtitle %}
+    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        Manage payments and webhooks
+    </p>
+    {% endblock %}
+</div>
+
+<!-- Messages -->
+{% if messages %}
+<div class="mb-6 space-y-2">
+    {% for message in messages %}
+    <div class="rounded-md p-4 {% if message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800{% elif message.tags == 'warning' %}bg-yellow-50 text-yellow-800 border border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800{% elif message.tags == 'success' %}bg-green-50 text-green-800 border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800{% else %}bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Page Content -->
+{% block page_content %}{% endblock %}
+{% endblock %}
+
+{% block body %}
+{{ block.super }}
+
+<!-- Global Dialogs -->
+{% include 'payments/components/ngrok_help_dialog.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<!-- Load and initialize components BEFORE Alpine starts -->
+<script type="module">
+try {
+    console.log('🔄 Starting PaymentAPI module import...');
+    const { loadAPI, showNotification } = await import('/static/js/api-loader.mjs');
+
+    // Load payments API
+    const paymentsAPI = await loadAPI('payments');
+    console.log('✅ PaymentAPI module imported successfully:', paymentsAPI);
+
+    // Make it available globally as PaymentAPI for backward compatibility
+    window.PaymentAPI = paymentsAPI;
+    window.showNotification = showNotification;
+
+    // Add utility functions that were in the old api-client.js
+    window.PaymentAPI.utils = {
+        showNotification,
+
+        copyToClipboard: async (text) => {
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Copied to clipboard!', 'success');
+            } catch (error) {
+                console.error('Failed to copy:', error);
+                showNotification('Failed to copy', 'error');
+            }
+        },
+
+    formatDate: (dateString) => {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        const now = new Date();
+        const diff = now - date;
+        const seconds = Math.floor(diff / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (days > 7) {
+            return date.toLocaleDateString();
+        } else if (days > 0) {
+            return `${days} day${days > 1 ? 's' : ''} ago`;
+        } else if (hours > 0) {
+            return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+        } else if (minutes > 0) {
+            return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+        } else {
+            return 'Just now';
+        }
+    }
+};
+
+// Map generated methods to expected names for compatibility
+window.PaymentAPI.dashboard = {
+    overview: () => paymentsAPI.paymentsOverviewDashboardOverviewRetrieve(),
+    metrics: () => paymentsAPI.paymentsOverviewDashboardMetricsRetrieve(),
+    recentPayments: (limit) => paymentsAPI.paymentsOverviewDashboardRecentPaymentsList({ limit }),
+    chartData: (period) => paymentsAPI.paymentsOverviewDashboardChartDataRetrieve({ period })
+};
+
+window.PaymentAPI.admin = {
+    payments: {
+        list: (params) => paymentsAPI.paymentsAdminApiPaymentsList(params),
+        get: (paymentId) => paymentsAPI.paymentsAdminApiPaymentsRetrieve(paymentId),
+        create: (data) => paymentsAPI.paymentsAdminApiPaymentsCreate(data),
+        cancel: (paymentId) => paymentsAPI.paymentsAdminApiPaymentsCancelCreate(paymentId),
+        refreshStatus: (paymentId) => paymentsAPI.paymentsAdminApiPaymentsRefreshStatusCreate(paymentId)
+    },
+    users: {
+        list: (params) => paymentsAPI.paymentsAdminApiUsersList(params)
+    }
+};
+
+window.PaymentAPI.currencies = {
+    supported: () => paymentsAPI.paymentsCurrenciesSupportedRetrieve(),
+    // byProvider uses query params via filterset_fields, so we need custom implementation
+    byProvider: async (provider) => {
+        const path = `/cfg/payments/provider-currencies/by_provider/`;
+        const queryString = provider ? `?provider=${provider}` : '';
+        const response = await fetch(path + queryString, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    },
+    // convert method - custom implementation to fix generated client bug
+    convert: async (from, to, amount) => {
+        const path = `/cfg/payments/currencies/convert/`;
+        const response = await fetch(path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                from_currency: from,
+                to_currency: to,
+                amount: amount
+            })
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    }
+};
+
+    // PaymentAPI is ready
+    console.log('✅ PaymentAPI loaded from generated MJS client');
+} catch (error) {
+    console.error('❌ Failed to load PaymentAPI module:', error);
+    console.error('Error stack:', error.stack);
+    window.PaymentAPI = null;
+}
+</script>
+
+<!-- Register Alpine components - MUST be non-module script to run before Alpine -->
+<script>
+document.addEventListener('alpine:init', () => {
+    console.log('🔧 Alpine:init - registering components...');
+
+    // Register components directly using Alpine.data
+    Alpine.data('paymentDashboardComponent', () => ({
+        loading: true,
+        recentPayments: [],
+        recentActivity: [],
+        stats: { total: 0, successful: 0, pending: 0, failed: 0 },
+
+        init() {
+            this.waitForDependencies();
+        },
+
+        async waitForDependencies() {
+            const check = setInterval(async () => {
+                if (window.PaymentAPI && typeof paymentDashboard === 'function') {
+                    clearInterval(check);
+                    const data = paymentDashboard();
+
+                    // Copy all properties, methods, AND getters
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            const descriptor = Object.getOwnPropertyDescriptor(data, key);
+                            if (descriptor) {
+                                // Copy getters/setters
+                                if (descriptor.get || descriptor.set) {
+                                    Object.defineProperty(this, key, descriptor);
+                                } else {
+                                    // Copy regular properties/methods
+                                    this[key] = data[key];
+                                }
+                            }
+                        }
+                    }
+
+                    if (data.init) await data.init.call(this);
+                }
+            }, 50);
+        }
+    }));
+
+    Alpine.data('paymentDetailComponent', (paymentId) => ({
+        loading: false,
+        showQRCode: false,
+        paymentId: paymentId,
+
+        init() {
+            console.log('🔵 PaymentDetail init() called with paymentId:', this.paymentId);
+            this.waitForDependencies();
+        },
+
+        async waitForDependencies() {
+            console.log('⏳ PaymentDetail: Waiting for dependencies...');
+            let attempts = 0;
+            const check = setInterval(async () => {
+                attempts++;
+                const hasAPI = !!window.PaymentAPI;
+                const hasFunction = typeof paymentDetail === 'function';
+
+                if (attempts <= 3 || (attempts % 10 === 0)) {
+                    console.log(`⏳ Attempt ${attempts}: PaymentAPI=${hasAPI}, paymentDetail=${hasFunction}`);
+                }
+
+                if (hasAPI && hasFunction) {
+                    clearInterval(check);
+                    console.log('✅ PaymentDetail: Dependencies ready!');
+                    const data = paymentDetail();
+
+                    console.log('🔍 PaymentDetail: Copying methods from data:', Object.keys(data));
+
+                    // Copy all properties, methods, AND getters
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            const descriptor = Object.getOwnPropertyDescriptor(data, key);
+                            if (descriptor) {
+                                // Copy getters/setters
+                                if (descriptor.get || descriptor.set) {
+                                    Object.defineProperty(this, key, descriptor);
+                                } else {
+                                    // Copy regular properties/methods
+                                    this[key] = data[key];
+                                }
+                            }
+                        }
+                    }
+
+                    console.log('✅ PaymentDetail: Copied methods:', Object.keys(this).filter(k => typeof this[k] === 'function'));
+
+                    if (data.init) await data.init.call(this, this.paymentId);
+                }
+            }, 50);
+        }
+    }));
+
+    Alpine.data('paymentListComponent', () => ({
+        loading: false,
+        payments: [],
+        filters: { search: '', status: '' },
+        currentPage: 1,
+        pageSize: 10,
+
+        // Getters defined in Alpine for reactivity
+        get filteredPayments() {
+            let filtered = this.payments;
+
+            if (this.filters.search) {
+                const search = this.filters.search.toLowerCase();
+                filtered = filtered.filter(payment =>
+                    payment.id.toLowerCase().includes(search) ||
+                    payment.external_id?.toLowerCase().includes(search) ||
+                    payment.provider.toLowerCase().includes(search)
+                );
+            }
+
+            if (this.filters.status) {
+                filtered = filtered.filter(payment => payment.status === this.filters.status);
+            }
+
+            return filtered;
+        },
+
+        get paginatedPayments() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.filteredPayments.slice(start, end);
+        },
+
+        init() {
+            this.waitForDependencies();
+        },
+
+        async waitForDependencies() {
+            const check = setInterval(async () => {
+                if (window.PaymentAPI && typeof paymentList === 'function') {
+                    clearInterval(check);
+                    const data = paymentList();
+
+                    console.log('🔄 PaymentList: Copying properties from:', Object.keys(data));
+
+                    // Copy only regular properties and methods (NOT getters)
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            const descriptor = Object.getOwnPropertyDescriptor(data, key);
+                            if (descriptor && !descriptor.get && !descriptor.set) {
+                                this[key] = data[key];
+                            }
+                        }
+                    }
+
+                    console.log('✅ PaymentList: All methods copied');
+                    if (data.init) await data.init.call(this);
+                }
+            }, 50);
+        }
+    }));
+
+    Alpine.data('paymentFormComponent', () => ({
+        loading: false,
+        loadingCurrencies: false,
+        errorMessage: '',
+        users: [],
+        providers: [],
+        currencies: [],
+        allCurrencies: [],
+        conversionResult: null,
+        form: {
+            amount_usd: '',
+            user: '',
+            provider: 'nowpayments',
+            currency_code: '',
+            description: '',
+            callback_url: '',
+            cancel_url: ''
+        },
+
+        // Stub function to prevent Alpine errors before real component loads
+        getCurrencyInfo(code) {
+            return this.currencies.find(c => c.provider_currency_code === code) ||
+                   this.allCurrencies.find(c => c.code === code) ||
+                   { provider_currency_code: code, currency: { code, name: code, currency_type: 'unknown' } };
+        },
+
+        async init() {
+            // Wait for both PaymentAPI and paymentForm to be ready
+            const check = setInterval(async () => {
+                if (window.PaymentAPI && typeof paymentForm === 'function') {
+                    clearInterval(check);
+
+                    console.log('🔄 PaymentForm: Dependencies ready, initializing...');
+
+                    // Get the real component
+                    const realComponent = paymentForm();
+
+                    // Copy all properties, methods, AND getters from real component
+                    for (const key in realComponent) {
+                        if (realComponent.hasOwnProperty(key) && key !== 'init') {
+                            const descriptor = Object.getOwnPropertyDescriptor(realComponent, key);
+                            if (descriptor) {
+                                // Copy getters/setters
+                                if (descriptor.get || descriptor.set) {
+                                    Object.defineProperty(this, key, descriptor);
+                                } else {
+                                    // Copy regular properties/methods
+                                    this[key] = realComponent[key];
+                                }
+                            }
+                        }
+                    }
+
+                    // Now call the real init
+                    if (realComponent.init) {
+                        await realComponent.init.call(this);
+                    }
+                }
+            }, 50);
+        }
+    }));
+
+    Alpine.data('webhookDashboardComponent', () => ({
+        loading: false,
+        events: [],
+        filters: { event_type: '', status: '' },
+        stats: { total: 0, successful: 0, failed: 0, successRate: 0 },
+        testForm: { url: '', event_type: '' },
+        testLoading: false,
+        showEventModal: false,
+        selectedEvent: null,
+
+        // API getter defined in Alpine to access window.PaymentAPI
+        get api() {
+            return window.PaymentAPI;
+        },
+
+        // Getter defined in Alpine for reactivity
+        get filteredEvents() {
+            let filtered = this.events;
+
+            if (this.filters.event_type) {
+                filtered = filtered.filter(event => event.event_type === this.filters.event_type);
+            }
+
+            if (this.filters.status) {
+                filtered = filtered.filter(event => event.status === this.filters.status);
+            }
+
+            return filtered;
+        },
+
+        init() {
+            this.waitForDependencies();
+        },
+
+        async waitForDependencies() {
+            const check = setInterval(async () => {
+                if (window.PaymentAPI && typeof webhookDashboard === 'function') {
+                    clearInterval(check);
+                    const data = webhookDashboard();
+
+                    // Copy only regular properties and methods (NOT getters)
+                    for (const key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            const descriptor = Object.getOwnPropertyDescriptor(data, key);
+                            if (descriptor && !descriptor.get && !descriptor.set) {
+                                this[key] = data[key];
+                            }
+                        }
+                    }
+
+                    if (data.init) await data.init.call(this);
+                }
+            }, 50);
+        }
+    }));
+
+    console.log('✅ All payment Alpine components registered');
+});
+</script>
+
+<!-- Ngrok status component -->
+<script src="{% static 'payments/js/ngrok-status.js' %}"></script>
+{% endblock %}
