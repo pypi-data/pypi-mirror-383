@@ -1,0 +1,181 @@
+Metadata-Version: 2.4
+Name: terminal-second-brain
+Version: 0.0.1
+Summary: Terminal User Interface for Second Brain Todo Application
+Project-URL: Homepage, https://github.com/namanvashistha/terminal-second-brain
+Project-URL: Repository, https://github.com/namanvashistha/terminal-second-brain
+Project-URL: Issues, https://github.com/namanvashistha/terminal-second-brain/issues
+Author-email: Naman Vashistha <naman@example.com>
+Keywords: notes,productivity,terminal,todo,tui
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Office/Business
+Classifier: Topic :: Utilities
+Requires-Python: <3.14,>=3.8
+Requires-Dist: httpx<0.29.0,>=0.28.0
+Requires-Dist: pydantic<2.13.0,==2.12.0
+Requires-Dist: rich<14.3.0,>=14.2.0
+Requires-Dist: textual<6.3.0,>=6.2.1
+Description-Content-Type: text/markdown
+
+# Terminal Second Brain - TUI
+
+🧠 A modern Terminal User Interface for managing your todos with style and efficiency.
+
+## Features
+
+✨ **Modern TUI Interface**
+- Clean, responsive terminal interface built with Textual
+- Keyboard and mouse navigation support
+- Real-time status updates and notifications
+
+📋 **Todo Management**
+- View all todos with visual status indicators
+- Add new todos with input validation
+- Mark todos as completed with a single click
+- Automatic refresh and real-time updates
+
+🔗 **API Integration**
+- Seamless integration with Spring Boot backend
+- Connection health monitoring
+- Error handling and user feedback
+- Configurable API endpoint
+
+## Prerequisites
+
+- Python 3.10 or higher
+- Spring Boot Todo API running on `http://localhost:8080`
+
+## Installation
+
+1. Install dependencies using uv:
+```bash
+uv sync
+```
+
+2. Or install manually with pip:
+```bash
+pip install textual httpx rich pydantic
+```
+
+## Running the Application
+
+1. Ensure your Spring Boot backend is running:
+```bash
+# In the main project directory
+gradle bootRun
+```
+
+2. Start the TUI application:
+```bash
+# Using uv (recommended)
+uv run main.py
+
+# Or directly with Python
+python main.py
+```
+
+## Usage
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `q` | Quit application |
+| `a` | Add new todo |
+| `r` | Refresh todo list |
+| `?` | Show help |
+| `Esc` | Cancel/Go back |
+| `Ctrl+S` | Save (in forms) |
+| `Tab` | Navigate controls |
+| `Enter` | Activate selected item |
+
+### Mouse Controls
+
+- **Click** on a todo to select it
+- **Double-click** to mark as complete (future feature)
+- Use **scroll wheel** to navigate long lists
+
+### Visual Indicators
+
+- ✅ **Completed todos** - Green checkmark
+- ⭕ **Pending todos** - Yellow circle
+- 🔄 **Loading** - Spinning indicator
+- ❌ **Errors** - Red X with message
+
+## Configuration
+
+The application can be configured through environment variables:
+
+```bash
+# API endpoint (default: http://localhost:8080)
+export TODO_API_URL=http://your-api-server:8080
+
+# Run the application
+uv run main.py
+```
+
+## Troubleshooting
+
+### Connection Issues
+
+If you see a connection error:
+
+1. **Check Backend Status**: Ensure Spring Boot app is running
+```bash
+curl http://localhost:8080/actuator/health
+```
+
+2. **Verify API Endpoints**: Test the API manually
+```bash
+curl http://localhost:8080/api/v1/todos
+```
+
+3. **Check Port Conflicts**: Ensure port 8080 is available
+
+### Common Issues
+
+- **Import Errors**: Run `uv sync` to install dependencies
+- **API Timeout**: Check network connectivity and backend performance
+- **Display Issues**: Ensure terminal supports Unicode and colors
+
+## Development
+
+### Project Structure
+
+```
+tui/
+├── main.py              # Main application entry point
+├── api_client.py        # HTTP client for backend API
+├── todo_list.py         # Todo list widget
+├── add_todo_screen.py   # Add todo form screen
+├── config.py            # Configuration and constants
+├── pyproject.toml       # Project dependencies
+└── README.md           # This file
+```
+
+### Adding Features
+
+The application is built with Textual widgets and follows a modular architecture:
+
+1. **New Screens**: Add in separate files, register in `SCREENS` dict
+2. **New Widgets**: Extend `textual.widgets` base classes
+3. **API Methods**: Add to `SyncTodoAPIClient` class
+4. **Styling**: Update CSS in `main.py` or create separate CSS file
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test with the backend API
+5. Submit a pull request
+
+## License
+
+This project is part of the Terminal Second Brain application. See the main project LICENSE for details.
