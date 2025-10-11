@@ -1,0 +1,957 @@
+Metadata-Version: 2.1
+Name: fengwo
+Version: 0.0.7
+Summary: 仿通达信公式的量化函数库
+Home-page: https://www.fengwo.run
+Author: 燕山飞雪
+Author-email: kogj@163.com
+Platform: Windows
+Platform: linux
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.4
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+
+# fengwo模块
+
+#### 介绍
+Python仿通达信公式的量化函数库模块，可在64位Python上使用通达信公式DLL，高效实现了WINNER，COST等筹码峰算法。
+本模块所有函数均解除了Python全局线程锁PIL的限制，使用多线程操作即可大量节省时间，提高运算和选股效率。
+
+#### 软件架构
+支持Python3.4~3.12中的32位和64位版本，支持Windows和Linux操作系统
+使用Windows操作系统Python64位也可以调用通达信dll文件（通达信公式dll文件是32位的）
+Linux版本支持除通达信DLL调用之外的所有函数
+
+#### 本次修改
+1、修正DMA动态移动平均函数和平均差指标重名的错误，平均差指标修改名为DFMA，DMA为动态移动平均函数
+2、修正个别函数调用的错误逻辑
+
+#### 安装教程
+
+使用pip安装
+
+```
+pip install fengwo
+```
+
+
+#### 使用说明
+
+##### 1.  引入模块
+
+```
+import fengwo as fw
+```
+模块在引入后默认显示一条消息，要取消消息可在模块引入后立即运行showMsg(False)即可取消消息显示
+
+```
+import fengwo as fw;fw.showMsg(False)
+```
+
+##### 2.  通用说明
+
+ 本模块所使用的序列值，可以是list数组，也可以是numpy数组，只要是可迭代对象即可，但数组或可迭代的内容都采用数字，文字和其它Python对象无法处理  
+ 本模块所用的常量也必须是数字，大部分都需要处理整形int，个别函数常量也可以使用浮点型float，具体使用可以查询函数说明。
+- 函数参数为S则说明该参数为序列值
+- 函数参数为N则说明该参数为常量
+- OPEN,CLOSE,HIGH,LOW,VOL,AMO,TurnRate 分别是指开盘价、收盘价、最高价、最低价、成交量、成交额，换手率，这些均采用序列值
+- 函数参数SN，则要求参数为int类型或者int类型的序列值（如果提供的是float类型或者float类型的序列值，函数内部会将该参数转换成int类型，但有可能采用以下3正方式:①四舍五入成整数，②向下取整为整数，因此强烈建议浮点数序列自行处理成整数序列再进行调用，其中向下取整可使用INTPART函数）
+- 本模块函数返回的序列值均采用numpy数组形式
+
+##### 3.  基础函数 
+
+**STD - 标准差函数**  
+函数原型：
+```
+def STD(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def STD(S,SN)
+```
+返回Numpy数组：估算标准差  
+
+**BACKSET - 向前赋值函数**  
+函数原型：
+```
+def BACKSET(S:Iterable,N:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def BACKSET(S,N)
+```
+属于未来函数,将当前位置到若干周期前的数据设为1.  
+用法:  
+ &nbsp;&nbsp;BACKSET(S,N),若X非0,则将当前位置到N周期前的数值设为1.  
+例如:  
+ &nbsp;&nbsp;BACKSET(CLOSE>OPEN,2)若收阳则将该周期及前一周期数值设为1,否则为0  
+
+**REF - 引用若干周期前的数据**  
+函数原型：
+```
+def REF(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def REF(S,SN)
+```
+用法:  
+ &nbsp;&nbsp;REF(X,A),引用A周期前的X值.A可以是变量.  
+例如:  
+ &nbsp;&nbsp;REF(CLOSE,BARSCOUNT(C)-1)表示第二根K线的收盘价.  
+
+**INTPART - 取整行数**  
+函数原型：
+```
+def INTPART(S:Iterable)->Optional[np.ndarray]
+#简洁表示
+def INTPART(S)
+```
+用法:  
+ &nbsp;&nbsp;INTPART(A)返回沿A绝对值减小方向最接近的整数  
+例如:  
+ &nbsp;&nbsp;INTPART(12.3)求得12,INTPART(-3.5)求得-3  
+
+**EMA - 返回指数移动平均**  
+函数原型：
+```
+def EMA(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示	
+def EMA(S,SN)
+```
+用法:  
+  &nbsp;&nbsp;EMA(X,N):X的N日指数移动平均.算法:Y=(X*2+Y'*(N-1))/(N+1)  
+  &nbsp;&nbsp;EMA(X,N)相当于SMA(X,N+1,2),N支持变量  
+
+**SMA - 返回移动平均**  
+函数原型：
+```
+def SMA(S:Iterable,N:Union[Iterable[int],int],M:int=1)->Optional[np.ndarray]
+#简洁表示	
+def SMA(S,SN)
+```
+用法:  
+ &nbsp;&nbsp;SMA(X,N,M):X的N日移动平均,M为权重,如Y=(X*M+Y'*(N-M))/N  
+
+**SLOPE - 返回线性回归斜率**  
+函数原型：
+```
+def SLOPE(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示	
+def SLOPE(S,SN)
+```
+
+**HHV - 求最高值**  
+函数原型：
+```
+def HHV(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示	
+def HHV(S,SN)
+```
+用法:  
+ &nbsp;&nbsp;HHV(X,N),求N周期内X最高值,N=0则从第一个有效值开始.  
+例如:  
+ &nbsp;&nbsp;HHV(HIGH,30)表示求30日最高价 
+
+**LLV - 求最低值**  
+函数原型：
+```
+def LLV(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def LLV(S,SN)
+```
+用法:  
+ &nbsp;&nbsp;LLV(X,N),求N周期内X最高值,N=0则从第一个有效值开始.  
+例如:  
+ &nbsp;&nbsp;LLV(LOW,30)表示求30日最低价 
+
+**MA - 简单移动平均**  
+函数原型：
+```
+def MA(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def MA(S,SN)
+```
+返回简单移动平均  
+用法:  
+ &nbsp;&nbsp;MA(X,N):X的N日简单移动平均,算法(X1+X2+X3+...+Xn)/N,N支持变量  
+
+**AVEDEV - 返回平均绝对偏差**  
+函数原型：
+```
+def AVEDEV(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def AVEDEV(S,SN)
+```
+求总和.
+
+**SUM -求和函数 **  
+函数原型：
+```
+def SUM(S:Iterable,SN)->Optional[np.ndarray]
+#简洁表示
+def SUM(S,SN)
+```
+用法:  
+ &nbsp;&nbsp;SUM(X,N),统计N周期中X的总和,N=0则从第一个有效值开始.  
+例如:  
+ &nbsp;&nbsp;SUM(VOL,0)表示统计从上市第一天以来的成交量总和  
+
+**BARSLAST - 上一次条件成立到当前的周期数.**  
+函数原型：	
+```			
+def BARSLAST(S:Iterable)->Optional[np.ndarray]
+#简洁表示
+def BARSLAST(S)
+```
+用法:  
+ &nbsp;&nbsp;BARSLAST(X):上一次X不为0到现在的周期数  
+例如:  
+ &nbsp;&nbsp;BARSLAST(CLOSE/REF(CLOSE,1)>=1.1)表示上一个涨停板到当前的周期数  
+
+**BARSCOUNT - 有效数据周期数.** 
+函数原型：
+```
+def BARSCOUNT(S:Iterable)->Optional[np.ndarray]
+#简洁表示
+def BARSCOUNT(S)
+```
+用法:  
+ &nbsp;&nbsp;BARSCOUNT(X)第一个有效数据到当前的间隔周期数  
+注意:判断范围为指标或条件选股计算时公式使用的数据,如果给画线指标的数据少(比如没有按下箭头取更多K线)或给条件选股给的数据少,这个有效值也可能少
+
+**BETWEEN - 介于.**  
+函数原型：
+```
+def BETWEEN(S1:Iterable,S2:Iterable,S3:Iterable)->Optional[np.ndarray]
+#简洁表示
+def BETWEEN(S1,S2,S3)
+```
+用法:  
+&nbsp;&nbsp;BETWEEN(A,B,C)表示A处于B和C之间时返回1(B<=A<=C或C<=A<=B),否则返回0  
+例如:  
+&nbsp;&nbsp;BETWEEN(CLOSE,MA(CLOSE,10),MA(CLOSE,5))表示收盘价介于5日均线和10日均线之间  
+
+
+**COUNT - 统计满足条件的周期数.**  
+函数原型：
+```
+def COUNT(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def COUNT(S,SN)
+```
+用法:  
+&nbsp;&nbsp;COUNT(X,N),统计N周期中满足X条件的周期数,若N<=0则从第一个有效值开始.  
+例如:  
+&nbsp;&nbsp;COUNT(CLOSE>OPEN,20)表示统计20周期内收阳的周期数 
+
+**WMA -返回加权移动平均**  
+函数原型：
+```
+def WMA(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def WMA(S,SN)
+```
+用法:  
+&nbsp;&nbsp;WMA(X,N):X的N日加权移动平均.算法:Yn=(1*X1+2*X2+...+n*Xn)/(1+2+...+n)
+
+**BARSLASTCOUNT - 统计连续满足条件的周期数**  
+函数原型：
+```
+def BARSLASTCOUNT(S:Iterable)->Optional[np.ndarray]
+#简洁表示
+def BARSLASTCOUNT(S)
+```
+用法:  
+&nbsp;&nbsp;BARSLASTCOUNT(X),统计连续满足X条件的周期数.  
+例如:  
+&nbsp;&nbsp;BARSLASTCOUNT(CLOSE>OPEN)表示统计连续收阳的周期数  
+
+**FILTER - 过滤连续出现的信号.**  
+函数原型：
+```
+def FILTER(S:Iterable,SN)->Optional[np.ndarray]
+#简洁表示
+def FILTER(S,SN)
+```
+用法:  
+&nbsp;&nbsp;FILTER(X,N):X满足条件后,将其后N周期内的数据置为0,N为常量.  
+例如:   
+&nbsp;&nbsp;FILTER(CLOSE>OPEN,5)查找阳线,5天内再次出现的阳线不被记录在内  
+
+**EXIST - 是否存在**  
+函数原型：
+```
+def EXIST(S:Iterable,N:int)->Optional[np.ndarray]
+#简洁表示
+def EXIST(S,N)
+  ```  
+例如:  
+&nbsp;&nbsp;EXIST(CLOSE>OPEN,10),表示10日内存在着阳线
+
+**DIFF - 单周期差异指标**  
+函数原型：
+```
+def DIFF(S:Iterable)->Optional[np.ndarray]
+#简洁表示
+def DIFF(S)
+```
+返回前一个值减后一个值的数值
+
+**VALUEWHEN - 条件取值**  
+函数原型:
+```
+def VALUEWHEN(COND:Iterable,S:Iterable)->Optional[np.ndarray]:
+#简洁表示
+def VALUEWHEN(COND,S)
+```
+&nbsp;&nbsp;当COND条件成立时,取X的当前值,否则取VALUEWHEN的上个值.
+
+**CROSS - 两条线交叉**  
+函数原型：
+```
+def CROSS(S1:Iterable,S2:Iterable)->Optional[np.ndarray]
+#简洁表示
+def CROSS(S1,S2)
+```
+用法:  
+&nbsp;&nbsp;CROSS(A,B)表示当A从下方向上穿过B时返回1,否则返回0  
+例如:  
+&nbsp;&nbsp;CROSS(MA(CLOSE,5),MA(CLOSE,10))表示5日均线与10日均线交金叉
+    
+**LONGCROSS - 两条线维持一定周期后交叉**  
+函数原型：
+```
+def LONGCROSS(S1:Iterable,S2:Iterable,N:Union[Iterable[int],int])->Optional[np.ndarray]
+简洁表示：
+def LONGCROSS(S1,S2,N)
+```
+用法:LONGCROSS(A,B,N)表示A在N周期内都小于B,本周期从下方向上穿过B时返回1,否则返回0
+
+**DMA - 求动态移动平均**  
+函数原型：
+```
+def DMA(S:Iterable,SN:Union[int,Iterable[int]])->Optional[np.ndarray]:
+#简洁表示
+def DMA(S,SN)
+```
+用法:
+&nbsp;&nbsp;DMA(X,A),求X的动态移动平均.  
+算法:Y=A*X+(1-A)*Y',其中Y'表示上一周期Y值,A必须大于0且小于1.A支持变量.  
+例如:  
+&nbsp;&nbsp;DMA(CLOSE,VOL/CAPITAL)表示求以换手率作平滑因子的平均价
+
+**BARSSINCEN - N个周期内第一个条件成立到当前的周期数.**  
+函数原型：
+```
+def BARSSINCEN(S:Iterable,N:int)->Optional[np.ndarray]
+#简洁表示
+def BARSSINCEN(S,N)
+```
+用法: BARSSINCEN(S,N):N周期内第一次S不为0到现在的周期数,N为常量  
+例如: BARSSINCE(HIGH>10,10)表示10个周期内股价超过10元时到当前的周期数  
+
+**LAST - 持续存在**  
+函数原型：
+```
+def LAST(S:Iterable,A:int,B:int)->Optional[np.ndarray]:
+#简洁表示
+def LAST(S,A,B)
+```
+LAST(X,A,B):持续存在  
+例如:  
+&nbsp;&nbsp;LAST(CLOSE>OPEN,10,5)   
+&nbsp;&nbsp;表示从前10日到前5日内一直阳线  
+&nbsp;&nbsp;若A为0,表示从第一天开始,B为0,表示到最后日止  
+
+**CONST - 获取常量序列**  
+函数原型：
+```
+def CONST(S:Iterable)->Optional[np.ndarray]
+#简洁表示
+def CONST(S)
+```
+返回序列S最后的值组成常量序列
+
+
+**LLVBARS - 求上一低点到当前的周期数**  
+函数原型：
+```
+def LLVBARS(S:Iterable,N:int)->Optional[np.ndarray]
+#简洁表示
+def LLVBARS(S,N)
+```
+用法: LLVBARS(S,N):求N周期内X最低值到当前周期数,N=0表示从第一个有效值开始统计
+
+**HHVBARS - 求上一高点到当前的周期数**  
+函数原型：
+```
+def HHVBARS(S:Iterable,N:int)->Optional[np.ndarray]:
+#简洁表示
+def HHVBARS(S,N)
+```
+用法: HHVBARS(S,N):求N周期内X最高值到当前周期数,N=0表示从第一个有效值开始统计
+
+**EVERY - 一直存在**  
+函数原型：
+```
+def EVERY(S:Iterable,SN:Union[int,Iterable[int]])->Optional[np.ndarray]
+#简洁表示：
+def EVERY(S,SN)
+```
+例如:  
+&nbsp;&nbsp;EVERY(CLOSE>OPEN,N)   
+&nbsp;&nbsp;表示N日内一直阳线(N应大于0,小于总周期数,N支持变量)
+
+**FORCAST - 线性回归预测**  
+函数原型：
+```
+def FORCAST(S:Iterable,SN:Union[Iterable[int],int])->Optional[np.ndarray]
+#简洁表示
+def FORCAST(S,SN)
+```
+返回S的线性回归预测值,SN支持变量
+
+
+**ATAN - 反正切**  
+函数原型：
+```
+def ATAN(S)->Union[np.ndarray,float]
+#简洁表示
+def ATAN(S)
+```
+返回S的反正切值
+   
+**ACOS - 反余弦**  
+函数原型：
+```  
+def ACOS(S)->Union[np.ndarray,float]
+#简洁表示
+def ACOS(S)
+```
+返回S的反余弦值
+
+**ASIN - 反正弦**  
+函数原型：
+```	
+def ASIN(S)->Union[np.ndarray,float]  
+#简洁表示 
+def ASIN(S)
+```
+返回S的反正弦值
+	
+**TAN - 正切**  
+函数原型：
+```
+def TAN(S)->Union[np.ndarray,float]
+#简洁表示
+def TAN(S)
+```
+返回S的正切值    
+	
+**COS - 余弦**  
+函数原型：
+```
+def COS(S)->Union[np.ndarray,float] 
+#简洁表示
+def COS(S)
+```
+返回S的余弦值  
+ 
+**SIN - 正弦**  
+函数原型：
+```	
+def SIN(S)->Union[np.ndarray,float] 
+#简洁表示
+def SIN(S)
+```
+返回S的正弦值
+
+RD - 四舍五入取值
+函数原型：
+```
+def RD(SN,D:int=3)->Union[np.ndarray,float,int]
+#简洁表示
+def RD(SN,D)
+```
+对SN四舍五入取D位小数
+
+**RET - 取末尾值**       
+函数原型：
+```
+def RET(S:Iterable,N:int=1)
+#简洁表示：
+def RET(S,N) 
+```
+返回序列倒数第N个值,默认返回最后一个 
+
+**ABS - 求绝对值**  
+函数原型：
+```
+def ABS(S)
+```
+用法:  ABS(X)返回X的绝对值  
+例如:  ABS(-34)返回34  
+
+**MAX - 求最大值**  
+函数原型：
+```
+def MAX(S1,S2)
+```
+用法: MAX(A,B)返回A和B中的较大值  
+例如: MAX(CLOSE-OPEN,0)表示若收盘价大于开盘价返回它们的差值,否则返回0 
+
+**MAX - 求最小值**  
+函数原型：
+```
+def MIN(S1,S2)
+```
+用法: MIN(A,B)返回A和B中的较大值   
+例如: MIN(CLOSE,OPEN)返回开盘价和收盘价中的较小值
+
+**IF - 根据条件求不同的值**  
+函数原型：
+```
+def IF(S,A,B)->np.ndarray: 
+#简洁表示
+def IF(S,A,B)
+```
+用法: IF(X,A,B)若X不为0则返回A,否则返回B  
+例如: IF(CLOSE>OPEN,HIGH,LOW)表示该周期收阳则返回最高值,否则返回最低值
+
+**SUMBARS - 向前累加到指定值到现在的周期数**  
+函数原型：
+```
+def SUMBARS(S:Iterable,SN)->Optional[np.ndarray]
+#简洁表示
+def SUMBARS(S,SN)
+```
+用法:  
+&nbsp;&nbsp;SUMBARS(X,A):将X向前累加直到大于等于A,返回这个区间的周期数,若所有的数据都累加后还不能达到A,则返回此时前面的总周期数.  
+&nbsp;&nbsp;例如:SUMBARS(VOL,流通股数)求完全换手到现在的周期数  
+
+##### 4.  指标类函数 
+
+**ATR -均幅指标**，又叫真实波幅：取一定时间周期内的股价波动幅度的移动平均值  
+函数原型：
+```
+def ATR(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=20)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def ATR(CLOSE,HIGH,LOW,N=20)
+```  
+
+返回(ATR,ATRMA)元组，ATR即真实波幅，ATRMA即真实波幅的N周期平均值   
+**BOLL - 布林带**
+函数原型
+```
+def BOLL(CLOSE:Iterable,N:int=20)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示
+def BOLL(CLOSE,N=20)
+```
+返回布林带上、中、下三个轨道的元组
+
+**CCI - 商品路径指标**  
+函数原型：
+```
+def CCI(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=14)->Optional[np.ndarray]
+#简洁表示
+def CCI(CLOSE,HIGH,LOW,N=14)
+```
+返回CCI的值
+
+**KDJ - 随机指标**  
+函数原型：
+```
+def KDJ(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=9,M1:int=3,M2:int=3)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示
+def KDJ(CLOSE,HIGH,LOW,N=9,M1=3,M2=3)
+```
+返回(K,D,J)三个序列的元组
+
+**MACD - 平滑异同平均线**  
+函数原型：
+```
+def MACD(CLOSE:Iterable,SHORT:int=12,LONG:int=26,MID:int=9,bit:int=2)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示
+def MACD(CLOSE,SHORT=12,LONG=26,MID=9,bit=2)
+```
+依次返回（DIF,DEA,MACD）元组
+
+**WR- 威廉指标**  
+函数原型：
+```
+def WR(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=10,N1:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def WR(CLOSE,HIGH,LOW,N=10,N1=6)
+```
+返回(WR1,WR2)元组，WR1、WR2即N和N1周期的威廉指标数值
+
+**MFI - 资金流量指标**  
+函数原型：
+```
+def MFI(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,VOL:Iterable,N:int=14)->Optional[np.ndarray]
+#简洁表示
+def MFI(CLOSE,HIGH,LOW,VOL,N=14)
+```
+返回值：MFI数值
+
+**TRIX - 三重指数平滑平均线**  
+函数原型：
+```
+def TRIX(CLOSE:Iterable,N:int=12,M:int=9)->Optional[np.ndarray]
+#简洁表示
+def TRIX(CLOSE,N=12,M=9)
+```
+返回值：(TRIX,MATRIX)元组,MATRIX为TRIX的N日平均
+
+**BIAS - 乖离率指标**  
+函数原型
+```
+def BIAS(CLOSE:Iterable,N1:int=6,N2:int=12,N3:int=24)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示：
+def BIAS(CLOSE,N1=6,N2=12,N3=24)
+```
+返回：(BIAS1,BIAS2,BIAS)元组，即N1,N2,N3三个周期计算的乖离率
+
+**BIAS_QL - 乖离率指标（传统版）**  
+函数原型：
+```
+def BIAS_QL(CLOSE:Iterable,N:int=6,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示：
+def BIAS_QL(CLOSE,N=6,M=6)
+```
+返回：(BIAS,MABIAS)元组，MABIAS是乖离率BIAS的M日周期简单平均
+
+**BBI多空均线指标**  
+函数原型:  
+```
+def BBI(CLOSE:Iterable,M1:int=3,M2:int=6,M3:int=12,M4:int=24)->Optional[np.ndarray]
+#简洁表示
+def BBI(CLOSE,M1=3,M2=6,M3=12,M4=24)
+```
+返回M1-M4周期的BBI多空均线数值
+
+**VR - 威廉指标**  
+函数原型:
+```
+def VR(CLOSE:Iterable,VOL:Iterable,N:int=26,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def VR(CLOSE,VOL,N=26,M=6)
+```
+返回值：(VR,MAVR)元组，MAVR为VR的M日均值
+
+**RSI - 相对强弱指标**  
+函数原型：
+```
+def RSI(CLOSE:Iterable,N1:int=6,N2:int=12,N3:int=24)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]:
+#简洁表示
+def RSI(CLOSE,N1=6,N2=12,N3=24)
+```
+返回值：(RSI1,RSI2,RSI3)元组，即根据收盘价计算的3个周期的RSI值
+
+**KTN - 肯特纳交易通道指标**  
+函数原型：
+```
+def KTN(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=20,M:int=10)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示:
+def KTN(CLOSE,HIGH,LOW,N=20,M=10)
+```
+返回值：(UPPER,MID,LOWER)元组，即通道的上中下三轨
+
+**TAQ - 唐安奇通道**  
+函数原型：
+```
+def TAQ(HIGH:Iterable,LOW:Iterable,N:int=20)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示:
+def TAQ(HIGH,LOW,N=20)
+```
+返回值：(UP,MID,DOWN)元组，即通道的上中下三轨
+
+**BRAR - 情绪指标**  
+函数原型：
+```
+def BRAR(OPEN:Iterable,CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=26)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def BRAR(OPEN,CLOSE,HIGH,LOW,N=26)
+```
+返回：(BR,AR)元组
+
+**EMV - 简易波动指标**
+函数原型：
+```
+def EMV(HIGH:Iterable,LOW:Iterable,VOL:Iterable,N:int=14,M:int=9)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def EMV(HIGH,LOW,VOL,N=14,M=9)
+```
+返回值:(EMV,MAEMV)元组,MAEMV为EMV的M日均值
+
+**OBV - 能量潮指标**
+函数原型：
+```
+def OBV(CLOSE:Iterable,VOL:Iterable,N:int=30)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def OBV(CLOSE,VOL,N=30)
+```
+返回值:(OBV,MAOBV)元组,MAOBV为OBV的N日均值
+    
+**DPO - 区间震荡线** 
+函数原型：
+```
+def DPO(CLOSE:Iterable,N:int=20,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def DPO(CLOSE,N=20,M=6)
+```
+返回值:(DPO,MADPO)元组,MADPO为DPO的M日均值
+
+**MTM - 动量线指标**  
+函数原型：
+```
+def MTM(CLOSE:Iterable,N:int=12,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def MTM(CLOSE,N=12,M=6)
+```
+返回值:(MTM,MTMMA)元组,MTMMA为MTM的M日均值
+
+**DFMA - 平均差指标**  
+通达信软件上的DMA指标，因与动态移动平均函数DMA重名，修改成DFMA
+函数原型：
+```
+def DFMA(CLOSE:Iterable,N1:int=10,N2:int=50,M:int=10)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def DFMA(CLOSE,N1=10,N2=50,M=10)
+```
+返回值:(DIF,DIFMA)元组,DIFMA为DIF的M日均值
+
+
+**DMI - 趋向指标**  
+函数原型：
+```
+def DMI(CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=14,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示
+def DMI(CLOSE,HIGH,LOW,N=14,M=6)
+```
+返回：(PDI,MDX,ADX,ADXR)元组 
+
+**ROC 变动率指标**  
+函数原型：
+```
+def ROC(CLOSE:Iterable,N:int=12,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def ROC(CLOSE,N=12,M=6)
+```
+返回值:(ROC,MAROC)元组,MAROC为ROC的M日均值'
+
+**MASS - 梅斯线指标**  
+函数原型：
+```
+def MASS(HIGH:Iterable,LOW:Iterable,N1:int=9,N2:int=25,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def MASS(HIGH,LOW,N1=9,N2=25,M=6)
+```
+返回值:(MASS,MAMASS)元组,MAMASS为MASS的M日均值
+
+**EXPMA - 指数平均线指标**
+函数原型：
+```
+def EXPMA(CLOSE:Iterable,M1:int=12,M2:int=50)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def EXPMA(CLOSE,M1=12,M2=50)
+```
+返回值:(EXP1,EXP2)元组,即收盘价的M1,M2日指数移动平均'
+
+**PSY - 心理线指标**  
+函数原型：
+```
+def PSY(CLOSE:Iterable,N:int=12,M:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def PSY(CLOSE,N=12,M=6)
+```
+返回值:(PSY,PSYMA)元组,PSYMA为PSY的M日均值
+
+**ASI - 震动升降指标**  
+函数原型：
+```
+def ASI(OPEN:Iterable,CLOSE:Iterable,HIGH:Iterable,LOW:Iterable,N:int=6)->Optional[Tuple[np.ndarray,np.ndarray]]
+#简洁表示
+def ASI(OPEN,CLOSE,HIGH,LOW,N=6)
+```
+返回值:(ASI,ASIMA)元组,ASIMA为ASI的N日均值
+
+##### 5.  进阶函数  
+
+**BOLL_M - 布林带（传统版）** *通达信加密函数   
+函数原型：
+```
+def BOLL_M(CLOSE:Iterable,N:int=20)->Optional[Tuple[np.ndarray,np.ndarray,np.ndarray]]
+#简洁表示
+def BOLL_M(CLOSE,N=20)
+```
+返回布林带上、中、下三个轨道的元组  
+
+**WINNER - 盈利盘比例函数** *通达信加密函数  
+函数原型：
+```
+def WINNER(HIGH:Iterable,LOW:Iterable,VOL:Iterable,Turnrate:Iterable,price,avg:Union[Iterable,str]='hlavg')->Optional[np.ndarray]
+#简洁表示
+def WINNER(HIGH,LOW,VOL,Turnrate,price,avg='hlavg')
+```
+说明：
+- VOL-成交量[序列值]，单位是手，万股等不重要,只要统一就行
+- Turnrate[换手率]：取值范围0-1，注意50%的换手应写作0.5  
+   *换手率由于流通股变动问题，故不能简单使用“成交量/流通股”的方式计算，这也是本函数保留输入换手率的原因
+- price-某价格的盈利比例中的价格，可以是具体数值（如：99.98），也可以是序列（如收盘价、开盘价等）
+- avg-筹码三角分布顶点:默认'hlavg'是取每日最高价和最低价的平均值，已经基本满足筹码计算要求。某些算法中使用“成交额/成交量”的计算方法计算当日平均价  
+   *使用“成交额/成交量”的计算方法的话，注意这个平均位置也要复权，否则会出现平均位置出现在当日最高价和最低价之外的情况  
+返回一组获利比例的numpy数组，范围0-1，如0.1即当前股价的盈利比例为10%，这里跟通达信软件是保持一致的  
+   *此函数专用于T+1交易，不适用于可转债或者非日线周期等换手率超过100%的情况   
+
+**COST - 成本函数** 依据获利盘比例找价格 *通达信加密函数   
+函数原型：
+```
+def COST(HIGH:Iterable,LOW:Iterable,VOL:Iterable,Turnrate:Iterable,winpercent:Iterable,radio:float=0.01,avg:Union[Iterable,str]='hlavg')->Optional[np.ndarray]
+#简洁表示
+def COST(HIGH,LOW,VOL,Turnrate,winpercent,radio=0.01,avg='hlavg')
+```
+计算某盈利比例对应的股价
+- VOL-成交量[序列值]，单位是手，万股等不重要,只要统一就行
+- Turnrate[换手率]：取值范围0-1，注意50%的换手应写作0.5  
+   *换手率由于流通股变动问题，故不能简单使用“成交量/流通股”的方式计算，这也是本函数保留输入换手率的原因    
+- winpercent-指定获利比例，应为0-100之间的数值（如winpercent=90,即返回盈利90%的股价），和通达信软件保持一致
+- avg-筹码三角分布顶点:默认'hlavg'是取每日最高价和最低价的平均值，已经基本满足筹码计算要求。某些算法中使用“成交额/成交量”的计算方法计算当日平均价  
+   *使用“成交额/成交量”的计算方法的话，注意这个平均位置也要复权，否则会出现平均位置出现在当日最高价和最低价之外的情况  
+- radio-精确度：如股票等使用0.01，ETF，Reits等使用0.001，只能取这两值其一  
+返回一组指定获利比例的股价。  
+   *此函数专用于T+1交易，不适用于可转债或者非日线周期等换手率超过100的情况'''
+
+**getHPoint - 指示当前位置是否是一组数据的高点**  
+函数原型：
+```
+def getHPoint(S:Iterable,N:int)->Optional[np.ndarray]
+#简洁表示
+def getHPoint(S,N)
+``` 
+返回值为dtype=bool_的数组，True位置即为相对高点位置
+
+**getLPoint - 指示当前位置是否是一组数据的低点**  
+函数原型：
+```
+def getLPoint(S:Iterable,N:int)->Optional[np.ndarray]
+#简洁表示：
+def getLPoint(S:Iterable,N:int)
+```  
+返回值为dtype=bool_的数组，True位置即为相对低点位置
+
+**getHLine - 获取一组数据高点的拟合直线**  
+函数原型：
+```
+def getHLine(S:Iterable,N:int)->Optional[Tuple[np.ndarray,float,float]]
+#简洁表示
+def getHLine(S,N)
+```
+返回值：(DATA,R2,SLOPE)元组  
+&nbsp;&nbsp;DATA-拟合后的高点序列,绘图的话是一条直线  
+&nbsp;&nbsp;R2-高点拟合的r-square数值[取值范围0-1，数值越大说明数据拟合度越好]  
+&nbsp;&nbsp;SLOPE-拟合后直线的斜率，为正则标识数据越来越大，为负则表示数据越来越小
+
+**getLLine - 获取一组数据低点的拟合直线**  
+函数原型：
+```
+def getLLine(S:Iterable,N:int)->Optional[Tuple[np.ndarray,float,float]]
+#简洁表示
+def getLLine(S,N)
+```
+返回值：(DATA,R2,SLOPE)元组  
+&nbsp;&nbsp;DATA-拟合后的低点序列,绘图的话是一条直线  
+&nbsp;&nbsp;R2-高点拟合的r-square数值[取值范围0-1，数值越大说明数据拟合度越好]  
+&nbsp;&nbsp;SLOPE-拟合后直线的斜率，为正则标识数据越来越大，为负则表示数据越来越小
+
+**getBestHLine - 获取一组数据在N取值为N1到N2之间的高点最佳拟合直线**  
+函数原型：
+```
+def getBestHLine(S:Iterable,N1:int,N2:int)->Optional[Tuple[np.ndarray,float,float,int]]
+#简洁表示
+def getBestHLine(S,N1,N2)
+```
+返回值：(DATA,R2,SLOPE,N)元组  
+&nbsp;&nbsp;DATA-最佳拟合后的高点序列,绘图的话是一条直线  
+&nbsp;&nbsp;R2-高点拟合后的最佳r-square数值[即函数getHLine(S,N)的N值取N1-N2之间所有整数时计算的R2最大值]  
+&nbsp;&nbsp;SLOPE-最佳拟合后直线的斜率，为正则标识数据越来越大，为负则表示数据越来越小  
+&nbsp;&nbsp;N-最佳拟合时的N值
+
+**getBestLLine - 获取一组数据在N取值为N1到N2之间的低点最佳拟合直线**  
+函数原型：
+```
+def getBestLLine(S:Iterable,N1:int,N2:int)->Optional[Tuple[np.ndarray,float,float,int]]
+#简洁表示
+def getBestLLine(S,N1,N2)
+```
+返回值：(DATA,R2,SLOPE,N)元组  
+&nbsp;&nbsp;DATA-最佳拟合后的低点序列,绘图的话是一条直线  
+&nbsp;&nbsp;R2-低点拟合后的最佳r-square数值[即函数getHLine(S,N)的N值取N1-N2之间所有整数时计算的R2最大值]  
+&nbsp;&nbsp;SLOPE-最佳拟合后直线的斜率，为正则标识数据越来越大，为负则表示数据越来越小  
+&nbsp;&nbsp;N-最佳拟合时的N值
+
+**RSRS - 阻力相对支撑强度指标**    炒股软件一般无此指标  
+函数原型：
+```
+def RSRS(HIGH:Iterable,LOW:Iterable,N:int=18,M:int=600)->Optional[np.ndarray]
+#简洁表示
+def RSRS(HIGH,LOW,N=18,M=600)
+```
+N,M-周期常量 M默认值值为600，注意输入数据的数量  
+返回值：计算的RSRS数值，一般在RSRS>0.7时买入，RSRS小于-0.7时卖出'
+
+**SAR - 抛物线指标**  通达信、同花顺等软件上是加密指标  
+函数原型：
+```
+def SAR(HIGH:Iterable,LOW:Iterable,start:int=4,stepstart:int=2,step:int=2,maxstep:int=20)->Optional[np.ndarray]
+#函数原型
+def SAR(HIGH,LOW,start=4,stepstart=2,step=2,maxstep=20)
+```
+输入参数：  
+&nbsp;&nbsp;start:起始统计周期  
+&nbsp;&nbsp;stepstart:加速因子参数  
+&nbsp;&nbsp;step:加速因子增量  
+&nbsp;&nbsp;maxstep:反向临界参数  
+返回值:SAR值，SAR大于收盘价代表下跌趋势，SAR小于收盘价代表上涨趋势
+
+##### 6.通达信公式DLL函数（Windows专用，Linux不支持）
+
+*通达信dll为32为dll文件，但是使用本模块，在64位的Python上亦可正常调用
+
+**binddll - 绑定dll文件**  
+函数原型：
+```
+def binddll(no:int,dllpath:str)->Optional[bool]
+#简洁表示
+def binddll(no,dllpath)
+```
+输入参数:  
+&nbsp;&nbsp;no-要绑定dll文件的函数取值[取值范围：1-10]
+&nbsp;&nbsp;dllpath-要绑定dll文件的路径
+成功返回True，失败直接抛出异常
+
+**TDXDLL(1-10) - 调用指定号码的通达信dll文件**  
+函数原型：
+```
+def TDXDLL1(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL2(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL3(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL4(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL5(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL6(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL7(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL8(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL9(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+def TDXDLL10(funcno:int,ina:Iterable,inb,inc)->Optional[np.ndarray]
+#简洁表示：
+def TDXDLL1(funcno,ina,inb,inc)
+def TDXDLL2(funcno,ina,inb,inc)
+def TDXDLL3(funcno,ina,inb,inc)
+def TDXDLL4(funcno,ina,inb,inc)
+def TDXDLL5(funcno,ina,inb,inc)
+def TDXDLL6(funcno,ina,inb,inc)
+def TDXDLL7(funcno,ina,inb,inc)
+def TDXDLL8(funcno,ina,inb,inc)
+def TDXDLL9(funcno,ina,inb,inc)
+def TDXDLL10(funcno,ina,inb,inc)
+```
+输入参数：ina,inb,inc为输入的3个参数，其中ina必须为序列值   
+返回值为计算结果的序列
