@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: rubin.citsci
+Version: 0.8.1
+Summary: The companion package to the Rubin citizen science notebooks.
+Author: Eric Rosas
+Author-email: eric.rosas@noirlab.edu
+Project-URL: Homepage, https://rubinobservatory.org/for-scientists/citizen-science
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: panoptes_client
+Requires-Dist: google.cloud.storage
+Requires-Dist: requests
+Dynamic: license-file
+
+# CitSci Notebook Core Pipeline
+
+This is intended to be used on the Vera Rubin Observatory's Science Platform (RSP) in the hosted Notebook Aspect at http://data.lsst.cloud. This package will not work in any other environment.
