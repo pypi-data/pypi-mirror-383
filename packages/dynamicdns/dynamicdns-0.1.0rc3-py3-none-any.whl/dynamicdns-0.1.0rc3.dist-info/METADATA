@@ -1,0 +1,48 @@
+Metadata-Version: 2.4
+Name: dynamicdns
+Version: 0.1.0rc3
+Summary: Collection of Dynamic DNS providers
+Project-URL: Documentation, https://github.com/tr4nt0r/dynamicdns#readme
+Project-URL: Issues, https://github.com/tr4nt0r/dynamicdns/issues
+Project-URL: Source, https://github.com/tr4nt0r/dynamicdns
+Author-email: tr4nt0r <4445816+tr4nt0r@users.noreply.github.com>
+License-Expression: MIT
+License-File: LICENSE.txt
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.8
+Requires-Dist: aiohttp>=3.12
+Requires-Dist: voluptuous>=0.15
+Requires-Dist: yarl>=1.20
+Description-Content-Type: text/markdown
+
+# DynamicDNS
+
+[![PyPI - Version](https://img.shields.io/pypi/v/dynamicdns.svg)](https://pypi.org/project/dynamicdns)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dynamicdns.svg)](https://pypi.org/project/dynamicdns)
+
+-----
+
+## Table of Contents
+
+- [DynamicDNS](#dynamicdns)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [License](#license)
+
+## Installation
+
+```console
+pip install dynamicdns
+```
+
+## License
+
+`dynamicdns` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
