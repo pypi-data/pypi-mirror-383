@@ -1,0 +1,298 @@
+Metadata-Version: 2.1
+Name: urlops
+Version: 1.0.1
+Summary: Clean URL handling made easy
+Author-email: Rahul Vinod Vishwakarma <rahulvv8878@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/RVV-karma/urlops
+Project-URL: Documentation, https://github.com/RVV-karma/urlops#readme
+Project-URL: Repository, https://github.com/RVV-karma/urlops.git
+Project-URL: Bug Tracker, https://github.com/RVV-karma/urlops/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: ruff>=0.1; extra == "dev"
+
+# urlops
+
+Clean URL handling made easy.
+
+## Overview
+
+urlops provides a simple, clean API for working with URLs. It offers immutable URL objects with intuitive operations that make URL manipulation feel natural.
+
+## Features
+
+- **Intuitive API** - Natural operations like `/` for path joining
+- **Immutable design** - All operations return new instances
+- **Multi-value query parameters** - Proper handling of complex query strings
+- **Custom exceptions** - Only uses urlops-specific exceptions, never built-in Python exceptions
+- **Simple and focused** - Core functionality without unnecessary complexity
+
+## Installation
+
+### From PyPI (when available)
+
+```bash
+pip install urlops
+```
+
+### From Source
+
+```bash
+# Clone the repository
+git clone https://github.com/RVV-karma/urlops.git
+cd urlops
+
+# Install in development mode
+pip install -e .
+
+# Or install with development dependencies
+pip install -e ".[dev]"
+```
+
+### Requirements
+
+- Python 3.8 or higher
+- No external dependencies (pure Python implementation)
+
+### Development Setup
+
+```bash
+# Clone and setup
+git clone https://github.com/RVV-karma/urlops.git
+cd urlops
+
+# Install development dependencies
+make dev-install
+
+# Run tests
+make test
+
+# Run linting and formatting
+make lint
+make format
+```
+
+## Quick Start
+
+```python
+from urlops import URL, parse, join
+
+# Create a URL
+url = URL("https://example.com/api/users?page=1&sort=name")
+
+# Access components
+print(url.scheme)    # "https"
+print(url.host)      # "example.com"
+print(url.port)      # None
+print(url.path)      # URLPath("/api/users")
+print(url.query)     # QueryParams("page=1&sort=name")
+print(url.fragment)  # ""
+
+# Path operations (intuitive syntax)
+new_url = url / "123" / "profile"
+print(new_url)       # "https://example.com/api/users/123/profile"
+
+# Query parameter manipulation
+query = url.query
+print(query.get("page"))        # "1"
+print(query.get_all("tag"))     # [] (empty for non-existent keys)
+
+# Immutable modification
+new_url = url.with_host("api.example.com").with_port(8080)
+print(new_url)       # "https://api.example.com:8080/api/users?page=1&sort=name"
+```
+
+## Detailed Examples
+
+### URL Creation and Parsing
+
+```python
+from urlops import URL, parse
+
+# Different ways to create URLs
+url1 = URL("https://example.com/path")
+url2 = parse("https://example.com/path")  # Factory function
+url3 = URL("//example.com/path")          # Protocol-relative
+url4 = URL("/relative/path")               # Relative URL
+
+# Check URL properties
+print(url1.is_absolute())  # True
+print(url4.is_absolute())  # False
+print(url1.is_valid())     # True
+```
+
+### Path Operations
+
+```python
+from urlops import URL
+
+url = URL("https://example.com/api/v1")
+
+# Path joining with /
+new_url = url / "users" / "123"
+print(new_url)  # "https://example.com/api/v1/users/123"
+
+# Path properties
+path = new_url.path
+print(path.name)        # "123"
+print(path.stem)        # "123" (no extension)
+print(path.suffix)      # "" (no extension)
+print(path.parent)      # URLPath("/api/v1/users")
+
+# Path modification
+new_path = path.with_name("profile.json")
+print(new_path)         # URLPath("/api/v1/users/profile.json")
+
+# File-like operations
+file_path = URL("https://example.com/docs/guide.pdf").path
+print(file_path.stem)   # "guide"
+print(file_path.suffix) # ".pdf"
+```
+
+### Query Parameter Handling
+
+```python
+from urlops import URL
+
+# Create URL with query parameters
+url = URL("https://api.example.com/search?q=python&category=web&tag=api&tag=rest")
+
+# Access query parameters
+query = url.query
+print(query.get("q"))           # "python"
+print(query.get("category"))    # "web"
+print(query.get_all("tag"))     # ["api", "rest"]
+print(query.keys())             # ["q", "category", "tag"]
+print(len(query))               # 4 (total key-value pairs)
+
+# Modify query parameters (immutable)
+new_query = query.add("page", "2").set("q", "javascript")
+print(new_query)                # "q=javascript&category=web&tag=api&tag=rest&page=2"
+
+# Remove parameters
+clean_query = new_query.remove("tag")
+print(clean_query)              # "q=javascript&category=web&page=2"
+
+# Builder pattern
+final_query = query.with_(page="3", limit="10")
+print(final_query)              # "q=python&category=web&tag=api&tag=rest&page=3&limit=10"
+```
+
+### URL Modification
+
+```python
+from urlops import URL
+
+base_url = URL("https://example.com/api")
+
+# Modify different components
+api_url = base_url.with_scheme("https").with_host("api.example.com").with_port(8080)
+print(api_url)  # "https://api.example.com:8080/api"
+
+# Path operations
+users_url = api_url / "users" / "123"
+print(users_url)  # "https://api.example.com:8080/api/users/123"
+
+# Query and fragment
+final_url = users_url.with_query("format=json").with_fragment("profile")
+print(final_url)  # "https://api.example.com:8080/api/users/123?format=json#profile"
+```
+
+### Factory Functions
+
+```python
+from urlops import parse, join
+
+# Parse function
+url = parse("https://example.com/api/v1")
+
+# Join function for building URLs
+base = parse("https://api.example.com")
+api_url = join(base, "v1", "users", "123")
+print(api_url)  # "https://api.example.com/v1/users/123"
+```
+
+### Error Handling
+
+```python
+from urlops import URL, ParseError, ValidationError, TypeError
+
+try:
+    # Invalid URL
+    url = URL("invalid://url")
+except ValidationError as e:
+    print(f"Invalid URL: {e}")
+
+try:
+    # Invalid port
+    url = URL("https://example.com:99999")
+except ValidationError as e:
+    print(f"Invalid port: {e}")
+
+try:
+    # Double slash in path
+    url = URL("https://example.com//invalid")
+except ValidationError as e:
+    print(f"Invalid path: {e}")
+
+try:
+    # Wrong type
+    url = URL(123)
+except TypeError as e:
+    print(f"Type error: {e}")
+```
+
+### Real-World Examples
+
+```python
+from urlops import URL
+
+# API endpoint construction
+base_api = URL("https://api.github.com")
+user_endpoint = base_api / "users" / "octocat"
+repos_endpoint = user_endpoint / "repos"
+
+# Add query parameters
+search_url = repos_endpoint.with_query("type=public&sort=updated")
+print(search_url)  # "https://api.github.com/users/octocat/repos?type=public&sort=updated"
+
+# CDN URL construction
+cdn_base = URL("https://cdn.example.com")
+asset_url = cdn_base / "images" / "logo.png"
+print(asset_url)  # "https://cdn.example.com/images/logo.png"
+
+# Web scraping URL handling
+scrape_url = URL("https://example.com/articles/2024/01/15")
+article_id = scrape_url.path.name  # "15"
+year = scrape_url.path.parent.name  # "2024"
+```
+
+## Development Status
+
+This project is currently in **Stable** (1.0.1). The core functionality is complete and ready for production use.
+
+## Contributing
+
+Contributions are welcome! Please see our [TODO.md](TODO.md) for current development tasks.
+
+## Repository
+
+This project is hosted on GitHub: [https://github.com/RVV-karma/urlops](https://github.com/RVV-karma/urlops)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.

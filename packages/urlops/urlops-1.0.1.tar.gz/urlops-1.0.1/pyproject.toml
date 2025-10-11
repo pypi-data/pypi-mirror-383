@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urlops"
+version = "1.0.1"
+description = "Clean URL handling made easy"
+authors = [{name = "Rahul Vinod Vishwakarma", email = "rahulvv8878@gmail.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/RVV-karma/urlops"
+Documentation = "https://github.com/RVV-karma/urlops#readme"
+Repository = "https://github.com/RVV-karma/urlops.git"
+"Bug Tracker" = "https://github.com/RVV-karma/urlops/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["urlops*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+
