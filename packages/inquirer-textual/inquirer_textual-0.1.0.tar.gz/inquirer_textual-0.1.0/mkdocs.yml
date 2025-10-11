@@ -1,0 +1,60 @@
+site_name: Inquirer Textual Documentation
+repo_url: https://github.com/robvanderleek/inquirer-textual
+theme:
+  name: material
+  palette:
+  - scheme: slate
+    primary: teal
+    toggle:
+      icon: material/lightbulb
+      name: Switch to light mode
+  - scheme: default
+    primary: teal
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to dark mode
+  logo: assets/logo-light.png
+  favicon: assets/favicon.ico
+  features:
+    - toc.integrate
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.tracking
+    - navigation.footer
+    - content.code.copy
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_source: false
+  - glightbox:
+      draggable: false
+      background: none
+      shadow: false
+  - search
+markdown_extensions:
+  - abbr
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.snippets
+  - pymdownx.superfences
+nav:
+  - Inquirer Textual: 'index.md'
+  - Prompts:
+    - Checkbox: 'prompts/checkbox.md'
+    - Confirm: 'prompts/confirm.md'
+    - Multi: 'prompts/multi.md'
+    - Number: 'prompts/number.md'
+    - Secret: 'prompts/secret.md'
+    - Select: 'prompts/select.md'
+    - Text: 'prompts/text.md'
+  - Reference:
+    - Checkbox: 'reference/checkbox.md'
+    - Confirm: 'reference/confirm.md'
+    - Multi: 'reference/multi.md'
+    - Number: 'reference/number.md'
+    - Secret: 'reference/secret.md'
+    - Select: 'reference/select.md'
+    - Text: 'reference/text.md'
