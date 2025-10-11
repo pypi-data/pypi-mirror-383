@@ -1,0 +1,23 @@
+Information: KiotaBuilder Cleaning output directory /home/runner/work/horreum-client-python/horreum-client-python/src/horreum/raw_client
+Debug: KiotaBuilder kiota version 1.28.0
+Information: KiotaBuilder loaded description from local source
+Debug: KiotaBuilder step 1 - reading the stream - took 00:00:00.0104181
+Warning: KiotaBuilder OpenAPI warning: #/ - A servers entry (v3) or host + basePath + schemes properties (v2) was not present in the OpenAPI description. The root URL will need to be set manually with the request adapter.
+Debug: KiotaBuilder step 2 - parsing the document - took 00:00:00.2807301
+Debug: KiotaBuilder step 3 - updating generation configuration from kiota extension - took 00:00:00.0002111
+Debug: KiotaBuilder step 4 - filtering API paths with patterns - took 00:00:00.0055215
+Warning: KiotaBuilder No server url found in the OpenAPI document. The base url will need to be set when using the client.
+Debug: KiotaBuilder step 5 - checking whether the output should be updated - took 00:00:00.0450765
+Debug: KiotaBuilder step 6 - create uri space - took 00:00:00.0140224
+Debug: KiotaBuilder InitializeInheritanceIndex 00:00:00.0048727
+Debug: KiotaBuilder CreateRequestBuilderClass 00:00:00
+Debug: KiotaBuilder MapTypeDefinitions 00:00:00.0129240
+Debug: KiotaBuilder TrimInheritedModels 00:00:00
+Debug: KiotaBuilder CleanUpInternalState 00:00:00
+Debug: KiotaBuilder step 7 - create source model - took 00:00:00.1478447
+Debug: KiotaBuilder 130ms: Language refinement applied
+Debug: KiotaBuilder step 8 - refine by language - took 00:00:00.1317620
+Debug: KiotaBuilder step 9 - writing files - took 00:00:00.1716892
+Information: KiotaBuilder loaded description from local source
+Debug: KiotaBuilder step 10 - writing lock file - took 00:00:00.0234262
+Debug: KiotaBuilder Api manifest path: /home/runner/work/horreum-client-python/horreum-client-python/apimanifest.json
