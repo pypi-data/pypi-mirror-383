@@ -1,0 +1,128 @@
+Metadata-Version: 2.4
+Name: langcrew-tools
+Version: 0.1.1
+Summary: Tool collection for LangCrew - Building multi-agent applications
+Project-URL: Homepage, https://langcrew.ai/
+Project-URL: Repository, https://github.com/01-ai/langcrew
+Project-URL: Documentation, https://langcrew.ai/guides/tools/
+Project-URL: Issues, https://github.com/01-ai/langcrew/issues
+Author-email: BTM Team <btm@langcrew.ai>
+License-Expression: MIT
+License-File: LICENSE
+Keywords: agents,ai,langchain,llm,multi-agent,orchestration,tools
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: <3.13,>=3.10
+Requires-Dist: agentbox-python-sdk>=0.2.9
+Requires-Dist: aiobotocore>=2.23.1
+Requires-Dist: aiohttp>=3.12.15
+Requires-Dist: beautifulsoup4>=4.13.5
+Requires-Dist: browser-use==0.5.5; python_version >= '3.11'
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: langchain-core>=0.3.72
+Requires-Dist: langchain-text-splitters>=0.3.9
+Requires-Dist: langchain>=0.3.27
+Requires-Dist: langcrew>=0.1.0
+Requires-Dist: langgraph>=0.6.0
+Requires-Dist: langmem
+Requires-Dist: playwright==1.54.0
+Requires-Dist: pydantic>=2.7.4
+Requires-Dist: pytest-dotenv>=0.5.2
+Requires-Dist: requests>=2.32.4
+Requires-Dist: sqlalchemy>=2.0.42
+Requires-Dist: volcengine-python-sdk[ark]>=4.0.11
+Provides-Extra: all
+Requires-Dist: codespell; extra == 'all'
+Requires-Dist: mypy>=1.0.0; extra == 'all'
+Requires-Dist: pytest-asyncio>=0.21.0; extra == 'all'
+Requires-Dist: pytest-cov; extra == 'all'
+Requires-Dist: pytest-dotenv>=0.5.0; extra == 'all'
+Requires-Dist: pytest-mock>=3.10.0; extra == 'all'
+Requires-Dist: pytest-watcher; extra == 'all'
+Requires-Dist: pytest-xdist[psutil]; extra == 'all'
+Requires-Dist: pytest>=7.0.0; extra == 'all'
+Requires-Dist: ruff>=0.1.0; extra == 'all'
+Requires-Dist: types-requests>=2.31.0; extra == 'all'
+Provides-Extra: development
+Requires-Dist: codespell; extra == 'development'
+Requires-Dist: mypy>=1.0.0; extra == 'development'
+Requires-Dist: pytest-watcher; extra == 'development'
+Requires-Dist: ruff>=0.1.0; extra == 'development'
+Requires-Dist: types-requests>=2.31.0; extra == 'development'
+Provides-Extra: testing
+Requires-Dist: pytest-asyncio>=0.21.0; extra == 'testing'
+Requires-Dist: pytest-cov; extra == 'testing'
+Requires-Dist: pytest-dotenv>=0.5.0; extra == 'testing'
+Requires-Dist: pytest-mock>=3.10.0; extra == 'testing'
+Requires-Dist: pytest-xdist[psutil]; extra == 'testing'
+Requires-Dist: pytest>=7.0.0; extra == 'testing'
+Description-Content-Type: text/markdown
+
+# LangCrew Tools
+
+> Official toolset for LangCrew: plug-and-play capabilities for multi‑agent applications (browser automation, cloud phone, code interpreter, command execution, data fetching, and more) with streaming events and human‑in‑the‑loop support.
+
+## What is this?
+
+`langcrew-tools` is the official toolbox in the LangCrew ecosystem, providing production‑ready tools specifically designed for agent workflows with streaming events, sandbox execution, and human‑in‑the‑loop support.
+
+## Core Benefits
+
+- **LangChain Integration**: All tools inherit from `langchain_core.tools.BaseTool` with consistent interfaces and Pydantic validation
+- **Streaming Events**: Built-in support for intermediate event dispatching during tool execution
+- **Timeout & Interruption**: Clear policies for handling timeouts and user interruptions
+- **HITL Support**: Production-grade human-in-the-loop extension points
+
+## Quick Install
+
+```bash
+pip install langcrew-tools
+```
+
+> Most tools require additional setup (API keys, services). See individual tool documentation for specific requirements.
+
+## Tool Catalog
+
+### E2B Sandbox Tools
+- **[Browser Automation](./langcrew_tools/browser/README.md)** - Streaming events, HITL support
+- **[Code Interpreter](./langcrew_tools/code_interpreter/README.md)** - Safe Python execution with isolation
+- **[Terminal Commands](./langcrew_tools/commands/README.md)** - Command execution and session management
+- **[Filesystem Operations](./langcrew_tools/filesystem/README.md)** - Comprehensive file and directory management
+
+### Information & Data Collection
+- **[Cloud Phone Automation](./langcrew_tools/cloud_phone/README.md)** - Control Android devices in the cloud
+- **[Data Fetching](./langcrew_tools/fetch/README.md)** - External data integration
+- **[Knowledge Management](./langcrew_tools/knowledge/README.md)** - Information storage and retrieval
+- **[Search Operations](./langcrew_tools/search/README.md)** - Advanced search capabilities
+
+### Infrastructure & Utilities
+- **[Image Generation](./langcrew_tools/image_gen/README.md)** - AI-powered image creation
+- **[Image Processing](./langcrew_tools/image_parser/README.md)** - Image analysis and manipulation
+- **[HITL Support](./langcrew_tools/hitl/README.md)** - Human-in-the-loop interactions
+- **[Utils & Helpers](./langcrew_tools/utils/README.md)** - Core infrastructure and sandbox management
+
+## Integration with LangCrew
+
+- Fully compatible with `langcrew`, inject tools into Agent via `tools=[...]`
+- Supports LangGraph astream event flow for UI visualization and HITL approvals
+- Combine with the main project example `examples/components/web/web_chat` to visualize tool activity in a web UI
+
+## Contributing
+
+We welcome contributions to make LangCrew Tools even better! You can:
+
+- **Report Issues**: Open issues for bugs or feature requests
+- **Submit PRs**: Contribute code improvements and new tools
+- **Documentation**: Help improve our documentation
+
+For detailed development guidelines, see individual tool READMEs or open an issue to discuss.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
