@@ -1,0 +1,31 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "sphinx_theme_shiratama"
+
+[project]
+name = "sphinx-theme-shiratama"
+authors = [{name = "yamabiko"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.8"
+dynamic = ["version", "description"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Framework :: Sphinx :: Theme",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: BSD License",
+  "Topic :: Documentation",
+  "Topic :: Software Development :: Documentation",
+]
+dependencies = [
+  "sphinx >= 4.2",
+  "beautifulsoup4",
+]
+
+[project.entry-points]
+"sphinx.html_themes" = { sphinx_theme_shiratama = "sphinx_theme_shiratama" }
+
