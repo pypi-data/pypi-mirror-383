@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rubin.citsci"
+authors = [
+    { email = "eric.rosas@noirlab.edu" },
+    { name = "Eric Rosas" }
+]
+description = "The companion package to the Rubin citizen science notebooks."
+
+version = "0.8.1"
+readme = "README.md"
+dependencies = [
+    "panoptes_client",
+    'google.cloud.storage',
+    'requests',
+]
+
+[project.urls]
+"Homepage" = "https://rubinobservatory.org/for-scientists/citizen-science"
