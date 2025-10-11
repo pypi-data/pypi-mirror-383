@@ -1,0 +1,50 @@
+name: Deploy Docs
+
+on:
+  push:
+    tags:
+      - "*" 
+  workflow_dispatch:
+
+permissions:
+  contents: write 
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: docs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build site
+        run: npm run build
+
+      - name: Configure Git authentication
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Deploy Docs
+        env:
+          GIT_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export USE_SSH=false
+          export DEPLOYMENT_BRANCH=gh-pages
+          export GIT_PASS=${GITHUB_TOKEN}
+          git config --global credential.helper store
+          echo "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
+          npx docusaurus deploy --skip-build
