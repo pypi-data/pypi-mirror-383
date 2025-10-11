@@ -1,0 +1,80 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "geqo"
+version = "0.1.2"
+description = "A quantum computing framework"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "JoS QUANTUM GmbH" }]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Quantum Computing",
+]
+license = "MIT"
+license-files = ["LICENSE"]
+
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.11.6",
+    "pdoc>=15.0.3",
+    "jupyter-book>=1.0.4.post1",
+]
+visualization = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
+    "mplcursors>=0.6",
+    "ipympl>=0.9.7",
+]
+sympy = [
+    "sympy>=1.14.0",
+]
+numpy = [
+    "numpy>=1.20",
+]
+plugin = [
+    "dotenv>=0.9.9",
+]
+cupy = [
+    "cupy-cuda12x>=13.0.0,<14.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.11.6",
+    "pdoc>=15.0.3",
+    "jupyter-book>=1.0.4.post1",
+]
+visualization = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
+    "mplcursors>=0.6",
+    "ipympl>=0.9.7",
+]
+sympy = [
+    "sympy>=1.14.0",
+]
+numpy = [
+    "numpy>=1.20",
+]
+plugin = [
+    "dotenv>=0.9.9",
+]
+cupy = [
+    "cupy-cuda12x>=13.0.0,<14.0.0", 
+]
+
+[project.urls]
+Homepage = "https://github.com/JoSQUANTUM/geqo"
+Documentation = "https://geqo.jos-quantum.de"
