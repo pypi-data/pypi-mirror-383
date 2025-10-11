@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: keplerio
+Version: 0.1.0
+Summary: SDK to push Spark DataFrames to HDFS/Iceberg for Kepler usecases
+Home-page: https://github.com/Tanitlab-SAS/keplerio.git
+Author: Your Name
+Author-email: baha@tanitlabk.com
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyspark>=3.5.6
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# keplerio
+
+Python SDK to push Spark DataFrames to HDFS/Iceberg for Kepler usecases.
+
+- Validates critical columns (id_kepler, date_transaction)
+- Formats date columns (yyyy-MM-dd)
+- Supports canonical + custom + extra_json columns
+- Partitions by date_transaction for efficient queries
+- Works with local or remote Spark Connect clusters
