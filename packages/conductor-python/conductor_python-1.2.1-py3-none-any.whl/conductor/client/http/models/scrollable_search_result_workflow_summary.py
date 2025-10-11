@@ -1,0 +1,6 @@
+from conductor.client.adapters.models.scrollable_search_result_workflow_summary_adapter import \
+    ScrollableSearchResultWorkflowSummaryAdapter
+
+ScrollableSearchResultWorkflowSummary = ScrollableSearchResultWorkflowSummaryAdapter
+
+__all__ = ["ScrollableSearchResultWorkflowSummary"]
