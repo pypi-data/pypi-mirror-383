@@ -1,0 +1,26 @@
+[project]
+name = "bach-baidu-maps"
+version = "1.0.0"
+description = "MCP Server Baidu Maps Enhanced - HTTP call Baidu Map API for MCP"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "bachstudio", email = "bachstudio@example.com" }]
+keywords = ["mcp", "map", "baidu", "baidu-maps", "fastmcp", "http"]
+license = { text = "MIT" }
+dependencies = [
+    "mcp[cli]>=1.9.0",
+    "httpx>=0.27.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/bachstudio-org/baidu-maps-mcp"
+"Repository" = "https://github.com/bachstudio-org/baidu-maps-mcp"
+"Bug Reports" = "https://github.com/bachstudio-org/baidu-maps-mcp/issues"
+
+[project.scripts]
+bach-baidu-maps = "mcp_server_baidu_maps:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
