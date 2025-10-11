@@ -1,0 +1,26 @@
+[project]
+name = "outlook-meetings"
+version = "0.0.1"
+description = "Create outlook meetings using cli"
+readme = "README.md"
+authors = [{ name = "Sukhbinder Singh" }]
+license = { text = "Apache-2.0" }
+requires-python = ">3.10"
+classifiers = ["License :: OSI Approved :: Apache Software License"]
+dependencies = ["pywin32", "dateutils"]
+
+[project.urls]
+Homepage = "https://github.com/sukhbinder/outlook-meetings"
+Changelog = "https://github.com/sukhbinder/outlook-meetings/releases"
+Issues = "https://github.com/sukhbinder/outlook-meetings/issues"
+CI = "https://github.com/sukhbinder/outlook-meetings/actions"
+
+[project.scripts]
+meet = "outlook_meetings.cli:cli"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
