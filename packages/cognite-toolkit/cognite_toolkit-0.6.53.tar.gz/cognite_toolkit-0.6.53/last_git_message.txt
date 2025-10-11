@@ -1,0 +1,34 @@
+[CDF-25910] Capabilities update by project type (#2055)
+
+# Description
+
+DM only projects does not require `AssetsAcl` and `RelationshipsAcl`.
+This PR intends to fix the error users are facing while running `cdf
+auth init`:
+
+```
+cognite.client.exceptions.CogniteAPIError: 2 invalid capabilitie(s) are present: {"assetsAcl":{"actions":["READ","WRITE"],"scope":{"all":{}}}} (invalid capability - write access to the legacy Assets API is restricted), {"relationshipsAcl":{"actions":["READ","WRITE"],"scope":{"all":{}}}} (invalid capability - write access to the legacy Relationships API is restricted) | code: 400 | X-Request-ID: XXXXXXXXXXXX | cluster: XXXXXXXXX | project: XXX-XXX
+The API Failed to process some items.
+Successful (2xx): 0
+Unknown (5xx): 0
+Failed (4xx): 1
+```
+
+A check is introduced which bypasses addition of `AssetsAcl` and
+`RelationshipsAcl` if project is DM only.
+
+## Changelog
+
+- [x] Patch
+- [ ] Skip
+
+## cdf
+
+### Fixed
+
+- Invalid Capabilities error on running `cdf auth init` on DM only
+projects.
+
+## templates
+
+No changes.
