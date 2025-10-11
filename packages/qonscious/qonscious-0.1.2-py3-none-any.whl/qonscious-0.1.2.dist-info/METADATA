@@ -1,0 +1,103 @@
+Metadata-Version: 2.4
+Name: qonscious
+Version: 0.1.2
+Summary: Qonscious is a runtime framework designed to support conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution.
+Author-email: Alejandro Fernandez <casco@lifia.info.unlp.edu.ar>, Federico Holik <holik@fisica.unlp.edu.ar>, Marcos Lammers <mlammers@lifia.info.unlp.edu.ar>
+License: No license has been chosen for this project yet.
+        All rights reserved.
+Project-URL: Homepage, https://github.com/lifia-unlp/qonscious
+Project-URL: Repository, https://github.com/lifia-unlp/qonscious
+Project-URL: Issues, https://github.com/lifia-unlp/qonscious/issues
+Project-URL: Documentation, https://lifia-unlp.github.io/qonscious/
+Keywords: quantum,qiskit,quantum-computing,runtime,resource-aware,nisq
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: qiskit<3,>=2.0
+Requires-Dist: qiskit-aer>=0.17
+Requires-Dist: qiskit-ibm-runtime>=0.40
+Requires-Dist: python-dotenv>=1.0
+Requires-Dist: qiskit-ionq
+Requires-Dist: typing_extensions>=4.7; python_version < "3.11"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.4; extra == "dev"
+Requires-Dist: ruff>=0.12.12; extra == "dev"
+Requires-Dist: pyright; extra == "dev"
+Provides-Extra: notebooks
+Requires-Dist: ipykernel>=6.29; extra == "notebooks"
+Requires-Dist: matplotlib>=3.9; extra == "notebooks"
+Requires-Dist: pandas>=2.3; extra == "notebooks"
+Provides-Extra: viz
+Requires-Dist: graphviz>=0.20; extra == "viz"
+Requires-Dist: pydeps>=1.12; extra == "viz"
+Provides-Extra: docs
+Requires-Dist: mkdocs; extra == "docs"
+Requires-Dist: mkdocs-material; extra == "docs"
+Requires-Dist: mkdocstrings[python]; extra == "docs"
+Requires-Dist: pymdown-extensions; extra == "docs"
+Dynamic: license-file
+
+[![CI](https://github.com/lifia-unlp/qonscious/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/lifia-unlp/qonscious/actions/workflows/ci.yml)
+
+**Qonscious** is a runtime framework designed to support the conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution.
+
+# Why Qonscious?
+
+In the NISQ era, quantum hardware is noisy, resource-limited, and variable over time. Static resource assumptions lead to unreliable results. **Qonscious** makes quantum programs introspective and adaptive.
+
+For a deeper discussion on the motivation behind Qonscious, read [our article](https://arxiv.org/html/2508.19276v1)
+
+# Key Features
+
+- Figures of Merit evaluation (e.g., get CHSH score, T1, T2, ...)
+- Conditional execution on compliance with figures of merit checks
+- One circuit, many backends: abstract backends and hide complexity behind adaptors (currently available for SampleV2, Aer Simulator, IBM Backends, IBM Simulators, IONQ backends)
+- Inversion of control: pass a callback, not only a circuit
+- Rich, uniform results from all backends, including backend configuration, and any figures of merit you need as conditional context
+- Built-in logging, extensibility, and fallback logic
+
+# Use cases
+
+These are some scenarios where you may use Qonscious:
+
+- Run a circuit conditional on your target computer (or simulator) checking some figures of merit (e.g., number of qubits, CHSH score, etc.)
+- Benchmark a computer (or simulator) in terms of a collection of figures of merit.
+- Explore correlations between experiment results and figures of merit of a given computer (or simulator)
+- ...
+
+# Installation
+
+We encourage installing Qiskit via pip to make sure you have the latest released version:
+
+````
+pip install qonscious
+````
+
+If you preffer working on the source code (or you'd like to contribute to the development of Qonscious read the [instructions for contributos](CONTRIBUTING.md))
+
+# Examples
+
+The [notebooks](./notebooks/) folder contains several examples of using Qonscious in different use cases. 
+
+We suggest you start with **chsh_test_demo.ipynb** which is also available as a [Google Colab Notebook](https://colab.research.google.com/drive/1tCTBrpzUH6uqZHWCY5nXOtXAv9bBfHXd?usp=sharing). There is even a [youtube tutorial](https://www.youtube.com/watch?v=mNkhzWlUE0g) covering this specific usage example.  
+
+# Documentation
+
+Up-to-date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
+
+The API reference's [home page](https://lifia-unlp.github.io/qonscious/reference/) provides a good overview of all important elements and their relationships. 
+
+
+
+
+
+
+
