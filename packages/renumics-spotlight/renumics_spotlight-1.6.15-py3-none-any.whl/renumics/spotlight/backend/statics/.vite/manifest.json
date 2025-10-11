@@ -1,0 +1,32 @@
+{
+  "_lib-CXsat34n.js": {
+    "file": "lib-CXsat34n.js",
+    "name": "lib"
+  },
+  "_lib-DVAg45cQ.cjs": {
+    "file": "lib-DVAg45cQ.cjs",
+    "name": "lib"
+  },
+  "src/lib.ts": {
+    "file": "lib.cjs",
+    "name": "lib",
+    "src": "src/lib.ts",
+    "isEntry": true,
+    "imports": [
+      "_lib-DVAg45cQ.cjs"
+    ]
+  },
+  "src/main.tsx": {
+    "file": "main.cjs",
+    "name": "main",
+    "src": "src/main.tsx",
+    "isEntry": true,
+    "imports": [
+      "_lib-DVAg45cQ.cjs"
+    ]
+  },
+  "style.css": {
+    "file": "style.css",
+    "src": "style.css"
+  }
+}

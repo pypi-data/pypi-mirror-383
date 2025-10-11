@@ -1,0 +1,144 @@
+Metadata-Version: 2.4
+Name: renumics-spotlight
+Version: 1.6.15
+Summary: Visualize and maintain datasets to develop and understand data-driven algorithms.
+License: MIT
+License-File: LICENSE
+Keywords: data curation,machine learning,data science,visualization,pandas,ai
+Author: Renumics GmbH
+Author-email: info@renumics.com
+Requires-Python: >=3.8,<3.14
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Framework :: FastAPI
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Manufacturing
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: JavaScript
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Classifier: Typing :: Typed
+Provides-Extra: all
+Provides-Extra: analysers
+Provides-Extra: descriptors
+Requires-Dist: aiofiles
+Requires-Dist: appdirs
+Requires-Dist: av
+Requires-Dist: cleanlab ; extra == "analysers" or extra == "all"
+Requires-Dist: cleanvision ; extra == "analysers" or extra == "all"
+Requires-Dist: click
+Requires-Dist: databases[sqlite] (>=0.1.3)
+Requires-Dist: datasets[audio] (>=2.12.0,<3.0.0)
+Requires-Dist: diskcache
+Requires-Dist: fastapi (>=0.65.2)
+Requires-Dist: filetype
+Requires-Dist: h5py (>3.0)
+Requires-Dist: httptools
+Requires-Dist: httpx (>=0.23.0)
+Requires-Dist: imagecodecs ; platform_machine != "arm64"
+Requires-Dist: imageio (>=2.18.0)
+Requires-Dist: importlib_resources (<5.8.0)
+Requires-Dist: ipywidgets
+Requires-Dist: jinja2
+Requires-Dist: loguru
+Requires-Dist: networkx
+Requires-Dist: numba (>=0.57.1,<0.59) ; python_full_version <= "3.8.0"
+Requires-Dist: numba (>=0.59) ; python_version >= "3.9" and python_version < "4.0"
+Requires-Dist: numpy
+Requires-Dist: orjson
+Requires-Dist: packaging
+Requires-Dist: pandas
+Requires-Dist: pillow (>=10.0.0,<11.0.0)
+Requires-Dist: prettytable
+Requires-Dist: py-machineid
+Requires-Dist: pyarrow
+Requires-Dist: pycatch22 (!=0.4.4) ; extra == "descriptors" or extra == "all"
+Requires-Dist: pydantic (>=2.0.0,<3.0.0)
+Requires-Dist: pydantic-settings (>=2.0.3,<3.0.0)
+Requires-Dist: pygltflib (>=1.15.1)
+Requires-Dist: requests (>=2.31)
+Requires-Dist: rsa
+Requires-Dist: scikit-image
+Requires-Dist: scikit-learn
+Requires-Dist: setuptools
+Requires-Dist: toml
+Requires-Dist: tqdm
+Requires-Dist: transformers
+Requires-Dist: trimesh
+Requires-Dist: typing-extensions
+Requires-Dist: umap-learn
+Requires-Dist: uvicorn (>=0.22)
+Requires-Dist: uvloop (>=0.17.0) ; sys_platform == "darwin"
+Requires-Dist: uvloop (>=0.17.0) ; sys_platform == "linux"
+Requires-Dist: validators
+Requires-Dist: websockets
+Project-URL: Documentation, https://spotlight.renumics.com/
+Project-URL: Homepage, https://spotlight.renumics.com/
+Project-URL: Repository, https://github.com/renumics/spotlight
+Description-Content-Type: text/markdown
+
+# Renumics Spotlight
+
+> Spotlight helps you to **identify critical data segments and model failure modes**. It enables you to build and maintain reliable machine learning models by **curating a high-quality datasets**.
+
+## Introduction
+
+Spotlight is built on the idea that you can only truly **understand unstructured datasets** if you can **interactively explore** them. Its core principle is to identify and fix critical data segments by leveraging **data enrichments** (e.g. features, embeddings, uncertainties). We are building Spotlight for cross-functional teams that want to be in **control of their data and data curation processes**. Currently, Spotlight supports many use cases based on image, audio, video and time series data.
+
+## Quickstart
+
+Get started by installing Spotlight and loading your first dataset.
+
+#### What you'll need
+
+-   [Python](https://www.python.org/downloads/) version 3.8-3.13
+
+#### Install Spotlight via [pip](https://packaging.python.org/en/latest/key_projects/#pip)
+
+```bash
+pip install renumics-spotlight
+```
+
+> We recommend installing Spotlight and everything you need to work on your data in a separate [virtual environment](https://docs.python.org/3/tutorial/venv.html)
+
+#### Load a dataset and start exploring
+
+```python
+import pandas as pd
+from renumics import spotlight
+
+df = pd.read_csv("https://spotlight.renumics.com/data/mnist/mnist-tiny.csv")
+spotlight.show(df, dtype={"image": spotlight.Image, "embedding": spotlight.Embedding})
+```
+
+> `pd.read_csv` loads a sample csv file as a pandas [DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).
+
+> `spotlight.show` opens up spotlight in the browser with the pandas dataframe ready for you to explore. The `dtype` argument specifies custom column types for the browser viewer.
+
+#### Load a [Hugging Face](https://huggingface.co/) dataset
+
+```python
+import datasets
+from renumics import spotlight
+
+dataset = datasets.load_dataset("olivierdehaene/xkcd", split="train")
+df = dataset.to_pandas()
+spotlight.show(df, dtype={"image_url": spotlight.Image})
+```
+
+> The `datasets` package can be installed via pip.
+
