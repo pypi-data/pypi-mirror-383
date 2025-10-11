@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "consts-everywhere"
+version = "1.0.0"
+dependencies = ["typeguard", "assign-overload"]
+description = "Create const variables everywhere"
+readme = "README.md"
+authors = [{name = "pyhacks", email = "enginyildirim111@gmail.com"}]
+keywords = ["const", "dynamic", "runtime"]
+
+[project.urls]
+Homepage = "https://github.com/pyhacks/consts-everywhere"

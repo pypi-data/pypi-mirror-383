@@ -1,0 +1,74 @@
+# consts-everywhere
+Create const variables everywhere. This is not just a \_\_setattr__ trick that only makes it possible to create const members.
+You can also create local and global consts.
+
+# Installation
+```pip install consts-everywhere```
+
+# How To Use
+We have a proxy class:
+
+_class_ **Const**(wrapped)
+
+This class inherits a variant of [ObjectProxy](https://wrapt.readthedocs.io/en/master/wrappers.html#object-proxy) from wrapt.
+Along with all augmented assignment operators, this class also overloads the normal assignment operator (=) thanks to [assign-overload](https://github.com/pyhacks/assign-overload).
+_wrapped_ can be any object and the resulting instance of this class will act like _wrapped_ in every way.
+If you use this class, you need to call consts_everywhere.**patch_and_reload_module**(). 
+This function only exposed in this package as a convenience, actually it is the exact copy of assign_overload.patch_and_reload_module() and you can find documentation about it in [assign-overload](https://github.com/pyhacks/assign-overload).
+Usage example:
+```python
+import consts_everywhere
+
+def main():
+    a = consts_everywhere.Const(10)
+    print(a) # prints 10
+    a = 20 # Error
+
+if consts_everywhere.patch_and_reload_module():
+    main()
+```
+One thing to note is if you assign a variable holding a _Const_ instance to a new variable, new variable takes the value of the _Const_ instance, not the value of its underlying object.
+However, most operators return the underlying object. Example:
+```python
+import consts_everywhere
+
+def main():
+    a = consts_everywhere.Const(10)
+    print(type(a+5)) # prints int
+    b = a
+    print(type(b)) # prints Const
+
+if consts_everywhere.patch_and_reload_module():
+    main()
+```
+If you want to access the underlying object, use the ```__wrapped__``` attribute:
+```python
+import consts_everywhere
+
+def main():
+    a = consts_everywhere.Const(10)
+    b = a.__wrapped__
+    print(type(b)) # prints int
+
+if consts_everywhere.patch_and_reload_module():
+    main()
+```
+
+_Const_ is also compatible with [typeguard](https://typeguard.readthedocs.io/en/latest/). Function argument type enforcement example:
+```python
+import typeguard
+import consts_everywhere
+
+@typeguard.typechecked
+def test4(a: consts_everywhere.Const[int]):
+    pass
+
+def main():
+    a = consts_everywhere.Const(10)
+    b = consts_everywhere.Const("abc")
+    test4(a) # Ok
+    test4(b) # Error
+
+if consts_everywhere.patch_and_reload_module():
+    main()
+```
