@@ -1,0 +1,24 @@
+[project]
+name = "async_loki_handler"
+version = "0.0.4"
+description = "Handler для библиотек logging и loguru для отправки логов в Loki, поддерживает ассинхронную отправку батчами в отличии от конкрутенов"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Limby", email = "bogo44tor@gmail.com"}
+]
+requires-python = ">=3.8"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["async_loki_handler*"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "build>=1.2.2.post1",
+    "twine>=6.1.0",
+]
