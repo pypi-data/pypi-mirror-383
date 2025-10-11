@@ -1,0 +1,97 @@
+name: "uv Build & Publish"
+description: "Build, test, and publish a Python package to PyPI with uv"
+author: "lin-pei-hsuan"
+
+inputs:
+  python-version:
+    description: "Python version to use"
+    required: false
+    default: "3.11"
+  uv-version:
+    description: "uv version (empty = installer latest)"
+    required: false
+    default: ""
+  pypi-token:
+    description: "PyPI token (pass via secrets)"
+    required: false
+  run-tests:
+    description: "Run tests before build"
+    required: false
+    default: "true"
+  pytest-args:
+    description: "Extra pytest args (e.g. --ignore=tests/test_card_creator.py)"
+    required: false
+    default: "--quiet"
+  publish:
+    description: "Publish to PyPI"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check out
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "pyproject.toml"
+
+    - name: Install the project
+      shell: bash
+      run: uv sync --all-extras --dev
+
+    - name: Run tests
+      shell: bash
+      run: uv run pytest ${{ inputs.pytest-args }}
+
+    - name: Set up Git identity
+      if: ${{ inputs.publish == 'true' }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      shell: bash
+
+    - name: Bump version (minor) with uv
+      if: ${{ inputs.publish == 'true' }}
+      id: bump
+      run: |
+        uv version --bump patch
+        # capture new version; uv prints "<name> <version>"
+        NEW_VERSION=$(uv version --output-format text | awk '{print $NF}')
+        echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - name: Commit version bump
+      if: ${{ inputs.publish == 'true' }}
+      run: |
+        if ! git diff --quiet; then
+          git add pyproject.toml
+          git commit -m "chore: bump version to v${{ steps.bump.outputs.new_version }}"
+          git tag -a "v${{ steps.bump.outputs.new_version }}" -m "Release v${{ steps.bump.outputs.new_version }}"
+          git push --follow-tags
+        else
+          echo "No changes to commit."
+        fi
+      shell: bash
+
+    - name: Build package
+      if: ${{ inputs.publish == 'true' }}
+      shell: bash
+      run: uv build
+
+    - name: Publish to PyPI
+      if: ${{ inputs.publish == 'true' }}
+      env:
+        PYPI_TOKEN: ${{ inputs.pypi-token }}
+      shell: bash
+      run: |
+        if [ -z "$PYPI_TOKEN" ]; then
+          echo "No PyPI token provided; skipping publish." >&2
+          exit 1
+        fi
+        uv publish --token "$PYPI_TOKEN"
