@@ -1,0 +1,40 @@
+Metadata-Version: 2.4
+Name: eventstreamd
+Version: 2025.10.0
+Summary: Simple Event Stream Server
+License: MIT
+License-File: LICENSE
+Author: Sebastian Rittau
+Author-email: srittau@rittau.biz
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Internet :: WWW/HTTP
+Requires-Dist: json-get (>=1.1.1,<1.2.0)
+Project-URL: Homepage, https://github.com/srittau/eventstreamd
+Project-URL: Repository, https://github.com/srittau/eventstreamd
+Description-Content-Type: text/markdown
+
+# eventstreamd
+
+![Supported Python Versions](https://img.shields.io/pypi/pyversions/eventstreamd)
+[![GitHub](https://img.shields.io/github/release/srittau/eventstreamd/all.svg)](https://github.com/srittau/eventstreamd/releases/)
+[![pypi](https://img.shields.io/pypi/v/eventstreamd.svg)](https://pypi.python.org/pypi/eventstreamd/)
+[![MIT License](https://img.shields.io/github/license/srittau/eventstreamd)](https://github.com/srittau/eventstreamd/blob/main/LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/srittau/eventstreamd/test.yml)](https://github.com/srittau/eventstreamd/actions/workflows/test.yml)
+
+A simple event stream server. Events are sent on a Unix socket and then
+distributed to all interested listeners via HTTP event streams.
+
+Docker image available:
+
+```bash
+docker pull srittau/eventstreamd
+```
+
