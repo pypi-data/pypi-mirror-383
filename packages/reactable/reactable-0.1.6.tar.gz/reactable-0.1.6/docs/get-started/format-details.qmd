@@ -1,0 +1,36 @@
+---
+title: Rendering details
+---
+
+
+```{python}
+import htmltools as html
+
+from reactable.data import cars_93
+from reactable import Reactable, Column, embed_css
+
+embed_css()
+
+data = cars_93[20:25, ["manufacturer", "model", "type", "price"]]
+```
+
+## Basic expandable row details
+
+
+```{python}
+from reactable.models import RowInfo
+
+
+# TODO: explain use of to_widget
+def fmt_details(ci: RowInfo):
+    return html.div(
+        f"Details for row: {ci.row_index}",
+        Reactable(data[ci.row_index, :]).to_widget(),
+    )
+
+
+Reactable(
+    data[["model"]],
+    details=fmt_details,
+)
+```

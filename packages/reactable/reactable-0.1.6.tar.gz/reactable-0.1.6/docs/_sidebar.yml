@@ -1,0 +1,26 @@
+website:
+  sidebar:
+  - contents:
+    - reference/index.qmd
+    - contents:
+      - reference/Reactable.qmd
+      section: Create tables
+    - contents:
+      - reference/Column.qmd
+      - reference/ColGroup.qmd
+      - reference/ColFormat.qmd
+      - reference/ColFormatGroupBy.qmd
+      section: Customize columns
+    - contents:
+      - reference/Theme.qmd
+      - reference/Language.qmd
+      section: Customize tables
+    - contents:
+      - reference/CellInfo.qmd
+      - reference/RowInfo.qmd
+      - reference/ColInfo.qmd
+      - reference/HeaderCellInfo.qmd
+      - reference/JS.qmd
+      section: Rendering
+    id: reference
+  - id: dummy-sidebar

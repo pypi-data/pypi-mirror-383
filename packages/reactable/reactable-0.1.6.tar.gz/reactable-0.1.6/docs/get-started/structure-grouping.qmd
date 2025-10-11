@@ -1,0 +1,161 @@
+---
+title: Row groups and aggregation
+jupyter: python3
+---
+
+```{python}
+from reactable import Reactable, Column, ColFormat, ColGroup, JS, embed_css
+from reactable.data import us_states, cars_93
+
+embed_css()
+```
+
+You can group rows in a table by specifying one or more columns in `group_by`:
+
+```{python}
+# | label: group-by
+data = cars_93[10:22, ["manufacturer", "model", "type", "price", "mpg_city"]]
+
+Reactable(
+    data,
+    group_by="manufacturer",
+)
+```
+
+When rows are grouped, you can aggregate data in a column using an `aggregate` function:
+
+```{python}
+# | label: group-by-aggregate
+data = cars_93[14:38, ["type", "price", "mpg_city", "drive_train", "man_trans_avail"]]
+Reactable(
+    data,
+    group_by="type",
+    columns=[
+        Column(id="price", aggregate="max"),
+        Column(id="mpg_city", aggregate="mean", format=ColFormat(digits=1)),
+        Column(id="drive_train", aggregate="unique"),
+        Column(id="man_trans_avail", aggregate="frequency"),
+    ],
+)
+```
+
+You can use one of the built-in aggregate functions:
+
+```{python}
+#| output: hide
+Column(aggregate = "sum")        # Sum of numbers
+Column(aggregate = "mean")       # Mean of numbers
+Column(aggregate = "max")        # Maximum of numbers
+Column(aggregate = "min")        # Minimum of numbers
+Column(aggregate = "median")     # Median of numbers
+Column(aggregate = "count")      # Count of values
+Column(aggregate = "unique")     # Comma-separated list of unique values
+Column(aggregate = "frequency")  # Comma-separated counts of unique values
+```
+
+Or a custom aggregate function in JavaScript:
+
+
+```{python}
+Column(
+    aggregate=JS(
+        """
+    function(values, rows) {
+      // input:
+      //  - values: an array of all values in the group
+      //  - rows: an array of row data values for all rows in the group (optional)
+      //
+      // output:
+      //  - an aggregated value, e.g. a comma-separated list
+      return values.join(', ')
+    }
+  """
+    )
+)
+```
+
+Here is an example using a custom JS aggregate to join `mpg_city` values:
+
+```{python}
+# | code-fold: true
+data = cars_93[14:38, ["type", "price", "mpg_city"]]
+Reactable(
+    data,
+    group_by="type",
+    columns=[
+        Column(id="price", aggregate="max"),
+        Column(
+            id="mpg_city",
+            aggregate=JS(
+                """
+            function(values, rows) {
+              // input:
+              //  - values: an array of all values in the group
+              //  - rows: an array of row data values for all rows in the group (optional)
+              //
+              // output:
+              //  - an aggregated value, e.g. a comma-separated list
+              return values.join(', ')
+            }
+          """
+            ),
+        ),
+    ],
+)
+```
+
+
+## Multiple groups
+
+```{python}
+# | label: group-by-multiple
+Reactable(
+    us_states,
+    group_by=["Region", "Division"],
+    columns=[
+        Column(id="Division", aggregate="unique"),
+        Column(id="Area", aggregate="sum", format=ColFormat(separators=True)),
+    ],
+)
+
+```
+
+## Custom aggregate function
+
+Custom aggregate functions are useful when none of the built-in aggregate functions apply, or when you want to aggregate values from multiple columns. For example, when calculating aggregate averages or percentages.
+
+Within a custom aggregate function, you can access the values in the column using the `values` argument, and the values in other columns using the `rows` argument:
+
+TODO
+
+## Include sub rows in pagination
+
+By default, sub rows are excluded from pagination and always shown on the same page when expanded. To include sub rows in pagination, you can set `paginate_sub_rows=True`. This is recommended for grouped tables with a large number of rows where expanded rows may not all fit on one page.
+
+```{python}
+# | label: group-by-paginate-sub-rows
+data = cars_93[["manufacturer", "model", "type", "price", "mpg_city"]]
+
+Reactable(
+    data=cars_93,
+    group_by="type",
+    paginate_sub_rows=True,
+)
+```
+
+## Sticky column groups
+
+```{python}
+# | label: sticky-column-groups
+Reactable(
+    cars_93[:5, :],
+    column_groups=[
+        ColGroup(name="Make", columns=["manufacturer", "model"], sticky="left"),
+        ColGroup(name="Price", columns=["min_price", "price", "max_price"], sticky="left"),
+    ],
+    default_col_def=Column(footer="Footer"),
+    resizable=True,
+    wrap=False,
+    bordered=True,
+)
+```

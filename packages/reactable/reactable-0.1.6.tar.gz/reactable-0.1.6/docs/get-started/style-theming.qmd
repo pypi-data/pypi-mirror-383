@@ -1,0 +1,72 @@
+---
+title: Theming
+---
+
+Themes provide a powerful way to customize table styling that can be reused across tables. You can either set theme variables to change the default styles (e.g., row stripe color), or add your own custom CSS to specific elements of the table.
+
+To apply a theme, provide a `Theme()` as the `theme=` argument:
+
+
+```{python}
+from reactable import Reactable, Theme, options, embed_css
+from reactable.data import cars_93
+
+embed_css()
+```
+
+```{python}
+# | label: theme
+Reactable(
+    cars_93,
+    searchable=True,
+    striped=True,
+    highlight=True,
+    bordered=True,
+    theme=Theme(
+        border_color="#dfe2e5",
+        striped_color="#f6f8fa",
+        highlight_color="#f0f5f9",
+        cell_padding="8px 12px",
+        style={
+            "font-family": "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif"
+        },
+        search_input_style={"width": "100%"},
+    ),
+)
+
+```
+
+## Global theme
+
+To set the default theme for all tables, set the global `reactable.options.theme` attribute:
+
+
+```{python}
+# | label: theme-global
+options.theme = Theme(
+    color="hsl(233, 9%, 87%)",
+    background_color="hsl(233, 9%, 19%) !important",
+    border_color="hsl(233, 9%, 22%) !important",
+    striped_color="hsl(233, 12%, 22%)",
+    highlight_color="hsl(233, 12%, 24%)",
+    input_style={"background-color": "hsl(233, 9%, 25%) !important"},
+    select_style={"background-color": "hsl(233, 9%, 25%)"},
+    page_button_hover_style={"background-color": "hsl(233, 9%, 25%)"},
+    page_button_active_style={"background-color": "hsl(233, 9%, 28%)"},
+)
+
+Reactable(
+    cars_93,
+    filterable=True,
+    show_page_size_options=True,
+    striped=True,
+    highlight=True,
+    details=lambda index: f"Details for row {index}",
+)
+```
+
+To restore options to the defaults, use the `.reset()` method:
+
+```{python}
+options.reset()
+```

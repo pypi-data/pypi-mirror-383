@@ -1,0 +1,32 @@
+---
+title: Column headers
+---
+
+```{python}
+import polars as pl
+
+from reactable import Reactable, Column, ColGroup, embed_css
+from reactable.data import penguins
+
+pl_penguins = penguins.to_polars()
+
+embed_css()
+```
+
+You can create column groups by passing a list of `ColGroup()` definitions to `column_groups=`:
+
+```{python}
+# | label: column-groups
+Reactable(
+    pl_penguins[:5, ["species", "island", "bill_length_mm", "bill_depth_mm"]],
+    columns=[
+        Column(id="bill_length_mm", name="Length (mm)"),
+        Column(id="bill_depth_mm", name="Depth (mm)"),
+        Column(id="species", name="Species"),
+        Column(id="island", name="Island"),
+    ],
+    column_groups=[
+        ColGroup(name="Bill", columns=["bill_length_mm", "bill_depth_mm"]),
+    ],
+)
+```

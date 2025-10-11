@@ -1,0 +1,121 @@
+project:
+  type: website
+  resources:
+    - "assets/sleep-table.png"
+
+notebook-links: false
+
+format:
+  html:
+    toc: true
+    css: styles.css
+    grid:
+      body-width: 850px
+
+execute:
+  daemon: false
+
+
+website:
+  title: "reactable-py" 
+  search:
+    show-item-context: true
+  page-navigation: true
+  google-analytics: "G-8JZE5GTSHM"
+  navbar:
+    left:
+      - text: Get Started
+        file: get-started/index.qmd
+      - text: Examples
+        file: demos/index.qmd
+      - text: Reference
+        file: reference/index.qmd
+      - href: blog/index.qmd
+        text: Blog
+    right:
+      - icon: github
+        href: https://github.com/machow/reactable-py
+      #- icon: rss
+      #  href: blog/index.xml
+  sidebar:
+      id: get-started
+      contents:
+        - get-started/index.qmd
+        #- get-started/overview.qmd
+        - get-started/code-structure.qmd
+        - get-started/display-export.qmd
+        - section: "Controls"
+          contents:
+            - get-started/controls-sorting.qmd
+            - get-started/controls-filtering.qmd
+            - get-started/controls-searching.qmd
+            - get-started/controls-pagination.qmd
+            - get-started/controls-resizing.qmd
+            - get-started/controls-click-actions.qmd
+        - section: "Structure"
+          contents:
+            - get-started/structure-column-groups.qmd
+            - get-started/structure-grouping.qmd
+            - get-started/structure-details.qmd
+            - get-started/structure-footers.qmd
+            - get-started/structure-rownames.qmd
+        - section: "Format"
+          contents:
+            - get-started/format-columns.qmd
+            - get-started/format-aggregated.qmd
+            - get-started/format-cell.qmd
+            - get-started/format-header-footer.qmd
+            - get-started/format-details.qmd
+        - section: "Style"
+          contents:
+            - get-started/style-table.qmd
+            - get-started/style-conditional.qmd
+            - get-started/style-custom-sort-indicators.qmd
+            - get-started/style-theming.qmd
+        - section: "Extra"
+          contents:
+            - get-started/format-custom-rendering-js.qmd
+            - get-started/style-conditional-js.qmd
+            - get-started/extra-advanced-filters.qmd
+            - get-started/extra-htmltools.qmd
+
+# tell quarto to read the generated sidebar
+#metadata-files:
+#  - _sidebar.yml
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: reactable
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
+  sections:
+    - title: Create tables
+      desc: Classes to build reactable tables.
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        - Reactable
+    - title: Customize columns
+      contents:
+        - Column
+        - ColGroup
+        - ColFormat
+        - ColFormatGroupBy
+    - title: Customize tables
+      contents:
+        - Theme
+        - Language
+      
+    - title: Rendering
+      desc: Classes used in custom rendering functions.
+      contents:
+        - CellInfo
+        - RowInfo
+        - ColInfo
+        - HeaderCellInfo
+        - JS
+    - title: Helpers
+      contents:
+        - to_widget

@@ -1,0 +1,37 @@
+# Function reference {.doc .doc-index}
+
+## Create tables
+
+Classes to build reactable tables.
+
+| | |
+| --- | --- |
+| [Reactable](Reactable.qmd#reactable.Reactable) | A reactive table. |
+
+## Customize columns
+
+| | |
+| --- | --- |
+| [Column](Column.qmd#reactable.Column) | Configure a table column. |
+| [ColGroup](ColGroup.qmd#reactable.ColGroup) | Configure a column group (spanner). |
+| [ColFormat](ColFormat.qmd#reactable.ColFormat) | Specify formatting for a Column. |
+| [ColFormatGroupBy](ColFormatGroupBy.qmd#reactable.ColFormatGroupBy) | Specify formatters for standard and aggregate cells. |
+
+## Customize tables
+
+| | |
+| --- | --- |
+| [Theme](Theme.qmd#reactable.Theme) | Theme configuration. |
+| [Language](Language.qmd#reactable.Language) | Language options. |
+
+## Rendering
+
+Classes used in custom rendering functions.
+
+| | |
+| --- | --- |
+| [CellInfo](CellInfo.qmd#reactable.CellInfo) | Cell data for custom rendering of cells, class_, and style. |
+| [RowInfo](RowInfo.qmd#reactable.RowInfo) | Row data for custom rendering of details. |
+| [ColInfo](ColInfo.qmd#reactable.ColInfo) | Column data for custom rendering of footers. |
+| [HeaderCellInfo](HeaderCellInfo.qmd#reactable.HeaderCellInfo) | Header cell data for custom rendering of column header (column labels). |
+| [JS](JS.qmd#reactable.JS) | A javascript function for rendering. |

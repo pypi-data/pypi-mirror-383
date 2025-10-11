@@ -1,0 +1,222 @@
+---
+title: Get Started
+jupyter: python3
+aliases: 
+  - ../index.html
+---
+
+`reactable` is a Python library for interactively viewing DataFrames. It focuses on three things:
+
+* Quick options for sorting, searching, and paginating data.
+* Working with many DataFrame inputs, including pandas and polars.
+* Extensive customization of table structure, value formats, and targeted styles.
+
+::: {.callout-note}
+This library is a port of the R library `reactable` by Greg Lin. It uses the same underlying javascript code, has adapted its beautiful examples and documentation.
+:::
+
+## Install
+
+```bash
+pip install reactable
+```
+
+## Previewing DataFrames
+
+```{python}
+from reactable import Reactable, embed_css
+from reactable.data import cars_93
+
+# Note that currently this function is required
+# to put css into notebooks.
+embed_css()
+
+
+Reactable(
+    cars_93[["manufacturer", "model", "type", "price"]],
+    default_page_size=5,
+    searchable=True,
+    filterable=True,
+)
+```
+
+## Using with pandas and polars
+
+reactable built-in datasets, like `cars_93` don't any DataFrame libraries.
+They include methods like `.to_pandas()` and `.to_polars()`, to quickly try out reactable with your preferred DataFrame tool.
+
+```{python}
+from reactable import Reactable, embed_css
+from reactable.data import cars_93
+
+Reactable(
+    cars_93.to_polars(),
+    default_page_size=5,
+)
+```
+
+## Extensive customization
+
+[See twitter demo for more](/demos/twitter-followers.qmd)
+
+<link href = "https://fonts.googleapis.com/css?family=Karla:400,700|Fira+Mono&display=fallback" rel = "stylesheet" />
+
+<style>
+.twitter-followers {
+  margin: 0 auto;
+  width: 575px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.followers-header {
+  margin: 1.125rem 0;
+  font-size: 1rem;
+}
+
+.followers-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.followers-tbl {
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+}
+
+.followers-tbl a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.followers-tbl a:hover,
+.followers-tbl a:focus {
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+}
+
+.header {
+  border-bottom: 2px solid #555;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.header:hover {
+  background-color: #eee;
+}
+
+.bar-cell {
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  font-family: "Fira Mono", Consolas, Monaco, monospace;
+  font-size: 0.84375rem;
+  white-space: pre;
+}
+
+.bar-chart {
+  flex-grow: 1;
+  margin-left: 0.375rem;
+  height: 0.875rem;
+}
+
+.bar {
+  height: 100%;
+}
+</style>
+
+```{python}
+# | echo: false
+
+from reactable import Reactable, embed_css
+from reactable.models import Column, Props, CellInfo, JS
+from htmltools import tags
+
+import polars as pl
+
+embed_css()
+
+data = pl.read_csv("../demos/twitter_followers.csv")
+
+
+def f_followers(ci: CellInfo):
+    width = f"{ci.value * 100 / data['followers'].max()}%"
+    val = f"{ci.value:,}".rjust(9)
+    bar = tags.div(
+        tags.div(
+            class_="bar",
+            style=f"width: {width}; background-color: #3fc1c9",
+        ),
+        class_="bar-chart",
+        style="margin-right: 0.375rem",
+    )
+    return tags.div(
+        tags.span(class_="number", content=val),
+        bar,
+        class_="bar-cell",
+    )
+
+
+tbl = Reactable(
+    data,
+    pagination=False,
+    default_sorted=["exclusive_followers_pct"],
+    default_col_def=Column(header_class="header", align="left"),
+    columns=dict(
+        account=Column(
+            cell=lambda ci: (
+                tags.a(
+                    f"@{ci.value}",
+                    href=f"https://twitter.com/{ci.value}",
+                    target="_blank",
+                )
+            ),
+            width=150,
+        ),
+        followers=Column(default_sort_order="desc", cell=f_followers),
+        exclusive_followers_pct=Column(
+            name="Exclusive Followers",
+            default_sort_order="desc",
+            cell=JS(
+                """function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + "%"
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Show % on first row only
+        if (cellInfo.viewIndex > 0) {
+          value = value.replace("%", " ")
+        }
+        // Render bar chart
+        return `
+          <div class="bar-cell">
+            <span class="number">${value}</span>
+            <div class="bar-chart" style="background-color: #e1e1e1">
+              <div class="bar" style="width: ${pct}; background-color: #fc5185"></div>
+            </div>
+          </div>
+        `
+      }"""
+            ),
+            html=True,
+        ),
+    ),
+    compact=True,
+    class_="followers-tbl",
+    static=True,
+)
+
+# tags.div(
+#    tags.div(
+#        tags.h2("Candidates whose followers are loyal only to them", class_="followers-title"),
+#        "Share of each 2020 candidate's followers who don't follow any other candidates",
+#        class_="followers-header",
+#    ),
+#    tbl,
+#    class_="twitter-followers",
+# )
+
+tbl
+```

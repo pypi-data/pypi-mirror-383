@@ -1,0 +1,376 @@
+---
+title: Javascript formatters
+---
+
+```{python}
+import polars as pl
+import htmltools as html
+from reactable.data import cars_93
+from reactable import Reactable, reactable, embed_css
+from reactable.models import Column, ColInfo, CellInfo, HeaderCellInfo, RowInfo, JS
+
+embed_css()
+
+data = cars_93[20:25, ["manufacturer", "model", "type", "price"]]
+```
+
+## Cell
+
+```{python}
+column = Column(
+    cell=JS(
+        """
+    function(cellInfo, state) {
+      // input:
+      //  - cellInfo, an object containing cell info
+      //  - state, an object containing the table state (optional)
+      //
+      // output:
+      //  - content to render (e.g. an HTML string)
+      return `<div><b>${cellInfo.value}</b></div>`
+    }
+  """
+    ),
+    html=True,  # to render as HTML
+)
+
+Reactable(data, columns={"manufacturer": column})
+
+```
+
+::: {.callout-note}
+
+
+## `cellInfo` properties
+
+
+```{python}
+# | echo: false
+import polars as pl
+
+cell_info_props = pl.DataFrame(
+    {
+        "Property": [
+            "value",
+            "row",
+            "column",
+            "index",
+            "viewIndex",
+            "aggregated",
+            "expanded",
+            "filterValue",
+            "subRows",
+            "level",
+            "selected",
+        ],
+        "Example": [
+            '"setosa"',
+            '{ Petal.Length: 1.7, Species: "setosa" }',
+            '{ id: "Petal.Length" }',
+            "20",
+            "0",
+            "true",
+            "true",
+            '"petal"',
+            '[{ Petal.Length: 1.7, Species: "setosa" }, ...]',
+            "0",
+            "true",
+        ],
+        "Description": [
+            "cell value",
+            "row data",
+            "column info object",
+            "row index (zero-based)",
+            "row index within the page (zero-based)",
+            "whether the row is aggregated",
+            "whether the row is expanded",
+            "column filter value",
+            "sub rows data (aggregated cells only)",
+            "row nesting depth (zero-based)",
+            "whether the row is selected",
+        ],
+    }
+)
+
+Reactable(cell_info_props, pagination=False)
+```
+
+:::
+
+## Headers
+
+
+```{python}
+column = Column(
+    header=JS(
+        """
+    function(column, state) {
+      // input:
+      //  - column, an object containing column properties
+      //  - state, an object containing the table state (optional)
+      //
+      // output:
+      //  - content to render (e.g. an HTML string)
+      return `<div><em>${column.name}</em></div>`
+    }
+  """
+    ),
+    html=True,  # to render as HTML
+)
+
+Reactable(
+    data,
+    columns={"price": column},
+)
+```
+
+::: {.callout-note}
+## `column` properties
+
+```{python}
+# | echo: false
+column_props = pl.DataFrame(
+    {
+        "Property": [
+            "id",
+            "name",
+            "filterValue",
+            "setFilter",
+            "column",
+            "data",
+        ],
+        "Example": [
+            '"Petal.Length"',
+            '"Petal Length"',
+            '"petal"',
+            "function setFilter(value: any)",
+            '{ id: "Petal.Length", name: "Petal Length", filterValue: "petal" }',
+            "[{ Petal.Length: 1.7, Petal.Width: 0.2, _subRows: [] }, ...]",
+        ],
+        "Description": [
+            "column ID",
+            "column display name",
+            "column filter value",
+            "function to set the column filter value (set to undefined to clear the filter)",
+            "column info object (deprecated in v0.3.0)",
+            "current row data in the table (deprecated in v0.3.0)",
+        ],
+    }
+)
+
+Reactable(column_props)
+```
+:::
+
+
+## Footers
+
+```{python}
+column = Column(
+    footer=JS(
+        """
+    function(column, state) {
+      // input:
+      //  - column, an object containing column properties
+      //  - state, an object containing the table state (optional)
+      //
+      // output:
+      //  - content to render (e.g. an HTML string)
+      return `<div>Rows: ${state.sortedData.length}</div>`
+    }
+  """
+    ),
+    html=True,  # to render as HTML
+)
+
+Reactable(data, columns={"price": column})
+```
+
+::: {.callout-note}
+## `column` properties
+
+```{python}
+# | echo: false
+Reactable(column_props)
+```
+:::
+
+## Expandable row details
+
+```{python}
+Reactable(
+    data,
+    details=JS(
+        """
+          function(rowInfo, state) {
+            // input:
+            //  - rowInfo, an object containing row info
+            //  - state, an object containing the table state (optional)
+            //
+            // output:
+            //  - content to render (e.g. an HTML string)
+            return `<div>Details for row: ${rowInfo.index}</div>`
+          }
+        """
+    ),
+)
+```
+
+::: {.callout-note}
+
+## `rowInfo` properties
+
+```{python}
+# | echo: false
+row_info_props = pl.DataFrame(
+    {
+        "Property": [
+            "values",
+            "row",
+            "index",
+            "viewIndex",
+            "expanded",
+            "level",
+            "selected",
+        ],
+        "Example": [
+            '{ Petal.Length: 1.7, Species: "setosa" }',
+            '{ Petal.Length: 1.7, Species: "setosa" }',
+            "20",
+            "0",
+            "true",
+            "0",
+            "true",
+        ],
+        "Description": [
+            "row data values",
+            "same as values (deprecated in v0.3.0)",
+            "row index (zero-based)",
+            "row index within the page (zero-based)",
+            "whether the row is expanded",
+            "row nesting depth (zero-based)",
+            "whether the row is selected",
+        ],
+    }
+)
+
+Reactable(row_info_props)
+```
+:::
+
+## Aggregate cell calculation
+
+```{python}
+Reactable(
+    data,
+    group_by="type",
+    columns=[
+        Column(id="price", aggregate="max"),
+        Column(
+            id="model",
+            aggregate=JS(
+                """
+            function(values, rows) {
+              // input:
+              //  - values: an array of all values in the group
+              //  - rows: an array of row data values for all rows in the group (optional)
+              //
+              // output:
+              //  - an aggregated value, e.g. a comma-separated list
+              return values.join(', ')
+            }
+          """
+            ),
+        ),
+    ],
+)
+```
+
+## Aggregated cell
+
+```{python}
+
+# Render aggregated value as a comma-separated list of unique values
+agg_type = JS(
+    """
+    function(cellInfo) {
+            const values = cellInfo.subRows.map(function(row) { return row['Type'] })
+            const unique = values.reduce(function(obj, v) { obj[v] = true; return obj }, {})
+            return Object.keys(unique).join(', ')
+    }"""
+)
+
+# Render aggregated cell as currency
+agg_price = JS(
+    """
+    function(cellInfo) {
+            return cellInfo.value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    }"""
+)
+
+Reactable(
+    data,
+    group_by="manufacturer",
+    columns={
+        "model": Column(aggregate="unique"),
+        "type": Column(aggregated=agg_type),
+        "price": Column(aggregate="sum", aggregated=agg_price),
+    },
+)
+
+```
+
+## Javascript `state` properties
+
+
+```{python}
+# | echo: false
+state_props = pl.DataFrame(
+    {
+        "Property": [
+            "sorted",
+            "page",
+            "pageSize",
+            "pages",
+            "filters",
+            "searchValue",
+            "selected",
+            "pageRows",
+            "sortedData",
+            "data",
+            "meta",
+            "hiddenColumns",
+        ],
+        "Example": [
+            '[{ id: "Petal.Length", desc: true }, ...]',
+            "2",
+            "10",
+            "5",
+            '[{ id: "Species", value: "petal" }]',
+            '"petal"',
+            "[0, 1, 4]",
+            '[{ Petal.Length: 1.7, Species: "setosa" }, ...]',
+            '[{ Petal.Length: 1.7, Species: "setosa" }, ...]',
+            '[{ Petal.Length: 1.7, Species: "setosa" }, ...]',
+            "{ custom: 123 }",
+            '["Petal.Length"]',
+        ],
+        "Description": [
+            "columns being sorted in the table",
+            "page index (zero-based)",
+            "page size",
+            "number of pages",
+            "column filter values",
+            "table search value",
+            "selected row indices (zero-based)",
+            "current row data on the page",
+            "current row data in the table (after sorting, filtering, grouping)",
+            "original row data in the table",
+            "custom table metadata from reactable() (new in v0.4.0)",
+            "columns being hidden in the table",
+        ],
+    }
+)
+
+Reactable(state_props)
+```

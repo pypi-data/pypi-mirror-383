@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[tool.setuptools.packages.find]
+include = ["reactable"]
+
+[project]
+name = "reactable"
+description = "Interactive tables for Python."
+readme = "README.md"
+keywords = ["tables"]
+license.file = "LICENSE"
+authors = [
+    { name = "Michael Chow", email = "michael.chow@posit.co" }
+]
+dynamic = ["version"]
+classifiers = [
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Topic :: Scientific/Engineering :: Visualization"
+]
+dependencies = [
+    "htmltools",
+    "databackend",
+    "ipyreact<=0.4.1",
+    "IPython",
+    "importlib-metadata",
+    "importlib-resources",
+    "typing_extensions>=3.10.0.0",
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+all = [
+    "reactable[dev]"
+]
+
+extra = [
+]
+
+dev = [
+    "black",
+    "jupyter",
+    "quartodoc>=0.9.1",
+    "faicons",
+    "great-tables",
+    "mizani",
+    "pandas",
+    "polars",
+    "pre-commit==2.15.0",
+    "pyarrow",
+    "pyright>=1.1.244",
+    "pytest>=3",
+    "pytest-cov",
+    "syrupy",
+    "plotly"
+]
+
+
+[project.urls]
+homepage = "https://github.com/machow/reactable-py"
+documentation = "https://machow.github.io/reactable-py"
+
+[tool.flake8]
+exclude = ["docs", ".venv", "tests/*"]
+
+ignore = [
+    "E501",    # line too long (maximum 100 characters)
+    "W503",    # line break before binary operator
+    "E203",    # whitespace before ':'
+]
+
+max-line-length = 100
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+asyncio_mode = "strict"
+testpaths = [
+    "tests"
+]
+
+markers = [
+]
+
+[tool.black]
+line-length = 100
