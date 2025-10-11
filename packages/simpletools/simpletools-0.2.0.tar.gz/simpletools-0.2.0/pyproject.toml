@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simpletools"
+version = "0.2.0"
+description = "simpletools"
+readme = "README.md"
+authors = [
+    { name="Marcin Rosinski", email="marcin@getsimpletools.com" }
+]
+license = { text="BSD-3-Clause" }
+requires-python = ">=3.6"
+dependencies = [
+    "pika>=1.0.0"
+]
+keywords = ["amqp", "pika", "queue"]
+
+
+# Optional: PyPI classifiers
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent"
+]

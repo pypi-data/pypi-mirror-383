@@ -1,0 +1,31 @@
+Metadata-Version: 2.4
+Name: simpletools
+Version: 0.2.0
+Summary: simpletools
+Author-email: Marcin Rosinski <marcin@getsimpletools.com>
+License: BSD-3-Clause
+Keywords: amqp,pika,queue
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: pika>=1.0.0
+Dynamic: license-file
+
+# simpletools-python
+
+### Install
+
+1. Clone Repo
+    1. `cd simpletools-python`
+
+
+2. Install Using PIP
+    1. `python3 -m pip install simpletools`
+    2. If necessary and confident this won't impact the OS Python3 Build, add `--break-system-packages` flag to install Globally
+        1. Create a `venv` for the project, and install to users `.local` Python3
+        2. Activate `venv` with `source <path>/<to>/<venv>/bin/activate`
+        3. PIP Install with `python3 -m pip install simpletools`
