@@ -1,0 +1,10 @@
+# Pixverse MCP Test Configuration
+# 包含测试 API Key 的配置文件
+
+# API Configuration
+base_url: "https://app-api.pixverseai.cn"
+api_key: "sk-smoketest2"
+
+# Server Configuration
+timeout: 30
+max_retries: 3
