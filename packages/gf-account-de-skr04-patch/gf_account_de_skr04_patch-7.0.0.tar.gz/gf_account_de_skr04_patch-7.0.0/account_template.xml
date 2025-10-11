@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<!-- This file is part of the account-de-skr04-patch module for Tryton form gruenfischer.de.
+ The COPYRIGHT file at the top level of
+ this repository contains the full copyright notices and license terms.-->
+<tryton>
+    <data>
+        <record id="account_5349" model="account.account.template">
+            <field name="name">Wareneingang ohne Vorsteuerabzug</field>
+            <field name="parent" ref="account_de_skr04.view_income_1060"/>
+            <field name="code">5349</field>
+            <field name="type" ref="account_de_skr04.type_4120"/>
+        </record>
+    </data>
+</tryton>
