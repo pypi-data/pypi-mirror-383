@@ -1,0 +1,489 @@
+# MCPulse Python SDK
+
+Official Python SDK for [MCPulse](https://github.com/sirrobot01/mcpulse) - the analytics and observability platform for MCP servers.
+
+## Features
+
+- ✅ **gRPC transport** - High-performance gRPC communication
+- ✅ **Query API** - Retrieve analytics data, metrics, and insights
+- ✅ **Decorator-based tracking** - Simple `@tracker.track_tool_call()` decorator
+- ✅ **Automatic buffering** - Metrics are buffered and flushed in background thread
+- ✅ **Parameter sanitization** - Automatically redacts sensitive keys like passwords and tokens
+- ✅ **Retry logic** - Built-in exponential backoff for failed requests
+- ✅ **Sampling support** - Control metric collection with configurable sample rates
+- ✅ **Session management** - Context manager for session tracking
+- ✅ **Async/sync support** - Works with both async and sync code
+- ✅ **Automatic error capture** - Exceptions are automatically recorded
+- ✅ **Type hints** - Full type annotations for better IDE support
+
+## Installation
+
+### Using uv (Recommended)
+
+[uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver.
+
+```bash
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install mcpulse
+uv pip install mcpulse
+```
+
+### Using pip
+
+```bash
+pip install mcpulse
+```
+
+### Development Installation
+
+For local development with uv:
+
+```bash
+# Clone the repository
+git clone https://github.com/sirrobot01/mcpulse-python.git
+
+# Install in development mode with dev dependencies
+uv pip install -e ".[dev]"
+
+# Or use the Makefile
+make dev
+```
+
+## Quick Start
+
+### Authentication
+
+If your MCPulse server requires authentication, you need an API key:
+
+1. Log in to your MCPulse dashboard
+2. Navigate to **API Keys** page
+3. Click **Create API Key** and give it a name
+4. Copy the generated key (shown only once!)
+
+### Basic Usage with Decorator
+
+```python
+from mcpulse import AnalyticsTracker, Config
+
+# Create configuration
+config = Config(
+    server_id="my-mcp-server",
+    transport="grpc",
+    grpc_endpoint="localhost:50051",
+    api_key="mcpulse_...",  # API key from MCPulse UI
+)
+
+# Create tracker
+tracker = AnalyticsTracker(config)
+
+# Use decorator to track tool calls
+@tracker.track_tool_call("calculate")
+def calculate(operation: str, a: float, b: float):
+    if operation == "add":
+        return a + b
+    elif operation == "multiply":
+        return a * b
+    else:
+        raise ValueError(f"Unknown operation: {operation}")
+
+# Use the tool - metrics are automatically tracked
+result = calculate(operation="add", a=5, b=3)
+print(f"Result: {result}")
+
+# Close tracker when done
+tracker.close()
+```
+
+### Querying Analytics Data
+
+```python
+import grpc
+from mcpulse_python.query import QueryClient
+from mcpulse_python.types import TimeRange
+from datetime import datetime, timedelta
+
+# Create gRPC channel
+channel = grpc.insecure_channel("localhost:50051")
+
+# Create query client
+client = QueryClient(channel=channel, api_key="mcpulse_...")
+
+# List all servers
+servers, pagination = client.list_servers(limit=10)
+for server in servers:
+    print(f"Server: {server.name} ({server.id})")
+
+# Get server metrics
+time_range = TimeRange(
+    start=datetime.now() - timedelta(days=1),
+    end=datetime.now()
+)
+metrics = client.get_server_metrics(
+    server_id="my-server",
+    time_range=time_range,
+    interval="1h"
+)
+print(f"Total Calls: {metrics.total_calls}")
+print(f"Success Rate: {metrics.success_rate * 100:.1f}%")
+print(f"Avg Latency: {metrics.avg_latency_ms}ms")
+
+# Get tool performance
+tools, _ = client.get_tools(
+    server_id="my-server",
+    time_range=time_range,
+    limit=10,
+    sort_by="call_count"
+)
+for tool in tools:
+    print(f"{tool.name}: {tool.call_count} calls")
+
+channel.close()
+```
+
+### With Session Tracking
+
+```python
+# Track a session
+with tracker.session() as session_id:
+    print(f"Session ID: {session_id}")
+
+    # All tracked calls within this context are associated with the session
+    calculate(operation="add", a=5, b=3)
+    calculate(operation="multiply", a=4, b=7)
+```
+
+### Async Support
+
+```python
+import asyncio
+
+@tracker.track_tool_call("async_search")
+async def search_database(query: str):
+    await asyncio.sleep(0.1)  # Simulate database query
+    return [{"id": 1, "title": "Result"}]
+
+# Works with async functions
+result = await search_database(query="test")
+```
+
+### MCP Server Integration
+
+Integrate MCPulse into your MCP server using the official MCP Python SDK:
+
+```python
+from mcp.server.fastmcp import FastMCP
+from mcp.server.stdio import stdio_server
+from mcpulse_python import AnalyticsTracker, Config
+
+# Initialize MCPulse tracker
+mcpulse_config = Config(
+    server_id="my-mcp-server",
+    grpc_endpoint="localhost:50051",
+    api_key="mcpulse_...",
+)
+tracker = AnalyticsTracker(mcpulse_config)
+
+# Create MCP server
+mcp = FastMCP("My Server")
+
+@mcp.tool()
+@tracker.track_tool_call("calculate")
+async def calculate(a: float, b: float) -> float:
+    """Add two numbers with analytics tracking."""
+    return a + b
+
+# Run server
+async def main():
+    async with stdio_server() as (read, write):
+        await mcp.run(read, write, mcp.create_initialization_options())
+    tracker.flush()
+    tracker.close()
+```
+
+See `examples/mcp_server_integration.py` for a complete working example.
+
+## Local Testing
+
+### Running Tests
+
+```bash
+# Using uv (recommended)
+make test
+
+# Or directly with uv
+uv run pytest
+
+# With coverage report
+make test-cov
+```
+
+### Running Examples
+
+```bash
+# Basic usage example
+make example-basic
+
+# Query API example
+make example-query
+
+# MCP server integration example (requires official mcp package)
+uv pip install ".[mcp]"
+python examples/mcp_server_integration.py
+
+# Or directly
+uv run python examples/basic_usage.py
+uv run python examples/query_example.py
+```
+
+### Development Workflow
+
+```bash
+# Install development dependencies
+make dev
+
+# Run linters
+make lint
+
+# Format code
+make format
+
+# Run all checks (lint + test)
+make check
+
+# Clean build artifacts
+make clean
+```
+
+## Configuration
+
+```python
+from mcpulse_python import Config
+
+config = Config(
+    # Server identification
+    server_id="my-mcp-server",
+
+    # Transport (only gRPC supported)
+    transport="grpc",
+    grpc_endpoint="localhost:50051",
+
+    # Authentication
+    api_key="mcpulse_...",
+
+    # Collection settings
+    enable_param_collection=True,
+    async_mode=True,
+    buffer_size=100,
+    flush_interval=5.0,  # seconds
+    max_batch_size=1000,
+
+    # Privacy
+    sanitize_params=True,
+    sensitive_keys=["password", "token", "api_key", "secret"],
+
+    # Sampling
+    sample_rate=1.0,  # 1.0 = 100%, 0.1 = 10%
+
+    # Retry
+    max_retries=3,
+    retry_backoff=1.0,  # seconds
+
+    # Timeout
+    timeout=10.0,
+
+    # Protocol metadata
+    protocol_version="2024-11-05",
+    client_name="mcpulse-python",
+    client_version="0.1.0",
+)
+
+# Validate configuration
+config.validate()
+```
+
+## API Reference
+
+### AnalyticsTracker
+
+High-level tracker with decorators and context managers.
+
+- `__init__(config)` - Create a new tracker
+- `track_tool_call(tool_name, enable_param_collection=None)` - Decorator to track tool calls
+- `session(session_id=None)` - Context manager for session tracking
+- `track_manual(...)` - Manually track a metric
+- `flush()` - Manually flush buffered metrics
+- `close()` - Close and flush remaining metrics
+
+### QueryClient
+
+Client for querying analytics data.
+
+- `list_servers(limit, offset)` - List all registered servers
+- `get_server(server_id)` - Get specific server details
+- `get_server_metrics(server_id, time_range, interval)` - Get aggregated metrics
+- `get_tools(server_id, time_range, limit, offset, sort_by)` - List tools and their metrics
+- `get_tool_timeline(server_id, tool_name, time_range, interval)` - Get time-series data
+- `get_errors(server_id, time_range, tool_name, limit, offset)` - Get error events
+- `get_sessions(query)` - Get session data
+- `get_anomalies(server_id, time_range, sensitivity)` - Get detected anomalies
+- `stream_metrics(server_id, topics)` - Stream real-time updates
+
+### AnalyticsClient
+
+Low-level client for direct API access.
+
+- `__init__(transport, grpc_endpoint, timeout, api_key)` - Create a new client
+- `ingest_metrics(metrics)` - Send a batch of metrics
+- `ingest_metrics_stream(batches)` - Stream batches
+- `close()` - Close the client
+
+### Collector
+
+Buffered collector with automatic flushing.
+
+- `__init__(config)` - Create a new collector
+- `collect(metric)` - Add a metric to the buffer
+- `flush()` - Flush all buffered metrics
+- `close()` - Close and flush remaining metrics
+
+## Environment Variables
+
+Configure the SDK using environment variables:
+
+```bash
+# Server
+export MCP_ANALYTICS_SERVER_ID=my-server
+export MCP_ANALYTICS_GRPC_ENDPOINT=localhost:50051
+
+# Authentication
+export MCP_ANALYTICS_API_KEY=mcpulse_...
+
+# Behavior
+export MCP_ANALYTICS_ASYNC=true
+export MCP_ANALYTICS_BUFFER_SIZE=100
+export MCP_ANALYTICS_FLUSH_INTERVAL=5
+
+# Privacy
+export MCP_ANALYTICS_SANITIZE=true
+export MCP_ANALYTICS_SAMPLE_RATE=1.0
+```
+
+## Project Structure
+
+```
+mcpulse-python/
+├── mcpulse_python/          # Main package
+│   ├── __init__.py          # Public API exports
+│   ├── client.py            # Low-level gRPC client
+│   ├── collector.py         # Buffered metric collector
+│   ├── config.py            # Configuration
+│   ├── query.py             # Query API client
+│   ├── sanitizer.py         # Parameter sanitization
+│   ├── tracker.py           # High-level tracker
+│   ├── types.py             # Type definitions
+│   ├── _convert.py          # Protobuf conversions
+│   └── pb/                  # Generated protobuf code
+├── tests/                   # Test suite
+│   ├── conftest.py          # Pytest fixtures
+│   ├── test_tracker.py      # Tracker tests
+│   ├── test_config.py       # Config tests
+│   └── test_sanitizer.py    # Sanitizer tests
+├── examples/                # Usage examples
+│   ├── basic_usage.py       # Basic tracking example
+│   └── query_example.py     # Query API example
+├── pyproject.toml           # Package metadata (uv compatible)
+├── Makefile                 # Development commands
+└── README.md                # This file
+```
+
+## Development Commands
+
+All commands use `uv` for fast, reliable package management:
+
+```bash
+make help          # Show all available commands
+make install       # Install package
+make dev           # Install with dev dependencies
+make test          # Run tests
+make test-cov      # Run tests with coverage
+make lint          # Run linters
+make format        # Format code
+make clean         # Clean build artifacts
+make build         # Build distribution
+make check         # Run all checks
+```
+
+## Testing Locally Without Server
+
+You can test the SDK locally even without a running MCPulse server:
+
+```python
+from unittest.mock import Mock, patch
+from mcpulse_python import AnalyticsTracker, Config
+
+config = Config(
+    server_id="test-server",
+    grpc_endpoint="localhost:50051",
+    async_mode=False,  # Synchronous for easier testing
+)
+
+tracker = AnalyticsTracker(config)
+
+# Mock the collector to avoid network calls
+with patch.object(tracker.collector, 'collect') as mock_collect:
+    @tracker.track_tool_call("test_function")
+    def test_function(x: int) -> int:
+        return x * 2
+
+    result = test_function(5)
+    assert result == 10
+    assert mock_collect.called  # Verify metric was collected
+
+tracker.close()
+```
+
+## Troubleshooting
+
+### Import errors
+
+If you see import errors, ensure the package is installed correctly:
+
+```bash
+uv pip install -e .
+```
+
+### gRPC connection errors
+
+Ensure the MCPulse server is running and accessible:
+
+```bash
+# Test gRPC connectivity
+grpcurl -plaintext localhost:50051 list
+```
+
+### Type checking errors
+
+Run mypy to check for type issues:
+
+```bash
+make lint
+# or
+uv run mypy mcpulse_python
+```
+
+## Contributing
+
+See the main [MCPulse repository](https://github.com/sirrobot01/mcpulse) for contribution guidelines.
+
+## License
+
+Same as MCPulse project.
+
+## Links
+
+- **Homepage**: https://github.com/sirrobot01/mcpulse
+- **Documentation**: https://docs.mcpulse.io
+- **Issues**: https://github.com/sirrobot01/mcpulse/issues
+- **PyPI**: https://pypi.org/project/mcpulse/ (coming soon)
