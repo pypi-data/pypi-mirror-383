@@ -1,0 +1,101 @@
+Metadata-Version: 2.4
+Name: chrys
+Version: 4.2.1
+Summary: A collection of color palettes for mapping and visualisation
+License-File: LICENSE
+Requires-Python: >=3.10
+Requires-Dist: matplotlib>=3.3.2
+Requires-Dist: numpy>=2.1.0
+Requires-Dist: wcag-contrast-ratio>=0.9
+Description-Content-Type: text/markdown
+
+# chrys
+
+A collection of color palettes for visualisation in JavaScript, Python and Sass.
+
+## Demo
+
+[netbek.github.io/chrys](https://netbek.github.io/chrys#colour-schemes)
+
+## Installation
+
+### Node.js and Sass
+
+```shell
+npm install chrys
+```
+
+### Python 3.10 and up
+
+```shell
+pip install chrys
+```
+
+## Usage
+
+For instructions, refer to [the docs](https://netbek.github.io/chrys#usage).
+
+## Development: Installation
+
+1. Install Node 22.x:
+
+    ```shell
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    source ~/.bashrc
+    nvm install 22
+    nvm use 22
+    ```
+
+2. Install uv:
+
+    ```shell
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+
+3. Create `.pypirc`:
+
+    ```shell
+    cp example.pypirc .pypirc
+    ```
+
+4. Enter a [PyPI API token](https://pypi.org/manage/account/#api-tokens) as the password in `.pypirc`.
+
+5. Install Node and Python dependencies:
+
+    ```shell
+    npm ci
+    uv sync
+    ```
+
+## Development: Usage
+
+Patch Node dependencies to fix ESM imports:
+
+```shell
+npx patch-package @bokeh/bokehjs --exclude 'nothing'
+npx patch-package vega-scale --exclude 'nothing'
+```
+
+Build the palette data, JavaScript and Python distribution packages, Sass, CSS, Illustrator scripts:
+
+```shell
+npm run build-data
+npm run build-dist
+```
+
+Publish the JavaScript and Python distribution packages:
+
+```shell
+npm run publish-dist
+```
+
+## Credit
+
+Palettes from:
+
+* [Bokeh](https://github.com/bokeh/bokeh) (BSD 3-Clause)
+* [Vega](https://github.com/vega/vega) (BSD 3-Clause)
+
+## License
+
+Copyright (c) 2017 Hein Bekker. Licensed under the BSD 3-Clause License.

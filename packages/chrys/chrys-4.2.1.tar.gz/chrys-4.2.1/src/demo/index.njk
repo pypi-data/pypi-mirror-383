@@ -1,0 +1,363 @@
+{%- macro variables(jsVar, sassVar) -%}
+  <table class="variables">
+    <tr>
+      <td>
+        <svg width="16" height="16"><use href="#logo-javascript" /></svg>
+        <svg width="16" height="16"><use href="#logo-python" /></svg>
+      </td>
+      <td><code>{{ jsVar }}</code></td>
+    </tr>
+    <tr>
+      <td>
+        <svg width="16" height="16"><use href="#logo-sass" /></svg>
+      </td>
+      <td><code>{{ sassVar }}</code></td>
+    </tr>
+  </table>
+{%- endmacro -%}
+
+{%- macro legend_gradient(name, palette, class_name='nb-legend__gradient') -%}
+  <svg class="{{ class_name }}" viewBox="0,0,1,1" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="gradient-{{ name }}">
+        {% for x in palette %}
+          <stop offset="{{ loop.index0 * 10 }}%" stop-color="{{ x }}"></stop>
+        {% endfor %}
+      </linearGradient>
+    </defs>
+    <rect fill="url(#gradient-{{ name }})" x="0" y="0" width="1" height="1"></rect>
+  </svg>
+{%- endmacro -%}
+
+{% macro table_head() %}
+  <thead>
+    <tr>
+      <th scope="col" colspan="3">Vega</th>
+      <th scope="col" colspan="3">Bokeh</th>
+    </tr>
+    <tr>
+      <th scope="col">Variable name</th>
+      <th scope="col">Vendor name</th>
+      <th scope="col">Palette</th>
+      <th scope="col">Variable name</th>
+      <th scope="col">Vendor name</th>
+      <th scope="col">Palette</th>
+    </tr>
+  </thead>
+{% endmacro %}
+
+{% macro table_continuous_row(type, palette) %}
+  <tr>
+    <td>{% if palette.vega %}{{ variables(palette.vega.jsVar, palette.vega.sassVar) }}{% endif %}</td>
+    <td>{% if palette.vega %}{{ palette.vega.vendorName }}{% endif %}</td>
+    <td>
+      {% if palette.vega %}
+        {{ legend_gradient(palette.vega.name, palette.vega.palette) }}
+        <div class="nb-discrete-palettes-all nb-discrete-palettes-all--{{ type }}">
+          {{ discrete_palettes_html(palette.vega.name, palette.vega.discretePalettes) }}
+        </div>
+      {% endif %}
+    </td>
+    <td>{% if palette.bokeh %}{{ variables(palette.bokeh.jsVar, palette.bokeh.sassVar) }}{% endif %}</td>
+    <td>{% if palette.bokeh %}{{ palette.bokeh.vendorName }}{% endif %}</td>
+    <td>
+      {% if palette.bokeh %}
+        {{ legend_gradient(palette.bokeh.name, palette.bokeh.palette) }}
+        <div class="nb-discrete-palettes-all nb-discrete-palettes-all--{{ type }}">
+          {{ discrete_palettes_html(palette.bokeh.name, palette.bokeh.discretePalettes) }}
+        </div>
+      {% endif %}
+    </td>
+  </tr>
+{% endmacro %}
+
+{% macro discrete_palette_html(name, palette) %}
+  <div class="nb-swatch-list">
+    {% for x in palette %}
+      <span class="nb-swatch" title="{{ x }}" style="background: {{ x }}; color: {{ x|best_color_contrast(['#000', '#fff']) }};">&nbsp;</span>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro discrete_palettes_html(name, palettes) %}
+  {% for palette in palettes %}
+    {{ discrete_palette_html(name, palette) }}
+  {% endfor %}
+{% endmacro %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>chrys</title>
+    <link rel="stylesheet" href="vendor/normalize-css/normalize.css"/>
+    <link rel="stylesheet" href="vendor/prism-themes/themes/prism-ghcolors.css"/>
+    <link rel="stylesheet" href="css/demo.css"/>
+  </head>
+  <body>
+    <svg hidden>
+      <symbol id="logo-javascript" viewBox="0 0 630 630"><path fill="#f7df1e" d="M0 0h630v630H0z"/><path d="M165.65 526.474l48.212-29.178c9.302 16.492 17.763 30.444 38.058 30.444 19.454 0 31.719-7.61 31.719-37.21v-201.3h59.203v202.137c0 61.32-35.943 89.232-88.385 89.232-47.36 0-74.852-24.529-88.807-54.13M375 520.13l48.206-27.911c12.69 20.724 29.183 35.947 58.361 35.947 24.532 0 40.174-12.265 40.174-29.181 0-20.299-16.068-27.489-43.135-39.326l-14.797-6.348c-42.715-18.181-71.05-41.017-71.05-89.227 0-44.404 33.831-78.238 86.695-78.238 37.637 0 64.702 13.111 84.154 47.366l-46.097 29.602c-10.15-18.183-21.142-25.372-38.057-25.372-17.339 0-28.335 10.995-28.335 25.372 0 17.762 10.996 24.952 36.367 35.948l14.8 6.343c50.325 21.569 78.66 43.557 78.66 93.034 0 53.287-41.866 82.465-98.11 82.465-54.976 0-90.5-26.218-107.836-60.474"/></symbol>
+      <symbol id="logo-python" viewBox="0 0 110.421 109.846"><g><path style="marker:none" d="M99.75 67.469c-28.032 0-26.281 12.156-26.281 12.156l.031 12.594h26.75V96H62.875s-17.938-2.034-17.938 26.25 15.657 27.281 15.657 27.281h9.343v-13.125s-.503-15.656 15.407-15.656h26.531s14.906.241 14.906-14.406V82.125s2.263-14.656-27.031-14.656zM85 75.938a4.808 4.808 0 014.813 4.812A4.808 4.808 0 0185 85.563a4.808 4.808 0 01-4.813-4.813A4.808 4.808 0 0185 75.937z" fill="#366994" overflow="visible" transform="translate(-44.938 -67.469)"/><path d="M100.546 177.315c28.032 0 26.281-12.156 26.281-12.156l-.03-12.594h-26.75v-3.781h37.374s17.938 2.034 17.938-26.25c0-28.285-15.657-27.282-15.657-27.282h-9.343v13.125s.503 15.657-15.407 15.657h-26.53s-14.907-.241-14.907 14.406v24.219s-2.263 14.656 27.031 14.656zm14.75-8.469a4.808 4.808 0 01-4.812-4.812 4.808 4.808 0 014.812-4.813 4.808 4.808 0 014.813 4.813 4.808 4.808 0 01-4.813 4.812z" style="marker:none" fill="#ffc331" overflow="visible" transform="translate(-44.938 -67.469)"/></g></symbol>
+      <symbol id="logo-sass" viewBox="0 0 547.8 410.6"><path fill="#CD6799" d="M471.4,236c-19.1,0.1-35.7,4.7-49.6,11.5c-5.1-10.1-10.2-19.1-11.1-25.7c-1-7.7-2.2-12.4-1-21.6  c1.2-9.2,6.6-22.3,6.5-23.3s-1.2-5.7-12.2-5.8c-11-0.1-20.5,2.1-21.6,5c-1.1,2.9-3.2,9.5-4.6,16.3c-1.9,10-22,45.7-33.5,64.4  c-3.7-7.3-6.9-13.7-7.6-18.8c-1-7.7-2.2-12.4-1-21.6c1.2-9.2,6.6-22.3,6.5-23.3c-0.1-1-1.2-5.7-12.2-5.8c-11-0.1-20.5,2.1-21.6,5  c-1.1,2.9-2.3,9.7-4.6,16.3c-2.3,6.6-29,66.2-36,81.6c-3.6,7.9-6.7,14.2-8.9,18.5c0,0,0,0,0,0s-0.1,0.3-0.4,0.8  c-1.9,3.7-3,5.7-3,5.7s0,0,0,0.1c-1.5,2.7-3.1,5.2-3.9,5.2c-0.6,0-1.7-7.2,0.2-17c4-20.7,13.5-52.9,13.4-54c0-0.6,1.8-6.2-6.2-9.1  c-7.8-2.9-10.6,1.9-11.3,1.9c-0.7,0-1.2,1.7-1.2,1.7s8.7-36.2-16.6-36.2c-15.8,0-37.6,17.3-48.4,32.9c-6.8,3.7-21.3,11.6-36.8,20.1  c-5.9,3.3-12,6.6-17.7,9.7c-0.4-0.4-0.8-0.9-1.2-1.3c-30.6-32.7-87.2-55.8-84.8-99.7c0.9-16,6.4-58,108.7-109  C233.9,19,300.9,30.5,312.5,56c16.6,36.4-35.9,104-122.9,113.8c-33.2,3.7-50.6-9.1-55-13.9c-4.6-5-5.3-5.3-7-4.3c-2.8,1.5-1,6,0,8.6  c2.6,6.8,13.3,18.8,31.4,24.7c16,5.2,54.9,8.1,102-10.1c52.7-20.4,93.9-77.1,81.8-124.6C330.7,2,250.7-13.9,175,13  C130,29,81.2,54.2,46.1,87c-41.7,39-48.3,72.9-45.6,87.1c9.7,50.4,79.2,83.2,107,107.5c-1.4,0.8-2.7,1.5-3.8,2.1  c-13.9,6.9-66.9,34.6-80.1,63.9c-15,33.2,2.4,57,13.9,60.2c35.7,9.9,72.4-7.9,92.1-37.3c19.7-29.4,17.3-67.6,8.2-85.1  c-0.1-0.2-0.2-0.4-0.4-0.6c3.6-2.1,7.3-4.3,10.9-6.4c7.1-4.2,14.1-8.1,20.1-11.3c-3.4,9.3-5.9,20.4-7.1,36.4  c-1.5,18.8,6.2,43.2,16.3,52.8c4.5,4.2,9.8,4.3,13.2,4.3c11.8,0,17.1-9.8,23-21.4c7.2-14.2,13.7-30.7,13.7-30.7s-8.1,44.6,13.9,44.6  c8,0,16.1-10.4,19.7-15.7c0,0.1,0,0.1,0,0.1s0.2-0.3,0.6-1c0.8-1.3,1.3-2.1,1.3-2.1s0-0.1,0-0.2c3.2-5.6,10.4-18.3,21.1-39.4  c13.8-27.2,27.1-61.2,27.1-61.2s1.2,8.3,5.3,22.1c2.4,8.1,7.4,17,11.4,25.6c-3.2,4.5-5.2,7-5.2,7s0,0,0.1,0.1  c-2.6,3.4-5.4,7.1-8.5,10.7c-10.9,13-23.9,27.9-25.7,32.2c-2.1,5.1-1.6,8.8,2.4,11.8c2.9,2.2,8.1,2.5,13.4,2.2  c9.8-0.7,16.7-3.1,20.1-4.6c5.3-1.9,11.5-4.8,17.3-9.1c10.7-7.9,17.2-19.2,16.6-34.1c-0.3-8.2-3-16.4-6.3-24.1  c1-1.4,1.9-2.8,2.9-4.2c16.9-24.7,30-51.8,30-51.8s1.2,8.3,5.3,22.1c2,7,6.1,14.6,9.7,22c-15.9,12.9-25.7,27.9-29.2,37.7  c-6.3,18.2-1.4,26.4,7.9,28.3c4.2,0.9,10.2-1.1,14.6-3c5.6-1.8,12.2-4.9,18.5-9.5c10.7-7.9,21-18.9,20.4-33.8  c-0.3-6.8-2.1-13.5-4.6-20c13.5-5.6,30.9-8.7,53.1-6.1c47.6,5.6,57,35.3,55.2,47.8c-1.8,12.5-11.8,19.3-15.1,21.4  c-3.3,2.1-4.4,2.8-4.1,4.3c0.4,2.2,2,2.1,4.8,1.7c3.9-0.7,25-10.1,25.9-33.1C548.9,267.8,520.9,235.7,471.4,236z M104.2,359.8  C88.4,377,66.4,383.5,56.9,378c-10.2-5.9-6.2-31.3,13.2-49.5c11.8-11.1,27-21.4,37.1-27.7c2.3-1.4,5.7-3.4,9.8-5.9  c0.7-0.4,1.1-0.6,1.1-0.6l0,0c0.8-0.5,1.6-1,2.4-1.5C127.6,318.8,120.8,341.7,104.2,359.8z M219.2,281.6c-5.5,13.4-17,47.7-24,45.8  c-6-1.6-9.7-27.6-1.2-53.3c4.3-12.9,13.4-28.3,18.7-34.3c8.6-9.6,18.1-12.8,20.4-8.9C236,236,222.6,273.2,219.2,281.6z M314.1,327  c-2.3,1.2-4.5,2-5.5,1.4c-0.7-0.4,1-2,1-2s11.9-12.8,16.6-18.6c2.7-3.4,5.9-7.4,9.3-11.9c0,0.4,0,0.9,0,1.3  C335.5,312.5,320.7,322.8,314.1,327z M387.3,310.3c-1.7-1.2-1.4-5.2,4.3-17.7c2.2-4.9,7.4-13.1,16.3-21c1,3.2,1.7,6.3,1.6,9.2  C409.4,300.1,395.6,307.3,387.3,310.3z"/></symbol>
+    </svg>
+
+    <main class="nb-main">
+      <h1>chrys</h1>
+
+      <section id="installation">
+        <h1>Installation</h1>
+
+        <section>
+          <h1><svg width="16" height="16"><use href="#logo-javascript" /></svg> Node.js</h1>
+
+          <pre><code class="language-shell-session">
+npm install chrys
+          </code></pre>
+        </section>
+
+        <section>
+          <h1><svg width="16" height="16"><use href="#logo-python" /></svg> Python</h1>
+
+          <pre><code class="language-shell-session">
+pip install chrys
+          </code></pre>
+        </section>
+
+        <section>
+          <h1><svg width="16" height="16"><use href="#logo-sass" /></svg> Sass</h1>
+
+          <pre><code class="language-shell-session">
+npm install chrys
+          </code></pre>
+        </section>
+      </section>
+
+      <section id="usage">
+        <h1>Usage</h1>
+
+        <section>
+          <h1>Get a list of discrete colours</h1>
+          <p>The maximum number of colours varies by palette, but most can return up to 9 colours.</p>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-javascript" /></svg> Node.js</h1>
+
+            <pre><code class="language-javascript">
+import {VEGA_ACCENT, discretePalette} from 'chrys/umd';
+
+const palette = discretePalette(VEGA_ACCENT, 5);
+            </code></pre>
+
+            <pre><code class="language-javascript">
+["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0"]
+            </code></pre>
+          </section>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-python" /></svg> Python</h1>
+
+            <pre><code class="language-python">
+from chrys.palettes import VEGA_ACCENT, discrete_palette
+
+hex_palette = discrete_palette(VEGA_ACCENT, 5)
+rgb_palette = discrete_palette(VEGA_ACCENT, 5, as_rgb=True)
+            </code></pre>
+
+            <pre><code class="language-python">
+["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0"]
+[(0.4980392156862745, 0.788235294117647, 0.4980392156862745), ...]
+            </code></pre>
+          </section>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-sass" /></svg> Sass</h1>
+
+            <pre><code class="language-sass">
+@import 'node_modules/chrys/src/variables';
+
+$palette: map-get(map-get($chrys-palettes, 'vega-accent'), 5);
+            </code></pre>
+
+            <pre><code class="language-sass">
+["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0"]
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h1>Get a list of palette names</h1>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-javascript" /></svg> Node.js</h1>
+
+            <pre><code class="language-javascript">
+import {VEGA_PALETTE_NAMES} from 'chrys/umd';
+
+const variables = Object.keys(VEGA_PALETTE_NAMES);
+const names = Object.values(VEGA_PALETTE_NAMES);
+            </code></pre>
+
+            <pre><code class="language-javascript">
+["VEGA_GREENS", "VEGA_YELLOW_GREEN", "VEGA_GOLD_GREEN", ...]
+["vega_greens", "vega_yellowgreen", "vega_goldgreen", ...]
+            </code></pre>
+          </section>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-python" /></svg> Python</h1>
+
+            <pre><code class="language-python">
+from chrys.palettes import VEGA_PALETTE_NAMES
+
+variables = VEGA_PALETTE_NAMES.keys()
+names = VEGA_PALETTE_NAMES.values()
+            </code></pre>
+
+            <pre><code class="language-python">
+["VEGA_GREENS", "VEGA_YELLOW_GREEN", "VEGA_GOLD_GREEN", ...]
+["vega_greens", "vega_yellowgreen", "vega_goldgreen", ...]
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h1>Parse a palette name</h1>
+          <p>Get the name of the vendor and the palette name used internally by the vendor. For example, in Altair and Vega, this is the scheme name.</p>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-javascript" /></svg> Node.js</h1>
+
+            <pre><code class="language-javascript">
+import {VEGA_ACCENT, parsePaletteName} from 'chrys/umd';
+
+parsePaletteName(VEGA_ACCENT);
+            </code></pre>
+
+            <pre><code class="language-javascript">
+{vendor: "vega", palette: "accent"}
+            </code></pre>
+          </section>
+
+          <section>
+            <h1><svg width="16" height="16"><use href="#logo-python" /></svg> Python</h1>
+
+            <pre><code class="language-python">
+from chrys.palettes import VEGA_CATEGORY_10, parse_palette_name
+
+vendor, name = parse_palette_name(VEGA_CATEGORY_10)
+            </code></pre>
+
+            <pre><code class="language-python">
+("vega", "category10")
+            </code></pre>
+          </section>
+        </section>
+      </section>
+
+      <section id="colour-schemes">
+        <h1>Colour schemes</h1>
+
+        <section>
+          <h1>Categorical schemes</h1>
+          <p>Categorical colour schemes can be used to encode discrete data values, each representing a distinct category.<sup><a href="#cite-note-1">[1]</a></sup></p>
+
+          <table class="nb-table nb-table--palettes nb-table--categorical-palettes">
+            {{ table_head() }}
+            <tbody>
+              {% for palette in categoricalPalettes %}
+                <tr>
+                  <td>{% if palette.vega %}{{ variables(palette.vega.jsVar, palette.vega.sassVar) }}{% endif %}</td>
+                  <td>{% if palette.vega %}{{ palette.vega.vendorName }}{% endif %}</td>
+                  <td>{% if palette.vega %}{{ discrete_palette_html(palette.vega.name, palette.vega.palette) }}{% endif %}</td>
+                  <td>{% if palette.bokeh %}{{ variables(palette.bokeh.jsVar, palette.bokeh.sassVar) }}{% endif %}</td>
+                  <td>{% if palette.bokeh %}{{ palette.bokeh.vendorName }}{% endif %}</td>
+                  <td>{% if palette.bokeh %}{{ discrete_palette_html(palette.bokeh.name, palette.bokeh.palette) }}{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h1>Sequential schemes</h1>
+          <p>
+            Sequential colour schemes can be used to encode quantitative values. These colour ramps are
+            designed to encode increasing numeric values. Multi-hue schemes use additional hues for
+            more colour discrimination, which may be useful for visualisations such as heatmaps.
+            However, beware that using multiple hues may cause viewers to inaccurately see the data range
+            as grouped into colour-coded clusters.<sup><a href="#cite-note-1">[1]</a></sup>
+          </p>
+          <div style="text-align: right;">
+            <label><input type="checkbox" id="sequential-discrete" /> Show discrete</label>
+          </div>
+          <table class="nb-table nb-table--palettes nb-table--sequential-palettes">
+            {{ table_head() }}
+            <tbody>
+              {% for palette in sequentialPalettes %}
+                {{ table_continuous_row('sequential', palette) }}
+              {% endfor %}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h1>Diverging schemes</h1>
+          <p>
+            Diverging colour schemes can be used to encode quantitative values with a meaningful mid-point,
+            such as zero or the average value. Color ramps with different hues diverge with
+            increasing saturation to highlight the values below and above the mid-point.<sup><a href="#cite-note-1">[1]</a></sup>
+          </p>
+          <div style="text-align: right;">
+            <label><input type="checkbox" id="diverging-discrete" /> Show discrete</label>
+          </div>
+          <table class="nb-table nb-table--palettes nb-table--diverging-palettes">
+            {{ table_head() }}
+            <tbody>
+              {% for palette in divergingPalettes %}
+                {{ table_continuous_row('diverging', palette) }}
+              {% endfor %}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h1>Cyclical schemes</h1>
+          <p>
+            Cyclical colour schemes may be used to highlight periodic patterns in continuous data.
+            However, these schemes are not well suited to accurately convey value differences.<sup><a href="#cite-note-1">[1]</a></sup>
+          </p>
+          <table class="nb-table nb-table--palettes nb-table--cyclical-palettes">
+            {{ table_head() }}
+            <tbody>
+              {% for palette in cyclicalPalettes %}
+                <tr>
+                  <td>{% if palette.vega %}{{ variables(palette.vega.jsVar, palette.vega.sassVar) }}{% endif %}</td>
+                  <td>{% if palette.vega %}{{ palette.vega.vendorName }}{% endif %}</td>
+                  <td>{% if palette.vega %}{{ legend_gradient(palette.vega.name, palette.vega.palette) }}{% endif %}</td>
+                  <td>{% if palette.bokeh %}{{ variables(palette.bokeh.jsVar, palette.bokeh.sassVar) }}{% endif %}</td>
+                  <td>{% if palette.bokeh %}{{ palette.bokeh.vendorName }}{% endif %}</td>
+                  <td>{% if palette.bokeh %}{{ legend_gradient(palette.bokeh.name, palette.bokeh.palette) }}{% endif %}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <section>
+        <h1>References</h1>
+        <ol>
+          <li id="cite-note-1"><a href="https://vega.github.io/vega/docs/schemes/#scheme-reference" target="_blank" rel="noopener noreferrer">Color Schemes — Vega</a></li>
+        </ol>
+      </section>
+    </main>
+
+    <script src="vendor/prismjs/prism.js"></script>
+    <script src="vendor/prismjs/components/prism-python.js"></script>
+    <script src="vendor/prismjs/components/prism-sass.js"></script>
+    <script src="vendor/jquery/dist/jquery.slim.min.js"></script>
+    <script src="js/demo.js"></script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+diff --git a/node_modules/vega-scale/package.json b/node_modules/vega-scale/package.json
+index d7c54bf..66383a8 100644
+--- a/node_modules/vega-scale/package.json
++++ b/node_modules/vega-scale/package.json
+@@ -1,4 +1,5 @@
+ {
++  "type": "module",
+   "name": "vega-scale",
+   "version": "7.4.1",
+   "description": "Scales and color schemes for visual encoding.",
+diff --git a/node_modules/vega-scale/src/interpolate.js b/node_modules/vega-scale/src/interpolate.js
+index 25073ca..a7e3ac0 100644
+--- a/node_modules/vega-scale/src/interpolate.js
++++ b/node_modules/vega-scale/src/interpolate.js
+@@ -1,4 +1,4 @@
+-import {scale as getScale} from './scales';
++import {scale as getScale} from './scales.js';
+ import {constant, peek} from 'vega-util';
+ import * as $ from 'd3-interpolate';
+ 
+diff --git a/node_modules/vega-scale/src/scales.js b/node_modules/vega-scale/src/scales.js
+index 639be55..0b06c5d 100644
+--- a/node_modules/vega-scale/src/scales.js
++++ b/node_modules/vega-scale/src/scales.js
+@@ -1,6 +1,6 @@
+ import { array, toSet } from 'vega-util';
+-import invertRange from './scales/invertRange';
+-import invertRangeExtent from './scales/invertRangeExtent';
++import invertRange from './scales/invertRange.js';
++import invertRangeExtent from './scales/invertRangeExtent.js';
+ 
+ import {
+   Band,
+@@ -13,16 +13,16 @@ import {
+   Time,
+   UTC,
+   Discretizing as Z
+-} from './scales/types';
++} from './scales/types.js';
+ 
+ import {
+   band as scaleBand,
+   point as scalePoint
+-} from './scales/scaleBand';
++} from './scales/scaleBand.js';
+ 
+ import {
+   scaleBinOrdinal
+-} from './scales/scaleBinOrdinal';
++} from './scales/scaleBinOrdinal.js';
+ 
+ import * as $ from 'd3-scale';
+ 
+diff --git a/node_modules/vega-scale/src/scales/scaleBand.js b/node_modules/vega-scale/src/scales/scaleBand.js
+index a411321..b3d199f 100644
+--- a/node_modules/vega-scale/src/scales/scaleBand.js
++++ b/node_modules/vega-scale/src/scales/scaleBand.js
+@@ -1,4 +1,4 @@
+-import bandSpace from './bandSpace';
++import bandSpace from './bandSpace.js';
+ import {bisectRight, range as sequence} from 'd3-array';
+ import {scaleOrdinal as ordinal} from 'd3-scale';
+ 
+diff --git a/node_modules/vega-scale/src/scales/scaleBinOrdinal.js b/node_modules/vega-scale/src/scales/scaleBinOrdinal.js
+index 3900f34..c6c55a3 100644
+--- a/node_modules/vega-scale/src/scales/scaleBinOrdinal.js
++++ b/node_modules/vega-scale/src/scales/scaleBinOrdinal.js
+@@ -1,8 +1,8 @@
+ import {bisect} from 'd3-array';
+ import {tickFormat} from 'd3-scale';
+ import {peek} from 'vega-util';
+-import {numbers} from './numbers';
+-import {slice} from './slice';
++import {numbers} from './numbers.js';
++import {slice} from './slice.js';
+ 
+ export function scaleBinOrdinal() {
+   let domain = [],
+diff --git a/node_modules/vega-scale/src/schemes.js b/node_modules/vega-scale/src/schemes.js
+index ee34745..e7861e8 100644
+--- a/node_modules/vega-scale/src/schemes.js
++++ b/node_modules/vega-scale/src/schemes.js
+@@ -1,5 +1,5 @@
+-import {continuous, discrete} from './palettes';
+-import {interpolateColors} from './interpolate';
++import {continuous, discrete} from './palettes.js';
++import {interpolateColors} from './interpolate.js';
+ import {isArray} from 'vega-util';
+ 
+ function colors(palette) {
