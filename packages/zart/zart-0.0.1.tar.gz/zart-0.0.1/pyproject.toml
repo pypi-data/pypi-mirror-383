@@ -1,0 +1,24 @@
+[project]
+name = "zart"
+description = "Zarr command line tools"
+readme = "README.md"
+authors = [
+    { name = "Lukas Kluft", email = "lukas.kluft@mpimet.mpg.de" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1.8",
+    "fsspec",
+    "zarr",
+]
+dynamic = ["version"]
+
+[project.scripts]
+zart = "zart.cli:main"
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"

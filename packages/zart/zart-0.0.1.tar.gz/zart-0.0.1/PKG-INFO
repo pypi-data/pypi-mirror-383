@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: zart
+Version: 0.0.1
+Summary: Zarr command line tools
+Author-email: Lukas Kluft <lukas.kluft@mpimet.mpg.de>
+Requires-Python: >=3.11
+Requires-Dist: click>=8.1.8
+Requires-Dist: fsspec
+Requires-Dist: zarr
+Description-Content-Type: text/markdown
+
+# Zarr Tools
+
+A collection of command line tools to interact with [Zarr](https://zarr.dev) stores.
