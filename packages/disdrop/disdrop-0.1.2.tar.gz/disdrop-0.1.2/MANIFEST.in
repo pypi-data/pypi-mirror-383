@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+recursive-include src/config *.yaml
+prune logs
+prune output
+prune temp
+prune venv
