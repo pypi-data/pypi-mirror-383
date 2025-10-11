@@ -1,0 +1,651 @@
+2025-10-10  rocky <rb@dusytfeet.com>
+
+	* .gitignore, ChangeLog, ChangeLog-spell-corrected.diff, Makefile,
+	admin-tools/make-dist-3.6-3.10.sh, trepanxpy/version.py: Get ready
+	for release 1.1.2
+
+2025-10-10  rocky <rb@dusytfeet.com>
+
+	* admin-tools/make-dist-newer.sh, admin-tools/make-dist-newest.sh,
+	admin-tools/pyenv-3.6-3.10-versions,
+	admin-tools/{pyenv-versions-newer => pyenv-newest-versions},
+	admin-tools/pyenv-versions-older: Administrivia
+
+2025-10-10  rocky <rb@dusytfeet.com>
+
+	* admin-tools/merge-for-3.6.sh: Administriva
+
+2025-10-10  rocky <rb@dusytfeet.com>
+
+	* admin-tools/checkout_common.sh, admin-tools/setup-master.sh:
+	Admnistrivia
+
+2025-10-09  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, admin-tools/checkout_common.sh,
+	admin-tools/merge-for-3.6.sh, admin-tools/setup-master.sh,
+	admin-tools/setup-python-2.7.sh, admin-tools/setup-python-3.2.sh,
+	admin-tools/setup-python-3.6.sh, pyproject.toml: Administrivia
+
+2025-10-09  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, admin-tools/setup-master.sh, pyproject.toml:
+	Administrivia
+
+2025-10-03  rocky <rb@dusytfeet.com>
+
+	* .pre-commit-config.yaml, trepanxpy/__main__.py,
+	trepanxpy/debugger.py: Respect env-var TREPAN_PYGMENTS_STYLE on
+	startup
+
+2025-10-03  rocky <rb@dusytfeet.com>
+
+	* .editorconfig, .pre-commit-config.yaml,
+	trepanxpy/processor/command/backtrace.py,
+	trepanxpy/processor/command/down.py,
+	trepanxpy/processor/command/up.py, trepanxpy/version.py:
+	Administrivia and cleanup Remove unneeded copyies from trepan3k commands. Bump version.  Add
+	precommit checking Fix typo in .editorconfig
+
+2025-10-02  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/__main__.py, trepanxpy/debugger.py,
+	trepanxpy/processor/cmd.py, trepanxpy/processor/command/down.py,
+	trepanxpy/processor/command/up.py: Add up and down commands and misc
+	fixes Add --style option.
+
+2025-10-02  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/backtrace.py,
+	trepanxpy/processor/command/info_subcmd/frame.py: Copy "info frame"
+	and "backtrace"
+
+2025-09-27  R. Bernstein <rocky@users.noreply.github.com>
+
+	* : Merge pull request #2 from litneet64/master Include trepanxpy.processor module in pyproject for setup
+
+2025-09-16  rocky <rb@dusytfeet.com>
+
+	* admin-tools/setup-master.sh, admin-tools/setup-python-3.6.sh:
+	Adjust setup scripts
+
+2025-09-16  rocky <rb@dusytfeet.com>
+
+	* admin-tools/setup-master.sh: Bang on setup scripts
+
+2025-09-11  rocky <rb@dusytfeet.com>
+
+	* admin-tools/setup-python-3.6.sh: Admnistrivia
+
+2025-09-11  rocky <rb@dusytfeet.com>
+
+	* admin-tools/setup-master.sh, admin-tools/setup-python-3.6.sh:
+	Administrivia
+
+2025-09-11  rocky <rb@dusytfeet.com>
+
+	* admin-tools/merge-for-3.2.sh, admin-tools/merge-for-3.6.sh,
+	admin-tools/setup-python-3.6.sh, pyproject.toml, setup.py: Use
+	pyproject.toml for Python-3.11-3.13
+
+2025-09-11  rocky <rb@dusytfeet.com>
+
+	* setup.py, trepanxpy/debugger_defaults.py,
+	trepanxpy/processor/command/info_subcmd/pc.py: Small changes * "style" -> "disasmstyle" in trepan3k now * version check cut and paste referred to trepan3k not xpython
+
+2025-07-26  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, trepanxpy/core.py: Require trepan3k 1.4.0 or
+	greater
+
+2025-06-26  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/debugger.py,
+	trepanxpy/processor/command/set_subcmd/autostack.py: Show autostack
+	commands as the last hook...  not the first hook.  It should come *after* autopc
+
+2025-06-20  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/__main__.py, trepanxpy/fmt.py: Small fixes __main__.py: -X (not -x) is what trepan3k uses. Also add alias -v
+	             which is what xpython uses.  fmt.py: We need to str() argument in
+	pymgments formatting
+
+2025-06-09  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/core.py: fnlist -> code_list fnlist is obsolete since the last major revision of trepan3k
+
+2024-11-23  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, trepanxpy/processor/cmd.py: Track trepan3k change
+	for completion
+
+2024-11-08  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, setup.py: Put nose in "dev" setup
+
+2024-09-14  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/core.py: trace_fn -> trace_func, included -> excluded
+
+2024-08-26  rocky <rb@dusytfeet.com>
+
+	* trepanxpy/processor/command/info_subcmd/pc.py: Track trepan3k
+	parameter change...  linestarts -> line_starts
+
+2024-08-26  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py: Bump minimum version of trepan3k allowed
+
+2024-08-26  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, admin-tools/how-to-make-a-release.md, setup.py,
+	trepanxpy/debugger_defaults.py, trepanxpy/fmt.py,
+	trepanxpy/processor/command/info_subcmd/pc.py: Track trepan3k
+	changes Highlighting via pygments has changed
+
+2024-07-22  rocky <rb@dusytfeet.com>
+
+	* ChangeLog, NEWS.md, __pkginfo__.py,
+	admin-tools/{make-dist-older.sh => make-dist-3.2-3.5.sh},
+	admin-tools/merge-for-2.7.sh, admin-tools/merge-for-3.2.sh,
+	admin-tools/pyenv-versions-newer, admin-tools/setup-master.sh,
+	admin-tools/setup-python-2.7.sh, admin-tools/setup-python-3.2.sh,
+	trepanxpy/version.py: Get ready for release 1.1.1
+
+2024-05-06  rocky <rb@dusytfeet.com>
+
+	* Makefile: Administrivia
+
+2024-05-06  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, setup.py: Administrivia
+
+2023-05-24  rocky <rb@dusytfeet.com>
+
+	* admin-tools/pyenv-versions-newer: Bump testing to newest Python
+	versions
+
+2022-03-30  rocky <rb@dusytfeet.com>
+
+	* admin-tools/pyenv-versions-newer, trepanxpy/fmt.py: Guard against
+	RAISE_VARARGS with no arg
+
+2021-11-20  rocky <rb@dusytfeet.com>
+
+	* __pkginfo__.py, trepanxpy/debugger_defaults.py: Change autostack
+	and autopc to default to True
+
+2021-11-08  rocky <rb@dusytfeet.com>
+
+	* README.md: Mention bytecode-specific commands
+
+2021-11-07  rocky <rb@dusytfeet.com>
+
+	* admin-tools/how-to-make-a-release.md, trepanxpy/version.py: Bump
+	version
+
+2021-11-07  rocky <rb@dusytfeet.com>
+
+	* ChangeLog, NEWS.md, __pkginfo__.py,
+	admin-tools/how-to-make-a-release.md,
+	admin-tools/make-dist-newer.sh, admin-tools/make-dist-older.sh,
+	admin-tools/pyenv-versions-newer, setup.cfg, setup.py,
+	trepanxpy/__init__.py, trepanxpy/__main__.py, trepanxpy/version.py:
+	Get ready for release 1.1.0
+
+2021-09-12  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/fmt.py: Formatting tweak
+
+2021-08-31  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/command/vmstack_subcmd/peek.py: Add vmstack
+	peek
+
+2021-08-30  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/command/vmstack_subcmd/__init__.py,
+	trepanxpy/processor/command/vmstack_subcmd/pop.py,
+	trepanxpy/processor/command/vmstack_subcmd/push.py: Add vmstack push Show type of object popped
+
+2021-08-30  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/command/vmstack.py,
+	trepanxpy/processor/command/vmstack_subcmd/pop.py: Add 1st VMStack
+	command: vmstack pop
+
+2021-08-29  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/debugger_defaults.py,
+	trepanxpy/processor/command/set_subcmd/autostack.py,
+	trepanxpy/processor/command/show_subcmd/autostack.py: Add set/show
+	autostack...  "set autostack on" shows evaluation stack on debugger entry "show autostack" show current setting of this on/off setting
+
+2021-08-28  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/debugger.py: vm parameter in format_instruction is
+	optional
+
+2021-08-22  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/debugger_defaults.py: Was missing "tempdir" default
+	setting
+
+2021-07-04  rocky <rb@dustyfeet.com>
+
+	* .editorconfig: Let editors know what style we use.
+
+2021-06-23  rocky <rb@dustyfeet.com>
+
+	* setup.cfg: Yet another config file
+
+2021-03-30  rocky <rb@dustyfeet.com>
+
+	* : commit 3fed185b27d07f64ff3ea15dad0362efe87ac416 Author: rocky
+	<rb@dustyfeet.com> Date:   Tue Mar 30 05:03:27 2021 -0400
+
+2021-03-24  rocky <rb@dustyfeet.com>
+
+	* __pkginfo__.py, setup.py, trepanxpy/debugger_defaults.py: Use
+	term-background library. Update for 3.9
+
+2020-07-22  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/__init__.py: fill out __init__.py Add pydoc friendly VERSION Add introductory docstring Note that we'll
+	use RsT
+
+2020-07-03  rocky <rocky@gnu.org>
+
+	* admin-tools/how-to-make-a-release.md, trepanxpy/core.py,
+	trepanxpy/processor/command/set_subcmd/loglevel.py: Small tweaks: downcase loglevel value, e.g. `set loglevel DEBUG` is valid
+	how-to-make-a-release.md: the python module name is trepanxpy, not
+	trepan-xpy core.py: prepare stub for new breakpoint handling
+
+2020-06-28  rocky <rocky@gnu.org>
+
+	* admin-tools/how-to-make-a-release.md: Administrivia
+
+2020-06-28  rocky <rocky@gnu.org>
+
+	* admin-tools/how-to-make-a-release.md: Administrivia
+
+2020-06-28  rocky <rocky@gnu.org>
+
+	* ChangeLog, Makefile, NEWS.md, __pkginfo__.py,
+	trepanxpy/debugger.py, trepanxpy/processor/cmd.py: Get ready for
+	release 1.0.3
+
+2020-06-23  rocky <rocky@gnu.org>
+
+	* trepanxpy/core.py, trepanxpy/debugger_defaults.py: Use new
+	trepan3k's new asm_format option
+
+2020-06-15  rocky <rocky@gnu.org>
+
+	* trepanxpy/core.py, trepanxpy/debugger.py,
+	trepanxpy/debugger_defaults.py, trepanxpy/events.py,
+	trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/continue.py,
+	trepanxpy/processor/command/step.py, trepanxpy/processor/trace.py:
+	Implemented breakpoints and step counts...  Event flags added to core for such purpose.
+
+2020-06-15  rocky <rocky@gnu.org>
+
+	* __pkginfo__.py, trepanxpy/__main__.py, trepanxpy/debugger.py,
+	trepanxpy/processor/cmd.py, trepanxpy/version.py: Bump min pkg
+	versions, start breakpoints.  And start renaming Debugger TrepanXPy
+
+2020-06-03  rocky <rocky@gnu.org>
+
+	* admin-tools/how-to-make-a-release.md: Administrivia
+
+2020-06-03  rocky <rocky@gnu.org>
+
+	* ChangeLog, NEWS.md, __pkginfo__.py,
+	admin-tools/how-to-make-a-release.md, trepanxpy/version.py: Get
+	ready for release 1.0.2
+
+2020-06-02  rocky <rocky@gnu.org>
+
+	* README.md, screenshots/.gitignore,
+	screenshots/trepan-xpy-demo1.cast,
+	screenshots/trepan-xpy-demo2.cast, trepanxpy/debugger_defaults.py,
+	trepanxpy/processor/command/set_subcmd/loglevel.py,
+	trepanxpy/processor/command/set_subcmd/logtrace.py,
+	trepanxpy/processor/command/show.py,
+	trepanxpy/processor/command/show_subcmd/__init__.py,
+	trepanxpy/processor/command/show_subcmd/loglevel.py: set logtrace ->
+	set loglevel and ...  add `show loglevel`.  Bugs the set routine were fixed as well.  Additional loglevel names
+	(e.g. critical, warning) were added README.md and screenshot have been updated.
+
+2020-06-01  rocky <rocky@gnu.org>
+
+	* __pkginfo__.py, trepanxpy/fmt.py: Bump versions, remove debug
+	stmts
+
+2020-05-30  rocky <rocky@gnu.org>
+
+	* : commit d2aae9b27c79a32768cbecbba20e840af5c9f0af Merge: 2dd2321
+	a9f60c2 Author: rocky <rocky@gnu.org> Date:   Sat May 30 18:10:39
+	2020 -0400
+
+2020-05-30  rocky <rocky@gnu.org>
+
+	* : commit 2dd23218913f8feda80becac2258e23624438097 Author: rocky
+	<rocky@gnu.org> Date:   Sat May 30 17:54:37 2020 -0400
+
+2020-05-30  rocky <rocky@gnu.org>
+
+	* README.md, README.rst, __pkginfo__.py, setup.py: Try using
+	Markdown
+
+2020-05-30  rocky <rocky@gnu.org>
+
+	* ChangeLog, Makefile, NEWS.md, __pkginfo__.py,
+	admin-tools/how-to-make-a-release.md, admin-tools/{make-dist.sh =>
+	make-dist-newer.sh}, admin-tools/make-dist-older.sh,
+	admin-tools/{pyenv-versions => pyenv-versions-newer},
+	admin-tools/pyenv-versions-older, trepanxpy/processor/trace.py,
+	trepanxpy/version.py: Get ready for release 1.0.1
+
+2020-05-29  rocky <rocky@gnu.org>
+
+	* README.rst, screenshots/README.md: Go over README, again
+
+2020-05-29  rocky <rocky@gnu.org>
+
+	* README.rst, screenshots/trepan-xpy-demo1.cast,
+	screenshots/trepan-xpy-demo1.txt: Update demo
+
+2020-05-29  rocky <rocky@gnu.org>
+
+	* : commit eeede1162c960a86204ef993feb2552673a04fd3 Author: rocky
+	<rocky@gnu.org> Date:   Fri May 29 10:58:18 2020 -0400
+
+2020-05-29  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst
+
+2020-05-29  rocky <rocky@gnu.org>
+
+	* README.rst, screenshots/README.md,
+	screenshots/trepan-xpy-demo1.cast, test/example/gcd.py,
+	trepanxpy/processor/command/set_subcmd/logtrace.py: Add a screenshot
+
+2020-05-28  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger_defaults.py, trepanxpy/fmt.py,
+	trepanxpy/processor/cmd.py: stack_fmt() may need the int arg
+	parameter...  * Use our own repr() to format instructions * Don't show instruction on a return event.
+
+2020-05-28  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger_defaults.py,
+	trepanxpy/processor/command/set_subcmd/logtrace.py: WIP - set logger
+	level...  Does not change a setting properly after the set, and there is no
+	corresponding "show" commaond, but it is still useful.
+
+2020-05-28  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger.py, trepanxpy/fmt.py,
+	trepanxpy/processor/cmd.py, trepanxpy/processor/trace.py: Use vm
+	info in showing instructiontrace info
+
+2020-05-28  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/debugger.py, trepanxpy/fmt.py,
+	trepanxpy/processor/command/next.py,
+	trepanxpy/processor/command/step.py,
+	trepanxpy/processor/command/stepi.py: Bang on "next" and "step"
+	commands
+
+2020-05-27  rocky <rb@dustyfeet.com>
+
+	* : commit 143a00745aa05482f821f491953c4bb79b634122 Author: rocky
+	<rb@dustyfeet.com> Date:   Wed May 27 20:02:03 2020 -0400
+
+2020-05-27  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst for <pre> formatting
+
+2020-05-27  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst
+
+2020-05-27  rocky <rocky@gnu.org>
+
+	* README.rst: Experiment with raw HTML
+
+2020-05-24  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger.py: lint
+
+2020-05-24  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger_defaults.py: Lint
+
+2020-05-23  rocky <rocky@gnu.org>
+
+	* trepanxpy/processor/command/continue.py: "Continue" should
+	continue
+
+2020-05-23  rocky <rocky@gnu.org>
+
+	* trepanxpy/processor/command/info_subcmd/pc.py: Wasn't passing
+	co_names as I should have...  There are too many parameters in a code object so it's easy to miss
+	one.
+
+2020-05-22  rocky <rocky@gnu.org>
+
+	* README.rst, __pkginfo__.py, trepanxpy/version.py: Bump pyficache
+	version
+
+2020-05-21  rocky <rocky@gnu.org>
+
+	* .gitignore, admin-tools/setup-master.sh,
+	admin-tools/setup-python-3.2.sh, trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/continue.py,
+	trepanxpy/processor/trace.py: Administrivia
+
+2020-05-21  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst
+
+2020-05-20  rocky <rocky@gnu.org>
+
+	* README.rst, admin-tools/how-to-make-a-release.md: Typos
+
+2020-05-20  rocky <rocky@gnu.org>
+
+	* NEWS.md, __pkginfo__.py, admin-tools/how-to-make-a-release.md,
+	admin-tools/make-dist.sh, admin-tools/pyenv-versions: Get ready for
+	release 1.0.0
+
+2020-05-20  rocky <rocky@gnu.org>
+
+	* README.rst: Spelling typos
+
+2020-05-20  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst
+
+2020-05-20  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst
+
+2020-05-20  R. Bernstein <rocky@users.noreply.github.com>
+
+	* README.rst: Update README.rst
+
+2020-05-20  rocky <rocky@gnu.org>
+
+	* .gitignore, README.rst, setup.py,
+	trepanxpy/processor/command/python.py,
+	trepanxpy/processor/command/stepi.py: Add python and step
+	commands...  go over docs.
+
+2020-05-20  rocky <rocky@gnu.org>
+
+	* .gitignore, trepanxpy/core.py, trepanxpy/debugger.py,
+	trepanxpy/fmt.py, trepanxpy/processor/cmd.py,
+	trepanxpy/processor/trace.py: Add instruction formatting.
+
+2020-05-19  rocky <rocky@gnu.org>
+
+	* trepanxpy/processor/command/return.py,
+	trepanxpy/processor/command/set_subcmd/pc.py,
+	trepanxpy/processor/command/step.py: Add a gdb immediate "return"
+	statement...  Correct `step` command the more compatible sys.settrace() VMTrace
+	environment.
+
+2020-05-19  rocky <rocky@gnu.org>
+
+	* trepanxpy/core.py, trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/set_subcmd/pc.py,
+	trepanxpy/processor/trace.py: Add "set pc" command; more proper
+	trace hook..  `set pc offset` will set the next instruction to be executed to be
+	`offset` cmd.py: follow sys.settrace() conventions more closely.  trace.py:
+	fix bug in showing instructions.
+
+2020-05-19  rocky <rocky@gnu.org>
+
+	* __pkginfo__.py: Bump required x-python & trepan3k versions
+
+2020-05-14  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/command/info_subcmd/pc.py: Set opc for in
+	"info pc" to get x-version right
+
+2020-05-13  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/__main__.py, trepanxpy/debugger.py,
+	trepanxpy/processor/trace.py: Fix up tracing...  * Add --trace option * Correct trace hook for new callbacks * Tidy output
+
+2020-05-13  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/info_subcmd/blocks.py: Add "info block"
+	subcommand
+
+2020-05-13  rocky <rb@dustyfeet.com>
+
+	* README.rst, test/example/gcd.py: Update README.rst
+
+2020-05-13  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/__main__.py, trepanxpy/debugger.py,
+	trepanxpy/processor/cmd.py: Add -c option; revise for better
+	instruction_info
+
+2020-05-13  rocky <rocky@gnu.org>
+
+	* trepanxpy/processor/command/info_subcmd/pc.py: Need xdis's
+	findlinestarts not dis's...  If we are to support cross-bytecode interpreting
+
+2020-05-12  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/info_subcmd/pc.py,
+	trepanxpy/processor/command/set_subcmd/logtrace.py: "list" and
+	"logtrace" fixups
+
+2020-05-12  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/cmd.py, trepanxpy/processor/command/info.py,
+	trepanxpy/processor/command/info_subcmd/pc.py,
+	trepanxpy/processor/command/set.py: Add our own exception-tolerant
+	`info pc` ...  set manager fixups
+
+2020-05-12  rocky <rocky@gnu.org>
+
+	* trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/info_subcmd/stack.py,
+	trepanxpy/processor/trace.py: Handle uncaught errors better
+
+2020-05-12  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger_defaults.py,
+	trepanxpy/processor/command/info.py,
+	trepanxpy/processor/command/info_subcmd/__init__.py,
+	trepanxpy/processor/command/info_subcmd/stack.py,
+	trepanxpy/processor/command/set.py: Add "info stack"
+
+2020-05-11  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger.py, trepanxpy/debugger_defaults.py,
+	trepanxpy/processor/cmd.py, trepanxpy/processor/command/set.py,
+	trepanxpy/processor/command/set_subcmd/{logging.py => logtrace.py}:
+	First "set" command addition
+
+2020-05-11  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/command/set.py,
+	trepanxpy/processor/command/set_subcmd/__init__.py: WIP towards
+	adding set command "logging"
+
+2020-05-11  rocky <rb@dustyfeet.com>
+
+	* : commit 2dcad1a53f23cc60f3b29dff958e176754051439 Author: rocky
+	<rb@dustyfeet.com> Date:   Mon May 11 19:26:57 2020 -0400
+
+2020-05-11  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/command/set_subcmd/logging.py: Start custom
+	set command
+
+2020-05-11  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger.py, trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/step.py, trepanxpy/processor/trace.py:
+	Add YIELD events Work on termination
+
+2020-05-10  rocky <rb@dustyfeet.com>
+
+	* trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/continue.py,
+	trepanxpy/processor/command/quit.py,
+	trepanxpy/processor/command/step.py,
+	trepanxpy/processor/command/stepi.py: Add stepi, step and continue
+	commands..  Other bugs prevent these from really shining though.
+
+2020-05-10  rocky <rocky@gnu.org>
+
+	* trepanxpy/debugger.py, trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/help/README.md,
+	trepanxpy/processor/command/help/arange.rst,
+	trepanxpy/processor/command/help/command.rst,
+	trepanxpy/processor/command/help/examples.rst,
+	trepanxpy/processor/command/help/filename.rst,
+	trepanxpy/processor/command/help/location.rst,
+	trepanxpy/processor/command/help/range.rst,
+	trepanxpy/processor/command/help/suffixes.rst,
+	trepanxpy/processor/trace.py: Some cleanup.
+
+2020-05-10  rocky <rocky@gnu.org>
+
+	* trepanxpy/core.py, trepanxpy/debugger.py,
+	trepanxpy/processor/cmd.py,
+	trepanxpy/processor/command/__init__.py,
+	trepanxpy/processor/command/quit.py: Our first revised command:
+	quit!
+
+2020-05-09  rocky <rocky@gnu.org>
+
+	* __pkginfo__.py, trepanxpy/__main__.py, trepanxpy/clifns.py,
+	trepanxpy/{lib => }/core.py, trepanxpy/debugger.py,
+	trepanxpy/misc.py, trepanxpy/processor/cmd.py, trepanxpy/{lib =>
+	processor/command}/__init__.py, trepanxpy/processor/trace.py:
+	Something that has a prompt and cmdline interface
+
+2020-05-09  rocky <rocky@gnu.org>
+
+	* test/example/fib.py, test/example/gcd.py, test/example/hanoi.py,
+	trepanxpy/clifns.py, trepanxpy/debugger.py,
+	trepanxpy/lib/__init__.py, trepanxpy/lib/core.py,
+	trepanxpy/misc.py, trepanxpy/processor/__init__.py,
+	trepanxpy/processor/trace.py: Something that looks like tracing
+
+2020-05-08  rocky <rocky@gnu.org>
+
+	* Much ado about nothing!
