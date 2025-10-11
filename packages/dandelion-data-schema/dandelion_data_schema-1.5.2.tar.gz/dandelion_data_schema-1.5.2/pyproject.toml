@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dandelion_data_schema"
+version = "1.5.2"
+description = "pydantic data structure expected by the Dandelion Algorithm Validation Service"
+author = "Dandelion Health"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=2",
+    "pydantic>=2.5.2",
+    "pydicom",
+]
+optional-dependencies = { ecghelper = ["ecghelper>=0.6.2"] }
+
+[tool.hatchling]
+src = "src/dandelion_data_schema"
+test = "tests"
+test-requirements = ["pytest", "pytest-benchmark"]
+lint = "src/dandelion_data_schema"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::DeprecationWarning:pkg_resources.*:",
+    "ignore::DeprecationWarning:pandas.*:",
+]
