@@ -1,0 +1,74 @@
+[tool.poetry]
+name = "stable-delusion"
+version = "0.1.5"
+description = "Helps you hallucinate by providing an interface for AI generation models (Nano Banana, Seedream 4.0)"
+authors = ["Lene Preuss <lene.preuss@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://gitlab.com/lilacashes/stable-delusion"
+repository = "https://gitlab.com/lilacashes/stable-delusion"
+documentation = "https://gitlab.com/lilacashes/stable-delusion/-/blob/main/README.md"
+keywords = ["ai", "image-generation", "gemini", "seedream", "cli", "api"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pillow = "^11.3.0"
+google-genai = "^1.38.0"
+flask = "^3.1.2"
+google-cloud-aiplatform = "^1.115.0"
+boto3 = "^1.40.39"
+botocore = "^1.40.39"
+python-dotenv = "^1.1.1"
+byteplus-python-sdk-v2 = "^3.0.12"
+poetry-core = "^2.2.1"
+coloredlogs = "^15.0.1"
+
+[tool.poetry.scripts]
+stable-delusion = "stable_delusion.main:main"
+hallucinate = "stable_delusion.generate:main"
+
+[tool.poetry.group.test.dependencies]
+freezegun = "^1.5.5"
+requests-mock = "^1.12.1"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.3.0"
+bandit = "^1.8.6"
+mypy = "^1.18.2"
+types-requests = "^2.32.4.20250913"
+boto3-stubs = {extras = ["s3"], version = "^1.40.39"}
+pytest = "^8.4.2"
+pylint = "^3.3.8"
+autopep8 = "^2.3.2"
+black = "^25.9.0"
+pytest-xdist = "^3.8.0"
+twine = "^6.1.0"
+build = "^1.2.2"
+vulture = "^2.14"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://gitlab.com/lilacashes/stable-delusion/-/issues"
+"Changelog" = "https://gitlab.com/lilacashes/stable-delusion/-/blob/main/CHANGELOG.md"
+
+[[tool.poetry.source]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
