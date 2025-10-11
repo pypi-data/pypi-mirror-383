@@ -1,0 +1,46 @@
+.sp-element {
+  font-family: monospace;
+  font-size: 105%;
+}
+
+.sp-error {
+  color: red;
+}
+
+p.sp-dense {
+  margin: 2px;
+}
+
+div.document div.documentwrapper {
+  max-width: none;
+}
+
+object {
+  background-color: white;
+  color-scheme: light;
+  max-width: 100%;
+}
+
+p.rubric {
+  font-weight: bold;
+}
+
+.admonition {
+  background-color: #eee;
+}
+
+:root[data-mode="dark"] .admonition {
+  background-color: #444;
+}
+
+:root[data-mode="darkest"] .admonition {
+  background-color: #222;
+}
+
+div.sphinxsidebar {
+  width: 20rem;
+}
+
+div.document {
+  margin-left: 20rem;
+}

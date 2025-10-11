@@ -1,0 +1,120 @@
+Metadata-Version: 2.4
+Name: dexpi.specificator
+Version: 1.0.0rc15
+Summary: Easy creation of engineering information models and related specification documents
+Author: DEXPI e.V.
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Sphinx==8.1.3
+Requires-Dist: attrs==25.3.0
+Requires-Dist: piccolo_theme==0.24.0
+Requires-Dist: pnb.mcl==0.1.8
+Requires-Dist: pyexcel-ezodf==0.3.4
+Requires-Dist: tomlkit==0.13.2
+Requires-Dist: Jinja2==3.1.6
+Requires-Dist: MarkupSafe==3.0.2
+Requires-Dist: Pygments==2.19.2
+Requires-Dist: alabaster==1.0.0
+Requires-Dist: babel==2.17.0
+Requires-Dist: certifi==2025.8.3
+Requires-Dist: charset-normalizer==3.4.3
+Requires-Dist: colorama==0.4.6
+Requires-Dist: docutils==0.21.2
+Requires-Dist: idna==3.10
+Requires-Dist: imagesize==1.4.1
+Requires-Dist: lxml==5.4.0
+Requires-Dist: packaging==25.0
+Requires-Dist: pyparsing==3.2.3
+Requires-Dist: rdflib==7.1.4
+Requires-Dist: requests==2.32.5
+Requires-Dist: snowballstemmer==3.0.1
+Requires-Dist: sphinxcontrib-applehelp==2.0.0
+Requires-Dist: sphinxcontrib-devhelp==2.0.0
+Requires-Dist: sphinxcontrib-htmlhelp==2.1.0
+Requires-Dist: sphinxcontrib-jsmath==1.0.1
+Requires-Dist: sphinxcontrib-qthelp==2.0.0
+Requires-Dist: sphinxcontrib-serializinghtml==2.0.0
+Requires-Dist: urllib3==2.5.0
+Dynamic: license-file
+
+# DEXPI Specificator
+
+**dexpi.specificator** is a Python library and CLI tool that lets you generate DEXPI specifications in Python.  
+It can be installed via [PyPI](https://pypi.org/) or [TestPyPI](https://test.pypi.org/) and used either as a library or a command-line tool to convert specification inputs into specification outputs.
+
+---
+
+## Features
+
+- Parse input specification files in the DEXPI format
+- Generate DEXPI outputs (XML, JSON, etc.) from those inputs
+- Validate specifications against DEXPI schemas
+- Tested with automated unit tests to ensure correctness
+- Published on PyPI/TestPyPI for easy installation via `pip`
+
+---
+
+## Installation
+
+Install the stable release from **PyPI**:
+
+```bash
+pip install dexpi.specificator
+```
+
+Install the latest development version from **TestPyPI**:
+
+```bash
+pip install --index-url https://test.pypi.org/simple/ dexpi.specificator
+```
+
+---
+
+## Usage
+
+### Used in Specification Projects
+The Specificator is used to generate the DEXPI Specification in CI/CD Pipelines of GitLab Repositories. 
+see https://gitlab.com/dexpi/Specification as the main used Repository 
+
+
+### CI/CD & Release Process
+
+The project uses GitLab CI/CD for testing and publishing:
+
+1. **Testing**  
+   Unit tests run automatically on every commit and merge request. Builds must pass before deployment.
+
+2. **Publish to TestPyPI**  
+   Development builds are uploaded to TestPyPI for pre-release testing.
+
+3. **Publish to PyPI**  
+   Tagged releases or main branch builds are uploaded to PyPI.  
+   API tokens are securely stored in GitLab CI/CD variables.
+
+4. **Versioning**  
+   Follows [Semantic Versioning](https://semver.org/) (MAJOR.MINOR.PATCH).
+
+---
+
+## Contributing
+
+- Open a merge request with your changes
+- Include tests for new functionality or bug fixes
+- Follow code review feedback before merging
+
+---
+
+## Issues
+
+Report issues and feature requests in the [GitLab issue tracker](../../issues).
+
+---
+
+## License
+
+This project is licensed under the [LICENSE](LICENSE) file included in the repository.
+
