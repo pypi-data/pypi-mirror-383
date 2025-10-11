@@ -1,0 +1,132 @@
+name: CI/CD Pipeline for uncpath-py
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  test-build-publish:
+    name: Test, Build and Publish
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "version=${VERSION}" >> $GITHUB_OUTPUT
+            echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            VERSION="0.0.0-dev"
+            echo "version=${VERSION}" >> $GITHUB_OUTPUT
+            echo "tag_name=dev" >> $GITHUB_OUTPUT
+          fi
+          echo "Version: ${VERSION}"
+      
+      - name: Update version in pyproject.toml
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          sed -i "s/^version = .*/version = \"${VERSION}\"/" pyproject.toml
+          echo "Updated version in pyproject.toml to ${VERSION}"
+          grep "^version" pyproject.toml
+      
+      - name: Sync dependencies
+        run: |
+          uv sync --no-dev || uv pip install -e .
+      
+      - name: Run tests
+        run: |
+          uv run -m pytest -q
+        continue-on-error: false
+      
+      - name: Build package
+        run: |
+          uv build
+          ls -lh dist/
+      
+      - name: Generate changelog from commits
+        id: changelog
+        run: |
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "First release, including all commits"
+            COMMITS=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            echo "Changes since ${PREVIOUS_TAG}"
+            COMMITS=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+          
+          {
+            echo "changelog<<EOF"
+            echo "## 变更日志 / Changelog"
+            echo ""
+            echo "$COMMITS"
+            echo ""
+            echo "---"
+            echo "**发布时间 / Release Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            echo "**PyPI**: https://pypi.org/project/uncpath-py/${{ steps.get_version.outputs.version }}/"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+      
+      - name: Publish to PyPI
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          if [ -z "$PYPI_TOKEN" ]; then
+            echo "Warning: PYPI_TOKEN not set. Skipping PyPI publish."
+            echo "To publish to PyPI, add PYPI_TOKEN to repository secrets."
+            exit 0
+          fi
+          uv publish --token $PYPI_TOKEN
+      
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: uncpath-py ${{ steps.get_version.outputs.tag_name }} 发布
+          body: ${{ steps.changelog.outputs.changelog }}
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Output summary
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo "## 发布成功 / Release Successful! 🎉" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**版本号 / Version**: ${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**发布时间 / Release Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "**PyPI 链接 / PyPI Link**: https://pypi.org/project/uncpath-py/${{ steps.get_version.outputs.version }}/" >> $GITHUB_STEP_SUMMARY
+          echo "**GitHub Release 链接 / GitHub Release Link**: https://github.com/${{ github.repository }}/releases/tag/${{ steps.get_version.outputs.tag_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 构建产物 / Build Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ls -lh dist/ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,311 @@
+Metadata-Version: 2.4
+Name: uncpath
+Version: 0.1.0
+Summary: A Python package for UNC path operations
+Project-URL: Homepage, https://github.com/JiashuaiXu/uncpath-py
+Project-URL: Repository, https://github.com/JiashuaiXu/uncpath-py
+Author: Jiashuai Xu
+License: MIT License
+        
+        Copyright (c) 2025 Jiashuai Xu
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: dev
+Requires-Dist: black>=22.0; extra == 'dev'
+Requires-Dist: flake8>=4.0; extra == 'dev'
+Requires-Dist: mypy>=0.950; extra == 'dev'
+Requires-Dist: pre-commit>=2.0; extra == 'dev'
+Requires-Dist: pytest>=7.0; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# uncpath-py
+
+[![CI/CD Pipeline](https://github.com/JiashuaiXu/uncpath-py/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/JiashuaiXu/uncpath-py/actions/workflows/ci-cd.yml)
+[![PyPI version](https://badge.fury.io/py/uncpath-py.svg)](https://pypi.org/project/uncpath-py/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A Python package for UNC (Universal Naming Convention) path operations, supporting one-click conversion of Windows/SMB UNC paths to Linux local mount paths.
+
+## ✨ Features
+
+### 🔍 UNC Path Parsing
+- **Multi-format Support**: Windows UNC (`\\host\share\path`), Unix UNC (`//host/share/path`), SMB protocol (`smb://host/share/path`)
+- **Smart Parsing**: Automatically identify path formats and extract host, share, and path information
+- **Normalization**: Convert to standard format
+
+### ⚙️ Configuration Management
+- **YAML Support**: Use PyYAML to handle configuration files
+- **Auto Configuration**: Automatically create default configuration files on first use
+- **Mapping Management**: Support adding, deleting, and listing mapping relationships
+- **Configuration Validation**: Automatically validate configuration file formats
+
+### 🗺️ Path Mapping
+- **Exact Mapping**: Direct mapping from host/share to local paths
+- **Wildcard Mapping**: Support `*` wildcards and `{host}`, `{share}` placeholders
+- **Default Mapping**: Use default rules when no mapping is found
+- **Smart Lookup**: Find mapping relationships by priority
+
+### 💻 Command Line Tool
+- **uncd Command**: Complete command line interface
+- **Path Conversion**: Direct directory switching or path output
+- **Configuration Management**: Command line configuration of mapping relationships
+- **Help Information**: Complete help and version information
+
+## 📦 Installation
+
+```bash
+pip install uncpath-py
+```
+
+## 🚀 Quick Start
+
+### 1. Initialize Configuration
+
+```bash
+# Create default configuration file
+uncd --init-config
+```
+
+### 2. Add Mapping Relationships
+
+```bash
+# Add exact mapping
+uncd --add-mapping "192.168.10.172/sambaShare" "/opt/samba"
+
+# Add wildcard mapping
+uncd --add-mapping "192.168.*/samba*" "/mnt/smb/{host}/{share}"
+```
+
+### 3. Use Path Conversion
+
+```bash
+# Switch to mapped directory
+uncd \\192.168.10.172\sambaShare\folder
+
+# Output path only, don't switch directory
+uncd --path-only \\192.168.10.172\sambaShare\folder
+# Output: /opt/samba\folder
+```
+
+## 📖 Detailed Usage
+
+### Command Line Usage
+
+```bash
+# Basic usage
+uncd <UNC_PATH>                    # Switch to mapped directory
+uncd --path-only <UNC_PATH>        # Output path only
+
+# Configuration management
+uncd --init-config                 # Create default configuration file
+uncd --list-mappings              # List all mapping relationships
+uncd --add-mapping KEY VALUE      # Add mapping relationship
+uncd --remove-mapping KEY         # Remove mapping relationship
+uncd --validate-config            # Validate configuration file
+
+# Help information
+uncd --help                       # Show help information
+uncd --version                    # Show version information
+```
+
+### Python API Usage
+
+#### Basic Functions
+
+```python
+from uncpath import is_unc_path, normalize_unc_path
+
+# Check if path is UNC path
+is_unc_path(r"\\server\share\file.txt")  # True
+is_unc_path("//server/share/file.txt")   # True
+is_unc_path("smb://server/share/file.txt")  # True
+is_unc_path("C:\\Users\\file.txt")       # False
+
+# Normalize UNC path
+normalize_unc_path(r"\\server\share\folder\file.txt")
+# Returns: "//server/share/folder/file.txt"
+```
+
+#### Advanced Functions
+
+```python
+from uncpath import UNCResolver, ConfigManager, PathMapper
+
+# UNC path parsing
+resolver = UNCResolver()
+parsed = resolver.parse_unc_path(r"\\192.168.10.172\sambaShare\folder")
+print(f"Host: {parsed.host}")      # 192.168.10.172
+print(f"Share: {parsed.share}")     # sambaShare
+print(f"Path: {parsed.path}")      # \folder
+print(f"Protocol: {parsed.protocol}")  # windows
+
+# Configuration management
+config_manager = ConfigManager()
+config_manager.add_mapping("192.168.10.172/sambaShare", "/opt/samba")
+
+# Path mapping
+mapper = PathMapper(config_manager)
+local_path = mapper.map_to_local(parsed)
+print(f"Local path: {local_path}")   # /opt/samba\folder
+```
+
+#### Convenience Functions
+
+```python
+from uncpath import resolve_unc_path
+
+# One-step parsing and mapping
+local_path = resolve_unc_path(r"\\192.168.10.172\sambaShare\folder")
+print(local_path)  # /opt/samba\folder
+```
+
+### Configuration File Format
+
+Configuration file location: `~/.config/uncpath/config.yaml`
+
+```yaml
+version: "1.0"
+
+# Path mapping relationships
+mappings:
+  # Exact mapping
+  "192.168.10.172/sambaShare": "/opt/samba"
+  "server1/shared": "/mnt/smb/server1"
+  
+  # Wildcard mapping
+  "192.168.*/samba*": "/mnt/smb/{host}/{share}"
+  "*/shared": "/mnt/shared/{host}"
+
+# Default settings
+defaults:
+  base_path: "/mnt/smb"
+  auto_create: false
+  create_mode: "0755"
+
+# Alias settings
+aliases:
+  "samba": "192.168.10.172/sambaShare"
+  "docs": "server1/shared"
+```
+
+## 🔧 Supported Path Formats
+
+### Windows UNC Format
+```bash
+uncd \\192.168.10.172\sambaShare\folder\file.txt
+uncd \\server\share\path
+```
+
+### Unix UNC Format
+```bash
+uncd //192.168.10.172/sambaShare/folder/file.txt
+uncd //server/share/path
+```
+
+### SMB Protocol Format
+```bash
+uncd smb://192.168.10.172/sambaShare/folder/file.txt
+uncd smb://server/share/path
+```
+
+## 📁 Project Structure
+
+```text
+uncpath-py/
+├── src/uncpath/
+│   ├── __init__.py      # Main module, contains all APIs
+│   ├── parser.py        # UNC path parser
+│   ├── config.py        # Configuration manager
+│   ├── mapper.py        # Path mapper
+│   ├── cli.py          # Command line interface
+│   └── exceptions.py    # Exception definitions
+├── tests/               # Test files
+├── doc/                 # Documentation directory
+└── pyproject.toml      # Project configuration
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+python -m pytest tests/ -v
+
+# Run specific tests
+python -m pytest tests/test_uncpath.py -v
+```
+
+## 🛠️ Development
+
+### Install Development Dependencies
+
+```bash
+pip install -e ".[dev]"
+```
+
+### Code Formatting
+
+```bash
+black src/ tests/
+```
+
+### Code Checking
+
+```bash
+flake8 src/ tests/
+```
+
+### Type Checking
+
+```bash
+mypy src/
+```
+
+## 📋 Version Roadmap
+
+- **v0.1.0** ✅ Basic UNC path conversion functionality (current version)
+- **v0.2.0** 🔄 Samba auto-discovery functionality
+- **v0.2.1** 📋 Authentication support and caching mechanism
+- **v0.2.2** 🚀 Advanced scanning strategies and batch operations
+
+## 🤝 Contributing
+
+Contributions are welcome! Please check [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information.
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
+## 🔗 Related Links
+
+- [GitHub Repository](https://github.com/JiashuaiXu/uncpath-py)
+- [PyPI Package](https://pypi.org/project/uncpath-py/)
+- [Documentation](doc/)
+- [中文文档](README_zh.md)
