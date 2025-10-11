@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Post-commit hook - dogfooding auto-sync for multiagent-core development
+# For user projects: lightweight guidance only
+# For multiagent-core: full build and sync to all registered projects
+
+# Get the commit message
+COMMIT_MSG=$(git log -1 --pretty=%B)
+
+echo "[POST-COMMIT] Commit completed: $(echo "$COMMIT_MSG" | head -1)"
+
+# Check if this is multiagent-core repository (for dogfooding)
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ "$REPO_ROOT" == *"/multiagent-core" ]]; then
+    # DOGFOODING MODE: Auto-build and sync after every commit
+    if echo "$COMMIT_MSG" | grep -qE "^(test|style|wip|temp)(\(.*\))?:"; then
+        echo "[DOGFOODING] Skipping build for test/style/wip/temp commit"
+    elif echo "$COMMIT_MSG" | grep -qE "^\[skip[\- ]ci\]|\[ci[\- ]skip\]"; then
+        echo "[DOGFOODING] Skipping build due to [skip ci] flag"
+    else
+        echo "[DOGFOODING] 🚀 Auto-syncing to all registered projects..."
+
+        # Sync source templates to package
+        bash scripts/sync-templates.sh > /dev/null 2>&1
+
+        # Build package
+        python3 -m build > /dev/null 2>&1
+
+        # Sync to all registered projects
+        python3 -c "from multiagent_core.auto_updater import update_all_deployments; update_all_deployments()" 2>&1 | grep -E "\[PACKAGE\]|\[SUCCESS\]|Updated"
+
+        echo "[DOGFOODING] ✅ All projects synced!"
+    fi
+else
+    echo "[POST-COMMIT] Auto-build will run on push to ensure templates are current"
+fi
+
+# Provide commit guidance for agent branches
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$current_branch" =~ ^agent- ]]; then
+    # Check if this is a COMPLETE commit
+    if echo "$COMMIT_MSG" | grep -qE "^\[COMPLETE\]"; then
+        # Check if @claude tag is present
+        if echo "$COMMIT_MSG" | grep -q "@claude"; then
+            echo "[COMMIT-INFO] ✅ Final commit with @claude tag - ready for PR creation"
+        else
+            echo "[COMMIT-TIP] 💡 TIP: Add @claude tag to [COMPLETE] commits for better PR tracking:"
+            echo "[COMMIT-TIP]   git commit --amend -m \"[COMPLETE] feat: description @claude\""
+        fi
+    fi
+fi
+
+# Only do minimal template updates for changes that affect .multiagent/templates
+if git diff-tree --name-only -r HEAD | grep -q "^\.multiagent/templates/"; then
+    echo "[POST-COMMIT] Template files changed - syncing to current project only..."
+    python3 -c "
+from multiagent_core.auto_updater import sync_project_templates
+import os
+try:
+    sync_project_templates(os.getcwd())
+    print('[POST-COMMIT] Current project templates updated')
+except Exception as e:
+    print(f'[POST-COMMIT] Warning: Template sync failed: {e}')
+" 2>/dev/null || echo "[POST-COMMIT] Template sync skipped (multiagent_core not available)"
+fi
+
+exit 0
