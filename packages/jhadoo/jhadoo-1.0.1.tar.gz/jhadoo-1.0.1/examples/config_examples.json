@@ -1,0 +1,88 @@
+{
+  "basic_config": {
+    "main_folder": "~/projects",
+    "targets": [
+      {"name": "venv", "days_threshold": 7, "enabled": true},
+      {"name": "node_modules", "days_threshold": 14, "enabled": true}
+    ]
+  },
+  
+  "python_only": {
+    "main_folder": "~/python_projects",
+    "targets": [
+      {"name": "venv", "days_threshold": 7, "enabled": true},
+      {"name": "__pycache__", "days_threshold": 30, "enabled": true},
+      {"name": ".pytest_cache", "days_threshold": 30, "enabled": true},
+      {"name": ".tox", "days_threshold": 30, "enabled": true},
+      {"name": "build", "days_threshold": 14, "enabled": true},
+      {"name": "dist", "days_threshold": 14, "enabled": true}
+    ]
+  },
+  
+  "nodejs_only": {
+    "main_folder": "~/node_projects",
+    "targets": [
+      {"name": "node_modules", "days_threshold": 14, "enabled": true},
+      {"name": ".next", "days_threshold": 7, "enabled": true},
+      {"name": ".nuxt", "days_threshold": 7, "enabled": true},
+      {"name": "dist", "days_threshold": 14, "enabled": true},
+      {"name": "build", "days_threshold": 14, "enabled": true}
+    ]
+  },
+  
+  "rust_projects": {
+    "main_folder": "~/rust_projects",
+    "targets": [
+      {"name": "target", "days_threshold": 14, "enabled": true}
+    ]
+  },
+  
+  "multi_language": {
+    "main_folder": "~/projects",
+    "targets": [
+      {"name": "venv", "days_threshold": 7, "enabled": true},
+      {"name": "node_modules", "days_threshold": 14, "enabled": true},
+      {"name": "target", "days_threshold": 14, "enabled": true},
+      {"name": "build", "days_threshold": 14, "enabled": true},
+      {"name": "dist", "days_threshold": 14, "enabled": true},
+      {"name": "__pycache__", "days_threshold": 30, "enabled": true}
+    ],
+    "exclusions": [
+      "~/projects/important-project",
+      "~/projects/production-code"
+    ],
+    "safety": {
+      "size_threshold_mb": 5000,
+      "require_confirmation_above_mb": 500
+    }
+  },
+  
+  "aggressive_cleanup": {
+    "main_folder": "~/projects",
+    "targets": [
+      {"name": "venv", "days_threshold": 3, "enabled": true},
+      {"name": "node_modules", "days_threshold": 7, "enabled": true},
+      {"name": "build", "days_threshold": 7, "enabled": true},
+      {"name": "dist", "days_threshold": 7, "enabled": true}
+    ],
+    "safety": {
+      "size_threshold_mb": 2000,
+      "require_confirmation_above_mb": 200
+    }
+  },
+  
+  "conservative_cleanup": {
+    "main_folder": "~/projects",
+    "targets": [
+      {"name": "venv", "days_threshold": 30, "enabled": true},
+      {"name": "node_modules", "days_threshold": 60, "enabled": true},
+      {"name": "build", "days_threshold": 30, "enabled": true}
+    ],
+    "safety": {
+      "size_threshold_mb": 10000,
+      "require_confirmation_above_mb": 1000,
+      "backup_mode": true
+    }
+  }
+}
+

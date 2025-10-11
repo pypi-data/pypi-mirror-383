@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jhadoo"
+version = "1.0.1"
+description = "Universal cleanup tool for ANY files/folders - works with all languages and build systems"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Bhavishya", email = "your.email@example.com"}
+]
+keywords = [
+    "cleanup",
+    "disk-space",
+    "file-management",
+    "folder-cleanup",
+    "development-tools",
+    "build-cleanup",
+    "cache-cleanup",
+    "automation",
+    "devops",
+    "universal-cleaner",
+    "multi-language",
+    "folder-agnostic"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.optional-dependencies]
+notifications = [
+    "win10toast>=0.9; platform_system=='Windows'"
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "mypy>=1.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/jhadoo"
+Documentation = "https://github.com/yourusername/jhadoo#readme"
+Repository = "https://github.com/yourusername/jhadoo"
+"Bug Tracker" = "https://github.com/yourusername/jhadoo/issues"
+
+[project.scripts]
+jhadoo = "jhadoo.cli:main"
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=jhadoo --cov-report=term-missing"
+
+

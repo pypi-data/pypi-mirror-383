@@ -1,0 +1,14 @@
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+include setup.cfg
+include CHANGES.md
+include jhadoo.md
+include PUBLISHING.md
+
+recursive-include jhadoo *.py
+recursive-include examples *.py *.json *.md
+recursive-exclude tests *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
