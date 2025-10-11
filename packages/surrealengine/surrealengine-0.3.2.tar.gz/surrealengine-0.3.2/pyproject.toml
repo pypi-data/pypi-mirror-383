@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surrealengine"
+version = "0.3.2"
+description = "An async Object-Document Mapper (ODM) for SurrealDB"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [
+    {name = "Iristech Systems"}
+]
+keywords = ["surrealdb", "odm", "database", "async", "orm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Framework :: AsyncIO",
+]
+dependencies = [
+    "aiohttp>=3.12.15",
+    "surrealdb>=1.0.3",
+    "websockets>=12.0",
+    "typing-extensions>=4.0.0"
+]
+
+[project.optional-dependencies]
+signals = [
+    "blinker>=1.6.2",
+]
+jupyter = [
+    "notebook==7.2.2",
+]
+all = [
+    "blinker>=1.6.2",
+    "notebook==7.2.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/iristech-systems/surrealengine"
+"Bug Tracker" = "https://github.com/iristech-systems/surrealengine/issues"
+"Documentation" = "https://github.com/iristech-systems/SurrealEngine-Docs"
