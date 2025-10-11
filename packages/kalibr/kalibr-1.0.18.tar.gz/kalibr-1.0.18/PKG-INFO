@@ -1,0 +1,94 @@
+Metadata-Version: 2.4
+Name: kalibr
+Version: 1.0.18
+Summary: Multi-Model AI Integration Framework
+Home-page: https://github.com/devonakelley/kalibr-sdk
+Author: Kalibr Team
+Author-email: Kalibr Team <team@kalibr.dev>
+License: MIT
+Project-URL: Homepage, https://kalibr.dev
+Project-URL: Documentation, https://kalibr.dev/docs
+Project-URL: Repository, https://github.com/devonakelley/kalibr-sdk
+Project-URL: Bug Reports, https://github.com/devonakelley/kalibr-sdk/issues
+Keywords: ai,api,framework,gpt,claude,gemini,copilot,multi-model,sdk
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastapi>=0.110.1
+Requires-Dist: uvicorn>=0.25.0
+Requires-Dist: pydantic>=2.6.4
+Requires-Dist: typer>=0.9.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: python-jose[cryptography]>=3.3.0
+Requires-Dist: passlib[bcrypt]>=1.7.4
+Requires-Dist: python-multipart>=0.0.9
+Requires-Dist: motor>=3.3.1
+Requires-Dist: pymongo>=4.5.0
+Requires-Dist: boto3>=1.34.129
+Requires-Dist: aiofiles>=23.2.1
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: black>=24.1.1; extra == "dev"
+Requires-Dist: isort>=5.13.2; extra == "dev"
+Requires-Dist: flake8>=7.0.0; extra == "dev"
+Requires-Dist: mypy>=1.8.0; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Kalibr SDK
+
+**Multi-Model AI Integration Framework**
+
+Write once, deploy anywhere, connect to any AI model.
+
+[![PyPI version](https://badge.fury.io/py/kalibr.svg)](https://badge.fury.io/py/kalibr)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Quick Start
+
+```bash
+# Install
+pip install kalibr
+
+# Create app
+kalibr init --template enhanced --name "My API"
+
+# Test locally  
+kalibr serve enhanced_app.py
+
+# Deploy to production
+kalibr deploy enhanced_app.py --platform fly --name my-api
+```
+
+## Features
+
+- ✅ **Multi-Model Support**: GPT Actions, Claude MCP, Gemini, Copilot
+- ✅ **Enhanced Framework**: File uploads, sessions, streaming, workflows  
+- ✅ **Built-in Auth**: JWT, user management, protected routes
+- ✅ **Easy Deployment**: Fly.io, AWS Lambda with one command
+- ✅ **Analytics**: Automatic tracking, custom events, metrics
+
+## Documentation
+
+See [KALIBR_SDK_COMPLETE.md](KALIBR_SDK_COMPLETE.md) for full documentation.
+
+## Examples
+
+Check the [examples/](examples/) directory for sample applications.
+
+---
+
+**Transform how you build AI-integrated applications! 🚀**
