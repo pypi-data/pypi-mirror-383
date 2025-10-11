@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: arattai
+Version: 0.3.0
+Summary: Python library for Arattai messaging API.
+Author: Vivek Kumar
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: summary
+
+from ArattaiBot import ArattaiBot, Bot
+
+ArattaiBot = ArattaiBot(isShowQr=True)
+bot = ArattaiBot.login_with_qr()
+chats = bot.fetch_chats(limit=500)
+print(chats)
+bot.sender.send_message("Message",chat=chats["chat_id"])
+bot.sender.send_message("Message",chat_id="2343453654645_chat_id")
+bot.sender.send_file("file.extension","Caption",chat=chats["chat_id"])
+bot.sender.send_file("file.extension","Caption",chat_id="2343453654645_chat_id")
