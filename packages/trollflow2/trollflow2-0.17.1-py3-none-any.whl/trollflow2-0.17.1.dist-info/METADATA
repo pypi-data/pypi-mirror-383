@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: trollflow2
+Version: 0.17.1
+Summary: Pytroll workflow execution framework
+Project-URL: Homepage, https://github.com/pytroll/trollflow2
+Author: Adam Dybbroe, Gerrit Holl, Panu Lahtinen, Paulo Medeiros, Ondrej Nedelcev
+Author-email: Martin Raspaud <martin.raspaud@smhi.se>
+License-Expression: GPL-3.0-or-later
+License-File: LICENSE
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.11
+Requires-Dist: dpath>=2.1.0
+Requires-Dist: posttroll>=1.10.0
+Requires-Dist: pyorbital
+Requires-Dist: pyyaml
+Requires-Dist: satpy>=0.32.0
+Requires-Dist: trollsift
+Description-Content-Type: text/markdown
+
+# trollflow2
+Next generation trollflow
+
+Trollflow2 supports only Python 3.9 and newer in Linux. OS X might work, but the tests are not run on it.
