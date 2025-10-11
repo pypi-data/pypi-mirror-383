@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools >= 80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emailnator-wrapper"
+dynamic = ["version", "readme"]
+keywords = [
+  "email generator",
+  "emailnator",
+  "gmailnator",
+  "gmail generator",
+  "gmail",
+  "email",
+  "tempmail",
+  "api",
+  "temporary",
+  "generator",
+  "emailnator api",
+  "gmailnator api",
+  "web api",
+  "web",
+  "bulk emails",
+  "emails",
+  "mail",
+  "mail generator"
+]
+description = "A Python wrapper for the Emailnator service providing both synchronous and asynchronous APIs."
+requires-python = ">=3.10"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE.txt"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+]
+authors = [
+    { name = "unelected" }
+]
+
+dependencies = [
+  "httpx~=0.28.1",
+  "pyyaml~=6.0.2"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
+    "pytest-asyncio>=1.0",
+    "coverage",
+]
+
+[project.urls]
+Homepage = "https://github.com/unelected/emailnator-wrapper"
+Repository = "https://github.com/unelected/emailnator-wrapper.git"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+python_classes = ["Test*"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"emailnator.config" = ["*.yaml"]
+[tool.setuptools.dynamic]
+version = { attr = "emailnator.version.__version__" }
+readme = {file = "README.md", content-type = "text/markdown"}
