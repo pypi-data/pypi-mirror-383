@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: simplr
+Version: 0.0.17
+Summary: Run OS independent commands using natural language.
+Home-page: https://github.com/noahl25/simplr
+Author: Noah Lisin
+Author-email: noah.g.lisin@vanderbilt.edu
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+License-File: LICENSE.txt
+Requires-Dist: langchain
+Requires-Dist: langchain-core
+Requires-Dist: langchain-google-genai
+Requires-Dist: langgraph
+Requires-Dist: requests
+Requires-Dist: rich
+Requires-Dist: questionary
+Requires-Dist: psutil
+Requires-Dist: grpcio==1.67.1
+Requires-Dist: grpcio-status==1.67.1
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+
+        Run OS independent commands using natural language.
+        See https://github.com/noahl25/simplr for more information.
+    
