@@ -1,0 +1,600 @@
+Metadata-Version: 2.4
+Name: dsf-aml-sdk
+Version: 1.0.42
+Summary: SDK for DSF Adaptive ML with Knowledge Distillation
+Home-page: https://github.com/jaimeajl/dsf-aml-sdk
+Author: api-dsfuptech
+Author-email: contacto@softwarefinanzas.com.co
+Keywords: dsf aml ml machine-learning distillation adaptive sdk
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.25.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# DSF AML SDK
+
+Reduce ML training data by **70–90%** via adaptive evaluation and knowledge distillation.  
+Distill a surrogate and run inference **~10× faster** with tiny footprints.
+
+---
+
+## 🚀 Why DSF AML?
+
+Traditional ML needs thousands of labels and long training cycles. DSF AML encodes **domain rules** in a lightweight formula and (Pro/Ent) distills them into a **fast surrogate**, letting you ship accurate models with **minimal data** and **lower infrastructure costs**.
+
+---
+
+## 📚 Core Concepts
+
+- **Config-as-rules**: Per-field `default`, `importance`, `sensitivity`, optional `string_floor`
+- **Adaptive evaluation**: Compute a normalized score for any item
+- **Decision-boundary focus**: Generate/collect data near the threshold
+- **Knowledge distillation** (Pro/Ent): Train a linear surrogate for sub-ms inference
+
+> **Non-linear mode (Pro/Ent):** The backend expects  
+> `data['adjustments_values'] = { field_name: { adjustment_name: value[-1..1] } }`
+
+---
+
+## 📦 Installation
+
+```bash
+pip install dsf-aml-sdk
+```
+
+Optionally point the SDK to your backend:
+
+```python
+import os
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK(
+    base_url=os.getenv("DSF_AML_BASE_URL"),  # e.g. https://your-vercel-app.vercel.app
+    tier="community"
+)
+```
+
+---
+
+## 🎯 Quick Start
+
+### Community
+
+```python
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK()  # defaults to community tier
+
+config = (sdk.create_config()
+    .add_field('model_accuracy',  default=0.95, importance=2.5, sensitivity=2.0)
+    .add_field('training_epochs', default=100,  importance=1.8, sensitivity=1.5)
+    .add_field('validation_loss', default=0.05, importance=2.2, sensitivity=2.5)
+    .add_field('model_name',      default='baseline', importance=1.0, string_floor=0.1)
+)
+
+item = {'model_accuracy': 0.96, 'training_epochs': 105, 'validation_loss': 0.048}
+res = sdk.evaluate(item, config)
+print(f"Score: {res.score:.3f}")
+```
+
+### Professional
+
+```python
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK(license_key='PRO-2026-12-31-XXXX', tier='professional')
+
+cfg = (sdk.create_config()
+    .add_field('model_accuracy', 0.9, 2.0, 2.0)
+    .add_field('training_epochs', 100, 1.8, 1.5)
+    .add_field('validation_loss', 0.05, 2.2, 2.5)
+)
+
+# Batch evaluation (up to BATCH_MAX_ITEMS; default 1000)
+experiments = [
+    {'model_accuracy': 0.92, 'training_epochs': 50,  'validation_loss': 0.08},
+    {'model_accuracy': 0.95, 'training_epochs': 100, 'validation_loss': 0.05},
+]
+scores = sdk.batch_evaluate(experiments, cfg)
+
+# Metrics (after at least one evaluate/batch)
+metrics = sdk.get_metrics()
+```
+
+### Enterprise: Pipeline + Distillation
+
+```python
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK(license_key='ENT-2026-12-31-XXXX', tier='enterprise')
+
+training_data = [
+    {'model_accuracy': 0.92, 'training_epochs': 120, 'validation_loss': 0.06},
+    {'model_accuracy': 0.88, 'training_epochs':  80, 'validation_loss': 0.07},
+    # ...
+]
+
+# 1) Identify seeds
+seeds = sdk.pipeline_identify_seeds(dataset=training_data, config=cfg, top_k_percent=0.1)
+
+# 2) Generate critical variants
+gen = sdk.pipeline_generate_critical(config=cfg, original_dataset=training_data)
+
+# 3) Full cycle
+full = sdk.pipeline_full_cycle(dataset=training_data, config=cfg, max_iterations=3)
+
+# 4) Distillation
+sdk.distill_train(cfg, samples=1000, batch_size=100, seed=42)
+fast_score = sdk.distill_predict(training_data[0], cfg)
+artifact = sdk.distill_export()  # Enterprise only
+```
+
+---
+
+## 💡 Use Cases
+
+### 1. Data Curation: Keep Only What Matters
+Retain the **10–30% most informative samples** near decision boundaries, discard duplicates and easy cases.
+
+```python
+# Start with 10,000 samples
+result = sdk.pipeline_full_cycle(dataset=full_training_data, config=config, max_iterations=3)
+print(f"Reduced: {len(full_training_data)} → {result['final_size']} samples")
+# Typical output: "Reduced: 10000 → 1500 samples" (85% reduction)
+```
+
+### 2. Policy Stress Testing: Generate Edge Cases
+Create boundary scenarios for testing ML policies (e.g., accuracy vs latency trade-offs).
+
+```python
+# Generate critical variants around decision threshold
+seeds = sdk.pipeline_identify_seeds(production_data, config, top_k_percent=0.1)
+edge_cases = sdk.pipeline_generate_critical(
+    config=config,
+    original_dataset=production_data,
+    epsilon=0.05  # tight band around threshold
+)
+# Use edge_cases for stress testing your models
+```
+
+### 3. Edge Deployment: Sub-millisecond Inference
+Deploy a linear surrogate for **<1ms CPU inference** without GPUs.
+
+```python
+# Train surrogate from your complex model
+sdk.distill_train(config, samples=1000)
+
+# Deploy with minimal footprint
+def inference_edge(sample):
+    return sdk.distill_predict(sample, config)  # <1ms on CPU
+
+# Benchmark: typically 10-50× faster than original model
+```
+
+### 4. Cost Control: 70–90% Less Training Data
+Evaluate → Reduce → Train pipeline cuts cloud costs dramatically.
+
+```python
+# Traditional approach: $1000/month for 100K samples
+original_cost = calculate_training_cost(samples=100_000)
+
+# DSF approach: Focus on 10K critical samples
+reduced_data = sdk.pipeline_full_cycle(dataset, config)
+new_cost = calculate_training_cost(samples=len(reduced_data['final_samples']))
+
+print(f"Cost savings: {(1 - new_cost/original_cost)*100:.0f}%")
+# Typical output: "Cost savings: 87%"
+```
+
+### Summary
+**DSF AML delivers:**
+- **Less data**: 70–90% reduction while preserving decision boundaries
+- **Faster training**: Focus on critical samples only  
+- **Synthesis capability**: Generate edge cases from minimal seed data
+- **Production-ready**: Partial results handling for serverless environments
+
+---
+
+## ⏱️ Handling Partial Results (Serverless-friendly)
+
+Long operations may return `status: "partial"` with a cursor and optional partial payload. Re-submit those values to continue without timeouts.
+
+### Critical Generation (Enterprise)
+
+```python
+resp = sdk.pipeline_generate_critical(cfg, original_dataset=training_data, k_variants=3)
+
+while isinstance(resp, dict) and resp.get("status") == "partial":
+    resp = sdk._make_request("", {
+        "action": "pipeline_generate_critical",
+        "config": cfg,
+        "license_key": sdk.license_key,
+        "original_dataset": training_data,
+        "cursor": resp.get("cursor", 0),
+        "partial_results": resp.get("partial_results", []),
+        "partial_metrics": resp.get("partial_metrics", {}),
+        "advanced": {"max_seeds_to_process": 8}
+    })
+```
+
+---
+
+## 📊 Rate Limits
+
+|      Tier    | Evaluations/Day |               atch Size                 |        Seeds Preview       |
+|--------------|-----------------|-----------------------------------------|----------------------------|
+| Community    |       100       | ❌ Not available                        | Configurable (default 10) |
+| Professional |      10,000     | ✅ Up to BATCH_MAX_ITEMS (default 1000) |         Unlimited         |
+| Enterprise   |     Unlimited   | ✅ Up to BATCH_MAX_ITEMS (default 1000) |         Unlimited         |
+
+---
+
+## 🆚 Tier Comparison
+
+|             Feature        | Community     | Professional |    Enterprise   |
+|----------------------------|---------------|--------------|-----------------|
+| Single evaluation          | ✅ (100/day) | ✅ (10k/day) | ✅ (unlimited) |
+| Batch evaluation           |      ❌      |      ✅      |       ✅       |
+| Performance metrics        |      ❌      |      ✅      | ✅ (enhanced)  |
+| pipeline_generate_critical |   Demo only   |      ❌      |    ✅ Full     |
+| pipeline_full_cycle        |      ❌      |      ❌      |       ✅       |
+| Curriculum learning        |      ❌      |      ❌      |       ✅       |
+| Non-linear evaluation      |      ❌      |      ✅      |       ✅       |
+| Distillation               |      ❌      |      ✅      |       ✅       |
+| Surrogate export           |      ❌      |      ❌      |       ✅       |
+| Redis caching              |      ❌      |      ✅      |       ✅       |
+
+---
+
+## 📖 API Reference
+
+### Initialization
+```python
+AMLSDK(tier='community'|'professional'|'enterprise', license_key=None, base_url=None, timeout=30)
+```
+
+### Core Methods
+- `evaluate(data, config)` - Single evaluation
+- `batch_evaluate(data_points, config)` - Batch processing (Pro/Ent)
+- `get_metrics()` - Performance metrics (Pro/Ent)
+
+### Pipeline Methods
+- `pipeline_identify_seeds(dataset, config, top_k_percent=0.1)`
+- `pipeline_generate_critical(config, original_dataset, **kwargs)` (Enterprise)
+- `pipeline_full_cycle(dataset, config, max_iterations=5)` (Enterprise)
+
+### Distillation Methods (Pro/Ent)
+- `distill_train(config, samples=1000, batch_size=100)`
+- `distill_predict(data, config) -> float`
+- `distill_export()` (Enterprise only)
+
+---
+
+## 🔧 Environment Variables
+
+|           Variable         |       Description         | Default |
+|----------------------------|---------------------------|---------|
+| `CRITICAL_MAX_SECS`        | Time budget per operation |   24s   |
+| `REDIS_TIMEOUT_SECS`       | Redis timeout             |   3s    |
+| `REDIS_RETRIES`            | Redis retry attempts      |   0     |
+| `DISABLE_ADAPTIVE_METRICS` | Skip heavy Redis I/O      |   true  |
+
+---
+
+## 📞 Support
+
+- **Documentation**: https://docs.dsf-aml.ai
+- **Issues**: https://github.com/dsf-aml/sdk/issues
+- **Enterprise**: contacto@softwarefinanzas.com.co
+
+---
+
+## 📄 License
+
+MIT for Community tier. Professional/Enterprise under commercial terms.
+
+© 2025 DSF AML SDK — Adaptive ML powered by Knowledge Distillation
+
+---
+
+# DSF AML SDK (Español)
+
+Reduce los datos de entrenamiento ML en **70–90%** mediante evaluación adaptativa y destilación de conocimiento.  
+Destila un modelo sustituto y ejecuta inferencias **~10× más rápido** con huella mínima.
+
+---
+
+## 🚀 ¿Por qué DSF AML?
+
+El ML tradicional necesita miles de etiquetas y largos ciclos de entrenamiento. DSF AML codifica **reglas del dominio** en una fórmula ligera y (Pro/Ent) las destila en un **sustituto rápido**, permitiendo entregar modelos precisos con **mínimos datos** y **menores costos de infraestructura**.
+
+---
+
+## 📚 Conceptos Clave
+
+- **Configuración como reglas**: Por campo `default`, `importance`, `sensitivity`, opcional `string_floor`
+- **Evaluación adaptativa**: Calcula un score normalizado para cualquier elemento
+- **Foco en fronteras de decisión**: Genera/recolecta datos cerca del umbral
+- **Destilación de conocimiento** (Pro/Ent): Entrena un sustituto lineal para inferencia sub-milisegundo
+
+> **Modo no lineal (Pro/Ent):** El backend espera  
+> `data['adjustments_values'] = { field_name: { adjustment_name: value[-1..1] } }`
+
+---
+
+## 📦 Instalación
+
+```bash
+pip install dsf-aml-sdk
+```
+
+Opcionalmente apunta el SDK a tu backend:
+
+```python
+import os
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK(
+    base_url=os.getenv("DSF_AML_BASE_URL"),  # ej: https://tu-app-vercel.vercel.app
+    tier="community"
+)
+```
+
+---
+
+## 🎯 Inicio Rápido
+
+### Community
+
+```python
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK()  # por defecto tier community
+
+config = (sdk.create_config()
+    .add_field('model_accuracy',  default=0.95, importance=2.5, sensitivity=2.0)
+    .add_field('training_epochs', default=100,  importance=1.8, sensitivity=1.5)
+    .add_field('validation_loss', default=0.05, importance=2.2, sensitivity=2.5)
+    .add_field('model_name',      default='baseline', importance=1.0, string_floor=0.1)
+)
+
+item = {'model_accuracy': 0.96, 'training_epochs': 105, 'validation_loss': 0.048}
+res = sdk.evaluate(item, config)
+print(f"Score: {res.score:.3f}")
+```
+
+### Professional
+
+```python
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK(license_key='PRO-2026-12-31-XXXX', tier='professional')
+
+cfg = (sdk.create_config()
+    .add_field('model_accuracy', 0.9, 2.0, 2.0)
+    .add_field('training_epochs', 100, 1.8, 1.5)
+    .add_field('validation_loss', 0.05, 2.2, 2.5)
+)
+
+# Evaluación batch (hasta BATCH_MAX_ITEMS; por defecto 1000)
+experimentos = [
+    {'model_accuracy': 0.92, 'training_epochs': 50,  'validation_loss': 0.08},
+    {'model_accuracy': 0.95, 'training_epochs': 100, 'validation_loss': 0.05},
+]
+scores = sdk.batch_evaluate(experimentos, cfg)
+
+# Métricas (después de al menos una evaluación)
+metrics = sdk.get_metrics()
+```
+
+### Enterprise: Pipeline + Destilación
+
+```python
+from dsf_aml_sdk import AMLSDK
+
+sdk = AMLSDK(license_key='ENT-2026-12-31-XXXX', tier='enterprise')
+
+datos_entrenamiento = [
+    {'model_accuracy': 0.92, 'training_epochs': 120, 'validation_loss': 0.06},
+    {'model_accuracy': 0.88, 'training_epochs':  80, 'validation_loss': 0.07},
+    # ...
+]
+
+# 1) Identificar semillas
+seeds = sdk.pipeline_identify_seeds(dataset=datos_entrenamiento, config=cfg, top_k_percent=0.1)
+
+# 2) Generar variantes críticas
+gen = sdk.pipeline_generate_critical(config=cfg, original_dataset=datos_entrenamiento)
+
+# 3) Ciclo completo
+full = sdk.pipeline_full_cycle(dataset=datos_entrenamiento, config=cfg, max_iterations=3)
+
+# 4) Destilación
+sdk.distill_train(cfg, samples=1000, batch_size=100, seed=42)
+score_rapido = sdk.distill_predict(datos_entrenamiento[0], cfg)
+artifact = sdk.distill_export()  # Solo Enterprise
+```
+
+---
+
+## 💡 Casos de Uso
+
+### 1. Curación de Datos: Conserva Solo lo Importante
+Retén el **10–30% de muestras más informativas** cerca de las fronteras de decisión, descarta duplicados y casos fáciles.
+
+```python
+# Empiezas con 10,000 muestras
+result = sdk.pipeline_full_cycle(dataset=datos_completos, config=config, max_iterations=3)
+print(f"Reducido: {len(datos_completos)} → {result['final_size']} muestras")
+# Salida típica: "Reducido: 10000 → 1500 muestras" (85% reducción)
+```
+
+### 2. Pruebas de Estrés de Políticas: Genera Casos Borde
+Crea escenarios frontera para probar políticas ML (ej: compromisos precisión vs latencia).
+
+```python
+# Genera variantes críticas alrededor del umbral de decisión
+seeds = sdk.pipeline_identify_seeds(datos_produccion, config, top_k_percent=0.1)
+casos_borde = sdk.pipeline_generate_critical(
+    config=config,
+    original_dataset=datos_produccion,
+    epsilon=0.05  # banda ajustada alrededor del umbral
+)
+# Usa casos_borde para pruebas de estrés de tus modelos
+```
+
+### 3. Despliegue en Edge: Inferencia Sub-milisegundo
+Despliega un sustituto lineal para **inferencia <1ms en CPU** sin GPUs.
+
+```python
+# Entrena sustituto desde tu modelo complejo
+sdk.distill_train(config, samples=1000)
+
+# Despliega con huella mínima
+def inferencia_edge(muestra):
+    return sdk.distill_predict(muestra, config)  # <1ms en CPU
+
+# Benchmark: típicamente 10-50× más rápido que el modelo original
+```
+
+### 4. Control de Costos: 70–90% Menos Datos de Entrenamiento
+El pipeline Evaluar → Reducir → Entrenar reduce dramáticamente los costos en la nube.
+
+```python
+# Enfoque tradicional: $1000/mes para 100K muestras
+costo_original = calcular_costo_entrenamiento(samples=100_000)
+
+# Enfoque DSF: Enfócate en 10K muestras críticas
+datos_reducidos = sdk.pipeline_full_cycle(dataset, config)
+costo_nuevo = calcular_costo_entrenamiento(samples=len(datos_reducidos['final_samples']))
+
+print(f"Ahorro: {(1 - costo_nuevo/costo_original)*100:.0f}%")
+# Salida típica: "Ahorro: 87%"
+```
+
+### Resumen
+**DSF AML entrega:**
+- **Menos datos**: Reducción del 70–90% preservando fronteras de decisión
+- **Entrenamiento más rápido**: Enfoque solo en muestras críticas
+- **Capacidad de síntesis**: Genera casos borde desde datos semilla mínimos
+- **Listo para producción**: Manejo de resultados parciales para entornos serverless
+
+---
+
+## ⏱️ Manejo de Resultados Parciales (Compatible con Serverless)
+
+Las operaciones largas pueden retornar `status: "partial"` con un cursor y payload parcial opcional. Re-envía esos valores para continuar sin timeouts.
+
+### Generación Crítica (Enterprise)
+
+```python
+resp = sdk.pipeline_generate_critical(cfg, original_dataset=datos_entrenamiento, k_variants=3)
+
+while isinstance(resp, dict) and resp.get("status") == "partial":
+    resp = sdk._make_request("", {
+        "action": "pipeline_generate_critical",
+        "config": cfg,
+        "license_key": sdk.license_key,
+        "original_dataset": datos_entrenamiento,
+        "cursor": resp.get("cursor", 0),
+        "partial_results": resp.get("partial_results", []),
+        "partial_metrics": resp.get("partial_metrics", {}),
+        "advanced": {"max_seeds_to_process": 8}
+    })
+```
+
+---
+
+## 📊 Límites de Tasa
+
+| Tier         | Evaluaciones/Día |                  Tamaño Batch               |     Vista Previa Semillas     |
+|--------------|------------------|---------------------------------------------|-------------------------------|
+| Community    |       100        |               ❌ No disponible              | Configurable (por defecto 10) |
+| Professional |      10,000      | ✅ Hasta BATCH_MAX_ITEMS (por defecto 1000) |           Ilimitado           |
+| Enterprise   |    Ilimitado     | ✅ Hasta BATCH_MAX_ITEMS (por defecto 1000) |           Ilimitado           |
+
+---
+
+## 🆚 Comparación de Tiers
+
+| Característica             |     Community    |  Professional |   Enterprise   |
+|----------------------------|------------------|---------------|----------------|
+| Evaluación individual      |    ✅ (100/día)  | ✅ (10k/día) | ✅ (ilimitado) |
+| Evaluación batch           |        ❌        |       ✅     |       ✅       |
+| Métricas de rendimiento    |        ❌        |       ✅     | ✅ (mejoradas) |
+| pipeline_generate_critical |     Solo demo    |        ❌    |  ✅ Completo   |
+| pipeline_full_cycle        |        ❌        |       ❌     |       ✅       |
+| Aprendizaje curricular     |        ❌        |       ❌     |       ✅       |
+| Evaluación no lineal       |        ❌        |       ✅     |       ✅       |
+| Destilación                |        ❌        |       ✅     |       ✅       |
+| Exportar sustituto         |        ❌        |       ❌     |       ✅       |
+| Cache Redis                |        ❌        |       ✅     |       ✅       |
+
+---
+
+## 📖 Referencia API
+
+### Inicialización
+```python
+AMLSDK(tier='community'|'professional'|'enterprise', license_key=None, base_url=None, timeout=30)
+```
+
+### Métodos Principales
+- `evaluate(data, config)` - Evaluación individual
+- `batch_evaluate(data_points, config)` - Procesamiento batch (Pro/Ent)
+- `get_metrics()` - Métricas de rendimiento (Pro/Ent)
+
+### Métodos de Pipeline
+- `pipeline_identify_seeds(dataset, config, top_k_percent=0.1)`
+- `pipeline_generate_critical(config, original_dataset, **kwargs)` (Enterprise)
+- `pipeline_full_cycle(dataset, config, max_iterations=5)` (Enterprise)
+
+### Métodos de Destilación (Pro/Ent)
+- `distill_train(config, samples=1000, batch_size=100)`
+- `distill_predict(data, config) -> float`
+- `distill_export()` (Solo Enterprise)
+
+---
+
+## 🔧 Variables de Entorno
+
+| Variable                   |            Descripción              | Por Defecto |
+|----------------------------|-------------------------------------|-------------|
+| `CRITICAL_MAX_SECS`        | Presupuesto de tiempo por operación |     24s     |
+| `REDIS_TIMEOUT_SECS`       | Timeout de Redis                    |     3s      |
+| `REDIS_RETRIES`            | Reintentos de Redis                 |      0      |
+| `DISABLE_ADAPTIVE_METRICS` | Omitir I/O pesado de Redis          |     true    |
+
+---
+
+## 📞 Soporte
+
+- **Documentación**: https://docs.dsf-aml.ai
+- **Issues**: https://github.com/dsf-aml/sdk/issues
+- **Enterprise**: contacto@softwarefinanzas.com.co
+
+---
+
+## 📄 Licencia
+
+MIT para tier Community. Professional/Enterprise bajo términos comerciales.
+
+© 2025 DSF AML SDK — ML Adaptativo impulsado por Destilación de Conocimiento
