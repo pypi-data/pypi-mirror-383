@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vid2gifx"
+version = "0.1.0"
+description = "FFmpeg-only video to GIF converter with palettegen/paletteuse and size targeting."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "thecoderider", email = "thecoderider42@gmail.com" }]
+keywords = ["ffmpeg", "gif", "video", "conversion", "palettegen", "paletteuse"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Environment :: Console",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Graphics",
+    "Operating System :: OS Independent",
+]
+
+# No runtime deps; FFmpeg is an external binary requirement.
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/the-code-rider/vid2gif"
+Issues = "https://github.com/the-code-rider/video2gif/issues"
+
+[project.scripts]
+vid2gifx = "vid2gifx.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
