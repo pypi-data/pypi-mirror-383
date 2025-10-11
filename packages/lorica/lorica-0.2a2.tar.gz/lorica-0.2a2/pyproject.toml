@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[project]
+name = "lorica"
+authors = [
+    { name="Lorica Cybersecurity", email="support@loricacyber.com"}
+]
+description = "A python package to interact with products from Lorica Cybersecurity"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "ohttpy == 0.1a13",
+    "cachetools == 5.5.2",
+    "pyjwt == 2.10.1",
+]
+dynamic = ["version"]
