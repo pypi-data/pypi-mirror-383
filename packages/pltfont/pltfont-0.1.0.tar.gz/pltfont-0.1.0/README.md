@@ -1,0 +1,50 @@
+# pltfont
+
+Mac 환경에서 **Matplotlib 한글 폰트를 자동 설정**하거나 **순환 변경**할 수 있는 간단한 유틸리티입니다.  
+한글 폰트 설정 문제로 매번 고민할 필요 없이, `pltfont`로 쉽게 해결할 수 있습니다.
+
+---
+
+## 주요 기능
+
+- Mac OS에서 Matplotlib 한글 폰트 자동 설정
+- 설치된 한글 폰트 목록 확인
+- 특정 폰트 선택 후 적용
+- 설치된 폰트 순환 기능
+
+---
+
+## 설치
+
+```bash
+pip install pltfont
+```
+
+
+## 사용 예시
+
+```python
+import pltfont
+
+# 1. 자동으로 한글 폰트 설정
+pltfont.auto()
+
+# 2. 설치된 폰트 목록 확인
+pltfont.list_fonts()
+
+# 3. 특정 폰트 지정
+pltfont.set("AppleGothic")
+
+# 4. 다음 폰트로 순환
+pltfont.next_font()
+```
+
+## 주의사항
+- 현재 Mac 환경에서만 정상 동작합니다.
+- Python >=3.8, Matplotlib >=3.6 환경에서 권장합니다.
+
+
+## 라이선스
+MIT License
+
+```
