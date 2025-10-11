@@ -1,0 +1,212 @@
+# ⚡ Electronex — Engineering Intelligence Toolkit  
+*Empowering ECE & CSE Student with Intelligent Python Tools*
+
+
+---
+
+[![PyPI version](https://img.shields.io/pypi/v/electronex.svg)](https://pypi.org/project/electronex/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/electronex.svg)](https://pypi.org/project/electronex/)
+[![License](https://img.shields.io/github/license/hrishabhxcode/electronex.svg)](https://github.com/hrishabhxcode/electronex/blob/main/LICENSE)
+[![Downloads](https://static.pepy.tech/badge/electronex)](https://pepy.tech/project/electronex)
+
+---
+
+## 🧠 Overview
+
+**Electronex** is a comprehensive open-source Python toolkit for **Electronics** and **Computer Science Engineers**, combining modules for:
+- Circuit Analysis ⚙️  
+- Digital Signal Processing 🎚️  
+- Algorithms & Math Utilities 🧮  
+- Machine Learning Tools 🤖  
+- Data Visualization 📊  
+
+From solving **Ohm’s Law** to performing **Signal Convolution**, **Electronex** simplifies complex engineering computations with clean, readable Python functions.
+
+---
+
+## 🚀 Installation
+
+```bash
+# Install from PyPI
+pip install electronex
+
+# Upgrade to the latest version
+pip install --upgrade electronex
+
+# Uninstall if needed
+pip uninstall electronex
+```
+
+---
+
+## 📘 Quick Start Example
+
+```python
+import electronex.circuits as ec
+import electronex.signals as es
+
+# ⚡ Circuit Calculations
+print("Voltage (V):", ec.ohms_law(current=2, resistance=10))
+
+# 📶 Signal Generation
+n = range(-3, 4)
+print("Unit Step:", es.unit_step(n))
+print("Ramp:", es.ramp(n))
+
+# 🔁 Convolution
+x = [1, 2, 3]
+h = [0, 1, 0.5]
+print("Convolution:", es.convolution(x, h))
+```
+
+---
+
+## 🧩 Module Overview
+
+### ⚡ `circuits.py`
+> Core Electrical Engineering Tools
+- `ohms_law(V=None, I=None, R=None)` → Computes voltage, current, or resistance.  
+- `voltage_divider(vin, r1, r2)` → Returns divided voltage output.  
+- `impedance_rlc(r, l, c, freq)` → Calculates total impedance of RLC circuits.  
+- `power(V, I)` → Computes power in watts.
+
+---
+
+### 📶 `signals.py`
+> Digital Signal Processing Helpers
+- `unit_step(n)` → Generates a unit step signal.  
+- `ramp(n)` → Generates a ramp signal.  
+- `convolution(x, h)` → Computes linear convolution.  
+- `correlation(x, y)` → Computes cross-correlation between sequences.
+
+---
+
+### 🧮 `algorithms.py`
+> Common Algorithmic Utilities
+- `factorial(n)` → Recursive factorial.  
+- `fibonacci(n)` → Fibonacci sequence generator.  
+- (More algorithms coming soon)
+
+---
+
+### 🧠 `mltools.py`
+> Machine Learning Tools (Coming Soon 🚧)
+- Simple preprocessing  
+- Linear regression and model evaluation utilities  
+
+---
+
+### 📊 `visualization.py`
+> Data Visualization for Engineers
+- Easy plotting for signals, data, or circuit responses.  
+- Wrapper around matplotlib for fast visual insights.
+
+---
+
+## 💻 Example Engineering Use-Cases
+
+| Domain | Example | Description |
+|--------|----------|-------------|
+| **Circuits** | Ohm’s Law Solver | Compute unknown voltage, current, or resistance |
+| **DSP** | Signal Convolution | Combine two discrete signals |
+| **Algorithms** | Fibonacci | Quickly generate number sequences |
+| **Visualization** | Waveform Plot | Plot unit step, ramp, and sinusoidal signals |
+
+---
+
+## 🧑‍🎓 For Engineering Students
+
+> **Electronex** is built especially for ECE and CSE students who want to code engineering concepts.  
+
+You can use it for:
+- Circuit & Network analysis  
+- DSP lab assignments  
+- Data structure & algorithm testing  
+- Machine learning experiments  
+- Research projects and visualizations  
+
+---
+
+## ⚙️ Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/hrishabhxcode/electronex.git
+cd electronex
+
+# Install locally
+pip install -e .
+
+# Run test scripts
+python examples/test_circuits.py
+```
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from students and professionals!
+
+```bash
+# Create a feature branch
+git checkout -b feature/new-feature
+
+# Commit your changes
+git commit -m "Added new DSP function"
+
+# Push to your fork
+git push origin feature/new-feature
+```
+
+Then, open a **Pull Request** on GitHub.
+
+---
+
+## 🧾 Changelog
+
+**v1.0.0** — Initial public release  
+- Added core modules: `circuits`, `signals`, `algorithms`, `visualization`  
+- Ready for educational and research use  
+
+---
+
+## 📜 License
+
+Licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for more details.
+
+---
+
+## 👨‍💻 Author
+
+**Hrishabh**  
+🎓 *NIT Nagaland*  
+📧 hrishabh.cbse@gmail.com  
+🌐 [www.hrishabhxcode.live](https://www.hrishabhxcode.live)  
+
+---
+
+## ⭐ Support & Acknowledgment
+
+If you find **Electronex** useful:
+- 🌟 Star the [GitHub Repo](https://github.com/hrishabhxcode/electronex)  
+- 🧠 Share it with your classmates and friends  
+- 🛠️ Contribute your own engineering functions  
+
+> “Built by an Engineer, for Engineers.” ⚙️
+
+---
+
+## 🧩 PyPI Launch Command for Users
+
+```bash
+pip install electronex
+```
+
+---
+
+### 🏁 Tagline:
+> **Electronex — Powering the Future of Engineering Computation ⚡**
+
+```bash
+Made with Love by Hrishabh
