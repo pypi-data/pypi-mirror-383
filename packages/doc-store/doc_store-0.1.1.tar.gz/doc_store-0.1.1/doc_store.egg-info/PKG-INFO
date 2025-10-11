@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: doc_store
+Version: 0.1.1
+Summary: Storage for documents
+Author-email: Jin Zhen Jiang <jinzhenjiang@pjlab.org.cn>
+License-Expression: AGPL-3.0
+Project-URL: Homepage, https://github.com/johnking0099/doc-store
+Project-URL: Issues, https://github.com/johnking0099/doc-store/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: <3.14,>=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: pymongo
+Requires-Dist: confluent-kafka
+Requires-Dist: boto3==1.28.43
+Requires-Dist: pillow
+Requires-Dist: pymupdf
+Requires-Dist: pyyaml
+Requires-Dist: orjson
+Requires-Dist: pydantic
+Requires-Dist: numpy
+Dynamic: license-file
+
+# doc_store
