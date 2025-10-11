@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+coverage = ["coverage[toml]"]
+test = [{include-group = "coverage"}, "pytest"]
+typing = ["mypy"]
+lint = ["pre-commit"]
+
+[project]
+name = "click-type-test"
+version = "2.0.2"
+description = "Test that type annotations match click parameter types"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { "text" = "MIT" }
+keywords = []
+authors = [
+  { name = "Stephen Rosen", email = "sirosen@globus.org" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = ["click>=8.1.0"]
+
+[project.urls]
+source = "https://github.com/sirosen/click-type-test"
+
+
+[tool.coverage.run]
+parallel = true
+source = ["click_type_test"]
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    # the pragma to disable coverage
+    "pragma: no cover",
+    # don't complain if tests don't hit unimplemented methods/modes
+    "raise NotImplementedError",
+    # don't check on executable components of importable modules
+    "if __name__ == .__main__.:",
+    # mypy-only code segments
+    "if t.TYPE_CHECKING:",
+    # type-checking overloads
+    "@t.overload"
+]
+[tool.isort]
+profile = "black"
+[tool.mypy]
+strict = true
