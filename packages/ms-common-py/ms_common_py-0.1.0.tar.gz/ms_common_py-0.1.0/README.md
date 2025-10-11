@@ -1,0 +1,114 @@
+# Get Products Function Flow Diagram
+
+```mermaid
+graph TD
+    A[Client Request] --> B[Django URL Router /v1/products]
+    B --> C[get_products View Function]
+    
+    C --> D[Handler Decorator]
+    D --> E[Circuit Breaker Decorator]
+    E --> F[Instrumentation Trace Decorator]
+    
+    F --> G[Handler Processing]
+    G --> G1[Validate HTTP Method GET]
+    G --> G2[Validate Content-Type JSON]
+    G --> G3[Check Mandatory Headers]
+    G --> G4[Create Communication Log]
+    
+    G4 --> H[get_products Execution]
+    H --> H1[Parse Request Parameters]
+    H --> H2[Build Tokopedia API URL /v2/product-list]
+    H --> H3[Call tokopedia_request_api]
+    H3 --> I[tokopedia_request_api Function]
+    I --> I1[Extract Language ID from Headers]
+    I --> I2[Get Access Token]
+    
+    I2 --> J[Access Token Management]
+    J --> J1[Check Redis Cache]
+    J1 --> J2{Token in Cache?}
+    J2 -->|Yes| J3[Return Cached Token]
+    J2 -->|No| J4[Request New Token from Tokopedia]
+    
+    J4 --> K[Tokopedia OAuth API]
+    K --> K1[POST /oauth/token]
+    K --> K2[Store Token in Redis Cache]
+    K2 --> J3
+    
+    J3 --> L[Make API Request to Tokopedia]
+    L --> L1[Set Authorization Headers Bearer Token]
+    L --> L2[HTTP GET Request Tokopedia API /v2/product-list]
+    
+    L2 --> M[Tokopedia API Response]
+    M --> N[tokopedia_handle_response]
+    N --> N1{Status Code Check}
+    N1 -->|200-202| N2[Success Response]
+    N1 -->|401| N3[AuthenticationFailure]
+    N1 -->|Other| N4[Error Handling]
+    
+    N4 --> O[Error Code Handler tokopedia_error_code_handler]
+    O --> O1{Error Code Type}
+    O1 -->|P08| O2[Delete Redis Token ForbiddenException]
+    O1 -->|U01-U03| O3[BillNotValidException]
+    O1 -->|P01-P19| O4[ForbiddenException]
+    O1 -->|S00-S04| O5[ProductClosedException]
+    
+    N2 --> P[Return Response to View]
+    P --> Q[Handler Success Processing]
+    Q --> Q1[Update Communication Log]
+    Q --> Q2[Create Success Response JSON]
+    
+    Q2 --> R[Return to Client]
+    
+    %% Error Flows
+    N3 --> S[Handler Error Processing]
+    O2 --> S
+    O3 --> S
+    O4 --> S
+    O5 --> S
+    
+    S --> S1[Update Communication Log]
+    S --> S2[Send Error Notifications Slack/Datadog/NewRelic]
+    S --> S3[Create Error Response JSON]
+    S3 --> R
+    
+    %% Circuit Breaker Error
+    E --> T{Circuit Open?}
+    T -->|Yes| U[CircuitBreakerError]
+    U --> S
+    
+    %% Styling
+    classDef external fill:#ffcccc
+    classDef infrastructure fill:#ccffcc
+    classDef application fill:#ccccff
+    classDef error fill:#ffaaaa
+    
+    class K,L2 external
+    class J1,V,W,X infrastructure
+    class B,C,D,E,F application
+    class S,U,N3,O2,O3,O4,O5 error
+```
+
+## Simplified Flow Diagram
+
+```mermaid
+flowchart LR
+    A[Client] --> B[Django Router]
+    B --> C[get_products]
+    C --> D[Handler Validation]
+    D --> E[Circuit Breaker Check]
+    E --> F[APM Tracing]
+    F --> G[Parse Params]
+    G --> H[Tokopedia API Client]
+    H --> I[Redis Token Cache]
+    I --> J{Token Valid?}
+    J -->|Yes| K[Use Cached Token]
+    J -->|No| L[Get New Token]
+    L --> M[Tokopedia OAuth]
+    M --> N[Cache New Token]
+    N --> K
+    K --> O[Call Products API]
+    O --> P[Tokopedia Products API]
+    P --> Q[Handle Response]
+    Q --> R[Return to Client]
+```
+

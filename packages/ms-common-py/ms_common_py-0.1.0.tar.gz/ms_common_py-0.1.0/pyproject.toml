@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=76.1.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ms-common-py"
+version = "0.1.0"
+description = "Common instrumentation and APM utilities"
+authors = [
+  { name = "FinAccel Team" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+  "ddtrace>=2.2.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["apm", "apm.*"]
