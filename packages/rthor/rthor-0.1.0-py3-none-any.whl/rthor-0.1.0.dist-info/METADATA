@@ -1,0 +1,241 @@
+Metadata-Version: 2.4
+Name: rthor
+Version: 0.1.0
+Summary: Python implementation of RTHOR (Randomization test of hypothesized order relations)
+Author-email: Andrew Mitchell <andrew.mitchell.research@gmail.com>
+License-Expression: MIT
+Project-URL: homepage, https://github.com/MitchellAcoustics/rthor
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: pandas>=2.0.0
+Dynamic: license-file
+
+# rthor
+
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Tests status][tests-badge]][tests-link]
+[![Linting status][linting-badge]][linting-link]
+[![Documentation status][documentation-badge]][documentation-link]
+[![License][license-badge]](./LICENSE.md)
+
+<!-- prettier-ignore-start -->
+[tests-badge]:              https://github.com/MitchellAcoustics/rthor/actions/workflows/tests.yml/badge.svg
+[tests-link]:               https://github.com/MitchellAcoustics/rthor/actions/workflows/tests.yml
+[linting-badge]:            https://github.com/MitchellAcoustics/rthor/actions/workflows/linting.yml/badge.svg
+[linting-link]:             https://github.com/MitchellAcoustics/rthor/actions/workflows/linting.yml
+[documentation-badge]:      https://github.com/MitchellAcoustics/rthor/actions/workflows/docs.yml/badge.svg
+[documentation-link]:       https://github.com/MitchellAcoustics/rthor/actions/workflows/docs.yml
+[license-badge]:            https://img.shields.io/badge/License-MIT-yellow.svg
+<!-- prettier-ignore-end -->
+
+**rthor** is a Python implementation of RTHOR (Randomization Test of Hypothesized Order Relations), a statistical test for circumplex and circular models in correlation matrices.
+
+## Features
+
+- **Exact R Parity**: Produces numerically identical results to the original R RTHORR package
+- **Multiple Input Formats**: Works with files, pandas DataFrames, or numpy arrays
+- **Flexible Analysis**: Test single matrices or compare multiple matrices pairwise
+- **Fast Performance**: Vectorized operations using NumPy for efficient computation
+- **Type-Safe**: Fully typed with comprehensive input validation
+- **Well-Documented**: Extensive docstrings and examples
+
+## Quick Start
+
+```python
+import rthor
+import pandas as pd
+
+# Test from correlation matrix file
+result = rthor.rthor_test(
+    "correlations.txt",
+    order="circular6",
+    n_matrices=3,
+    n_variables=6,
+    labels=["Sample 1", "Sample 2", "Sample 3"]
+)
+
+# View results
+print(result.summary())
+print(result.results)
+
+# Test from DataFrames
+result = rthor.rthor_test(
+    [df1, df2, df3],
+    order="circular6",
+    labels=["Group A", "Group B", "Group C"]
+)
+
+# Compare multiple matrices
+comparison = rthor.compare_matrices([df1, df2, df3], order="circular6")
+print(comparison.summary())
+print(comparison.comparisons)  # Pairwise differences
+```
+
+## Installation
+
+### From PyPI (when released)
+
+```sh
+pip install rthor
+```
+
+### From Source
+
+```sh
+pip install git+https://github.com/MitchellAcoustics/rthor.git
+```
+
+### For Development
+
+```sh
+git clone https://github.com/MitchellAcoustics/rthor.git
+cd rthor
+pip install -e .[dev]
+```
+
+## Requirements
+
+- Python 3.11, 3.12, or 3.13
+- NumPy ≥ 1.24.0
+- pandas ≥ 2.0.0
+
+## What is RTHOR?
+
+RTHOR (Randomization Test of Hypothesized Order Relations) is a statistical method for testing whether correlation matrices conform to a hypothesized ordering of variables. This is particularly useful for:
+
+- **Circumplex Models**: Variables arranged in a circular pattern (e.g., interpersonal behavior, emotions)
+- **Circular Structures**: Testing theoretical predictions about variable ordering
+- **Correlation Patterns**: Validating expected patterns in correlation matrices
+
+The test uses a randomization approach to compute p-values, comparing the observed Correspondence Index (CI) with values from permuted data. CI ranges from -1 (perfect disagreement) to +1 (perfect agreement).
+
+## Key Functions
+
+### `rthor_test()`
+
+Test whether correlation matrices conform to a hypothesized ordering.
+
+**Parameters:**
+
+- `data`: Input data (file path, list of DataFrames, or numpy array)
+- `order`: Hypothesized ordering ("circular6", "circular8", or custom list)
+- `labels`: Optional descriptive labels for matrices
+- `n_matrices`: Number of matrices (required for file input)
+- `n_variables`: Number of variables (required for file input)
+
+**Returns:** `RTHORResult` object with results DataFrame and metadata
+
+### `compare_matrices()`
+
+Compare multiple correlation matrices pairwise to determine which fits the hypothesis better.
+
+**Parameters:** Same as `rthor_test()` but requires at least 2 matrices
+
+**Returns:** `ComparisonResult` object with individual results and pairwise comparisons
+
+## Documentation
+
+Full documentation is available at [https://mitchellacoustics.github.io/rthor](https://mitchellacoustics.github.io/rthor)
+
+## Testing
+
+Run tests across all supported Python versions:
+
+```sh
+tox
+```
+
+Run tests in current environment:
+
+```sh
+pytest tests
+```
+
+Run tests with coverage:
+
+```sh
+pytest --cov --cov-report=xml
+```
+
+## Development
+
+This project uses:
+
+- **uv** for dependency management
+- **ruff** for linting and formatting
+- **pytest** for testing
+- **mkdocs** with Material theme for documentation
+- **pre-commit** hooks (via prek) for code quality
+
+Install development dependencies:
+
+```sh
+pip install -e .[dev]
+```
+
+Run pre-commit hooks:
+
+```sh
+prek run
+```
+
+Build documentation:
+
+```sh
+mkdocs serve
+```
+
+## Project Team
+
+**Andrew Mitchell** ([andrew.mitchell.research@gmail.com](mailto:andrew.mitchell.research@gmail.com))
+
+### Research Software Engineering Contact
+
+Centre for Advanced Research Computing, University College London
+([arc.collaborations@ucl.ac.uk](mailto:arc.collaborations@ucl.ac.uk))
+
+## Citation
+
+If you use rthor in your research, please cite both this package and the original R implementation:
+
+**rthor:**
+
+```bibtex
+@software{mitchell_rthor_2025,
+  author = {Mitchell, Andrew},
+  title = {rthor: Python implementation of RTHOR},
+  year = {2025},
+  url = {https://github.com/MitchellAcoustics/rthor}
+}
+```
+
+**Original R RTHORR:**
+
+```bibtex
+@manual{gurtman_rthorr_2021,
+  title = {RTHORR: Randomization Tests of Hypothesized Order Relations},
+  author = {Gurtman, Michael B.},
+  year = {2021},
+  note = {R package version 1.0.0}
+}
+```
+
+## License
+
+MIT License. See [LICENSE.md](LICENSE.md) for details.
+
+## Acknowledgments
+
+This project is developed in collaboration with the
+[Centre for Advanced Research Computing](https://ucl.ac.uk/arc), University College London.
+
+rthor is a Python port of the R package RTHORR by Michael B. Gurtman. The implementation maintains exact numerical parity with the original R version while providing a Pythonic interface and improved performance through vectorization.
