@@ -1,0 +1,48 @@
+[build-system]
+requires = ["maturin>=1.5,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "async-server-ops"                      # PyPI package name (hyphens ok)
+version = "0.2.2"                              # <-- bump for the next release on PyPI
+description = "Async local/remote (SSH) file ops in Rust with throughput tuning and Python bindings"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.8"
+keywords = ["ssh", "rsync", "scp", "async", "tokio", "rust", "pyo3"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+# Optional runtime deps on the Python side (usually none for a pure extension)
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/your-org/async-server-ops"
+Repository = "https://github.com/your-org/async-server-ops/issues"
+
+[tool.maturin]
+# Enable the Cargo `python` feature so pyo3 builds, and target abi3
+features = ["python"]
+strip = true
+# Include the top-level files in the wheel (adjust as needed)
+include = [
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+    "Cargo.toml",
+    "src/**",
+]
+# You can also add manylinux policy on the CLI:
+#   maturin build --release -F python --manylinux 2014

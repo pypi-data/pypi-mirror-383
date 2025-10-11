@@ -1,0 +1,46 @@
+[package]
+name = "async_server_ops"
+version = "0.2.0"                       # keep your crate version; Python wheel version comes from pyproject
+edition = "2021"
+license = "MIT"
+description = "Async local/remote (SSH) file ops in Rust with throughput tuning and Python bindings"
+readme = "README.md"
+repository = "https://github.com/your-org/async-server-ops"   # <- update if you have one
+keywords = ["ssh", "rsync", "scp", "async", "tokio"]
+categories = ["filesystem", "network-programming", "api-bindings"]
+
+[lib]
+name = "async_server_ops"               # this is the Python import module name
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+# Enable Python bindings only when requested by maturin/pip.
+# abi3 lets one wheel support many CPython versions (3.8+ here).
+python = [
+  "dep:pyo3",
+  "dep:pyo3-asyncio",
+  "pyo3/extension-module",
+  "pyo3/abi3-py38",
+  "pyo3-asyncio/tokio-runtime",
+]
+
+[dependencies]
+tokio = { version = "1.37", features = ["fs", "process", "macros", "rt-multi-thread", "io-util"] }
+async-trait = "0.1"
+futures = "0.3"
+thiserror = "1"
+which = "6"
+serde = { version = "1", features = ["derive"] }
+regex = "1"
+itertools = "0.13"
+
+# --- Python bindings (OPTIONAL) ---
+# Mark both as optional, and only compile them when the `python` feature is enabled.
+pyo3 = { version = "0.20", optional = true, features = ["macros", "abi3-py38"] }
+pyo3-asyncio = { version = "0.20", optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.37", features = ["macros", "rt-multi-thread"] }
+tempfile = "3"
+whoami = "1"
