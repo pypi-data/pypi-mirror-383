@@ -1,0 +1,283 @@
+# Shieldix - مكتبة حماية أكواد Python
+
+**النسخة:** 0.1.0  
+**المطور:** MERO  
+**تليجرام:** @QP4RM
+
+---
+
+## شو هي Shieldix؟
+
+Shieldix مكتبة بايثون بتحمي أكوادك البرمجية من الناس اللي بدهم يسرقوها أو يشوفوا شو مكتوب جواتها. المكتبة بتشتغل على تشفير ملفاتك بطريقة معقدة، وبتخليها صعبة كتير على أي حد يفكها.
+
+---
+
+## ليش تستخدم Shieldix؟
+
+### حماية قوية للكود
+- 40 مرحلة تشفير - كل مرحلة بتستخدم أسلوب مختلف
+- 30 محول بايت كود - بيحولوا الكود لصيغ معقدة
+- 45 وحدة تنفيذ - بيشغلوا الكود المحمي بطريقة آمنة
+
+### بيشتغل على كل شي
+- Windows, Linux, macOS
+- Android و Termux
+- 32-bit و 64-bit
+- Python 2.7 و كل إصدارات Python 3
+
+### سهل الاستخدام
+- ما بدك أي مكتبات خارجية
+- بس سطرين كود وبتحمي ملفاتك
+- الكود المحمي بيشتغل عادي بس بيكون مخفي
+
+---
+
+## كيف تنصّب المكتبة؟
+
+```bash
+pip install shieldix
+```
+
+---
+
+## كيف تستخدمها؟
+
+### احمي كودك
+
+```python
+import shieldix
+
+الكود_تبعي = """
+print("مرحبا يا عالم!")
+print("هاد الكود محمي بـ Shieldix")
+"""
+
+shieldix.protect(الكود_تبعي, output_file='كود_محمي.sldx')
+print("تم! الكود صار محمي")
+```
+
+### شغّل الكود المحمي
+
+```python
+import shieldix
+
+shieldix.execute_protected('كود_محمي.sldx')
+```
+
+---
+
+## مستويات الحماية
+
+عندك 4 مستويات حماية تختار منهم:
+
+```python
+import shieldix
+
+الكود = """
+def احسب(x, y):
+    return x + y
+
+نتيجة = احسب(10, 20)
+print(نتيجة)
+"""
+
+shieldix.protect(الكود, output_file='محمي.sldx', protection_level=4)
+```
+
+**المستويات:**
+- `protection_level=1` - حماية خفيفة
+- `protection_level=2` - حماية وسط
+- `protection_level=3` - حماية قوية (الافتراضي)
+- `protection_level=4` - حماية كاملة
+
+---
+
+## حماية مشروع كامل
+
+```python
+import shieldix
+import os
+
+def احمي_المشروع(مجلد_المشروع, مجلد_النتيجة):
+    if not os.path.exists(مجلد_النتيجة):
+        os.makedirs(مجلد_النتيجة)
+    
+    for root, dirs, files in os.walk(مجلد_المشروع):
+        for ملف in files:
+            if ملف.endswith('.py'):
+                المسار = os.path.join(root, ملف)
+                
+                with open(المسار, 'r', encoding='utf-8') as f:
+                    الكود = f.read()
+                
+                مسار_نسبي = os.path.relpath(المسار, مجلد_المشروع)
+                مسار_النتيجة = os.path.join(مجلد_النتيجة, مسار_نسبي + '.sldx')
+                
+                os.makedirs(os.path.dirname(مسار_النتيجة), exist_ok=True)
+                
+                shieldix.protect(الكود, output_file=مسار_النتيجة, protection_level=4)
+                print(f"تم حماية: {مسار_نسبي}")
+
+احمي_المشروع('مشروعي', 'مشروع_محمي')
+```
+
+---
+
+## التواصل
+
+**تليجرام:** [@QP4RM](https://t.me/QP4RM)
+
+---
+
+## الترخيص
+
+MIT License
+
+---
+
+**تم التطوير بواسطة MERO**  
+**© 2025 Shieldix**
+
+---
+---
+---
+
+# Shieldix - Python Code Protection Library
+
+**Version:** 0.1.0  
+**Developer:** MERO  
+**Telegram:** @QP4RM
+
+---
+
+## What is Shieldix?
+
+Shieldix is a Python library that protects your code from people who want to steal it or see what's inside. The library encrypts your files in a complex way, making it very difficult for anyone to crack them.
+
+---
+
+## Why Use Shieldix?
+
+### Strong Code Protection
+- 40 encryption stages - each stage uses a different method
+- 30 bytecode converters - transform code into complex formats
+- 45 execution modules - run protected code securely
+
+### Works Everywhere
+- Windows, Linux, macOS
+- Android & Termux
+- 32-bit & 64-bit
+- Python 2.7 and all Python 3 versions
+
+### Easy to Use
+- No external libraries needed
+- Just 2 lines of code to protect your files
+- Protected code runs normally but stays hidden
+
+---
+
+## How to Install?
+
+```bash
+pip install shieldix
+```
+
+---
+
+## How to Use?
+
+### Protect Your Code
+
+```python
+import shieldix
+
+my_code = """
+print("Hello, World!")
+print("This code is protected by Shieldix")
+"""
+
+shieldix.protect(my_code, output_file='protected_code.sldx')
+print("Done! Code is now protected")
+```
+
+### Run Protected Code
+
+```python
+import shieldix
+
+shieldix.execute_protected('protected_code.sldx')
+```
+
+---
+
+## Protection Levels
+
+You have 4 protection levels to choose from:
+
+```python
+import shieldix
+
+code = """
+def calculate(x, y):
+    return x + y
+
+result = calculate(10, 20)
+print(result)
+"""
+
+shieldix.protect(code, output_file='protected.sldx', protection_level=4)
+```
+
+**Levels:**
+- `protection_level=1` - Light protection
+- `protection_level=2` - Medium protection
+- `protection_level=3` - Strong protection (default)
+- `protection_level=4` - Maximum protection
+
+---
+
+## Protect Entire Project
+
+```python
+import shieldix
+import os
+
+def protect_project(project_dir, output_dir):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    for root, dirs, files in os.walk(project_dir):
+        for file in files:
+            if file.endswith('.py'):
+                file_path = os.path.join(root, file)
+                
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    code = f.read()
+                
+                relative_path = os.path.relpath(file_path, project_dir)
+                output_path = os.path.join(output_dir, relative_path + '.sldx')
+                
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                
+                shieldix.protect(code, output_file=output_path, protection_level=4)
+                print(f"Protected: {relative_path}")
+
+protect_project('my_project', 'protected_project')
+```
+
+---
+
+## Contact
+
+**Telegram:** [@QP4RM](https://t.me/QP4RM)
+
+---
+
+## License
+
+MIT License
+
+---
+
+**Developed by MERO**  
+**© 2025 Shieldix**
