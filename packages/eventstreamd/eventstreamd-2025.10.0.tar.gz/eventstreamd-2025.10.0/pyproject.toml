@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "eventstreamd"
+version = "2025.10.0"
+description = "Simple Event Stream Server"
+readme = "README.md"
+authors = ["Sebastian Rittau <srittau@rittau.biz>"]
+license = "MIT"
+homepage = "https://github.com/srittau/eventstreamd"
+repository = "https://github.com/srittau/eventstreamd"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Topic :: Internet :: WWW/HTTP",
+]
+packages = [{ include = "evtstrd" }, { include = "evtstrd_test" }]
+
+[tool.poetry.scripts]
+eventstreamd = "evtstrd.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+json-get = "~1.1.1"
+
+[tool.poetry.group.dev.dependencies]
+asserts = ">=0.6,<0.14"
+mypy = ">=1.7,<1.19"
+poethepoet = ">=0.22.0"
+pytest = ">=7.4,<9.0"
+ruff = "~= 0.14.0"
+
+[tool.ruff]
+line-length = 79
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I"]
+
+[tool.pytest.ini_options]
+python_files = ["evtstrd_test/*.py"]
+
+[tool.poe.tasks]
+lint = "ruff check"
+typecheck = "mypy evtstrd evtstrd_test"
+test = "pytest"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
