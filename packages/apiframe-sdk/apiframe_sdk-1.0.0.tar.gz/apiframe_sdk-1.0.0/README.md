@@ -1,0 +1,577 @@
+# Apiframe Python SDK
+
+Official Python SDK for [Apiframe](https://apiframe.ai) - The ultimate platform for AI image and video generation APIs.
+
+[![PyPI version](https://badge.fury.io/py/apiframe.svg)](https://pypi.org/project/apiframe/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+## Features
+
+- 🎨 **Midjourney API** (Original) - Generate, upscale, vary, blend, inpaint, face swap
+- 🚀 **Midjourney Pro API** - Fast & Turbo modes, better stability
+- ⚡ **Flux AI** - Fast and high-quality image generation
+- 🎭 **Ideogram** - Creative image generation with text rendering
+- 🎬 **Luma AI** - Text and image to video generation
+- 🎵 **Suno AI** - AI music generation
+- 🎶 **Udio AI** - Advanced music creation
+- 🎥 **Runway ML** - Gen-3 video generation
+- 🎪 **Kling AI** - Video generation and manipulation
+- 📸 **AI Photos** - Headshots, face swap, and photo enhancement
+- 📤 **Media Upload** - Upload and manage media files
+
+## Installation
+
+```bash
+pip install apiframe-sdk
+```
+
+## Quick Start
+
+```python
+from apiframe import Apiframe
+
+# Initialize the client
+client = Apiframe(api_key='your_api_key_here')
+
+# Create an image generation task
+task = client.midjourney.imagine({
+    'prompt': 'a serene mountain landscape at sunset, photorealistic',
+    'aspect_ratio': '16:9'
+})
+
+print(f"Task created: {task['id']}")
+
+# Wait for completion with progress updates
+result = client.tasks.wait_for(
+    task['id'],
+    on_progress=lambda p: print(f'Progress: {p}%')
+)
+
+print(f"Images ready: {result['image_urls']}")  # imagine returns 4 images
+
+# Close the client
+client.close()
+```
+
+### Using Context Manager
+
+```python
+from apiframe import Apiframe
+
+with Apiframe(api_key='your_api_key_here') as client:
+    task = client.midjourney.imagine({
+        'prompt': 'a beautiful sunset',
+        'aspect_ratio': '16:9'
+    })
+    
+    result = client.tasks.wait_for(task['id'])
+    print(result['image_urls'])
+```
+
+## API Reference
+
+### Configuration
+
+```python
+from apiframe import Apiframe
+
+client = Apiframe(
+    api_key='your_api_key',                    # Required: Your Apiframe API key
+    base_url='https://api.apiframe.ai',        # Optional: Custom API endpoint
+    timeout=300                                 # Optional: Request timeout in seconds (default: 300)
+)
+```
+
+### Midjourney (Original API)
+
+The original Midjourney API with comprehensive features.
+**Endpoint:** `/imagine`, `/imagine-video`, `/reroll`, `/variations`, `/faceswap`, etc.
+**Docs:** [https://docs.apiframe.ai/api-endpoints](https://docs.apiframe.ai/api-endpoints)
+
+#### imagine(params)
+Create a new image generation task.
+
+```python
+task = client.midjourney.imagine({
+    'prompt': 'a serene mountain landscape',
+    'aspect_ratio': '16:9',                    # Optional: '1:1', '16:9', '9:16', etc.
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### imagine_video(params)
+Generate videos using a text prompt and an image URL.
+
+```python
+task = client.midjourney.imagine_video({
+    'prompt': 'cinematic mountain landscape',
+    'image_url': 'https://example.com/start-frame.jpg',
+    'motion': 'high',                          # Optional: 'low' or 'high'
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### reroll(params)
+Reroll to create new images from a previous Imagine task.
+
+```python
+task = client.midjourney.reroll({
+    'parent_task_id': 'original_task_id',
+    'prompt': 'optional new prompt',           # Optional
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### variations(params)
+Create 4 new variations of one of the 4 generated images.
+
+```python
+task = client.midjourney.variations({
+    'parent_task_id': 'original_task_id',
+    'index': '1',                              # '1', '2', '3', '4', or 'strong', 'subtle'
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### face_swap(params)
+Swap the face on a target image with the face on a provided image.
+
+```python
+task = client.midjourney.face_swap({
+    'target_image_url': 'https://example.com/target.jpg',
+    'swap_image_url': 'https://example.com/face.jpg',
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### upscale_1x(params)
+Upscale one of the 4 generated images to get a single image.
+
+```python
+task = client.midjourney.upscale_1x({
+    'parent_task_id': 'original_task_id',
+    'index': '1',                              # '1', '2', '3', or '4'
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### upscale_alt(params)
+Upscale with Subtle or Creative mode.
+
+```python
+task = client.midjourney.upscale_alt({
+    'parent_task_id': 'upscale1x_task_id',
+    'type': 'subtle',                          # 'subtle' or 'creative'
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### upscale_highres(params)
+Upscale any image to higher resolution (2x or 4x).
+
+```python
+task = client.midjourney.upscale_highres({
+    'parent_task_id': 'task_id',               # Or use 'image_url' instead
+    'image_url': 'https://example.com/image.jpg',          # Or use 'parent_task_id'
+    'type': '2x',                              # '2x' or '4x'
+    'index': '1',                              # Optional
+    'webhook_url': 'https://your-domain.com/webhook',      # Optional
+    'webhook_secret': 'your-secret'                        # Optional
+})
+```
+
+#### Other Midjourney Methods
+- `inpaint(params)` - Redraw a selected area of an image (Vary Region)
+- `outpaint(params)` - Enlarge an image's canvas (Zoom Out)
+- `pan(params)` - Broaden the image canvas in a specific direction
+- `describe(params)` - Get four example prompts based on an image
+- `blend(params)` - Blend multiple images into one
+- `shorten(params)` - Analyze and optimize your prompt
+- `seed(params)` - Get the seed of a generated image
+
+See the [examples directory](examples/) for detailed usage.
+
+### Midjourney Pro API (MidjourneyAlt)
+
+The Pro Midjourney API with Fast & Turbo modes for better performance.
+
+```python
+task = client.midjourney_alt.imagine({
+    'prompt': 'a serene mountain landscape',
+    'mode': 'turbo'                            # 'fast' or 'turbo' (Pro exclusive)
+})
+
+task = client.midjourney_alt.upscale({
+    'parent_task_id': 'parent_task_id',
+    'index': '1',
+    'type': 'subtle'                           # 'subtle' or 'creative'
+})
+```
+
+### Flux
+
+```python
+# Generate with Flux (specify model)
+task = client.flux.generate({
+    'model': 'flux-pro',                       # 'flux-schnell', 'flux-pro', 'flux-dev', etc.
+    'prompt': 'a futuristic cityscape',
+    'width': 1024,
+    'height': 1024,
+    'steps': 50,                               # only for flux-pro and flux-dev
+    'guidance': 7.5,                           # only for flux-pro and flux-dev
+    'seed': 42,
+    'safety_tolerance': 2
+})
+
+# Convenience methods
+task = client.flux.generate_pro({
+    'prompt': 'a futuristic cityscape',
+    'width': 1024,
+    'height': 1024
+})
+
+task = client.flux.generate_dev({
+    'prompt': 'a landscape',
+    'aspect_ratio': '16:9'
+})
+
+task = client.flux.generate_schnell({
+    'prompt': 'quick sketch',
+    'width': 512,
+    'height': 512
+})
+```
+
+### Ideogram
+
+```python
+# Generate image
+task = client.ideogram.generate({
+    'prompt': 'a logo design',
+    'aspect_ratio': 'ASPECT_1_1',
+    'style_type': 'DESIGN',
+    'magic_prompt_option': 'AUTO'
+})
+
+# Upscale image
+task = client.ideogram.upscale({
+    'image_url': 'https://...',
+    'prompt': 'enhance this image',
+    'resemblance': 80                          # 1-100
+})
+
+# Describe image
+task = client.ideogram.describe({
+    'image_url': 'https://...'
+})
+
+# Remix (image-to-image)
+task = client.ideogram.remix({
+    'image_url': 'https://...',
+    'prompt': 'transform this image...',
+    'image_weight': 70                         # 1-100
+})
+```
+
+### Luma AI (Video)
+
+```python
+# Generate video from text prompt
+task = client.luma.generate({
+    'prompt': 'a serene beach with waves',
+    'aspect_ratio': '16:9',
+    'loop': False,
+    'enhance_prompt': True
+})
+
+# Generate video with start and end images
+task = client.luma.generate({
+    'prompt': 'a smooth transition',
+    'image_url': 'https://start-image.jpg',
+    'end_image_url': 'https://end-image.jpg',
+    'aspect_ratio': '1:1'
+})
+
+# Extend a previously generated video
+task = client.luma.extend({
+    'parent_task_id': 'previous_task_id',
+    'prompt': 'continue the scene with more action'
+})
+```
+
+### Suno AI (Music)
+
+```python
+# Generate song with lyrics (creates TWO songs)
+task = client.suno.generate({
+    'prompt': 'an upbeat electronic track',
+    'lyrics': 'Verse 1: Dancing through the night...',
+    'model': 'chirp-v3-5',
+    'tags': 'electronic, dance, upbeat',
+    'title': 'Digital Dreams',
+    'make_instrumental': False
+})
+
+result = client.tasks.wait_for(task['id'])
+# result['songs'] will contain array of 2 songs
+
+# Upload audio and turn it into extendable song
+upload_task = client.suno.upload({
+    'audio_url': 'https://your-audio-url.mp3'
+})
+upload_result = client.tasks.wait_for(upload_task['id'])
+
+# Extend a song
+extend_task = client.suno.extend({
+    'song_id': upload_result['song_id'],
+    'continue_at': 30,
+    'from_upload': True,
+    'prompt': 'continue with more energy'
+})
+
+# Generate lyrics only
+lyrics_task = client.suno.generate_lyrics({
+    'prompt': 'a song about summer adventures'
+})
+lyrics_result = client.tasks.wait_for(lyrics_task['id'])
+```
+
+### Udio AI (Music)
+
+```python
+# Generate music (creates TWO songs with lyrics)
+task = client.udio.generate({
+    'prompt': 'a calm ambient soundtrack',
+    'lyrics': 'Verse 1: Under the stars...',
+    'model': 'udio32-v1.5',
+    'tags': 'ambient, calm, instrumental'
+})
+
+result = client.tasks.wait_for(task['id'])
+# result['songs'] will contain array of 2 songs
+```
+
+### Runway ML (Video)
+
+```python
+# Text to video
+task = client.runway.text_to_video(
+    'a drone shot flying over mountains',
+    {'model': 'gen3a_turbo', 'duration': 5}
+)
+
+# Image to video
+task = client.runway.image_to_video(
+    'https://image-url.jpg',
+    'add cinematic motion to this scene',
+    {'duration': 10}
+)
+
+# Video to video
+task = client.runway.video_to_video(
+    'https://video-url.mp4',
+    'transform with sunset atmosphere',
+    {'model': 'gen3', 'duration': 5}
+)
+```
+
+### Kling AI (Video)
+
+```python
+# Text to video
+task = client.kling.text_to_video(
+    'a time-lapse of a flower blooming',
+    {'duration': 10, 'aspect_ratio': '16:9'}
+)
+
+# Image to video
+task = client.kling.image_to_video(
+    'https://image-url.jpg',
+    'animate this image with smooth motion',
+    {'mode': 'pro', 'duration': 5}
+)
+
+# Virtual Try On
+task = client.kling.tryon({
+    'human_image_url': 'https://person-image.jpg',
+    'cloth_image_url': 'https://clothing-image.jpg'
+})
+```
+
+### AI Photos
+
+```python
+# Step 1: Upload and prepare 10-30 images for training
+upload_task = client.ai_photos.upload({
+    'images': ['base64_image_1', 'base64_image_2', '...'],  # 10-30 images
+    'ethnicity': 'white',
+    'gender': 'male',
+    'age': 30
+})
+
+upload_result = client.tasks.wait_for(upload_task['id'])
+
+# Step 2: Train AI on the subject
+train_task = client.ai_photos.train({
+    'training_images_id': upload_task['id'],
+    'trigger_word': 'TOKMSN'                   # Default trigger word
+})
+
+train_result = client.tasks.wait_for(train_task['id'])
+
+# Step 3: Generate photos using the trained model
+generate_task = client.ai_photos.generate({
+    'training_id': train_task['id'],
+    'prompt': 'a realistic portrait of TOKMSN man wearing a suit',
+    'aspect_ratio': '1:1',
+    'number_of_images': '4'
+})
+
+result = client.tasks.wait_for(generate_task['id'])
+print(result['image_urls'])
+```
+
+### Media Upload
+
+```python
+# Upload image from file (max 2MB)
+upload = client.media.upload(file='./path/to/image.jpg')
+print(f"Uploaded: {upload['imageURL']}")
+
+# Upload audio from file (max 2MB, 60 seconds)
+audio_upload = client.media.upload_audio(file='./path/to/audio.mp3')
+print(f"Uploaded audio: {audio_upload['audioURL']}")
+
+# Use uploaded media
+task = client.midjourney.blend({
+    'image_urls': [upload['imageURL'], 'https://another-url.jpg']
+})
+```
+
+### Tasks
+
+General task management endpoints.
+
+#### get(task_id)
+Get the result/status of a submitted task.
+
+```python
+task = client.tasks.get(task_id)
+print(task['status'])  # 'pending', 'processing', 'completed', 'failed'
+```
+
+#### get_many(task_ids)
+Get the results/statuses of multiple tasks (min 2, max 20).
+
+```python
+result = client.tasks.get_many(['task_id_1', 'task_id_2', 'task_id_3'])
+print(result['tasks'])
+```
+
+#### wait_for(task_id, options)
+Wait for a task to complete with progress tracking.
+
+```python
+result = client.tasks.wait_for(
+    task_id,
+    on_progress=lambda progress: print(f'Progress: {progress}%'),
+    interval=3,                                # Polling interval in seconds (default: 3)
+    timeout=300                                 # Max wait time in seconds (default: 300)
+)
+```
+
+#### get_account_info()
+Get account details including credits, usage, plan, etc.
+
+```python
+account = client.tasks.get_account_info()
+print(f"Email: {account['email']}")
+print(f"Credits: {account['credits']}")
+print(f"Total Images: {account['total_images']}")
+print(f"Plan: {account['plan']}")
+```
+
+## Error Handling
+
+```python
+from apiframe import (
+    Apiframe,
+    ApiframeError,
+    AuthenticationError,
+    RateLimitError,
+    TimeoutError
+)
+
+try:
+    client = Apiframe(api_key='your_api_key')
+    task = client.midjourney.imagine({'prompt': '...'})
+    result = client.tasks.wait_for(task['id'])
+except AuthenticationError:
+    print('Invalid API key')
+except RateLimitError:
+    print('Rate limit exceeded')
+except TimeoutError:
+    print('Request timed out')
+except ApiframeError as e:
+    print(f'API error: {e.message}')
+    print(f'Status: {e.status}')
+```
+
+## Environment Variables
+
+You can set your API key using an environment variable:
+
+```bash
+export APIFRAME_API_KEY=your_api_key_here
+```
+
+Then in your code:
+
+```python
+import os
+from apiframe import Apiframe
+
+client = Apiframe(api_key=os.environ.get('APIFRAME_API_KEY'))
+```
+
+## Examples
+
+Check the `/examples` directory for complete examples:
+
+- `midjourney_example.py` - Midjourney Original API usage
+- `flux_example.py` - Flux AI image generation
+- `luma_video_example.py` - Luma video generation
+- `suno_music_example.py` - Suno music generation
+- `media_upload_example.py` - Media upload and usage
+- `ai_photos_example.py` - AI Photos training and generation
+
+## Requirements
+
+- Python >= 3.8
+- An Apiframe API key (get one at [apiframe.ai](https://apiframe.ai))
+
+## Documentation
+
+For detailed API documentation, visit [docs.apiframe.ai](https://docs.apiframe.ai)
+
+## Support
+
+- Documentation: [docs.apiframe.ai](https://docs.apiframe.ai)
+- GitHub Issues: [github.com/apiframe-ai/apiframe-python-sdk/issues](https://github.com/apiframe-ai/apiframe-python-sdk/issues)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
