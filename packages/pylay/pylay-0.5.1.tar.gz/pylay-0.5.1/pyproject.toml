@@ -1,0 +1,204 @@
+[project]
+name = "pylay"
+version = "0.5.1"
+description = "Python の type hint と docstrings を利用した types <-> docs 間の透過的なジェネレータ"
+authors = [{name = "Ryo HIGASIGAWA", email = "your.email@example.com"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Code Generators",
+]
+keywords = ["python", "type-hints", "pydantic", "yaml", "documentation", "generator"]
+dependencies = [
+    "pydantic>=2.8.2",
+    "pyyaml>=6.0.2",
+    "ruamel-yaml>=0.18.6",
+    "rich>=13.7.0",
+    "networkx>=3.3",
+    "click>=8.3.0",
+    "matplotlib>=3.10.6",
+    "mypy>=1.18.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/biwakonbu/pylay"
+Repository = "https://github.com/biwakonbu/pylay.git"
+
+[project.scripts]
+pylay = "src.cli.main:cli"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.3",
+    "ruff>=0.6.0",
+    "radon>=6.0.1",
+    "interrogate>=1.7.0",
+    "safety>=3.2.3",
+    "mypy>=1.18.2",
+    "pre-commit>=3.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
+    "networkx>=3.3",
+    "pydot>=3.0.0",
+]
+viz = [
+    "matplotlib>=3.5.0",
+    "networkx>=3.3",
+]
+
+[tool.poetry]
+name = "pylay"
+version = "0.5.0"
+description = "Python の type hint と docstrings を利用した types <-> docs 間の透過的なジェネレータ"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [
+    {include = "src"},
+]
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+pydantic = ">=2.8.2"
+pyyaml = ">=6.0.2"
+ruamel-yaml = ">=0.18.6"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.3.3"
+ruff = ">=0.6.0"
+radon = ">=6.0.1"
+interrogate = ">=1.7.0"
+safety = ">=3.2.3"
+mypy = ">=1.18.2"
+pre-commit = ">=3.0.0"
+pytest-cov = ">=4.0.0"
+pytest-xdist = ">=3.0.0"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+# Python 3.12+ 対応の設定
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade (Python 3.9+ modernization)
+]
+
+# Python 3.13標準表記を強制（警告として検出）
+# UP006: typing.List → list, typing.Dict → dict (PEP 585)
+# UP007: Union[X, Y] → X | Y (PEP 604)
+# UP035: typing.List/Dict 等の非推奨インポートを検出
+# UP037: Remove quoted annotations (Python 3.10+)
+# UP045: Optional[X] → X | None (PEP 604)
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# uv 用の設定
+[tool.uv]
+package = true
+dev-dependencies = [
+    "mypy>=1.18.2",
+    "pytest>=8.3.3",
+    "ruff>=0.6.0",
+    "pre-commit>=3.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
+    "radon>=6.0.1",
+    "interrogate>=1.7.0",
+    "safety>=3.2.3",
+    "types-pyyaml>=6.0.12.20250915",
+    "pyright>=1.1.406",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "tests.*",
+    "scripts.*",
+]
+ignore_missing_imports = true
+
+[tool.pylay]
+# pylay プロジェクト全体解析設定
+target_dirs = ["src", "scripts", "utils"]
+output_dir = "docs/pylay"
+generate_markdown = true
+extract_deps = true
+infer_level = "strict"
+clean_output_dir = true
+exclude_patterns = [
+    "**/tests/**",
+    "**/*_test.py",
+    "**/__pycache__",
+    "**/.venv/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+]
+max_depth = 10
+
+# 新機能：型品質チェック設定
+[tool.pylay.quality_check]
+# 型レベル閾値設定（厳格モード）
+level_thresholds = { level1_max = 0.15, level2_min = 0.50, level3_min = 0.20 }
+
+# エラーレベル判定基準
+error_conditions = [
+    { condition = "level1_ratio > 0.20", message = "Level 1型エイリアスの比率が高すぎます" },
+    { condition = "level2_ratio < 0.40", message = "Level 2制約付き型の比率が低すぎます" },
+    { condition = "level3_ratio < 0.15", message = "Level 3 BaseModelの比率が低すぎます" },
+    { condition = "documentation.implementation_rate < 0.70", message = "ドキュメント実装率が低すぎます" },
+    { condition = "primitive_usage_ratio > 0.10", message = "プリミティブ型の直接使用が多すぎます" },
+]
+
+# アドバイス・警告・エラーレベル設定
+severity_levels = [
+    { name = "アドバイス", color = "blue", threshold = 0.8 },
+    { name = "警告", color = "yellow", threshold = 0.6 },
+    { name = "エラー", color = "red", threshold = 0.0 },
+]
+
+# 改善プランの詳細度設定
+improvement_guidance = [
+    { level = "level1_to_level2", suggestion = "NewType + ファクトリ関数で制約を追加してください（PEP 484準拠）" },
+    { level = "level2_to_level3", suggestion = "BaseModelでビジネスロジックを追加してください" },
+    { level = "add_validation", suggestion = "バリデーション関数を実装してください" },
+    { level = "add_documentation", suggestion = "詳細なdocstringを追加してください" },
+    { level = "primitive_replacement", suggestion = "ドメイン型に置き換えてください" },
+]
+
+[tool.uv.sources]
+# ローカル開発用
+# pylay = { path = ".", editable = true }
+
+# PyPI公開は環境変数で設定
