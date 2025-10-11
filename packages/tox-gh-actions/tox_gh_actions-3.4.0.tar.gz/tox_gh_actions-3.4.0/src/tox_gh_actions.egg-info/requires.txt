@@ -1,0 +1,12 @@
+tox<5,>=4
+
+[testing]
+devpi-process
+pre-commit
+pytest>=7
+pytest-cov>=4
+pytest-mock>=3
+pytest-randomly>=3
+
+[testing:platform_python_implementation == "CPython"]
+mypy
