@@ -1,0 +1,43 @@
+[project]
+name = "hatch-simple-cython"
+version = "0.1.0-beta.2"
+description = "A simplified Cython build hook plugin for Hatch"
+readme = "README.md"
+authors = []
+requires-python = ">=3.10"
+dependencies = [
+    "hatchling>=1.18.0",
+    "Cython>=3.0.0",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Framework :: Hatch",
+]
+
+[project.urls]
+Documentation = "https://github.com/Sun-ZhenXing/hatch-simple-cython#readme"
+Issues = "https://github.com/Sun-ZhenXing/hatch-simple-cython/issues"
+Source = "https://github.com/Sun-ZhenXing/hatch-simple-cython"
+
+[project.entry-points.hatch]
+simple-cython = "hatch_simple_cython.hooks"
+
+[build-system]
+requires = ["hatchling>=1.18.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hatch_simple_cython"]
+
+[tool.uv]
+dev-dependencies = [
+    "editables>=0.5",
+    "numpy>=2.2.6",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
