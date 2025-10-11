@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools==76.1.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PythaGrid"
+description = ""
+
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "PythaGrid.__version__"}
