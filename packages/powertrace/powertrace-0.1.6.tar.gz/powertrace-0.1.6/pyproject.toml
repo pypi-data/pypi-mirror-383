@@ -1,0 +1,72 @@
+[project]
+name = "powertrace"
+version = "0.1.6"
+description = "Detailed stack trace logging and visualization"
+authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.10, <3.14"
+dependencies = [
+    "package-utils[context] >=0.6.6, <1",
+    "powercli >=0.3.7, <1",
+    "rich >=13.7.1, <15",
+    "superpathlib >=2.0.4, <3"
+]
+
+[project.optional-dependencies]
+dev = [
+    "package-dev-tools >=0.7.1, <1",
+    "package-dev-utils >=0.1.6, <1",
+    "pexpect >=4.9.0, <5",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/quintenroets/powertrace"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.coverage.run]
+command_line = "-m pytest tests"
+
+[tool.coverage.report]
+precision = 4
+fail_under = 100
+
+[tool.mypy]
+strict = true
+no_implicit_reexport = false
+
+[[tool.mypy.overrides]]
+module = [
+    "pexpect.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src", ".",
+]
+
+[tool.ruff]
+fix = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN401",   # annotated with Any
+    "D",        # docstrings
+    "G004",     # logging f-string
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    "F401"  # unused import
+]
+"tests/*" = [
+    "S101"  # assert used
+]
+
+[tool.setuptools.package-data]
+powertrace = ["py.typed"]
