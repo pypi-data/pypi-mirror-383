@@ -1,0 +1,51 @@
+[project]
+name = "FakeSMTPd"
+version = "2025.10.0"
+description = "SMTP server for testing mail functionality"
+readme = "README.md"
+authors = [
+    { name = "Sebastian Rittau", email = "srittau@rittau.biz" },
+]
+license = "MIT"
+keywords = ["SMTP", "mail", "testing"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Topic :: Communications :: Email :: Mail Transport Agents",
+    "Topic :: Software Development :: Testing",
+]
+requires-python = ">= 3.10"
+dependencies = [
+    "typing-extensions >= 4.0.1, < 5",
+]
+
+[project.scripts]
+fakesmtpd = "fakesmtpd.server:main"
+
+[project.urls]
+"Homepage" = "https://github.com/srittau/fakesmtpd"
+"GitHub" = "https://github.com/srittau/fakesmtpd"
+"Issues" = "https://github.com/srittau/fakesmtpd/issues"
+"Changes" = "https://github.com/srittau/fakesmtpd/blob/main/CHANGELOG.md"
+
+[tool.poetry]
+packages = [{ include = "fakesmtpd" }]
+
+[tool.poetry.group.dev.dependencies]
+mypy = ">=1.14.1,<1.19.0"
+pytest = ">=6.2.4,<9"
+pytest-mock = ">=3.6.1"
+ruff = "~= 0.14.0"
+
+[tool.pytest.ini_options]
+python_files = ["test_*/*.py"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 79
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
