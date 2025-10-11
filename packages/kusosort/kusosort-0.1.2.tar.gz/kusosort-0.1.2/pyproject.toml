@@ -1,0 +1,37 @@
+# pyproject.toml (修正版)
+
+[build-system]
+requires = ["scikit-build-core>=0.7.0", "pybind11>=2.11.0"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "kusosort"
+version = "0.1.2"
+authors = [
+    { name = "Your Name", email = "you@example.com" },
+]
+description = "A collection of joke sorting algorithms implemented in C++ for Python."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT License" } # ファイルを指定する代わりにテキストでライセンスを記述するとシンプルです
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers",
+    "Programming Language :: C++",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/KIIIIT00/kusosort"
+"Bug Tracker" = "https://github.com/KIIIIT00/kusosort/issues"
+
+# 開発用依存関係を定義するセクション
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.scikit-build]
+cmake.minimum-version = "3.15"
+cmake.source-dir = "src/kusosort/cpp"
+wheel.packages = ["src/kusosort"]
