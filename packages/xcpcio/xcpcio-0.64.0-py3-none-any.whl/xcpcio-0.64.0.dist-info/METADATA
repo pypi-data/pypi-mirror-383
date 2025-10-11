@@ -1,0 +1,31 @@
+Metadata-Version: 2.4
+Name: xcpcio
+Version: 0.64.0
+Summary: xcpcio python lib
+Project-URL: homepage, https://github.com/xcpcio/xcpcio
+Project-URL: documentation, https://github.com/xcpcio/xcpcio
+Project-URL: repository, https://github.com/xcpcio/xcpcio
+Author-email: Dup4 <hi@dup4.com>
+Maintainer-email: Dup4 <hi@dup4.com>, cubercsl <hi@cubercsl.site>
+License-Expression: MIT
+Keywords: xcpcio
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.11
+Requires-Dist: aiofiles>=23.0.0
+Requires-Dist: aiohttp>=3.8.0
+Requires-Dist: click>=8.0.0
+Requires-Dist: fastapi>=0.117.1
+Requires-Dist: pydantic>=2.11.7
+Requires-Dist: pyyaml>=6.0.0
+Requires-Dist: semver>=3.0.0
+Requires-Dist: tenacity>=8.0.0
+Requires-Dist: uvicorn>=0.36.0
+Requires-Dist: zstandard>=0.25.0
+Description-Content-Type: text/markdown
+
+# xcpcio-python
