@@ -1,0 +1,15 @@
+# Include important files in source distribution
+include README.md
+include LICENSE
+include pyproject.toml
+
+# Include package data
+recursive-include src/chainguard_pig_latin *.py py.typed
+
+# Include tests
+recursive-include tests *.py
+
+# Exclude unnecessary files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
