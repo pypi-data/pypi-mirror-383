@@ -1,0 +1,47 @@
+site_name: dql-core Documentation
+site_description: Framework-agnostic validation engine for Data Quality Language (DQL)
+site_url: https://yourusername.github.io/dql-core/
+
+theme:
+  name: material
+  palette:
+    primary: deep-purple
+    accent: deep-purple
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Concepts: concepts.md
+  - Guides:
+      - Validator Guide: validator-guide.md
+      - Cleaner Guide: cleaner-guide.md
+      - Executor Guide: executor-guide.md
+      - Extending: extending.md
+  - API Reference: api-reference.md
+  - Compatibility: compatibility.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [dql_core]
+          options:
+            show_source: true
+            show_root_heading: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html

@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main, develop]
+  pull_request:
+    branches: [master, main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: stratege.ai/dql-core
+        token: ${{ secrets.GIT_TOKEN }}
+        fetch-depth: 0
+        persist-credentials: true
+        github-server-url: https://git.heyvince.ca
+        username: ${{ secrets.GIT_USERNAME }}
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: Run tests
+      run: pytest
+
+    - name: Upload coverage
+      if: matrix.python-version == '3.11'
+      uses: codecov/codecov-action@v3
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: stratege.ai/dql-core
+        token: ${{ secrets.GIT_TOKEN }}
+        fetch-depth: 0
+        persist-credentials: true
+        github-server-url: https://git.heyvince.ca
+        username: ${{ secrets.GIT_USERNAME }}
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install black flake8
+
+    - name: Run Black
+      run: black --check dql_core tests
+
+    - name: Run Flake8
+      run: flake8 dql_core tests --max-line-length=100 --extend-ignore=E203,W503

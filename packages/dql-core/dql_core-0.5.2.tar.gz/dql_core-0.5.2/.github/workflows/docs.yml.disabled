@@ -1,0 +1,38 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: stratege.ai/dql-core
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: true
+          github-server-url: https://git.heyvince.ca
+          username: ${{ secrets.GIT_USERNAME }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material "mkdocstrings[python]"
+          pip install -e .
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          mkdocs gh-deploy --force
