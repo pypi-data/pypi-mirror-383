@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chainguard-pig-latin"
+version = "0.1.0"
+authors = [
+    {name = "Adam Lamorre", email = "alamorre@users.noreply.github.com"},
+]
+description = "A Python package to convert text to Pig Latin - built from source for Chainguard"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["pig-latin", "text-processing", "language", "fun", "chainguard"]
+license = {text = "MIT"}
+
+[project.urls]
+Homepage = "https://github.com/alamorre/chainguard-pig-latin"
+Repository = "https://github.com/alamorre/chainguard-pig-latin"
+Issues = "https://github.com/alamorre/chainguard-pig-latin/issues"
+
+[project.scripts]
+pig-latin = "chainguard_pig_latin.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+chainguard_pig_latin = ["py.typed"]
