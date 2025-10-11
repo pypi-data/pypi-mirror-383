@@ -1,0 +1,89 @@
+Metadata-Version: 2.3
+Name: imgio
+Version: 1.5.0
+Summary: Easy image reading & writing
+Project-URL: Homepage, http://github.com/toaarnio/imgio
+Author-email: Tomi Aarnio <tomi.p.aarnio@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2017 Tomi Aarnio
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.10
+Requires-Dist: imageio
+Requires-Dist: imageio-freeimage
+Requires-Dist: numpy
+Requires-Dist: openexr
+Requires-Dist: pyexr
+Description-Content-Type: text/markdown
+
+# imgio
+
+[![Build Status](https://travis-ci.com/toaarnio/imgio.svg?branch=master)](https://travis-ci.com/github/toaarnio/imgio)
+
+Easy image file reading &amp; writing for Python. Tested on Python 3.10.
+
+Supported file formats (read/write):
+
+```
+   .pnm
+   .pgm
+   .ppm
+   .pfm
+   .png
+   .jpg
+   .jpeg
+   .bmp
+   .tif
+   .tiff
+   .insp
+   .npy
+   .exr
+   .raw
+   .hdr
+```
+
+**Installing on Linux:**
+```
+sudo apt install libopenexr-dev
+pip install imgio
+```
+
+**Installing on Windows:**
+```
+pip install pipwin
+pipwin install pyexr
+pip install imgio
+```
+
+**Building & installing from source:**
+```
+git clone <this-repository>
+cd <this-repository>
+make install
+```
+
+**Releasing to PyPI:**
+```
+make release
+```
