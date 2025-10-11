@@ -1,0 +1,31 @@
+[project]
+name = "mcp-gotify-fastmcp"
+version = "0.1.2"
+description = "MCP server for sending gotify notifications"
+readme = "README.md"
+authors = [
+    { name = "TerminalMan", email = "84923604+SecretiveShell@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastmcp>=2.3.0",
+    "httpx>=0.28.1",
+    "mcp>=1.6.0",
+]
+
+[project.scripts]
+mcp-gotify = "mcp_gotify:main"
+mcp-gotify-sse = "mcp_gotify:main_sse"
+mcp-gotify-streaming = "mcp_gotify:main_streaming_http"
+
+[project.urls]
+Homepage = "https://github.com/fastmcp-me/mcp-gotify#readme"
+Repository = "https://github.com/fastmcp-me/mcp-gotify.git"
+Issues = "https://github.com/fastmcp-me/mcp-gotify/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_gotify"]
