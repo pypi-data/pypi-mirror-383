@@ -1,0 +1,30 @@
+[project]
+name = "pydna-utils"
+description = "Functions to ease using pydna interactively"
+authors = [
+    {name = "BjornFJohansson",email = "bjornjobb@gmail.com"}
+]
+dynamic = []
+license = {text = "BSD-3"}
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "pydna (>=5.5.1,<6.0.0)",
+    "platformdirs (>=4.5.0,<5.0.0)",
+    "confz (>=2.1.0,<3.0.0)",
+    "pydantic (>=2.12.0,<3.0.0)",
+    "tomli-w (>=1.2.0,<2.0.0)",
+    "prettytable (>=3.16.0,<4.0.0)"
+]
+version = "0.0.1"
+
+[build-system]
+build-backend = "poetry_dynamic_versioning.backend"
+requires = ["poetry-core", "poetry-dynamic-versioning"]
+[tool.poetry-dynamic-versioning]
+enable = false
+style = "semver"
+vcs = "git"
+[tool.poetry-dynamic-versioning.substitution]
+files = ["src/pydna_utils/__init__.py"]
+[tool.poetry]

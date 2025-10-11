@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: pydna-utils
+Version: 0.0.1
+Summary: Functions to ease using pydna interactively
+License: BSD-3
+License-File: LICENSE
+Author: BjornFJohansson
+Author-email: bjornjobb@gmail.com
+Requires-Python: >=3.12,<4.0
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: confz (>=2.1.0,<3.0.0)
+Requires-Dist: platformdirs (>=4.5.0,<5.0.0)
+Requires-Dist: prettytable (>=3.16.0,<4.0.0)
+Requires-Dist: pydantic (>=2.12.0,<3.0.0)
+Requires-Dist: pydna (>=5.5.1,<6.0.0)
+Requires-Dist: tomli-w (>=1.2.0,<2.0.0)
+Description-Content-Type: text/markdown
+
+# ![icon](https://github.com/pydna-group/pydna-utils/blob/main/docs/_static/icon.png?raw=true)
+
+pydna-utils is a package containing utilities for pydna facilitating interactive use.
+
+```bash
+pip install pydna-utils
+```
+
+
+
