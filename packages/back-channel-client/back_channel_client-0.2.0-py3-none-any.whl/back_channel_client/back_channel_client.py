@@ -1,0 +1,161 @@
+import time
+import os
+import json
+import configparser
+import statistics
+import logging.handlers
+from urllib.parse import urlparse
+import requests
+import psutil
+from requests.exceptions import ConnectionError  # pylint: disable=redefined-builtin
+from back_channel_client.forward import ClientForwarder
+
+
+class BackChannelClient:  # pylint: disable=too-few-public-methods
+    CONFIG_FOLDER_PATH = os.path.join(
+        os.path.expanduser("~"), ".config", "back_channel_client"
+    )
+    CONFIG_PATH = os.path.join(CONFIG_FOLDER_PATH, "config.ini")
+    DEFAULT_CONFIG = {
+        "connection": {
+            "server_address": "http://localhost",
+            "ssh_username": "root",
+            "ssh_port": "22",
+            "period_time_sec": "30",
+            "client_name": "test_client",
+            "disk_path": "/media/HDD",
+        }
+    }
+
+    def __init__(self):
+        self._logger = self._init_logger()
+        self._config = self._load_config()
+
+    def _init_logger(self):
+        syslog = logging.handlers.SysLogHandler(address="/dev/log")
+        syslog.setFormatter(
+            logging.Formatter("back-channel-client %(name)s: %(levelname)s %(message)s")
+        )
+        logger = logging.getLogger("back-channel-client")
+        logger.addHandler(syslog)
+        logger.setLevel(logging.INFO)
+        return logger
+
+    def _load_config(self):
+        config = configparser.ConfigParser()
+        if config.read(self.CONFIG_PATH):
+            return config
+        return self._create_config()
+
+    def _create_config(self):
+        if not os.path.exists(self.CONFIG_FOLDER_PATH):
+            os.makedirs(self.CONFIG_FOLDER_PATH)
+        config = configparser.ConfigParser()
+        for section, configs in self.DEFAULT_CONFIG.items():
+            config[section] = {}
+            for config_key, config_value in configs.items():
+                config[section][config_key] = config_value
+        with open(self.CONFIG_PATH, "w", encoding="utf-8") as f:
+            config.write(f)
+        return config
+
+    @property
+    def _server_address(self):
+        return self._config["connection"]["server_address"]
+
+    @property
+    def _server_hostname(self):
+        return urlparse(self._server_address).hostname
+
+    def _get_order(self):
+        request = requests.get(
+            url=f"{self._server_address}/api/v1/client/order",
+            headers={
+                "name": self._config["connection"]["client_name"],
+                "username": self._config["connection"]["ssh_username"],
+            },
+            timeout=5,
+        )
+        return request.json()
+
+    def _send_metrics(self):
+        metrics = self._collect_metrics()
+        url = f"{self._server_address}/api/v1/client/metric"
+        client_name = self._config["connection"]["client_name"]
+        data = {
+            "uptime": metrics["uptime_hours"],
+            "cpu_usage": metrics["cpu_percent"],
+            "memory_usage": metrics["mem_percent"],
+            "disk_usage": metrics["disk_usage"],
+            "temperature": metrics["temperature"],
+        }
+        headers = {"Content-type": "application/json", "name": client_name}
+        requests.put(url, data=json.dumps(data), headers=headers, timeout=5)
+
+    def _collect_metrics(self):
+        uptime_sec = time.time() - psutil.boot_time()
+        disk_path = (
+            self._config["connection"]["disk_path"]
+            if os.path.exists(self._config["connection"]["disk_path"])
+            else "/"
+        )
+        return {
+            "uptime_hours": int(uptime_sec),
+            "mem_percent": int(psutil.virtual_memory().percent),
+            "cpu_percent": self._get_cpu_avarage_load(),
+            "disk_usage": int(psutil.disk_usage(disk_path).percent),
+            "temperature": self._get_cpu_temperature(),
+        }
+
+    @staticmethod
+    def _get_cpu_temperature():
+        try:
+            sensor_data = psutil.sensors_temperatures()
+            return int(
+                [
+                    statistics.mean([i.current for i in value])
+                    for key, value in sensor_data.items()
+                    if key.startswith("cpu")
+                ][0]
+            )
+        except (IndexError, AttributeError):
+            return -1
+
+    @staticmethod
+    def _get_cpu_avarage_load():
+        try:
+            return int(
+                [x / psutil.cpu_count() * 100 for x in psutil.getloadavg()][1]
+            )  # 5 min load average
+        except IndexError:
+            return -1
+
+    def run(self):
+        self._logger.info("Starting back channel client...")
+        while True:
+            try:
+                data = self._get_order()
+                if port := data.get("port"):
+                    forwarder = ClientForwarder(
+                        host=self._server_hostname,
+                        port=port,
+                        local_port=self._config["connection"]["ssh_port"],
+                    )
+                    forwarder.start()
+                    self._get_order()
+                self._send_metrics()
+            except ConnectionError as e:
+                self._logger.warning("Cannot connect to host: '%s'", e.request.url)
+            except Exception:  # pylint: disable=broad-except
+                self._logger.exception("Error occurred")
+            finally:
+                time.sleep(int(self._config["connection"]["period_time_sec"]))
+
+
+def main():
+    client = BackChannelClient()
+    client.run()
+
+
+if __name__ == "__main__":
+    main()
