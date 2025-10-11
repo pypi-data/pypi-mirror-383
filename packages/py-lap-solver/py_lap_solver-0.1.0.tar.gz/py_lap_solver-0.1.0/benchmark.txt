@@ -1,0 +1,599 @@
+
+======================================================================
+LAP Solver Benchmark - Available Solvers
+======================================================================
+Available Solvers:
+------------------------------------------------------------
+✓ Scipy                     [pure_python]
+✓ ScipyMP8                  [pure_python, batch_parallel, multiprocessing]
+✓ BatchedScipyOMP           [cpp, batch_parallel]
+                            Features: OpenMP
+✓ BatchedScipySequential    [cpp]
+✓ Lap1015OMP                [cpp, optimized, intra_matrix_parallel]
+                            Features: OpenMP
+✓ Lap1015Sequential         [cpp, optimized]
+
+======================================================================
+LAP Solver Benchmark Suite
+======================================================================
+
+======================================================================
+SINGLE PROBLEM BENCHMARKS (solve_single)
+======================================================================
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (10, 10)
+======================================================================
+BatchedScipyOMP          :    0.089 ms
+BatchedScipySequential   :    0.006 ms
+Lap1015                  :    0.012 ms
+Lap1015OMP               :    3.164 ms
+Lap1015Sequential        :    0.006 ms
+Scipy                    :    0.006 ms
+ScipyMP8                 :    0.004 ms
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50)
+======================================================================
+BatchedScipyOMP          :    0.082 ms
+BatchedScipySequential   :    0.044 ms
+Lap1015                  :    0.072 ms
+Lap1015OMP               :   13.369 ms
+Lap1015Sequential        :    0.064 ms
+Scipy                    :    0.045 ms
+ScipyMP8                 :    0.036 ms
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100)
+======================================================================
+BatchedScipyOMP          :    0.208 ms
+BatchedScipySequential   :    0.178 ms
+Lap1015                  :    0.277 ms
+Lap1015OMP               :   32.738 ms
+Lap1015Sequential        :    0.295 ms
+Scipy                    :    0.191 ms
+ScipyMP8                 :    0.173 ms
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500)
+======================================================================
+BatchedScipyOMP          :    6.081 ms
+BatchedScipySequential   :    6.023 ms
+Lap1015                  :    8.232 ms
+Lap1015OMP               :  264.047 ms
+Lap1015Sequential        :    8.434 ms
+Scipy                    :    5.855 ms
+ScipyMP8                 :    5.909 ms
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (1000, 1000)
+======================================================================
+BatchedScipyOMP          :   31.598 ms
+BatchedScipySequential   :   30.885 ms
+Lap1015                  :   29.386 ms
+Lap1015OMP               :  568.310 ms
+Lap1015Sequential        :   29.222 ms
+Scipy                    :   35.473 ms
+ScipyMP8                 :   31.463 ms
+
+======================================================================
+Generator: get_masked_square_matrix
+Matrix size: (50, 50)
+Valid size: 33
+======================================================================
+BatchedScipyOMP          :    0.059 ms
+BatchedScipySequential   :    0.019 ms
+Lap1015                  :    0.064 ms
+Lap1015OMP               :   15.655 ms
+Lap1015Sequential        :    0.063 ms
+Scipy                    :    0.026 ms
+ScipyMP8                 :    0.015 ms
+
+======================================================================
+Generator: get_masked_square_matrix
+Matrix size: (100, 100)
+Valid size: 67
+======================================================================
+BatchedScipyOMP          :    0.120 ms
+BatchedScipySequential   :    0.093 ms
+Lap1015                  :    0.249 ms
+Lap1015OMP               :   34.613 ms
+Lap1015Sequential        :    0.242 ms
+Scipy                    :    0.103 ms
+ScipyMP8                 :    0.084 ms
+
+======================================================================
+Generator: get_masked_square_matrix
+Matrix size: (500, 500)
+Valid size: 337
+======================================================================
+BatchedScipyOMP          :    3.659 ms
+BatchedScipySequential   :    3.502 ms
+Lap1015                  :    7.422 ms
+Lap1015OMP               :  242.281 ms
+Lap1015Sequential        :    7.825 ms
+Scipy                    :    3.788 ms
+ScipyMP8                 :    3.608 ms
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (10, 15)
+======================================================================
+BatchedScipyOMP          :    0.076 ms
+BatchedScipySequential   :    0.009 ms
+Lap1015                  :    0.019 ms
+Lap1015OMP               :    3.945 ms
+Lap1015Sequential        :    0.018 ms
+Scipy                    :    0.006 ms
+ScipyMP8                 :    0.003 ms
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (50, 100)
+======================================================================
+BatchedScipyOMP          :    0.041 ms
+BatchedScipySequential   :    0.022 ms
+Lap1015                  :    0.094 ms
+Lap1015OMP               :  136.544 ms
+Lap1015Sequential        :    0.147 ms
+Scipy                    :    0.045 ms
+ScipyMP8                 :    0.057 ms
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (100, 50)
+======================================================================
+BatchedScipyOMP          :    0.171 ms
+BatchedScipySequential   :    0.048 ms
+Lap1015                  :    0.191 ms
+Lap1015OMP               :   67.860 ms
+Lap1015Sequential        :    0.874 ms
+Scipy                    :    0.082 ms
+ScipyMP8                 :    0.105 ms
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (100, 200)
+======================================================================
+BatchedScipyOMP          :    0.348 ms
+BatchedScipySequential   :    0.334 ms
+Lap1015                  :    0.725 ms
+Lap1015OMP               :  357.418 ms
+Lap1015Sequential        :    0.388 ms
+Scipy                    :    0.093 ms
+ScipyMP8                 :    0.073 ms
+
+======================================================================
+Generator: get_masked_rect_matrix
+Matrix size: (100, 100)
+Valid size: 50
+======================================================================
+BatchedScipyOMP          :    0.060 ms
+BatchedScipySequential   :    0.033 ms
+Lap1015                  :    0.098 ms
+Lap1015OMP               :   46.299 ms
+Lap1015Sequential        :    0.101 ms
+Scipy                    :    0.032 ms
+ScipyMP8                 :    0.024 ms
+
+======================================================================
+Generator: get_masked_rect_matrix
+Matrix size: (200, 200)
+Valid size: 100
+======================================================================
+BatchedScipyOMP          :    0.319 ms
+BatchedScipySequential   :    0.215 ms
+Lap1015                  :    0.420 ms
+Lap1015OMP               :  152.333 ms
+Lap1015Sequential        :    0.446 ms
+Scipy                    :    0.121 ms
+ScipyMP8                 :    0.098 ms
+
+======================================================================
+BATCH SIZE = 1 BENCHMARKS (batch_solve)
+======================================================================
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50), Batch size: 1
+======================================================================
+BatchedScipyOMP          :    0.065 ms
+BatchedScipySequential   :    0.032 ms
+Lap1015                  :    0.066 ms
+Lap1015OMP               :   14.273 ms
+Lap1015Sequential        :    0.069 ms
+Scipy                    :    0.049 ms
+ScipyMP8                 :  616.583 ms
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100), Batch size: 1
+======================================================================
+BatchedScipyOMP          :    0.361 ms
+BatchedScipySequential   :    0.190 ms
+Lap1015                  :    0.289 ms
+Lap1015OMP               :  292.343 ms
+Lap1015Sequential        :    0.294 ms
+Scipy                    :    0.209 ms
+ScipyMP8                 :  570.988 ms
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500), Batch size: 1
+======================================================================
+BatchedScipyOMP          :    6.022 ms
+BatchedScipySequential   :    6.146 ms
+Lap1015                  :    8.080 ms
+Lap1015OMP               :  245.951 ms
+Lap1015Sequential        :    8.166 ms
+Scipy                    :    5.898 ms
+ScipyMP8                 :  461.658 ms
+
+======================================================================
+VARIABLE BATCH SIZE BENCHMARKS
+======================================================================
+
+--- Square matrices (50x50) ---
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50), Batch size: 5
+======================================================================
+BatchedScipyOMP          :    0.117 ms  ( 42735.0 problems/sec)
+BatchedScipySequential   :    0.265 ms  ( 18885.7 problems/sec)
+Lap1015                  :    0.413 ms  ( 12093.1 problems/sec)
+Lap1015OMP               :  227.165 ms  (    22.0 problems/sec)
+Lap1015Sequential        :    0.421 ms  ( 11869.4 problems/sec)
+Scipy                    :    0.261 ms  ( 19120.5 problems/sec)
+ScipyMP8                 :  496.160 ms  (    10.1 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50), Batch size: 10
+======================================================================
+BatchedScipyOMP          :    0.166 ms  ( 60105.2 problems/sec)
+BatchedScipySequential   :    0.465 ms  ( 21499.6 problems/sec)
+Lap1015                  :    0.707 ms  ( 14152.6 problems/sec)
+Lap1015OMP               :  328.220 ms  (    30.5 problems/sec)
+Lap1015Sequential        :    0.760 ms  ( 13158.6 problems/sec)
+Scipy                    :    0.489 ms  ( 20462.1 problems/sec)
+ScipyMP8                 :  546.241 ms  (    18.3 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50), Batch size: 50
+======================================================================
+BatchedScipyOMP          :    0.496 ms  (100848.7 problems/sec)
+BatchedScipySequential   :    2.401 ms  ( 20824.3 problems/sec)
+Lap1015                  :    3.859 ms  ( 12958.3 problems/sec)
+Lap1015OMP               :  860.076 ms  (    58.1 problems/sec)
+Lap1015Sequential        :    3.908 ms  ( 12795.2 problems/sec)
+Scipy                    :    2.611 ms  ( 19153.1 problems/sec)
+ScipyMP8                 :  547.460 ms  (    91.3 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50), Batch size: 100
+======================================================================
+BatchedScipyOMP          :    0.859 ms  (116363.6 problems/sec)
+BatchedScipySequential   :    4.774 ms  ( 20947.9 problems/sec)
+Lap1015                  :    7.833 ms  ( 12765.7 problems/sec)
+Lap1015OMP               : 1467.257 ms  (    68.2 problems/sec)
+Lap1015Sequential        :    7.721 ms  ( 12951.6 problems/sec)
+Scipy                    :    5.100 ms  ( 19607.4 problems/sec)
+ScipyMP8                 :  515.960 ms  (   193.8 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (50, 50), Batch size: 1000
+======================================================================
+BatchedScipyOMP          :    8.290 ms  (120627.3 problems/sec)
+BatchedScipySequential   :   49.285 ms  ( 20290.3 problems/sec)
+Lap1015                  :   77.784 ms  ( 12856.1 problems/sec)
+Lap1015OMP               : 14920.722 ms  (    67.0 problems/sec)
+Lap1015Sequential        :   77.682 ms  ( 12873.1 problems/sec)
+Scipy                    :   49.944 ms  ( 20022.5 problems/sec)
+ScipyMP8                 :  497.743 ms  (  2009.1 problems/sec)
+
+--- Square matrices (100x100) ---
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100), Batch size: 5
+======================================================================
+BatchedScipyOMP          :    0.269 ms  ( 18590.3 problems/sec)
+BatchedScipySequential   :    0.927 ms  (  5391.6 problems/sec)
+Lap1015                  :    1.365 ms  (  3661.8 problems/sec)
+Lap1015OMP               :  158.548 ms  (    31.5 problems/sec)
+Lap1015Sequential        :    1.353 ms  (  3696.9 problems/sec)
+Scipy                    :    0.938 ms  (  5328.4 problems/sec)
+ScipyMP8                 :  521.913 ms  (     9.6 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100), Batch size: 10
+======================================================================
+BatchedScipyOMP          :    0.479 ms  ( 20895.0 problems/sec)
+BatchedScipySequential   :    1.915 ms  (  5220.8 problems/sec)
+Lap1015                  :    3.131 ms  (  3193.7 problems/sec)
+Lap1015OMP               :  318.496 ms  (    31.4 problems/sec)
+Lap1015Sequential        :    2.904 ms  (  3443.8 problems/sec)
+Scipy                    :    1.892 ms  (  5285.5 problems/sec)
+ScipyMP8                 :  470.526 ms  (    21.3 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100), Batch size: 50
+======================================================================
+BatchedScipyOMP          :    1.855 ms  ( 26951.2 problems/sec)
+BatchedScipySequential   :   10.248 ms  (  4879.1 problems/sec)
+Lap1015                  :   15.388 ms  (  3249.3 problems/sec)
+Lap1015OMP               : 1717.307 ms  (    29.1 problems/sec)
+Lap1015Sequential        :   15.223 ms  (  3284.4 problems/sec)
+Scipy                    :   10.199 ms  (  4902.7 problems/sec)
+ScipyMP8                 :  489.997 ms  (   102.0 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100), Batch size: 100
+======================================================================
+BatchedScipyOMP          :    3.299 ms  ( 30313.4 problems/sec)
+BatchedScipySequential   :   20.490 ms  (  4880.5 problems/sec)
+Lap1015                  :   30.643 ms  (  3263.4 problems/sec)
+Lap1015OMP               : 4137.078 ms  (    24.2 problems/sec)
+Lap1015Sequential        :   30.620 ms  (  3265.9 problems/sec)
+Scipy                    :   20.041 ms  (  4989.7 problems/sec)
+ScipyMP8                 :  528.150 ms  (   189.3 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (100, 100), Batch size: 1000
+======================================================================
+BatchedScipyOMP          :   33.401 ms  ( 29939.4 problems/sec)
+BatchedScipySequential   :  203.090 ms  (  4923.9 problems/sec)
+Lap1015                  :  306.193 ms  (  3265.9 problems/sec)
+Lap1015OMP               : 36944.908 ms  (    27.1 problems/sec)
+Lap1015Sequential        :  304.024 ms  (  3289.2 problems/sec)
+Scipy                    :  201.878 ms  (  4953.5 problems/sec)
+ScipyMP8                 :  661.347 ms  (  1512.1 problems/sec)
+
+--- Square matrices (500x500) ---
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500), Batch size: 5
+======================================================================
+BatchedScipyOMP          :    7.625 ms  (   655.8 problems/sec)
+BatchedScipySequential   :   31.785 ms  (   157.3 problems/sec)
+Lap1015                  :   36.398 ms  (   137.4 problems/sec)
+Lap1015OMP               : 1677.112 ms  (     3.0 problems/sec)
+Lap1015Sequential        :   36.715 ms  (   136.2 problems/sec)
+Scipy                    :   30.966 ms  (   161.5 problems/sec)
+ScipyMP8                 :  557.505 ms  (     9.0 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500), Batch size: 10
+======================================================================
+BatchedScipyOMP          :   13.605 ms  (   735.0 problems/sec)
+BatchedScipySequential   :   63.191 ms  (   158.2 problems/sec)
+Lap1015                  :   73.208 ms  (   136.6 problems/sec)
+Lap1015OMP               : 2145.051 ms  (     4.7 problems/sec)
+Lap1015Sequential        :   73.409 ms  (   136.2 problems/sec)
+Scipy                    :   61.369 ms  (   162.9 problems/sec)
+ScipyMP8                 :  540.273 ms  (    18.5 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500), Batch size: 50
+======================================================================
+BatchedScipyOMP          :   56.420 ms  (   886.2 problems/sec)
+BatchedScipySequential   :  322.850 ms  (   154.9 problems/sec)
+Lap1015                  :  380.315 ms  (   131.5 problems/sec)
+Lap1015OMP               : 12073.751 ms  (     4.1 problems/sec)
+Lap1015Sequential        :  399.726 ms  (   125.1 problems/sec)
+Scipy                    :  328.093 ms  (   152.4 problems/sec)
+ScipyMP8                 :  685.202 ms  (    73.0 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500), Batch size: 100
+======================================================================
+BatchedScipyOMP          :  129.964 ms  (   769.4 problems/sec)
+BatchedScipySequential   :  676.265 ms  (   147.9 problems/sec)
+Lap1015                  :  780.316 ms  (   128.2 problems/sec)
+Lap1015OMP               : 29037.318 ms  (     3.4 problems/sec)
+Lap1015Sequential        :  773.654 ms  (   129.3 problems/sec)
+Scipy                    :  669.208 ms  (   149.4 problems/sec)
+ScipyMP8                 :  848.102 ms  (   117.9 problems/sec)
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (500, 500), Batch size: 1000
+======================================================================
+BatchedScipyOMP          : 2946.886 ms  (   339.3 problems/sec)
+BatchedScipySequential   : 6653.933 ms  (   150.3 problems/sec)
+Lap1015                  : 9379.372 ms  (   106.6 problems/sec)
+Lap1015OMP               : 262347.588 ms  (     3.8 problems/sec)
+Lap1015Sequential        : 9324.304 ms  (   107.2 problems/sec)
+Scipy                    : 6617.015 ms  (   151.1 problems/sec)
+ScipyMP8                 : 9056.168 ms  (   110.4 problems/sec)
+
+--- Rectangular matrices (50x100) ---
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (50, 100), Batch size: 10
+======================================================================
+BatchedScipyOMP          :    0.146 ms  ( 68434.6 problems/sec)
+BatchedScipySequential   :    0.312 ms  ( 32051.3 problems/sec)
+Lap1015                  :    2.486 ms  (  4022.3 problems/sec)
+Lap1015OMP               :  482.773 ms  (    20.7 problems/sec)
+Lap1015Sequential        :    1.144 ms  (  8741.9 problems/sec)
+Scipy                    :    0.320 ms  ( 31282.6 problems/sec)
+ScipyMP8                 :  669.364 ms  (    14.9 problems/sec)
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (50, 100), Batch size: 50
+======================================================================
+BatchedScipyOMP          :    0.516 ms  ( 96836.7 problems/sec)
+BatchedScipySequential   :    1.831 ms  ( 27308.1 problems/sec)
+Lap1015                  :    7.501 ms  (  6666.0 problems/sec)
+Lap1015OMP               : 3176.252 ms  (    15.7 problems/sec)
+Lap1015Sequential        :    7.151 ms  (  6991.8 problems/sec)
+Scipy                    :    2.148 ms  ( 23277.9 problems/sec)
+ScipyMP8                 :  593.034 ms  (    84.3 problems/sec)
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (50, 100), Batch size: 100
+======================================================================
+BatchedScipyOMP          :    0.708 ms  (141160.0 problems/sec)
+BatchedScipySequential   :    3.108 ms  ( 32176.8 problems/sec)
+Lap1015                  :   15.753 ms  (  6348.1 problems/sec)
+Lap1015OMP               : 5262.437 ms  (    19.0 problems/sec)
+Lap1015Sequential        :   17.419 ms  (  5740.8 problems/sec)
+Scipy                    :    3.363 ms  ( 29735.7 problems/sec)
+ScipyMP8                 :  547.235 ms  (   182.7 problems/sec)
+
+--- Rectangular matrices (100x50) ---
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (100, 50), Batch size: 10
+======================================================================
+BatchedScipyOMP          :    0.343 ms  ( 29175.8 problems/sec)
+BatchedScipySequential   :    1.118 ms  (  8946.9 problems/sec)
+Lap1015                  :    2.833 ms  (  3529.6 problems/sec)
+Lap1015OMP               :  237.357 ms  (    42.1 problems/sec)
+Lap1015Sequential        :    2.743 ms  (  3645.9 problems/sec)
+Scipy                    :    0.352 ms  ( 28388.9 problems/sec)
+ScipyMP8                 :  536.238 ms  (    18.6 problems/sec)
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (100, 50), Batch size: 50
+======================================================================
+BatchedScipyOMP          :    0.374 ms  (133689.8 problems/sec)
+BatchedScipySequential   :    2.969 ms  ( 16838.8 problems/sec)
+Lap1015                  :   12.220 ms  (  4091.7 problems/sec)
+Lap1015OMP               : 1185.741 ms  (    42.2 problems/sec)
+Lap1015Sequential        :   11.383 ms  (  4392.6 problems/sec)
+Scipy                    :    1.863 ms  ( 26839.6 problems/sec)
+ScipyMP8                 :  540.251 ms  (    92.5 problems/sec)
+
+======================================================================
+Generator: get_full_rect_matrix
+Matrix size: (100, 50), Batch size: 100
+======================================================================
+BatchedScipyOMP          :    0.873 ms  (114509.2 problems/sec)
+BatchedScipySequential   :   10.380 ms  (  9633.9 problems/sec)
+Lap1015                  :   24.864 ms  (  4021.9 problems/sec)
+Lap1015OMP               : 2647.829 ms  (    37.8 problems/sec)
+Lap1015Sequential        :   21.231 ms  (  4710.1 problems/sec)
+Scipy                    :    3.565 ms  ( 28053.1 problems/sec)
+ScipyMP8                 :  526.907 ms  (   189.8 problems/sec)
+
+--- Masked square matrices (100x100) ---
+
+======================================================================
+Generator: get_masked_square_matrix
+Matrix size: (100, 100), Batch size: 10
+Valid size: [67 79 74 71 63 63 61 77 72 74]
+======================================================================
+BatchedScipyOMP          :    0.322 ms  ( 31076.0 problems/sec)
+BatchedScipySequential   :    1.157 ms  (  8640.2 problems/sec)
+Lap1015                  :    3.385 ms  (  2954.5 problems/sec)
+Lap1015OMP               :  398.424 ms  (    25.1 problems/sec)
+Lap1015Sequential        :    3.005 ms  (  3327.5 problems/sec)
+Scipy                    :    1.112 ms  (  8991.5 problems/sec)
+ScipyMP8                 :  558.168 ms  (    17.9 problems/sec)
+
+======================================================================
+Generator: get_masked_square_matrix
+Matrix size: (100, 100), Batch size: 50
+Valid size: [67 79 74 71 63 63 61 77 72 74 60 79 76 64 63 63 66 70 68 65 72 62 65 67
+ 69 75 63 70 71 60 72 63 61 78 79 76 66 61 73 68 62 69 60 78 65 73 66 70
+ 70 63]
+======================================================================
+BatchedScipyOMP          :    1.026 ms  ( 48744.8 problems/sec)
+BatchedScipySequential   :    5.749 ms  (  8697.3 problems/sec)
+Lap1015                  :   16.430 ms  (  3043.2 problems/sec)
+Lap1015OMP               : 2319.781 ms  (    21.6 problems/sec)
+Lap1015Sequential        :   18.659 ms  (  2679.7 problems/sec)
+Scipy                    :    5.898 ms  (  8477.0 problems/sec)
+ScipyMP8                 :  563.607 ms  (    88.7 problems/sec)
+
+======================================================================
+Generator: get_masked_square_matrix
+Matrix size: (100, 100), Batch size: 100
+Valid size: [67 79 74 71 63 63 61 77 72 74 60 79 76 64 63 63 66 70 68 65 72 62 65 67
+ 69 75 63 70 71 60 72 63 61 78 79 76 66 61 73 68 62 69 60 78 65 73 66 70
+ 70 63 79 75 78 77 71 78 61 63 60 66 67 65 76 67 65 70 62 76 61 79 75 63
+ 60 76 74 74 75 61 67 62 77 72 66 61 66 66 74 72 77 69 62 74 75 71 75 69
+ 70 68 60 62]
+======================================================================
+BatchedScipyOMP          :    4.949 ms  ( 20204.6 problems/sec)
+BatchedScipySequential   :   12.116 ms  (  8253.4 problems/sec)
+Lap1015                  :   33.447 ms  (  2989.8 problems/sec)
+Lap1015OMP               : 4179.485 ms  (    23.9 problems/sec)
+Lap1015Sequential        :   36.785 ms  (  2718.5 problems/sec)
+Scipy                    :   11.933 ms  (  8380.4 problems/sec)
+ScipyMP8                 :  489.850 ms  (   204.1 problems/sec)
+
+======================================================================
+LARGE MATRICES WITH SMALL BATCHES
+======================================================================
+
+--- Large square matrices (1000x1000) with small batches ---
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (1000, 1000)
+======================================================================
+BatchedScipyOMP          :   31.766 ms
+BatchedScipySequential   :   31.624 ms
+Lap1015                  :   29.728 ms
+Lap1015OMP               :  471.102 ms
+Lap1015Sequential        :   29.583 ms
+Scipy                    :   30.974 ms
+ScipyMP8                 :   31.343 ms
+
+--- Large square matrices (5000x5000) with small batches ---
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (5000, 5000)
+======================================================================
+BatchedScipyOMP          : 1579.322 ms
+BatchedScipySequential   : 1530.220 ms
+Lap1015                  : 1157.110 ms
+Lap1015OMP               : 5338.010 ms
+Lap1015Sequential        : 1034.732 ms
+Scipy                    : 1669.639 ms
+ScipyMP8                 : 1601.398 ms
+
+--- Large square matrices (10000x10000) with small batches ---
+
+======================================================================
+Generator: get_full_square_matrix
+Matrix size: (10000, 10000)
+======================================================================
+BatchedScipyOMP          : 8120.505 ms
+BatchedScipySequential   : 9825.028 ms
+Lap1015                  : 4574.485 ms
+Lap1015OMP               : 12561.604 ms
+Lap1015Sequential        : 4717.189 ms
+Scipy                    : 8091.479 ms
+ScipyMP8                 : 7994.722 ms
+
+======================================================================
+Benchmark suite complete!
+======================================================================
+
