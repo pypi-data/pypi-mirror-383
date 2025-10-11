@@ -1,0 +1,112 @@
+# Copyright (c) 2023 Rackslab
+#
+# This file is part of RFL.
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+
+"""
+This setup.py loads parameter defined in pyproject.toml and calls setuptools.setup()
+with these parameters. This script is especially useful to build modern PEP 518 Python
+projects that provide pyproject.toml with old versions of pip/python (eg. python 3.6)
+without PEP 518 support.
+"""
+
+import sys
+import os
+
+from setuptools import setup, find_packages
+
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
+header = "rfl-build"
+
+with open("pyproject.toml", "rb") as fh:
+    pyproject = tomllib.load(fh)
+
+# Nothing much can be done by the script.
+if "project" not in pyproject:
+    print(f"{header}: project section not found, leaving.")
+    sys.exit(0)
+
+# Initialize dict of additional options
+kwargs = {}
+
+if "scripts" in pyproject["project"]:
+    kwargs["entry_points"] = {
+        "console_scripts": [
+            f"{executable}={caller}"
+            for executable, caller in pyproject["project"]["scripts"].items()
+        ]
+    }
+
+# Python Packaging User Guide suggests using find_namespace_packages(…) to support
+# namespace packages:
+#
+# https://packaging.python.org/en/latest/guides/packaging-namespace-packages/#native-namespace-packages
+#
+# Unfortunately, this function is not support in setuptools < v40.1.0 that is provided
+# on systems with Python 3.6 where this setup.py script is required (el8). The
+# alternative solution is to explicitely list the packages to install. Then the
+# following logic detects if there is a native namespace (when one topfolder declared in
+# [tool.setuptools.packages.find] include directive does not contain an __init__.py). In
+# this case, the subpackages are explicity declared (without wildcard) in setup(). If no
+# namespace is detected, the packages are automatically detected with find_packages().
+
+if "find" in pyproject["tool"]["setuptools"]["packages"]:
+    autofind = True
+    packages = []
+    for include in pyproject["tool"]["setuptools"]["packages"]["find"]["include"]:
+        if "." not in include:
+            continue
+        topfolder = include.split(".", 1)[0]
+        if "__init__.py" not in os.listdir(topfolder):
+            autofind = False
+        packages.append(include.replace("*", ""))
+
+    if autofind:
+        kwargs["packages"] = find_packages()
+    else:
+        kwargs["packages"] = packages
+else:
+    # Explicit packages listing without find
+    kwargs["packages"] = pyproject["tool"]["setuptools"]["packages"]
+
+print(f"{header}: packages: {kwargs['packages']}")
+
+if "package-data" in pyproject["tool"]["setuptools"]:
+    kwargs["package_data"] = {
+        package: data
+        for package, data in pyproject["tool"]["setuptools"]["package-data"].items()
+    }
+    kwargs["include_package_data"] = True
+    print(f"{header}: package data {kwargs['package_data']}")
+
+if "dependencies" in pyproject["project"]:
+    kwargs["install_requires"] = pyproject["project"]["dependencies"]
+
+if "optional-dependencies" in pyproject["project"]:
+    kwargs["extras_require"] = {
+        extra: deps
+        for extra, deps in pyproject["project"]["optional-dependencies"].items()
+    }
+    print(f"{header}: extras require {kwargs['extras_require']}")
+
+if "text" in pyproject["project"]["license"]:
+    kwargs["license"] = pyproject["project"]["license"]["text"]
+elif "file" in pyproject["project"]["license"]:
+    kwargs["license_files"] = [pyproject["project"]["license"]["file"]]
+
+if "urls" in pyproject["project"]:
+    kwargs["url"] = pyproject["project"]["urls"]["Homepage"]
+
+setup(
+    name=pyproject["project"]["name"],
+    version=pyproject["project"]["version"],
+    author=pyproject["project"]["authors"][0]["name"],
+    author_email=pyproject["project"]["authors"][0]["email"],
+    platforms=["GNU/Linux"],
+    **kwargs,
+)
