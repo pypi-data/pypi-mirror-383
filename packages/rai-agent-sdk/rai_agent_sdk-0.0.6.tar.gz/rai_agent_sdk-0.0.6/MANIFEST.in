@@ -1,0 +1,9 @@
+include README.md
+include LICENSE
+include pyproject.toml
+include setup.py
+recursive-include SDK_Creation/rai_agent_sdk *.py
+recursive-include SDK_Creation/rai_agent_sdk *.yaml
+recursive-include SDK_Creation/rai_agent_sdk *.typed
+global-exclude __pycache__
+global-exclude *.py[cod]
