@@ -1,0 +1,48 @@
+Metadata-Version: 2.4
+Name: quillion-cli
+Version: 0.1.4
+Summary: Quillion Command Line Interface
+License-File: LICENSE
+Author: anybody
+Requires-Python: >=3.9,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: jinja2 (>=3.1.2,<4.0.0)
+Requires-Dist: pyfiglet (>=1.0.4,<2.0.0)
+Requires-Dist: requests (==2.32.5)
+Requires-Dist: rich (>=14.1.0,<15.0.0)
+Requires-Dist: tomli (>=2.0.1,<3.0.0)
+Requires-Dist: typer (>=0.19.1,<0.20.0)
+Requires-Dist: watchdog (>=2.3.1,<3.0.0)
+Description-Content-Type: text/markdown
+
+Quillion CLI
+
+Internal CLI tool for the Quillion web framework.
+
+Overview
+
+Part of the Quillion package. Provides development utilities for Quillion applications.
+
+Usage
+
+```bash
+q [command]
+```
+
+Commands
+
+· new - Create project
+
+· run - Start server
+
+Quillion CLI is included with the Quillion framework installation.
+
+License
+
+MIT
