@@ -1,0 +1,74 @@
+<h1>jaggimage-viewer</h1>
+
+<p>I was so used to my 25+ years old version of ACDSee to quickly see my files, i just made my own image viewer with Python and Qt.</p>
+
+<p><img src="https://raw.githubusercontent.com/clxjaguar/jaggimage-viewer/main/media/screenshot.jpg" alt="Screenshot. Jaguar picture by Charles J. Sharp on Wikipedia" title="" /></p>
+
+<h2>Usage</h2>
+
+<ul>
+<li>You can run it without argument in any directory containing pictures, it will show the first of files with any recognized extension, and next/prev will show others files in current directory</li>
+<li>You can run it with one file name as argument to display it (or associate jaggimage-viewer with images files), next/prev will also show others files of the same directory</li>
+<li>You can run it with several files as argument, the first one will be displayed, next/prev will show others images you listed</li>
+</ul>
+
+<h2>Shortcuts</h2>
+
+<p>Most keyboard shortcuts are shown in the contextual menu (right click), but some functions have several. I tried to keep the sames shortcuts than ACDSee.</p>
+
+<p>| Functionality                                                     | Shortcut(s)                                           |
+|-------------------------------------------------------------------|-------------------------------------------------------|
+| Toggle full-screen mode                                           | <code>F</code>, <code>F11</code>, Double-click                              |
+| Toggle status bar                                                 | <code>B</code>                                                   |
+| Next image                                                        | <code>Space</code>, <code>Page Down</code>, Mouse wheel                     |
+| Previous image                                                    | <code>Backspace</code>, <code>Page Up</code>, Mouse wheel                   |
+| Zoom in                                                           | <code>+</code>, <code>Ctrl</code> (or <code>Shift</code>)+Mouse Wheel                  |
+| Zoom out                                                          | <code>-</code>, <code>Ctrl</code> (or <code>Shift</code>)+Mouse Wheel                  |
+| Zoom 1:1 ("pixel perfect")                                        | <code>/</code>                                                   |
+| Toggle zoom best-fit / full width or height                       | <code>*</code>                                                   |
+| Zoom lock (zoom level not changing when displaying another image) | <code>Ctrl</code>+<code>/</code>                                            |
+| Panning image (if not zoomed best fit)                            | Arrows keys (with <code>Ctrl</code>is faster, <code>Shift</code> is slower) |
+| Edit file description                                             | <code>Ctrl+D</code>                                              |
+| Rename file (and .txt description file, if present)               | <code>F2</code>                                                  |
+| Reload file and relist directory                                  | <code>F5</code>                                                  |
+| Show contextual menu                                              | <code>F10</code>                                                 |
+| Open a specific file (in same or different directory)             | <code>Ctrl</code>+<code>O</code>                                            |
+| Copy current image to clipboard                                   | <code>Ctrl</code>+<code>C</code>                                            |
+| Open the image with an external editor (gimp by default)          | <code>Ctrl</code>+<code>E</code>                                            |
+| Quit the program                                                  | <code>Escape</code>, <code>Ctrl</code>+<code>W</code>                                   |</p>
+
+<h2>Installation</h2>
+
+<h3>From PyPI</h3>
+
+<p>This assumes you have either <code>Python</code> and <code>pip</code>, or <code>uv</code> installed.</p>
+
+<p>With <code>pip</code>:</p>
+
+<p><code>shell
+pip install jaggimage-viewer
+</code></p>
+
+<p>With <code>uv</code>:</p>
+
+<p><code>shell
+uv tool install jaggimage-viewer
+</code></p>
+
+<h3>From sources</h3>
+
+<ol>
+<li>Have <code>uv</code> installed: https://docs.astral.sh/uv/#installation</li>
+<li><p>Clone the repository:</p>
+
+<p><code>shell
+git clone https://github.com/clxjaguar/jaggimage-viewer.git
+</code></p></li>
+<li><p>Run the installation:</p>
+
+<p><code>shell
+cd jaggimage-viewer
+uv build
+uv tool install .
+</code></p></li>
+</ol>
