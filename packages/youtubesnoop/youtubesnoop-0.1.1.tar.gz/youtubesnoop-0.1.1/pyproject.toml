@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "youtubesnoop"
+version = "0.1.1"
+description = "YouTube video/music downloader with metadata tagging and cover art"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Anders"}
+]
+keywords = ["youtube", "downloader", "music", "metadata", "flac", "beets"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "yt-dlp>=2024.0.0",
+    "mutagen>=1.47.0",
+    "musicbrainzngs>=0.7.1",
+    "beets>=1.6.0",
+    "questionary>=2.0.0",
+    "click>=8.0.0",
+    "requests>=2.31.0",
+]
+
+[project.scripts]
+youtubesnoop = "youtube_snoop.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/anderslatif/YoutubeSnoop"
+Repository = "https://github.com/anderslatif/YoutubeSnoop"
+Issues = "https://github.com/anderslatif/YoutubeSnoop/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["youtube_snoop"]
