@@ -1,0 +1,146 @@
+Metadata-Version: 2.4
+Name: langchain-agentbay-integration
+Version: 0.1.0
+Summary: An integration package connecting AgentbayIntegration and LangChain
+License: MIT
+License-File: LICENSE
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: langchain-core (>=0.3.15,<0.4.0)
+Requires-Dist: wuying-agentbay-sdk (>=0.8.1,<0.9.0)
+Project-URL: Repository, https://github.com/langchain-ai/langchain
+Project-URL: Release Notes, https://github.com/langchain-ai/langchain/releases?q=tag%3A%22agentbay-integration%3D%3D0%22&expanded=true
+Project-URL: Source Code, https://github.com/langchain-ai/langchain/tree/master/libs/partners/agentbay-integration
+Description-Content-Type: text/markdown
+
+# langchain-agentbay-integration
+
+This package contains the LangChain integration with AgentBay, providing tools for file operations, code execution, and command execution within a secure cloud environment.
+
+## Installation
+
+```bash
+pip install -U langchain-agentbay-integration wuying-agentbay-sdk
+```
+
+Additional dependencies required for examples:
+```bash
+pip install langchain langchain-openai
+```
+
+## Setup
+
+You need to configure credentials by setting the following environment variables:
+
+### API Keys Setup
+
+**AgentBay API Key**:
+1. Visit [Agent-Bay Console](https://agentbay.console.aliyun.com/service-management)
+2. Sign up or log in to your Alibaba Cloud account
+3. Navigate to the Service Management section
+4. Create a new API KEY or select an existing one
+5. Copy the API Key and set it as the value of `AGENTBAY_API_KEY` environment variable
+
+**DashScope API Key**:
+1. Visit [DashScope Platform](https://bailian.console.aliyun.com/#/home)
+2. Sign up or log in to your account
+3. Navigate to the API Key management section
+4. Copy the API Key and set it as the value of `DASHSCOPE_API_KEY` environment variable
+
+```bash
+export AGENTBAY_API_KEY="your-agentbay-api-key"
+export DASHSCOPE_API_KEY="your-dashscope-api-key"
+```
+
+## AgentBay Integration Toolkit
+
+The AgentbayIntegrationToolkit provides a comprehensive set of tools for interacting with the AgentBay cloud computing platform.
+
+### Instantiation
+
+First, create an AgentBay session and initialize the toolkit:
+
+```python
+import os
+from agentbay import AgentBay
+from agentbay.session_params import CreateSessionParams
+from langchain_agentbay_integration import AgentbayIntegrationToolkit
+
+# Create AgentBay session
+agent_bay = AgentBay()
+params = CreateSessionParams(image_id="code_latest")
+result = agent_bay.create(params)
+session = result.session
+
+# Initialize the toolkit
+toolkit = AgentbayIntegrationToolkit(session=session)
+```
+
+### Tools
+
+The toolkit includes the following tools:
+
+1. **WriteFileTool**: Write content to files in the AgentBay session with support for both overwrite and append modes.
+2. **ReadFileTool**: Read content from files in the AgentBay session.
+3. **RunCodeTool**: Execute Python or JavaScript code in a secure cloud environment.
+4. **ExecuteCommandTool**: Run shell commands with configurable timeout settings.
+
+```python
+tools = toolkit.get_tools()
+for tool in tools:
+    print(f"Tool: {tool.name}")
+    print(f"Description: {tool.description}")
+```
+
+### Use within an agent
+
+You can use the toolkit with a LangChain agent:
+
+```python
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
+# Initialize LLM
+llm = ChatOpenAI(
+    api_key=os.getenv("DASHSCOPE_API_KEY"),
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+    model=os.getenv("DASHSCOPE_MODEL", "qwen3-max")
+)
+
+# Create prompt
+prompt = ChatPromptTemplate.from_messages([
+    ("system", """You are a helpful assistant with access to AgentBay tools that can write files, read files, execute code, and execute commands.
+    
+Available tools:
+1. write_file - Write content to a file in the AgentBay session. Supports 'overwrite' and 'append' modes.
+2. read_file - Read content from a file in the AgentBay session.
+3. run_code - Execute code in the AgentBay session. Supported languages are: python, javascript.
+4. execute_command - Execute a shell command in the AgentBay session
+
+Use these tools to help the user accomplish their tasks. When using write_file, you can specify the mode parameter to either overwrite (default) or append to a file. When appending content, make sure to include newline characters if needed to separate lines."""),
+    ("human", "{input}"),
+    ("placeholder", "{agent_scratchpad}")
+])
+
+# Create agent
+agent = create_tool_calling_agent(llm, toolkit.get_tools(), prompt)
+agent_executor = AgentExecutor(agent=agent, tools=toolkit.get_tools(), verbose=True)
+
+# Example usage
+example_query = """Write a Python file '/tmp/script.py' with content 'print("Hello from Python!")\nprint("AgentBay integration successful!")\n' using default mode.
+Then run the Python code in that file using the run_code tool.
+Next, write a file '/tmp/demo.txt' with content 'First line\n' using default mode.
+Then append a second line 'Second line\n' to the same file using append mode.
+After that, read the file '/tmp/demo.txt' to verify its content.
+Finally, execute command 'cat /tmp/demo.txt' to show the file content."""
+
+result = agent_executor.invoke({"input": example_query})
+print(f"Final result: {result['output']}")
+```
