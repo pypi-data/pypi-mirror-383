@@ -1,0 +1,157 @@
+Metadata-Version: 2.4
+Name: SARepo
+Version: 0.1.8
+Summary: Minimal, explicit Repository & Unit-of-Work layer over SQLAlchemy 2.x
+Author: nurbergenovv
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: SQLAlchemy>=2.0
+Dynamic: license-file
+
+# SARepo
+
+**Minimal, explicit Repository + Unit of Work layer on top of SQLAlchemy 2.x (sync & async).**  
+No magic method names — just clean typed APIs, composable specs, pagination, and optional soft-delete.
+
+---
+
+## 🚀 Quick Start (Sync)
+
+```python
+from sqlalchemy import create_engine, String
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
+
+from SARepo.sa_repo import SARepository
+from SARepo.base import PageRequest
+from SARepo.specs import and_specs, ilike
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Request(Base):
+    __tablename__ = "requests"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    title: Mapped[str] = mapped_column(String(255))
+    status: Mapped[str] = mapped_column(String(50))
+
+
+# Setup database
+engine = create_engine("sqlite+pysqlite:///:memory:", echo=False)
+Base.metadata.create_all(engine)
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
+
+# Usage
+with SessionLocal() as session:
+    repo = SARepository(Request, session)
+
+    # Create
+    r = repo.add(Request(title="Hello", status="NEW"))
+    session.commit()
+
+    # Query + Paginate
+    page = repo.page(PageRequest(0, 10), spec=ilike(Request.title, "%He%"))
+    print(page.total, [i.title for i in page.items])
+```
+
+---
+
+## ⚙️ Async Quick Start
+
+```python
+import asyncio
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+
+from SARepo.sa_repo import SAAsyncRepository
+from SARepo.base import PageRequest
+
+
+async def main():
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:", echo=False)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+    SessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
+
+    async with SessionLocal() as session:
+        repo = SAAsyncRepository(Request, session)
+
+        await repo.add(Request(title="Hello", status="NEW"))
+        await session.commit()
+
+        page = await repo.page(PageRequest(0, 10))
+        print(page.total)
+
+
+asyncio.run(main())
+```
+
+---
+
+## 🧠 Features
+
+✅ **SARepository / SAAsyncRepository**
+- Clean CRUD operations (`get`, `add`, `update`, `remove`, etc.)
+- `page()` method with total count
+
+✅ **Composable Specs**
+- Combine filters easily (`eq`, `ilike`, `and_specs`, `not_deleted`)
+
+✅ **Soft Delete**
+- Automatically filters out rows with `is_deleted=True` if the model has this column
+
+✅ **Typed Protocol Interface**
+- `CrudRepository` protocol for structural typing & IDE autocompletion
+
+✅ **Unit of Work**
+- Minimal sync & async helpers for transactional operations
+
+---
+
+## 🧩 Example: Spec Composition
+
+```python
+from SARepo.specs import eq, ilike, and_specs
+
+spec = and_specs(
+    eq(Request.status, "NEW"),
+    ilike(Request.title, "%Hello%")
+)
+
+page = repo.page(PageRequest(0, 10), spec=spec)
+```
+
+---
+
+## 📜 License
+
+**MIT License**  
+Copyright (c) 2025  
+
+---
+
+## 🧭 Project Structure (Example)
+
+```
+SARepo/
+│
+├── sa_repo.py         # Core Repository classes (sync & async)
+├── base.py            # Pagination, PageRequest, DTO helpers
+├── specs.py           # Composable query specs
+├── uow.py             # Optional Unit of Work layer
+├── __init__.py
+```
+
+---
+
+### ✅ Philosophy
+
+- No ORM “magic” — only explicit SQLAlchemy 2.0 APIs  
+- One repository → one model  
+- Predictable transaction scope  
+- Works with Pydantic DTOs or dataclasses  
+- 100 % type-safe
