@@ -1,0 +1,69 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=80", "setuptools-scm>=8"]
+
+[project]
+authors = [{ name = "liu xue yan", email = "liu_xue_yan@foxmail.com" }]
+description = "A library that represents emoji sequences and characters based on the Unicode® Technical Standard #51 Data Files"
+name = "emoji-data"
+readme = "README.md"
+
+requires-python = ">=3.9"
+
+dependencies = ["importlib-resources; python_version<'3.9'"]
+
+keywords = ["emoji", "unicode"]
+
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE.txt"]
+
+classifiers = [
+  # "Development Status :: 1 - Planning",
+  # "Development Status :: 2 - Pre-Alpha",
+  # "Development Status :: 3 - Alpha",
+  # "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
+  # "Development Status :: 6 - Mature",
+  # "Development Status :: 7 - Inactive",
+  "Intended Audience :: Developers",
+  "Topic :: Text Processing",
+  "Programming Language :: Python",
+]
+
+dynamic = ["version"]
+
+[project.urls]
+homepage = "https://github.com/tanbro/emoji-data"
+repository = "https://github.com/tanbro/emoji-data.git"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"emoji_data.data" = ["emoji_data/data/*.txt", "emoji_data/py.typed"]
+
+[tool.setuptools_scm]
+write_to = "src/emoji_data/_version.py"
+
+[dependency-groups]
+dev = [
+  { include-group = "test" },
+  { include-group = "docs" },
+  { include-group = "typed" },
+]
+test = ["coverage"]
+typed = ["mypy"]
+docs = [
+  "importlib_metadata;python_version<'3.8'",
+  "Sphinx>=7",
+  "myst-parser",
+  "sphinx-book-theme",
+  "nbsphinx",
+  "linkify-it-py",
+  "sphinx-copybutton",
+  "sphinx-inline-tabs",
+  "sphinx_tippy",
+  "sphinx-version-warning",
+  "sphinx-autodoc-typehints",
+]
+ipy = ["ipykernel"]
