@@ -1,0 +1,20 @@
+Metadata-Version: 2.3
+Name: dstricks2
+Version: 0.1.0
+Summary: Collection of data science utilities.
+Author: RJUNCC
+Author-email: RJUNCC <20bigal04@ryeguytech.com>
+License: MIT
+Requires-Dist: matplotlib>=3.10.7
+Requires-Dist: numpy>=2.3.3
+Requires-Dist: pandas>=2.3.3
+Requires-Dist: polars>=1.34.0
+Requires-Dist: scikit-learn>=1.7.2
+Requires-Dist: seaborn>=0.13.2
+Requires-Dist: pytest>=8.4.2 ; extra == 'test'
+Requires-Python: >=3.11
+Provides-Extra: test
+Description-Content-Type: text/markdown
+
+# dstricks2
+The better version of dstricks

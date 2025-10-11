@@ -1,0 +1,32 @@
+[project]
+name = "dstricks2"
+version = "0.1.0"
+description = "Collection of data science utilities."
+readme = "README.md"
+license = {text="MIT"}
+authors = [
+    { name = "RJUNCC", email = "20bigal04@ryeguytech.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "matplotlib>=3.10.7",
+    "numpy>=2.3.3",
+    "pandas>=2.3.3",
+    "polars>=1.34.0",
+    "scikit-learn>=1.7.2",
+    "seaborn>=0.13.2",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.4.2",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.9,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
