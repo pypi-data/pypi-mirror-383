@@ -1,0 +1,4 @@
+[console_scripts]
+s3-bucket-cli = chuk_virtual_fs.cli.s3_bucket_cli:main
+snapshot-cli = chuk_virtual_fs.cli.snapshot_cli:main
+template-cli = chuk_virtual_fs.cli.template_cli:main
