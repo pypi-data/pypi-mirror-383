@@ -1,0 +1,82 @@
+Metadata-Version: 2.4
+Name: hogwarts-playwright-agent
+Version: 0.1.2
+Summary: hogwarts-playwright-agent 霍格沃兹测试开发学社学员版
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: browser-use>=0.7.9
+Requires-Dist: crawl4ai>=0.7.4
+Requires-Dist: grandalf>=0.8
+Requires-Dist: hogwarts-logger>=1.0.0
+Requires-Dist: langchain>=0.3.27
+Requires-Dist: langchain-mcp-adapters>=0.1.10
+Requires-Dist: langchain-ollama>=0.3.8
+Requires-Dist: langchain-openai>=0.3.33
+Requires-Dist: langgraph>=0.6.7
+Requires-Dist: playwright>=1.55.0
+Requires-Dist: pytest-playwright>=0.7.1
+
+# hogwarts-playwright-agent
+
+playwright agent
+
+支持mcp。
+
+霍格沃兹测试开发学社学员体验版，本工具只用于教学演示，不适合正式产品使用。
+
+
+## 使用
+
+```bash
+npx -y @playwright/mcp@latest --port 8931
+
+hogwarts-playwright-agent --llm.model deepseek-chat --llm.base_url https://api.deepseek.com/v1 --llm.key $DEEPSEEK_TOKEN  -p '打开百度 搜索霍格沃兹测试开发学社 打开搜索结果中的第一条链接' --mcp.name playwright --mcp.url http://localhost:8931/sse 
+
+```
+
+## 参数说明
+
+```text
+usage: hogwarts-playwright-agent [-h] [-p str] [--llm [JSON]] [--llm.model str] [--llm.provider str] [--llm.key str]
+                                 [--llm.tool_calling str] [--llm.base_url str] [--llm.reasoning bool] [--mcp [JSON]]
+                                 [--mcp.name str] [--mcp.url str] [--mcp.command str] [--mcp.transport str]
+
+hogwarts-playwright-agent, 支持mcp。
+霍格沃兹测试开发学社学员体验版，本工具只用于教学演示，不适合正式产品使用。
+- [测试人社区](https://ceshiren.com)
+- [霍格沃兹测试开发学社](https://testing-studio.com)
+- [测吧（北京）科技有限公司](https://ceba.ceshiren.com)
+
+options:
+  -h, --help            show this help message and exit
+  -p str, --prompt str  prompt 提示词 (required)
+
+llm options:
+  llm 大模型配置
+
+  --llm [JSON]          set llm from JSON string (default: {})
+  --llm.model str       (default: null)
+  --llm.provider str    (default: openai)
+  --llm.key str         (default: null)
+  --llm.tool_calling str
+                        (default: function)
+  --llm.base_url str    (default: null)
+  --llm.reasoning bool  (default: null)
+
+mcp options:
+  default: null (undefined)
+  mcp 配置
+
+  --mcp [JSON]          set mcp from JSON string (default: {})
+  --mcp.name str        (default: null)
+  --mcp.url str         (default: null)
+  --mcp.command str     (default: null)
+  --mcp.transport str   (default: null)
+
+```
+
+## 霍格沃兹测试开发学社
+
+- [测试人社区](https://ceshiren.com)
+- [霍格沃兹测试开发学社](https://testing-studio.com)
+- [测吧（北京）科技有限公司](https://ceba.ceshiren.com)
