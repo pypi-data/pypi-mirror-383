@@ -1,0 +1,141 @@
+{% extends "pages/patchouli/page.html.jinja" %}
+{% set d = mediatransport.diagrams.context("protocol") %}
+
+{% block body %}
+<!-- ahh, freedom from that stupid book format. lots of room to play here! -->
+{# well, if it's set up correctly at least... #}
+{% include "csscheck.html.jinja" without context %}
+
+<div class="protocoldocs">
+{# comments are for reference when building layout -#}
+{# about {type} and {data} -#}
+<p><b>{{d.tl("notice")}}</b></p>
+
+<p>{{d.tl("intro1")}}</p>
+{{d.dia([
+  (1, 'sym', 'type'),
+  (None, 'sym', 'data'),
+])}}
+<p>{{d.tl("intro2")}}</p>
+
+<h3>{{d.tl("stdtypes")}}</h3>
+
+<h4>{{d.tl("garbage")}}</h4>
+<p>{{d.tl("garbage.description")}}</p>
+{{d.dia([
+  (1, 'literal', 'ff')
+])}}
+
+<h4>{{d.tl("truefalse")}}</h4>
+<div class="diagram-sbs">
+{{d.dia([
+  (1, 'literal', '02')
+])}}
+{{d.dia([
+  (1, 'literal', '03')
+])}}
+</div>
+
+<h4>{{d.tl("null")}}</h4>
+{{d.dia([
+  (1, 'literal', '04')
+])}}
+
+<h4>{{d.tl("double")}}</h4>
+<p>{{d.tl("double.description")}}</p>
+{{d.dia([
+  (1, 'literal', '05'),
+  (8, 'sym', 'double_value')
+])}}
+
+<h4>{{d.tl("pattern")}}</h4>
+<p>{{d.tl("pattern.description")}}</p>
+<ul>
+<li>{{d.tl("pattern.1")}}</li>
+<li>{{d.tl("pattern.2")}}</li>
+<li>{{d.tl("pattern.3")}}</li>
+</ul>
+{{d.dia([
+  (1, 'literal', '06'),
+  (1, 'sym', 'dir'),
+  (4, 'sym', 'pattern_len'),
+  (('pattern_len', '*1'), 'sym', 'angles'),
+])}}
+
+<h4>{{d.tl("vec3")}}</h4>
+<p>{{d.tl("vec3.description")}}</p>
+{{d.dia([
+  (1, 'literal', '07'),
+  (8, 'sym', 'vec_x'),
+  (8, 'sym', 'vec_y'),
+  (8, 'sym', 'vec_z'),
+])}}
+
+<h4>{{d.tl("list")}}</h4>
+<p>{{d.tl("list.description")}}</p>
+{{d.dia([
+  (1, 'literal', '08'),
+  (4, 'sym', 'list_len'),
+  (None, 'sym', 'list_iotas'),
+])}}
+
+<h3>{{d.tl("moreiotas")}}</h3>
+
+<h4>{{d.tl("string")}}</h4>
+<p>{{d.tl("string.description")}}</p>
+{{d.dia([
+  (1, 'literal', '01'),
+  (4, 'sym', 'str_len'),
+  (('str_len', '*1'), 'sym', 'string'),
+])}}
+
+<h4>{{d.tl("matrix")}}</h4>
+<p>{{d.tl("matrix.description")}}</p>
+<ul>
+  <li>{{d.tl("matrix.1")}}</li>
+  <li>{{d.tl("matrix.2")}}</li>
+</ul>
+{{d.dia([
+  (1, 'literal', '40'),
+  (1, 'sym', 'rows'),
+  (1, 'sym', 'cols'),
+  (('rowscols', '*8'), 'sym', 'matrix_contents'),
+])}}
+
+<h3>{{d.tl("hexpose")}}</h3>
+
+<h4>{{d.tl("text")}}</h4>
+<p>{{d.tl("text.description")}}</p>
+{{d.dia([
+  (1, 'literal', '50'),
+  (4, 'sym', 'str_len'),
+  (('str_len', '*1'), 'sym', 'string'),
+])}}
+
+<h3>{{d.tl("meta")}}</h3>
+<p>{{d.tl("meta_intro")}}</p>
+
+<h4>{{d.tl("server_info")}}</h4>
+<p>{{d.tl("server_info.description")}}</p>
+<ul>
+  <li>{{d.tl("server_info.1")}}</li>
+  <li>{{d.tl("server_info.2")}}</li>
+  <li>{{d.tl("server_info.3")}}</li>
+  <li>{{d.tl("server_info.4")}}</li>
+  <li>{{d.tl("server_info.5")}}</li>
+  <li>{{d.tl("server_info.6")}}</li>
+  <li>{{d.tl("server_info.7")}}</li>
+</ul>
+{{d.dia([
+  (1, 'literal', 'fe'),
+  (2, 'sym', 'protocol_version'),
+  (4, 'sym', 'max_send'),
+  (4, 'sym', 'max_inter_send'),
+  (4, 'sym', 'max_recv'),
+  (8, 'sym', 'max_power'),
+  (8, 'sym', 'power_regen_rate'),
+  (8, 'sym', 'inter_cost'),
+])}}
+
+</div>
+{% endblock body %}
