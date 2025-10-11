@@ -1,0 +1,247 @@
+Metadata-Version: 2.4
+Name: morchaos
+Version: 0.1.0
+Summary: A collection of utilities for file management, deduplication, and system monitoring
+Author: Jones Chung
+Author-email: jones.developer.chung@gmail.com
+Requires-Python: >=3.10,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: Pillow (>=10.0.0,<11.0.0)
+Requires-Dist: click (>=8.1.0,<9.0.0)
+Requires-Dist: ebooklib (>=0.18,<0.19)
+Requires-Dist: imagehash (>=4.3.0,<5.0.0)
+Requires-Dist: pdfplumber (>=0.9.0,<0.10.0)
+Requires-Dist: psutil (>=5.9.0,<6.0.0)
+Requires-Dist: python-docx (>=0.8.11,<0.9.0)
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+# 📦 morchaos
+
+A collection of utilities for file management, deduplication, and system monitoring.
+
+## Features
+
+- **File Deduplication**: Find and manage duplicate files using SHA-256 hashing
+- **Image Deduplication**: Detect similar images using perceptual hashing
+- **Source Code Deduplication**: Find duplicate source files with whitespace normalization
+- **Ebook Catalogization**: Organize ebooks by author using metadata extraction
+- **Chatbot Interface**: Simple HTTP client for local Ollama/chat model endpoints
+- **System Information**: Collect CPU, memory, disk, battery, and network statistics
+
+## Installation
+
+### From Source
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd morchaos
+
+# Install with Poetry
+poetry install
+
+# Or install with pip
+pip install .
+```
+
+### Dependencies
+
+- Python ≥3.10
+- click (CLI framework)
+- imagehash, Pillow (image processing)
+- pdfplumber, python-docx, ebooklib (ebook metadata)
+- psutil (system information)
+- requests (HTTP client)
+
+## Usage
+
+### Command Line Tools
+
+After installation, the following console scripts are available:
+
+#### Duplicate File Detection
+```bash
+# Find duplicates in a directory
+duplicate --directory /path/to/files
+
+# Delete duplicates (keeps first occurrence)
+duplicate --directory /path/to/files --action delete
+
+# Move duplicates to a separate directory
+duplicate --directory /path/to/files --action move --target-dir /path/to/duplicates
+
+# Filter by file extensions
+duplicate --directory /path/to/files --extensions .txt .doc
+
+# Ignore specific directories
+duplicate --directory /path/to/files --ignore-dirs temp cache
+```
+
+#### Image Duplicate Detection
+```bash
+# Find similar images
+image-diff --directory /path/to/images
+
+# Adjust similarity threshold (0-64, lower = more strict)
+image-diff --directory /path/to/images --threshold 10
+
+# Specify image extensions
+image-diff --directory /path/to/images --extensions .jpg .png .gif
+```
+
+#### Source Code Duplicate Detection
+```bash
+# Find duplicate source files (whitespace-insensitive)
+source-diff --directory /path/to/code
+
+# Specify source file extensions
+source-diff --directory /path/to/code --extensions .py .js .java
+```
+
+#### Ebook Catalogization
+```bash
+# Preview metadata extraction
+ebook-catalog --directory /path/to/ebooks --preview
+
+# Organize ebooks by author (dry run)
+ebook-catalog --directory /path/to/ebooks --dry-run
+
+# Actually organize ebooks
+ebook-catalog --directory /path/to/ebooks
+```
+
+#### Chatbot Interface
+```bash
+# Single prompt
+chatbot "Hello, how are you?"
+
+# Interactive mode
+chatbot --interactive
+
+# Use different model or endpoint
+chatbot --model codellama --url http://localhost:11434 "Write a Python function"
+
+# Check endpoint health
+chatbot --health-check
+
+# List available models
+chatbot --list-models
+```
+
+#### System Information
+```bash
+# Show all system information
+system-info
+
+# Show specific category
+system-info --category cpu
+system-info --category memory
+
+# Output as JSON
+system-info --json
+```
+
+### Python API
+
+```python
+from morchaos.core import duplicate, image, source, ebook, chatbot, system
+
+# Find duplicate files
+duplicates = duplicate.find_duplicates(Path("/path/to/files"))
+duplicate.act_on_duplicates(duplicates, "delete")
+
+# Find similar images
+similar_images = image.find_image_duplicates(Path("/path/to/images"))
+
+# Find duplicate source code
+source_duplicates = source.find_source_duplicates(Path("/path/to/code"))
+
+# Catalogize ebooks
+ebook.catalogize(Path("/path/to/ebooks"))
+
+# Use chatbot
+bot = chatbot.Chatbot()
+response = bot.ask("Hello!")
+
+# Get system information
+cpu_info = system.get_cpu_info()
+memory_info = system.get_memory_info()
+```
+
+## Development
+
+### Setup Development Environment
+
+```bash
+# Install development dependencies
+poetry install --with dev
+
+# Run tests
+pytest
+
+# Run tests with coverage
+pytest --cov=morchaos --cov-report=html
+
+# Type checking
+mypy morchaos
+
+# Code formatting
+black morchaos tests
+
+# Linting
+flake8 morchaos tests
+```
+
+### Project Structure
+
+```
+morchaos/
+├── core/                 # Business logic modules
+│   ├── duplicate.py      # SHA-256 duplicate detection
+│   ├── image.py          # Perceptual hash image comparison
+│   ├── source.py         # Source code normalization
+│   ├── ebook.py          # Ebook metadata extraction
+│   ├── chatbot.py        # HTTP client for chat models
+│   ├── system.py         # System information collection
+│   └── file_utils.py     # File utilities
+├── cli/                  # Command-line interfaces
+│   ├── duplicate.py      # duplicate command
+│   ├── image_diff.py     # image-diff command
+│   ├── source_diff.py    # source-diff command
+│   ├── ebook_catalog.py  # ebook-catalog command
+│   ├── chatbot.py        # chatbot command
+│   └── system_info.py    # system-info command
+├── logger/               # Logging configuration
+└── tests/                # Test suite
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+We welcome contributions of all kinds! To get started:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-name`)
+3. Make your changes with clear commit messages
+4. Run tests and ensure code quality checks pass
+5. Submit a pull request
+
+### Guidelines
+
+- Follow the existing code style (PEP8)
+- Include tests for new features or bug fixes
+- Document new functionality in the README or docstrings
+- Be respectful and constructive in code reviews and discussions
+
+---
+
+Let me know if you'd like a CONTRIBUTING.md or LICENSE file scaffolded next, or if you want to add badges, changelogs, or CI instructions.
