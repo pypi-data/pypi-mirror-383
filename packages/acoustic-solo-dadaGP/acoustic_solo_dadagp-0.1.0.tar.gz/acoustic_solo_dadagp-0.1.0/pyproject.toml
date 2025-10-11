@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "acoustic-solo-dadaGP"  # distribution name on PyPI
+description = "Guitar tablature tokenization and processing toolkit."
+authors = [
+  { name = "Austin Liu", email = "austin_f_liu@brown.edu" },
+  { name = "Claude Hu", email = "zh4nh@virginia.edu" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+
+# Keep these dynamic so setuptools pulls them from files/attrs below:
+dynamic = ["version", "dependencies"]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Topic :: Multimedia :: Sound/Audio",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Text Processing"
+]
+keywords = ["music", "guitar", "tablature", "tokenization", "audio"]
+
+[tool.setuptools.dynamic]
+version = { attr = "asdadagp._version.__version__" }
+dependencies = { file = "requirements.txt" }
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=6.0.0",
+  "pytest-cov>=2.0.0"
+]
+
+[project.scripts]
+asdadagp = "asdadagp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["asdadagp*"]
+exclude = ["tests*", "docs*"]
+
+
+[project.urls]
+Homepage = "https://github.com/austinliu05/acoustic-solo-dadaGP"
+Source = "https://github.com/austinliu05/acoustic-solo-dadaGP"
