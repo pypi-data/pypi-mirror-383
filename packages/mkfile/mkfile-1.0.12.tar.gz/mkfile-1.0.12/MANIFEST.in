@@ -1,0 +1,22 @@
+include README.md
+include __version__.py
+recursive-include mkfile *.pyd
+recursive-include mkfile *.so
+recursive-include mkfile *.ini
+recursive-include mkfile *.jpg
+include mkfile/__init__.py
+include mkfile/__main__.py
+include mkfile/__version__.py
+include mkfile/mkfile.pyx
+
+# Exclude source files untuk binary distribution
+global-exclude *.py[cod]
+global-exclude *.c
+global-exclude __pycache__
+global-exclude *.so
+global-exclude .git*
+global-exclude *.ini
+
+# Include LICENSE if exists (optional)
+include LICENSE*
+exclude LICENSE.rst
