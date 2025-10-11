@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "flamecraft"
+version = "0.1.0"
+description = "Flamecraft agentic AI testing package with pretty print features."
+authors = ["Victor Amit <dev@amit.work>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "flamecraft", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.urls]
+homepage = "https://github.com/flamecraft/flamecraft"
+repository = "https://github.com/flamecraft/flamecraft"
+documentation = "https://github.com/flamecraft/flamecraft#readme"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+flamecraft = "flamecraft.__main__:main"
