@@ -1,0 +1,56 @@
+Metadata-Version: 2.4
+Name: nac-yaml
+Version: 1.1.1
+Summary: A Python library with common YAML utility functions supporting 'Network as Code'.
+Project-URL: homepage, https://github.com/netascode/nac-yaml
+Project-URL: repository, https://github.com/netascode/nac-yaml
+Project-URL: documentation, https://github.com/netascode/nac-yaml
+Author-email: Daniel Schmidt <danischm@cisco.com>
+Maintainer-email: Daniel Schmidt <danischm@cisco.com>
+License: MPL-2.0
+License-File: LICENSE
+Keywords: automation,cisco,network,utilities,yaml
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Requires-Dist: ruamel-yaml>=0.18.15
+Provides-Extra: dev
+Requires-Dist: ansible-core>=2.17.6; extra == 'dev'
+Requires-Dist: bandit[toml]>=1.8.6; extra == 'dev'
+Requires-Dist: mypy>=1.17.1; extra == 'dev'
+Requires-Dist: pre-commit>=4.3.0; extra == 'dev'
+Requires-Dist: pytest-cov>=6.2.1; extra == 'dev'
+Requires-Dist: pytest-mock>=3.15.0; extra == 'dev'
+Requires-Dist: pytest>=8.4.2; extra == 'dev'
+Requires-Dist: ruff>=0.12.12; extra == 'dev'
+Description-Content-Type: text/markdown
+
+[![Tests](https://github.com/netascode/nac-yaml/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/nac-yaml/actions/workflows/test.yml)
+![Python Support](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-informational "Python Support: 3.10, 3.11, 3.12, 3.13")
+
+# nac-yaml
+
+A Python library with common YAML utility functions supporting `Network as Code`.
+
+## Installation
+
+### Using uv (recommended)
+
+```bash
+uv add nac-yaml
+```
+
+### Using pip
+
+```bash
+pip install nac-yaml
+```
