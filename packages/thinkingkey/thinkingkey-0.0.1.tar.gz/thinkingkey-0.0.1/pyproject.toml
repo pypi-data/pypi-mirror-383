@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "thinkingkey"
+version = "0.0.1"
+description = "ThinkingKey Python package with greet and project info."
+authors = ["Victor Amit <dev@amit.work>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "thinkingkey", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.urls]
+homepage = "https://www.upflame.org/thinkingkey"
+repository = "https://github.com/upflame/thinkingkey"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
