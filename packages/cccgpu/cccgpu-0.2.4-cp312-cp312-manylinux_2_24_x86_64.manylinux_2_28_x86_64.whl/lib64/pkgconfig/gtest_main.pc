@@ -1,0 +1,10 @@
+libdir=/tmp/tmpps1rg04x/wheel/platlib/lib64
+includedir=/tmp/tmpps1rg04x/wheel/platlib/include
+
+Name: gtest_main
+Description: GoogleTest (with main() function)
+Version: 1.15.2
+URL: https://github.com/google/googletest
+Requires: gtest = 1.15.2
+Libs: -L${libdir} -lgtest_main -lpthread
+Cflags: -I${includedir} -DGTEST_HAS_PTHREAD=1
