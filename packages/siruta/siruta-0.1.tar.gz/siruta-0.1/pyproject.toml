@@ -1,0 +1,12 @@
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'siruta'
+version = '0.1'
+description = 'A bunch of form fields and utilities for Romanian counties and localities using SIRUTA codes.'
+readme = { file = "README", content-type = "text/x-rst" }
+
+requires-python = '>=3.9'
