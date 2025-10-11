@@ -1,0 +1,79 @@
+################################################################
+#### poetry config ####
+################################################################
+
+[project]
+name = "brainscore_core"
+version = "2.3.0"
+description = ""
+authors = []
+license = { 'file' = 'LICENSE' }
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "tqdm",
+    "numpy>=1.21,<2.0",
+    "boto3", # AWS S3 client for brainio lite
+    "netCDF4", # NetCDF file format for brainio lite
+    "xarray", # Data arrays for brainio lite
+    "pandas", # DataFrames for brainio lite
+    "Pillow", # Image processing for brainio lite
+    "psycopg2-binary", # postgres driver
+    # submission
+    "fire",
+    "peewee",
+    "pybtex",
+    "requests",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-check",
+    "pytest-mock",
+    "requests-mock"]
+
+[build-system]
+requires = [
+    "setuptools>=65,<69",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+################################################################
+#### mypy type-checking config ####
+################################################################
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests as integration tests (slow, requires real components)",
+    "unit: marks tests as unit tests (fast, isolated)",
+    "slow: marks tests as slow running tests",
+    "memory_intense: tests requiring more memory than is available in the Travis sandbox (currently 3 GB)",
+    "travis_slow: tests running for more than 10 minutes without output (which leads Travis to error)",
+    "private_access: tests that require access to a private resource, such as assemblies on S3 (note that Travis builds originating from forks can not have private access)",
+]
+
+# Test discovery patterns
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Console output
+console_output_style = "progress"
+
+# Warnings configuration
+filterwarnings = [
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning", 
+    "ignore::FutureWarning:brainscore_core.metrics*",
+]
+
+################################################################
+#### setuptools packaging config ####
+################################################################
+
+[tool.setuptools.package-data]
+# include bash files (e.g. 'test_plugin.sh') in package install
+"brainscore_core.plugin_management" = ["**"]

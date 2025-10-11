@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: brainscore_core
+Version: 2.3.0
+License: 
+        MIT License
+        
+        Copyright (c) 2017, Martin Schrimpf and Jon Prescott-Roy
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        
+        
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: tqdm
+Requires-Dist: numpy<2.0,>=1.21
+Requires-Dist: boto3
+Requires-Dist: netCDF4
+Requires-Dist: xarray
+Requires-Dist: pandas
+Requires-Dist: Pillow
+Requires-Dist: psycopg2-binary
+Requires-Dist: fire
+Requires-Dist: peewee
+Requires-Dist: pybtex
+Requires-Dist: requests
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-check; extra == "test"
+Requires-Dist: pytest-mock; extra == "test"
+Requires-Dist: requests-mock; extra == "test"
+
+[![Build Status](https://app.travis-ci.com/brain-score/core.svg?token=vqt7d2yhhpLGwHsiTZvT&branch=main)](https://app.travis-ci.com/brain-score/core)
+[![Documentation Status](https://readthedocs.org/projects/brain-score-core/badge/?version=latest)](https://brain-score-core.readthedocs.io/en/latest/?badge=latest)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) 
+
+Brain-Score is a platform to evaluate computational models of mind and brain function on their match to behavioral and
+neural measurements in domains such as vision and language. The intent of Brain-Score is to adopt many (ideally all) the
+experimental benchmarks in the field for the purpose of model testing, falsification, and comparison. To that end,
+Brain-Score operationalizes experimental data into quantitative benchmarks that any model candidate following
+the `BrainModel` interface can be scored on.
+
+See the [Documentation](https://brain-score-core.readthedocs.io) for more details.
+
+Brain-Score is made by and for the community. To contribute,
+please [send in a pull request](https://github.com/brain-score/core/pulls).
+
+## License
+
+MIT license
