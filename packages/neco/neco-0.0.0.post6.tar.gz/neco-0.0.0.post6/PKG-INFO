@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: neco
+Version: 0.0.0.post6
+Summary: Add your description here
+License-File: LICENSE
+Requires-Python: >=3.12
+Requires-Dist: loguru==0.7.3
+Requires-Dist: setuptools>=68
+Provides-Extra: all
+Requires-Dist: boto3==1.38.41; extra == 'all'
+Requires-Dist: hyperopt==0.2.7; extra == 'all'
+Requires-Dist: mlflow==3.1.0; extra == 'all'
+Requires-Dist: scikit-learn==1.6.1; extra == 'all'
+Requires-Dist: tsfresh==0.21.1; extra == 'all'
+Provides-Extra: mlops
+Requires-Dist: boto3==1.38.41; extra == 'mlops'
+Requires-Dist: hyperopt==0.2.7; extra == 'mlops'
+Requires-Dist: mlflow==3.1.0; extra == 'mlops'
+Requires-Dist: scikit-learn==1.6.1; extra == 'mlops'
+Requires-Dist: tsfresh==0.21.1; extra == 'mlops'

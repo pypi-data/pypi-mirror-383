@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.25", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "neco"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dynamic = ["version"]
+
+dependencies = [
+    "loguru==0.7.3",
+    "setuptools>=68",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==8.4.2",
+    "pytest-dotenv-modern==0.3.0",
+    "pytest-xdist==3.8.0",
+]
+
+[project.optional-dependencies]
+mlops = [
+    "boto3==1.38.41",
+    "scikit-learn==1.6.1",
+    "mlflow==3.1.0",
+    "tsfresh==0.21.1",
+    "hyperopt==0.2.7",
+]
+
+all = [
+    "neco[mlops]",
+]
+
+[tool.hatch.build.targets.sdist]
+include = ["neco", "README.md", "LICENSE"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["neco"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "post-release"
+local_scheme = "no-local-version"
+fallback_version = "0.0.0"
+
