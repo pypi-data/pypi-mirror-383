@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "ideacook"
+version = "0.1.0"
+description = "AI ideas, tools, and packages testing package with pretty print features."
+authors = ["Victor Amit <dev@amit.work>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "ideacook", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.urls]
+homepage = "https://github.com/ideacook/ideacook"
+repository = "https://github.com/ideacook/ideacook"
+documentation = "https://github.com/ideacook/ideacook#readme"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+ideacook = "ideacook.__main__:main"
