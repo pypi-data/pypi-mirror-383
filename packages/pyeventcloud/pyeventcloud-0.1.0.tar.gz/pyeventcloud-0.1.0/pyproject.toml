@@ -1,0 +1,53 @@
+[project]
+name = "pyeventcloud"
+version = "0.1.0"
+description = "CloudEvents SDK for Python with zero dependencies and complete protocol bindings"
+readme = "README.md"
+authors = [
+    { name = "Tudor Plugaru", email = "tudor@plugaru.me" }
+]
+requires-python = ">=3.11"
+dependencies = []
+license = { text = "Apache-2.0" }
+keywords = [
+    "cloudevents",
+    "events",
+    "sdk",
+    "kafka",
+    "http",
+    "eventing",
+    "cloud-native",
+    "serverless"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Distributed Computing",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/plugarut/pyeventcloud"
+Documentation = "https://github.com/plugarut/pyeventcloud#readme"
+Repository = "https://github.com/plugarut/pyeventcloud"
+Issues = "https://github.com/plugarut/pyeventcloud/issues"
+
+[build-system]
+requires = ["uv_build>=0.9.0,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]
