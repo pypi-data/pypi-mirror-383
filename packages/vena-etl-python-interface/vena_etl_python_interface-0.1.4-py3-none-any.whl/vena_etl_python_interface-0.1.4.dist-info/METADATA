@@ -1,0 +1,199 @@
+Metadata-Version: 2.4
+Name: vena-etl-python-interface
+Version: 0.1.4
+Summary: A Python library for interacting with Vena's ETL API
+Home-page: https://github.com/venasolutions/vena-etl-python-interface
+Author: Greg Hetherington
+Author-email: ghetherington@venacorp.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.1
+Requires-Dist: pandas>=1.1.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# vena-etl-python-interface
+Python package for interacting with Vena's ETL APIs.
+
+## Installation
+
+```bash
+pip install vepi
+```
+
+## Configuration
+
+Create a configuration file (e.g., `config.py`) with your Vena API credentials:
+
+```python
+HUB = 'eu1'  # e.g., us1, us2, ca3
+API_USER = 'your_api_user'
+API_KEY = 'your_api_key'
+TEMPLATE_ID = 'your_template_id'
+DATA_SOURCE = 'your_erp_or_data_source'
+MODEL_ID = 'your_model_id'  # Optional, needed for exports
+```
+
+## Usage
+
+### Basic Setup
+
+```python
+from vepi import VenaETL
+
+# Initialize the client
+vena_etl = VenaETL(
+    hub=HUB,
+    api_user=API_USER,
+    api_key=API_KEY,
+    template_id=TEMPLATE_ID,
+    data_source=DATA_SOURCE
+    model_id=MODEL_ID,
+)
+```
+
+### Importing Data
+
+#### Using DataFrame (start_with_data)
+
+```python
+import pandas as pd
+
+# Create a DataFrame with your data
+data = {
+    'Value': ['1000', '2000'],
+    'Account': ['3910', '3910'],
+    'Entity': ['V001', 'V001'],
+    'Department': ['D10', 'D10'],
+    'Year': ['2020', '2020'],
+    'Period': ['1', '2'],
+    'Scenario': ['Actual', 'Actual'],
+    'Currency': ['Local', 'Local'],
+    'Measure': ['Value', 'Value']
+}
+df = pd.DataFrame(data)
+
+# Import the data
+vena_etl.start_with_data(df)
+```
+
+#### Using File (start_with_file)
+
+You can upload data in three ways:
+
+1. From a CSV file:
+```python
+# Upload from a CSV file
+vena_etl.start_with_file("path/to/your/data.csv")
+```
+
+2. From a DataFrame:
+```python
+# Upload from a DataFrame
+df = pd.DataFrame(data)
+vena_etl.start_with_file(df)
+```
+
+3. From a file-like object:
+```python
+# Upload from a file-like object
+with open("data.csv", "r") as f:
+    vena_etl.start_with_file(f)
+```
+
+### Exporting Data
+
+```python
+# Export data with custom page size
+exported_data = vena_etl.export_data(page_size=10000)
+print(f"Exported {len(exported_data)} records")
+```
+
+### Getting Dimension Hierarchy
+
+```python
+# Get dimension hierarchy
+hierarchy = vena_etl.get_dimension_hierarchy()
+print("Dimension hierarchy:")
+print(hierarchy)
+```
+
+### Job Management
+
+#### Running a Job
+
+The simplest way to run a job is using the `run_job` method:
+
+```python
+# Run a job with a specific template ID
+result = vena_etl.run_job(
+    template_id=JOB_TEMPLATE_ID,  # Specify the template ID for the job
+    poll_interval=5,  # How often to check job status (seconds)
+    timeout=3600     # Maximum time to wait (seconds)
+)
+
+# Check the result
+print(f"Job status: {result.get('status')}")
+print(f"Job ID: {result.get('id')}")
+print(f"Model: {result.get('modelName')}")
+```
+
+#### Step-by-Step Job Management
+
+For more control, you can manage jobs step by step:
+
+```python
+# Create a new job with a specific template ID
+job_id = vena_etl.create_job(template_id=JOB_TEMPLATE_ID)
+print(f"Created job with ID: {job_id}")
+
+# Get job status
+status = vena_etl.get_job_status(job_id)
+print(f"Current status: {status.get('status')}")
+
+# Submit the job
+submit_result = vena_etl.submit_job(job_id)
+print(f"Submission result: {submit_result}")
+
+# Wait for completion
+final_status = vena_etl.wait_for_job_completion(job_id)
+print(f"Final status: {final_status.get('status')}")
+```
+
+#### Canceling a Job
+
+```python
+# Cancel a running job
+cancel_result = vena_etl.cancel_job(job_id)
+print(f"Cancel result: {cancel_result.get('status')}")
+```
+
+## Error Handling
+
+The package includes comprehensive error handling for:
+- Invalid credentials
+- Missing required fields
+- API communication errors
+- Data validation errors
+- Job submission errors
+- Job cancellation errors
+
+## License
+
+MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. 
