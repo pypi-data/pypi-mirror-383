@@ -1,0 +1,38 @@
+Metadata-Version: 2.3
+Name: dandelion_data_schema
+Version: 1.5.2
+Summary: pydantic data structure expected by the Dandelion Algorithm Validation Service
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Requires-Dist: numpy>=2
+Requires-Dist: pydantic>=2.5.2
+Requires-Dist: pydicom
+Provides-Extra: ecghelper
+Requires-Dist: ecghelper>=0.6.2; extra == 'ecghelper'
+Description-Content-Type: text/markdown
+
+# Dandelion Data Schema
+
+The Dandelion Data Schema describes the structure of data used in the Data Validation Service provided by Dandelion Health.
+
+## Example usage
+
+Load an example dataset into python.
+
+```python
+import json
+from dandelion_data_schema.record import Record
+
+with open('tests/data/dataset.json', 'r') as fp:
+    dataset = json.load(fp)
+
+dataset = Record.model_validate(dataset)
+```
+
+## Distribute on pypi
+
+```bash
+python3 -m build --sdist --wheel
+python3 -m twine upload --skip-existing dist/*
+```
