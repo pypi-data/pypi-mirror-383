@@ -1,0 +1,371 @@
+# Extract Monster Python SDK
+
+[![PyPI version](https://badge.fury.io/py/extract-monster.svg)](https://badge.fury.io/py/extract-monster)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Official Python SDK for [Extract Monster](https://extract.monster) - Extract structured data from files and text using AI.
+
+## Features
+
+- 🎯 **Type-Safe Schema Support** - Use Pydantic models for type-safe data extraction
+- 📄 **Multi-Format Support** - Extract from PDFs, images, videos, audio, and text documents
+- 🔒 **Secure Authentication** - API key-based authentication
+- 📦 **Easy to Use** - Simple, intuitive API design
+- 🎨 **Flexible Schemas** - Support for Pydantic models and raw JSON schemas
+
+## Installation
+
+```bash
+pip install extract-monster
+```
+
+For Pydantic support (recommended):
+```bash
+pip install extract-monster[pydantic]
+```
+
+## Quick Start
+
+```python
+from extract_monster import ExtractMonster
+from pydantic import BaseModel, Field
+
+# Initialize client
+client = ExtractMonster(api_key="your_api_key")
+
+# Define schema with Pydantic
+class Invoice(BaseModel):
+    invoice_number: str = Field(description="Invoice number")
+    date: str = Field(description="Invoice date")
+    total: float = Field(description="Total amount")
+    vendor: str = Field(description="Vendor name")
+
+# Extract from file
+result = client.extract_file("invoice.pdf", schema=Invoice)
+print(result.extracted_data)
+# {"invoice_number": "INV-001", "date": "2024-01-15", "total": 1250.00, "vendor": "Acme Corp"}
+
+# Extract from text
+class Contact(BaseModel):
+    name: str = Field(description="Full name")
+    phone: str = Field(description="Phone number")
+    email: str = Field(description="Email address")
+
+result = client.extract_text(
+    "Contact John Doe at john@example.com or 555-1234",
+    schema=Contact
+)
+print(result.extracted_data)
+# {"name": "John Doe", "phone": "555-1234", "email": "john@example.com"}
+```
+
+## Authentication
+
+Get your API key from the [Extract Monster Dashboard](https://extract.monster/dashboard).
+
+### Option 1: Pass API key directly
+```python
+client = ExtractMonster(api_key="your_api_key")
+```
+
+### Option 2: Use environment variable
+```bash
+export EXTRACT_MONSTER_API_KEY="your_api_key"
+```
+
+```python
+client = ExtractMonster()  # Automatically uses environment variable
+```
+
+## Usage
+
+### Extract from Files
+
+Extract structured data from any supported file format:
+
+```python
+from extract_monster import ExtractMonster
+from pydantic import BaseModel, Field
+from typing import List
+
+client = ExtractMonster(api_key="your_api_key")
+
+# Define your schema
+class MenuItem(BaseModel):
+    name: str = Field(description="Dish or item name")
+    price: float = Field(description="Price in local currency")
+    description: str = Field(description="Item description or ingredients")
+
+class Menu(BaseModel):
+    restaurant_name: str = Field(description="Restaurant name")
+    items: List[MenuItem] = Field(description="List of menu items")
+
+# Extract from PDF, image, or other file
+result = client.extract_file("menu.pdf", schema=Menu)
+print(result.extracted_data)
+```
+
+**Supported File Formats:**
+- **Documents (Visual)**: PDF - Full visual understanding with charts, diagrams
+- **Documents (Text)**: TXT, MD, HTML, XML, JSON, CSV, RTF
+- **Images**: PNG, JPG, JPEG, WEBP, HEIC, HEIF
+- **Videos**: MP4, MPEG, MOV, AVI, FLV, MPG, WEBM, WMV, 3GP
+- **Audio**: WAV, MP3, AIFF, AAC, OGG, FLAC
+
+### Extract from Text
+
+Extract structured data from plain text:
+
+```python
+from pydantic import BaseModel, Field
+from typing import List
+
+class Person(BaseModel):
+    name: str = Field(description="Person's full name")
+    role: str = Field(description="Job title or role")
+    email: str = Field(description="Email address")
+
+class Meeting(BaseModel):
+    date: str = Field(description="Meeting date")
+    attendees: List[Person] = Field(description="List of meeting attendees")
+    topics: List[str] = Field(description="Topics discussed in the meeting")
+
+text = """
+Meeting on Jan 15, 2024
+Attendees:
+- John Doe (CEO) - john@company.com
+- Jane Smith (CTO) - jane@company.com
+
+Topics discussed:
+1. Q1 Product Roadmap
+2. Budget Review
+"""
+
+result = client.extract_text(text, schema=Meeting)
+print(result.extracted_data)
+```
+
+### Schema Options
+
+#### 1. Pydantic Models (Recommended)
+```python
+from pydantic import BaseModel, Field
+
+class Product(BaseModel):
+    name: str = Field(description="Product name")
+    price: float = Field(description="Price in USD")
+    in_stock: bool = Field(description="Availability status")
+
+result = client.extract_file("product.jpg", schema=Product)
+```
+
+#### 2. JSON Schema Dictionary
+```python
+schema = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "price": {"type": "number"},
+        "in_stock": {"type": "boolean"}
+    },
+    "required": ["name", "price"]
+}
+
+result = client.extract_file("product.jpg", schema=schema)
+```
+
+#### 3. No Schema (Freeform)
+```python
+# Let the AI extract relevant information
+result = client.extract_file("document.pdf")
+print(result.extracted_data)
+```
+
+### Context Managers
+
+Use context managers for automatic cleanup:
+
+```python
+with ExtractMonster(api_key="your_api_key") as client:
+    result = client.extract_file("document.pdf")
+```
+
+### Error Handling
+
+```python
+from extract_monster import (
+    ExtractMonster,
+    AuthenticationError,
+    QuotaExceededError,
+    ValidationError,
+    APIError,
+)
+
+client = ExtractMonster(api_key="your_api_key")
+
+try:
+    result = client.extract_file("document.pdf", schema=MySchema)
+except AuthenticationError:
+    print("Invalid API key")
+except QuotaExceededError:
+    print("Usage quota exceeded")
+except ValidationError as e:
+    print(f"Validation error: {e.message}")
+except APIError as e:
+    print(f"API error: {e.message}")
+```
+
+### Response Object
+
+The `ExtractionResponse` object provides multiple ways to access data:
+
+```python
+result = client.extract_file("invoice.pdf", schema=Invoice)
+
+# Access as dictionary
+print(result.extracted_data)
+
+# Dict-like access
+print(result["invoice_number"])
+print(result.get("total", 0.0))
+
+# Metadata
+print(result.status)      # "success"
+print(result.filename)    # "invoice.pdf"
+print(result.file_type)   # "document"
+
+# Convert to dict
+data = result.to_dict()
+```
+
+## Configuration
+
+### Custom API Endpoint
+
+```python
+client = ExtractMonster(
+    api_key="your_api_key",
+    base_url="https://custom-endpoint.example.com"
+)
+```
+
+### Custom Timeout
+
+```python
+# Default timeout is 300 seconds (5 minutes)
+client = ExtractMonster(
+    api_key="your_api_key",
+    timeout=600  # 10 minutes
+)
+```
+
+## Examples
+
+Check out the [examples](./examples) directory for more usage examples:
+
+- [Invoice Extraction](./examples/invoice_extraction.py)
+- [Receipt Processing](./examples/receipt_processing.py)
+- [Resume Parsing](./examples/resume_parsing.py)
+- [License Plate Detection](./examples/license_plate.py)
+
+## Development
+
+### Setup Development Environment
+
+```bash
+# Clone repository
+git clone https://github.com/extract-monster/extract-monster-python.git
+cd extract-monster-python
+
+# Install with dev dependencies
+pip install -e ".[dev]"
+```
+
+### Run Tests
+
+```bash
+pytest tests/ -v --cov=extract_monster
+```
+
+### Code Formatting
+
+```bash
+# Format code
+black extract_monster/ tests/
+
+# Lint code
+ruff check extract_monster/ tests/
+
+# Type checking
+mypy extract_monster/
+```
+
+## Publishing to PyPI
+
+```bash
+# Build package
+python -m build
+
+# Upload to PyPI
+python -m twine upload dist/*
+```
+
+## API Reference
+
+### `ExtractMonster`
+
+Main client class for interacting with Extract Monster API.
+
+#### `__init__(api_key, base_url, timeout)`
+Initialize the client.
+
+**Parameters:**
+- `api_key` (str, optional): API key for authentication
+- `base_url` (str, optional): Base URL for API
+- `timeout` (float, optional): Request timeout in seconds
+
+#### `extract_file(file_path, schema)`
+Extract data from a file.
+
+**Parameters:**
+- `file_path` (str | Path): Path to file
+- `schema` (Type[BaseModel] | dict, optional): Schema for extraction
+
+**Returns:** `ExtractionResponse`
+
+#### `extract_text(text, schema)`
+Extract data from text.
+
+**Parameters:**
+- `text` (str): Text content
+- `schema` (Type[BaseModel] | dict, optional): Schema for extraction
+
+**Returns:** `ExtractionResponse`
+
+## Support
+
+- 📧 Email: support@extract.monster
+- 📖 Documentation: [extract.monster/docs](https://extract.monster/docs)
+- 🐛 Issues: [GitHub Issues](https://github.com/extract-monster/extract-monster-python/issues)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) first.
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+---
+
+Made with ❤️ by the Extract Monster team
