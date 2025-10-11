@@ -1,0 +1,157 @@
+{%- macro nb_pt_legend(elements, categories, element_columns) %}
+  {%- set element_categories = elements | map(attribute="category") | list | unique | list %}
+  {%- set matched_categories = [] %}
+  {%- for k, v in categories.items() %}
+    {%- if k in element_categories %}
+      {# {%- do matched_categories.append([k | attr("value") | default(k), v]) %} #}
+      {%- do matched_categories.append([k, v]) %}
+    {%- endif %}
+  {%- endfor %}
+
+<div class="nb-pt-legend">
+  <div class="nb-pt-element-legend nb-pt-element-legend--at-default">
+    <p class="nb-pt-element-legend__caption">
+      Left to right:
+      <span class="nb-pt-element__atomic-number">{{ element_columns.atomic_number }}</span>,
+      <span class="nb-pt-element__symbol">{{ element_columns.symbol }}</span>,
+      <span class="nb-pt-element__name">{{ element_columns.name }}</span>,
+      <span class="nb-pt-element__atomic-mass">{{ element_columns.atomic_mass }}</span>,
+      <span class="nb-pt-element__electronegativity">{{ element_columns.electronegativity }}</span>
+    </p>
+  </div>
+
+  <div class="nb-pt-element-legend nb-pt-element-legend--at-wide">
+    <span class="nb-pt-element-legend__notes nb-pt-element-legend__notes--left">
+      <span class="nb-pt-element">
+        <span class="nb-pt-element__basic">
+          <span class="nb-pt-element__atomic-number">
+            <span class="nb-pt-element-legend__note">
+              <span class="nb-pt-element-legend__connector"></span>
+              {{ element_columns.atomic_number }}
+            </span>
+          </span>
+          <span class="nb-pt-element__symbol">
+            <span class="nb-pt-element-legend__note">
+              <span class="nb-pt-element-legend__connector"></span>
+              {{ element_columns.symbol }}
+            </span>
+          </span>
+        </span>
+        <span class="nb-pt-element__extended">
+          <span class="nb-pt-element__name">
+            <span class="nb-pt-element-legend__note">
+              <span class="nb-pt-element-legend__connector"></span>
+              {{ element_columns.name }}
+            </span>
+          </span>
+          <span class="nb-pt-element__properties">
+            <span class="nb-pt-element__atomic-mass">
+              <span class="nb-pt-element-legend__note">
+                <span class="nb-pt-element-legend__connector"></span>
+                {{ element_columns.atomic_mass }}
+              </span>
+            </span>
+            <span class="nb-pt-element__electronegativity">
+              <span class="nb-pt-element-legend__note">
+                <span class="nb-pt-element-legend__connector"></span>
+                {{ element_columns.electronegativity }}
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </span><span class="nb-pt-element-legend__subject">
+      <span class="nb-pt-element">
+        <span class="nb-pt-element__basic">
+          <span class="nb-pt-element__atomic-number">
+            {{ elements[0].atomic_number }}
+          </span>
+          <span class="nb-pt-element__symbol">
+            {{ elements[0].symbol }}
+          </span>
+        </span>
+        <span class="nb-pt-element__extended">
+          <span class="nb-pt-element__name">
+            {{ elements[0].name }}
+          </span>
+          <span class="nb-pt-element__properties">
+            <span class="nb-pt-element__atomic-mass">
+              {{ elements[0].atomic_mass }}
+            </span>
+            <span class="nb-pt-element__electronegativity">
+              {{ elements[0].electronegativity }}
+            </span>
+          </span>
+        </span>
+      </span>
+    </span><span class="nb-pt-element-legend__notes nb-pt-element-legend__notes--right">
+      <span class="nb-pt-element">
+        <span class="nb-pt-element__basic">
+          <span class="nb-pt-element__atomic-number">
+            <span class="nb-pt-element-legend__note">
+              <span class="nb-pt-element-legend__connector"></span>
+              {{ element_columns.electronegativity }}
+            </span>
+          </span>
+          <span class="nb-pt-element__symbol">
+            <span class="nb-pt-element-legend__note">
+              <span class="nb-pt-element-legend__connector"></span>
+              {{ element_columns.symbol }}
+            </span>
+          </span>
+        </span>
+        <span class="nb-pt-element__extended">
+          <span class="nb-pt-element__name">
+            <span class="nb-pt-element-legend__note">
+              <span class="nb-pt-element-legend__connector"></span>
+              {{ element_columns.name }}
+            </span>
+          </span>
+          <span class="nb-pt-element__properties">
+            <span class="nb-pt-element__atomic-mass">
+              <span class="nb-pt-element-legend__note">
+                <span class="nb-pt-element-legend__connector"></span>
+                {{ element_columns.atomic_mass }}
+              </span>
+            </span>
+            <span class="nb-pt-element__electronegativity">
+              <span class="nb-pt-element-legend__note">
+                <span class="nb-pt-element-legend__connector"></span>
+                {{ element_columns.electronegativity }}
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </span>
+  </div>
+
+  <div class="nb-pt-category-legend nb-pt-category-legend--at-wide">
+    <table class="nb-pt-category-legend-table">
+      <caption>Categories</caption>
+      <tbody>
+      {%- for category_id, category_name in matched_categories %}
+        {%- if loop.index % 2 == 1 %}
+          {%- if loop.first == false %}
+        </tr>
+          {%- endif %}
+        <tr class="nb-pt-category-legend-row">
+          {%- endif %}
+          <td class="nb-pt-category-legend-cell">
+            <span class="nb-pt-category-legend-item" data-category="{{ category_id }}">
+              <span class="nb-pt-category-legend-item__swatch"></span>
+              <span class="nb-pt-category-legend-item__label">{{ category_name }}</span>
+            </span>
+          </td>
+        {%- if loop.last %}
+          {%- if loop.index % 2 == 1 %}
+          <td class="nb-pt-category-legend-cell"></td>
+          {%- endif %}
+        </tr>
+        {%- endif %}
+      {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{%- endmacro %}
