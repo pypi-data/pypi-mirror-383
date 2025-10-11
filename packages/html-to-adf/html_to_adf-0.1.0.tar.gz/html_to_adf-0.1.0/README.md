@@ -1,0 +1,129 @@
+# html-to-adf - Convert HTML to ADF (Atlassian Document Format)
+
+## What is this?
+This is a rudimentary python helper module, dedicated to producing Jira/Confluence ready ADF out of incoming HTML.
+
+The module itself attempts to handle generalized sanitization, while cutting some corners to forcibly marshal 'whatever' text into something tangible and compatible with Jira/Confluence.
+
+This module is focused at **front-loading** incoming comments and descriptions for Jira and follows out of the box a relatively strict subset of tags from HTML.
+
+
+## Dependencies
+Everything here is mostly a painfully hand-rolled parser; we have one dependency which is: `beautifulsoup4` non-version specific.
+
+### Supported and Converted tags
+```html
+<html> 
+<body>
+
+<h1>...<h6>
+<head> -> Converted to a heading type
+<title> -> Converted to a heading type
+
+<div> -> Converted to a paragraph type
+<p>
+
+<table> -> Represents a tablebase
+<thead> -> Represents a tablehead
+<tbody> -> Represents a tablebody
+
+<tr> -> represents a tablerow
+<th> -> represents a tablecell
+<td> -> represents a tablecell
+
+Modifiers:
+
+<b>
+<strong>
+<i>
+<em>
+<s>
+<u>
+```
+
+We also _support links and `<a>` tags_. (The magic under the hood can break; usually defaulting to nothing happening at all or [your entire line being a link](https://example.com/))
+
+### Example:
+
+We'll convert the following HTML to ADF:
+
+```python
+# test.py
+from html_to_adf import import_html_to_str, convert_html_to_adf, export_document
+
+html_text = import_html_to_str("test.html")
+
+# If you were going to send this in an API request format, you would want to structure the ADF around a 'body {}'
+# adding True to: convert_html_to_adf(html_text, True) will wrap the entire contents of the dict in a body {} for your ease of use.
+resulting_adf_document: dict = convert_html_to_adf(html_text)
+
+
+print(resulting_adf_document)
+export_document(resulting_adf_document)
+
+```
+
+```html
+<!--test.html-->
+
+<html>
+  <head>
+    <title>Monthly Sales Report</title>
+  </head>
+  <body>
+    <h1>Monthly Sales Report</h1>
+    <p>
+      The following table shows <b>sales performance</b> by region for 
+      <i>September 2025</i>. 
+      For more info, visit our 
+      <a href="https://example.com/reports/september">report page</a>.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Sales ($)</th>
+          <th>Growth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>North America</td>
+          <td><b>125,000</b></td>
+          <td><span style="color:green">+5%</span></td>
+        </tr>
+        <tr>
+          <td>Europe</td>
+          <td>98,500</td>
+          <td><span style="color:red">-2%</span></td>
+        </tr>
+        <tr>
+          <td>Asia-Pacific</td>
+          <td>142,750</td>
+          <td><u>+8%</u></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Summary: <strong>Asia-Pacific</strong> led the month with strong growth.
+      <br>
+      Keep up the great work!
+    </p>
+  </body>
+</html>
+```
+
+This yields the following ADF:
+[Here's the rather large textblob](https://raw.githubusercontent.com/actes2/html-to-adf/refs/heads/main/tests/output.json)
+_To view in live time, copy that blob and float on over to the Atlassian Live Document Preview: https://developer.atlassian.com/cloud/jira/platform/apis/document/viewer/_
+
+![results.png](https://raw.githubusercontent.com/actes2/html-to-adf/refs/heads/main/tests/results.png)
+
+
+## Further development and support
+
+This module is a creation of necessity, not passion; there's a large chance I won't update it very much, but that said if I get inspired you never know!
+
+Feel free to drop something in the Issues section as you see them and I may visit those issues!

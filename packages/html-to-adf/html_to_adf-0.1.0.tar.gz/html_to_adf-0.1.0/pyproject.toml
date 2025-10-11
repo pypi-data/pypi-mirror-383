@@ -1,0 +1,19 @@
+[project]
+name = "html-to-adf"
+version = "0.1.0"
+description = "Convert HTML to Atlassian Document Format (ADF) for Jira and Confluence."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+  { name = "Avery Tomlin", email = "actesbusiness@gmail.com" }
+]
+keywords = ["atlassian", "jira", "adf", "html", "converter"]
+dependencies = [
+  "beautifulsoup4",
+]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/actes2/html-to-adf"
+Documentation = "https://github.com/actes2/html-to-adf#readme"
+Issues = "https://github.com/actes2/html-to-adf/issues"
