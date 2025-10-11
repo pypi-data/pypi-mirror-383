@@ -1,0 +1,18 @@
+[package]
+name = "quillmark-python"
+version.workspace = true
+edition.workspace = true
+description = "Python bindings for Quillmark"
+license = "Apache-2.0"
+readme = "README.md"
+
+[lib]
+name = "_quillmark"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "~0.26", features = ["extension-module", "abi3-py310"] }
+quillmark = { workspace = true, features = ["typst"] }
+quillmark-core = { workspace = true}
+anyhow = {workspace = true}
+serde_json = {workspace = true}
