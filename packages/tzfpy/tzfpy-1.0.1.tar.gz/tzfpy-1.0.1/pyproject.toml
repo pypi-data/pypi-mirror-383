@@ -1,0 +1,74 @@
+[project]
+classifiers = [
+  "Programming Language :: Rust",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: GIS",
+  "Operating System :: OS Independent",
+]
+dependencies = []
+license = "MIT"
+description = "Probably the fastest Python package to convert longitude/latitude to timezone name"
+name = "tzfpy"
+requires-python = ">=3.10"
+maintainers = [{ name = "ringsaturn", email = "ringsaturn.me@gmail.com" }]
+authors = [{ name = "ringsaturn", email = "ringsaturn.me@gmail.com" }]
+keywords = [
+  "tzf",
+  "timezone",
+  "timezone-name",
+  "timezone-lookup",
+  "gps",
+  "gps-coordinates",
+  "gps-location",
+  "longitude",
+  "latitude",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+pytz = ["pytz>=2025.2"]
+tzdata = ["tzdata>=2025.2"]
+
+[project.urls]
+Documentation = "https://github.com/ringsaturn/tzfpy"
+Issues = "https://github.com/ringsaturn/tzfpy/issues"
+"Source Code" = "https://github.com/ringsaturn/tzfpy"
+"Online Demo" = "https://ringsaturn.github.io/tzf-web/"
+"Benchmark Results" = "https://github.com/ringsaturn/tz-benchmark"
+
+[build-system]
+build-backend = "maturin"
+requires = ["maturin>=1,<2"]
+
+[dependency-groups]
+dev = [
+  "ruff==0.13.1",
+  "citiespy>=0.6.13",
+  "maturin==1.9.6",
+  "pytest>=8.4.2",
+  "pytest-benchmark>=5.1.0",
+  "pytest-cov>=7.0.0",
+  "pytest-pretty>=1.3.0",
+  "pytz>=2025.2",
+  "tzdata>=2025.2",
+  "pytest-codspeed>=4.0.0",
+  "arrow>=1.3.0",
+  "whenever>=0.9.2",
+]
+
+[tool.maturin]
+# "extension-module" tells pyo3 we want to build an extension module (skips linking against libpython.so)
+features = ["pyo3/extension-module", "pyo3/generate-import-lib"]
+
+[tool.uv.workspace]
+members = [
+    "examples",
+]
