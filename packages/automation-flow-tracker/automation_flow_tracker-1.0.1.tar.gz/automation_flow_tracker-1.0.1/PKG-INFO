@@ -1,0 +1,38 @@
+Metadata-Version: 2.4
+Name: automation-flow-tracker
+Version: 1.0.1
+Summary: A helper library for the Python automation system – handles run tracking, logging, and error management.
+Author-email: Dominik Domiter <dominik.domiter@autowallis.hu>
+License: MIT
+Project-URL: Homepage, https://github.com/domiterd/automation-flow-tracker
+Keywords: logging,tracking,sqlite,runs
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Intended Audience :: Developers
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# automation-flow-tracker
+
+**automation-flow-tracker** is a helper library for the Python automation system.  
+It provides automatic tracking of script executions ("runs"), detailed logging, and log file maintenance using an SQLite database.
+
+---
+
+## Features
+
+- Tracks all runs and their status in an SQLite database  
+- Automatically creates and cleans up log files  
+- Logs detailed errors and stack traces  
+- Supports different trigger types (`manual` or `scheduler`)  
+- Integrates easily into any automation flow  
+
+---
+
+## Installation
+
+```bash
+pip install automation-flow-tracker

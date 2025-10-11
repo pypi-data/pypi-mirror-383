@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "automation-flow-tracker"
+version = "1.0.1"
+description = "A helper library for the Python automation system – handles run tracking, logging, and error management."
+authors = [
+    { name = "Dominik Domiter", email = "dominik.domiter@autowallis.hu" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+keywords = ["logging", "tracking", "sqlite", "runs"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers"
+]
+
+[project.urls]
+Homepage = "https://github.com/domiterd/automation-flow-tracker"
