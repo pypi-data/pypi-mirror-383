@@ -1,0 +1,483 @@
+Metadata-Version: 2.4
+Name: obol-mcp
+Version: 0.1.0
+Summary: FastMCP server for Obol DVT cluster troubleshooting and monitoring
+Author-email: Obol Network <support@obol.tech>
+License: MIT
+Project-URL: Homepage, https://github.com/ObolNetwork/obol-mcp
+Project-URL: Repository, https://github.com/ObolNetwork/obol-mcp
+Project-URL: Documentation, https://github.com/ObolNetwork/obol-mcp#readme
+Project-URL: Issues, https://github.com/ObolNetwork/obol-mcp/issues
+Keywords: mcp,obol,dvt,ethereum,staking,distributed-validators,fastmcp
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Monitoring
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastmcp>=2.11.3
+Requires-Dist: httpx>=0.27.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: inline-snapshot>=0.13.0; extra == "dev"
+Dynamic: license-file
+
+# Obol MCP
+
+[![PyPI version](https://badge.fury.io/py/obol-mcp.svg)](https://badge.fury.io/py/obol-mcp)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+
+FastMCP server for comprehensive Obol DVT cluster troubleshooting and monitoring.
+
+This project provides a [FastMCP](https://gofastmcp.com) server that acts as a comprehensive read-only interface to the public [Obol Network API](https://docs.obol.org/api/what-is-this-api). It exposes 22 Obol API GET endpoints as callable **tools** accessible via the Model Context Protocol (MCP).
+
+This enables Large Language Models (LLMs) or other MCP-compatible clients to troubleshoot, monitor, and analyze Obol Distributed Validator (DVT) clusters, operator performance, exit coordination, and network-wide statistics without needing direct HTTP request logic.
+
+## Features / Implemented Tools (22 Total)
+
+This server implements the following categories of Obol API tools:
+
+### 🏥 Health & System Status (2 tools)
+*   **`obol_api_health`**: Check API health including database and beacon node connectivity (`GET /v1/_health`)
+*   **`obol_api_metrics`**: Retrieve Prometheus-style metrics from the API (`GET /metrics`)
+
+### 🔒 Cluster Lock Operations (5 tools)
+*   **`obol_cluster_lock_by_hash`**: Get complete cluster lock by lock_hash (`GET /v1/lock/{lockHash}`)
+*   **`obol_lock_by_config_hash`**: Get cluster lock by config_hash (`GET /v1/lock/configHash/{configHash}`)
+*   **`obol_locks_by_network`**: List cluster locks on a network with pagination/filtering (`GET /v1/lock/network/{network}`)
+*   **`obol_cluster_search`**: Search clusters by partial lock_hash or name (`GET /v1/lock/search/{network}`)
+*   **`obol_network_summary`**: Get network-wide cluster statistics (`GET /v1/lock/network/summary/{network}`)
+
+### 📊 Cluster Health & Monitoring (2 tools)
+*   **`obol_cluster_effectiveness`**: Get per-validator effectiveness metrics (`GET /v1/effectiveness/{lockHash}`)
+*   **`obol_cluster_validator_states`**: Get beacon chain states of all validators in cluster (`GET /v1/state/{lockHash}`)
+
+### 👥 Operator Management (5 tools)
+*   **`obol_operator_clusters`**: List all clusters where an address is an operator (`GET /v1/lock/operator/{address}`)
+*   **`obol_operator_info`**: Get operator statistics on a network (`GET /v1/address/network/{network}`)
+*   **`obol_search_operators`**: Search operators by partial address (`GET /v1/address/search/{network}`)
+*   **`obol_operator_badges`**: Get operator badges (lido, etherfi, etc.) (`GET /v1/address/badges/{address}`)
+*   **`obol_operator_techne`**: Get Techne credentials (bronze, silver, gold) (`GET /v1/address/techne/{address}`)
+*   **`obol_operator_incentives`**: Get Obol token incentives for an operator (`GET /v1/address/incentives/{network}/{address}`)
+
+### 🚪 Exit Coordination (2 tools)
+*   **`obol_cluster_exit_status_summary`**: Get exit status summary for cluster (`GET /v1/exp/exit/status/summary/{lockHash}`)
+*   **`obol_cluster_exit_status`**: Get detailed exit status with filtering (`GET /v1/exp/exit/status/{lockHash}`)
+
+### 🔧 DKG & Cluster Definitions (2 tools)
+*   **`obol_cluster_definition`**: Get cluster definition/proposal by config_hash (`GET /v1/definition/{configHash}`)
+*   **`obol_operator_definitions`**: List cluster definitions an operator is part of (`GET /v1/definition/operator/{address}`)
+
+### 🔬 Advanced Features (4 tools)
+*   **`obol_migrateable_validators`**: Get validators eligible for migration to DVT (`GET /v1/address/migrateable-validators/{network}/{withdrawalAddress}`)
+*   **`obol_owr_tranches`**: Get OWR (Optimistic Withdrawal Recipient) tranche info (`GET /v1/owr/{network}/{address}`)
+*   **`obol_terms_signed_status`**: Check if address signed latest Terms & Conditions (`GET /v1/termsAndConditions/{address}`)
+
+*Note: This server focuses on read-only operations for troubleshooting and monitoring. POST/PUT operations for cluster creation/updates require authentication and are not included.*
+
+## Requirements
+
+*   Python 3.10+
+*   [FastMCP 2.x](https://gofastmcp.com/) (tested with 2.11.3)
+*   [httpx](https://www.python-httpx.org/)
+
+## Installation
+
+### Quick Start (Recommended)
+
+Install and configure for Claude Desktop in one command:
+
+```bash
+fastmcp install obol-mcp --name "Obol MCP"
+```
+
+Then restart Claude Desktop and you're ready to go! 🚀
+
+### Alternative Installation Methods
+
+#### From PyPI
+
+```bash
+pip install obol-mcp
+fastmcp install obol-mcp --name "Obol MCP"
+```
+
+#### From GitHub
+
+```bash
+# Direct install
+fastmcp install git+https://github.com/ObolNetwork/obol-mcp.git --name "Obol MCP"
+
+# Or clone first
+git clone https://github.com/ObolNetwork/obol-mcp.git
+cd obol-mcp
+fastmcp install . --name "Obol MCP"
+```
+
+#### For Development
+
+```bash
+git clone https://github.com/ObolNetwork/obol-mcp.git
+cd obol-mcp
+pip install -e ".[dev]"
+fastmcp dev server.py
+```
+
+## Configuration
+
+### Claude Desktop
+
+After installation with `fastmcp install`, the server is automatically configured.
+
+**To verify:**
+1. Restart Claude Desktop
+2. Look for the 🔨 icon in the bottom-right
+3. Click it to see 22 Obol MCP tools
+
+### Cursor IDE
+
+Cursor requires manual configuration:
+
+1. **Cursor → File → Preferences → Cursor Settings → MCP**
+2. Click **"Add new global MCP server"**
+3. Add to `mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "Obol MCP": {
+      "command": "uvx",
+      "args": ["obol-mcp"]
+    }
+  }
+}
+```
+
+4. Restart Cursor
+
+### Manual Configuration
+
+If `fastmcp install` doesn't work, manually edit:
+
+**Claude Desktop Config Location:**
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+**Add:**
+```json
+{
+  "mcpServers": {
+    "Obol MCP": {
+      "command": "uvx",
+      "args": ["obol-mcp"]
+    }
+  }
+}
+```
+
+## Usage
+
+Once installed, interact with your DVT clusters through Claude:
+
+```
+"Show me cluster effectiveness for lock_hash 0x..."
+"List all clusters on mainnet"
+"Check validator states for lock_hash 0x..."
+"Show me operator info for address 0x..."
+"Get exit status summary for my cluster"
+```
+
+## Running the Server Manually
+
+You can also run the server directly:
+
+```bash
+# As installed command
+obol-mcp
+
+# Or directly with Python
+python server.py
+
+# Or with uvx
+uvx obol-mcp
+```
+
+## Usage
+
+Once the server is running, you can interact with it using any MCP-compatible client.
+
+**Example using the FastMCP Python client:**
+
+```python
+# client_example.py
+import asyncio
+from fastmcp import Client
+
+client = Client("server.py")
+
+async def main():
+    async with client:
+        print("Connected to Obol DVT Cluster Monitor MCP Server.")
+
+        # Example 1: Check API Health
+        health = await client.call_tool("obol_api_health")
+        print("\nAPI Health:")
+        print(health)
+
+        # Example 2: Get Network Summary
+        summary = await client.call_tool("obol_network_summary", {"network": "holesky"})
+        print("\nHolesky Network Summary:")
+        print(summary)
+
+        # Example 3: Search for a specific cluster
+        lock_hash = "0xYOUR_CLUSTER_LOCK_HASH_HERE"  # Replace with real lock_hash
+        if lock_hash != "0xYOUR_CLUSTER_LOCK_HASH_HERE":
+            # Get complete cluster lock
+            cluster = await client.call_tool("obol_cluster_lock_by_hash", {"lock_hash": lock_hash})
+            print(f"\nCluster Lock for {lock_hash}:")
+            print(cluster)
+            
+            # Get effectiveness metrics
+            effectiveness = await client.call_tool("obol_cluster_effectiveness", {"lock_hash": lock_hash})
+            print(f"\nEffectiveness Metrics:")
+            print(effectiveness)
+            
+            # Get validator states
+            states = await client.call_tool("obol_cluster_validator_states", {"lock_hash": lock_hash})
+            print(f"\nValidator States:")
+            print(states)
+            
+            # Get exit status summary
+            exit_summary = await client.call_tool("obol_cluster_exit_status_summary", {"lock_hash": lock_hash})
+            print(f"\nExit Status Summary:")
+            print(exit_summary)
+
+        # Example 4: Check operator info
+        operator_address = "0xYOUR_OPERATOR_ADDRESS_HERE"  # Replace with real address
+        if operator_address != "0xYOUR_OPERATOR_ADDRESS_HERE":
+            # Get all clusters for operator
+            clusters = await client.call_tool("obol_operator_clusters", {
+                "address": operator_address,
+                "limit": 10
+            })
+            print(f"\nClusters for operator {operator_address}:")
+            print(clusters)
+            
+            # Get operator badges
+            badges = await client.call_tool("obol_operator_badges", {"address": operator_address})
+            print(f"\nOperator Badges:")
+            print(badges)
+            
+            # Get Techne credentials
+            techne = await client.call_tool("obol_operator_techne", {"address": operator_address})
+            print(f"\nTechne Credentials:")
+            print(techne)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+Run the client example: `python client_example.py`
+
+### Common DVT Troubleshooting Scenarios
+
+**Scenario 1: Investigating cluster performance issues**
+```python
+# Get cluster lock to see configuration
+lock = await client.call_tool("obol_cluster_lock_by_hash", {"lock_hash": "0x..."})
+
+# Check effectiveness metrics for underperforming validators
+effectiveness = await client.call_tool("obol_cluster_effectiveness", {"lock_hash": "0x..."})
+
+# Check if any validators are in unexpected states
+states = await client.call_tool("obol_cluster_validator_states", {"lock_hash": "0x..."})
+```
+
+**Scenario 2: Coordinating voluntary exits**
+```python
+# Get exit status summary to see which operators have signed
+summary = await client.call_tool("obol_cluster_exit_status_summary", {"lock_hash": "0x..."})
+
+# Get detailed status for specific validators
+status = await client.call_tool("obol_cluster_exit_status", {
+    "lock_hash": "0x...",
+    "validatorPubkey": "0x...",
+    "page": 1,
+    "limit": 10
+})
+```
+
+**Scenario 3: Auditing operator participation**
+```python
+# Find all clusters an operator is part of
+clusters = await client.call_tool("obol_operator_clusters", {"address": "0x..."})
+
+# Get operator stats across the network
+stats = await client.call_tool("obol_operator_info", {
+    "network": "mainnet",
+    "sortBy": "avg_effectiveness",
+    "sortOrder": "desc",
+    "limit": 100
+})
+```
+
+### Using with Claude Desktop
+
+You can install this server directly into Claude Desktop using the FastMCP CLI:
+
+```bash
+fastmcp install server.py --name "Obol DVT MCP Server"
+```
+
+This will automatically configure Claude Desktop to use the server. You can then interact with DVT clusters directly through Claude!
+
+### Cloud Hosting (Optional)
+
+You can host this server on [FastMCP Cloud](https://fastmcp.cloud/) for free, which provides:
+- Automatic deployment and updates
+- No local installation required
+- Accessible from any Claude Desktop instance
+- Built-in monitoring and logs
+
+For more details on deployment options, see the [FastMCP documentation](https://gofastmcp.com/getting-started/quickstart).
+
+## Configuration
+
+*   **API URL:** The server connects to the public Obol API at `https://api.obol.tech`. This is configured in `server.py`.
+*   **Supported Networks:** `mainnet`, `holesky`, `sepolia` (check Obol API documentation for current network support)
+*   **Authentication:** No API keys or authentication are required for read-only GET endpoints. POST/PUT operations require authentication and are not included in this server.
+*   **Rate Limiting:** The server inherits rate limits from the Obol API. Consider implementing request throttling for high-volume use cases.
+
+## Supported Networks
+
+The following Ethereum networks are supported:
+- **mainnet** - Ethereum Mainnet
+- **holesky** - Holesky Testnet (primary testnet)
+- **sepolia** - Sepolia Testnet
+
+## Troubleshooting Tips
+
+### Common Issues
+
+**"Cluster not found" errors:**
+- Verify the `lock_hash` or `config_hash` is correct
+- Ensure the cluster exists on the specified network
+- Check that DKG has completed for cluster definition lookups
+
+**"Network not supported" errors:**
+- Verify you're using a supported network name (`mainnet`, `holesky`, `sepolia`)
+- Network names are case-sensitive
+
+**Empty results for operator queries:**
+- Verify the address format is correct (42-character hex string starting with `0x`)
+- Check if the operator has participated in any clusters on the specified network
+
+**API timeout errors:**
+- The Obol API may be under heavy load
+- Check API health status with `obol_api_health` tool
+- Consider implementing retry logic with exponential backoff
+
+## Use Cases
+
+This MCP server enables:
+
+1. **DVT Cluster Monitoring** - Real-time monitoring of validator states, effectiveness, and performance
+2. **Operator Auditing** - Track operator participation, badges, and reputation across networks
+3. **Exit Coordination** - Monitor and coordinate voluntary exit signatures across distributed validator operators
+4. **DKG Troubleshooting** - Debug cluster definition and DKG ceremony issues
+5. **Network Analysis** - Analyze network-wide patterns, cluster distributions, and aggregate statistics
+6. **Migration Planning** - Identify validators eligible for migration to DVT clusters
+
+## Future Work
+
+*   Add data aggregation and analysis tools on top of raw API responses
+*   Implement caching for frequently accessed data
+*   Add support for additional networks as they become available
+*   Create composite tools for common troubleshooting workflows
+*   Add filtering and search capabilities across multiple clusters/operators
+
+## Troubleshooting
+
+### Server not showing in Claude Desktop
+
+1. **Check installation:**
+   ```bash
+   pip list | grep obol-mcp
+   ```
+
+2. **Verify config:**
+   ```bash
+   # macOS
+   cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
+   
+   # Windows
+   type %APPDATA%\Claude\claude_desktop_config.json
+   ```
+
+3. **Check logs:**
+   ```bash
+   # macOS
+   tail -f ~/Library/Logs/Claude/mcp*.log
+   
+   # Windows
+   # Check %APPDATA%\Claude\logs\mcp*.log
+   ```
+
+4. **Test server manually:**
+   ```bash
+   python server.py
+   # OR
+   uvx obol-mcp
+   ```
+
+5. **Restart Claude Desktop completely** (not just close the window)
+
+### Command not found: uvx
+
+If `uvx` is not available, use the Python module approach in your config:
+
+```json
+{
+  "mcpServers": {
+    "Obol MCP": {
+      "command": "python",
+      "args": ["-m", "obol_mcp"]
+    }
+  }
+}
+```
+
+## Development
+
+```bash
+# Clone repository
+git clone https://github.com/ObolNetwork/obol-mcp.git
+cd obol-mcp
+
+# Install in development mode with test dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest tests/ -v
+
+# Run in dev mode with Inspector UI
+fastmcp dev server.py
+
+# Build package
+python -m build
+
+# Check package
+twine check dist/*
+```
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
