@@ -1,0 +1,70 @@
+Metadata-Version: 2.3
+Name: ai-snake-lab
+Version: 0.1.0
+Summary: Interactive reinforcement learning sandbox for experimenting with AI agents in a classic Snake Game environment.
+License: GPL-3.0
+Keywords: AI,Reinforcement Learning,Textual,Snake,Simulation,SQLite,Python
+Author: Nadim-Daniel Ghaznavi
+Author-email: nghaznavi@gmail.com
+Requires-Python: >=3.11,<3.13
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Games/Entertainment :: Simulation
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Dist: aiohttp (>=3.13.0)
+Requires-Dist: jinja2 (>=3.1.6)
+Requires-Dist: loguru (>=0.7.3)
+Requires-Dist: numpy (>=2.3.3)
+Requires-Dist: pillow (>=11.0.0)
+Requires-Dist: pytest (>=8.4.2)
+Requires-Dist: pytest-mock (>=3.15.1)
+Requires-Dist: rich (>=14.2.0)
+Requires-Dist: sqlite-utils (>=3.35)
+Requires-Dist: textual (>=6.2.1)
+Requires-Dist: textual-dev (>=1.7.0)
+Requires-Dist: textual-hires-canvas (>=0.10.1)
+Requires-Dist: textual-plot (>=0.8.0)
+Requires-Dist: textual-serve (>=1.1.2)
+Requires-Dist: torch (>=2.8.0)
+Requires-Dist: torchvision (>=0.23.0)
+Project-URL: Bug Tracker, https://github.com/NadimGhaznavi/ai_snake_lab/issues
+Project-URL: Documentation, https://snakelab.osoyalce.com/
+Project-URL: Source, https://github.com/NadimGhaznavi/ai_snake_lab
+Description-Content-Type: text/markdown
+
+# Introduction
+
+**AI Snake Lab** is an interactive reinforcement learning sandbox for experimenting with AI agents in a classic Snake Game environment — featuring a live Textual TUI interface, flexible replay memory database, and modular model definitions.
+
+---
+
+# 🚀 Features
+
+- 🐍 **Classic Snake environment** with customizable grid and rules
+- 🧠 **AI agent interface** supporting multiple architectures (Linear, RNN, CNN)
+- 🎮 **Textual-based simulator** for live visualization and metrics
+- 💾 **SQLite-backed replay memory** for storing frames, episodes, and runs
+- 🧩 **Experiment metadata tracking** — models, hyperparameters, state-map versions
+- 📊 **Built-in plotting** for hashrate, scores, and learning progress
+
+---
+
+# 🧰 Tech Stack
+
+| Component | Description |
+|------------|--------------|
+| **Python 3.11+** | Core language |
+| **Textual** | Terminal UI framework |
+| **SQLite3** | Lightweight replay memory + experiment store |
+| **PyTorch** *(optional)* | Deep learning backend for models |
+| **Plotext / Matplotlib** | Visualization tools |
+
+---
+
+# Links
+
+* [Project Layout](/pages/project_layout.html)
+* [SQLite3 Schema](/pages/db_schema.html)
+---
