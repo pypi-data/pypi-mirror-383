@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+recursive-include beta_cynosure *
+prune venv
+prune dist
+prune build
+prune __pycache__
