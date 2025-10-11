@@ -1,0 +1,44 @@
+# Configuration file for running Domino platform locally
+
+[airflow]
+AIRFLOW_APISERVER_PORT_HOST = 8080
+
+[path]
+DOMINO_LOCAL_RUNNING_PATH = ""
+
+[kind]
+DOMINO_KIND_CLUSTER_NAME = "domino-cluster"
+HTTP_PORT_HOST = 80
+HTTPS_PORT_HOST = 443
+
+[github]
+DOMINO_GITHUB_WORKFLOWS_REPOSITORY = ""
+DOMINO_DEFAULT_PIECES_REPOSITORY_TOKEN = ""
+DOMINO_GITHUB_ACCESS_TOKEN_WORKFLOWS = ""
+DOMINO_GITHUB_WORKFLOWS_SSH_PRIVATE_KEY = ""
+DOMINO_GITHUB_WORKFLOWS_SSH_PUBLIC_KEY = ""
+
+[domino_db]
+DOMINO_CREATE_DATABASE = true # Changing to false will use the existing database defined by below variables
+DOMINO_DB_HOST = "postgres"
+DOMINO_DB_PORT = "postgres"
+DOMINO_DB_USER = "postgres"
+DOMINO_DB_PASSWORD = "postgres"
+DOMINO_DB_NAME = "postgres"
+DOMINO_CREATE_DEFAULT_USER = true
+DOMINO_POSTGRES_PORT_HOST = 5433
+
+[domino_rest]
+DOMINO_REST_PORT_HOST = 8000
+
+[domino_frontend]
+DOMINO_FRONTEND_PORT_HOST = 3000
+
+[dev]
+DOMINO_LOCAL_DOMINO_PACKAGE=""
+
+[flower]
+FLOWER_PORT_HOST = 5555
+
+[docker_proxy]
+DOCKER_PROXY_PORT_HOST = 2376
