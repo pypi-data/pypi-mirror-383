@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "artifact-lint-py"
+version = "1.0.0"
+authors = [
+    {name = "Ethan Balcik", email="ethanbalcik@ibm.com" }
+]
+description = "A python framework for developing artifact linters"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+keywords = ["artifact","lint","py","linter"]
+license = "Apache-2.0"
+license-files = [
+    "LICENSE"
+]
+dependencies = [
+    "jsonschema"
+]
+
+[project.urls]
+Homepage = "https://github.com/whatsacomputertho/artifact-lint-py"
+Issues = "https://github.com/whatsacomputertho/artifact-lint-py/issues"
+
+[project.optional-dependencies]
+test = ["tox","pytest","pytest-mock","pytest-cov"]
+build = ["build"]
+doc = ["sphinx","sphinx_rtd_theme"]
