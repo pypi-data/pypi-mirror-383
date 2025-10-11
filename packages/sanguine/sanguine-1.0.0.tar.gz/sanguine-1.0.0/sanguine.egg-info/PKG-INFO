@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: sanguine
+Version: 1.0.0
+Summary: Automat code indexing tool
+Author-email: Nitesh Yadav <nitesh.txt@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/n1teshy/sanguine
+Project-URL: Repository, https://github.com/n1teshy/sanguine
+Project-URL: Issues, https://github.com/n1teshy/sanguine/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: peewee
+Requires-Dist: tree_sitter_language_pack
+Requires-Dist: huepy
