@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: grobnercrystals
+Version: 1.1.3
+Summary: A package for working with Gröbner crystal structures.
+Home-page: https://github.com/LiberMagnum/grobnercrystals
+Author: Abigail Price
+Author-email: Abigail Price <price29@illinois.edu>
+Project-URL: Homepage, https://github.com/LiberMagnum/grobnercrystals
+Project-URL: Documentation, https://libermagnum.github.io/grobnercrystals/
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Summary
+
+This repository contains SageMath code for working with *Gröbner crystal structures*, introduced in [this preprint](https://arxiv.org/abs/2510.07560).
+
+## Dependencies
+
+- SageMath ([documentation here](https://doc.sagemath.org/html/en/index.html))
+- Macaulay2 ([documentation here](https://www.macaulay2.com))
+  - the "gfanInterface" package ([documentation here](https://macaulay2.com/doc/Macaulay2/share/doc/Macaulay2/gfanInterface/html/index.html))
+- numpy
+
+## Installation
+
+To install grobnercrystals, run the following in a terminal:
+
+```terminal
+sage --pip install grobnercrystals
+```
+
+Alternatively, run:
+
+```terminal
+sage --pip install git+https://github.com/LiberMagnum/grobnercrystals.git#egg=grobnercrystals
+```
+
+## Documentation
+
+Documentation and examples are available at [this website](https://libermagnum.github.io/grobnercrystals/).
