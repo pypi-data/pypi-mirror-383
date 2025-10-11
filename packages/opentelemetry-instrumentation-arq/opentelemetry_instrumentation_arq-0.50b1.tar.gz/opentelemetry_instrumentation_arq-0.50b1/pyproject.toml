@@ -1,0 +1,39 @@
+[project]
+name = "opentelemetry-instrumentation-arq"
+authors = [{ name = "fcfangcc", email = "swjfc22@live.com" }]
+description = "Arq instrumentation for OpenTelemetry"
+readme = "README.rst"
+requires-python = ">=3.10"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "opentelemetry-api",
+    "opentelemetry-instrumentation",
+    "opentelemetry-semantic-conventions",
+    "wrapt >= 1.0.0, < 2.0.0",
+]
+
+[project.optional-dependencies]
+instruments = ["arq"]
+dev = ["build"]
+
+[project.entry-points.opentelemetry_instrumentor]
+arq = "opentelemetry.instrumentation.arq:ArqInstrumentor"
+
+[build-system]
+requires = ["setuptools>=70.0"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools.dynamic]
+version = { attr = "opentelemetry.instrumentation.arq.version.__version__" }
+
+[tool.ruff]
+line-length = 120

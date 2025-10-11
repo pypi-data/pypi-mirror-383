@@ -1,0 +1,10 @@
+opentelemetry-api
+opentelemetry-instrumentation
+opentelemetry-semantic-conventions
+wrapt<2.0.0,>=1.0.0
+
+[dev]
+build
+
+[instruments]
+arq
