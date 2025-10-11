@@ -1,0 +1,396 @@
+"""
+Decorators to convert functions into AI agents
+"""
+import functools
+import inspect
+from pathlib import Path
+from typing import Any, Awaitable, Callable, Optional, ParamSpec, TypeVar, overload
+
+from .llm import LLMConfig, call_llm
+from .memory import MemoryManager
+from .parser import parse_response
+from .prompt import extract_template, render_prompt
+from .registry import agent_registry
+from .tool_registry import tool_registry
+from .workflow_registry import workflow_registry
+
+P = ParamSpec('P')
+T = TypeVar('T')
+
+
+def _convert_tools_to_llm_format(tools: list[Callable]) -> list[dict[str, Any]]:
+    """Convert Python tool functions to LiteLLM tools format.
+
+    Args:
+        tools: List of tool functions
+
+    Returns:
+        List of tool dictionaries in OpenAI tools format
+    """
+    llm_tools = []
+    for tool in tools:
+        sig = inspect.signature(tool)
+
+        # Build parameters schema
+        properties: dict[str, Any] = {}
+        required: list[str] = []
+
+        for param_name, param in sig.parameters.items():
+            # Convert Python type annotations to JSON schema types
+            param_type = "string"  # default
+            if param.annotation != inspect.Parameter.empty:
+                if param.annotation in (int, type(1)):
+                    param_type = "integer"
+                elif param.annotation in (float, type(1.0)):
+                    param_type = "number"
+                elif param.annotation in (bool, type(True)):
+                    param_type = "boolean"
+                elif param.annotation in (list, type([])):
+                    param_type = "array"
+                elif param.annotation in (dict, type({})):
+                    param_type = "object"
+
+            properties[param_name] = {
+                "type": param_type,
+                "description": f"{param_name} parameter"
+            }
+
+            # Mark as required if no default value
+            if param.default == inspect.Parameter.empty:
+                required.append(param_name)
+
+        # Get function description from docstring
+        description = tool.__doc__ or tool.__name__
+        if description:
+            description = description.strip().split('\n')[0]  # First line only
+
+        llm_tools.append({
+            "type": "function",
+            "function": {
+                "name": tool.__name__,
+                "description": description,
+                "parameters": {
+                    "type": "object",
+                    "properties": properties,
+                    "required": required
+                }
+            }
+        })
+
+    return llm_tools
+
+
+@overload
+def agent(
+    fn: Callable[P, Awaitable[T]],
+    *,
+    model: str = "gpt-4o-mini",
+    temperature: float = 0.7,
+    enable_memory: bool = False,
+    persist_dir: Optional[Path] = None,
+    max_messages: int = 100,
+    tools: Optional[list[Callable]] = None,
+    **kwargs: Any
+) -> Callable[P, Awaitable[T]]: ...
+
+@overload
+def agent(
+    fn: None = None,
+    *,
+    model: str = "gpt-4o-mini",
+    temperature: float = 0.7,
+    enable_memory: bool = False,
+    persist_dir: Optional[Path] = None,
+    max_messages: int = 100,
+    tools: Optional[list[Callable]] = None,
+    **kwargs: Any
+) -> Callable[[Callable[P, Awaitable[T]]], Callable[P, Awaitable[T]]]: ...
+
+def agent(
+    fn: Callable[P, Awaitable[T]] | None = None,
+    *,
+    model: str = "gpt-4o-mini",
+    temperature: float = 0.7,
+    enable_memory: bool = False,
+    persist_dir: Optional[Path] = None,
+    max_messages: int = 100,
+    tools: Optional[list[Callable]] = None,
+    **kwargs: Any
+) -> (
+    Callable[P, Awaitable[T]]
+    | Callable[[Callable[P, Awaitable[T]]], Callable[P, Awaitable[T]]]
+):
+    """
+    Convert a function into an AI agent.
+
+    Args:
+        fn: Function to convert
+        model: LLM model to use
+        temperature: Temperature for LLM
+        enable_memory: Enable memory management
+        persist_dir: Directory for persistent memory storage
+        max_messages: Maximum messages in context memory
+        tools: List of tool functions available to the agent
+        **kwargs: Additional LLM parameters
+
+    Returns:
+        Decorated async function
+
+    Example:
+        @agent
+        async def hello(name: str) -> str:
+            '''Say hello to {{ name }}'''
+            pass
+
+        result = await hello("World")
+
+        # With memory
+        @agent(enable_memory=True)
+        async def assistant(query: str, memory: MemoryManager) -> str:
+            '''Answer: {{ query }}'''
+            memory.add_message("user", query)
+            return "response"
+
+        # With tools
+        @agent(tools=[search_tool, calculator])
+        async def research_agent(topic: str) -> str:
+            '''Research {{ topic }} using available tools'''
+            pass
+    """
+    def decorator(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
+        # Extract template from docstring
+        template_str = extract_template(func)
+
+        # Create LLM config
+        config = LLMConfig(model=model, temperature=temperature)
+
+        # Get function signature to check for memory parameter
+        sig = inspect.signature(func)
+        has_memory_param = "memory" in sig.parameters
+
+        # Convert tools to LiteLLM format if provided
+        llm_tools = None
+        if tools:
+            llm_tools = _convert_tools_to_llm_format(tools)
+
+        @functools.wraps(func)
+        async def wrapper(*args: P.args, **kwargs_inner: P.kwargs) -> T:
+            # Create and inject memory if enabled
+            if enable_memory and has_memory_param:
+                memory = MemoryManager(
+                    agent_name=func.__name__,
+                    persist_dir=persist_dir,
+                    max_messages=max_messages,
+                )
+                # Inject memory into kwargs before binding
+                kwargs_inner = dict(kwargs_inner)  # type: ignore
+                kwargs_inner["memory"] = memory  # type: ignore
+
+            # Get function signature and bind arguments
+            bound = sig.bind(*args, **kwargs_inner)
+            bound.apply_defaults()
+
+            # Render prompt with arguments (excluding memory from template)
+            template_args = {
+                k: v for k, v in bound.arguments.items() if k != "memory"
+            }
+            prompt = render_prompt(template_str, **template_args)
+
+            # Prepare additional kwargs for LLM
+            llm_kwargs = dict(kwargs)
+            if llm_tools:
+                llm_kwargs["tools"] = llm_tools
+
+            # Call LLM
+            response = await call_llm(prompt, config, **llm_kwargs)
+
+            # Parse response based on return type annotation
+            return_type = sig.return_annotation
+            if return_type != inspect.Signature.empty and return_type is not str:
+                return parse_response(response, return_type)  # type: ignore
+
+            return response  # type: ignore
+
+        # Mark as agent for MCP discovery
+        wrapper._is_agent = True  # type: ignore
+        wrapper._agent_config = config  # type: ignore
+        wrapper._agent_template = template_str  # type: ignore
+        wrapper._enable_memory = enable_memory  # type: ignore
+
+        # Register in global registry
+        agent_name = func.__name__
+        try:
+            agent_registry.register(agent_name, wrapper)  # type: ignore
+        except ValueError:
+            # Agent already registered (e.g., in tests), skip
+            pass
+
+        return wrapper  # type: ignore
+
+    return decorator if fn is None else decorator(fn)
+
+
+@overload
+def tool(fn: Callable[P, T]) -> Callable[P, T]: ...
+
+@overload
+def tool(fn: None = None) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+
+def tool(
+    fn: Callable[P, T] | None = None, *, name: Optional[str] = None
+) -> Callable[P, T] | Callable[[Callable[P, T]], Callable[P, T]]:
+    """
+    Convert a function into a tool (non-LLM function).
+
+    Tools are regular Python functions that can be called by agents.
+    They are registered in the tool registry and can be exposed via MCP.
+
+    Args:
+        fn: Function to convert
+        name: Optional tool name (defaults to function name)
+
+    Returns:
+        Decorated function with type validation
+
+    Example:
+        @tool
+        def calculate_tax(amount: float, rate: float = 0.1) -> float:
+            '''Calculate tax amount'''
+            return amount * rate
+
+        # Call directly
+        result = calculate_tax(100.0, 0.15)  # 15.0
+
+        # Or use in agent via MCP
+        @agent
+        async def shopping_assistant(query: str) -> str:
+            '''
+            Help with shopping. Available tools:
+            - calculate_tax(amount, rate): Calculate tax
+
+            Query: {{ query }}
+            '''
+            pass
+    """
+    def decorator(func: Callable[P, T]) -> Callable[P, T]:
+        # Get function signature for validation
+        sig = inspect.signature(func)
+        tool_name = name or func.__name__
+
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            # Bind arguments to signature for validation
+            try:
+                bound = sig.bind(*args, **kwargs)
+                bound.apply_defaults()
+            except TypeError as e:
+                raise TypeError(
+                    f"Tool '{tool_name}' called with invalid arguments: {e}"
+                ) from e
+
+            # Execute the tool function
+            result = func(*bound.args, **bound.kwargs)
+
+            # Validate return type if annotated
+            return_type = sig.return_annotation
+            if return_type != inspect.Signature.empty:
+                # TODO: Add Pydantic validation for return type
+                pass
+
+            return result  # type: ignore
+
+        # Mark as tool for MCP discovery
+        wrapper._is_tool = True  # type: ignore
+        wrapper._tool_name = tool_name  # type: ignore
+        wrapper._tool_signature = sig  # type: ignore
+        wrapper._tool_docstring = func.__doc__ or ""  # type: ignore
+
+        # Register in global tool registry
+        try:
+            tool_registry.register(tool_name, wrapper)  # type: ignore
+        except ValueError:
+            # Tool already registered (e.g., in tests), skip
+            pass
+
+        return wrapper  # type: ignore
+
+    return decorator if fn is None else decorator(fn)
+
+
+@overload
+def workflow(fn: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]: ...
+
+@overload
+def workflow(
+    fn: None = None
+) -> Callable[[Callable[P, Awaitable[T]]], Callable[P, Awaitable[T]]]: ...
+
+def workflow(
+    fn: Callable[P, Awaitable[T]] | None = None, *, name: Optional[str] = None
+) -> (
+    Callable[P, Awaitable[T]]
+    | Callable[[Callable[P, Awaitable[T]]], Callable[P, Awaitable[T]]]
+):
+    """
+    Convert a function into a workflow (multi-agent orchestration).
+
+    Workflows coordinate multiple agents and tools to accomplish complex tasks.
+    Unlike @agent, workflows execute the actual function body which orchestrates
+    the agent calls.
+
+    Args:
+        fn: Function to convert
+        name: Optional workflow name (defaults to function name)
+
+    Returns:
+        Decorated async function
+
+    Example:
+        @workflow
+        async def research_workflow(topic: str) -> dict:
+            '''Research a topic using multiple agents'''
+            # Search for information
+            search_results = await search_agent(topic)
+
+            # Summarize findings
+            summary = await summarize_agent(search_results)
+
+            # Generate report
+            report = await report_agent(summary)
+
+            return {"topic": topic, "report": report}
+
+        result = await research_workflow("AI safety")
+    """
+    def decorator(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
+        # Get function signature
+        sig = inspect.signature(func)
+        workflow_name = name or func.__name__
+
+        @functools.wraps(func)
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            # Bind arguments to signature
+            bound = sig.bind(*args, **kwargs)
+            bound.apply_defaults()
+
+            # Execute the workflow function
+            result = await func(*bound.args, **bound.kwargs)
+
+            return result  # type: ignore
+
+        # Mark as workflow for MCP discovery
+        wrapper._is_workflow = True  # type: ignore
+        wrapper._workflow_name = workflow_name  # type: ignore
+        wrapper._workflow_signature = sig  # type: ignore
+        wrapper._workflow_docstring = func.__doc__ or ""  # type: ignore
+
+        # Register in global workflow registry
+        try:
+            workflow_registry.register(workflow_name, wrapper)  # type: ignore
+        except ValueError:
+            # Workflow already registered (e.g., in tests), skip
+            pass
+
+        return wrapper  # type: ignore
+
+    return decorator if fn is None else decorator(fn)
