@@ -1,0 +1,63 @@
+Metadata-Version: 2.4
+Name: hunter-how-cli
+Version: 1.0.1
+Summary: CLI tool for interacting with the hunter.how search engine
+Author-email: Daniil Kadochnikov <daniil.kadochnikov@proton.me>
+License: This is free and unencumbered software released into the public domain.
+        
+        Anyone is free to copy, modify, publish, use, compile, sell, or
+        distribute this software, either in source code form or as a compiled
+        binary, for any purpose, commercial or non-commercial, and by any
+        means.
+        
+        In jurisdictions that recognize copyright laws, the author or authors
+        of this software dedicate any and all copyright interest in the
+        software to the public domain. We make this dedication for the benefit
+        of the public at large and to the detriment of our heirs and
+        successors. We intend this dedication to be an overt act of
+        relinquishment in perpetuity of all present and future rights to this
+        software under copyright law.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+        OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+        OTHER DEALINGS IN THE SOFTWARE.
+        
+        For more information, please refer to <https://unlicense.org/>
+Project-URL: Homepage, https://github.com/anti79/hunter-how-cli
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests
+Requires-Dist: platformdirs
+Dynamic: license-file
+
+# Unofficial CLI tool for ⌖ Hunter.how
+
+## Installation
+
+```
+pip3 install hunter-how-cli
+```
+
+## Usage examples
+
+Set API key:
+```
+hunter-how set_api_key YOUR_KEY_HERE
+```
+
+Search for direcoty listings, output to file:
+```
+hunter-how search 'web.title="Index"' --page 1 --page-size 10 -o indexes.json
+```
+
+Parse from file, output ip:port to stdout:
+```
+hunter-how parse indexes.json --fields ip,port -d ":"
+```
+
+
