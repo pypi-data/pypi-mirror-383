@@ -1,0 +1,27 @@
+[project]
+name = "bach-google-search-pse"
+version = "0.2.3"
+description = "Google 可编程搜索引擎 MCP 服务器 - 提供关键词搜索、URL内容获取和PDF解析功能"
+readme = "README.md"
+authors = [
+    { name = "bachstudio", email = "bachstudio@example.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=1.12.3",
+    "requests>=2.31.0",
+]
+keywords = ["mcp", "google-search", "pse", "web-scraping", "pdf-parser"]
+license = { text = "MIT" }
+
+[project.urls]
+"Homepage" = "https://github.com/rongquanfeng/GoogleSearchPSEMCP"
+"Repository" = "https://github.com/rongquanfeng/GoogleSearchPSEMCP.git"
+"Bug Reports" = "https://github.com/rongquanfeng/GoogleSearchPSEMCP/issues"
+
+[project.scripts]
+bach-google-search-pse = "mcpccc:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
