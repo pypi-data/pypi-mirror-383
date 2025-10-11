@@ -1,0 +1,144 @@
+[build-system]
+requires = ["setuptools_scm[toml]>=8", "setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hklpy2"
+description = "2nd generation controls for diffractometers as PseudoPositioners in the Bluesky Framework."
+authors = [
+  { name = "Bluesky Team" },
+  { name = "Pete Jemian", email = "prjemian+hklpy2@gmail.com" },
+]
+maintainers = [{ name = "Pete Jemian", email = "prjemian+hklpy2@gmail.com" }]
+dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["bluesky", "diffraction", "diffractometer"]
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license
+license = "LicenseRef-UChicago-Argonne-LLC-License"
+license-files = ["LICEN[CS]E*"]
+# https://pypi.org/classifiers/
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Environment :: OpenStack",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
+  "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+  "bluesky_tiled_plugins",
+  "bluesky",
+  "cytoolz",
+  "databroker",
+  "numpy",
+  "ophyd",
+  "pandas",
+  "pint",
+  "pyRestTable",
+  "ruamel.yaml",
+  "tiled",
+  "tqdm",
+  "typeguard",
+]
+
+[project.entry-points."hklpy2.solver"]
+no_op = "hklpy2.backends.no_op:NoOpSolver"
+# HklSolver relies on the 'hkl' package.
+# If that package cannot be imported, then solver states it is not available.
+hkl_soleil = "hklpy2.backends.hkl_soleil:HklSolver"
+th_tth = "hklpy2.backends.th_tth_q:ThTthSolver"
+
+[project.optional-dependencies]
+dev = [
+  "build",
+  "coverage",
+  "coveralls",
+  "isort",
+  "mypy",
+  "pre-commit",
+  "pytest",
+  "ruff",
+  # databroker 2.0.0b57 needs
+  "bson",
+  "doct",
+  "humanize",
+  "mongomock",
+  "pymongo",
+  "pytest-cov",
+  "pytest-mock",
+  # tiled 0.1.0b19 needs
+  "suitcase-mongo",
+]
+doc = [
+  "apstools",
+  "astroid<3.9999",  # https://stackoverflow.com/a/79414363 due to  [autoapi.not_readable]
+  "ipython",
+  "markupsafe",
+  "matplotlib",
+  "myst-nb",
+  "myst-parser",
+  "nbsphinx",
+  "ophyd",
+  "pydata-sphinx-theme",
+  "setuptools >=70.1",
+  "setuptools-scm >=8",
+  "spec2nexus",
+  "sphinx >=7",
+  "sphinx-autoapi",
+  "sphinx-design",
+  "sphinx-tabs",
+]
+all = ["hklpy2[dev,doc]"]
+
+[project.urls]
+homepage = "https://blueskyproject.io/hklpy2/"
+issues = "https://github.com/bluesky/hklpy2/issues"
+source = "https://github.com/bluesky/hklpy2"
+
+[tool.black]
+line-length = 115 # matches the value of 'max-line-length' in .flake8
+target-version = ['py312']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | examples/archive
+    | build
+    | dist
+  )/
+  | hkl/_version.py
+)
+'''
+
+[tool.copyright]
+copyright = "2023-2025, Argonne National Laboratory"
+
+[tool.flake8]
+max-line-length = 115
+extend-ignore = ["E501"]
+
+[tool.isort]
+profile = "black"
+force_single_line = true
+line_length = 115
+src_paths = ["."]
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+# filterwarnings = [
+#   # Warnings inherited from upstream packages.
+#   "ignore:.*'wheel' package is no longer the canonical*:DeprecationWarning",
+# ]
+
+[tool.setuptools_scm]

@@ -1,0 +1,99 @@
+Metadata-Version: 2.4
+Name: hklpy2
+Version: 0.2.0rc1
+Summary: 2nd generation controls for diffractometers as PseudoPositioners in the Bluesky Framework.
+Author: Bluesky Team
+Author-email: Pete Jemian <prjemian+hklpy2@gmail.com>
+Maintainer-email: Pete Jemian <prjemian+hklpy2@gmail.com>
+License-Expression: LicenseRef-UChicago-Argonne-LLC-License
+Project-URL: homepage, https://blueskyproject.io/hklpy2/
+Project-URL: issues, https://github.com/bluesky/hklpy2/issues
+Project-URL: source, https://github.com/bluesky/hklpy2
+Keywords: bluesky,diffraction,diffractometer
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Environment :: OpenStack
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: bluesky_tiled_plugins
+Requires-Dist: bluesky
+Requires-Dist: cytoolz
+Requires-Dist: databroker
+Requires-Dist: numpy
+Requires-Dist: ophyd
+Requires-Dist: pandas
+Requires-Dist: pint
+Requires-Dist: pyRestTable
+Requires-Dist: ruamel.yaml
+Requires-Dist: tiled
+Requires-Dist: tqdm
+Requires-Dist: typeguard
+Provides-Extra: dev
+Requires-Dist: build; extra == "dev"
+Requires-Dist: coverage; extra == "dev"
+Requires-Dist: coveralls; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: bson; extra == "dev"
+Requires-Dist: doct; extra == "dev"
+Requires-Dist: humanize; extra == "dev"
+Requires-Dist: mongomock; extra == "dev"
+Requires-Dist: pymongo; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: pytest-mock; extra == "dev"
+Requires-Dist: suitcase-mongo; extra == "dev"
+Provides-Extra: doc
+Requires-Dist: apstools; extra == "doc"
+Requires-Dist: astroid<3.9999; extra == "doc"
+Requires-Dist: ipython; extra == "doc"
+Requires-Dist: markupsafe; extra == "doc"
+Requires-Dist: matplotlib; extra == "doc"
+Requires-Dist: myst-nb; extra == "doc"
+Requires-Dist: myst-parser; extra == "doc"
+Requires-Dist: nbsphinx; extra == "doc"
+Requires-Dist: ophyd; extra == "doc"
+Requires-Dist: pydata-sphinx-theme; extra == "doc"
+Requires-Dist: setuptools>=70.1; extra == "doc"
+Requires-Dist: setuptools-scm>=8; extra == "doc"
+Requires-Dist: spec2nexus; extra == "doc"
+Requires-Dist: sphinx>=7; extra == "doc"
+Requires-Dist: sphinx-autoapi; extra == "doc"
+Requires-Dist: sphinx-design; extra == "doc"
+Requires-Dist: sphinx-tabs; extra == "doc"
+Provides-Extra: all
+Requires-Dist: hklpy2[dev,doc]; extra == "all"
+Dynamic: license-file
+
+# hklpy2
+
+| Name | Downloads | Version | Platforms | PyPI | Coverage |
+| --- | --- | --- | --- | --- | --- |
+| [![Conda Package](https://img.shields.io/badge/package-hklpy2-green.svg)](https://anaconda.org/conda-forge/hklpy2) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/hklpy2.svg)](https://anaconda.org/conda-forge/hklpy2) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/hklpy2.svg)](https://anaconda.org/conda-forge/hklpy2) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/hklpy2.svg)](https://anaconda.org/conda-forge/hklpy2) | [![PyPi](https://img.shields.io/pypi/v/hklpy2.svg)](https://pypi.python.org/pypi/hklpy2) | [![Coverage Status](https://coveralls.io/repos/github/bluesky/hklpy2/badge.svg?branch=main)](https://coveralls.io/github/bluesky/hklpy2?branch=main) |
+
+2nd generation controls for diffractometers as PseudoPositioners in the
+[Bluesky Framework](https://blueskyproject.io).
+
+[![FCC ball&stick](/docs/source/_static/fcc-ball-and-stick.jpg)](https://worldrecord.r-krickl.com/en/)
+
+![API diagram](/docs/source/_static/hklpy2-block-diagram.png)
+
+## About
+
+- home: https://blueskyproject.io/hklpy2/
+- source: https://github.com/bluesky/hklpy2
+- license: [Argonne Open Source License](/LICENSE)
+- design: [API](/docs/source/api.rst), [concepts](/docs/source/concepts.rst), [checklist](/docs/source/concepts/planning/_checklist_v2.md)
+- **hklpy**, v1: [docs](https://blueskyproject.io/hklpy/), [source](https://github.com/bluesky/hklpy)
+- **libhkl**: [docs](https://people.debian.org/~picca/hkl/hkl.html),  [source](https://repo.or.cz/hkl.git)
+- acknowledgement:
+  "This product includes software produced by UChicago Argonne,
+  LLC under Contract No. DE-AC02-06CH11357 with the Department of Energy."
