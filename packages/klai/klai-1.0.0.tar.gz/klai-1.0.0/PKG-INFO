@@ -1,0 +1,38 @@
+Metadata-Version: 2.4
+Name: klai
+Version: 1.0.0
+Summary: A Local-First AI Terminal Companion
+License: MIT
+Keywords: ai,cli,terminal,llm,chatgpt,gemini,developer-tools
+Author: sarthak sidhant
+Author-email: sarthaksidhantisopolice@gmail.com
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Terminals
+Classifier: Topic :: Utilities
+Requires-Dist: Flask (>=3.0.0,<4.0.0)
+Requires-Dist: click (<8.2.0)
+Requires-Dist: google-api-core (>=2.19.0,<3.0.0)
+Requires-Dist: google-genai (>=0.5.0,<0.6.0)
+Requires-Dist: httpx (>=0.27.0,<0.28.0)
+Requires-Dist: prompt-toolkit (>=3.0.0,<4.0.0)
+Requires-Dist: rich (>=13.0.0,<14.0.0)
+Requires-Dist: sqlalchemy (>=2.0.0,<3.0.0)
+Requires-Dist: typer[rich] (>=0.9.0,<0.10.0)
+Description-Content-Type: text/markdown
+
+# klai - A Local-First AI Terminal Companion
+
+This is a command-line AI assistant that runs entirely on your local machine.
+
