@@ -1,0 +1,143 @@
+stages:
+  - test
+  - publish
+
+pre-commit:
+  stage: test
+
+  image: python:latest
+
+  rules:
+    - if: "$CI_MERGE_REQUEST_LABELS =~ /tests::block/"
+      when: never
+    - if: "$CI_MERGE_REQUEST_LABELS =~ /tests::force/"
+    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH"
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+  before_script:
+    - python --version
+    - pip install pre-commit
+
+  script:
+    - pre-commit run --all-files
+
+test-notraining:
+  stage: test
+
+  image: python:3.12
+
+  rules:
+    - if: "$CI_MERGE_REQUEST_LABELS =~ /tests::block/"
+      when: never
+    - if: "$CI_MERGE_REQUEST_LABELS =~ /tests::force/"
+    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH"
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+  cache:
+    # only caching delta data, everything else is reinstalled via pip
+    - key: delta-cache
+      paths:
+        - .cache/delta
+
+  variables:
+    DELTA_ASSETS_CACHE: ".cache/delta"
+    PIP_CACHE_DIR: ".cache/pip"
+
+  before_script:
+    - date
+    - apt update
+    - apt install -y ffmpeg
+    - pip install .[jax-cpu]
+    - export KERAS_BACKEND=jax
+    - curl -Os https://uploader.codecov.io/latest/linux/codecov
+    - chmod +x codecov
+
+  script:
+    - date
+    # * Removing test_train because they are too long for gitlab CI
+    - pytest --verbose --cov=delta -k "not test_train"
+    - ./codecov -t $CODECOV_TOKEN
+
+  after_script:
+    - rm -rf .cache/delta/0.0.1/unzipped
+
+test-training:
+  stage: test
+
+  tags:
+    - saas-linux-medium-amd64
+
+  image: python:3.12
+
+  rules:
+    - if: "$CI_MERGE_REQUEST_LABELS =~ /tests::block/"
+      when: never
+    - if: "$CI_MERGE_REQUEST_LABELS =~ /tests::force/"
+    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH"
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+  cache:
+    # only caching delta data, everything else is reinstalled via pip
+    - key: delta-cache
+      paths:
+        - .cache/delta
+
+  variables:
+    DELTA_ASSETS_CACHE: ".cache/delta"
+    PIP_CACHE_DIR: ".cache/pip"
+
+  before_script:
+    - date
+    - apt update
+    - apt install -y ffmpeg
+    - pip install .[jax-cpu]
+    - export KERAS_BACKEND=jax
+    - curl -Os https://uploader.codecov.io/latest/linux/codecov
+    - chmod +x codecov
+
+  script:
+    - date
+    - python -c "import jax; print(jax.devices())"
+    - pytest --verbose --cov=delta -k "test_train"
+    - ./codecov -t $CODECOV_TOKEN
+
+  after_script:
+    - rm -rf .cache/delta/0.0.1/unzipped
+
+test-build:
+  stage: test
+
+  image: python:latest
+
+  script:
+    - pip install hatch
+    - hatch build
+
+PyPI-upload:
+  stage: publish
+
+  image: python:latest
+
+  rules:
+    - if: "$CI_COMMIT_TAG"
+
+  script:
+    - pip install hatch
+    - hatch build
+    - hatch publish
+
+GitLab-release:
+  stage: publish
+
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+
+  rules:
+    - if: "$CI_COMMIT_TAG"
+
+  script:
+    - echo "Running the GitLab release job."
+
+  release:
+    tag_name: $CI_COMMIT_TAG
+    name: "Release $CI_COMMIT_TAG"
+    description: "Release created using the release-cli."
