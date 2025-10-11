@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: apistubs
+Version: 0.0.1
+Summary: APISTUBS: Active stubs service, which can interact with tests generator and LLMs
+Author-email: Eugene Rabtsau <e.ryabtsev@gmail.com>
+Project-URL: Source, https://github.com/ryabtsev/apistubs
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests
+Requires-Dist: PyYAML
+Requires-Dist: Jinja2
+Requires-Dist: parse
+Requires-Dist: mock
+Requires-Dist: Django
+Requires-Dist: openapi-core
+Requires-Dist: uvicorn
+Requires-Dist: fastapi
+Dynamic: license-file
+
+# APISTUBS: Active stubs service, which can interact with tests generator and LLMs
+
+🚀 An MVP realized with the Django framework in a synchronous way
+
+🚧 Rewriting it in a modern way with **async Django** and **FastAPI**.
+
+Additional validation if OpenAPI schema is provided.
+
+## Key Features:
+*   **Blackbox Testing:** Treat any microservice as a blackbox and reroute its external requests.
+*   **Language-Agnostic:** Works with any microservice, regardless of the programming language or framework used.
+*   **AI-Powered Test Generation:** Leverage AI to automatically generate tests, or create them manually.
+*   **API and Frontend Testing:** Test your APIs or use it with frontend testing frameworks like Playwright.
