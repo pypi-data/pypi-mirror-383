@@ -1,0 +1,115 @@
+Metadata-Version: 2.1
+Name: AutoMorphoTrack
+Version: 1.0.0
+Summary: AutoMorphoTrack is an open-source Python package for automated detection, morphology classification, motility tracking, and colocalization analysis of organelles in multichannel fluorescence microscopy data.
+Home-page: https://github.com/abayatibrain/AMTpackage
+Author: Armin Bayati
+Author-email: a.bayati.brain@gmail.com
+License: MIT
+Project-URL: Documentation, https://github.com/abayatibrain/AMTpackage
+Project-URL: Source, https://github.com/abayatibrain/AMTpackage
+Project-URL: Tracker, https://github.com/abayatibrain/AMTpackage/issues
+Description: # AutoMorphoTrack
+        
+        **AutoMorphoTrack** is an open-source Python package for automated detection, morphology classification, shape profiling, motility tracking, and colocalization analysis of subcellular organelles in multichannel fluorescence microscopy data.  
+        
+        This package represents the fully modular version of the **AutoMorphoTrack pipeline**, originally developed as a Jupyter Notebook by **Armin Bayati, Ph.D.**, and now distributed as an installable Python framework.  
+        Repository: [https://github.com/abayatibrain/automorphotrack](https://github.com/abayatibrain/automorphotrack)
+        
+        ---
+        
+        ## 🧬 Overview
+        
+        AutoMorphoTrack automates quantitative analysis of time-lapse `.tif` image stacks—typically dual-channel recordings of mitochondria and lysosomes—and generates publication-ready visual and numerical outputs at every step of the analysis pipeline.
+        
+        **Pipeline stages:**
+        
+        1. **Detection** – Organelle segmentation and outline visualization  
+        2. **Lysosomal Counting** – Per-frame lysosome enumeration and temporal profiling  
+        3. **Morphology Classification** – Elongated vs. punctate mitochondria  
+        4. **Shape Feature Extraction** – Area, circularity, solidity, aspect ratio, orientation  
+        5. **Tracking** – Cumulative organelle trajectories (mitochondria, lysosomes, composite)  
+        6. **Motility Analysis** – Velocity, displacement, and trajectory-based statistics  
+        7. **Colocalization** – Bright-blue overlap overlays and correlation metrics  
+        8. **Integrated Summary** – Correlation matrices linking morphology, motility, and overlap  
+        
+        Each stage outputs high-resolution figures, videos, and CSV data tables stored in standardized subdirectories, ensuring reproducibility and compatibility with any image dataset.
+        
+        ---
+        
+        ## 📦 Installation
+        
+        Install directly from PyPI:
+        
+        ```bash
+        pip install AutoMorphoTrack
+        ```
+        
+        Or from source:
+        
+        ```bash
+        git clone https://github.com/abayatibrain/automorphotrack.git
+        cd automorphotrack
+        pip install -e .
+        ```
+        
+        ---
+        
+        ## 🚀 Basic Usage
+        
+        ```python
+        from automorphotrack import *
+        
+        tif_path = "Composite.tif"
+        
+        detect_organelles(tif_path)
+        count_lysosomes_per_frame(tif_path)
+        classify_morphology(tif_path)
+        analyze_shape_features(tif_path)
+        track_organelles(tif_path)
+        analyze_motility()
+        analyze_colocalization(tif_path)
+        summarize_integrated_data()
+        ```
+        
+        Each function automatically generates visual and quantitative outputs at every step.
+        
+        ---
+        
+        ## 📁 Outputs
+        
+        | Step | Output Type | Example Files |
+        |------|--------------|---------------|
+        | Detection | PNG + MP4 | `Mito_Frame0.png`, `Mitochondria_Detection.mp4` |
+        | Lysosome Count | PNG + CSV + MP4 | `Lyso_Count_Plot.png`, `Lysosome_Counts.csv` |
+        | Morphology | PNG + MP4 + CSV | `Morphology_Frame0_Labeled.png`, `Morphology_Labeled.mp4` |
+        | Shape Features | PNG + CSV | `Shape_Distributions.png`, `Mito_ShapeMetrics.csv` |
+        | Tracking | PNG + MP4 + CSV | `Cumulative_Mito.png`, `Mito_Tracks.csv` |
+        | Motility | PNG + CSV | `Motility_Distributions.png`, `Motility_Scatter.png` |
+        | Colocalization | PNG + MP4 + CSV | `Colocalization_Frame0.png`, `Colocalization.csv` |
+        | Summary | PNG + CSV | `Integrated_CorrelationMatrix.png`, `Integrated_Merged_Data.csv` |
+        
+        ---
+        
+        ## 🔧 Dependencies
+        
+        - Python ≥ 3.9  
+        - numpy, pandas, matplotlib, seaborn, opencv-python, scikit-image, scipy, tifffile
+        
+        ---
+        
+        ## 🧩 Citation
+        
+        If you use **AutoMorphoTrack** in your research, please cite:
+        
+        > **Bayati, A. (2025)**. AutoMorphoTrack: An accessible Python framework for automated analysis of organelle morphology and motility.  
+        > *GitHub Repository:* [https://github.com/abayatibrain/automorphotrack](https://github.com/abayatibrain/automorphotrack)
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown

@@ -1,0 +1,19 @@
+# Include documentation and license files
+include README.md
+include LICENSE
+include requirements.txt
+
+# Include all Python source files
+recursive-include automorphotrack *.py
+
+# Include any additional data files (if present)
+recursive-include automorphotrack *.csv
+recursive-include automorphotrack *.txt
+recursive-include automorphotrack *.ipynb
+recursive-include automorphotrack *.png
+recursive-include automorphotrack *.jpg
+recursive-include automorphotrack *.tif
+recursive-include automorphotrack *.json
+
+# Exclude unnecessary system or cache files
+global-exclude __pycache__ *.py[cod] .DS_Store
