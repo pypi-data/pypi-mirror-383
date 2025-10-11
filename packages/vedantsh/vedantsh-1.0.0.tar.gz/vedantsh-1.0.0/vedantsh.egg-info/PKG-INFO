@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: vedantsh
+Version: 1.0.0
+Summary: A custom Python-based terminal with colors, autocompletion, and basic shell commands.
+Author: Vedant Mahajan
+License: MIT
+Keywords: terminal shell python custom cli
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: prompt_toolkit
+Requires-Dist: colorama
+Dynamic: author
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# VedantSH
+
+A simple, colorful, and customizable Python terminal shell.
+
+## Installation
+
+```bash
+pip install vedantsh
