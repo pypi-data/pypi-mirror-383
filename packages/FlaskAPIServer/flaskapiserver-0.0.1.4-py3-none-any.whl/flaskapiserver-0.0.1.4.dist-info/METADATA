@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: FlaskAPIServer
+Version: 0.0.1.4
+Summary: Готовый сервер flask для быстрого использования API
+Home-page: https://github.com/falbue/FlaskAPIServer
+Author: falbue
+Author-email: cyansair05@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: dotenv
+Requires-Dist: flask
+Requires-Dist: flask_cors
+Requires-Dist: pytz
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# flask-api-server
