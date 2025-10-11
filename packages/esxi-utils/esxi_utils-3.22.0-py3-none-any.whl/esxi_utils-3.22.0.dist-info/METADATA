@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: esxi-utils
+Version: 3.22.0
+Summary: A package that provides functions for interacting with an ESXi server and manipulating VMs/OVFs.
+Author: The MITRE Corporation
+Requires-Python: >=3.10
+License-File: LICENSE
+Requires-Dist: pyvmomi==8.0.3.0.1
+Requires-Dist: requests_ntlm==1.3.0
+Requires-Dist: requests==2.32.3
+Requires-Dist: paramiko==3.4.1
+Requires-Dist: fabric==3.2.2
+Requires-Dist: lxml==5.3.0
+Requires-Dist: vncdotool==1.0.0
+Requires-Dist: pywinrm==0.4.3
+Requires-Dist: pan-os-python==1.6.0
+Requires-Dist: netmiko==3.4.0
+Requires-Dist: textfsm==1.1.2
+Requires-Dist: python-dateutil==2.8.2
+Requires-Dist: opencv-python-headless>=4.8.0.76
+Dynamic: license-file
