@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: cnda_dl
+Version: 1.2.0
+Summary: A command line utility for downloading fMRI data from CNDA
+Author-Email: Ramone Agard <agardr@wustl.edu>, Joey Scanga <joeyscanga92@gmail.com>
+Requires-Python: <4.0,>=3.9
+Requires-Dist: matplotlib>=3.7.2
+Requires-Dist: matplotlib-inline>=0.1.6
+Requires-Dist: progressbar2>=4.4.2
+Requires-Dist: pyxnat>=1.6.2
+Description-Content-Type: text/markdown
+
+# Installation
+
+We recommend installing cnda-dl with [pipx](https://github.com/pypa/pipx), which ensures that the cnda-dl binary is installed in an isolated environment. Installation instructions can be found [here](https://github.com/pypa/pipx?tab=readme-ov-file#install-pipx).
+
+With `pipx` installed:
+
+```
+pipx install cnda_dl
+```
