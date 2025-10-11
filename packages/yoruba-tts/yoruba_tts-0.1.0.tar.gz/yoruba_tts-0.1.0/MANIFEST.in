@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+
+# EXCLUDE large model files
+# recursive-include yoruba_tts/models/assets *
