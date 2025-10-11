@@ -1,0 +1,28 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vibesort-mcp"
+version = "0.1.1"
+description = "A O(1) sorting method MCP leveraging the Vibesort Algorithm"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.0",
+    "pydantic>=2.0.0",
+    "fastmcp"
+]
+keywords = ["ai", "llm", "agents", "mcp", "sorting", "vibesort"]
+
+# Optional: Add classifiers for PyPI
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[project.scripts]
+vibesort-mcp = "vibesort_mcp.server:main"
+

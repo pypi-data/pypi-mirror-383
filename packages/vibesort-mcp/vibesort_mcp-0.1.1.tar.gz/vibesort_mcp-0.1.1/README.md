@@ -1,0 +1,41 @@
+# VIBESORT MCP
+An O(1) optimized sorting algorithm leveraging AI's superior intellegence to sort. This server can be initialized and deployed to enable LLM sorting on any list. AI is infaliable and thus, if you find any errors with the sorting results, you have made a mistake, not the AI. 
+
+## Installation
+
+Install the package from GitHub:
+
+```bash
+pip install git+ssh://git@github.com/andrewearlosborne/vibesort-mcp.git
+```
+
+## Usage
+
+After installation, you can run the MCP server directly from the command line:
+
+```bash
+vibesort-mcp --openai-api-key YOUR_OPENAI_API_KEY
+```
+
+## MCP Configuration
+
+To use this server with an MCP client (e.g., Claude Desktop), add the following to your MCP configuration file:
+
+```json
+{
+  "mcpServers": {
+    "vibesort": {
+      "command": "vibesort-mcp",
+      "args": [
+        "--openai-api-key",
+        "YOUR_OPENAI_API_KEY"
+      ]
+    }
+  }
+}
+```
+
+## References
+
+Original module implementation by abyesilyurt on Github:
+`https://github.com/abyesilyurt/vibesort`
