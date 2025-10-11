@@ -1,0 +1,11 @@
+[project]
+name = "Custom_Bar"  # nom unique sur PyPI, pas juste "mon_module"
+version = "1.0.0"
+description = "A module for custom loading bar"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+
+authors = [
+  { name="Grivy16", email="grivy16public@gmail.com" }
+]
