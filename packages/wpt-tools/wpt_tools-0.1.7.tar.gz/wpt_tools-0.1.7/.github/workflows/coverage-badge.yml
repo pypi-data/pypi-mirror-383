@@ -1,0 +1,95 @@
+name: Update coverage data
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+# Prevent parallel runs from racing on the same target branch
+concurrency:
+  group: coverage-data
+  cancel-in-progress: false
+
+jobs:
+  cov:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"   # ensure `uv` is on PATH
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Generate Coverage Report
+        run: |
+          uv run pytest \
+            --junitxml=pytest.xml \
+            --cov-report=term-missing:skip-covered \
+            --cov=wpt_tools \
+            tests/ | tee pytest-coverage.txt
+
+      - name: Parse coverage
+        id: cov
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
+          hide-comment: true
+
+      # Prepare an isolated worktree for the coverage-data branch
+      - name: Prepare coverage-data worktree
+        run: |
+          set -e
+          git fetch origin coverage-data:coverage-data || true
+          rm -rf coverage-wt
+          if git show-ref --verify --quiet refs/heads/coverage-data; then
+            git worktree add coverage-wt coverage-data
+          else
+            git worktree add -b coverage-data coverage-wt
+          fi
+
+      - name: Write YAML into worktree
+        run: |
+          mkdir -p coverage-wt/coverage
+          printf 'coverage:\n  percent: %s\n  color: %s\n' \
+            '${{ steps.cov.outputs.coverage }}' \
+            '${{ steps.cov.outputs.color }}' > coverage-wt/coverage/summary.yml
+          echo "----- coverage-wt/coverage/summary.yml -----"
+          cat coverage-wt/coverage/summary.yml
+
+      # Only commit if the file actually changed (cleaner history)
+      - name: Check if YAML changed
+        id: changed
+        run: |
+          set -e
+          cd coverage-wt
+          git add -N coverage/summary.yml || true
+          if git diff --quiet -- coverage/summary.yml; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit to coverage-data
+        if: steps.changed.outputs.changed == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: coverage-wt
+          file_pattern: coverage/summary.yml
+          commit_message: "chore: update coverage data"
+          branch: coverage-data            # explicitly push to this branch
+          # push_options: --force-with-lease  # optional; enable only if you still see races

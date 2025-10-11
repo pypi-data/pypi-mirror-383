@@ -1,0 +1,84 @@
+Metadata-Version: 2.4
+Name: wpt_tools
+Version: 0.1.7
+Summary: Python package for analyzing wireless power systems
+Author-email: t-sasatani <sasatani.dev@gmail.com>
+License: Apache-2.0
+License-File: LICENSE
+Keywords: analysis,power,rf,s-parameters,transfer,wireless
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: <3.14,>=3.11
+Requires-Dist: click<9,>=8.1.0
+Requires-Dist: coloredlogs>=15.0.1
+Requires-Dist: colorlog<7,>=6.8.2
+Requires-Dist: dotenv>=0.9.9
+Requires-Dist: ipykernel>=6.29.5
+Requires-Dist: matplotlib<4,>=3.10.3
+Requires-Dist: numpy<3,>=2.0.0
+Requires-Dist: numpydantic>=1.6.11
+Requires-Dist: pillow<12,>=11.2.1
+Requires-Dist: pydantic<3,>=2.11.4
+Requires-Dist: pytest-cov<7,>=6.1.0
+Requires-Dist: pytest<9,>=8.2.2
+Requires-Dist: scikit-learn<2,>=1.2.1
+Requires-Dist: scikit-rf<1.8,>=1.7.0
+Requires-Dist: scipy~=1.15.3
+Requires-Dist: tabulate>=0.9.0
+Requires-Dist: toml<0.11,>=0.10.2
+Provides-Extra: dev
+Requires-Dist: black[jupyter]<26,>=25.1.0; extra == 'dev'
+Requires-Dist: ipykernel<7,>=6.26.0; extra == 'dev'
+Requires-Dist: isort<7,>=6.0.1; extra == 'dev'
+Requires-Dist: myst-parser<5,>=4.0.1; extra == 'dev'
+Requires-Dist: pytest-cov<7,>=6.1.0; extra == 'dev'
+Requires-Dist: pytest<9,>=8.2.2; extra == 'dev'
+Requires-Dist: ruff<0.12,>=0.11.6; extra == 'dev'
+Requires-Dist: sphinx-book-theme>=1.1.4; extra == 'dev'
+Requires-Dist: sphinx-click<6,>=5.0.0; extra == 'dev'
+Requires-Dist: sphinx<8.3,>=8.2.3; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# Wireless Power Tools
+
+[![CI](https://github.com/t-sasatani/wpt-tools/actions/workflows/format.yml/badge.svg)](https://github.com/t-sasatani/wpt-tools/actions/workflows/format.yml)
+![coverage](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Ft-sasatani%2Fwpt-tools%2Fcoverage-data%2Fcoverage%2Fsummary.yml&query=%24.coverage.percent&label=coverage)
+[![PyPI version](https://badge.fury.io/py/wpt-tools.svg)](https://badge.fury.io/py/wpt-tools)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+2-port parameter based analysis tools for wireless power transfer systems
+
+## Features
+
+- LCR circuit fitting and modeling
+- Z-parameter visualization
+- Efficiency calculation with load matching
+- Receiver-side capacitor filter design
+- Load sweep analysis (input/output power, efficiency)
+- Plotting and visualization
+
+## Installation
+
+```bash
+pip install wpt-tools
+```
+
+## Quick Start
+
+```bash
+# Run the demo
+wpt demo
+```
+
+## Documentation
+
+Full documentation available at: [https://t-sasatani.github.io/wpt-tools/](https://t-sasatani.github.io/wpt-tools/)
