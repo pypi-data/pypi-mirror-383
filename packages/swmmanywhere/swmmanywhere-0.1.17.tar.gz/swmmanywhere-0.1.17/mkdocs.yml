@@ -1,0 +1,67 @@
+site_name: SWMManywhere docs
+
+theme:
+  name: "material"
+
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.copy
+extra_css: [custom.css]
+
+plugins:
+  - mkdocstrings
+  - mkdocs-jupyter: 
+      execute: true
+  - search
+  - include-markdown
+  - bibtex:
+      bib_file: "./docs/paper/paper.bib"
+      csl_file: "./docs/paper/apa.csl"
+      cite_inline: false
+repo_url: https://github.com/ImperialCollegeLondon/SWMManywhere
+site_url: https://imperialcollegelondon.github.io/SWMManywhere/
+
+markdown_extensions:
+  - footnotes
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - About: ./paper/paper.md
+  - Quickstart: quickstart.md
+  - Guides:
+    - Configuration guide: config_guide.md
+    - Parameters guide: parameters_guide.md
+    - Graph functions: graphfcns_guide.md
+    - Metrics guide: metrics_guide.md
+  - Notebooks:
+    - Extended demo: ./notebooks/extended_demo.py
+    - Real world demo: ./notebooks/validation_demo.py
+    - Using custom data: ./notebooks/custom_data_demo.py
+  - Contributing: CONTRIBUTING.md
+  - API reference:
+    - SWMManywhere: reference.md
+    - Graph utilities: reference-graph-utilities.md
+    - Geospatial utilities: reference-geospatial-utilities.md
+    - Metric utilities: reference-metric-utilities.md
+    - Logging: reference-logging.md
+    - Parameters: reference-parameters.md
+    - FilePaths: reference-filepaths.md
+    - Post processing: reference-post-processing.md
+    - Preprocessing: reference-preprocessing.md
+    - Config definitions: reference-defs.md
+  - Coverage report: https://app.codecov.io/gh/ImperialCollegeLondon/SWMManywhere
