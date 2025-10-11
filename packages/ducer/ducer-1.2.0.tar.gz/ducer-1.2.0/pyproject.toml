@@ -1,0 +1,80 @@
+[project]
+name = "ducer"
+description = "Fast and compact maps and sets with Billions of keys, based on finite-state-transducers."
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [{ name = "Joachim Folz", email = "joachim.folz@dfki.de" }]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+keywords = [
+    "big data",
+    "compression",
+    "dataset",
+    "dict",
+    "finite-state-machines",
+    "finite-state-transducers",
+    "frozen",
+    "fst",
+    "map",
+    "serialization",
+    "set",
+    "streaming",
+]
+requires-python = ">=3.9"
+dynamic = ["version"]
+license = "MIT"
+
+[project.urls]
+Homepage = "https://github.com/jfolz/ducer"
+Documentation = "https://ducer.readthedocs.io/stable/"
+Repository = "https://github.com/jfolz/ducer"
+Issues = "https://github.com/jfolz/ducer/issues"
+Changelog = "https://github.com/jfolz/ducer/blob/main/CHANGELOG.md"
+
+[tool.setuptools_scm]
+version_file = "ducer/_version.py"
+version_file_template = """
+__version__ = '{version}'
+__version_tuple__ = {version_tuple}
+"""
+
+[tool.setuptools]
+packages = ["ducer"]
+
+[build-system]
+requires = [
+    "setuptools>=77.0.0",
+    "setuptools-rust>=1.11.0",
+    "setuptools-scm>=8.3.0",
+]
+build-backend = "setuptools.build_meta"
+
+[[tool.setuptools-rust.ext-modules]]
+target = "ducer._fst"
+path = "rust/Cargo.toml"
+binding = "PyO3"
+args = ["--profile", "prod"]
+
+[tool.cibuildwheel]
+skip = "cp3[1-9][0-9]t-* *_i686 *musllinux* *-win32"
+build-verbosity = 1
+build-frontend = "build"
+test-requires = "pytest>=8.3.1"
+test-command = "pytest {project}/tests -vv"
+
+[tool.cibuildwheel.linux]
+before-all = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal"
+environment = "CARGO_HOME=/usr/local/"
+
+[tool.cibuildwheel.macos]
+environment = "MACOSX_DEPLOYMENT_TARGET=10.12"
