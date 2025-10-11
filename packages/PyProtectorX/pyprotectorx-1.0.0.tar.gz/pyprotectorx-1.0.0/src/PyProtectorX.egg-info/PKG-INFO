@@ -1,0 +1,28 @@
+Metadata-Version: 2.4
+Name: PyProtectorX
+Version: 1.0.0
+Summary: Powerful Python protection library
+Author: Your Name
+Author-email: Zain Alkhalil <zainr56h@gmail.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+# PyProtector
+
+**PyProtector** is a binary-only Python extension (.so) for secure encrypted operations.  
+This package contains the prebuilt ELF shared object without exposing C source code.
+
+## Installation
+```bash
+pip install PyProtector
+```
+
+## Usage
+```python
+import pyprotector
+# Example usage
+# pyprotector.encrypt_file("script.py")
+```
