@@ -1,0 +1,184 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "check-requirements-txt"
+dynamic = ["version"]
+description = "A tool (and also a pre-commit hook) to automatically check the missing packages in requirements.txt and pyproject.toml."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "ferstar", email = "zhangjianfei3@gmail.com" },
+]
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "packaging",
+  "tomli>=1.2.0; python_version<'3.11'",
+]
+
+[project.urls]
+Documentation = "https://github.com/ferstar/check-requirements-txt#readme"
+Issues = "https://github.com/ferstar/check-requirements-txt/issues"
+Source = "https://github.com/ferstar/check-requirements-txt"
+
+[project.scripts]
+check-requirements-txt = "check_requirements_txt:run"
+
+[tool.hatch.version]
+path = "src/check_requirements_txt/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+]
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov-xml = [
+  "test-cov",
+  "- coverage combine",
+  "coverage xml",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+  "coverage xml",
+]
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
+
+[tool.hatch.envs.lint]
+dependencies = [
+  "pyright>=1.1.0",
+  "ruff>=0.4.3",
+  "pytest",
+]
+[tool.hatch.envs.lint.scripts]
+typing = "pyright {args:src/check_requirements_txt tests}"
+style = [
+  "ruff check {args:.}",
+  "ruff format --check {args:.}",
+]
+fmt = [
+  "ruff format {args:.}",
+  "ruff check --fix {args:.}",
+  "style",
+]
+all = [
+  "style",
+  "typing",
+]
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["**/__pycache__", "**/.pytest_cache"]
+pythonVersion = "3.12"
+typeCheckingMode = "basic"
+reportMissingImports = true
+reportMissingTypeStubs = false
+reportUnusedImport = true
+reportUnusedVariable = true
+
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FBT",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "Q",
+  "RUF",
+  "S",
+  "T",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+ignore = [
+  # Allow non-abstract empty methods in abstract base classes
+  "B027",
+  # Allow boolean positional values in function calls, like `dict.get(... True)`
+  "FBT003",
+  # Ignore checks for possible passwords
+  "S105", "S106", "S107",
+  # Ignore complexity
+  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+  # Allow print statements - they are useful for CLI output
+  "T201",
+]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["check_requirements_txt"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+"tests/**/*" = ["PLR2004", "S101", "TID252"]
+
+[tool.coverage.run]
+source_pkgs = ["check_requirements_txt", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/check_requirements_txt/__about__.py",
+]
+
+[tool.coverage.paths]
+check_requirements_txt = ["src/check_requirements_txt", "*/check-requirements-txt/src/check_requirements_txt"]
+tests = ["tests", "*/check-requirements-txt/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[dependency-groups]
+dev = [
+    "hatch>=1.14.2",
+    "hatchling>=1.27.0",
+    "pytest>=8.4.2",
+]
