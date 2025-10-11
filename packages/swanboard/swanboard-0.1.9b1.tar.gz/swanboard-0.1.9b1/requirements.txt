@@ -1,0 +1,16 @@
+# web server
+fastapi>=0.110.1
+uvicorn>=0.14.0
+
+
+# database
+peewee
+ujson
+
+
+# Information collection
+psutil
+setuptools
+
+# others
+rich>=13.6.0, <14.0.0
