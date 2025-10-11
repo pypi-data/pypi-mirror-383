@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: ixpepy
+Version: 1.0.1
+Summary: 3ML plugins for the IXPE mission
+Home-page: https://github.com/threeML/ixpepy
+Author: Niccolò Di Lalla
+Author-email: niccolo.dilalla@stanford.edu
+Project-URL: Bug Tracker, https://github.com/threeML/ixpepy/issues
+Project-URL: Source Code, https://github.com/threeML/ixpepy
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: astromodels
+Requires-Dist: astropy
+Requires-Dist: matplotlib
+Requires-Dist: numpy>=1.18
+Requires-Dist: threeML
+Dynamic: license-file
+
+# ixpepy
+
+IXPE plugins for threeML
