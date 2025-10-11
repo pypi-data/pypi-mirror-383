@@ -1,0 +1,59 @@
+/* Custom styles for x-zic documentation */
+
+.wy-side-nav-search {
+    background-color: #2980B9;
+}
+
+.wy-side-nav-search > a {
+    color: #fcfcfc;
+}
+
+.wy-side-nav-search > div.version {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Code highlighting */
+.highlight {
+    background: #f8f8f8;
+    border: 1px solid #e1e4e5;
+    border-radius: 4px;
+}
+
+/* Better table styling */
+.rst-content table.docutils {
+    border: 1px solid #e1e4e5;
+}
+
+.rst-content table.docutils th {
+    background-color: #f3f6f6;
+}
+
+/* API documentation styling */
+.rst-content .emphasized {
+    border-left: 4px solid #2980B9;
+    padding-left: 10px;
+}
+
+/* Custom admonitions */
+.custom-admonition {
+    border-left: 4px solid #2980B9;
+    background: #f0f8ff;
+}
+
+/* Function signatures */
+.sig {
+    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Parameter tables */
+.field-list dt {
+    font-weight: bold;
+    background: #f3f6f6;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.field-list dd {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
