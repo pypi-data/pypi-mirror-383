@@ -1,0 +1,72 @@
+Metadata-Version: 2.4
+Name: django-cli-no-admin
+Version: 2025.10.1
+Summary: Use the Django CLI using "django" without typing "django-admin"
+Author-email: Jeff Triplett <jeff.triplett@gmail.com>
+License-Expression: BSD-3-Clause
+Project-URL: Changelog, https://github.com/jefftriplett/django-cli-no-admin/releases
+Project-URL: Documentation, https://github.com/jefftriplett/django-cli-no-admin
+Project-URL: Fiscal support, https://github.com/sponsors/jefftriplett/
+Project-URL: Source, https://github.com/jefftriplett/django-cli-no-admin
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.0
+Classifier: Framework :: Django :: 5.1
+Classifier: Framework :: Django :: 5.2
+Classifier: Framework :: Django :: 6.0
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: django
+Dynamic: license-file
+
+# django-cli-no-admin
+
+> Use the Django CLI using "django" without typing "django-admin".
+
+django-cli-no-admin is a config-only project that creates a `django` command and nothing more. With this package, you can use the `django` command instead of `django-admin` to execute management commands in your Django project.
+
+See the blog post: https://micro.webology.dev/2024/12/14/new-project-to.html 
+
+## Installation
+
+You can install django-cli-no-admin using pip:
+
+```shell
+pip install django-cli-no-admin
+```
+
+Or, if you prefer uv: 
+
+```shell
+uv pip install django-cli-no-admin
+```
+
+## Usage
+
+Once installed, you can use `django` from the command line in place of `django-admin`:
+
+```shell
+django startproject myproject
+```
+
+Or any other Django management command:
+
+```shell
+django runserver
+```
+
+## No Additional Setup Required
+
+There are no additional dependencies or configurations needed. Simply install the package, and you're ready to go.
+
+## License
+
+django-cli-no-admin is licensed under the BSD License. See the LICENSE.txt file for details.
