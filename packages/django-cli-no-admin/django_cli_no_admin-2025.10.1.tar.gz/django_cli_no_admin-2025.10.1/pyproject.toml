@@ -1,0 +1,37 @@
+[project]
+name = "django-cli-no-admin"
+version = "2025.10.1"
+description = 'Use the Django CLI using "django" without typing "django-admin"'
+authors = [
+    { name = "Jeff Triplett", email = "jeff.triplett@gmail.com" }
+]
+requires-python = ">=3.10"
+license = "BSD-3-Clause"
+dependencies = [
+    "django"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14"
+]
+readme = { file = "README.md", content-type="text/markdown" }
+
+[project.scripts]
+django = "django.core.management:execute_from_command_line"
+
+[project.urls]
+Changelog = "https://github.com/jefftriplett/django-cli-no-admin/releases"
+Documentation = "https://github.com/jefftriplett/django-cli-no-admin"
+"Fiscal support" = "https://github.com/sponsors/jefftriplett/"
+Source = "https://github.com/jefftriplett/django-cli-no-admin"
