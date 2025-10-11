@@ -1,0 +1,28 @@
+language: python
+sudo: false
+
+env:
+  - TESTPART=PYTHON1
+  - TESTPART=PYTHON2
+
+python:
+  - "3.7"
+
+before_install:
+  - travis_apt_get_update
+  - wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b -p /home/travis/mc
+  - export PATH=/home/travis/mc/bin:$PATH
+
+install:
+  - conda update --yes conda > conda_install.txt
+  - conda create -q -y --name testenv -c pytorch -c conda-forge python=3.7 numpy scipy pandas scikit-learn matplotlib torchvision pytorch xgboost rebound einops jupyter pytorch-lightning ipython h5py
+  - source activate testenv
+  - python setup.py install
+
+script:
+    - if [[ $TESTPART == "PYTHON1" ]]; then cd $TRAVIS_BUILD_DIR/ && python setup.py test; fi
+    - if [[ $TESTPART == "PYTHON2" ]]; then cd $TRAVIS_BUILD_DIR/jupyter_examples/ && python ipynb2py.py ComparingToNbody.ipynb; fi
+    - if [[ $TESTPART == "PYTHON2" ]]; then cd $TRAVIS_BUILD_DIR/jupyter_examples/ && python ipynb2py.py QuickStart.ipynb; fi
+    - if [[ $TESTPART == "PYTHON2" ]]; then cd $TRAVIS_BUILD_DIR/jupyter_examples/ && python ipynb2py.py GridOfStabilityPredictions.ipynb; fi
