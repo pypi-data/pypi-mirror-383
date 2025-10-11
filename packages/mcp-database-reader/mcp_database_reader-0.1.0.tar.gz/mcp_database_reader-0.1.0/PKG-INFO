@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: mcp-database-reader
+Version: 0.1.0
+Summary: MCP server for MySQL database reading operations
+Author-email: liuym14 <liuym14@xiaopeng.com>
+Project-URL: Homepage, https://github.com/yourusername/mcp-database-reader
+Project-URL: Repository, https://github.com/yourusername/mcp-database-reader
+Project-URL: Issues, https://github.com/yourusername/mcp-database-reader/issues
+Keywords: mcp,database,mysql,claude
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: mcp[cli]>=1.0.0
+Requires-Dist: sqlalchemy>=2.0.0
+Requires-Dist: pymysql>=1.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pydantic>=2.0.0
+
+# 测试
