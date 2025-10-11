@@ -1,0 +1,175 @@
+<p align="center">
+  <img src="https://i.ibb.co.com/35P4Nq9x/Screenshot-2025-08-22-at-18-40-11.png?width=128" alt="POCONG Logo" width="128"/>
+</p>
+
+# POCONG 🪦
+**Python Oriented Crawling ON Going**
+
+POCONG is a lightweight web crawling framework built in Python.
+
+## Features
+
+- 🔒 **Get Free Proxy**: Automatic proxy fetching, validation, and rotation from free proxy sources
+- 🌐 **Dynamic Media Web Scraping**: Extract content, metadata, and media information from web pages with proxy support
+- 📱 **Social Media Scraping**: Extract data from social media platforms *(coming soon)*
+- 🛒 **E-commerce Scraping**: Extract product information from e-commerce websites *(coming soon)*
+
+## Installation
+```bash
+pip install pocong
+```
+
+## Usage: Get Proxy from proxy_spiders
+
+You can use the `get_proxy` and `get_proxy_random` methods from `proxy_spiders` to fetch working proxies.
+
+```python
+from pocong.proxy_spiders import GetProxy
+
+gp = GetProxy()
+
+# Get the first working proxy
+proxy = gp.get_proxy()
+print("First working proxy:", proxy)
+```
+```python
+from pocong.proxy_spiders import GetProxy
+
+gp = GetProxy()
+
+# Get a random working proxy
+random_proxy = gp.get_proxy_random()
+print("Random working proxy:", random_proxy)
+```
+
+Sample output:
+```
+First working proxy: {'ip': '123.45.67.89', 'port': '8080', 'https': 'yes', ...}
+Random working proxy: {'ip': '98.76.54.32', 'port': '3128', 'https': 'yes', ...}
+```
+
+You can use the returned proxy dictionary with the `requests` library, for example:
+
+```python
+import requests
+
+proxy = gp.get_proxy()
+if proxy:
+    proxies = {
+        'http': f"http://{proxy['ip']}:{proxy['port']}",
+        'https': f"http://{proxy['ip']}:{proxy['port']}"
+    }
+    response = requests.get('https://httpbin.org/ip', proxies=proxies)
+    print(response.json())
+else:
+    print("No working proxy found.")
+```
+
+- `get_proxy()` will return the first working proxy found.
+- `get_proxy_random()` will return a random working proxy (with up to 20 retries).
+
+Both methods return a dictionary with proxy details (e.g., `{ 'ip': '...', 'port': '...', ... }`) or `None` if no working proxy is found.
+
+## Usage: Dynamic Media Web Scraping
+
+The `DynamicScrapingNews` class provides comprehensive web scraping capabilities with built-in proxy support for extracting content, metadata, and media information from web pages.
+
+### Basic Usage
+
+```python
+from pocong.media_spiders import DynamicScrapingNews
+
+# Simple scraping without proxy
+scraper = DynamicScrapingNews("https://example.com", use_proxy=False)
+result = scraper.scrape()
+
+# Extract specific information
+print(f"Title: {result['title']}")
+print(f"URL: {result['url']}")
+print(f"Media: {result['media']}")
+print(f"Published: {result['published_date']}")
+print(f"Text content: {result['text'][:200]}...")  # First 200 chars
+```
+
+### Proxy Configuration Options
+
+#### 1. Automatic Proxy (Default)
+```python
+# Uses automatic proxy fetching
+scraper = DynamicScrapingNews("https://example.com")
+result = scraper.scrape()
+```
+
+#### 2. Manual Proxy Configuration
+```python
+# Method 1: IP:Port format
+scraper = DynamicScrapingNews("https://example.com", 
+                              manual_proxy="192.168.1.1:8080")
+
+# Method 2: Full URL format
+scraper = DynamicScrapingNews("https://example.com", 
+                              manual_proxy="http://192.168.1.1:8080")
+
+# Method 3: Dictionary format
+scraper = DynamicScrapingNews("https://example.com", 
+                              manual_proxy={"ip": "192.168.1.1", "port": "8080"})
+
+result = scraper.scrape()
+```
+
+#### 3. No Proxy
+```python
+# Disable proxy completely
+scraper = DynamicScrapingNews("https://example.com", use_proxy=False)
+result = scraper.scrape()
+```
+
+#### 4. Manual Proxy Override
+```python
+# Manual proxy overrides use_proxy setting
+scraper = DynamicScrapingNews("https://example.com", 
+                              use_proxy=False, 
+                              manual_proxy="192.168.1.1:8080")
+result = scraper.scrape()
+```
+
+### Complete Example with Proxy Integration
+
+```python
+from pocong.proxy_spiders import GetProxy
+from pocong.media_spiders import DynamicScrapingNews
+
+# Get a working proxy
+proxy = GetProxy().get_proxy()
+print(f"Using proxy: {proxy}")
+
+# Use automatic proxy (default behavior)
+scraper = DynamicScrapingNews("https://example.com")
+result = scraper.scrape()
+
+# Use manual proxy with ip:port format
+scraper = DynamicScrapingNews("https://example.com", 
+                              manual_proxy=f"{proxy['ip']}:{proxy['port']}")
+result = scraper.scrape()
+
+# Use manual proxy with dictionary format
+scraper = DynamicScrapingNews("https://example.com", 
+                              manual_proxy={"ip": proxy['ip'], "port": proxy['port']})
+result = scraper.scrape()
+```
+
+### Extracted Data Structure
+
+The `scrape()` method returns a dictionary containing:
+
+```python
+{
+    'title': 'Page Title',           # Extracted from og:title or title tag
+    'url': 'https://example.com',    # Canonical URL
+    'image': 'https://...',          # Featured image URL
+    'html': '<html>...</html>',      # Full HTML content
+    'text': 'Clean text content',    # Processed text without HTML
+    'media': 'example',              # Domain name extracted from URL
+    'published_date': datetime(...)  # Publication date if found
+}
+```
