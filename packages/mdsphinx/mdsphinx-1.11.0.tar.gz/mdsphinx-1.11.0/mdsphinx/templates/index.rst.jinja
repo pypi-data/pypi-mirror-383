@@ -1,0 +1,10 @@
+{{ titleize(title, depth) }}
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 10
+{{ "" }}
+{%- for path, doc in documents %}
+{{ indent("{title} <{target}>".format(title=doc['title'], target=doc['target']), 3) }}
+{%- endfor %}
+{{ "" }}
