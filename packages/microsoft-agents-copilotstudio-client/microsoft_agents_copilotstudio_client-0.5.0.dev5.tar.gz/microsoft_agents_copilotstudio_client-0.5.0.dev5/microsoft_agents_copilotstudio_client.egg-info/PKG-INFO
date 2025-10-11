@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: microsoft-agents-copilotstudio-client
+Version: 0.5.0.dev5
+Summary: A client library for Microsoft Agents
+Author: Microsoft Corporation
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/microsoft/Agents
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+License-File: LICENSE
+Requires-Dist: microsoft-agents-hosting-core==0.5.0.dev5
+Dynamic: license-file
+Dynamic: requires-dist
