@@ -1,0 +1,69 @@
+Metadata-Version: 2.4
+Name: reflink-copy
+Version: 0.3.3
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Programming Language :: Rust
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS
+Classifier: Typing :: Typed
+License-File: LICENSE
+Summary: Python wrapper for reflink_copy Rust library
+Keywords: reflink
+Home-Page: https://github.com/iterative/reflink-copy
+Author: Saugat Pachhai
+License: Apache License 2.0
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+Project-URL: Homepage, https://github.com/iterative/reflink-copy
+Project-URL: Source, https://github.com/iterative/reflink-copy
+
+### `reflink-copy`
+
+Python wrapper for [`reflink-copy`](https://github.com/cargo-bins/reflink-copy).
+
+### Installation
+
+You can install the library via `pip` from [PyPI](https://pypi.org/project/reflink-copy):
+
+```console
+pip install reflink-copy
+```
+
+### Usage
+
+```python
+from reflink_copy import reflink, reflink_or_copy
+
+reflink("file1", "file2")
+reflink_or_copy("file1", "file2")
+```
+
+### Reference
+
+```python
+def reflink(src: str | os.PathLike[str], dst: str | os.PathLike[str]) -> None: ...
+def reflink_or_copy(src: str | os.PathLike[str], dst: str | os.PathLike[str]) -> None: ...
+```
+
+### Contributing
+
+```bash
+python -m venv .venv; source .venv/bin/activate
+pip install maturin pytest
+maturin develop
+pytest
+```
+
