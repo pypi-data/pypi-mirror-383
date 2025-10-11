@@ -1,0 +1,19 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'node_modules/sass-apca/apca';
+
+@function best-color-contrast($bg-color, $fg-colors: (#fff, #000)) {
+  $best-color: list.nth($fg-colors, 1);
+  $highest-contrast: math.abs(apca.contrast($bg-color, $best-color));
+
+  @each $color in $fg-colors {
+    $contrast: math.abs(apca.contrast($bg-color, $color));
+
+    @if $contrast > $highest-contrast {
+      $highest-contrast: $contrast;
+      $best-color: $color;
+    }
+  }
+
+  @return $best-color;
+}

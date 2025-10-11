@@ -1,0 +1,47 @@
+diff --git a/node_modules/@bokeh/bokehjs/build/js/lib/api/palettes.js b/node_modules/@bokeh/bokehjs/build/js/lib/api/palettes.js
+index c15d438..144507c 100644
+--- a/node_modules/@bokeh/bokehjs/build/js/lib/api/palettes.js
++++ b/node_modules/@bokeh/bokehjs/build/js/lib/api/palettes.js
+@@ -1,4 +1,4 @@
+-import { linspace } from "../core/util/array";
++import { linspace } from "../core/util/array.js";
+ export const YlGn3 = [0x31a354ff, 0xaddd8eff, 0xf7fcb9ff];
+ export const YlGn4 = [0x238443ff, 0x78c679ff, 0xc2e699ff, 0xffffccff];
+ export const YlGn5 = [0x006837ff, 0x31a354ff, 0x78c679ff, 0xc2e699ff, 0xffffccff];
+diff --git a/node_modules/@bokeh/bokehjs/build/js/lib/core/util/array.js b/node_modules/@bokeh/bokehjs/build/js/lib/core/util/array.js
+index 56cdb21..b6a9653 100644
+--- a/node_modules/@bokeh/bokehjs/build/js/lib/core/util/array.js
++++ b/node_modules/@bokeh/bokehjs/build/js/lib/core/util/array.js
+@@ -2,9 +2,9 @@
+ //     http://underscorejs.org
+ //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ //     Underscore may be freely distributed under the MIT license.
+-import { randomIn } from "./math";
+-import { assert } from "./assert";
+-import { map, reduce, min, min_by, max, max_by, sum, cumsum, every, some, find, find_last, find_index, find_last_index, sorted_index, is_empty } from "./arrayable";
++import { randomIn } from "./math.js";
++import { assert } from "./assert.js";
++import { map, reduce, min, min_by, max, max_by, sum, cumsum, every, some, find, find_last, find_index, find_last_index, sorted_index, is_empty } from "./arrayable.js";
+ export { map, reduce, min, min_by, max, max_by, sum, cumsum, every, some, find, find_last, find_index, find_last_index, sorted_index, is_empty };
+ const slice = Array.prototype.slice;
+ export function head(array) {
+diff --git a/node_modules/@bokeh/bokehjs/build/js/lib/core/util/arrayable.js b/node_modules/@bokeh/bokehjs/build/js/lib/core/util/arrayable.js
+index 656019c..0f3267a 100644
+--- a/node_modules/@bokeh/bokehjs/build/js/lib/core/util/arrayable.js
++++ b/node_modules/@bokeh/bokehjs/build/js/lib/core/util/arrayable.js
+@@ -1,4 +1,4 @@
+-import { clamp } from "./math";
++import { clamp } from "./math.js";
+ export function is_empty(array) {
+     return array.length == 0;
+ }
+diff --git a/node_modules/@bokeh/bokehjs/package.json b/node_modules/@bokeh/bokehjs/package.json
+index ddcc0e7..9278ab6 100644
+--- a/node_modules/@bokeh/bokehjs/package.json
++++ b/node_modules/@bokeh/bokehjs/package.json
+@@ -1,4 +1,5 @@
+ {
++  "type": "module",
+   "name": "@bokeh/bokehjs",
+   "version": "2.4.3",
+   "description": "Interactive, novel data visualization",
