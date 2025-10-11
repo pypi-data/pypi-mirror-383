@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: bpmn2neo
+Version: 0.1.0
+Summary: Load BPMN 2.0 diagrams into Neo4j and create node embeddings for Graph-RAG.
+Author-email: Kim JongHwan <kjhweb@outlook.kr>
+License: Apache-2.0
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: neo4j>=5.19
+Requires-Dist: pydantic>=2.5
+Requires-Dist: pydantic-settings>=2.3
+Requires-Dist: openai>=1.30
+Requires-Dist: tenacity>=8.2
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Requires-Dist: mypy>=1.8; extra == "dev"
+Requires-Dist: types-requests; extra == "dev"
+Provides-Extra: keyring
+Requires-Dist: keyring>=24.3; extra == "keyring"
+Dynamic: license-file
