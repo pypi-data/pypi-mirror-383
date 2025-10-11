@@ -1,0 +1,78 @@
+Metadata-Version: 2.3
+Name: ngilive
+Version: 0.5.4
+Summary: 
+Author: Ole-Jakob Olsen
+Author-email: ole.jakob.olsen@ngi.no
+Requires-Python: >=3.11,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: httpx (>=0.28.1,<0.29.0)
+Requires-Dist: pydantic (>=2.11.9,<3.0.0)
+Description-Content-Type: text/markdown
+
+# NGILive SDK
+
+Utilities that makes it easier to work with NGI Live from python.
+
+For more information about how to use the SDK, please visit [https://sdk.ngilive.no](https://sdk.ngilive.no).
+
+## Usage
+
+It helps you get access to data via the API by doing all the difficult auth things.
+
+Additionally it provides nice type hinted bindings for the API endpoints,
+so you can follow code completion instead of reading documentation!
+
+```python
+from ngilive import NGILive
+
+nl = NGILive()
+
+
+sensor_response = nl.sensor_search(
+    20190539,
+    logger="IK50",
+    unit="V",
+)
+```
+
+The first time you run it, you will see an output like this in your terminal.
+Perform the log in as prompted, and you will not see it again until your access has
+expired.
+
+```
+[18:41:13] ngilive.auth INFO: Please complete the authentication in your browser: https://keycloak.ngiapi.no/auth/...
+```
+
+## Development
+
+#### Requirements
+
+- poetry 2+
+- python
+
+#### Set up
+
+`poetry install`
+
+#### Tests
+
+`poetry run pytest .`
+
+#### Build/Run docs locally
+
+```bash
+poetry run pdoc \
+    -o build/docs \
+    -t docs/templates/ \
+    src/ngilive/__init__.py \
+    src/ngilive/schema.py \
+    src/ngilive/auth.py \
+    src/ngilive/config.py
+
+python -m http.server --directory build/docs 8000
+```
+
