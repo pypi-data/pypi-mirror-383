@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+exclude = [
+    "dist/",
+    "examples/",
+    "scripts/",
+    "tests/",
+    ".venv",
+    ".idea/",
+    ".git/",
+    ".gitignore",
+]
+
+[project]
+name = "metrological-quantity"
+version = "1.0.0"
+description = 'Simple arithmetic operations with quantities including units and uncertainties'
+requires-python = ">=3.6"
+license = { file = "LICENSE" }
+keywords = ["metrology", "arithmetics", "uncertainty", "units"]
+authors = [
+    { name = "Xandra Campo", email = "xkmpera@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/xandratxan/metrological-quantity"
+Documentation = "https://github.com/xandratxan/metrological-quantity/blob/main/README.md"
+Issues = "https://github.com/xandratxan/metrological-quantity/issues"
