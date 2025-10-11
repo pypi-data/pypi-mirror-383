@@ -1,0 +1,82 @@
+Metadata-Version: 2.4
+Name: streamlit-audio-stream-player
+Version: 0.2.0
+Summary: Beautiful audio stream player component for Streamlit with frequency visualization and state animations
+Home-page: https://github.com/bensonbs/streamlit-audio-stream-player
+Author: Benson Sung
+Author-email: Benson Sung <benson.bs.sung@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/bensonbs/streamlit-audio-stream-player
+Project-URL: Repository, https://github.com/bensonbs/streamlit-audio-stream-player
+Project-URL: Issues, https://github.com/bensonbs/streamlit-audio-stream-player/issues
+Keywords: streamlit,audio,visualizer,frequency,component
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: streamlit>=1.0.0
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Streamlit Audio Stream Player
+
+Beautiful audio stream player component for Streamlit with frequency visualization and animated state transitions, inspired by ElevenLabs UI design.
+
+![Demo](asset/demo.gif)
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+
+## Installation
+
+```bash
+pip install streamlit-audio-stream-player
+```
+
+## Quick Start
+
+```python
+import streamlit as st
+from streamlit_audio_stream_player import audio_stream_player
+import time
+
+st.title("🎵 Audio Stream Player Test")
+
+# Session state
+if 'play_count' not in st.session_state:
+    st.session_state.play_count = 0
+
+# Audio stream options
+stream_options = {
+    "Radio Paradise (MP3)": "https://stream.radioparadise.com/mp3-128",
+    "BBC World Service": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+    "Custom URL": "custom"
+}
+
+selected_stream = st.selectbox("Select Audio Stream", list(stream_options.keys()))
+
+if selected_stream == "Custom URL":
+    stream_url = st.text_input("Enter Audio Stream URL", value="https://stream.radioparadise.com/mp3-128")
+else:
+    stream_url = stream_options[selected_stream]
+
+st.info(f"🎧 Current Audio Stream: {stream_url}")
+
+# Display audio stream player
+if stream_url:
+    audio_stream_player(
+        stream_url=stream_url,
+        key=f"player_{st.session_state.play_count}"
+    )
+    
+st.markdown("---")
+st.caption("💡 Tip: If you don't hear sound, check the browser console (F12) for error messages and verify the audio stream URL is valid.")
+```
+
+> ⚠️ **Browser Compatibility Warning**: Safari may have issues with audio streaming due to CORS restrictions. For best results, use **Chrome** or **Firefox**.
+
+## License
+
+MIT
+
