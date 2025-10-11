@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: data-lib_save
+Version: 0.1.1
+Summary: A library for storing, processing, and transmitting data (JSON, HTTP).
+Home-page: UNKNOWN
+Author: Unknow
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+# data-lib_save
+
+A library for storing, processing, and transmitting data (JSON, HTTP).
+
+## Installation
+
+pip install dataflow
+
+
+## Usage example
+
+```python
+from dataflow.storage import DataStorage
+
+storage = DataStorage()
+storage.load()
+storage.add_unique({"name": "Alice", "age": 30})
+
