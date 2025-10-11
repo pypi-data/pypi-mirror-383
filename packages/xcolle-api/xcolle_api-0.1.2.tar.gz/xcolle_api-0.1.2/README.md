@@ -1,0 +1,124 @@
+# `xcolle-api`
+
+[![PyPI - Version](https://img.shields.io/pypi/v/xcolle-api)](https://pypi.org/project/xcolle-api/)
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-LGPLv3-green)](LICENSE)
+[![linting - Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/NTFSvolume/xcolle-api/actions/workflows/ruff.yaml)
+
+A Python library providing an asynchronous API interface for [pcolle.com](https://pcolle.com) / [gcolle.net](https://gcolle.net).
+
+## Installation
+
+You can install using uv:
+
+```bash
+uv tool install xcolle_api
+```
+
+## Data Model
+
+The objects returned by the API are dataclasses, with 2 convenience methods:
+
+- `as_dict`: Same as `dataclasses.asdict`
+- `as_json`: Returns a JSON string representation of the object
+
+## Quick Start
+
+Basic example on how to use it:
+
+```python
+import asyncio
+from pathlib import Path
+
+from xcolle_api import PcolleAPI
+
+
+async def fetch_product(product_id: str) ->  None:
+    async with PcolleAPI() as api:
+        product = await api.product(product_id)
+
+    print(product.as_dict())
+    Path(f"product_{product_id}.json").write_text(product.as_json())
+
+
+if __name__ == "__main__":
+    asyncio.run(fetch_product("197240637f2aa245ecf"))
+```
+
+### Output
+
+```json
+{
+  "id": "197240637f2aa245ecf",
+  "file_name": "p902.mp4",
+  "file_size": "238.11 MB",
+  "file_size_bytes": 249676431,
+  "ratings": 3,
+  "views": 7208,
+  "price": 920,
+  "title": "あの同僚さんがついにパンティまでも・・・固定カメラ版",
+  "sales_start_date": "2022-11-24 00:00:00+00:00",
+  "seller_id": "5975951e350bdd97",
+  "thumbnail": "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/132828_300x225.jpg",
+  "url": "https://www.pcolle.com/product/detail/?product_id=197240637f2aa245ecf",
+  "category": {
+    "id": 5,
+    "name": "店員・OL・働く女性"
+  },
+  "contains": [],
+  "set": "197243637f2c0257993",
+  "additional_info": [
+    "セット商品として購入できます"
+  ],
+  "description": "商品説...",
+  "description_html": "<p class=\"title-item title-05\">商品説明</p>...",
+  "previews": [
+    "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/132828_1.jpg",
+    "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/132828_2.jpg",
+    "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/132828_3.jpg",
+    "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/132828_4.jpg",
+    "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/132828_5.jpg",
+    "https://img.pcolle.com/5975951e350bdd97/197240637f2aa245ecf/174045_ab6.jpg"
+  ],
+  "tags": [
+    {
+      "id": 125,
+      "name": "パンチラ"
+    },
+    {
+      "id": 18,
+      "name": "胸チラ"
+    },
+    {
+      "id": 32,
+      "name": "OL"
+    },
+    {
+      "id": 47,
+      "name": "アイドル風"
+    },
+    {
+      "id": 74,
+      "name": "生足"
+    },
+    {
+      "id": 75,
+      "name": "スカートめくり"
+    },
+    {
+      "id": 86,
+      "name": "カメラ目線"
+    },
+    {
+      "id": 99,
+      "name": "美尻"
+    },
+    {
+      "id": 109,
+      "name": "開脚"
+    }
+  ],
+  "manage_id": "5975951e350bdd97",
+  "bonus": null
+}
+```
