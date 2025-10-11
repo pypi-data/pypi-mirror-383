@@ -1,0 +1,258 @@
+Metadata-Version: 2.4
+Name: streamlit-audio-stream-player
+Version: 0.2.2
+Summary: Beautiful audio stream player component for Streamlit with frequency visualization and state animations
+Home-page: https://github.com/bensonbs/streamlit-audio-stream-player
+Author: Benson Sung
+Author-email: Benson Sung <benson.bs.sung@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/bensonbs/streamlit-audio-stream-player
+Project-URL: Repository, https://github.com/bensonbs/streamlit-audio-stream-player
+Project-URL: Issues, https://github.com/bensonbs/streamlit-audio-stream-player/issues
+Keywords: streamlit,audio,visualizer,frequency,component
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: streamlit>=1.0.0
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Streamlit Audio Stream Player
+
+Beautiful audio stream player component for Streamlit with frequency visualization and animated state transitions, inspired by ElevenLabs UI design.
+
+![Demo](asset/demo.gif)
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+
+## Installation
+
+```bash
+pip install streamlit-audio-stream-player
+```
+
+## Features
+
+- 🎵 **Two Visualization Modes**: Choose between Bar and Orb visualizers
+- 🎨 **Customizable Colors**: Full control over colors and themes
+- 🔄 **Auto State Transitions**: Automatic visualization based on audio playback
+- 📊 **Real-time Frequency Analysis**: Dynamic visualization of audio frequencies
+- 🌐 **Multiple Data Formats**: Support for URLs, files, bytes, and more
+
+## Quick Start
+
+### Basic Usage with URL
+
+```python
+import streamlit as st
+from streamlit_audio_stream_player import audio_bar, audio_orb
+
+st.title("🎵 Audio Stream Player")
+
+# Bar visualizer
+audio_bar(
+    data="https://stream.radioparadise.com/mp3-128",
+    key="audio_player"
+)
+
+# Orb visualizer
+audio_orb(
+    data="https://stream.radioparadise.com/mp3-128",
+    key="orb_player"
+)
+```
+
+## Visualization Modes
+
+### Bar Visualizer
+
+The traditional bar visualizer with animated frequency bars:
+
+```python
+from streamlit_audio_stream_player import audio_bar
+
+audio_bar(
+    data="audio.mp3",
+    prime_color="#3b82f6",
+    second_color="#f1f5f9",
+    key="bar_player"
+)
+```
+
+**States:**
+- `thinking`: Audio loading (pulsing animation)
+- `speaking`: Audio playing (frequency visualization)
+- `initializing`: Audio ended (bars reset)
+
+### Orb Visualizer
+
+Animated blob/orb visualization with morphing shapes:
+
+```python
+from streamlit_audio_stream_player import audio_orb
+
+audio_orb(
+    data="audio.mp3",
+    prime_color="#CADCFC",
+    second_color="#A0B9D1",
+    seed=1000,
+    key="orb_player"
+)
+```
+
+**States:**
+- `listening`: Slow morphing - 還沒獲取到首包音檔 (audio loading)
+- `talking`: Fast morphing - 播放使用中 (audio playing)
+- `idle`: Very slow morphing - 播放完畢 (audio ended)
+
+**Parameters:**
+- `prime_color`: First gradient color
+- `second_color`: Second gradient color
+- `seed`: Random seed for blob shape (different seeds = different shapes)
+
+### Custom Colors
+
+Customize the visualizer appearance with color parameters:
+
+```python
+# Bar visualizer: Red bars with dark background
+audio_bar(
+    data="https://stream.radioparadise.com/mp3-128",
+    prime_color="#ff6b6b",
+    second_color="#1a1a2e",
+    key="red_player"
+)
+
+# Orb visualizer: Warm gradient
+audio_orb(
+    data="https://stream.radioparadise.com/mp3-128",
+    prime_color="#F6E7D8",
+    second_color="#E0CFC2",
+    key="warm_orb"
+)
+
+# Orb visualizer: Purple gradient with custom shape
+audio_orb(
+    data="https://stream.radioparadise.com/mp3-128",
+    prime_color="#E9D5FF",
+    second_color="#C084FC",
+    seed=2000,
+    key="purple_orb"
+)
+```
+
+### Supported Data Formats
+
+Both `audio_bar` and `audio_orb` accept multiple data formats:
+
+```python
+from pathlib import Path
+from io import BytesIO
+
+# 1. URL (streaming)
+audio_bar(data="https://example.com/audio.mp3")
+
+# 2. File path (string)
+audio_bar(data="/path/to/audio.mp3")
+
+# 3. Path object
+audio_orb(data=Path("audio.mp3"))
+
+# 4. Raw bytes
+with open("audio.mp3", "rb") as f:
+    audio_bytes = f.read()
+audio_bar(data=audio_bytes)
+
+# 5. BytesIO
+byte_io = BytesIO(audio_bytes)
+audio_orb(data=byte_io)
+```
+
+### Complete Example
+
+```python
+import streamlit as st
+from streamlit_audio_stream_player import audio_bar, audio_orb
+
+st.title("🎵 Audio Stream Player Test")
+
+# Session state
+if 'play_count' not in st.session_state:
+    st.session_state.play_count = 0
+
+# Audio stream options
+stream_options = {
+    "Radio Paradise (MP3)": "https://stream.radioparadise.com/mp3-128",
+    "BBC World Service": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+    "Custom URL": "custom"
+}
+
+selected_stream = st.selectbox("Select Audio Stream", list(stream_options.keys()))
+
+if selected_stream == "Custom URL":
+    stream_url = st.text_input("Enter Audio Stream URL", value="https://stream.radioparadise.com/mp3-128")
+else:
+    stream_url = stream_options[selected_stream]
+
+# Visualization mode
+mode = st.radio("Visualization Mode", ["bar", "orb"], horizontal=True)
+
+st.info(f"🎧 Current Audio Stream: {stream_url}")
+
+# Display audio stream player
+if stream_url:
+    if mode == "orb":
+        audio_orb(
+            data=stream_url,
+            prime_color="#CADCFC",
+            second_color="#A0B9D1",
+            key=f"player_{st.session_state.play_count}"
+        )
+    else:
+        audio_bar(
+            data=stream_url,
+            key=f"player_{st.session_state.play_count}"
+        )
+    
+st.markdown("---")
+st.caption("💡 Tip: If you don't hear sound, check the browser console (F12) for error messages and verify the audio stream URL is valid.")
+```
+
+## API Reference
+
+### `audio_bar(data, key=None, prime_color="#3b82f6", second_color="#f1f5f9")`
+
+Display an audio player with bar visualizer.
+
+**Parameters:**
+- `data` (str | Path | bytes | BytesIO | file): Audio data in various formats
+- `key` (str | None): Unique component key
+- `prime_color` (str): Bar color (default: `"#3b82f6"`)
+- `second_color` (str): Background color (default: `"#f1f5f9"`)
+
+**Returns:**
+- `str`: Current state of the component
+
+### `audio_orb(data, key=None, prime_color="#CADCFC", second_color="#A0B9D1", seed=1000)`
+
+Display an audio player with animated orb visualizer.
+
+**Parameters:**
+- `data` (str | Path | bytes | BytesIO | file): Audio data in various formats
+- `key` (str | None): Unique component key
+- `prime_color` (str): First gradient color (default: `"#CADCFC"`)
+- `second_color` (str): Second gradient color (default: `"#A0B9D1"`)
+- `seed` (int): Random seed for orb shape (default: `1000`)
+
+**Returns:**
+- `str`: Current state of the component
+
+> ⚠️ **Browser Compatibility Warning**: Safari may have issues with audio streaming due to CORS restrictions. For best results, use **Chrome** or **Firefox**.
+
+## License
+
+MIT
+
