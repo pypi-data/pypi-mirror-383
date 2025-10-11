@@ -1,0 +1,22 @@
+[project]
+name = "odoo_soup"
+version = "1.1.1"
+description = "Log tools for Odoo"
+authors = [
+    { name = "Austin Paskerian", email = "paau@odoo.com" },
+]
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1",
+    "magicprompt==0.2.5",
+    "psycopg2==2.9.10",
+    "sqlalchemy==2.0.43",
+    "click-spinner==0.1.10"
+]
+
+[project.scripts]
+soup = "odoo_soup.main:soup"
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
