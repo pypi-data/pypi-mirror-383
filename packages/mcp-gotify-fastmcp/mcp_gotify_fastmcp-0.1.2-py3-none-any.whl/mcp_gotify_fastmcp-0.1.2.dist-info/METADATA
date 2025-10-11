@@ -1,0 +1,58 @@
+Metadata-Version: 2.4
+Name: mcp-gotify-fastmcp
+Version: 0.1.2
+Summary: MCP server for sending gotify notifications
+Project-URL: Homepage, https://github.com/fastmcp-me/mcp-gotify#readme
+Project-URL: Repository, https://github.com/fastmcp-me/mcp-gotify.git
+Project-URL: Issues, https://github.com/fastmcp-me/mcp-gotify/issues
+Author-email: TerminalMan <84923604+SecretiveShell@users.noreply.github.com>
+License-File: LICENSE
+Requires-Python: >=3.13
+Requires-Dist: fastmcp>=2.3.0
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: mcp>=1.6.0
+Description-Content-Type: text/markdown
+
+[![Add to Cursor](https://fastmcp.me/badges/cursor_dark.svg)](https://fastmcp.me/MCP/Details/1298/gotify-notifications)
+[![Add to VS Code](https://fastmcp.me/badges/vscode_dark.svg)](https://fastmcp.me/MCP/Details/1298/gotify-notifications)
+[![Add to Claude](https://fastmcp.me/badges/claude_dark.svg)](https://fastmcp.me/MCP/Details/1298/gotify-notifications)
+[![Add to ChatGPT](https://fastmcp.me/badges/chatgpt_dark.svg)](https://fastmcp.me/MCP/Details/1298/gotify-notifications)
+[![Add to Codex](https://fastmcp.me/badges/codex_dark.svg)](https://fastmcp.me/MCP/Details/1298/gotify-notifications)
+[![Add to Gemini](https://fastmcp.me/badges/gemini_dark.svg)](https://fastmcp.me/MCP/Details/1298/gotify-notifications)
+
+# MCP-gotify
+
+MCP server for sending gotify push notifications.
+
+## Installation
+
+### stdio
+
+claude json:
+
+```json5
+{
+    "mcpServers": {
+        "mcp-gotify": {
+            "command": "uvx",
+            "args": ["mcp-gotify"],
+            "env": {
+                "GOTIFY_SERVER": "http://localhost:2081", // Change this to your gotify server
+                "GOTIFY_TOKEN": "YOUR TOKEN" // Get this from gotify
+            }
+        }
+    }
+}
+```
+
+### sse
+
+```bash
+git clone https://github.com/SecretiveShell/mcp-gotify
+cd mcp-gotify
+uv run mcp-gotify-sse
+```
+
+## License
+
+MIT
