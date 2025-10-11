@@ -1,0 +1,15 @@
+[project]
+name = "ultra_framework"
+version = "0.1.1"
+authors = [{name="Giorgio Ripani", email="giorgio.ripani93@gmail.com"}]
+description = "Framework based on FastAPI."
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = ["Programming Language :: Python :: 3.12", "Operating System :: OS Independent"]
+
+[project.urls]
+Homepage = "https://github.com/gripani/ultra_framework"
+
+[build-system]
+requires = ["setuptools >= 78.1.1"]
+build-backend = "setuptools.build_meta"
