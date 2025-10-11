@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astraflow"
+version = "0.0.1"
+description = "Efficient training"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+  {name = "Haizhong Zheng", email = "hzzheng@umich.edu"}
+]
+dependencies = ["requests>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/Infini-AI-Lab/M2PO"
+
