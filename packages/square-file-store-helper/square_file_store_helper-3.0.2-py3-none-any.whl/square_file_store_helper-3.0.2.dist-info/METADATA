@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: square_file_store_helper
+Version: 3.0.2
+Summary: helper to access the file store layer for my personal server.
+Project-URL: homepage, https://github.com/thepmsquare/square_file_store_helper
+Author-email: Parth Mukesh Mangtani <thepmsquare@gmail.com>
+License: GPLv3
+License-File: LICENSE
+Keywords: file,helper,utilities
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Requires-Python: >=3.12
+Requires-Dist: kiss-headers>=2.4.3
+Requires-Dist: requests>=2.31.0
+Requires-Dist: square-commons>=2.0.0
+Description-Content-Type: text/markdown
+
+# square_file_store_helper
+
+> 📌 versioning: see [CHANGELOG.md](./CHANGELOG.md).
+
+## about
+
+helper to access the file store layer for my personal server.
+
+## installation
+
+```shell
+pip install square_file_store_helper
+```
+
+## usage
+
+[reference python file](./example/example.py)
+
+## env
+
+- python>=3.12.0
+
+> feedback is appreciated. thank you!
