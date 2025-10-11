@@ -1,0 +1,94 @@
+Metadata-Version: 2.4
+Name: easyui-lib
+Version: 0.1.1
+Summary: Una librería para crear interfaces de usuario de manera sencilla
+Author-email: "Cascade, Kalum, Ashriel" <martinoviedo.ok@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/tuusuario/easyui
+Project-URL: Repository, https://github.com/tuusuario/easyui
+Project-URL: Issues, https://github.com/tuusuario/easyui/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Pillow>=9.0.0
+Requires-Dist: pycairo>=1.20.0
+Requires-Dist: cairosvg>=2.5.0
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: qtawesome>=1.0.0
+Requires-Dist: tinycss2>=1.2.0
+Requires-Dist: cssutils>=2.3.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: babel>=2.9.0
+Requires-Dist: importlib-resources>=5.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0.0; extra == "dev"
+Requires-Dist: pytest-qt>=4.0.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: isort>=5.0.0; extra == "dev"
+Requires-Dist: mypy>=0.910; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=4.0.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=0.5.0; extra == "docs"
+Requires-Dist: sphinx-copybutton>=0.4.0; extra == "docs"
+Provides-Extra: sass
+Requires-Dist: libsass>=0.21.0; extra == "sass"
+Provides-Extra: less
+Requires-Dist: lesscpy>=0.15.0; extra == "less"
+Provides-Extra: postcss
+Requires-Dist: postcss>=8.4.0; extra == "postcss"
+Requires-Dist: autoprefixer>=10.4.0; extra == "postcss"
+Dynamic: license-file
+
+# EasyUI
+
+EasyUI es una librería Python que facilita la creación de interfaces de usuario de manera sencilla e intuitiva.
+
+## Características
+
+- Creación rápida de interfaces gráficas
+- Sintaxis simple y legible
+- Componentes preconstruidos
+- Personalización fácil
+
+## Instalación
+
+```bash
+pip install easyui
+```
+
+## Uso básico
+
+```python
+from easyui import Window, Button, Label
+
+def on_click():
+    print("¡Botón presionado!")
+
+# Crear una ventana
+window = Window("Mi Aplicación", width=400, height=300)
+
+# Agregar componentes
+label = Label("¡Bienvenido a EasyUI!")
+button = Button("Haz clic aquí", on_click=on_click)
+
+# Mostrar la ventana
+window.show()
+```
+
+## Autores
+
+- Cascade
+- Kalum
+- Ashriel
+
+## Licencia
+
+MIT
