@@ -1,0 +1,95 @@
+[build-system]
+requires = ["hatchling", "hatch-regex-commit"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dynamicdns"
+dynamic = ["version"]
+description = 'Collection of Dynamic DNS providers'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "tr4nt0r", email = "4445816+tr4nt0r@users.noreply.github.com" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ["aiohttp>=3.12", "yarl>=1.20", "voluptuous>=0.15"]
+
+[project.urls]
+Documentation = "https://github.com/tr4nt0r/dynamicdns#readme"
+Issues = "https://github.com/tr4nt0r/dynamicdns/issues"
+Source = "https://github.com/tr4nt0r/dynamicdns"
+
+[tool.hatch.version]
+source = "regex_commit"
+commit_extra_args = ["-e"]
+path = "src/dynamicdns/__init__.py"
+
+[tool.hatch.envs.default]
+python = "3.13"
+dependencies = [
+  "aiohttp==3.12.15",
+  "yarl==1.20.1",
+  "voluptuous==0.15.2"
+]
+
+[tool.hatch.envs.hatch-static-analysis]
+config-path = "none"
+dependencies = [
+  "ruff==0.13.2"
+]
+
+[tool.hatch.envs.hatch-test]
+parallel = true
+extra-dependencies = [
+  "pytest==8.4.1",
+  "pytest-cov==6.2.1",
+  "pytest-asyncio==1.1.0",
+]
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy==1.18.2",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/dynamicdns tests}"
+
+[tool.coverage.run]
+source_pkgs = ["dynamicdns", "tests"]
+branch = true
+parallel = true
+
+
+[tool.coverage.paths]
+dynamicdns = ["src/dynamicdns", "*/dynamicdns/src/dynamicdns"]
+tests = ["tests", "*/dynamicdns/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+known-first-party = ["dynamicdns"]
+combine-as-imports = true
+split-on-trailing-comma = false
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
