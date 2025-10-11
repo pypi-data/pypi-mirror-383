@@ -1,0 +1,83 @@
+Metadata-Version: 2.4
+Name: jaxlpips
+Version: 1.2.0
+Summary: LPIPS perceptual loss for JAX
+License: MIT License
+        
+        Copyright (c) 2025 tux-type
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: flax>=0.12.0
+Requires-Dist: huggingface-hub>=0.31.1
+Requires-Dist: jax>=0.6.0
+Requires-Dist: safetensors>=0.5.3
+Provides-Extra: dev
+Requires-Dist: lpips>=0.1.4; extra == "dev"
+Requires-Dist: pytest>=8.3.5; extra == "dev"
+Dynamic: license-file
+
+# JAX LPIPS
+
+LPIPS perceptual loss implementation for JAX.
+
+Information on the metric is available in the [original repo](https://github.com/richzhang/PerceptualSimilarity).\
+Pretrained network and LPIPS linear weights are available on [Hugging Face](https://huggingface.co/tux-type/jaxlpips).
+
+## Installation
+Install jaxlpips with:
+```sh
+pip install jaxlpips
+```
+
+## Why?
+There are already some LPIPS versions for JAX.
+
+This implementation provides:
+- Alexnet and VGG support
+- trimmed pretrained network parameters and calculations
+- safetensors for all parameters
+
+## Example
+Supports `"alexnet"` and `"vgg16"` for `pretrained_network` to perform feature extraction.
+
+Minimal example using dummy data:
+```Python
+import numpy as np
+from jaxlpips import LPIPS
+
+rng = np.random.default_rng(2781)
+
+ref = rng.normal(size=(4, 64, 64, 3)).astype(np.float32)
+tgt = rng.normal(size=(4, 64, 64, 3)).astype(np.float32)
+
+lpips_loss_fn = LPIPS(pretrained_network="alexnet")
+
+loss = lpips_loss_fn(ref, tgt)
+```
+
+
+## References
+[1] Zhang, Richard, et al. "The unreasonable effectiveness of deep features as a perceptual metric." Proceedings of the IEEE conference on computer vision and pattern recognition. 2018.
