@@ -1,0 +1,27 @@
+# Include essential files
+include README.md
+include LICENSE
+include CHANGELOG.md
+
+# Include source package
+recursive-include src/spymot *.py
+
+# Exclude development directories and files
+prune V1
+prune V2
+prune documentation
+prune examples_and_demos
+prune results_output
+prune test_data
+prune archive
+exclude *.pyc
+exclude *.log
+exclude .DS_Store
+exclude IMPORTANCE.md
+exclude FINAL_*.md
+exclude GITHUB_PACKAGE_*.md
+exclude PUBLICATION_*.md
+exclude publish_package.sh
+exclude pyproject_compatible.toml
+exclude requirements.txt
+exclude setup.py
