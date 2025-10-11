@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bk_precision_1900"
+version = "1.1.0"
+description = "Control the BK Precision 1900 series power supplies"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Carlos Asmat", email = "casmat@dephy.com" }]
+keywords = ["B&K", "BK Precision", "hardware", "serial", "power-supply"]
+dependencies = [
+  "pyserial>=3.5",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: System :: Hardware",
+  "Topic :: Scientific/Engineering",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/DephyInc/bk_precision_1900"
+Repository = "https://github.com/DephyInc/bk_precision_1900"
+Issues = "https://github.com/DephyInc/bk_precision_1900/issues"
+
+[project.scripts]
+bk1902b = "bk1902b:main"
+
+# Single-module project layout: bk1902b.py at the repo root
+[tool.setuptools]
+py-modules = ["bk1902b"]
+
+# Optional dev extras: install with `pip install .[dev]`
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.6.9",
+  "mypy>=1.11.2",
+  "pytest>=8.3.0",
+  "pytest-cov>=5.0.0",
+]
+
+# -----------------------------
+# Ruff: formatter + linter
+# -----------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+[tool.ruff.lint]
+# E,F = pycodestyle/pyflakes, I = isort, B = bugbear, UP = pyupgrade
+select = ["E", "F", "I", "B", "UP"]
+ignore = []
+extend-safe-fixes = ["ALL"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bk_precision_1900", "bk1902b"]
+
+# -----------------------------
+# mypy: static type checking
+# -----------------------------
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_subclassing_any = true
+disallow_any_generics = true
+no_implicit_optional = true
+strict_equality = true
+
+# PySerial does not ship full type info
+[[tool.mypy.overrides]]
+module = ["serial", "serial.*"]
+ignore_missing_imports = true
+
+# -----------------------------
+# Pytest
+# -----------------------------
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = ["tests"]
