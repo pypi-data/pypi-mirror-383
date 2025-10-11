@@ -1,0 +1,4 @@
+{% for s in f.scenarios %}
+    {% set steps_tbl %}{% include 'steps_table.xml.j2' %}{% endset %}
+    {{ expand(s.name, steps_tbl) }}
+{% endfor %}
