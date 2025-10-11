@@ -1,0 +1,15 @@
+[project]
+name = "team-pal"
+version = "0.1.1"
+description = "Team Pal CLI entrypoint"
+readme = "docs/concept.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pexpect>=4.9.0",
+    "pytest>=8.4.2",
+    "python-dotenv>=1.1.1",
+    "slack-sdk>=3.37.0",
+]
+
+[project.scripts]
+pal = "team_pal.cli:main"
