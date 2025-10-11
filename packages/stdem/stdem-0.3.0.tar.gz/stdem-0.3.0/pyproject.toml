@@ -1,0 +1,24 @@
+[project]
+name = "stdem"
+version = "0.3.0"
+description = "A powerful tool for converting Excel spreadsheets into JSON data with complex hierarchical structures"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+
+dependencies = [
+    "openpyxl>=3.1.5",
+]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.10.7",
+    "pytest>=8.4.2",
+    "ruff>=0.13.3",
+]
+
+[project.scripts]
+stdem = "stdem.main:main"
+
+[tool.ruff.lint]
+extend-select = ["N"]
