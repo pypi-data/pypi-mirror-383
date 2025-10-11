@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=72", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ascii_library"
+version = "1.2.40"
+description = "Your project description"
+authors = [
+  { name = "Georg Heiler", email = "georg.heiler@ascii.ac.at" },
+  { name = "Hernan Picatto", email = "hernan.picatto@ascii.ac.at" },
+]
+license = { text = "MIT" } # Or another license identifier
+requires-python = ">=3.9"
+dependencies = [
+  "dagster>=1.11.10,<1.12",
+  "dagster-pipes>=1.11.10,<1.12",
+  "boto3",
+]
+
+[project.optional-dependencies]
+
+[project.urls]
+# Define project-related URLs such as homepage or documentation
+repository = "https://github.com/ascii-supply-networks/research-space/tree/main/src/pipelines/ascii_library"
+
+[tool.setuptools.packages.find]
+exclude = ["ascii_library_tests"]
+
+[tool.pyrefly]
+project-includes = ["."]
+project-excludes = [
+  "**/build/**",
+  "**/.ruff_cache/**",
+  "**/.pixi/**",
+  "**/dist/**",
+]
+
+search-path = ["."]
+python-version = "3.11.13"
+
+python-interpreter = "${PIXI_PROJECT_ROOT}/.pixi/envs/pipeline-remote-dev/bin/python3.11"
