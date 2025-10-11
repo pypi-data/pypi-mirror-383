@@ -1,0 +1,101 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ["3.13"]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install uv
+      uses: astral-sh/setup-uv@v1
+      with:
+        version: "latest"
+    
+    - name: Install dependencies
+      run: |
+        uv sync --dev
+        uv pip install -e .
+        ls -la
+        python -c "import sys; print('Python path:', sys.path)"
+        uv run python -c "import collectivecrossing; print('Package imported successfully')"
+    
+    - name: Run pre-commit
+      run: |
+        uv run pre-commit run --all-files
+    
+    - name: Create test results directory
+      run: |
+        mkdir -p test-results
+    
+    - name: Run tests with pytest
+      run: |
+        uv run pytest tests/ -v --tb=short --junitxml=test-results/results.xml --cov=src/collectivecrossing --cov-report=xml:coverage.xml --cov-report=term-missing
+    
+    - name: Check coverage file
+      run: |
+        if [ -f coverage.xml ]; then
+          echo "Coverage file found:"
+          ls -la coverage.xml
+          echo "First 20 lines:"
+          cat coverage.xml | head -20
+        else
+          echo "Coverage file not found. Checking for other coverage files:"
+          ls -la *.xml || echo "No XML files found"
+          echo "Current directory contents:"
+          ls -la
+        fi
+    
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: "test-results/results.xml"
+        comment_mode: always
+        comment_title: "Test Results"
+        compare_to_earlier_commit: true
+        fail_on: 'errors'
+        comment_on_pr: true
+        comment_on_commits: false
+    
+    - name: Publish Coverage Report
+      uses: codecov/codecov-action@v3
+      if: always()
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.python-version }}
+        path: |
+          .pytest_cache/
+          test-results/
+          test-results/results.xml
+          coverage.xml
+        if-no-files-found: warn
