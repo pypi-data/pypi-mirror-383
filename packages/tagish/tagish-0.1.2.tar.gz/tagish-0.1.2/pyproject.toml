@@ -1,0 +1,28 @@
+[project]
+name = "tagish"
+version = "0.1.2"
+description = "A gerernic tag format for serialization deserializatio"
+authors = [
+    {name = "adebert",email = "debert@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+[project.scripts]
+tagish = "tagish.__main__:main"
+
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+pytest-cov = "^7.0.0"
+black = "^25.9.0"
+ruff = "^0.14.0"
+isort = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
