@@ -1,0 +1,560 @@
+"""Base reader."""
+
+from __future__ import annotations
+
+import typing as ty
+from contextlib import contextmanager, suppress
+from functools import lru_cache
+from pathlib import Path
+
+import numpy as np
+from ims_utils.profile import centroid_to_profile
+from ims_utils.spectrum import find_between_batch, find_between_ppm, find_between_tol, get_mzs_for_tol
+from koyo.typing import PathLike
+from koyo.utilities import get_min_max
+from loguru import logger
+from tqdm import tqdm
+
+from imzy.processing import accumulate_peaks_centroid, accumulate_peaks_profile
+
+
+class BaseReader:
+    """Base reader class."""
+
+    # private attributes
+    _xyz_coordinates: np.ndarray | None = None
+    _tic: np.ndarray | None = None
+    _current = -1
+
+    def __init__(self, path: PathLike, auto_profile: bool = True):
+        self.auto_profile = auto_profile
+        self.path = Path(path)
+
+    def _init(self, *args: ty.Any, **kwargs: ty.Any) -> None:
+        """Method which is called to initialize the reader."""
+        raise NotImplementedError("Must implement method")
+
+    @property
+    def mz_min(self) -> float:
+        """Minimum m/z value."""
+        raise NotImplementedError("Must implement method")
+
+    @property
+    def mz_max(self) -> float:
+        """Maximum m/z value."""
+        raise NotImplementedError("Must implement method")
+
+    @property
+    def is_centroid(self) -> bool:
+        """Flag to indicate whether the data is in centroid or profile mode."""
+        raise NotImplementedError("Must implement method")
+
+    def get_spectrum(self, index: int) -> tuple[np.ndarray, np.ndarray]:
+        """Return mass spectrum."""
+        return self._read_spectrum(index)
+
+    def get_summed_spectrum(
+        self, indices: ty.Iterable[int], scales: np.ndarray | None = None, silent: bool = False
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Sum pixel data to produce summed mass spectrum."""
+        raise NotImplementedError("Must implement method")
+
+    def _read_spectrum(self, index: int) -> tuple[np.ndarray, np.ndarray]:
+        raise NotImplementedError("Must implement method")
+
+    def _read_spectra(self, indices: np.ndarray | None = None) -> ty.Iterator[tuple[np.ndarray, np.ndarray]]:
+        raise NotImplementedError("Must implement method")
+
+    @property
+    def rois(self) -> list[int]:
+        """Return list of ROIs."""
+        raise NotImplementedError("Must implement method")
+
+    @property
+    def x_pixel_size(self) -> float:
+        """Return x pixel size in micrometers."""
+        raise NotImplementedError("Must implement method")
+
+    @property
+    def y_pixel_size(self) -> float:
+        """Return y pixel size in micrometers."""
+        raise NotImplementedError("Must implement method")
+
+    @property
+    @lru_cache
+    def x_size(self) -> int:
+        """X-axis size."""
+        min_val, max_max = get_min_max(self.x_coordinates)
+        return int(max_max - min_val + 1)
+
+    @property
+    @lru_cache
+    def y_size(self) -> int:
+        """Y-axis size."""
+        min_val, max_max = get_min_max(self.y_coordinates)
+        return int(max_max - min_val + 1)
+
+    def __iter__(self) -> BaseReader:
+        return self
+
+    def __next__(self) -> tuple[np.ndarray, np.ndarray]:
+        """Get next spectrum."""
+        if self._current < self.n_pixels - 1:
+            self._current += 1
+            return self[self._current]
+        else:
+            self._current = -1
+            raise StopIteration
+
+    def __getitem__(self, item: int) -> tuple[np.ndarray, np.ndarray]:
+        """Retrieve spectrum."""
+        return self.get_spectrum(item)
+
+    @contextmanager
+    def _disable_auto_profile(self) -> ty.Generator[None, None, None]:
+        """Context manager to temporarily disable auto profile mode."""
+        original_value = self.auto_profile
+        self.auto_profile = False
+        try:
+            yield
+        finally:
+            self.auto_profile = original_value
+
+    @contextmanager
+    def _enable_faster_iter(self) -> ty.Generator[None, None, None]:
+        """Context manager to temporarily enable faster iteration mode."""
+        original_value = self.auto_profile
+        self.auto_profile = False
+        try:
+            yield
+        finally:
+            self.auto_profile = original_value
+
+    @staticmethod
+    def _centroid_to_profile(
+        x: np.ndarray, y: np.ndarray, resolution: int, mz_grid: np.ndarray
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Convert centroid to profile spectrum."""
+        return centroid_to_profile(x, y, resolving_power=resolution, mz_grid=mz_grid)
+
+    def reshape(self, array: np.ndarray, fill_value: float = 0) -> np.ndarray:
+        """Reshape vector of intensities."""
+        if len(array) != self.n_pixels:
+            raise ValueError("Wrong size and shape of the array.")
+        dtype = np.float32 if np.isnan(fill_value) else array.dtype
+        im = np.full((self.y_size, self.x_size), fill_value=fill_value, dtype=dtype)
+        im[self.y_coordinates, self.x_coordinates] = array
+        return im
+
+    def reshape_batch(self, array: np.ndarray, fill_value: float = 0) -> np.ndarray:
+        """Batch reshaping of images."""
+        if array.ndim != 2:
+            raise ValueError("Expected 2-D array.")
+        if len(array) != self.n_pixels:
+            raise ValueError("Wrong size and shape of the array.")
+        n = array.shape[1]
+        dtype = np.float32 if np.isnan(fill_value) else array.dtype
+        im = np.full((n, self.y_size, self.x_size), fill_value=fill_value, dtype=dtype)
+        for i in range(n):
+            im[i, self.y_coordinates, self.x_coordinates] = array[:, i]
+        return im
+
+    def flatten(self, array: np.ndarray) -> np.ndarray:
+        """Flatten 2D image."""
+        return array[self.y_coordinates, self.x_coordinates]
+
+    @property
+    def image_shape(self) -> tuple[int, int]:
+        """Return shape of the image."""
+        return self.y_size, self.x_size
+
+    def index_to_xy_coordinates(self, index: int) -> tuple[int, int]:
+        """Convert index to x, y coordinates."""
+        return self.x_coordinates[index], self.y_coordinates[index]
+
+    def xy_coordinates_to_index(self, x: int, y: int) -> int:
+        """Convert x, y coordinates to index."""
+        indices = np.where((self.x_coordinates == x) & (self.y_coordinates == y))[0]
+        if indices.size > 0:
+            return indices[0]
+
+    @property
+    def xyz_coordinates(self) -> np.ndarray:
+        """Return xyz coordinates."""
+        if self._xyz_coordinates is None:
+            raise ValueError("Coordinates have not been initialized.")
+        return self._xyz_coordinates
+
+    @property
+    def x_coordinates(self) -> np.ndarray:
+        """Return x-axis coordinates/."""
+        return self.xyz_coordinates[:, 0]
+
+    @property
+    def y_coordinates(self) -> np.ndarray:
+        """Return y-axis coordinates."""
+        return self.xyz_coordinates[:, 1]
+
+    @property
+    def z_coordinates(self) -> np.ndarray:
+        """Return z-axis coordinates."""
+        return self.xyz_coordinates[:, 2]
+
+    @property
+    def pixels(self) -> np.ndarray:
+        """Iterable of pixels in the dataset."""
+        return np.arange(self.n_pixels)
+
+    @property
+    def n_pixels(self) -> int:
+        """Return the total number of pixels in the dataset."""
+        return len(self.x_coordinates)
+
+    @property
+    def pixel_size(self) -> float:
+        """Return pixel size.
+
+        This method will throw an error if the pixel size is not equal in both dimensions.
+        """
+        if self.x_pixel_size != self.y_pixel_size:
+            raise ValueError("Pixel size is not equal in both dimensions.")
+        return self.x_pixel_size
+
+    def get_chromatogram(self, indices: ty.Iterable[int]) -> np.ndarray:
+        """Return chromatogram."""
+        indices = np.asarray(indices)
+        array = np.zeros(len(indices), dtype=np.float32)
+        with self._enable_faster_iter():
+            for y in self.spectra_iter(indices):
+                array += np.sum(y)
+        return array
+
+    def get_tic(self, silent: bool = False) -> np.ndarray:
+        """Return TIC image."""
+        if self._tic is None:
+            res = np.zeros(self.n_pixels)
+            with self._enable_faster_iter():
+                for i, (_, y) in enumerate(self.spectra_iter(silent=silent)):
+                    res[i] = y.sum()
+            self._tic = res
+        return self._tic
+
+    def get_ion_image(
+        self,
+        mz: float,
+        tol: float | None = None,
+        ppm: float | None = None,
+        fill_value: float = np.nan,
+        silent: bool = False,
+    ) -> np.ndarray:
+        """Return ion image for specified m/z with tolerance or ppm."""
+        if (tol is None and ppm is None) or (tol == 0 and ppm == 0):
+            raise ValueError("Please specify `tol` or `ppm`.")
+        elif tol is not None and ppm is not None:
+            raise ValueError("Please only specify `tol` or `ppm`.")
+        func = find_between_tol if tol else find_between_ppm
+        val = tol if tol else ppm
+        res = np.full(self.n_pixels, dtype=np.float32, fill_value=fill_value)
+        if self.is_centroid:
+            with self._enable_faster_iter():
+                for i, (x, y) in enumerate(self.spectra_iter(silent=silent)):
+                    mask = func(x, mz, val)
+                    res[i] = y[mask].sum()
+        else:
+            x, _ = self[0]
+            mask = func(x, mz, val)
+            for i, (_, y) in enumerate(self.spectra_iter(silent=silent)):
+                res[i] = y[mask].sum()
+        return self.reshape(res)
+
+    def _get_ions(
+        self,
+        mzs: ty.Iterable[float],
+        tol: float | None = None,
+        ppm: float | None = None,
+        fill_value: float = np.nan,
+        silent: bool = False,
+    ) -> np.ndarray:
+        mzs = np.asarray(mzs)
+        mzs_min, mzs_max = get_mzs_for_tol(mzs, tol, ppm)
+        res = np.full((self.n_pixels, len(mzs)), dtype=np.float32, fill_value=fill_value)
+
+        if self.is_centroid:
+            with self._enable_faster_iter():
+                for i, (x, y) in enumerate(self.spectra_iter(silent=silent)):
+                    res[i] = accumulate_peaks_centroid(mzs_min, mzs_max, x, y)
+        else:
+            x, _ = self.get_spectrum(0)
+            indices = find_between_batch(x, mzs_min, mzs_max)
+            for i, (_, y) in enumerate(self.spectra_iter(silent=silent)):
+                res[i] = accumulate_peaks_profile(indices, y)
+        return res
+
+    def _get_ions_yield(
+        self,
+        mzs: ty.Iterable[float],
+        tol: float | None = None,
+        ppm: float | None = None,
+        fill_value: float = np.nan,
+        silent: bool = False,
+    ) -> ty.Generator[np.ndarray, None, None]:
+        mzs = np.asarray(mzs)
+        mzs_min, mzs_max = get_mzs_for_tol(mzs, tol, ppm)
+        res = np.full((self.n_pixels, len(mzs)), dtype=np.float32, fill_value=fill_value)
+
+        n = self.n_pixels
+        if self.is_centroid:
+            with self._enable_faster_iter():
+                for i, (x, y) in enumerate(self.spectra_iter(silent=silent)):
+                    res[i] = accumulate_peaks_centroid(mzs_min, mzs_max, x, y)
+                    yield i, n, None
+        else:
+            x, _ = self.get_spectrum(0)
+            indices = find_between_batch(x, mzs_min, mzs_max)
+            for i, (_, y) in enumerate(self.spectra_iter(silent=silent)):
+                res[i] = accumulate_peaks_profile(indices, y)
+                yield i, n, None
+        yield None, None, res
+
+    def get_ion_images(
+        self,
+        mzs: ty.Iterable[float],
+        tol: float | None = None,
+        ppm: float | None = None,
+        fill_value: float = np.nan,
+        silent: bool = False,
+    ) -> np.ndarray:
+        """Return many ion images for specified m/z values."""
+        res = self._get_ions(mzs, tol, ppm, fill_value, silent)
+        return self.reshape_batch(res)
+
+    def to_table(
+        self,
+        mzs: ty.Iterable[float],
+        tol: float | None = None,
+        ppm: float | None = None,
+        fill_value: float = np.nan,
+        silent: bool = False,
+    ) -> np.ndarray:
+        """Return many ion images for specified m/z values without reshaping."""
+        return self._get_ions(mzs, tol, ppm, fill_value, silent)
+
+    def to_zarr(
+        self,
+        zarr_path: PathLike,
+        mzs: ty.Iterable[float],
+        tol: float | None = None,
+        ppm: float | None = None,
+        as_flat: bool = True,
+        chunk_size: tuple[int, int] | None = None,
+        silent: bool = False,
+    ) -> Path:
+        """Export many ion images for specified m/z values (+ tolerance) to Zarr array."""
+        from imzy._centroids._extract import (
+            check_zarr,
+            create_centroids_zarr,
+            extract_centroids_zarr,
+            rechunk_zarr_array,
+        )
+
+        if not as_flat:
+            raise ValueError("Only flat images are supported at the moment.")
+        if (tol is None and ppm is None) or (tol == 0 and ppm == 0):
+            raise ValueError("Please specify `tol` or `ppm`.")
+
+        check_zarr()
+        import dask.array as dsa
+
+        mzs = np.asarray(mzs)
+        if mzs.size == 0:
+            raise ValueError("Expect at least 1 mass to extract.")
+        mzs_min, mzs_max = get_mzs_for_tol(mzs, tol, ppm)
+
+        zarr_path = Path(zarr_path)
+        # prepare output directory
+        ds = create_centroids_zarr(
+            self.path,
+            zarr_path,
+            len(mzs),
+            mzs=mzs,
+            mzs_min=mzs_min,
+            mzs_max=mzs_max,
+            ppm=ppm,
+            tol=tol,
+        )
+        zarr_array_path = str(zarr_path / ds.path)
+        extract_centroids_zarr(
+            input_dir=self.path,
+            zarr_path=zarr_array_path,
+            mzs_min=mzs_min,
+            mzs_max=mzs_max,
+            indices=self.pixels,
+            silent=silent,
+        )
+
+        ds = dsa.from_zarr(zarr_array_path)
+        ys = ds.sum(axis=0).compute()
+        create_centroids_zarr(
+            self.path,
+            zarr_path,
+            len(mzs_min),
+            ys=np.asarray(ys),
+            ppm=ppm,
+            tol=tol,
+        )
+
+        target_path = str(zarr_path / "array")
+        rechunk_zarr_array(self.path, zarr_array_path, target_path, chunk_size=chunk_size)
+        return zarr_path
+
+    def to_hdf5(
+        self,
+        hdf_path: PathLike,
+        mzs: ty.Iterable[float],
+        tol: float | None = None,
+        ppm: float | None = None,
+        as_flat: bool = True,
+        max_mem: float = 512,  # mb
+        silent: bool = False,
+    ) -> Path:
+        """Export many ion images for specified m/z values (+ tolerance) to a HDF5 store."""
+        from imzy._centroids._extract import create_centroids_hdf5, extract_centroids_hdf5, get_chunk_info
+        from imzy._hdf5_mixin import check_hdf5
+
+        if not as_flat:
+            raise ValueError("Only flat images are supported at the moment.")
+        check_hdf5()
+
+        mzs = np.asarray(mzs)
+        if mzs.size == 0:
+            raise ValueError("Expect at least 1 mass to extract.")
+        mzs_min, mzs_max = get_mzs_for_tol(mzs, tol, ppm)
+
+        chunk_info = get_chunk_info(self.n_pixels, len(mzs), max_mem)
+        hdf_path = Path(hdf_path)
+        if not hdf_path.suffix == ".h5":
+            hdf_path = hdf_path.with_suffix(".h5")
+
+        if hdf_path.exists():
+            from imzy._centroids import H5CentroidsStore
+
+            store = H5CentroidsStore(hdf_path)
+            if store.n_peaks == len(mzs):
+                if np.allclose(store.xs, mzs, rtol=1e-3):
+                    return hdf_path
+
+        # prepare output directory
+        hdf_path = create_centroids_hdf5(
+            self.path,
+            hdf_path,
+            len(mzs),
+            mzs=mzs,
+            mzs_min=mzs_min,
+            mzs_max=mzs_max,
+            ppm=ppm,
+            tol=tol,
+            chunk_info=chunk_info,
+            spatial_info={
+                "x_coordinates": self.x_coordinates,
+                "y_coordinates": self.y_coordinates,
+                "image_shape": np.asarray(self.image_shape),
+                "pixel_size": self.pixel_size,
+            },
+        )
+        extract_centroids_hdf5(
+            input_dir=self.path,
+            hdf_path=hdf_path,
+            mzs_min=mzs_min,
+            mzs_max=mzs_max,
+            indices=self.pixels,
+            silent=silent,
+        )
+        return hdf_path
+
+    extract_centroids_hdf5 = to_hdf5
+
+    def get_normalizations(self, silent: bool = False) -> dict[str, np.ndarray]:
+        """Get available normalizations."""
+        from imzy._normalizations._extract import _compute_normalizations, get_normalizations
+
+        norm_names = get_normalizations()
+        norms = _compute_normalizations(self, clean=False, silent=silent)
+        data = {}
+        for i, norm in enumerate(norm_names):
+            data[norm] = norms[:, i]
+        return data
+
+    def extract_normalizations_hdf5(self, hdf_path: PathLike, silent: bool = False) -> Path:
+        """Extract normalizations."""
+        from imzy._hdf5_mixin import check_hdf5
+        from imzy._normalizations._extract import create_normalizations_hdf5, extract_normalizations_hdf5
+
+        check_hdf5()
+        hdf_path = Path(hdf_path)
+        if not hdf_path.suffix == ".h5":
+            hdf_path = hdf_path.with_suffix(".h5")
+        if not hdf_path.exists():
+            hdf_path = create_normalizations_hdf5(self.path, hdf_path)
+            hdf_path = extract_normalizations_hdf5(input_dir=self.path, hdf_path=hdf_path, silent=silent)
+        return hdf_path
+
+    def spectra_iter(
+        self, indices: ty.Iterable[int] | None = None, silent: bool = False
+    ) -> ty.Generator[tuple[np.ndarray, np.ndarray], None, None]:
+        """Yield spectra."""
+        indices = self.pixels if indices is None else np.asarray(indices)
+        yield from tqdm(
+            self._read_spectra(indices), total=len(indices), disable=silent, miniters=500, desc="Iterating spectra..."
+        )
+
+    def _write_cache(self, filename: str, data: dict) -> None:
+        """Sometimes, reading data from raw data can be very slow, so we can cache it instead.
+
+        Cache data is usually written inside the raw directory (e.g. inside Bruker .d or Waters .raw) or next to it
+        (e.g. when dealing with imzML).
+
+        Parameters
+        ----------
+        filename : str
+            name of the cache file without the .npz suffix
+        data : dict
+            dictionary containing cache data
+        """
+        cache_dir_path = Path(self.path) / ".icache"
+        cache_dir_path.mkdir(exist_ok=True)
+        tmp_filename = cache_dir_path / (filename + ".tmp.npz")
+        filename = cache_dir_path / (filename + ".npz")
+        np.savez(tmp_filename, **data)
+        try:
+            tmp_filename.rename(filename)
+        except OSError:
+            with suppress(FileNotFoundError):
+                filename.unlink()
+            tmp_filename.rename(filename)
+        except PermissionError:
+            logger.warning("Could not write cache file.")
+        finally:
+            with suppress(FileNotFoundError):
+                tmp_filename.unlink()
+
+    def _read_cache(self, filename: str, keys: list[str]) -> dict[str, np.ndarray | None]:
+        """Load cache metadata.
+
+        Parameters
+        ----------
+        filename : str
+            Name of the cache file without the .npz suffix
+        keys : list
+            Keys to be read when cache file is loaded
+        """
+        cache_file_path = Path(self.path) / ".icache" / (filename + ".npz")
+
+        data = {}.fromkeys(keys)
+        if cache_file_path.exists():
+            with np.load(cache_file_path, mmap_mode="r") as f_ptr:
+                for key in keys:
+                    try:
+                        data[key] = f_ptr[key]
+                    except KeyError:
+                        data[key] = None
+        return data
