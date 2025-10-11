@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "quillion-cli"
+version = "0.1.4"
+description = "Quillion Command Line Interface"
+authors = ["anybody"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+typer = "^0.19.1"
+rich = "^14.1.0"
+pyfiglet = "^1.0.4"
+watchdog = "^2.3.1"
+jinja2 = "^3.1.2"
+tomli = "^2.0.1"
+requests = "2.32.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
