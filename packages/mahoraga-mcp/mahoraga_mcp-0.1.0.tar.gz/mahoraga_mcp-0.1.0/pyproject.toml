@@ -1,0 +1,56 @@
+[project]
+name = "mahoraga-mcp"
+version = "0.1.0"
+description = "Model Context Protocol server for Mahoraga - AI-powered mobile automation agent"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{ name = "Mahoraga Team", email = "hello@mahoraga.app" }]
+requires-python = ">=3.11"
+keywords = ["mcp", "mobile-automation", "android", "ai", "testing", "mahoraga"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "mcp>=0.9.0",
+    "httpx>=0.27.0",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "aiofiles>=23.0.0",
+    "openai>=1.0.0",
+    "pillow>=10.0.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "llama-index==0.13.2",
+    "llama-index-llms-openai-like",
+    "adbutils==2.10.0",
+    "apkutils==2.0.0",
+]
+
+[project.scripts]
+mahoraga-mcp = "src.server:main"
+
+[project.urls]
+Homepage = "https://mahoraga.app"
+Repository = "https://github.com/mahoraga/mahoraga-mcp"
+Documentation = "https://docs.mahoraga.app"
+Issues = "https://github.com/mahoraga/mahoraga-mcp/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
