@@ -1,0 +1,271 @@
+Metadata-Version: 2.4
+Name: chainguard-pig-latin
+Version: 0.1.0
+Summary: A Python package to convert text to Pig Latin - built from source for Chainguard
+Author-email: Adam Lamorre <alamorre@users.noreply.github.com>
+License: MIT
+Project-URL: Homepage, https://github.com/alamorre/chainguard-pig-latin
+Project-URL: Repository, https://github.com/alamorre/chainguard-pig-latin
+Project-URL: Issues, https://github.com/alamorre/chainguard-pig-latin/issues
+Keywords: pig-latin,text-processing,language,fun,chainguard
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# Chainguard Pig Latin
+
+A Python package for converting English text to Pig Latin. Built from source to ensure security and transparency.
+
+## What is Pig Latin?
+
+Pig Latin is a language game where words are altered according to simple rules:
+- **Words starting with consonants**: Move the consonant(s) to the end and add "ay" (e.g., "hello" → "ellohay")
+- **Words starting with vowels**: Add "way" to the end (e.g., "apple" → "appleway")
+
+## Features
+
+- 🔒 **Secure**: Built from source using Chainguard's secure supply chain
+- 🎯 **Accurate**: Properly handles consonant clusters, including "qu" combinations
+- 📝 **Smart**: Preserves capitalization, punctuation, and whitespace
+- 🚀 **Fast**: Efficient pure Python implementation
+- 🛠️ **CLI & Library**: Use as a command-line tool or import into your code
+- ✅ **Well-tested**: Comprehensive test suite with high coverage
+- 📦 **Type-safe**: Includes type hints for better IDE support
+
+## Installation
+
+Install from PyPI:
+
+```bash
+pip install chainguard-pig-latin
+```
+
+## Usage
+
+### As a Library
+
+```python
+from chainguard_pig_latin import to_pig_latin, word_to_pig_latin
+
+# Convert a single word
+word_to_pig_latin("hello")
+# Output: "ellohay"
+
+word_to_pig_latin("apple")
+# Output: "appleway"
+
+# Convert a sentence
+to_pig_latin("Hello world!")
+# Output: "Ellohay orldway!"
+
+to_pig_latin("The quick brown fox jumps over the lazy dog")
+# Output: "Ethay uickqay ownbray oxfay umpsjay overway ethay azylay ogday"
+
+# Capitalization is preserved
+to_pig_latin("Python is AWESOME!")
+# Output: "Ythonpay isway AWESOMEWAY!"
+```
+
+### As a Command-Line Tool
+
+Convert text directly from the command line:
+
+```bash
+# Convert text from arguments
+pig-latin hello world
+# Output: ellohay orldway
+
+pig-latin "The quick brown fox"
+# Output: Ethay uickqay ownbray oxfay
+
+# Read from stdin
+echo "Hello world" | pig-latin
+# Output: Ellohay orldway
+
+# Convert multiple lines
+cat myfile.txt | pig-latin
+```
+
+## Examples
+
+### Consonant Words
+```python
+word_to_pig_latin("hello")   # "ellohay"
+word_to_pig_latin("world")   # "orldway"
+word_to_pig_latin("string")  # "ingstray"
+word_to_pig_latin("glove")   # "oveglay"
+```
+
+### Vowel Words
+```python
+word_to_pig_latin("apple")     # "appleway"
+word_to_pig_latin("elephant")  # "elephantway"
+word_to_pig_latin("igloo")     # "iglooway"
+word_to_pig_latin("octopus")   # "octopusway"
+```
+
+### Consonant Clusters
+```python
+word_to_pig_latin("three")    # "eethray"
+word_to_pig_latin("school")   # "oolschay"
+word_to_pig_latin("stretch")  # "etchstray"
+```
+
+### Special "qu" Handling
+```python
+word_to_pig_latin("queen")   # "eenquay"
+word_to_pig_latin("quick")   # "ickquay"
+word_to_pig_latin("square")  # "aresquay"
+```
+
+### Capitalization and Punctuation
+```python
+word_to_pig_latin("Hello")    # "Ellohay"
+word_to_pig_latin("HELLO")    # "ELLOHAY"
+word_to_pig_latin("hello!")   # "ellohay!"
+word_to_pig_latin("(hello)")  # "(ellohay)"
+```
+
+## Development
+
+### Setup
+
+Clone the repository and install development dependencies:
+
+```bash
+git clone https://github.com/alamorre/chainguard-pig-latin.git
+cd chainguard-pig-latin
+pip install -e .
+pip install pytest
+```
+
+### Running Tests
+
+Run the test suite:
+
+```bash
+pytest tests/ -v
+```
+
+Run tests with coverage:
+
+```bash
+pytest tests/ --cov=chainguard_pig_latin --cov-report=term-missing
+```
+
+### Building from Source
+
+Build the package:
+
+```bash
+pip install build
+python -m build
+```
+
+This creates distribution files in the `dist/` directory.
+
+### Installing Locally
+
+Install the package in development mode:
+
+```bash
+pip install -e .
+```
+
+## API Reference
+
+### `word_to_pig_latin(word: str) -> str`
+
+Convert a single word to Pig Latin.
+
+**Parameters:**
+- `word` (str): A single word to convert
+
+**Returns:**
+- str: The word converted to Pig Latin
+
+**Example:**
+```python
+word_to_pig_latin("hello")  # "ellohay"
+```
+
+### `to_pig_latin(text: str) -> str`
+
+Convert a string of text to Pig Latin.
+
+**Parameters:**
+- `text` (str): The text to convert to Pig Latin
+
+**Returns:**
+- str: The text converted to Pig Latin
+
+**Example:**
+```python
+to_pig_latin("Hello world!")  # "Ellohay orldway!"
+```
+
+## Pig Latin Rules Implemented
+
+1. **Consonant Start**: Words beginning with consonant sounds have the consonant(s) moved to the end, followed by "ay"
+   - Simple: "pig" → "igpay"
+   - Clusters: "string" → "ingstray"
+   - Special: "queen" → "eenquay" (qu stays together)
+
+2. **Vowel Start**: Words beginning with vowel sounds have "way" added to the end
+   - "apple" → "appleway"
+   - "eat" → "eatway"
+
+3. **Preservation**:
+   - Capitalization is maintained
+   - Punctuation is preserved
+   - Whitespace is kept intact
+
+## Why Chainguard?
+
+This package is built using Chainguard's secure software supply chain practices:
+- ✅ Built from source, not from pre-built binaries
+- ✅ Transparent build process
+- ✅ Minimal dependencies
+- ✅ Regular security updates
+- ✅ Full provenance and SBOM (Software Bill of Materials)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Add tests for your changes
+4. Ensure all tests pass (`pytest`)
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/alamorre/chainguard-pig-latin/issues)
+- **Documentation**: [GitHub Repository](https://github.com/alamorre/chainguard-pig-latin)
+
+## Changelog
+
+### Version 0.1.0 (Initial Release)
+- Basic Pig Latin conversion for words and text
+- Command-line interface
+- Consonant cluster handling
+- Special "qu" combination support
+- Capitalization and punctuation preservation
+- Comprehensive test suite
