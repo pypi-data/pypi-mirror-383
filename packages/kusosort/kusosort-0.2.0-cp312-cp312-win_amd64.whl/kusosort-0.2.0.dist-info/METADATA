@@ -1,0 +1,175 @@
+Metadata-Version: 2.2
+Name: kusosort
+Version: 0.2.0
+Summary: A collection of joke sorting algorithms implemented in C++ for Python.
+Author-Email: Your Name <you@example.com>
+License: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: C++
+Project-URL: Homepage, https://github.com/KIIIIT00/kusosort
+Project-URL: Bug Tracker, https://github.com/KIIIIT00/kusosort/issues
+Requires-Python: >=3.8
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Description-Content-Type: text/markdown
+
+# kusosort 
+
+[![PyPI version](https://badge.fury.io/py/kusosort-itsuk.svg)](https://pypi.org/project/kusosort/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**C++で実装された、最高に非効率で面白いソートアルゴリズムのPythonライブラリです。**
+
+このライブラリは、計算機科学の思考実験やジョークとして知られるアルゴリズムを集めたものです。実用性は皆無ですが、アルゴリズムの「悪い例」を楽しく学ぶための教育的なツールとして、あるいは単なるエンターテイメントとしてお楽しみください。
+
+コアロジックはC++で実装されており、"最大限の"パフォーマンス（？）を発揮します。
+
+## インストール
+
+```bash
+pip install kusosort
+```
+
+## クイックスタート
+
+このライブラリの面白さをすぐに体験してみましょう。例えば、スターリンソートは基準に満たない要素を容赦なく「粛清」します。
+
+```python
+import kusosort
+
+my_list = [1, 5, 2, 8, 3, 9, 4]
+print(f"元の配列: {my_list}")
+
+# スターリンソートで基準に満たない要素を粛清！
+purged_list = kusosort.stalin(my_list)
+
+def my_prayer():
+    print("神よ...")
+
+kusosort.miracle(data, max_attempts=3, prey=my_prayer)
+# 神よ...
+# 神よ...
+# 神よ...
+# The miracle didn't happen, and the list was not sorted.
+
+# ボゴソート (注意: 終わらない可能性があります)
+# data = random.sample(range(10), 10)
+# kusosort.bogo_sort(data)
+# print(f"Bogo sorted: {data}")
+```
+
+**実行結果:**
+```
+元の配列: [1, 5, 2, 8, 3, 9, 4]
+粛清後の配列: [1, 5, 8, 9]
+元の配列は変更されていません: [1, 5, 2, 8, 3, 9, 4]
+```
+
+##  利用可能なアルゴリズム
+
+`kusosort`は、以下の素晴らしい（？）アルゴリズムを提供します。
+
+### `kusosort.bogo(data, verbose=False)`
+配列がソートされるまで、全体をランダムにシャッフルし続けます。
+
+- 引数
+  - ``data``(list): ソートしたい数値または文字列のリスト
+  - ``verbose``(bool, optional): ``True``に設定すると、ソート処理中の配列の状態をリアルタイムで表示します。デフォルトは``False``です。
+
+**警告**: この関数はあなたのPCをフリーズさせる可能性があります。非常に小さい配列（3要素以下）でお試しください。`verbose=True`にすると途中経過が見られます。
+
+```python
+# 2要素ならすぐに終わるはず
+sorted_list = kusosort.bogo([2, 1], verbose=True)
+# Sorting... current state: [1, 2]
+#
+print(sorted_list)
+# [1, 2]
+```
+
+### `kusosort.bozo(data, verbose=False)`
+配列がソートされるまで、ランダムに選んだ2つの要素を交換し続けます。`bogo`と同様に危険です。
+
+- 引数
+  - ``data``(list): ソートしたい数値または文字列のリスト
+  - ``verbose``(bool, optional): ``True``に設定すると、ソート処理中の配列の状態をリアルタイムで表示します。デフォルトは``False``です。
+
+```python
+sorted_list = kusosort.bozo(["b", "a"], verbose=True)
+# Sorting... current state: ["a", "b"]
+#
+print(sorted_list)
+# ['a', 'b']
+```
+
+### `kusosort.stalin(data)`
+配列を先頭から見ていき、前の要素より小さいものをすべて削除（粛清）します。
+
+- 引数
+  - ``data``(list): ソートしたい数値または文字列のリスト
+
+```python
+result = kusosort.stalin([1, 5, 2, 6, 3])
+print(result)
+# [1, 5, 6]
+```
+
+### `kusosort.abe(data)`
+配列を先頭から見ていき、各要素を「それまでに出現した最大値」で上書きします。
+
+- 引数
+  - ``data``(list): ソートしたい数値または文字列のリスト
+
+```python
+data = [3, 5, 2, 8, 4]
+
+result = kusosort.abe(data)
+print(result)
+# [3, 5, 5, 8, 8]
+```
+
+### `kusosort.miracle(data, max_attempts=10)`
+奇跡が起きて配列がソートされるのを待ちます。`max_attempts`回チェックしてソートされていなければ諦めます。
+
+- 引数:
+    - ``data`` (list): ソートしたい数値または文字列のリスト。
+
+    - ``max_attempts`` (int, optional): 奇跡を待つ試行回数。デフォルトは``10``回です。
+
+```python
+result = kusosort.miracle([3, 1, 2], max_attempts=5)
+# The miracle did not happen... (x5)
+# The miracle didn't happen, and the list was not sorted.
+print(result)
+# [3, 1, 2]
+```
+
+### `kusosort.quantum_bogo(data, num_universes=1)`
+指定された数の並行宇宙で、それぞれ1回だけシャッフルを行います。成功した宇宙と破壊された宇宙の結果を報告します。
+
+- 引数:
+    - ``data`` (list): ソートしたい数値または文字列のリスト。
+
+    - ``num_universes`` (int, optional): 観測する並行宇宙の数。デフォルトは``1``です。
+
+```python
+result = kusosort.quantum_bogo([3, 1, 2], num_universes=5)
+# Executing Quantum Bogo Sort across 5 universes...
+#  Universe 1 was destroyed.
+#  Universe 2: Sort successful! Result: [1, 2, 3]
+#  Universe 3 was destroyed.
+#  Universe 4 was destroyed.
+#  Universe 5 was destroyed.
+print(result)
+# [3, 1, 2]
+```
+
+## 貢献
+面白いクソソートのアイデアがあれば、ぜひIssueやPull Requestを送ってください！
+
+## ライセンス
+このプロジェクトはMITライセンスです。
