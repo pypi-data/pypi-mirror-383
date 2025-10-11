@@ -1,0 +1,60 @@
+Metadata-Version: 2.4
+Name: giql
+Version: 0.0.0.0
+Summary: A Python utility for parsing and normalizing various DCC datapackages.
+Author-email: Conrad Bzura <conradbzura@gmail.com>
+License: MIT License
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: aiohttp
+Requires-Dist: click
+Requires-Dist: fastapi
+Requires-Dist: motor
+Requires-Dist: pymongo
+Requires-Dist: strawberry-graphql
+Requires-Dist: uvicorn
+Requires-Dist: wool
+Provides-Extra: dev
+Requires-Dist: debugpy; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+
+# dcc2cvh
+
+## Overview
+`dcc2cvh` is a Python package designed to process CFDE and ENCODE datapackages and push the data to a MongoDB database. It provides a CLI tool for reading `.csv` and `.tsv` files from a specified directory and loading them into MongoDB.
+
+## Installation
+To install the package from GitHub, use the following command:
+
+```bash
+pip install git+https://github.com/conradbzura/dcc2cvh.git
+```
+
+## Starting MongoDB
+This project includes a `Makefile` to simplify building and starting MongoDB and the API. To start MongoDB, run:
+
+```bash
+make mongodb
+make api
+```
+
+This will start a container running MongoDB listening on port 27017 and the GraphQL API listening on port 8000.
+
+> [!NOTE]
+Ensure that both Docker is installed on your system and properly configured before running this command.
+
+## Using the CLI
+The package provides a CLI command `load-dataset` under the command group `c2m2` to process and load CFDE datapackages into MongoDB.
+
+### Command: `load-dataset`
+
+#### Usage
+```bash
+dcc2cvh c2m2 load-dataset DIRECTORY
+```
+
+#### Arguments
+- `DIRECTORY`: The path to the directory containing the CFDE datapackage. This directory should contain `.csv` or `.tsv` files.
