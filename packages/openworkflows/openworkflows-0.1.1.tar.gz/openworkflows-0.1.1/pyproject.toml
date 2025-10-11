@@ -1,0 +1,62 @@
+[project]
+name = "openworkflows"
+version = "0.1.1"
+description = "A simple, developer-friendly Python package for creating AI workflows"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "async-generator>=1.10",
+    "httpx>=0.28.1",
+    "litellm>=1.77.5",
+    "nemo-toolkit[asr]>=1.23.0",
+    "pydantic>=2.0.0",
+    "torch>=2.5.1",
+    "transformers>=4.46.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+    "ruff>=0.1.0",
+]
+llm = [
+    "litellm>=1.0.0",
+    "openai>=1.0.0",
+    "anthropic>=0.18.0",
+]
+audio = [
+    "insanely-fast-whisper>=0.0.15",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311"]
+
+[tool.mypy]
+python_version = "3.8"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.14.1",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.13.2",
+]

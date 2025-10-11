@@ -1,0 +1,65 @@
+{
+  "name": "Math Pipeline",
+  "nodes": [
+    {
+      "id": "x_input",
+      "type": "input",
+      "config": {
+        "name": "x"
+      }
+    },
+    {
+      "id": "y_input",
+      "type": "input",
+      "config": {
+        "name": "y"
+      }
+    },
+    {
+      "id": "multiply",
+      "type": "transform",
+      "config": {
+        "operation": "multiply",
+        "factor": 2
+      }
+    },
+    {
+      "id": "add",
+      "type": "merge",
+      "config": {
+        "operation": "sum"
+      }
+    },
+    {
+      "id": "output",
+      "type": "output",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "x_input",
+      "target": "multiply",
+      "source_handle": "value",
+      "target_handle": "input"
+    },
+    {
+      "source": "multiply",
+      "target": "add",
+      "source_handle": "result",
+      "target_handle": "input1"
+    },
+    {
+      "source": "y_input",
+      "target": "add",
+      "source_handle": "value",
+      "target_handle": "input2"
+    },
+    {
+      "source": "add",
+      "target": "output",
+      "source_handle": "result",
+      "target_handle": "value"
+    }
+  ]
+}
