@@ -1,0 +1,170 @@
+Metadata-Version: 2.4
+Name: devstream-client
+Version: 0.1.0
+Summary: Python client library for DevStream logging service
+Home-page: https://github.com/paul-wolf/devstream
+Author: Paul
+Author-email: paul.wolf@yew.io
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.25.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# DevStream Python Client
+
+Python client library for sending logs to DevStream logging service.
+
+## Installation
+
+```bash
+pip install devstream-client
+```
+
+Or install from source:
+
+```bash
+cd client
+pip install -e .
+```
+
+## Quick Start
+
+### Basic Usage
+
+```python
+from devstream_client import DevStreamClient
+
+# Initialize client
+client = DevStreamClient(
+    api_key="your-api-key",
+    app_key="my-app",
+    deployment_key="production",
+    base_url="http://localhost:8787"  # or your production URL
+)
+
+# Send a simple log
+client.log("Application started successfully")
+
+# Send a log with tags
+client.log_with_tags(
+    "User logged in",
+    user_id="12345",
+    level="info",
+    ip_address="192.168.1.1"
+)
+```
+
+### Python Logging Integration
+
+```python
+import logging
+from devstream_client import DevStreamHandler
+
+# Create logger
+logger = logging.getLogger("myapp")
+logger.setLevel(logging.INFO)
+
+# Add DevStream handler
+handler = DevStreamHandler(
+    api_key="your-api-key",
+    app_key="my-app",
+    deployment_key="production",
+    base_url="http://localhost:8787"  # or your production URL
+)
+logger.addHandler(handler)
+
+# Use standard Python logging
+logger.info("Application started")
+logger.error("Something went wrong", exc_info=True)
+```
+
+### Django Integration
+
+Add to your Django settings:
+
+```python
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'devstream': {
+            'class': 'devstream_client.client.DevStreamHandler',
+            'api_key': 'your-api-key',
+            'app_key': 'my-django-app',
+            'deployment_key': os.environ.get('DEPLOYMENT', 'local'),
+            'base_url': 'http://localhost:8787',  # or your production URL
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['devstream'],
+            'level': 'INFO',
+        },
+        'myapp': {
+            'handlers': ['devstream'],
+            'level': 'DEBUG',
+        },
+    },
+}
+```
+
+## Configuration
+
+### Client Parameters
+
+- `api_key` (required): Your DevStream API key
+- `app_key` (required): Application identifier
+- `deployment_key` (required): Deployment environment (e.g., 'local', 'dev', 'staging', 'production')
+- `base_url` (optional): DevStream service URL (default: http://localhost:8787)
+
+### Tags
+
+Tags are key-value pairs that help you filter and search logs. You can add tags in two ways:
+
+1. As a list of dictionaries:
+```python
+client.log("User action", tags=[
+    {"name": "user_id", "value": "12345"},
+    {"name": "action", "value": "login"}
+])
+```
+
+2. As keyword arguments:
+```python
+client.log_with_tags(
+    "User action",
+    user_id="12345",
+    action="login"
+)
+```
+
+## Features
+
+- Simple API for sending logs
+- Integration with Python's standard logging module
+- Support for custom tags
+- Automatic retry and error handling
+- Django-ready configuration
+
+## License
+
+MIT License
