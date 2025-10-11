@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quillmark-mcp"
+version = "0.0.10"
+description = "MCP server for Quillmark document rendering. Run with `quillmark-mcp@0.0.8` (recommended)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["mcp", "model-context-protocol", "quillmark", "markdown", "typst", "document-rendering"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "mcp>=0.1.0",
+    "pydantic>=2.0",
+    "quillmark>=0.1.17",
+    "tomli>=2.0.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "tbump"
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/quillmark-mcp"
+Repository = "https://github.com/yourusername/quillmark-mcp"
+Issues = "https://github.com/yourusername/quillmark-mcp/issues"
+
+# This is the critical entry point for MCP/Copilot
+[project.scripts]
+quillmark-mcp = "quillmark_mcp.__main__:main"
+
+# Package configuration
+# The main Python package lives in src/quillmark_mcp
+[tool.hatch.build.targets.wheel]
+packages = ["src/quillmark_mcp"]
+
+# Include the tonguetoquill-collection data directory in the wheel
+# This contains quill templates and assets needed by the package
+# Path resolution in quill_loader.py expects this as a sibling to quillmark_mcp
+[tool.hatch.build.targets.wheel.force-include]
+"src/tonguetoquill-collection" = "tonguetoquill-collection"
+
+# Ensure source distribution includes all necessary files
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/LICENSE",
+]
