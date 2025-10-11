@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "raindropio-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "-m",
+        "raindropio_mcp"
+      ],
+      "env": {
+        "RAINDROP_TOKEN": "your-raindrop-token"
+      }
+    }
+  }
+}
