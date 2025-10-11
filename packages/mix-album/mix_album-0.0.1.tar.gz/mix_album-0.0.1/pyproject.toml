@@ -1,0 +1,47 @@
+# pyproject.toml
+#
+# Project: Mix Album
+# License: GNU GPLv3
+# Copyright (C) 2024 - 2025 Róbert Čerňanský
+
+
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+
+[project]
+name = "mix_album"
+dynamic = ["version"]
+authors = [
+  { name="Róbert Čerňanský", email="openhs@tightmail.com" },
+]
+description = "Utility that helps to create a custom collection of songs - a mix album."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Operating System :: POSIX",
+]
+dependencies = [
+    "mutagen",
+    "yt_dlp"
+]
+
+
+
+[project.scripts]
+mix-album-add = "mix_album.main:main"
+
+
+
+[project.urls]
+Homepage = "https://gitlab.com/openhs/mix_album"
+
+
+
+[tool.setuptools.dynamic]
+version = {attr = "mix_album.__version__"}
