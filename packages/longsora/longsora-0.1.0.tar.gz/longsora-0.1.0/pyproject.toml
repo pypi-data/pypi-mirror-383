@@ -1,0 +1,49 @@
+[project]
+name = "longsora"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [{ name = "llinkedlist771" }]
+dependencies = [
+    "distro>=1.9.0",
+    "ffmpeg>=1.4",
+    "httpx>=0.28.1",
+    "jiter>=0.11.0",
+    "loguru>=0.7.3",
+    "opencv-python>=4.12.0.88",
+    "pydantic>=2.12.0",
+    "typing-extensions>=4.15.0",
+]
+
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/linkedlist771/LongSoraGen"
+Issues = "https://github.com/linkedlist771/LongSoraGen/issues"
+Source = "https://github.com/linkedlist771/LongSoraGen"
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6.0",
+    "mypy>=1.10.0",
+    "pytest>=8.0.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.1,<0.10.0"]
+build-backend = "uv_build"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
