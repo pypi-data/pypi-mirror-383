@@ -1,0 +1,5 @@
+[console_scripts]
+msit = components.__main__:main
+
+[msit_sub_task]
+debug:debug a wide variety of model issues = components.debug.__init__:debug_task
