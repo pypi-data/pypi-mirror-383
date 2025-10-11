@@ -1,0 +1,806 @@
+#!/bin/bash
+
+root=${1:-app}
+app_py_path="${root//\//.}"
+app_py_path="${app_py_path#.}"
+app_py_path="${app_py_path%.}"
+mydir=$(pwd)
+
+dirs=(
+    "nginx"
+    "$root"
+    "$root/core"
+    "$root/core/models"
+    "$root/core/schemas"
+    "$root/tests"
+    "$root/tests/v1"
+    "$root/v1"
+    "$root/v1/dependencies"
+    "$root/v1/routers"
+    "$root/v1/internal"
+
+)
+
+declare -A files
+
+
+files=(
+    ["$root/main.py"]="
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError, WebSocketRequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from $app_py_path.v1 import routers
+from $app_py_path.v1.routers import root
+from $app_py_path.core.err_handler import http_exception_handler, request_validation_exception_handler, websocket_request_validation_exception_handler, page_not_found_exception_handler
+
+app = FastAPI()
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request, exc):
+    return await http_exception_handler(request, exc)
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return await request_validation_exception_handler(request, exc)
+
+@app.exception_handler(WebSocketRequestValidationError)
+async def websocket_validation_exception_handler(websocket, exc):
+    return await websocket_request_validation_exception_handler(websocket, exc)
+
+@app.exception_handler(404)
+async def not_found_exception_handler(request, exc):
+    return await page_not_found_exception_handler(request, exc)
+
+
+origins = [
+    'http://localhost',
+    'http://localhost:3000',
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+
+
+########## ROUTERS ##########
+
+app.include_router(
+    root.endpoint_list,
+    prefix='',
+)
+
+app.include_router(
+    routers.router,
+    prefix='/v1',
+    tags=['v1'],
+)
+
+"
+    ["$root/workers.py"]="
+from uvicorn.workers import UvicornWorker
+
+class MyUvicornWorker(UvicornWorker):
+    # CONFIG_KWARGS = {'loop': 'asyncio', 'http': 'h11', 'lifespan': 'off'}
+    CONFIG_KWARGS = {'loop': 'asyncio', 'lifespan': 'off'}
+
+"
+    ["$root/core/utils.py"]="
+import typing
+from _morm_config_ import DB_POOL
+from morm.db import DB
+from $app_py_path.core.schemas.sql import Sql
+from morm.model import ModelType
+from $app_py_path.core.models import _all_models_
+from $app_py_path.core.schemas.res import Res
+
+
+
+def fixType(x):
+    '''Fix type of string to int, float, bool, or None to be used in SQL queries
+
+    Args:
+        x (str): string to fix
+
+    Returns:
+        any: int, float, bool, or None to be used in SQL queries
+    '''
+    x = str(x).strip()
+    if x.lower() in ['true','ok','yes','y']: return True
+    if x.lower() in ['false','','no','n']: return False
+    if x.lower() in ['null','none','na','n/a']: return None
+    try:
+        if '.' in x: return float(x)
+        return int(x)
+    except:
+        return x
+
+
+async def get_table_info(m: ModelType):
+    '''Get table/model information
+
+    Args:
+        m (ModelType): Model class
+
+    Returns:
+        dict: table/model information
+    '''
+    db = DB(DB_POOL)
+    db_table = m.Meta.db_table
+    meta = m.Meta.__dict__.copy()
+    try:
+        del meta['_field_defs_']
+        del meta['f']
+        for k in list(meta.keys()):
+            if k.startswith('_'): del meta[k]
+    except KeyError: ...
+    res = {
+        'general':{
+            'name': m.__name__,
+            'description': m.__doc__,
+            '_repr': repr(m),
+            },
+        'fields_detail': m._get_fields_json_(),
+        'meta': meta,
+    }
+    q = f'''
+        select
+            relname as table_name,
+            nspname as schema,
+            reltuples as row_counts,
+            pg_relation_size(c.oid) AS size
+        from pg_class c
+        JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        where relkind='r' and relname = '{db_table}'
+        '''
+    r = await db.fetch(q)
+    res['general']['stat'] = dict(**r[0])
+    # q = f'SELECT column_name, ordinal_position as index, udt_name, data_type, column_default, character_maximum_length FROM information_schema.columns WHERE table_name = '{db_table}';'
+    # r = await db.fetch(q)
+    # res['cols'] = r
+    # print(m._get_all_fields_json_())
+    return res
+
+async def run_sql(sql: Sql, timeout: float=None):
+    '''Run raw SQL query
+
+    Args:
+        sql (Sql): Sql dataclass object
+
+    Returns:
+        query result, depending on query function: sql.fn
+    '''
+    try:
+        db = DB(DB_POOL)
+        fn = getattr(db, sql.fn)
+        model_class = _all_models_[sql.model] if sql.model else None
+        return await fn(sql.q, *sql.vals, timeout=timeout, model_class=model_class)
+    except KeyError as e:
+        raise Res(status=Res.Status.not_found, errors=[f'Model not found: {sql.model}'])
+    except AttributeError as e:
+        raise Res(status=Res.Status.bad_request, errors=[f'Unknown fn: {fn}'])
+    except Exception as e:
+        raise Res(status=Res.Status.internal_server_error, errors=[f'Error: {e}'])
+
+"
+    ["$root/core/err_handler.py"]="'''error handler for $app_py_path api'''
+from fastapi.exceptions import RequestValidationError, WebSocketRequestValidationError
+from fastapi.utils import is_body_allowed_for_status_code
+from fastapi.websockets import WebSocket
+from starlette.exceptions import HTTPException
+from starlette.requests import Request
+from starlette.responses import Response
+from $app_py_path.core.schemas.res import Res
+
+
+def parse_exc(exc):
+    errors = []
+    for e in exc.errors():
+        errors.append(e['msg']+': '+'.'.join(e['loc'][1:]))
+    return errors
+
+async def http_exception_handler(request: Request, exc: HTTPException) -> Response:
+    headers = getattr(exc, 'headers', None)
+    if not is_body_allowed_for_status_code(exc.status_code):
+        return Response(status_code=exc.status_code, headers=headers)
+    if isinstance(exc, Res): return exc
+    return Res(status=Res.Status[exc.status_code], errors=[exc.detail], headers=headers)
+
+async def request_validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> Res:
+    errors = parse_exc(exc)
+    return Res(status=Res.Status.invalid_request, errors=errors)
+
+async def websocket_request_validation_exception_handler(
+    websocket: WebSocket, exc: WebSocketRequestValidationError
+) -> None:
+    errors = parse_exc(exc)
+    await websocket.close(
+        code=Res.Status.invalid_request_ws.status, reason=Res(Res.Status.invalid_request_ws, errors=errors).render()
+    )
+
+async def page_not_found_exception_handler(request: Request, exc: Exception) -> Res:
+    if isinstance(exc, Res): return exc
+    return Res(status=Res.Status.not_implemented, errors=[Res.Status.not_implemented.msg])
+
+"
+
+    ["$root/core/schemas/sql.py"]="
+from pydantic import BaseModel as PydanticBaseModel
+from pydantic import Field
+
+
+class Sql(PydanticBaseModel):
+    '''SQL query schema'''
+    fn:str = Field(default='fetch', description='Query function to run: fetch, fetchrow, fetchval, execute')
+    q:str = Field(description='SQL query', min_length=1)
+    vals:list = Field(default=[], description='Values to be passed to query: replacements for $1, $2, etc. sequentially')
+    model:str = Field(default='', description='Model name to be used for query')
+
+"
+
+    ["$root/core/schemas/internal.py"]="
+from collections.abc import Mapping
+import typing
+from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel as PydanticBaseModel, Field, field_serializer
+
+DataType = typing.TypeVar('DataType')
+_global_Res_ = {} # global dict to store all response schemas
+
+class Map(Mapping):
+    '''Map class to be used as a dict with dot notation'''
+    _fields_ = None
+
+    def __init__(self, **kwargs):
+        self._fields_ = kwargs
+        for k,v in kwargs.items():
+            setattr(self, k, v)
+
+    def __iter__(self):
+      for k,v in self._fields_.items():
+        yield k,v
+
+    def __len__(self) -> int:
+        return self._fields_.__len__()
+
+    def __getitem__(self, __key):
+        return self._fields_[__key]
+
+    def __eq__(self, __other: object) -> bool:
+        return isinstance(__other, Map) and self._fields_ == __other._fields_
+
+    def keys(self):
+        return self._fields_.keys()
+
+
+class _Status_Meta_(type):
+    unknown_status_error = Map(status=500, msg='unknown_status_error') # when status code is not defined in this class instance i.e Status class
+    def  __getitem__(cls, k):
+        if isinstance(k, str):
+            return getattr(cls, k, cls.unknown_status_error)
+        for key,v in cls.__dict__.items():
+            if isinstance(v, Map) and v.status == k:
+                return v
+        return cls.unknown_status_error
+
+
+class _Res(PydanticBaseModel, typing.Generic[DataType]):
+    '''Base response schema (internal use only)'''
+    data:DataType = Field(default=None, description='Response data')
+
+    @field_serializer('data')
+    def serialize_data(self, v, _info):
+        return jsonable_encoder(v)
+
+"
+
+    ["$root/core/schemas/status.py"]="'''Our status codes in Map(status, msg) object'''
+
+from $app_py_path.core.schemas.internal import Map, _Status_Meta_
+
+class Status(metaclass=_Status_Meta_):
+    '''HTTP status codes in Map(status, msg) object
+
+    statuses can be accessed by dot notation (e.g Status.success) or by index (e.g Status[200] or Status['success'])
+    '''
+    success = Map(status=200, msg='success')
+    bad_request = Map(status=400, msg='bad_request')
+    unauthorized = Map(status=401, msg='unauthorized')
+    forbidden = Map(status=403, msg='forbidden')
+    not_found = Map(status=404, msg='not_found')
+    invalid_request = Map(status=422, msg='invalid_request')
+    invalid_request_ws = Map(status=1008, msg='invalid_request') # for websocket
+    internal_server_error = Map(status=500, msg='internal_server_error')
+    bad_gateway = Map(status=502, msg='bad_gateway')
+    service_unavailable = Map(status=503, msg='service_unavailable')
+    gateway_timeout = Map(status=504, msg='gateway_timeout')
+    not_implemented = Map(status=501, msg='not_implemented')
+
+"
+
+    ["$root/core/schemas/res.py"]="'''Response schemas'''
+import typing, re
+from starlette.datastructures import MutableHeaders
+from starlette.exceptions import HTTPException
+from fastapi.responses import ORJSONResponse
+from starlette.background import BackgroundTask
+from pydantic import Field, create_model
+from $app_py_path.core.schemas.internal import _global_Res_, DataType, _Res
+from $app_py_path.core.schemas.status import Status, Map
+
+
+class Res(HTTPException, ORJSONResponse, typing.Generic[DataType]):
+    '''Response schema, can be raised as exception or returned as response
+
+    #### Res.schema
+    New response schema can be created using the Res.schema() class method.
+    This methods creates a new response schema with custom default status code and message if not exists already.
+
+    #### Res.schema_all
+    This method returns response schema for different status codes to be used for 'responses' parameter in router decorators for swagger doc.
+
+    '''
+
+    Status = Status # shortcut to Status class
+
+    def __init__(
+        self,
+        data: typing.Optional[DataType] = None,
+        status: Map=Status.success,
+        errors: typing.Optional[list] = None,
+        warnings: typing.Optional[list] = None,
+        headers: typing.Optional[dict] = None,
+        media_type: typing.Optional[str] = None,
+        background: typing.Optional[BackgroundTask] = None
+    ) -> None:
+        '''Response schema class, can be raised as Exception or returned as a response directly'''
+        HTTPException.__init__(self, status.status, detail=status.msg, headers=headers)
+        errors = [status.msg] if status != Status.success and not errors else errors
+        ResClass = self.__class__.schema(DataType, status)
+        ORJSONResponse.__init__(self, content=ResClass(data=data,status=status.status, msg=status.msg, errors=errors, warnings=warnings).model_dump(), status_code=status.status, headers=headers, media_type=media_type, background=background)
+
+    @classmethod
+    def schema(cls, dType: DataType, status: Map):
+        '''Create and return response schema with custom default status code and message if not exists already'''
+        dataTypeName = dType.__name__ if hasattr(dType, '__name__') else str(dType)
+        dataTypeName = re.sub(r'[^\w]', '_', dataTypeName)
+        name = f'Res{dataTypeName}{status.status}{status.msg}'
+        if name not in _global_Res_:
+            _global_Res_[name] = create_model(name, __base__=_Res[dType],
+                                    status=(int, Field(default=status.status, description='HTTP status code')),
+                                    msg=(str, Field(default=status.msg, description='response message')),
+                                    errors=(typing.Optional[list], Field(default=None, description='List of errors')),
+                                    warnings=(typing.Optional[list], Field(default=None, description='List of warnings')),
+
+                            )
+        return _global_Res_[name]
+
+    @classmethod
+    def schema_all(cls, dType: DataType=None):
+        '''Return response schema for different status codes to be used for 'responses' parameter in router decorators for swagger doc'''
+        res_all = {}
+        for k,v in Status.__dict__.items():
+            if isinstance(v, Map):
+                dtype = dType if v.status == 200 else None
+                res_all[v.status] = {'description': v.msg, 'model': Res.schema(dtype, v)}
+        return res_all
+
+    @property
+    def headers(self) -> MutableHeaders:
+        return super(ORJSONResponse, self).headers
+
+    @headers.setter
+    def headers(self, v: dict|None) -> MutableHeaders:
+        self.init_headers(v)
+
+"
+
+    ["$root/core/models/__init__.py"]="
+'''All models are available here in _all_models_ dict by their names.
+
+Please have unique names for your models to make proper use of the
+_all_models_ dict.
+'''
+
+import glob, os
+from morm.utils import import_module
+from morm.model import ModelType
+from $app_py_path.core.settings import BASE_DIR
+
+_all_models_ = {}
+
+for file in glob.glob(os.path.join(os.path.dirname(__file__), '*.py')):
+    if file.endswith('__init__.py'):
+        continue
+    module = import_module(file, base_path=BASE_DIR)
+    _all_models_.update(dict([(name, cls) for name, cls in module.__dict__.items() if isinstance(cls, ModelType) and not getattr(getattr(cls, 'Meta', None), 'abstract', True)]))
+
+"
+
+    ["$root/core/models/base.py"]="
+from morm.pg_models import BaseCommon, Base, Model
+
+# BaseCommon defines id, created_at and updated_at fields,
+# while pg_models.Base defines only id,
+# and pg_models.Model defines nothing.
+
+class MyBase(BaseCommon):
+    class Meta:
+        abstract = True
+
+"
+    ["$root/core/models/user.py"]="
+from morm.fields import Field
+from morm.fields.common import ForeignKey, EmailField
+from $app_py_path.core.models.base import MyBase
+
+
+class Org(MyBase):
+    '''All available organizations'''
+    class Meta:
+        db_table = 'orgs'
+        exclude_fields_up = ('created_at',)
+    name = Field('varchar(255)')
+    url = Field('varchar(255)')
+    description = Field('text')
+    perms = Field('integer[]', default=[])
+    isLive = Field('boolean')
+
+
+class User(MyBase):
+    '''Main user model'''
+    class Meta:
+        db_table = 'users'
+        exclude_fields_up = ('created_at',)
+        exclude_fields_down = ('password',)
+
+    username = Field('varchar(65)')
+    fullname = Field('varchar(65)')
+    nickname = Field('varchar(20)')
+    email = EmailField(max_length=255, unique=True)
+    password = Field('varchar(255)')
+    bio = Field('text')
+    profession = Field('varchar(255)', default='Unknown')
+    org = ForeignKey(Org, on_delete='SET NULL')
+    lastLogin = Field('timestamp')
+    isSuperUser = Field('boolean')
+    perms = Field('integer[]', default=[])
+    isLive = Field('boolean')
+
+
+class UserProfile(User):
+    '''A proxy model for normal user profile'''
+    class Meta:
+        proxy = True
+        exclude_fields_up = ('created_at',)
+        exclude_fields_down = ('password','isSuperUser','isLive', 'lastLogin')
+
+"
+    ["$root/core/settings.py"]="
+import os
+
+DEBUG = True if os.getenv('DEBUG', 'true').lower() == 'true' else False
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+"
+    ["$root/v1/routers/__init__.py"]="
+'''Make a single APIRouter that contains all the routers.
+
+We will automatically include all routers (module.router) in this directory
+sequentially. You should give sequential names to your router modules
+such as route_0001_admin.py, route_0002_user.py, etc...
+'''
+
+from fastapi import APIRouter
+import glob, os
+from morm.utils import import_module
+from $app_py_path.core.settings import BASE_DIR
+
+router = APIRouter()
+
+__all_router_paths = [] # This is for sorting the routers
+for file in glob.glob(os.path.join(os.path.dirname(__file__), '*.py')):
+    if file.endswith('__init__.py'):
+        continue
+    __all_router_paths.append(file)
+sorted(__all_router_paths)
+for file in __all_router_paths:
+    module = import_module(file, base_path=BASE_DIR)
+    router.include_router(module.router)
+del __all_router_paths
+
+"
+    ["$root/v1/routers/root.py"]="'''project root routers'''
+from typing import List
+from fastapi import APIRouter, Request
+from pydantic import BaseModel
+from $app_py_path.core.settings import DEBUG
+from $app_py_path.core.schemas.res import Res
+
+
+router = APIRouter()
+
+class RequestData(BaseModel):
+    method: str
+    url: str
+    base_url: str
+    headers: dict
+    cookies: dict
+    query_params: dict
+    form: list
+    body: str
+
+async def return_request(request: Request) -> Res[RequestData]:
+    body = await request.body()
+    form = await request.form()
+    data = RequestData(
+        method=request.method,
+        url=str(request.url),
+        base_url=str(request.base_url),
+        headers=dict(request.headers),
+        cookies=request.cookies,
+        query_params=dict(request.query_params),
+        form=list(form),
+        body=body.decode('utf-8'),
+    )
+    return Res(data)
+
+
+@router.get('/', responses=Res.schema_all(RequestData))
+async def endpoint_root(request: Request):
+    '''
+    All available request data:
+
+    'app', 'auth', 'base_url', 'body', 'client', 'close', 'cookies', 'form', 'get', 'headers', 'is_disconnected', 'items', 'json', 'keys', 'method', 'path_params', 'query_params', 'receive', 'scope', 'send_push_promise', 'session', 'state', 'stream', 'url', 'url_for', 'user', 'values'
+    '''
+    return await return_request(request)
+
+
+############ project root router: EndpointList ############
+class Endpoint(BaseModel):
+    title: str
+    url: str
+    version: str
+
+class EndpointList(BaseModel):
+    title: str
+    endpoints: List[Endpoint]
+
+endpoint_list = APIRouter()
+@endpoint_list.get('/', responses=Res.schema_all(EndpointList))
+async def get_endpoint_list(request: Request):
+    return Res(
+        EndpointList(
+            title='Welcome to our API base.',
+            endpoints=[
+                Endpoint(title='v1 endpoint of the API', url='/v1', version='v1'),
+            ]
+        )
+    )
+
+"
+
+    ["$root/tests/v1/test_sample.py"]="
+from fastapi.testclient import TestClient
+from $app_py_path.main import app
+
+client = TestClient(app)
+
+def test_sample():
+    response = client.get('/')
+    assert response.status_code == 200
+    assert response.json() == {'msg': 'Hello World'}
+"
+    ["requirements.txt"]="morm
+fastapi
+uvicorn
+gunicorn
+python-multipart
+"
+    [".gitignore"]="*.pyc
+/build/
+/dist/
+/*egg-info/
+__pycache__/
+*.html
+*.old
+*.log
+.vscode/
+.idea/
+/.venv/
+/venv/
+/.env*
+.pytest_cache
+/htmlcov
+/site/
+.coverage
+coverage.xml
+Pipfile.lock
+.ipynb_checkpoints
+.mypy_cache
+
+# vim temporary files
+*~
+.*.sw?
+.cache
+"
+    ["nginx/default"]="server {
+    listen 80 default_server;
+
+    server_name _;
+
+    location /.well-known/acme-challenge/ {
+        alias $HOME/.acme-challenge/;
+        try_files \$uri =404;
+    }
+
+    location / {
+        return 302 https://\$host\$request_uri;
+    }
+}
+
+"
+    ["nginx/$app_py_path"]="
+server {
+    listen 443 ssl;
+    server_name $app_py_path.com www.$app_py_path.com;
+
+    ssl_certificate $HOME/neurocert/fullchain.crt;
+    ssl_certificate_key $HOME/neurocert/dom.key;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA;
+    ssl_session_cache shared:SSL:50m;
+    #ssl_dhparam /path/to/server.dhparam;
+    ssl_prefer_server_ciphers on;
+
+    gzip on;
+    gzip_comp_level    5;
+    gzip_min_length    256;
+    gzip_proxied       any;
+    gzip_vary          on;
+
+    gzip_types
+    application/atom+xml
+    application/javascript
+    application/json
+    application/ld+json
+    application/manifest+json
+    application/rss+xml
+    application/vnd.geo+json
+    application/vnd.ms-fontobject
+    application/x-font-ttf
+    application/x-web-app-manifest+json
+    application/xhtml+xml
+    application/xml
+    font/opentype
+    image/bmp
+    image/svg+xml
+    image/x-icon
+    text/cache-manifest
+    text/css
+    text/plain
+    text/vcard
+    text/vnd.rim.location.xloc
+    text/vtt
+    text/x-component
+    text/x-cross-domain-policy;
+    # text/html is always compressed by gzip module
+
+    access_log  /var/log/nginx/$app_py_path.access.log;
+    error_log  /var/log/nginx/$app_py_path.error.log;
+
+
+    location ~ ^.*\.txt\$ {
+        access_log off; log_not_found off;
+        root $HOME/$app_py_path/raw;
+    }
+    location /img/ {
+        access_log off; log_not_found off;
+        root $HOME/$app_py_path/raw;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        access_log off; log_not_found off;
+        root $HOME/$app_py_path/raw;
+        expires 1d;
+    }
+
+    ##index.php should be converted to dir links, make it look like we run on PHP!
+    location ~ ^/(.*/)index[.](php)([^/]*)\$ {
+        return 301 /\$1\$3;
+    }
+    ##for domain/index.php, make it look like we run on PHP!
+    location ~ ^/index[.]php([^/]*)\$ {
+        return 301 /\$1;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/tmp/.$app_py_path.sock;
+    }
+
+}
+
+"
+    ["run"]="#!/bin/bash
+. ./vact
+uvicorn $app_py_path.main:app --reload --loop asyncio
+"
+    ["mgr"]="#!/bin/bash
+. ./vact
+python mgr.py \${1+\"\$@\"}
+"
+    ["$app_py_path.service"]="[Unit]
+Description=$app_py_path daemon
+After=network.target
+
+[Service]
+User=$USER
+Group=$USER
+WorkingDirectory=$mydir
+ExecStart=$mydir/gunicorn.sh
+
+[Install]
+WantedBy=multi-user.target
+
+"
+    ["gunicorn.sh"]="#!/bin/bash
+. ~/.bashrc
+export LC_MEASUREMENT=en_US.UTF-8
+export LC_PAPER=en_US.UTF-8
+export LC_MONETARY=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_NAME=en_US.UTF-8
+export LC_ADDRESS=en_US.UTF-8
+export LC_NUMERIC=en_US.UTF-8
+export LC_TELEPHONE=en_US.UTF-8
+export LC_IDENTIFICATION=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+
+
+export ${app_py_path^^}_ENV=live # use live env (from vact)
+
+################################################################################
+############################ Cleanups and resets ###############################
+################################################################################
+
+################################################################################
+. ./vact
+gunicorn --timeout 300 --access-logfile - --workers $((2*$(nproc --all)+1)) -k $app_py_path.workers.MyUvicornWorker  --worker-connections=1000 $app_py_path.main:app --bind unix:/tmp/.$app_py_path.sock
+
+"
+
+)
+
+for dir in "${dirs[@]}"; do
+    mkdir -p "$dir"
+    file="$dir/__init__.py"
+    if [[ -f "$file" ]]; then
+        echo "File exists: $file"
+        continue
+    fi
+    if [[ "$dir" != 'nginx' ]]; then
+        echo "${files[$file]}" > "$file"
+    fi
+done
+
+for key in "${!files[@]}"; do
+    if [[ -f "$key" ]]; then
+        echo "File exists: $key"
+        continue
+    fi
+    echo "${files[$key]}" > "$key"
+done
+
+morm_admin init -p $app_py_path
+chmod +x ./run ./mgr ./gunicorn.sh
+. ./vact
+pip install -r requirements.txt
