@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: minir
+Version: 0.1.6
+Summary: A minimal implementation of an intermediate representation
+Author-email: Sinjin Jeong <sjjeong94@gmail.com>
+License: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: onnx
+Requires-Dist: numpy
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Dynamic: license-file
+
+# minir
+A minimal implementation of an intermediate representation
