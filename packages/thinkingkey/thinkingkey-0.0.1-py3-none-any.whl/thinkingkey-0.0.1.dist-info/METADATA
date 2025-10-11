@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: thinkingkey
+Version: 0.0.1
+Summary: ThinkingKey Python package with greet and project info.
+License: MIT
+License-File: LICENSE
+Author: Victor Amit
+Author-email: dev@amit.work
+Requires-Python: >=3.9
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Project-URL: homepage, https://www.upflame.org/thinkingkey
+Project-URL: repository, https://github.com/upflame/thinkingkey
+Description-Content-Type: text/markdown
+
+# ThinkingKey Package
+
+Minimal Python package with:
+
+- Project info (name, version, author)
+- Greet function
+
+## Usage
+
+```python
+from thinkingkey import greet, get_author
+
+print(get_author())
+print(greet("Victor"))
+
