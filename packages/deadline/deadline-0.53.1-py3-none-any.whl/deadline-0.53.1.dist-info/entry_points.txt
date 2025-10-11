@@ -1,0 +1,6 @@
+[console_scripts]
+deadline = deadline.client.cli:main
+
+[gui_scripts]
+deadline-dev-gui = deadline.client.cli.deadline_dev_gui_main:main
+deadlinew = deadline.client.cli:main
