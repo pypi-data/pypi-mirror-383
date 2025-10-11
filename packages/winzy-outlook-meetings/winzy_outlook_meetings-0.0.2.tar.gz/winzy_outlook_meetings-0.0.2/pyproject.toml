@@ -1,0 +1,34 @@
+[project]
+name = "winzy-outlook-meetings"
+version = "0.0.2"
+description = "Get outlook calendar entries in commandline."
+readme = "README.md"
+authors = [{name = "Sukhbinder Singh"}]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License"
+]
+dependencies = [
+    "winzy",
+    "dateutils",
+]
+
+[project.urls]
+Homepage = "https://github.com/sukhbinder/winzy-outlook-meetings"
+Changelog = "https://github.com/sukhbinder/winzy-outlook-meetings/releases"
+Issues = "https://github.com/sukhbinder/winzy-outlook-meetings/issues"
+CI = "https://github.com/sukhbinder/winzy-outlook-meetings/actions"
+
+[project.entry-points."winzy.plugins"]
+outcal = "winzy_outlook_meetings:outcal_plugin"
+
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
