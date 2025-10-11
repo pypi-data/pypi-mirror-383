@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: datapizza-ai-clients-mistral
+Version: 0.0.2
+Summary: Mistral AI client for the datapizza-ai framework
+Author-email: Datapizza <datapizza@datapizza.tech>
+License: MIT
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: <4,>=3.10.0
+Requires-Dist: datapizza-ai-core>=0.0.0
+Requires-Dist: mistralai<2.0.0,>=1.2.0
+Requires-Dist: requests<3.0.0,>=2.25.0
