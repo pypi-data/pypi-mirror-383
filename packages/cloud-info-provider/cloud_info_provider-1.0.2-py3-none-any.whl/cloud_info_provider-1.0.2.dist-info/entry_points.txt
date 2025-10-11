@@ -1,0 +1,11 @@
+[console_scripts]
+cloud-info-provider-service = cloud_info_provider.core:main
+
+[cip.formatters]
+glue21json = cloud_info_provider.formatters.glue:GLUE21Json
+
+[cip.providers]
+openstack = cloud_info_provider.providers.openstack:OpenStackProvider
+
+[cip.publishers]
+stdout = cloud_info_provider.publishers.stdout:StdOutPublisher
