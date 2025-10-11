@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="redturtle.bandi"
+    >
+
+  <utility
+      name="bandi_state"
+      component=".bandi_state.modify_bandi_state_query"
+      />
+
+</configure>

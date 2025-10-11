@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="redturtle.bandi"
+    >
+
+  <browser:page
+      name="bandi_renderer"
+      for="*"
+      class=".bandi_render.View"
+      template="bandi_render.pt"
+      permission="zope2.View"
+      layer="redturtle.bandi.interfaces.browserlayer.IRedturtleBandiLayer"
+      />
+
+</configure>
