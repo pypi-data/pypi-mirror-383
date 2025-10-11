@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: emoji-data
+Version: 0.5.0
+Summary: A library that represents emoji sequences and characters based on the Unicode® Technical Standard #51 Data Files
+Author-email: liu xue yan <liu_xue_yan@foxmail.com>
+License-Expression: GPL-3.0-or-later
+Project-URL: homepage, https://github.com/tanbro/emoji-data
+Project-URL: repository, https://github.com/tanbro/emoji-data.git
+Keywords: emoji,unicode
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Text Processing
+Classifier: Programming Language :: Python
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: importlib-resources; python_version < "3.9"
+Dynamic: license-file
+
+# emoji-data
+
+[![CI](https://github.com/tanbro/emoji-data/actions/workflows/python-package.yml/badge.svg)](https://github.com/tanbro/emoji-data/actions/workflows/python-package.yml)
+[![Documentation Status](https://readthedocs.org/projects/emoji-data/badge/?version=latest)](https://emoji-data.readthedocs.io/en/latest/?badge=latest)
+[![PyPI](https://img.shields.io/pypi/v/emoji-data.svg)](https://pypi.org/project/emoji-data/)
+
+A library that represents emoji sequences and characters based on the [Unicode® Technical Standard #51 Data Files](http://www.unicode.org/reports/tr51/#Data_Files_Table).
+
+## Install
+
+```sh
+pip install emoji-data
+```
+
+## How to use
+
+See [`docs/notebooks/example.ipynb`](docs/notebooks/example.ipynb)
