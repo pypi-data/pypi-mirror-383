@@ -1,0 +1,28 @@
+# Include essential files
+include README.md
+include LICENSE.md
+include CHANGELOG.md
+include CITATION.cff
+include pyproject.toml
+
+# Include tests (for sdist users)
+recursive-include tests *.py
+recursive-include tests/fixtures *.txt *.json *.csv
+
+# Exclude development and CI files
+prune .claude
+prune .github
+prune .vscode
+prune docs
+prune site
+exclude .gitignore
+exclude .markdownlint.yaml
+exclude .pre-commit-config.yaml
+exclude mkdocs.yml
+exclude uv.lock
+exclude CLAUDE.md
+
+# Exclude build artifacts
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .DS_Store
