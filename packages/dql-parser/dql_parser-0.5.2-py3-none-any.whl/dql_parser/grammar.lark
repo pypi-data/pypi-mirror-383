@@ -1,0 +1,194 @@
+// DQL (Data Quality Language) Grammar for Lark Parser
+// Adapted from docs/dql-specification.md
+
+// Start symbol
+?start: dql_file
+
+// Top-level structure
+// Story 1.9: INCLUDE and MACRO support now integrated
+dql_file: (include_directive | macro_definition | from_block)+
+
+// INCLUDE directive
+include_directive: INCLUDE STRING
+
+// MACRO definition
+macro_definition: DEFINE MACRO MACRO_NAME "(" parameter_list? ")" AS "{" expectation+ "}"
+parameter_list: MACRO_PARAM ("," MACRO_PARAM)*
+
+// MACRO invocation (used within expectations, handled by transformer)
+macro_invocation: USE MACRO MACRO_NAME "(" macro_args? ")"
+macro_args: arg ("," arg)*
+
+from_block: FROM model_name (expectation | macro_invocation)+
+
+// Model declaration
+model_name: IDENTIFIER
+
+// Expectation statement
+expectation: EXPECT target operator_clause severity_clause? cleaner_clause?
+
+// Target types
+target: column_target | row_target | expr_target
+
+column_target: "column" "(" STRING ")"
+row_target: "row" WHERE condition
+expr_target: expr
+
+// Operators
+operator_clause: operator_name operator_args?
+
+operator_name: to_be_null
+            | to_not_be_null
+            | to_match_pattern
+            | to_be_between
+            | to_be_in
+            | to_be_unique
+            | to_have_length
+            | to_be_greater_than
+            | to_be_less_than
+            | to_satisfy
+            | to_reference
+
+to_be_null: TO_BE_NULL
+to_not_be_null: TO_NOT_BE_NULL
+to_match_pattern: TO_MATCH_PATTERN
+to_be_between: TO_BE_BETWEEN
+to_be_in: TO_BE_IN
+to_be_unique: TO_BE_UNIQUE
+to_have_length: TO_HAVE_LENGTH
+to_be_greater_than: TO_BE_GREATER_THAN
+to_be_less_than: TO_BE_LESS_THAN
+to_satisfy: TO_SATISFY
+to_reference: TO_REFERENCE
+
+TO_BE_NULL.2: "to_be_null"i
+TO_NOT_BE_NULL.2: "to_not_be_null"i
+TO_MATCH_PATTERN.2: "to_match_pattern"i
+TO_BE_BETWEEN.2: "to_be_between"i
+TO_BE_IN.2: "to_be_in"i
+TO_BE_UNIQUE.2: "to_be_unique"i
+TO_HAVE_LENGTH.2: "to_have_length"i
+TO_BE_GREATER_THAN.2: "to_be_greater_than"i
+TO_BE_LESS_THAN.2: "to_be_less_than"i
+TO_SATISFY.2: "to_satisfy"i
+TO_REFERENCE.2: "to_reference"i
+
+operator_args: "(" arg_list ")"
+arg_list: arg ("," arg)*
+arg: STRING | NUMBER | list | IDENTIFIER
+
+list: "[" arg_list "]"
+
+// Severity
+severity_clause: SEVERITY severity_level
+severity_level: SEVERITY_CRITICAL | SEVERITY_WARNING | SEVERITY_INFO
+
+SEVERITY.2: "severity"i
+SEVERITY_CRITICAL: "critical"i
+SEVERITY_WARNING: "warning"i
+SEVERITY_INFO: "info"i
+
+// Cleaners (Epic 3)
+cleaner_clause: cleaner_call+
+cleaner_call: ON_FAILURE CLEAN_WITH "(" STRING cleaner_args? ")"
+cleaner_args: "," arg_list
+
+// Row-level conditions
+condition: comparison | logical_expr | "(" condition ")"
+
+comparison: expr COMPARATOR expr
+
+logical_expr: condition (AND | OR) condition
+           | NOT condition
+
+// Expressions with proper precedence (PEMDAS)
+// expr: addition/subtraction (lowest precedence)
+// term: multiplication/division/modulo
+// factor: atoms (highest precedence)
+
+?expr: term
+     | expr "+" term   -> add
+     | expr "-" term   -> subtract
+
+?term: factor
+     | term "*" factor -> multiply
+     | term "/" factor -> divide
+     | term "%" factor -> modulo
+
+?factor: atom
+       | "(" expr ")"  -> parentheses
+
+?atom: NUMBER          -> number_literal
+     | STRING          -> string_literal
+     | NULL            -> null_literal
+     | field_ref       -> field_reference
+     | function_call
+
+// Field reference (simple identifier only)
+field_ref: FIELD_NAME
+
+FIELD_NAME: /[a-z_][a-z0-9_]*/
+
+value: STRING | NUMBER | NULL
+
+// Function calls (string, date, and CONCAT)
+function_call: string_func | date_func | concat_func
+
+// String functions
+string_func: upper_func | lower_func | trim_func | length_func
+
+upper_func: "UPPER"i "(" expr ")"
+lower_func: "LOWER"i "(" expr ")"
+trim_func: "TRIM"i "(" expr ")"
+length_func: "LENGTH"i "(" expr ")"
+
+// Date functions
+date_func: year_func | month_func | day_func | age_func
+
+year_func: "YEAR"i "(" expr ")"
+month_func: "MONTH"i "(" expr ")"
+day_func: "DAY"i "(" expr ")"
+age_func: "AGE"i "(" expr ")"
+
+// CONCAT function (variable arguments)
+concat_func: "CONCAT"i "(" expr ("," expr)+ ")"
+
+COMPARATOR: "==" | "!=" | "<=" | ">=" | "<" | ">"
+
+// Lexical tokens (case-insensitive keywords)
+FROM.2: "from"i
+EXPECT.2: "expect"i
+WHERE.2: "where"i
+NULL.2: "null"i
+AND.2: "and"i
+OR.2: "or"i
+NOT.2: "not"i
+ON_FAILURE.2: "on_failure"i
+CLEAN_WITH.2: "clean_with"i
+
+// INCLUDE and MACRO keywords - Story 1.9: Now active
+// Higher priority (3) to match before MACRO_NAME
+INCLUDE.3: "include"i
+DEFINE.3: "define"i
+MACRO.3: "macro"i
+USE.3: "use"i
+AS.3: "as"i
+
+// Identifiers (PascalCase model names)
+IDENTIFIER: /[A-Z][a-zA-Z0-9_]*/
+
+// Macro names and parameters (lowercase identifiers)
+MACRO_NAME: /[a-z][a-z0-9_]*/
+MACRO_PARAM: /[a-z][a-z0-9_]*/
+
+// Strings (single or double quotes)
+STRING: /"[^"]*"/ | /'[^']*'/
+
+// Numbers (integers and floats)
+NUMBER: /[+-]?[0-9]+(\.[0-9]+)?/
+
+// Whitespace and comments (ignored)
+%import common.WS
+%ignore WS
+COMMENT: /#[^\n]*/
+%ignore COMMENT
