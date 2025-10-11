@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aria2py"
+version = "0.1.2"
+description = "A modern, type-safe Python wrapper for aria2c with improved UX."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Omar Hanafy" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+keywords = ["aria2", "download", "bittorrent", "metalink", "rpc"]
+
+[project.urls]
+Homepage = "https://github.com/omar-hanafy/aria2py"
+"Bug Tracker" = "https://github.com/omar-hanafy/aria2py/issues"
+
+[tool.setuptools.package-data]
+aria2py = ["py.typed"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aria2py*"]
