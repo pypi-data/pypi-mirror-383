@@ -1,0 +1,473 @@
+# Circuit Agent SDK - Python
+
+> **Clean, type-safe Python SDK for building cross-chain agents on the circuit platform**
+
+A Python SDK for building automated agents to deploy on Circuit. Features **2 low-level core methods** for maximum flexibility, plus **built-in platform integrations** for common on-chain operations—all with full type safety.
+
+> **💡 Best used with [Circuit Agents CLI](https://github.com/circuitorg/agents-cli)** - Deploy, manage, and test your agents with ease
+
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Core SDK API](#-core-sdk-api-only-2-methods) - Low-level transaction & event logging methods
+- [Cross-Chain Swaps with Swidge](#-cross-chain-swaps-with-swidge) - Token swaps & bridges
+- [Polymarket Prediction Markets](#-polymarket-prediction-markets) - Trading integration
+- [Session Memory Storage](#-session-memory-storage) - State management
+
+## ✨ Features
+
+- **🎯 Low-Level Core API**: 2 foundational methods (`send_log()`, `sign_and_send()`) for sending custom transactions
+- **🔒 Type Hinting**: Network parameter determines valid request shapes automatically
+- **🚀 Cross-Chain**: Unified interface for EVM and Solana networks
+- **🌉 Cross-Chain Swaps**: Built-in Swidge integration for seamless token swaps and bridges
+- **📈 Polymarket Integration**: Trade prediction markets with `sdk.polymarket.*` methods
+- **💾 Session Memory**: Key-value storage with `sdk.memory.*` methods for maintaining state
+
+## 🚀 Quick Start
+### Install the SDK
+```bash
+pip install circuit-agent-sdk
+# or with uv
+uv pip install circuit-agent-sdk
+```
+
+### Sample SDK Usage
+>**NOTE:** The fastest, and recommended, way to get started is to setup an agent via the circuit [CLI](https://github.com/circuitorg/agents-cli)'s 'circuit agent init' command. This will setup a sample agent directory with the necessary agent wireframe, and configure the cli to allow you for easy testing and deployment. You just simply need to add in your secret formula to the execution and stop functions.
+
+```python
+from agent_sdk import AgentSdk, SDKConfig
+
+# Initialize the sdk
+sdk = AgentSdk(SDKConfig(
+    session_id=123
+))
+```
+
+## 🎯 Core SDK API (Only 2 Methods!)
+
+> **Low-level building blocks** for direct blockchain interaction. Use these for maximum flexibility, or leverage our higher-level integrations (Swidge, Polymarket, Memory) for common operations.
+
+### 1. Add Logs to Timeline
+
+```python
+await sdk.send_log({
+    "type": "observe",
+    "short_message": "Starting swap operation"
+})
+```
+
+### 2. Sign & Send Transactions
+
+#### Ethereum (any EVM chain)
+
+```python
+# Native ETH transfer
+await sdk.sign_and_send({
+    "network": "ethereum:1",  # Chain ID in network string
+    "request": {
+        "to_address": "0x742d35cc6634C0532925a3b8D65e95f32B6b5582",
+        "data": "0x",
+        "value": "1000000000000000000"  # 1 ETH in wei
+    },
+    "message": "Sending 1 ETH"
+})
+
+# Contract interaction
+await sdk.sign_and_send({
+    "network": "ethereum:42161",  # Arbitrum
+    "request": {
+        "to_address": "0xTokenContract...",
+        "data": "0xa9059cbb...",  # encoded transfer()
+        "value": "0"
+    }
+})
+```
+
+#### Solana
+
+```python
+await sdk.sign_and_send({
+    "network": "solana",
+    "request": {
+        "hex_transaction": "010001030a0b..."  # serialized VersionedTransaction
+    }
+})
+```
+
+
+## 🌉 Cross-Chain Swaps with Swidge
+
+> **High-level abstraction** built on core SDK methods. Simplifies cross-chain token operations with a quote-and-execute pattern.
+
+The SDK includes built-in Swidge integration for seamless cross-chain token swaps and bridges. Swidge provides a unified interface that handles both **swapping** (exchanging tokens within the same network) and **bridging** (moving tokens across different networks) through a single API. Whether you're doing a simple token swap on Ethereum or bridging assets across chains, the same pattern works for everything.
+
+### Cross-Chain Swaps & Bridges
+
+#### Get a Quote
+
+```python
+# 🌉 Bridge USDC: Polygon → Arbitrum
+bridge_quote = sdk.swidge.quote({
+    "from": {"network": "ethereum:137", "address": user_address},
+    "to": {"network": "ethereum:42161", "address": user_address},
+    "amount": "50000000",  # $50 USDC (6 decimals)
+    "fromToken": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",  # USDC on Polygon
+    "toToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",   # USDC on Arbitrum
+    "slippage": "2.0",  # 2% slippage for cross-chain (default: 0.5%)
+    "priceImpact": "1.0"  # 1% max price impact (default: 0.5%)
+})
+
+# 🔄 Swap USDC → ETH on same chain (using defaults)
+swap_quote = sdk.swidge.quote({
+    "from": {"network": "ethereum:42161", "address": user_address},
+    "to": {"network": "ethereum:42161", "address": user_address},
+    "amount": "100000000",  # $100 USDC (6 decimals)
+    "fromToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",  # USDC
+    # toToken omitted = native ETH (default behavior)
+    # slippage defaults to "0.5", priceImpact defaults to "0.5"
+})
+
+if quote.success and quote.data:
+    print(f"💰 You'll receive: {quote.data.asset_receive.amountFormatted}")
+    print(f"💸 Total fees: {', '.join([f.name for f in quote.data.fees])}")
+elif quote.error:
+    # Check for specific error types
+    if quote.error == "Wallet not found":
+        print("👛 Wallet not found")
+    elif quote.error == "From wallet does not match session wallet":
+        print("🔐 Wallet address doesn't match session")
+    else:
+        print("❓ Quote not available for this swap")
+```
+
+#### Execute a Swap
+
+```python
+# 1️⃣ Get a quote first
+quote_request = {
+    "from": {"network": "ethereum:42161", "address": user_address},
+    "to": {"network": "ethereum:1", "address": user_address},
+    "amount": "100000000",  # $100 USDC
+    "fromToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",  # USDC on Arbitrum
+    "priceImpact": "0.1",  # Conservative price impact setting
+    "slippage": "5.0"
+}
+
+quote = sdk.swidge.quote(quote_request)
+
+# 2️⃣ Handle quote failures with retry logic
+if quote.error == "No quote provided":
+    print("❓ Quote not available, increasing price impact and retrying...")
+    # Retry with more permissive parameters
+    quote_request["priceImpact"] = "10.0"
+    quote_request["slippage"] = "10.0"
+    quote = sdk.swidge.quote(quote_request)
+
+# 3️⃣ Execute the swap if quote succeeded
+if quote.success and quote.data:
+    print(f"💰 Expected to receive: {quote.data.asset_receive.amountFormatted}")
+    print(f"💸 Fees: {', '.join([f'{f.name}: {f.amountFormatted}' for f in quote.data.fees])}")
+
+    result = sdk.swidge.execute(quote.data)
+
+    if result.success and result.data:
+        print(f"🎉 Status: {result.data.status}")
+
+        if result.data.status == "success":
+            if result.data.in_ and result.data.in_.txs:
+                print(f"📤 Sent: {result.data.in_.txs[0]}")
+            if result.data.out and result.data.out.txs:
+                print(f"📥 Received: {result.data.out.txs[0]}")
+            print("✅ Cross-chain swap completed!")
+        elif result.data.status == "failure":
+            print("❌ Transaction failed")
+        elif result.data.status == "refund":
+            print("↩️ Transaction was refunded")
+        elif result.data.status == "delayed":
+            print("⏰ Transaction is delayed")
+    else:
+        print(f"❌ Execute failed: {result.error}")
+else:
+    print(f"❌ Quote failed after retry: {quote.error}")
+    return {"success": False}
+```
+
+## 📈 Polymarket Prediction Markets
+
+> **High-level abstraction** built on core SDK methods. Simplifies prediction market trading on Polygon.
+
+> **Note:** Due to polymarket accepting buys and sells with different decimal precision, you may end up with dust positions when trying to sell to close out a position.
+
+
+The SDK includes built-in Polymarket integration for trading prediction markets on Polygon.
+
+### Polymarket Trading
+
+#### Get Positions
+
+Fetch all current positions for the session wallet:
+
+```python
+positions = sdk.polymarket.positions()
+
+if positions.success and positions.data:
+    print(f"Total value: ${positions.data.totalValue}")
+
+    for position in positions.data.positions:
+        print(f"{position.question} ({position.outcome})")
+        print(f"  Shares: {position.formattedShares}")
+        print(f"  Value: ${position.valueUsd}")
+        print(f"  P&L: ${position.pnlUsd} ({position.pnlPercent}%)")
+```
+
+#### Place Market Orders
+
+Execute buy or sell market orders:
+
+```python
+# Buy order - size is USD amount to spend
+buy_order = sdk.polymarket.market_order({
+    "tokenId": "123456789...",  # Market token ID
+    "size": 10,                  # Spend $10 to buy shares
+    "side": "BUY"
+})
+
+# Sell order - size is number of shares to sell
+sell_order = sdk.polymarket.market_order({
+    "tokenId": "123456789...",
+    "size": 5.5,                 # Sell 5.5 shares
+    "side": "SELL"
+})
+
+if buy_order.success and buy_order.data:
+    print(f"Order Success: {buy_order.data.success}")
+    print(f"Order ID: {buy_order.data.orderInfo.orderId}")
+    print(f"Filled at ${buy_order.data.orderInfo.priceUsd} per share")
+    print(f"Total cost: ${buy_order.data.orderInfo.totalPriceUsd}")
+else:
+    print(f"Error: {buy_order.error}")
+```
+
+#### Redeem Positions
+
+Claim winnings from settled positions:
+
+```python
+# Redeem all redeemable positions
+redemption = sdk.polymarket.redeem_positions()
+
+if redemption.success and redemption.data:
+    for result in redemption.data:
+        if result.success and result.transactionHash:
+            if result.position:
+                print(f"✅ Redeemed: {result.position.question}")
+            else:
+                print(f"✅ Unwrapped collateral")
+            print(f"   TX: {result.transactionHash}")
+        elif result.position:
+            print(f"❌ Failed to redeem: {result.position.question}")
+else:
+    print(f"Error: {redemption.error}")
+
+# Redeem specific positions by token IDs
+specific_redemption = sdk.polymarket.redeem_positions({
+    "tokenIds": ["123456", "789012"]
+})
+
+if specific_redemption.success and specific_redemption.data:
+    print(f"Redeemed {len([r for r in specific_redemption.data if r.success])} positions")
+else:
+    print(f"Error: {specific_redemption.error}")
+```
+
+### Complete Polymarket Example
+
+```python
+from agent_sdk import Agent, AgentRequest, AgentResponse, AgentSdk, SDKConfig
+
+def execution_function(request: AgentRequest) -> AgentResponse:
+    sdk = AgentSdk(SDKConfig(session_id=request.sessionId))
+
+    try:
+        # Get current positions
+        positions = sdk.polymarket.positions()
+
+        if not positions.success or not positions.data:
+            raise Exception(f"Failed to get positions: {positions.error}")
+
+        # Find specific position
+        target_position = next(
+            (p for p in positions.data.positions if p.tokenId == "YOUR_TOKEN_ID"),
+            None
+        )
+
+        if target_position and float(target_position.formattedShares) > 0:
+            # Sell position
+            sell_order = sdk.polymarket.market_order({
+                "tokenId": target_position.tokenId,
+                "size": float(target_position.formattedShares),
+                "side": "SELL"
+            })
+
+            if sell_order.success and sell_order.data:
+                sdk.send_log({
+                    "type": "observe",
+                    "short_message": f"Sold {target_position.outcome} for ${sell_order.data.orderInfo.totalPriceUsd}"
+                })
+
+        return AgentResponse(success=True)
+    except Exception as error:
+        sdk.send_log({
+            "type": "error",
+            "short_message": f"Error: {str(error)}"
+        })
+        return AgentResponse(success=False, error=str(error))
+
+
+def stop_function(request: AgentRequest) -> AgentResponse:
+    sdk = AgentSdk(SDKConfig(session_id=request.sessionId))
+
+    try:
+        # Redeem all settled positions on stop
+        redemption = sdk.polymarket.redeem_positions()
+
+        if redemption.success and redemption.data:
+            successful = [r for r in redemption.data if r.success]
+            sdk.send_log({
+                "type": "observe",
+                "short_message": f"✅ Redeemed {len(successful)} positions"
+            })
+        else:
+            sdk.send_log({
+                "type": "error",
+                "short_message": f"Failed to redeem positions: {redemption.error}"
+            })
+
+        return AgentResponse(success=True)
+    except Exception as error:
+        return AgentResponse(success=False, error=str(error))
+```
+
+## 💾 Session Memory Storage
+
+> **High-level abstraction** built on core SDK methods. Provides key-value storage for maintaining state across execution cycles without external databases.
+
+Store and retrieve data for your agent's session with simple get/set/delete/list operations. Memory is **automatically scoped to your session ID** - each session has isolated storage that persists across execution cycles.
+
+
+### Memory Operations
+
+#### Set a Value
+
+```python
+# Store user preferences
+result = sdk.memory.set("lastSwapNetwork", "ethereum:42161")
+
+if result.success and result.data:
+    print(f"Stored key: {result.data.key}")
+else:
+    print(f"Failed to store: {result.error}")
+```
+
+#### Get a Value
+
+```python
+# Retrieve stored preferences
+result = sdk.memory.get("lastSwapNetwork")
+
+if result.success and result.data:
+    print(f"Network: {result.data.value}")
+else:
+    print(f"Key not found: {result.error}")
+```
+
+#### Delete a Value
+
+```python
+# Clean up temporary data
+result = sdk.memory.delete("tempSwapQuote")
+
+if result.success and result.data:
+    print(f"Deleted key: {result.data.key}")
+```
+
+#### List All Keys
+
+```python
+# List all stored keys
+result = sdk.memory.list()
+
+if result.success and result.data:
+    print(f"Found {result.data.count} keys:")
+    for key in result.data.keys:
+        print(f"  - {key}")
+```
+
+### Complete Memory Example
+
+```python
+from agent_sdk import Agent, AgentRequest, AgentResponse, AgentSdk, SDKConfig
+import json
+
+def execution_function(request: AgentRequest) -> AgentResponse:
+    sdk = AgentSdk(SDKConfig(session_id=request.sessionId))
+
+    try:
+        # Check if this is a first run by looking for a stored counter
+        counter_result = sdk.memory.get("executionCount")
+
+        count = 0
+        if counter_result.success and counter_result.data:
+            count = int(counter_result.data.value)
+            sdk.send_log({
+                "type": "observe",
+                "short_message": f"Execution #{count + 1} - Welcome back!"
+            })
+        else:
+            sdk.send_log({
+                "type": "observe",
+                "short_message": "First execution - initializing..."
+            })
+
+        # Store some session data
+        sdk.memory.set("executionCount", str(count + 1))
+        sdk.memory.set("lastRunTimestamp", str(int(time.time())))
+        sdk.memory.set("userPreferences", json.dumps({
+            "network": "ethereum:42161",
+            "slippage": "2.0"
+        }))
+
+        # List all stored keys
+        list_result = sdk.memory.list()
+        if list_result.success and list_result.data:
+            sdk.send_log({
+                "type": "observe",
+                "short_message": f"Stored {list_result.data.count} keys: {', '.join(list_result.data.keys)}"
+            })
+
+        return AgentResponse(success=True)
+    except Exception as error:
+        sdk.send_log({
+            "type": "error",
+            "short_message": f"Error: {str(error)}"
+        })
+        return AgentResponse(success=False, error=str(error))
+
+
+def stop_function(request: AgentRequest) -> AgentResponse:
+    sdk = AgentSdk(SDKConfig(session_id=request.sessionId))
+
+    try:
+        # Clean up temporary data on stop
+        list_result = sdk.memory.list()
+        if list_result.success and list_result.data:
+            # Delete all temp keys
+            for key in list_result.data.keys:
+                if key.startswith("temp_"):
+                    sdk.memory.delete(key)
+
+        return AgentResponse(success=True)
+    except Exception as error:
+        return AgentResponse(success=False, error=str(error))
+```
