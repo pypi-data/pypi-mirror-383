@@ -1,0 +1,116 @@
+Metadata-Version: 2.4
+Name: PolyY
+Version: 0.1
+Summary: A Multi Y axis Plotting Library based on Plotly
+Home-page: https://github.com/Nashat90/
+Author: Nashat Jumaah Omar
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: plotly
+Requires-Dist: matplotlib
+Requires-Dist: pandas
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+
+# MultiYPlot: A Flexible Multi Y-Axis (A  Plotly based Library)
+
+MultiYPlot is a lightweight and intuitive Python library built on top of **Plotly** Graph Objects, designed to simplify the creation of multi–Y-axis interactive charts.With **PolyY**, you can easily visualize multiple datasets with different scales on the same figure — without losing clarity, interactivity, or control. The library provides a clean object-oriented interface to build, customize, and update complex figures in just a few lines of code.
+
+#### Key Features
+🔹 **Multi Y-Axis** Support: Effortlessly plot multiple series with independent Y-axes while maintaining alignment and scale integrity.
+🔹 Built on Plotly Graph Objects: Leverages Plotly’s powerful graph_objects module for **high-quality, interactive visualization**.
+🔹 Full Interactivity: Zoom, pan, hover, and toggle traces directly in the figure — no static images or re-renders needed.
+🔹 Fine Figure Control: Access and modify each trace, axis, and layout component with full **Plotly** compatibility.
+🔹 **Dynamic** Trace Management: Add, update, or restyle traces after creation — ideal for data exploration and dashboard integration.
+
+![All Plots](https://raw.githubusercontent.com/Nashat90/PolyY/main/images/5.png)
+
+
+# Example 1: Energy Industry Data
+```python
+import polyY.plotly as plot
+import pandas as pd
+
+elect = pd.read_csv(r"data\electricity_consumption_data.csv")
+x = elect.timestamp
+ys = ['power_kwh', 'voltage_v', 'current_a', 'temperature_c', 'reactive_power_kvar']
+clrs = ["pink", "magenta", "green", "purple", "orange"]
+
+figure = plot.MakeFigure("Power Consumption Metrics", "plotly_dark")
+for i in range(5):
+    figure.add_trace(x, elect[ys[i]].to_list(), name=ys[i], kind="line", color=clrs[i])
+figure.get_figure().update_layout(width=1500, height=800)
+```
+![Energy Consumption](https://raw.githubusercontent.com/Nashat90/PolyY/main/images/1.png)
+
+
+# Example 2: Oil and Gas Data
+```python
+import polyY.plotly as plot
+import pandas as pd
+
+data = pd.read_csv(r"data\oil and gas.txt", sep="\t")
+x = data.Time_Days
+ys = ['Gas_Volume', 'Water_Volume_', 'Casing_Pressure_', 'Active_Pressure_', 'Line_Pressure_', 'Calculated_Sandface_Pressure_']
+clrs = ["olive", "blue", "magenta", "red", "orange", "green"]
+
+figure = plot.MakeFigure("Oil and Gas Production Metrics", "none")
+for i in range(6):
+    figure.add_trace(x, data[ys[i]].to_list(), name=ys[i], kind="line", color=clrs[i])
+figure.get_figure().update_layout(width=1500, height=800)
+```
+![Oil and Gas Metrics](https://raw.githubusercontent.com/Nashat90/PolyY/main/images/2.png)
+
+
+# Example 3: Weather and Forecast Data
+```python
+import polyY.plotly as plot
+import pandas as pd
+
+data = pd.read_csv(r"data\weather_data_500.csv")
+x = data.timestamp
+ys = ['humidity_%', 'wind_speed_m_s', 'rainfall_mm', 'solar_radiation_w_m2', 'pressure_hpa', 'temperature_c']
+clrs = ["blue", "orange", "green", "magenta", "red", "olive"]
+
+figure = plot.MakeFigure("Weather and Forecast Metrics", "ggplot2")
+for i in range(6):
+    figure.add_trace(x, data[ys[i]].to_list(), name=ys[i], kind="line", color=clrs[i])
+figure.get_figure().update_layout(width=1500, height=800)
+```
+![Weather Metrics](https://raw.githubusercontent.com/Nashat90/PolyY/main/images/3.png)
+
+
+# Example 4: Combo Chart
+```python
+import polyY.plotly as plot
+import pandas as pd
+
+data = pd.read_csv(r"data\oil and gas.txt", sep="\t")
+x = data.Time_Days
+ys = ['Gas_Volume', 'Water_Volume_', 'Casing_Pressure_', 'Active_Pressure_']
+clrs = ["olive", "blue", "magenta", "red"]
+types = ["area", "area", "line", "scatter"]
+
+figure = plot.MakeFigure("Combo Chart Example", "none")
+for i in range(4):
+    figure.add_trace(x, data[ys[i]].to_list(), name=ys[i], kind=types[i], color=clrs[i])
+figure.get_figure().update_layout(width=1500, height=800)
+
+```
+![Combo Chart](https://raw.githubusercontent.com/Nashat90/PolyY/main/images/4.png)
+
+
+
+
+
+
