@@ -1,0 +1,43 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Kontoen er allerede konfigureret",
+            "reauth_successful": "Genautentificering lykkedes"
+        },
+        "error": {
+            "invalid_auth": "Ugyldig godkendelse",
+            "send_verification_code": "Bekr\u00e6ftelseskoden kunne ikke sendes",
+            "validate_verification_code": "Kunne ikke bekr\u00e6fte din bekr\u00e6ftelseskode. Pr\u00f8v igen"
+        },
+        "step": {
+            "reauth_confirm": {
+                "title": "Godkendelse udl\u00f8bet for {name}"
+            },
+            "trusted_device": {
+                "data": {
+                    "trusted_device": "Betroet enhed"
+                },
+                "description": "V\u00e6lg din betroede enhed",
+                "title": "Betroet iCloud-enhed"
+            },
+            "user": {
+                "data": {
+                    "username": "Email",
+                    "with_family": "Med familien"
+                },
+                "description": "Indtast dine legitimationsoplysninger",
+                "title": "iCloud-legitimationsoplysninger"
+            },
+            "verification_code": {
+                "data": {
+                    "verification_code": "Bekr\u00e6ftelseskode"
+                }
+            }
+        }
+    },
+    "services": {
+        "update": {
+            "name": "Opdatering"
+        }
+    }
+}
