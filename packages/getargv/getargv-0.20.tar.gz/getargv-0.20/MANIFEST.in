@@ -1,0 +1,9 @@
+# https://packaging.python.org/en/latest/guides/using-manifest-in/
+include src/getargv/_getargvmodule.c
+include src/getargv/__init__.pyi
+include src/getargv/__init__.py
+include src/getargv/py.typed
+include README.md
+include LICENSE.txt
+include setup.py
+exclude src/getargv/compile_commands.json

@@ -1,0 +1,41 @@
+[build-system]
+requires = [
+  "setuptools>=77.0",
+  "tomli>=2.0.1; python_version<'3.11'",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "getargv"
+version = "0.20"
+authors = [
+  { name="Camden Narzt", email="getargv@narzt.cam" },
+]
+description = "Python bindings to libgetargv, a library to correctly and quickly get other process's args"
+readme = "README.md"
+requires-python = ">=3.9"
+license-files = [ "LICENSE.txt" ]
+classifiers = [
+  'Development Status :: 3 - Alpha',
+  'Environment :: Console',
+  'Environment :: MacOS X',
+  'Intended Audience :: Developers',
+  'Intended Audience :: Information Technology',
+  'Intended Audience :: System Administrators',
+  'Operating System :: MacOS :: MacOS X',
+  'Programming Language :: Python',
+  'Programming Language :: C',
+  'Programming Language :: Python :: Implementation :: CPython',
+]
+
+[project.urls]
+Repository = "https://github.com/getargv/getargv.py"
+Issues = "https://github.com/getargv/getargv.py/issues"
+Homepage = "https://getargv.narzt.cam"
+Documentation = "https://getargv.github.io/getargv.py"
+Funding = "https://github.com/sponsors/CamJN"
+
+[tool.pyright]
+include = ["src", "setup.py"]
+typeCheckingMode = "strict"
+reportMissingModuleSource = false
