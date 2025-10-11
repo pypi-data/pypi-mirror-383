@@ -1,0 +1,31 @@
+[project]
+name = "itar"
+version = "0.3.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Karim Abou Zeid", email = "contact@ka.codes" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "msgpack>=1.1.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.0",
+    "ruff>=0.11.13",
+]
+
+[project.scripts]
+itar = "itar.cli:main"
+
+[project.optional-dependencies]
+cli = [
+    "tqdm>=4.67.1",
+    "humanize>=4.12.3",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.0,<0.10.0"]
+build-backend = "uv_build"
