@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=69", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pywxwork"
+version = "1.0.17"
+description = "WeCom/Work WeChat API helpers (external contact, groupchat, etc.)"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{ name = "Renqiukai", email = "renqiukai@qq.com" }]
+license = { text = "MIT" }
+keywords = ["wxwork", "workwechat"]
+dependencies = ["requests", "loguru"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pywxwork*"]
