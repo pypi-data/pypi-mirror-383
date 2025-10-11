@@ -1,0 +1,4 @@
+[flake8]
+ignore = E501, W503, E704
+per-file-ignores =
+    */__init__.py: IMP100, E402, F401, F403

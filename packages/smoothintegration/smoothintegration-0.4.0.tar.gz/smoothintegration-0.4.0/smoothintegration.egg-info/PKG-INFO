@@ -1,0 +1,79 @@
+Metadata-Version: 2.4
+Name: smoothintegration
+Version: 0.4.0
+Summary: Python bindings for the SmoothIntegration API
+Home-page: https://github.com/SmoothIntegration/sdk-python
+Author: SmoothIntegration
+Author-email: support@smooth-integration.com
+License: MIT
+Project-URL: Homepage, https://smooth-integration.com
+Project-URL: Bug Tracker, https://github.com/SmoothIntegration/sdk-python/issues
+Project-URL: Documentation, https://smooth-integration.com/docs
+Project-URL: Source Code, https://github.com/SmoothIntegration/sdk-python
+Keywords: smooth integration unified accounting api cdc
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.9
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: typing_extensions>=4.12.2
+Requires-Dist: types-requests>=2.32.0
+Requires-Dist: requests>=2.32.3
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: freezegun; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+Official SmoothIntegration Bindings for Python
+==============================================
+
+A Python library for Smooth Integration's API.
+
+
+Setup
+-----
+
+You can install this package by using the pip tool and installing:
+
+    $ pip install smooth-integration
+
+
+Setting up a SmoothIntegration Account
+--------------------------------------
+
+Sign up for SmoothIntegration at https://app.smooth-integration.com.
+
+Using the SmoothIntegration API
+-------------------------------
+
+Documentation for the python bindings can be found alongside SmoothIntegration's API documentation
+
+- https://smooth-integration.com/docs
