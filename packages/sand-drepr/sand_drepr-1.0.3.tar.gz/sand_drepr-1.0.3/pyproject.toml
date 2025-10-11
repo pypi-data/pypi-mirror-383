@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "sand-drepr"
+version = "1.0.3"
+description = "SAND & DRepr Integration"
+authors = ["Binh Vu <binh@toan2.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+drepr-v2 = "^1.6.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
