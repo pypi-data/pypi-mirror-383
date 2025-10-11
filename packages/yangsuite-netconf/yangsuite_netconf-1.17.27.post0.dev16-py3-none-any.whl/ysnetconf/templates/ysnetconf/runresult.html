@@ -1,0 +1,228 @@
+{% load static %}
+<html lang="en">
+<head/>
+    <!-- Pop-up for result stream output -->
+<script src="{% static 'yangsuite/js/jquery-1.11.2.min.js' %}"></script>
+<script src="{% static 'yangsuite/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'yangsuite/js/js.cookie.js' %}"></script>
+<script src="{% static 'yangsuite/js/yangsuite.js' %}"></script>
+<script src="{% static 'ysnetconf/js/rpcmanager.js' %}"></script>
+<script src="{% static 'ysnetconf/js/netconf.js' %}"></script>
+<link rel="stylesheet" href="{% static 'yangsuite/css/cui-standard-1.3.3.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'ysnetconf/css/netconf.css' %}"/>
+<link rel="stylesheet" href="{% static 'yangsuite/css/excite-bike/jquery-ui.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'yangsuite/css/yangsuite-cui.css' %}"/>
+<title id="ys-run-title"></title>
+</head>
+<body class="cui">
+ <div class="content-fluid">
+  <main>
+   <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <button id="ys-session-toggle"
+                class="btn btn--primary">Start Session</button>
+      </div>
+      <div class="col-auto flex-center-vertical">
+        <label>Datastores:&nbsp;</label>
+        <div class="btn-group" role="group" id="ys-toggle-lock">
+          <button id="ys-toggle-lock-candidate" class="btn btn--small candidate"
+                  value="candidate" disabled>
+            <span class="icon icon-unlock"></span>
+            Candidate
+          </button>
+          <button id="ys-toggle-lock-running" class="btn btn--small running"
+                  value="running" disabled>
+            <span class="icon icon-unlock"></span>
+            Running
+          </button>
+          <button id="ys-toggle-lock-startup" class="btn btn--small startup"
+                  value="startup" disabled>
+            <span class="icon icon-unlock"></span>
+            Startup
+          </button>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="form-group label--inline">
+          <div class="form-group__text select">
+            <label for="ys-prebuilt-rpcs">Actions:</label>
+            <select id="ys-prebuilt-rpcs">
+              <option disabled selected value=""></option>
+              <option value="capabilities">Report device capabilities</option>
+              <optgroup label="Event notifications (RFC 5277)">
+                <option value="list_notifications">get streams</option>
+                <option value="subscribe_eventstream">subscribe</option>
+              </optgroup>
+              <optgroup label="Candidate datastore" class="candidate">
+                <option value="get_config-candidate">get-config</option>
+                <option disabled>validate</option>
+                <option value="commit">commit</option>
+                <option disabled>discard</option>
+              </optgroup>
+              <optgroup label="Running datastore" class="running">
+                <option value="get_config-running">get-config</option>
+              </optgroup>
+              <optgroup label="Startup datastore" class="startup">
+                <option value="get_config-startup">get-config</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+   <div class="content" style="height: calc(100% - 42px)">
+     <div id="ys-run-results" class="netconf-output"></div>
+   </div>
+  </main>
+ </div>
+</body>
+<div id="ytool-dialog" title="YANG Suite"></div>
+<div id="ys-subscribe-dialog" title="Subscribe to event stream">
+  <div class="form-group">
+    <div class="form-group__text">
+      <label for="ys-eventstream-name">Name of event stream</label>
+      <input id="ys-eventstream-name" type="text">
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    let device = window.location.href.split("/").pop();
+    let updateURI = rpcmanager.config.runURI +"/?device=" + device;
+
+    netconf.config.sessionStatusElem = "#ys-run-title";
+
+    $("#ys-run-title").text("NETCONF: "+ device + " (not connected)");
+    $("#ys-run-results").append("<pre>Waiting for Data...</pre>");
+
+    $("#ys-subscribe-dialog").dialog({
+        autoOpen: false,
+        title: "Subscribe to event stream",
+        modal: true,
+        minWidth: 400,
+        buttons: {
+            'Subscribe': function() {
+                rpcmanager.sendSubscribeRPC(device,
+                                            $("#ys-eventstream-name").val());
+                $(this).dialog('close');
+            },
+            'Close': function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $("#ys-session-toggle").click(function() {
+        if ($(this).text() == "Start Session") {
+            netconf.startEndSession(device, 'start').then(function() {
+                /* Enable UI elements for datastores this device supports */
+                netconf.getAllDatastores(device).then(function(retObj) {
+                    for (let dsstore of ['candidate', 'running', 'startup']) {
+                        $('.' + dsstore).attr("disabled",
+                                              !retObj.all_datastores.includes(dsstore));
+                    }
+                });
+
+            });
+        } else {
+            netconf.startEndSession(device, 'end').then(function() {
+                for (let dsstore of ['candidate', 'running', 'startup']) {
+                    $('.' + dsstore).attr("disabled", true);
+                }
+            });
+        }
+    });
+
+    $("#ys-toggle-lock button").click(function() {
+        let lockElem = $(this).find('.icon');
+        let lock = (lockElem.hasClass("icon-unlock"));
+        netconf.lockUnlockDatastore(lock, device, $(this).val());
+    });
+
+    $("#ys-prebuilt-rpcs").change(function() {
+        let action = $(this).val();
+        $(this).val("");
+
+        if (action == "commit") {
+            rpcmanager.sendCommitRPC(device);
+        } else if (action.startsWith("get_config")) {
+            rpcmanager.sendGetConfigAllRPC(device, action.split("-")[1]);
+        } else if (action == "list_notifications") {
+            rpcmanager.sendGetStreamsRPC(device);
+        } else if (action == "subscribe_eventstream") {
+            $("#ys-subscribe-dialog").dialog("open");
+        } else if (action == "capabilities") {
+            netconf.getCapabilities(device).then(function(retObj) {
+                let capList = $("<ul>");
+                for (let entry of retObj.capabilities) {
+                    let entryHeading = $("<li>").append($("<small>").text("capability: "))
+                        .append($("<strong>").text(entry.capability));
+                    let entrySubList = $('<ul>');
+                    for (let attr of Object.keys(entry)) {
+                        if (attr == 'capability') {
+                            continue;
+                        }
+                        if (Array.isArray(entry[attr])) {
+                            let subSubList = $('<ul>');
+                            for (let item of entry[attr]) {
+                                subSubList.append($("<li>").append($("<span>").text(item)));
+                            }
+                            entrySubList.append($("<li>").append($("<small>").text(attr + ": "))
+                                                .append(subSubList));
+                        } else {
+                            entrySubList.append($("<li>").append($("<small>").text(attr + ": "))
+                                                .append($("<span>").text(entry[attr])));
+                        }
+                    }
+                    entryHeading.append(entrySubList);
+                    capList.append(entryHeading);
+                }
+                capList.dialog({
+                    width: Math.min($(window).width() * 0.9, 800),
+                    maxHeight: $(window).height() * 0.9,
+                    title: "Device Capabilities",
+                });
+            });
+        } else {
+            alert("Not yet implemented");
+        }
+    });
+
+    function updateRpcReplyData() {
+
+        $.getJSON(updateURI, function(data) {
+            if (!data.reply || data.reply.length === 0) {
+                return;
+            }
+            window.focus();
+
+            let target = $("#ys-run-results");
+
+            let scrolledToEnd = (target.scrollTop() + target.innerHeight() >=
+                                 target.prop("scrollHeight"));
+
+            for (let entry of data.reply) {
+                let rpcdata = entry;
+                target.append($("<pre>").text(rpcdata));
+            }
+            if (scrolledToEnd) {
+                // Scroll to the new end of the page; else stay put
+                target.scrollTop(target.prop("scrollHeight"));
+            }
+
+            netconf.toggleSessionButton(data.connected);
+        });
+    };
+
+    testInterval = setInterval(function() {
+        // TODO: always need to set window status,
+        // but maybe only need to updateRpcReplyData while we have a session?
+        updateRpcReplyData();
+        window.runStatus = "alive";
+    }, 1000);
+
+});
+</script>
+</html>

@@ -1,0 +1,5 @@
+[yangsuite.apps]
+netconf = ysnetconf.apps:YSNetconfConfig
+
+[ysdevices.plugins]
+netconf = ysnetconf.device_plugin:NetconfPlugin
