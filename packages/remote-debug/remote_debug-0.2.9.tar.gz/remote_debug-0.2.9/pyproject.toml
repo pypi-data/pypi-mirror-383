@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "remote-debug"
+version = "0.2.9"
+description = "A helper tool for remote debugging on HPC clusters."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Paul Link", email = "paul.link@student.kit.edu" },
+]
+dependencies = [
+    "rich-click",
+    "debugpy",
+]
+
+[project.scripts]
+rdg = "remote_debug.cli:cli"
+
+
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
