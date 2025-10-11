@@ -1,0 +1,37 @@
+Metadata-Version: 2.4
+Name: dukatools
+Version: 0.2.0
+Summary: Small cross-platform CLI toolbelt: treex, dirproc, and more.
+License-Expression: MIT
+License-File: LICENSE
+Keywords: cli,utilities,filesystem,tree
+Author: rexologue
+Requires-Python: >=3.8
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Dist: chardet (>=5,<6)
+Requires-Dist: imageio-ffmpeg (>=0.4)
+Project-URL: Bug Tracker, https://github.com/rexologue/dukatools/issues
+Project-URL: Homepage, https://github.com/rexologue/dukatools
+Project-URL: Repository, https://github.com/rexologue/dukatools
+Description-Content-Type: text/markdown
+
+# dukatools
+
+Cross-platform CLI toolbelt.
+
+## Install
+uv tool install dukatools
+
+## Upgrade
+uv tool upgrade dukatools
+
+## Commands
+- treex — enhanced directory tree
+- dirproc — directory batch processor
+
+## Usage
+treex --help
+dirproc --help
+
