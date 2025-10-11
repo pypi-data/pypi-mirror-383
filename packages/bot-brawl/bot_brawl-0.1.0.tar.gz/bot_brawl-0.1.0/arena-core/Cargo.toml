@@ -1,0 +1,20 @@
+[package]
+name = "arena_core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bincode = "2.0.1"
+async-trait = "0.1"
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = "0.28.0"
+futures = "0.3"
+anyhow = "1.0"
+
+[[bin]]
+name = "rust_bot"
+path = "examples/rust_bot.rs"
+
+[[bin]]
+name = "server"
+path = "examples/server.rs"
