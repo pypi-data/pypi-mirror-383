@@ -1,0 +1,18 @@
+[project]
+name = "local-weather-mcp"
+version = "0.1.5"
+dependencies = [
+    "mcp[cli]",
+    "httpx"
+]
+
+
+[project.scripts]
+local-weather-mcp = "local_weather_mcp.server:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
