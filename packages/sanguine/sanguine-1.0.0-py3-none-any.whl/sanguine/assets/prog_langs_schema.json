@@ -1,0 +1,223 @@
+{
+    "python": {
+        "function": "function_definition",
+        "class": "class_definition",
+        "parameters": "parameters",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["expression_statement", "string"],
+        "assignment": "assignment",
+        "attribute": "attribute"
+    },
+    "java": {
+        "function": "method_declaration",
+        "class": "class_declaration",
+        "parameters": "formal_parameters",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["block", "comment"],
+        "assignment": "field_declaration",
+        "attribute": "variable_declarator"
+    },
+    "javascript": {
+        "function": "function_declaration",
+        "class": "class_declaration",
+        "parameters": "formal_parameters",
+        "body": "statement_block",
+        "identifier": "identifier",
+        "docstring_expr": ["expression_statement", "string"],
+        "assignment": "lexical_declaration",
+        "attribute": "variable_declarator"
+    },
+    "typescript": {
+        "function": "function_declaration",
+        "class": "class_declaration",
+        "parameters": "formal_parameters",
+        "body": "statement_block",
+        "identifier": "identifier",
+        "docstring_expr": ["expression_statement", "string"],
+        "assignment": "lexical_declaration",
+        "attribute": "variable_declarator"
+    },
+    "cpp": {
+        "function": "function_definition",
+        "class": "class_specifier",
+        "parameters": "parameter_list",
+        "body": "compound_statement",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "declaration",
+        "attribute": "field_declaration"
+    },
+    "c": {
+        "function": "function_definition",
+        "class": "struct_specifier",
+        "parameters": "parameter_list",
+        "body": "compound_statement",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "declaration",
+        "attribute": "field_declaration"
+    },
+    "csharp": {
+        "function": "method_declaration",
+        "class": "class_declaration",
+        "parameters": "parameter_list",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "field_declaration",
+        "attribute": "variable_declaration"
+    },
+    "go": {
+        "function": "function_declaration",
+        "class": "type_declaration",
+        "parameters": "parameter_list",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "var_declaration",
+        "attribute": "field_declaration"
+    },
+    "ruby": {
+        "function": "method",
+        "class": "class",
+        "parameters": "method_parameters",
+        "body": "body_statement",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "assignment",
+        "attribute": "instance_variable"
+    },
+    "php": {
+        "function": "function_definition",
+        "class": "class_declaration",
+        "parameters": "formal_parameters",
+        "body": "compound_statement",
+        "identifier": "name",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "expression_statement",
+        "attribute": "property_declaration"
+    },
+    "swift": {
+        "function": "function_declaration",
+        "class": "class_declaration",
+        "parameters": "parameter_clause",
+        "body": "statements",
+        "identifier": "simple_identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "property_declaration",
+        "attribute": "variable_declaration"
+    },
+    "kotlin": {
+        "function": "function_declaration",
+        "class": "class_declaration",
+        "parameters": "function_value_parameters",
+        "body": "function_body",
+        "identifier": "simple_identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "property_declaration",
+        "attribute": "variable_declaration"
+    },
+    "scala": {
+        "function": "function_definition",
+        "class": "class_definition",
+        "parameters": "parameters",
+        "body": "template_body",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "val_definition",
+        "attribute": "val_declaration"
+    },
+    "r": {
+        "function": "function_definition",
+        "class": "setClass",
+        "parameters": "parameters",
+        "body": "brace_list",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "left_assignment",
+        "attribute": "dollar"
+    },
+    "perl": {
+        "function": "subroutine_declaration",
+        "class": "package_statement",
+        "parameters": "parameters",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "assignment_expression",
+        "attribute": "hash_access"
+    },
+    "lua": {
+        "function": "function_declaration",
+        "class": "assignment_statement",
+        "parameters": "parameters",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "assignment_statement",
+        "attribute": "field"
+    },
+    "dart": {
+        "function": "function_signature",
+        "class": "class_definition",
+        "parameters": "formal_parameter_list",
+        "body": "function_body",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "initialized_variable_definition",
+        "attribute": "getter_signature"
+    },
+    "elixir": {
+        "function": "call",
+        "class": "call",
+        "parameters": "arguments",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "binary_operator",
+        "attribute": "dot"
+    },
+    "clojure": {
+        "function": "list_lit",
+        "class": "list_lit",
+        "parameters": "list_lit",
+        "body": "list_lit",
+        "identifier": "sym_lit",
+        "docstring_expr": ["comment", "comment"],
+        "assignment": "list_lit",
+        "attribute": "keyword_lit"
+    },
+    "rust": {
+        "function": "function_item",
+        "class": "struct_item",
+        "parameters": "parameters",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["line_comment", "block_comment"],
+        "assignment": "let_declaration",
+        "attribute": "field_declaration"
+    },
+    "haskell": {
+        "function": "function_declaration",
+        "class": "class_declaration",
+        "parameters": "patterns",
+        "body": "rhs",
+        "identifier": "variable",
+        "docstring_expr": ["comment"],
+        "assignment": "function_declaration",
+        "attribute": "constructor"
+    },
+
+    "julia": {
+        "function": "function_definition",
+        "class": "struct_definition",
+        "parameters": "parameter_list",
+        "body": "block",
+        "identifier": "identifier",
+        "docstring_expr": ["string_literal"],
+        "assignment": "assignment_expression",
+        "attribute": "field_expression"
+    }
+}
