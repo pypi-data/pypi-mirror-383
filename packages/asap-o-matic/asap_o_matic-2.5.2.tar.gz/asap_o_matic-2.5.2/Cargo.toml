@@ -1,0 +1,12 @@
+[package]
+name = "asap-o-matic"
+version = "2.5.0"
+edition = "2021"
+
+[lib]
+name = "asap_o_matic"
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.22.2"
+features = ["abi3-py311"]
