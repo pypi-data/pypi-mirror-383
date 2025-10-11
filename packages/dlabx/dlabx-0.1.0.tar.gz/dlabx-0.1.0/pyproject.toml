@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dlabx"
+version = "0.1.0"
+description = "Dhruv's Lab - A Python library for algorithms and data structures"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+authors = [
+    { name = "Dhruv Sonani", email="dhruvsonani788@gmail.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent"
+]
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["dlabx*"]
+
