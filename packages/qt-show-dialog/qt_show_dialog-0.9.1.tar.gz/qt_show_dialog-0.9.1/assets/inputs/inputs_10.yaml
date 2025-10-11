@@ -1,0 +1,29 @@
+# In this example, styling is applied to the HTML text by including CSS in the <style> section.
+dialog_title: inputs_10
+title: HTML with styling
+description: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Times New Roman, serif;
+                color: #555;
+            }
+            .strike {
+                text-decoration: line-through;
+                color: red;
+            }
+            .highlight {
+                background-color: yellow;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <p>This is <span class="strike">strike through and red</span> text.</p>
+        <p>This is <span class="highlight">highlighted</span> text.</p>
+    </body>
+    </html>
+buttons: Ok/Cancel
+theme: Light

@@ -1,0 +1,15 @@
+# Set pass/fail buttons
+# The difference between this and `inputs_06` is that the icon images are not in Qt's resources,
+# rather they're loaded as external files.
+#
+# Paths to external files (button icons in this case) can be absolute or relative. If relative,
+# then it's relative to the current working directory (usually where the command was executed).
+dialog_title: inputs_07
+title: Pass / Fail buttons set
+description: |
+    Pass / Fail buttons have their text and icons changed.
+    In this example, the icons are external files with paths
+    relative to the current working directory.
+pass_button_icon: assets/images/play_icon.png
+fail_button_text: Cancel
+fail_button_icon: assets/images/stop_icon.png

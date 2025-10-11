@@ -1,0 +1,59 @@
+site_name: Show Dialog
+
+nav:
+  - Home:
+      - Introduction: index.md
+      - Usage: usage.md
+      - Inputs: inputs.md
+      - IPC: ipc.md
+      - Development: development.md
+
+theme:
+  name: material
+  logo: images/window_icon.svg
+  favicon: images/window_icon.svg
+  font:
+    text: Arimo                 # Google font, replaces the default Arial
+  features:
+    - content.code.annotate
+    - content.code.copy         # Copy button on top right of code blocks
+    - navigation.expand         # Expand navigation menus by default
+#    - navigation.tabs           # Enable tabs on top https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-tabs
+  palette:
+    - media: "(prefers-color-scheme: light"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+#extra_css:
+#  - _assets/style.css
+
+markdown_extensions:
+  - abbr
+  - admonition                  # Info boxes
+  - pymdownx.details            # Info boxes
+  - pymdownx.highlight
+  - pymdownx.superfences        # Info boxes, tabs
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji  # https://emojipedia.org/twitter/
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables                      # Create tables in Markdown by using a simple syntax
+  - mdx_truly_sane_lists        # 2-space indented nested lists
+  - attr_list                   # More functionality for images (align, lazy load, etc.)
+  - md_in_html                  # MD/HTML interop. Also helps with images (caption, center alignment)
+
+plugins:
+  - search                      # Search box at the top
+  - glightbox                   # Image lightbox (for zooming). Requires `mkdocs-glightbox` package
+
+dev_addr: 127.0.0.1:7007        # Default 8000 may compete with other frameworks
+
+site_url: https://github.com/joaonc/show_dialog
+repo_url: https://github.com/joaonc/show_dialog
+copyright: Copyright &copy; 2025 Joao Coelho

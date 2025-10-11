@@ -1,0 +1,23 @@
+/*
+Test stylesheet.
+
+See `tests/libs/README.md` on how to update the resources file when this file is updated.
+ */
+
+QLabel#title_label {
+    color: blue;
+}
+
+QLabel#description_label {
+    color: rgb(0, 0, 50);
+}
+
+QPushButton#pass_button {
+    color : green;
+    /*background-color : gray;*/
+}
+
+QPushButton#fail_button {
+    color : red;
+    /*background-color : green;*/
+}
