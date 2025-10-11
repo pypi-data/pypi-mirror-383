@@ -1,0 +1,74 @@
+## v0.4.10, 10.2025
+* @sebastiantuinstra fixed issue #19: Iteration loop in p_hrho(h, rho) used incorrect value for convergence check.
+
+## v0.4.9, 05.2022
+* fix issue with missing unit conversion in h_px and h_tx
+* add tests for fixed bugs
+* fix error in demo script
+* add new demos based on the work of @stu314159
+* improve code readability by using additional tools
+** enforce code styling with black
+** reduce minimal python version to 3.4 based on report from vermin
+** fix more spelling mistakes with codespell
+
+## v0.4.8, 03.2021
+* Fix issue #10: certain values lead to an infinite loop, stop if values dont change anymore and warn user
+* Spelling
+
+## v0.4.7, 01.2021
+* Setup: add fallback to distutil if setuptools is not available
+
+## v0.4.6, 12.2020
+* removed stump for IAPWS R15 as it containd a error that need further work but left the constants define in R15
+* non functional changes
+** fix code style in multiple locations
+** add github workflows for package and publish
+
+## v0.4.5, 07.2020
+* add functions from IAPWS R4 and R14
+** R14: pressure along the melting and sublimation curves
+** R4: viscosity and thermal conductivity as a function of density and temperature for heavy water substance
+** test cases from documentation
+** demo diagram
+** add new constants
+
+## v0.4.4, 06.2020
+* fix bug in value check code in region_pT(p, T). Thanks to @sbatururimi for reporting this!
+
+## v0.4.3, 04.2020
+* switch to pytest for testing because of 'setup.py test' is deprecated, see https://github.com/pypa/setuptools/issues/1684.
+
+## v0.4.2, 07.2019
+* fix for error in table selection for calculations for density as a function of pressure and enthalpy. Current tests did not indicate this problem - thanks to gonmolina!
+
+## v0.4, 2018
+* support for Python 3
+** handling of math expressions in python 3 fixed problems with some edge cases
+** one test still fails: w_ps Speed of sound as a function of pressure and entropy
+* fix multiple typos
+* linting / cleanup of code
+* add constant for absolute zero point
+* command line selection for demo program
+* new tests for UnitConverter
+
+## v0.3.3b1, 21.01.2018
+* fix for typo
+
+## v0.3.3, 21.01.2018
+* change changelog to markdown
+* add gitignore
+* remove unnecessary files
+* reworked setup.py for more sanity
+* cleanup and better logging
+
+## v0.3.1, 18.02.2014
+* logging capability's
+
+## v0.3, 08.02.2014
+* User can now use ft/lb/sec/°F/psi/btu, m/kg/sec/°C/bar/W or m/kg/sec/K/MPa/W
+
+## v0.2, 03.02.2014
+* demos, changes to unitTests and some minor fixes - 8 Tests fail
+
+## v0.1, 11.02.2014
+* Initial release. - 26 Tests fail
