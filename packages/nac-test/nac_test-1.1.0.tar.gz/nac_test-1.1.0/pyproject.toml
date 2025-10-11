@@ -1,0 +1,120 @@
+[project]
+name = "nac-test"
+version = "1.1.0"
+description = "A CLI tool to render and execute Robot Framework tests using Jinja templating."
+license = { text = "MPL-2.0" }
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Daniel Schmidt", email = "danischm@cisco.com" },
+]
+maintainers = [
+    { name = "Daniel Schmidt", email = "danischm@cisco.com" },
+]
+keywords = ["robot", "testing", "automation", "jinja", "templating"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "Jinja2>=3.1.6",
+    "RESTinstance>=1.5.2",
+    "jmespath>=1.0.1",
+    "nac-yaml>=1.1.1",
+    "robotframework>=7.3.2",
+    "robotframework-jsonlibrary>=0.5",
+    "robotframework-pabot>=4.3.2",
+    "robotframework-requests>=0.9.7",
+    "ruamel.yaml>=0.18.15",
+    "typer>=0.17.4",
+]
+
+[project.urls]
+homepage = "https://github.com/netascode/nac-test"
+repository = "https://github.com/netascode/nac-test"
+documentation = "https://github.com/netascode/nac-test"
+
+[project.scripts]
+iac-test = "nac_test.cli.main:app"
+nac-test = "nac_test.cli.main:app"
+
+[project.optional-dependencies]
+dev = [
+    "ansible-core>=2.17.6",
+    "bandit[toml]>=1.8.6",
+    "mypy>=1.17.1",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "pytest-cov>=6.2.1",
+    "pytest-mock>=3.15.0",
+    "ruff>=0.12.12",
+]
+
+[tool.coverage.run]
+source = ["nac_test"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "@abstract", "except ImportError:"]
+omit = ["*/__main__.py"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["nac_test"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B101"]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = false
+disallow_untyped_defs = true
+ignore_errors = false
+ignore_missing_imports = true
+python_version = "3.10"
+strict_optional = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = false
+warn_unreachable = true
+show_error_context = true
+
+[tool.pytest.ini_options]
+markers = ["unit", "integration"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
