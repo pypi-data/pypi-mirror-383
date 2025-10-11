@@ -1,0 +1,146 @@
+Metadata-Version: 2.4
+Name: PyProtectorX
+Version: 1.0.1
+Summary: Powerful Python protection library
+Author: Zain Alkhalil
+Author-email: Zain Alkhalil <zainr56h@gmail.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+# PyProtectorX
+
+**PyProtectorX** is a binary-only Python extension (.so) for secure encrypted operations.  
+This package contains the prebuilt ELF shared object without exposing C source code.
+
+## Installation
+```bash
+pip install PyProtectorX
+```
+# - Make Python File Encryption.py File And Paste This code 
+
+## Usage
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys
+import os
+import time
+ENCRYPTOR_MODULE = 'PyProtectorX'
+OUTPUT_SUFFIX = '_Enc.py'
+
+def import_pyprotectorx():
+    try:
+        from PyProtectorX import dumps, loads, Run
+        return type(ENCRYPTOR_MODULE, (object,), {'dumps': dumps, 'loads': loads, 'Run': Run})
+    except ImportError:
+        print(f"Error: Required module '{ENCRYPTOR_MODULE}' not found.")
+        print(f"Please install it: pip install {ENCRYPTOR_MODULE}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error loading {ENCRYPTOR_MODULE}: {e}")
+        sys.exit(1)
+
+def generate_encrypted_template(filename, encrypted_data): 
+    return f'''#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Encrypted by {ENCRYPTOR_MODULE}"""
+
+import sys
+import os
+
+# Data is hardcoded in the file
+ENCRYPTED_CODE = {encrypted_data!r}
+
+def load_and_run():
+    try:
+        # Runtime import
+        import {ENCRYPTOR_MODULE} as Encryptor
+    except ImportError:
+        print(f"[!] {ENCRYPTOR_MODULE} module not found at runtime.")
+        print(f"[!] Please install it: pip install {ENCRYPTOR_MODULE}")
+        sys.exit(1)
+
+    try:
+        # Execute the encrypted code
+        Encryptor.Run(ENCRYPTED_CODE)
+    except Exception as e:
+        print(f"[!] Execution failed: {{e}}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    load_and_run()
+'''
+
+def encrypt_file(filepath, PyProtectorX):
+    """Encrypts a single file and saves the output."""
+    base_name = os.path.splitext(filepath)[0]
+    output_path = f"{base_name}{OUTPUT_SUFFIX}"
+
+    # 1. Read the file
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            source_code = f.read()
+    except Exception as e:
+        print(f"Error reading file '{filepath}': {e}")
+        return False
+
+    # 2. Encrypt the code
+    try:
+        encrypted_data = PyProtectorX.dumps(source_code)
+    except Exception as e:
+        print(f"Encryption failed for '{filepath}': {e}")
+        return False
+
+    # Optional: Verify encryption
+    try:
+        PyProtectorX.loads(encrypted_data)
+    except Exception as e:
+        print(f"Verification failed (decryption error): {e}")
+        return False
+
+    # 3. Generate and write the output file
+    encrypted_content = generate_encrypted_template(os.path.basename(filepath), encrypted_data)
+    try:
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(encrypted_content)
+        print(f"SUCCESS: '{filepath}' encrypted to '{output_path}'")
+        return True
+    except Exception as e:
+        print(f"Error writing output file '{output_path}': {e}")
+        return False
+
+
+def main():
+    if len(sys.argv) != 2:
+        print(f"Usage: python3 {os.path.basename(sys.argv[0])} <file_to_encrypt.py>")
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+
+    if not os.path.exists(filepath):
+        print(f"Error: File not found: {filepath}")
+        sys.exit(1)
+    if not filepath.endswith('.py'):
+        print(f"Error: File must be a Python script (.py).")
+        sys.exit(1)
+    if filepath.endswith(OUTPUT_SUFFIX):
+        print(f"Warning: Skipping file '{filepath}' (looks like it's already encrypted).")
+        sys.exit(0)
+
+    # Import the engine and encrypt
+    PyProtectorX = import_pyprotectorx()
+    
+    if encrypt_file(filepath, PyProtectorX):
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+
+
+```
