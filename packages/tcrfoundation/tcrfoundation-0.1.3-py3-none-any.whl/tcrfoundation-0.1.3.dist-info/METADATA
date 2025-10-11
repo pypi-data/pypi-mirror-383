@@ -1,0 +1,138 @@
+Metadata-Version: 2.4
+Name: tcrfoundation
+Version: 0.1.3
+Summary: A multimodal foundation model for T cell receptor and transcriptome analysis
+Author-email: Xu Liao <xl3514@cumc.columbia.edu>
+License: MIT
+Project-URL: Homepage, https://github.com/Liao-Xu/TCRfoundation
+Project-URL: Documentation, https://tcrfoundation.readthedocs.io
+Project-URL: Repository, https://github.com/Liao-Xu/TCRfoundation
+Project-URL: Issues, https://github.com/Liao-Xu/TCRfoundation/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=1.10.0
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: pandas>=1.3.0
+Requires-Dist: scanpy>=1.9.0
+Requires-Dist: scikit-learn>=1.0.0
+Requires-Dist: matplotlib>=3.5.0
+Requires-Dist: seaborn>=0.11.0
+Requires-Dist: tqdm>=4.62.0
+Requires-Dist: anndata>=0.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.2.0; extra == "dev"
+Requires-Dist: jupyter>=1.0.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=4.0.0; extra == "docs"
+Requires-Dist: furo; extra == "docs"
+Requires-Dist: myst-parser>=0.18.0; extra == "docs"
+Requires-Dist: myst-nb>=0.17.0; extra == "docs"
+Requires-Dist: sphinx-autodoc-typehints; extra == "docs"
+Requires-Dist: sphinx-copybutton; extra == "docs"
+Requires-Dist: ipykernel; extra == "docs"
+Requires-Dist: nbformat; extra == "docs"
+Dynamic: license-file
+
+# TCRfoundation
+
+[![Documentation Status](https://readthedocs.org/projects/tcrfoundation/badge/?version=latest)](https://tcrfoundation.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/tcrfoundation.svg)](https://badge.fury.io/py/tcrfoundation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+**A multimodal foundation model for single-cell immune profiling**
+
+## Overview
+
+TCRfoundation integrates gene expression and TCR sequences (α and β chains) from paired single-cell measurements through self-supervised pretraining with masked reconstruction and cross-modal contrastive learning.
+
+### Input and Pretraining Architecture
+
+Gene expression profiles are encoded through feed-forward layers with multi-head attention, while TCR sequences are tokenized and processed through transformer blocks. The fused representations are learned via three objectives: masked gene expression reconstruction, masked TCR sequence reconstruction, and cross-modal alignment.
+
+![Input and Pretraining](docs/figures/overview1.png)
+
+### Fine-tuning Tasks
+
+The pretrained model supports three downstream applications:
+
+- **T-cell state classification**: Predict tissue origin, disease state, and cellular phenotype
+- **Binding specificity detection**: Identify TCR-antigen interactions and quantify binding avidity
+- **Cross-modal prediction**: Infer gene expression from TCR sequences
+
+![Fine-tuning Tasks](docs/figures/overview2.png)
+
+## Installation
+
+### From PyPI (Recommended)
+
+```bash
+pip install tcrfoundation
+```
+
+### From Source
+
+```bash
+git clone https://github.com/Liao-Xu/TCRfoundation.git
+cd TCRfoundation
+pip install -e .
+```
+
+**Requirements**: Python 3.8+, PyTorch 1.10.0+
+
+## Quick Start
+
+```python
+import tcrfoundation as tcrf
+import scanpy as sc
+
+# Load your data
+adata = sc.read("your_data.h5ad")
+
+# Pretrain the foundation model
+model, history = tcrf.pretrain.train(
+    adata,
+    epochs=500,
+    batch_size=2048,
+    save_dir='models/'
+)
+
+# Fine-tune for classification
+results, adata_new = tcrf.finetune.classification.train_classifier(
+    adata,
+    label_column="cell_type",
+    checkpoint_path="models/foundation_model_best.pt",
+    num_epochs=50
+)
+```
+
+## Documentation
+
+- **Full Documentation**: [https://tcrfoundation.readthedocs.io](https://tcrfoundation.readthedocs.io)
+
+## Tutorials
+
+Complete Jupyter notebook tutorials are available:
+
+1. [Pretraining](tutorials/01_pretrain.ipynb) - Train the foundation model
+2. [Classification](tutorials/02_classification.ipynb) - T cell state classification
+3. [Specificity](tutorials/03_specificity.ipynb) - Antigen specificity prediction
+4. [Avidity](tutorials/04_avidity.ipynb) - Binding avidity regression
+5. [Cross-modal](tutorials/05_cross_modal.ipynb) - TCR-to-gene prediction
+
+
+## Contact
+
+- **Author**: Xu Liao
+- **Email**: xl3514@cumc.columbia.edu
+- **GitHub**: [https://github.com/Liao-Xu/TCRfoundation](https://github.com/Liao-Xu/TCRfoundation)
