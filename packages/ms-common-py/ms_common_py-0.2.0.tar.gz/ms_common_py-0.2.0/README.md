@@ -1,0 +1,191 @@
+# MS Common Python Library
+
+A comprehensive Application Performance Monitoring (APM) and instrumentation library for Python microservices at FinAccel.
+
+[![PyPI version](https://badge.fury.io/py/ms-common-py.svg)](https://badge.fury.io/py/ms-common-py)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/)
+
+## Features
+
+- **APM Instrumentation**: Automatic tracing and monitoring with Datadog integration
+- **Exception Handling**: Standardized exception classes for microservices
+- **Configuration Management**: Thread-safe configuration management for APM settings
+- **Class Instrumentation**: Automatic instrumentation of class methods
+- **Function Decorators**: Easy-to-use decorators for tracing individual functions
+
+## Installation
+
+```bash
+pip install ms-common-py
+```
+
+## Quick Start
+
+### Basic Function Tracing
+
+```python
+from apm import trace
+
+@trace(name="my_function", service="my-service")
+def my_function():
+    # Your code here
+    return "Hello World"
+```
+
+### Class Instrumentation
+
+```python
+from apm import instrument_class
+
+@instrument_class(prefix="MyService", service="my-service")
+class MyService:
+    def process_data(self):
+        # This method will be automatically traced
+        pass
+    
+    def validate_input(self):
+        # This method will also be traced
+        pass
+```
+
+### Configuration
+
+Set the following environment variables:
+
+```bash
+# APM Configuration
+export APM_PROVIDER=datadog
+export DD_SERVICE=my-service-name
+export DD_ENV=production
+export APM_VERSION=1.0.0
+export DD_APM_ENABLED=true
+
+# Datadog Agent Configuration (optional)
+export DD_AGENT_HOST=localhost
+export DD_TRACE_AGENT_PORT=8126
+```
+
+## APM Configuration
+
+The library uses a thread-safe singleton configuration that automatically refreshes when environment variables change:
+
+```python
+from apm.const import APMConfig
+
+# Get current configuration
+config = APMConfig.get()
+print(f"Service: {config.service_name}")
+print(f"Environment: {config.environment}")
+print(f"Enabled: {config.enabled}")
+
+# Force refresh configuration
+config = APMConfig.get(force=True)
+```
+
+## Exception Handling
+
+Use standardized exceptions for consistent error handling across services:
+
+```python
+from apm.exceptions import (
+    ServiceException,
+    AuthenticationFailure,
+    ForbiddenException,
+    BadRequestException,
+    NotFoundException
+)
+
+# Raise a custom service exception
+raise AuthenticationFailure(
+    message="Invalid credentials",
+    service="my-service"
+)
+```
+
+## Advanced Usage
+
+### Custom Tags and Resource Names
+
+```python
+from apm import trace
+
+@trace(
+    name="complex_operation",
+    service="data-processor",
+    resource="process_user_data",
+    tags={"operation_type": "batch", "version": "v2"}
+)
+def process_user_data(user_id):
+    # Your processing logic
+    pass
+```
+
+### Excluding Methods from Class Instrumentation
+
+```python
+from apm import instrument_class
+
+@instrument_class(
+    prefix="UserService",
+    exclude_methods=["_private_method", "health_check"]
+)
+class UserService:
+    def create_user(self):
+        # This will be traced
+        pass
+    
+    def _private_method(self):
+        # This will NOT be traced
+        pass
+    
+    def health_check(self):
+        # This will NOT be traced
+        pass
+```
+
+### Service Type Auto-Detection
+
+The library automatically detects service types based on class inheritance:
+
+- **Consumer**: Classes inheriting from `BaseConsumer` or `Consumer`
+- **Cron**: Classes inheriting from `BaseCommand` or `Command`
+- **API**: Classes inheriting from `APIView`, `ViewSet`, or `Handler`
+- **Worker**: Classes inheriting from `Worker` or `Task`
+- **Service**: Default for other classes
+
+## Available Exception Classes
+
+| Exception | HTTP Code | Description |
+|-----------|-----------|-------------|
+| `ServiceException` | 500 | Base exception class |
+| `AuthenticationFailure` | 401 | Authentication failed |
+| `ForbiddenException` | 403 | Access forbidden |
+| `BadRequestException` | 400 | Bad request |
+| `MissingParamException` | 406 | Missing required parameters |
+| `ValidateException` | 422 | Validation error |
+| `NotFoundException` | 404 | Resource not found |
+| `BusinessException` | 422 | Business logic error |
+| `ProductClosedException` | 450 | Product/service closed |
+| `BillNotValidException` | 451 | Bill validation error |
+
+## Requirements
+
+- Python 3.9+
+- ddtrace>=2.2.0 (for Datadog integration)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
+
+## License
+
+This project is proprietary to FinAccel.
+
+## Support
+
+For issues and questions, please contact the FinAccel development team or create an issue in the Bitbucket repository.
+
