@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vera-syntaxis"
+version = "0.1.0"
+description = "A static analysis tool for detecting architectural code smells in Python"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "RH Labs/The SurveyOS Project"}
+]
+keywords = ["linter", "architecture", "code-quality", "static-analysis", "design-patterns"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "networkx>=2.8",
+    "pydantic>=2.0",
+    "tomli>=2.0.0; python_version<'3.11'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "mypy>=1.0",
+    "flake8>=6.0",
+]
+gui = [
+    "ttkbootstrap>=1.10.1",
+    "pygments>=2.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/vera-syntaxis"
+"Bug Tracker" = "https://github.com/yourusername/vera-syntaxis/issues"
+
+[project.scripts]
+vera-syntaxis = "vera_syntaxis.cli:main"
+vera-syntaxis-gui = "vera_syntaxis.gui.launch_gui:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vera_syntaxis*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]

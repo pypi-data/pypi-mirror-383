@@ -1,0 +1,14 @@
+# Include documentation
+include README.md
+include LICENSE
+
+# Include test data
+recursive-include tests *.py
+
+# Exclude compiled and cache files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude *.so
+global-exclude *.dylib
+global-exclude .DS_Store

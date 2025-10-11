@@ -1,0 +1,505 @@
+Metadata-Version: 2.4
+Name: vera-syntaxis
+Version: 0.1.0
+Summary: A static analysis tool for detecting architectural code smells in Python
+Author: RH Labs/The SurveyOS Project
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/vera-syntaxis
+Project-URL: Bug Tracker, https://github.com/yourusername/vera-syntaxis/issues
+Keywords: linter,architecture,code-quality,static-analysis,design-patterns
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Quality Assurance
+Classifier: Topic :: Software Development :: Testing
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: networkx>=2.8
+Requires-Dist: pydantic>=2.0
+Requires-Dist: tomli>=2.0.0; python_version < "3.11"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+Requires-Dist: flake8>=6.0; extra == "dev"
+Provides-Extra: gui
+Requires-Dist: ttkbootstrap>=1.10.1; extra == "gui"
+Requires-Dist: pygments>=2.0; extra == "gui"
+Dynamic: license-file
+
+# Vera Syntaxis
+
+A static analysis tool for detecting architectural code smells in Python codebases.
+
+## Overview
+
+Vera Syntaxis is a specialized linter that focuses on architectural issues rather than style or type safety:
+
+- **Tight Coupling Detection**: Identifies instances of tight coupling between classes
+- **MVBC Architecture Linter**: Enforces communication rules between Model, View, Business, and Controller layers
+
+## Features
+
+- **AST-based Analysis**: Uses Python's Abstract Syntax Tree for accurate code analysis
+- **Call Graph Construction**: Builds a comprehensive call graph of your codebase
+- **Configurable Rules**: Customize architectural rules via TOML configuration
+- **Python API**: Use as a library in your own tools
+- **GUI Interface**: Optional GUI plugin for Extensio Pulchra framework
+
+## Requirements
+
+- Python 3.8+
+- Extensive use of type hints in target codebase for accurate analysis
+
+## Installation
+
+```bash
+pip install vera-syntaxis
+```
+
+For development:
+```bash
+pip install vera-syntaxis[dev]
+```
+
+For GUI support:
+```bash
+pip install vera-syntaxis[gui]
+```
+
+## Quick Start
+
+### Command Line
+
+```bash
+# Parse and analyze a project
+vera-syntaxis analyze /path/to/project
+
+# Parse only (for debugging)
+vera-syntaxis parse /path/to/project
+```
+
+### Python API
+
+```python
+from vera_syntaxis import run_analysis
+
+violations = run_analysis("/path/to/project")
+for violation in violations:
+    print(f"{violation.file_path}:{violation.line_number} - {violation.message}")
+```
+
+## Configuration
+
+Create a `pyproject.toml` in your project root:
+
+```toml
+[tool.vera_syntaxis]
+model_paths = ["my_app/models/"]
+view_paths = ["my_app/views/"]
+business_paths = ["my_app/services/"]
+controller_paths = ["my_app/controllers/"]
+module_filter = ["my_app.*"]
+
+[tool.vera_syntaxis.coupling]
+max_inter_class_calls = 5
+max_demeter_chain = 3
+
+[tool.vera_syntaxis.circular]
+allow_self_cycles = false
+max_cycle_length = 10
+
+[tool.vera_syntaxis.god_object]
+max_methods = 20
+max_attributes = 15
+max_lines = 300
+
+[tool.vera_syntaxis.feature_envy]
+envy_threshold = 0.5
+min_accesses = 3
+
+[tool.vera_syntaxis.data_clump]
+min_clump_size = 3
+min_occurrences = 2
+```
+
+## Architectural Rules
+
+### Tight Coupling Linter
+
+#### TC001: Direct Instantiation
+Flags direct class instantiations that create tight coupling.
+
+**Example Violation:**
+```python
+class UserService:
+    def create_user(self):
+        # Bad: Direct instantiation creates tight coupling
+        db = Database()
+        return db.save(User())
+```
+
+**Fix:** Use dependency injection instead.
+
+#### TC002: Law of Demeter (Method Chaining)
+Detects excessive method chaining that violates the Law of Demeter.
+
+**Configuration:**
+- `max_demeter_chain`: Maximum allowed chain length (default: 5)
+
+**Example Violation:**
+```python
+# Bad: Chain length of 4 exceeds configured maximum of 3
+country = user.address.city.postal_code.country
+```
+
+**Fix:** Break the chain using intermediate variables or add helper methods:
+```python
+# Good: Use intermediate variables
+address = user.address
+city = address.city
+postal_code = city.postal_code
+country = postal_code.country
+
+# Or: Add a helper method
+country = user.get_country()
+```
+
+#### TC003: Excessive Interaction
+Identifies classes with too many inter-class calls using call graph analysis.
+
+**Configuration:**
+- `max_inter_class_calls`: Maximum allowed unique method calls to other classes (default: 10)
+
+**Example Violation:**
+```python
+class Client:
+    def __init__(self):
+        self.service_a = ServiceA()
+        self.service_b = ServiceB()
+        self.service_c = ServiceC()
+    
+    def do_work(self):
+        # Bad: Calls 12 unique methods from other classes (exceeds limit of 10)
+        self.service_a.method1()
+        self.service_a.method2()
+        self.service_a.method3()
+        self.service_a.method4()
+        self.service_b.method1()
+        self.service_b.method2()
+        self.service_b.method3()
+        self.service_b.method4()
+        self.service_c.method1()
+        self.service_c.method2()
+        self.service_c.method3()
+        self.service_c.method4()
+```
+
+**Fix:** Refactor to reduce coupling:
+```python
+# Good: Introduce a facade or coordinator
+class ServiceCoordinator:
+    def __init__(self):
+        self.service_a = ServiceA()
+        self.service_b = ServiceB()
+        self.service_c = ServiceC()
+    
+    def execute_workflow(self):
+        # Encapsulates the complex interactions
+        self.service_a.do_work()
+        self.service_b.do_work()
+        self.service_c.do_work()
+
+class Client:
+    def __init__(self):
+        self.coordinator = ServiceCoordinator()
+    
+    def do_work(self):
+        # Now only 1 inter-class call
+        self.coordinator.execute_workflow()
+```
+
+### MVBC Linter
+
+#### W2902: Illegal Layer Dependency
+Enforces proper layer communication in Model-View-Business-Controller architecture.
+
+**Allowed Dependencies:**
+- **Model**: Can be used by anyone (no dependencies on other layers)
+- **View**: Can use Model only
+- **Business**: Can use Model only  
+- **Controller**: Can use View, Business, and Model
+
+**Forbidden Dependencies:**
+- View → Business (must go through Controller)
+- Business → View (business logic shouldn't know about presentation)
+- View → Controller (creates circular dependency)
+- Business → Controller (creates circular dependency)
+
+**Configuration:**
+Supports both single-level and nested directory patterns:
+```toml
+[tool.vera_syntaxis.mvbc]
+model_paths = ["models/*.py"]          # Matches models/user.py and models/subdir/user.py
+view_paths = ["views/**/*.py"]         # Explicit nested pattern
+business_paths = ["business/*.py"]
+controller_paths = ["controllers/*.py"]
+```
+
+**Example Violations:**
+
+*View → Business:*
+```python
+# In views/user_view.py
+from business.user_logic import UserLogic  # Bad: View importing Business
+
+class UserView:
+    def __init__(self):
+        self.logic = UserLogic()
+```
+**Fix:** Use a Controller to mediate between View and Business.
+
+*Business → View:*
+```python
+# In business/user_logic.py
+from views.user_view import UserView  # Bad: Business importing View
+
+class UserLogic:
+    def __init__(self):
+        self.view = UserView()
+```
+**Fix:** Keep business logic independent of presentation. Controllers should manage Views.
+
+### Circular Dependency Linter
+
+#### CD001: Circular Dependency
+Detects circular dependencies between modules.
+
+**Configuration:**
+- `allow_self_cycles`: Allow methods to call themselves (default: false)
+- `max_cycle_length`: Maximum cycle length to report (default: 10)
+
+**Example Violation:**
+```python
+# module_a.py
+from module_b import ClassB
+
+class ClassA:
+    def method(self):
+        b = ClassB()
+
+# module_b.py
+from module_a import ClassA  # Circular dependency!
+
+class ClassB:
+    def method(self):
+        a = ClassA()
+```
+
+**Fix:** Break the cycle using dependency inversion:
+```python
+# interface.py
+from abc import ABC, abstractmethod
+
+class IProcessor(ABC):
+    @abstractmethod
+    def process(self): pass
+
+# module_a.py
+from interface import IProcessor
+
+class ClassA(IProcessor):
+    def process(self):
+        pass
+
+# module_b.py
+from interface import IProcessor
+
+class ClassB:
+    def __init__(self, processor: IProcessor):
+        self.processor = processor
+```
+
+### God Object Linter
+
+#### GO001: God Object
+Detects classes with too many responsibilities (God Objects).
+
+**Configuration:**
+- `max_methods`: Maximum number of methods allowed (default: 20)
+- `max_attributes`: Maximum number of attributes allowed (default: 15)
+- `max_lines`: Maximum number of lines allowed (default: 300)
+
+**Example Violation:**
+```python
+class UserManager:  # God Object!
+    def __init__(self):
+        self.db = Database()
+        self.cache = Cache()
+        self.logger = Logger()
+        self.validator = Validator()
+        self.emailer = Emailer()
+        # ... 15+ attributes
+    
+    def create_user(self): pass
+    def update_user(self): pass
+    def delete_user(self): pass
+    def validate_email(self): pass
+    def send_welcome_email(self): pass
+    def log_activity(self): pass
+    # ... 20+ methods
+```
+
+**Fix:** Split into focused classes:
+```python
+# Separate concerns into focused classes
+class UserRepository:
+    def __init__(self, db):
+        self.db = db
+    
+    def create(self, user): pass
+    def update(self, user): pass
+    def delete(self, user_id): pass
+
+class UserValidator:
+    def validate_email(self, email): pass
+    def validate_password(self, password): pass
+
+class UserNotifier:
+    def __init__(self, emailer):
+        self.emailer = emailer
+    
+    def send_welcome_email(self, user): pass
+    def send_password_reset(self, user): pass
+
+class UserService:
+    def __init__(self, repo, validator, notifier):
+        self.repo = repo
+        self.validator = validator
+        self.notifier = notifier
+    
+    def create_user(self, user_data):
+        if self.validator.validate_email(user_data['email']):
+            user = self.repo.create(user_data)
+            self.notifier.send_welcome_email(user)
+            return user
+```
+
+### Feature Envy Linter
+
+#### FE001: Feature Envy
+Detects methods that use more features from another class than their own.
+
+**Configuration:**
+- `envy_threshold`: Ratio of external to total accesses that triggers envy (default: 0.5)
+- `min_accesses`: Minimum total accesses before checking (default: 3)
+
+**Example Violation:**
+```python
+class Order:
+    def __init__(self):
+        self.customer = Customer()
+    
+    def validate_customer_email(self):  # Feature Envy!
+        # Uses customer features more than own features
+        email = self.customer.email
+        email = self.customer.email.strip()
+        email = self.customer.email.lower()
+        is_valid = '@' in self.customer.email
+        return is_valid
+```
+
+**Fix:** Move the method to the appropriate class:
+```python
+class Customer:
+    def __init__(self):
+        self.email = ""
+    
+    def validate_email(self):
+        # Now uses own features
+        email = self.email.strip().lower()
+        return '@' in email
+
+class Order:
+    def __init__(self):
+        self.customer = Customer()
+    
+    def process(self):
+        # Delegate to the appropriate class
+        if self.customer.validate_email():
+            # Process order
+            pass
+```
+
+### Data Clump Linter
+
+#### DC001: Data Clump
+Detects groups of parameters that frequently appear together.
+
+**Configuration:**
+- `min_clump_size`: Minimum number of parameters in a clump (default: 3)
+- `min_occurrences`: Minimum number of methods with the clump (default: 2)
+
+**Example Violation:**
+```python
+class OrderProcessor:
+    def calculate_total(self, price, quantity, discount):  # Data Clump!
+        return price * quantity * (1 - discount)
+    
+    def validate_order(self, price, quantity, discount):  # Same parameters
+        return price > 0 and quantity > 0
+    
+    def format_order(self, price, quantity, discount):  # Same parameters
+        return f"{quantity} items at ${price}"
+```
+
+**Fix:** Extract data clump into a class:
+```python
+class OrderDetails:
+    def __init__(self, price: float, quantity: int, discount: float):
+        self.price = price
+        self.quantity = quantity
+        self.discount = discount
+    
+    def calculate_total(self) -> float:
+        return self.price * self.quantity * (1 - self.discount)
+    
+    def validate(self) -> bool:
+        return self.price > 0 and self.quantity > 0
+    
+    def format(self) -> str:
+        return f"{self.quantity} items at ${self.price}"
+
+class OrderProcessor:
+    def process_order(self, details: OrderDetails):
+        if details.validate():
+            total = details.calculate_total()
+            print(details.format())
+            return total
+```
+
+## Limitations
+
+- Requires extensive type hints for accurate analysis
+- Dynamic attributes (via `__getattr__`) may not be detected
+- Forward references must be properly annotated
+
+## Development Status
+
+Version 0.1.0 - Alpha (Reporting Only)
+
+## License
+
+MIT License
+
+## Contributing
+
+Contributions welcome! Please see CONTRIBUTING.md for guidelines.
