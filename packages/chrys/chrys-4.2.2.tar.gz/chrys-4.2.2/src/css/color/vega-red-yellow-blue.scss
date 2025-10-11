@@ -1,0 +1,18 @@
+@import 'src/css/variables';
+
+$name: 'vega-red-yellow-blue';
+$map: map-get($chrys-palettes, $name);
+$sizes: map-keys($map);
+
+@each $size in $sizes {
+  $colors: map-get($map, $size);
+  $index: 0;
+
+  @each $color in $colors {
+    $index: $index + 1;
+
+    .chrys-color-#{$name}-#{$size}-#{$index} {
+      color: $color;
+    }
+  }
+}
