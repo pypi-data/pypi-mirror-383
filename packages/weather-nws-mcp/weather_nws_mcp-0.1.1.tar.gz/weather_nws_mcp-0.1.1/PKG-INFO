@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: weather-nws-mcp
+Version: 0.1.1
+Summary: A Python package for accessing weather data from the National Weather Service (NWS) API
+Author-email: 501849930 <501849930@qq.com>
+Keywords: weather,nws,api,forecast,alerts
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: mcp[cli]>=1.16.0
+Dynamic: license-file
+
+# Weather Package
+
+A Python package for accessing weather data from the National Weather Service (NWS) API.
+
+## Features
+
+- Get weather alerts for US states
+- Get weather forecasts for any location by latitude and longitude
+- Easy-to-use asynchronous API
+
+## Installation
+
+```bash
+pip install weather
+```
+
+## Usage
+
+```python
+from weather import get_alerts, get_forecast
+
+# Get weather alerts for California
+alerts = get_alerts("CA")
+
+# Get forecast for a specific location (latitude, longitude)
+forecast = get_forecast(34.0522, -118.2437)  # Los Angeles, CA
+```
+
+## Requirements
+
+- Python 3.11+
+- httpx
+- mcp

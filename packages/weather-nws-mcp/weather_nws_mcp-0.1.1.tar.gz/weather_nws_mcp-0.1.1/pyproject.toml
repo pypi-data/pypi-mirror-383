@@ -1,0 +1,26 @@
+[project]
+name = "weather-nws-mcp"
+version = "0.1.1"
+description = "A Python package for accessing weather data from the National Weather Service (NWS) API"
+readme = "README.md"
+authors = [
+    {name = "501849930", email = "501849930@qq.com"}
+]
+keywords = ["weather", "nws", "api", "forecast", "alerts"]
+
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.16.0",
+]
+
+[tool.uv.workspace]
+members = ["venv"]
+
+[project.scripts]
+weather-nws-mcp = "weather.weather:main"
+
+[build-system]
+# 更新setuptools版本要求到77.0.0或更高
+requires = ["setuptools>=77.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
