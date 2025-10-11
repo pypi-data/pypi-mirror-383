@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: neocr
+Version: 0.1.0
+Summary: NeoCR is a hierarchical, context-aware OCR system for mixed-content documents
+Author: NeoSpace Technologies
+Maintainer: NeoSpace Technologies
+Project-URL: Homepage, https://neospacetech.github.io/neocr
+Project-URL: Repository, https://github.com/neospacetech/neocr
+Project-URL: Documentation, https://neospacetech.github.io/neocr
+Project-URL: Bug Tracker, https://github.com/neospacetech/neocr/issues
+Keywords: ocr,optical-character-recognition,document-analysis,text-extraction,handwriting-recognition,formula-recognition,table-extraction,hierarchical-parsing
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Image Recognition
+Classifier: Topic :: Text Processing
+Classifier: Topic :: Multimedia :: Graphics :: Capture :: Scanners
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: numpy==2.2.6
+Requires-Dist: opencv-python>=4.12.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx; extra == "docs"
+Requires-Dist: sphinx-rtd-theme; extra == "docs"
+Requires-Dist: myst-parser; extra == "docs"
+Provides-Extra: test
+Requires-Dist: pytest>=6.0; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+
+# neocr
+NeoCR is a hierarchical, context-aware OCR system for mixed-content documents. It decomposes text into atoms, symbols, quants, and groups, preserving structure. Supports handwriting, formulas, tables, and sketches, with predictive completion, confidence-aware inference, and export to plaintext, Markdown, LaTeX, or PDF.
