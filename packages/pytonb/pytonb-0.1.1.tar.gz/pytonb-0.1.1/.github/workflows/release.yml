@@ -1,0 +1,61 @@
+name: CI + Publish to PyPI (graceful if exists)
+
+on:
+  push:            # every push on any branch
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # good for VCS-based versioning
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: astral-sh/setup-uv@v6
+      - run: uv --version
+
+      - name: Sync deps
+        run: uv sync --dev
+
+      - name: Pytest
+        run: uv run pytest -q
+
+      - name: Build
+        run: uv build --sdist --wheel
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  publish:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    environment: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to PyPI (skip if already uploaded)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          skip-existing: true   # <-- makes reruns/same-version uploads succeed gracefully
+
