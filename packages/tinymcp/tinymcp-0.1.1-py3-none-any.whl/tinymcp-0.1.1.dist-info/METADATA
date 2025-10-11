@@ -1,0 +1,86 @@
+Metadata-Version: 2.4
+Name: tinymcp
+Version: 0.1.1
+Summary: A lightweight MCP router for FastAPI
+Project-URL: Homepage, https://github.com/grab/tinymcp
+Project-URL: Documentation, https://github.com/grab/tinymcp#readme
+Project-URL: Repository, https://github.com/grab/tinymcp
+Project-URL: Bug Tracker, https://github.com/grab/tinymcp/issues
+Author-email: Md Riyadh <riyadh.sharif@grabtaxi.com>
+Maintainer-email: Md Riyadh <riyadh.sharif@grabtaxi.com>, Felix Lie <felix.lie@grabtaxi.com>
+License: MIT License
+        
+        Copyright (c) 2025 Grab
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE
+Keywords: api,fastapi,mcp,model-context-protocol,tools
+Classifier: Development Status :: 4 - Beta
+Classifier: Framework :: FastAPI
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Requires-Dist: fastapi>=0.68.0
+Description-Content-Type: text/markdown
+
+# TinyMCP
+
+A lightweight MCP router for FastAPI.
+
+## Quick Start
+
+```python
+from tinymcp import create_mcp_router, mcp_tool
+
+@mcp_tool(description="Get current time")
+def get_time() -> str:
+    from datetime import datetime
+    return datetime.now().isoformat()
+
+@mcp_tool(description="Get user data with structured output")
+def get_user_data():
+    return {
+        "content": [{"type": "text", "text": "User data retrieved"}],
+        "structured": {"user_id": 123, "email": "user@example.com"}
+    }
+
+# Add to FastAPI
+app.include_router(create_mcp_router(name="My App"))
+
+# Custom prefix (default: "/mcp")
+app.include_router(create_mcp_router(name="My App", prefix="/my-mcp"))
+```
+
+## Quick Demo
+Once you have this repo cloned, from root, run the following (install the missing dev dependencies as required)
+
+```bash
+uv run python docs/sample_server/simple_fastapi_server.py
+```
+
+## Note on Authentication
+
+Authentication has been intentionally left out of TinyMCP to keep it... tiny. Any auth that can be setup with FastAPI in general can be setup with this. However, for MCP server to interact with most MCP clients like cursor, several specific configurations, endpoints etc. are required. If you have an existing OAuth mechanism in your FastAPI server, it is quite easy to make it work for the TinyMCP server as well. See [oauth_integration_guide.md](./docs/authentication/oauth_integration_guide.md) for a complete setup guide.
