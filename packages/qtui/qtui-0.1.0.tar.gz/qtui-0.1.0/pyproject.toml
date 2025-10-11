@@ -1,0 +1,49 @@
+[project]
+name = "qtui"
+version = "0.1.0"
+description = "A collection of UI libraries for pyqt (pyside)"
+readme = "README.md"
+authors = [
+    { name = "moreih29", email = "moreih29@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "qtpy>=2.4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pyside6>=6.3.0,<6.10.0",
+    "ruff>=0.1.0",
+    "pyright>=1.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "B",    # flake8-bugbear
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "none"
+exclude = [".venv", "example", "**/*_rc.py", "**/*_ui.py"]
+
+[tool.pyright.defineConstant]
+PYQT5 = false
+PYSIDE2 = false
+PYQT6 = false
+PYSIDE6 = true
