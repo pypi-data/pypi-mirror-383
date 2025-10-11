@@ -1,0 +1,277 @@
+# Pump Portal MCP Server 🚀
+
+A production-ready **Model Context Protocol (MCP)** server that provides Solana blockchain trading operations through **PumpPortal Lightning API**. Create wallets, launch tokens, and execute trades with reliable transaction handling.
+
+## ✨ Features
+
+- 🏦 **Wallet Management**: Create secure trading wallets with API keys
+- 🪙 **Token Creation**: Launch new SPL tokens with metadata and social links
+- 💰 **Trading Operations**: Buy and sell tokens across multiple DEXs
+- 💸 **Fee Collection**: Claim creator fees from token trading activity
+- 🔄 **Lightning API**: Reliable transaction execution via PumpPortal infrastructure
+- 🛡️ **Production Ready**: Comprehensive error handling, logging, and validation
+- 📊 **Trading Resources**: Access wallet info and trading status via MCP resources
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+1. **PumpPortal API Key** - Create a wallet using the `create_wallet` tool
+2. **Python 3.11+** (for development only)
+
+### Installation
+
+Option 1: From Source
+
+```bash
+git clone https://github.com/pump-portal/pump-portal-mcp-server.git
+cd pump-portal-mcp-server
+uv sync
+```
+
+Option 2: Using `uvx` (when published)
+
+```bash
+uvx pump-portal-mcp-server@latest
+```
+
+## 🔧 Configuration
+
+### Claude Desktop
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "pump-portal": {
+      "command": "python",
+      "args": ["-m", "pump_portal_mcp_server.server"],
+      "cwd": "/path/to/pump-portal-mcp-server",
+      "env": {
+        "API_KEY": "your-pumpportal-api-key-here"
+      }
+    }
+  }
+}
+```
+
+**Getting your API key:**
+
+You have three options to get your API key:
+
+**Option 1: Use the create_wallet tool (Recommended)**
+1. Start the server temporarily without an API key
+2. Use the `create_wallet` tool to generate a new wallet
+3. Copy the `apiKey` from the response
+4. Update your configuration with the API key
+5. Restart the server
+
+**Option 2: Use PumpPortal web interface**
+1. Visit https://pumpportal.fun/trading-api/setup
+2. Click 'Create Wallet'
+3. Copy the `apiKey` from the response
+4. Update your configuration with the API key
+
+**Option 3: Use curl command**
+```bash
+curl 'https://pumpportal.fun/api/create-wallet'
+```
+Copy the `apiKey` from the response and update your configuration.
+
+**Configuration file locations:**
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+### Claude Code (VS Code Extension)
+
+Install and configure in VS Code:
+
+1. Install the Claude Code extension
+2. Open Command Palette (`Cmd/Ctrl + Shift + P`)
+3. Run "Claude Code: Add MCP Server"
+4. Configure:
+   ```json
+   {
+     "name": "pump-portal",
+     "command": "python",
+     "args": ["-m", "pump_portal_mcp_server.server"],
+     "cwd": "/path/to/pump-portal-mcp-server",
+     "env": {
+       "API_KEY": "your-pumpportal-api-key-here"
+     }
+   }
+   ```
+
+## 🛠️ Available Tools
+
+### Wallet Operations
+
+#### `create_wallet`
+Create a new trading wallet and API key.
+
+**Returns:**
+- `apiKey`: For Lightning API operations
+- `walletPublicKey`: Public key for receiving funds
+- `privateKey`: Keep secure for wallet access
+
+### Token Operations
+
+#### `create_token`
+Launch a new SPL token on PumpPortal.
+
+**Parameters:**
+- `name`: Token name
+- `symbol`: Token ticker (1-10 chars)
+- `description`: Token description
+- `dev_buy_amount`: SOL amount for initial buy (min 0.01)
+- `image_base64`: Token icon (base64 encoded, optional)
+- `twitter`: Twitter URL (optional)
+- `telegram`: Telegram URL (optional)
+- `website`: Website URL (optional)
+- `slippage`: Slippage percentage (default: 10)
+- `priority_fee`: Priority fee in SOL (default: 0.0005)
+
+**Example:**
+```python
+create_token(
+    name="My Token",
+    symbol="MTK",
+    description="A revolutionary token",
+    dev_buy_amount=0.1,
+    twitter="https://twitter.com/mytoken",
+    website="https://mytoken.com"
+)
+```
+
+### Trading Operations
+
+#### `buy_token`
+Buy tokens using Lightning API.
+
+**Parameters:**
+- `mint`: Token contract address
+- `amount`: Amount to trade
+- `denominated_in_sol`: "true" for SOL amount, "false" for token count
+- `slippage`: Slippage percentage (default: 10)
+- `priority_fee`: Priority fee in SOL (default: 0.0005)
+- `pool`: Exchange pool (pump, raydium, pump-amm, launchlab, raydium-cpmm, bonk, auto)
+
+#### `sell_token`
+Sell tokens using Lightning API.
+
+**Parameters:**
+- `mint`: Token contract address
+- `amount`: Amount to trade (can be "100%" to sell all)
+- `denominated_in_sol`: "true" for SOL amount, "false" for token count
+- `slippage`: Slippage percentage (default: 10)
+- `priority_fee`: Priority fee in SOL (default: 0.0005)
+- `pool`: Exchange pool (pump, raydium, pump-amm, launchlab, raydium-cpmm, bonk, auto)
+
+#### `claim_fees`
+Claim creator fees from trading activity.
+
+**Parameters:**
+- `pool`: Pool type ("pump" or "meteora-dbc")
+- `mint`: Token address (required for meteora-dbc)
+- `priority_fee`: Priority fee in SOL (default: 0.000001)
+
+## 📊 Available Resources
+
+### Wallet Information
+- `pumpportal://wallet/current` - Current wallet configuration and status
+- `pumpportal://status/trading` - Trading service capabilities and settings
+
+## 💡 Available Prompts
+
+### Trading Guidance
+- `token_launch_checklist` - Comprehensive token launch checklist
+- `trading_strategy_guide` - Trading strategies and risk management
+- `portfolio_management` - Portfolio diversification and management
+
+## ⚙️ Environment Variables
+
+```bash
+# Required
+API_KEY=your-pumpportal-api-key-here
+
+# Optional
+DEFAULT_SLIPPAGE=10                    # Default slippage percentage
+DEFAULT_PRIORITY_FEE=0.0005           # Default priority fee in SOL
+DEFAULT_POOL=pump                      # Default exchange pool
+API_TIMEOUT=30                         # API request timeout (seconds)
+LOG_LEVEL=INFO                         # DEBUG, INFO, WARNING, ERROR
+LOG_FORMAT=standard                    # standard, json, detailed
+```
+
+## 🔄 Pool Types
+
+- **pump**: Pump.fun tokens (high volatility, new launches)
+- **raydium**: Established tokens with better liquidity
+- **pump-amm**: Automated market maker for pump tokens
+- **launchlab**: LaunchLab platform tokens
+- **raydium-cpmm**: Raydium constant product market maker
+- **bonk**: Bonk ecosystem tokens
+- **auto**: Automatic pool selection based on best conditions
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**"API_KEY not set"**
+- Use one of these methods to get your API key:
+  - Use the `create_wallet` tool to generate a new wallet
+  - Visit https://pumpportal.fun/trading-api/setup and click 'Create Wallet'
+  - Run `curl 'https://pumpportal.fun/api/create-wallet'`
+- Add the returned `apiKey` to your configuration
+- Restart the MCP server
+
+**"Trading failed" errors**
+- Check your wallet has sufficient SOL balance
+- Verify the token mint address is correct
+- Adjust slippage settings for volatile markets
+- Ensure priority fee is adequate for network conditions
+
+**"Token creation failed"**
+- Verify dev buy amount is at least 0.01 SOL
+- Check token name and symbol are valid
+- Ensure image is properly base64 encoded if provided
+- Verify all URLs are valid and accessible
+
+### Development Setup
+
+For local development:
+
+```bash
+# Clone repository
+git clone https://github.com/pump-portal/pump-portal-mcp-server.git
+cd pump-portal-mcp-server
+
+# Install with uv
+uv sync
+
+# Set environment (create wallet first to get API key)
+export API_KEY=your-api-key-here
+
+# Run locally
+uv run python -m pump_portal_mcp_server.server
+```
+
+## ⚠️ Risk Disclaimer
+
+Trading cryptocurrencies involves substantial risk of loss and is not suitable for all investors. The Pump Portal MCP Server is a tool for executing trades and does not provide financial advice. Always:
+
+- Do your own research before trading
+- Never invest more than you can afford to lose
+- Understand the risks of cryptocurrency trading
+- Consider consulting with a financial advisor
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 🆘 Support
+
+- **Issues**: [GitHub Issues](https://github.com/pump-portal/pump-portal-mcp-server/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/pump-portal/pump-portal-mcp-server/discussions)
+- **PumpPortal**: [PumpPortal.fun](https://pumpportal.fun)
