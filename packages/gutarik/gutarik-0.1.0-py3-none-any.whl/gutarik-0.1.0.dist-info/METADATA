@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: gutarik
+Version: 0.1.0
+Summary: Auto .md docs generator
+License: MIT
+Keywords: Backend,Documentation,Docs,Docstring,Generator,Python,Markdown
+Author: ProudRykar
+Author-email: proudrykar@mail.ru
+Requires-Python: >=3.10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Provides-Extra: yaml-toml
+Requires-Dist: pyyaml (>=6.0.2) ; extra == "yaml-toml"
+Requires-Dist: toml (>=0.10.2,<0.11.0) ; extra == "yaml-toml"
+Project-URL: Changelog, https://github.com/ProudRykar/GUTARIK/releases
+Project-URL: Issues, https://github.com/ProudRykar/GUTARIK/issues
+Project-URL: Repository, https://github.com/ProudRykar/GUTARIK
+Description-Content-Type: text/markdown
+
+# GUTARIK
+
