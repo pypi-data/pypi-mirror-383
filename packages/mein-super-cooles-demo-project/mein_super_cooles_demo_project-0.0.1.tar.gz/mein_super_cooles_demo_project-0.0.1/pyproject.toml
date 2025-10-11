@@ -1,0 +1,18 @@
+[project]
+name = "mein_super_cooles_demo_project"
+version = "0.0.1"
+authors = [
+    { name="Thomas Benkenstein", email="thomas.benkenstein@experteach.de" },
+]
+description = "Demonstration eines PyPI Uploads"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyqt5",
+    "numpy",
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Environment :: X11 Applications :: Qt"
+]
