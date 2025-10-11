@@ -1,0 +1,17 @@
+plover>=4.0.0.dev8
+aiohttp
+aiohttp_middlewares
+jsonpickle
+nacl_middleware
+PySide6
+
+[dev]
+plover_websocket_server[test]
+pre-commit
+build
+bump-my-version
+twine
+ruff
+
+[test]
+pytest
