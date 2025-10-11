@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ngram-punctuator"
+authors = [{ name = "Zhendong Peng", email = "pzd17@tsinghua.org.cn" }]
+description = "N-gram Punctuator"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.7"
+dynamic = ["version"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "click",
+    "kenlm",
+    "modelscope",
+    "regex",
+]
+
+[project.scripts]
+ngram-punctuator = "ngram_punctuator.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/pengzhendong/ngram-punctuator"
+Documentation = "https://github.com/pengzhendong/ngram-punctuator#readme"
+BugTracker = "https://github.com/pengzhendong/ngram-punctuator/issues"
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
