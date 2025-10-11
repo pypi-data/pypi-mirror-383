@@ -1,0 +1,79 @@
+[tool.mypy]
+files = "policy_sentry"
+
+python_version = "3.9" # should be identical to the minimum supported version
+local_partial_types = true # will become the new default from version 2
+allow_redefinition_new = true # will become the new default from version 2
+fixed_format_cache = true # new caching mechanism
+strict = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = [
+    "schema"
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+preview = true
+select = [
+    "A",
+    "ANN",
+    "ARG",
+    "B",
+    "C4",
+    "E",
+    "F",
+    "FURB",
+    "I",
+    "ISC",
+    "N",
+    "PERF",
+    "PIE",
+    "PLE",
+    "PLW",
+    "PYI",
+    "RUF",
+    "S",
+    "SIM",
+    "T10",
+    "TC",
+    "UP",
+    "W",
+    "YTT",
+]
+ignore = ["E501"] # ruff fromat takes care of it
+
+fixable = ["I001"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "test",
+    "test/analysis",
+    "test/command",
+    "test/querying",
+    "test/util",
+    "test/writing",
+]
+norecursedirs = [
+    "_build",
+    "tmp*",
+    "__pycache__",
+]
+
+[tool.coverage.report]
+omit = [
+    "policy_sentry/shared/awsdocs.py",
+    # omit anything in a .local directory anywhere
+    "*/.local/*",
+    "*/virtualenv/*",
+    "*/venv/*",
+    "*/.venv/*",
+    "*/docs/*",
+    "*/examples/*",
+    "utils/*",
+]
