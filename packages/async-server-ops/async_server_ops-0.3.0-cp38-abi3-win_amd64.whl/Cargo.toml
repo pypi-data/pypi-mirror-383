@@ -1,0 +1,34 @@
+[package]
+name = "async_server_ops"
+version = "0.3.0"
+edition = "2021"
+license = "MIT"
+description = "Async local/remote file ops over SSH (scp/rsync) with robust defaults and Python bindings"
+readme = "README.md"
+keywords = ["ssh", "scp", "rsync", "tokio", "async", "python", "pyo3"]
+
+[lib]
+name = "async_server_ops"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+# Build Python extension only when requested
+python = ["dep:pyo3", "dep:pyo3-asyncio", "pyo3/extension-module", "pyo3/abi3-py38", "pyo3-asyncio/tokio-runtime"]
+
+[dependencies]
+tokio = { version = "1.47", features = ["fs", "process", "macros", "rt-multi-thread", "io-util"] }
+async-trait = "0.1"
+futures = "0.3"
+thiserror = "1"
+which = "6"
+serde = { version = "1", features = ["derive"] }
+
+# Optional Python bindings
+pyo3 = { version = "0.20", optional = true, features = ["macros", "abi3-py38"] }
+pyo3-asyncio = { version = "0.20", optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.47", features = ["macros", "rt-multi-thread"] }
+tempfile = "3"
+whoami = "1"
