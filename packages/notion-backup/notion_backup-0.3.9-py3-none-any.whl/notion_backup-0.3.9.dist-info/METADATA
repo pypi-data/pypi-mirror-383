@@ -1,0 +1,40 @@
+Metadata-Version: 2.3
+Name: notion-backup
+Version: 0.3.9
+Summary: Notion workspace export automation tool
+Author: Ligohu
+Author-email: ligohu@ligohu.fr
+Requires-Python: >=3.10.12
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: backoff (>=1.10.0)
+Requires-Dist: click (>=7.1.2)
+Requires-Dist: prompt_toolkit (>=3.0.5)
+Requires-Dist: requests (>=2.23.0)
+Requires-Dist: tqdm (>=4.46.0)
+Project-URL: Repository, https://codeberg.org/Ligohu/notion-backup
+Description-Content-Type: text/markdown
+
+# notion-backup
+
+Automate export of Notion workspace
+
+## Installation
+
+```
+pip install --upgrade notion-backup
+```
+
+## Configuration
+
+Create a `notion_backup.conf` file from the template `notion_backup.conf.template`.
+Get the token, file_token and space_id from the cookies of your browser.
+
+## Usage
+
+```
+backup_notion --output-dir='.' --config-file='notion_backup.conf'
+```
+
