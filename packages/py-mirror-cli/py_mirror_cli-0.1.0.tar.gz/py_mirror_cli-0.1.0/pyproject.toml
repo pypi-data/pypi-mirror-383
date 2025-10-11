@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "py-mirror-cli"
+version = "0.1.0"
+description = "Python pip 镜像源管理工具，类似 nrm"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "Jonelee", email = "jonelee@example.com"}
+]
+keywords = ["pip", "pypi", "mirror", "registry", "manager"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "typer[all]>=0.9.0",
+    "rich>=13.0.0",
+    "textual>=0.47.0",
+    "requests>=2.31.0",
+    "configparser>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+]
+
+[project.scripts]
+pyrm = "pyrm.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/py-mirror-cli"
+Repository = "https://github.com/yourusername/py-mirror-cli"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pyrm*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
