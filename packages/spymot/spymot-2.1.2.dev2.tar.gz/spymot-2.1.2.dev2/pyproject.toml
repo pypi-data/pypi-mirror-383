@@ -1,0 +1,161 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spymot"
+dynamic = ["version"]
+description = "Advanced Protein Motif Detection with AlphaFold Structural Validation"
+readme = "README.md"
+authors = [
+    {name = "Erfan Zohrabi", email = "erfanzohrabi.ez@gmail.com"},
+]
+maintainers = [
+    {name = "Erfan Zohrabi", email = "erfanzohrabi.ez@gmail.com"},
+]
+keywords = [
+    "bioinformatics",
+    "protein",
+    "motif",
+    "alphafold",
+    "cancer",
+    "slims",
+    "signal-peptides",
+    "protein-structure",
+    "drug-discovery",
+    "structural-biology",
+    "computational-biology"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9", 
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.19.0",
+    "requests>=2.25.0",
+    "click>=8.0.0",
+    "PyYAML>=5.4.0",
+    "biopython>=1.79",
+    "pandas>=1.3.0",
+    "tqdm>=4.60.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy",
+    "ruff"
+]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "myst-parser"
+]
+full = [
+    "scipy>=1.7.0",
+    "pandas>=1.3.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.11.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/ErfanZohrabi/Spymot"
+Documentation = "https://github.com/ErfanZohrabi/Spymot/tree/main/documentation"
+Repository = "https://github.com/ErfanZohrabi/Spymot.git"
+"Bug Tracker" = "https://github.com/ErfanZohrabi/Spymot/issues"
+Changelog = "https://github.com/ErfanZohrabi/Spymot/blob/main/CHANGELOG.md"
+
+[project.scripts]
+spymot = "spymot.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["spymot", "spymot.*"]
+exclude = ["*.tests", "*.tests.*", "tests.*", "tests"]
+
+[tool.setuptools.package-data]
+spymot = [
+    "data/*", 
+    "examples/*",
+    "*.md",
+    "v1/data/*",
+    "v2/data/*",
+    "v2/examples/*",
+    "v1/tests/*",
+    "v2/tests/*"
+]
+
+[tool.setuptools_scm]
+write_to = "src/spymot/_version.py"
+# Generate clean versions for tags (no local version identifiers)
+local_scheme = "no-local-version"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "V1/tests", "V2/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose"
+]
+markers = [
+    "slow: marks tests as slow",
+    "integration: marks tests as integration tests",
+    "v1: marks tests for V1 functionality",
+    "v2: marks tests for V2 functionality"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         
+    | \.git          
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = ["E", "F", "I", "UP", "B", "ANN", "C4", "SIM", "RUF"]
+ignore = ["ANN101", "ANN102"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+packages = ["spymot"]
