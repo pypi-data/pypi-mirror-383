@@ -1,0 +1,334 @@
+Metadata-Version: 2.4
+Name: smarttest-cli
+Version: 0.1.3
+Summary: SmartTest CLI - Execute test scenarios with secure credential handling
+Author-email: SmartTest Team <ai.smart.test.contact@gmail.com>
+Maintainer-email: SmartTest Team <ai.smart.test.contact@gmail.com>
+License: MIT
+Project-URL: Homepage, https://ai-smart-test.vercel.app/
+Project-URL: Documentation, https://ai-smart-test.vercel.app/docs
+Project-URL: Repository, https://github.com/smarttest/smarttest-cli
+Project-URL: Bug Tracker, https://github.com/smarttest/smarttest-cli/issues
+Keywords: testing,api,cli,automation,ci-cd,continuous-integration,api-testing
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Software Development :: Quality Assurance
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: typer>=0.9.0
+Requires-Dist: httpx>=0.24.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.10.0; extra == "dev"
+Dynamic: license-file
+
+# SmartTest CLI
+
+Enterprise-ready CLI for executing test scenarios with secure, zero-credential-exposure architecture.
+
+## Features
+
+🔒 **Zero Credential Exposure**: Auth tokens never leave your network
+⚡ **Concurrent Execution**: Run up to 5 scenarios simultaneously
+🎯 **Continue-on-Error**: Individual failures don't stop execution
+📊 **Real-time Progress**: Live progress updates with rich terminal output
+📄 **CI Integration**: JUnit XML reports for CI/CD pipelines
+🌐 **Network Aware**: Proxy and custom CA support for enterprise networks
+
+## Installation
+
+Install the CLI from PyPI:
+
+```bash
+pip install smarttest-cli
+```
+
+### Get Your PAT Token
+
+1. Visit the SmartTest platform: https://ai-smart-test.vercel.app/
+2. Sign up or log in to your account
+3. Navigate to **Settings** → **API Tokens**
+4. Click **Generate PAT Token**
+5. Copy your Personal Access Token (PAT)
+
+**What is a PAT Token?**
+A Personal Access Token (PAT) authenticates the CLI with the SmartTest backend. It allows the CLI to fetch test scenarios and submit results securely. This token is separate from any credentials needed to test your APIs.
+
+## Quick Start
+
+### 1. Set Your PAT Token
+
+```bash
+export SMARTTEST_TOKEN=your_pat_token_here
+```
+
+### 2. Run Test Scenarios
+
+```bash
+# Run a specific scenario
+python smarttest.py run --scenario-id 123
+
+# Run all scenarios for an endpoint
+python smarttest.py run --endpoint-id 456
+
+# Run all scenarios for a system
+python smarttest.py run --system-id 789
+
+# With JUnit XML report for CI
+python smarttest.py run --system-id 789 --report junit.xml
+```
+
+## Configuration
+
+### Optional Configuration File
+
+Create `.smarttest.yml` in your project root for advanced configuration:
+
+```yaml
+# API Configuration
+api_url: "https://api.smarttest.com"
+
+# Execution Settings
+concurrency: 5
+timeout: 30
+
+# Enterprise Network Settings
+proxy:
+  http_proxy: "http://proxy.company.com:8080"
+  https_proxy: "https://proxy.company.com:8080"
+
+tls:
+  ca_bundle_path: "/path/to/ca-bundle.pem"
+  verify_ssl: true
+```
+
+**Configuration Options:**
+- `api_url`: SmartTest API endpoint (default: https://api.smarttest.com)
+- `concurrency`: Number of scenarios to run in parallel (default: 5)
+- `timeout`: Request timeout in seconds (default: 30)
+- `proxy`: HTTP/HTTPS proxy settings for corporate networks
+- `tls`: Custom CA bundle and SSL verification options
+
+## Authentication
+
+### SmartTest Authentication (Required)
+
+The CLI requires a **Personal Access Token (PAT)** to authenticate with SmartTest:
+
+```bash
+export SMARTTEST_TOKEN=your_pat_token_here
+```
+
+**How to get your PAT token:**
+1. Visit https://ai-smart-test.vercel.app/
+2. Go to **Settings** → **API Tokens**
+3. Generate a new PAT token
+4. Copy and save it securely
+
+### Zero-Credential Exposure (Advanced)
+
+**When testing APIs that require authentication**, SmartTest uses a zero-credential-exposure model to keep your API credentials secure.
+
+#### How It Works
+
+1. **SmartTest backend sends auth config references** (metadata only, no actual credentials)
+2. **CLI resolves credentials locally** from your environment variables
+3. **Credentials never leave your network** or reach SmartTest servers
+4. **Requests are made directly from your environment** to the target API
+
+#### Setting Up Target API Credentials
+
+Only needed if you're testing APIs that require authentication:
+
+```bash
+# Bearer Token Authentication
+export AUTH_CONFIG_123_TOKEN=your_api_bearer_token
+
+# Basic Authentication
+export AUTH_CONFIG_456_USERNAME=api_username
+export AUTH_CONFIG_456_PASSWORD=api_password
+
+# API Key Authentication
+export AUTH_CONFIG_789_API_KEY=your_api_key
+```
+
+**Pattern:** `AUTH_CONFIG_{ID}_{CREDENTIAL_TYPE}`
+- `{ID}`: Auth configuration ID from SmartTest dashboard
+- `{CREDENTIAL_TYPE}`: TOKEN, USERNAME, PASSWORD, or API_KEY
+
+**Example Scenario:**
+- You're testing your company's API at `https://api.company.com`
+- The API requires a bearer token for authentication
+- SmartTest knows the API needs auth (config ID: 123)
+- You set: `export AUTH_CONFIG_123_TOKEN=company_bearer_token_xyz`
+- CLI resolves the token locally and includes it in requests
+- SmartTest never sees `company_bearer_token_xyz`
+
+## CI/CD Integration
+
+### GitHub Actions
+
+```yaml
+- name: Run SmartTest
+  env:
+    SMARTTEST_TOKEN: ${{ secrets.SMARTTEST_TOKEN }}
+    API_TOKEN: ${{ secrets.API_TOKEN }}
+  run: |
+    python smarttest.py run --system-id 123 --report junit.xml
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SmartTest CLI
+        run: pip install smarttest-cli
+
+      - name: Run API Tests
+        env:
+          # PAT token for SmartTest authentication
+          SMARTTEST_TOKEN: ${{ secrets.SMARTTEST_TOKEN }}
+        run: |
+          smarttest --system-id 123 --report junit.xml
+
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: SmartTest Results
+          path: junit.xml
+          reporter: java-junit
+```
+
+### Jenkins
+
+**Basic Pipeline:**
+```groovy
+pipeline {
+    agent any
+    environment {
+        // PAT token for SmartTest authentication
+        SMARTTEST_TOKEN = credentials('smarttest-token')
+        API_TOKEN = credentials('api-token')
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'python smarttest.py run --system-id 123 --report junit.xml'
+            }
+            post {
+                always {
+                    junit 'junit.xml'
+                }
+            }
+        }
+    }
+}
+```
+
+## Example Output
+
+```bash
+$ python smarttest.py run --system-id 123
+🔍 Found 25 scenarios (3 skipped - no validations)
+⚡ Executing scenarios... ✅ 18 passed, ❌ 3 failed, ⚠️ 1 errors [████████████████████████] 22/22 • 0:00:15
+
+Results:
+✅ 18 passed
+❌ 3 failed (validation errors)
+⚠️  1 error (network timeout)
+
+Failed scenarios:
+  - user_login_invalid: Expected status 401, got 200
+  - payment_process: Response missing required field 'transaction_id'
+
+Error scenarios:
+  - webhook_callback: Connection timeout after 30s
+
+Summary: 18/22 scenarios passed (81.8% success rate)
+Execution time: 15.2s
+```
+
+## Error Handling
+
+The CLI provides comprehensive error classification:
+
+- **✅ Success**: HTTP request succeeded, all validations passed
+- **❌ Failed**: HTTP request succeeded, but validations failed
+- **⚠️  Network Timeout**: Request timed out
+- **⚠️  Network Error**: Connection failed
+- **⚠️  Auth Error**: Authentication resolution failed
+- **⚠️  Unknown Error**: Unexpected error occurred
+
+## Architecture
+
+```
+┌─ Scenario Discovery (API with rate limiting)
+├─ Skip scenarios without validations
+├─ Concurrent Execution (max 5)
+│  ├─ Fetch definition (auth config references only)
+│  ├─ Resolve auth locally (zero credential exposure)
+│  ├─ Execute HTTP request (with comprehensive error handling)
+│  └─ Submit results (continue on any error)
+└─ Generate reports and exit
+```
+
+## Troubleshooting
+
+### Authentication Issues
+
+**SmartTest Authentication:**
+```bash
+# Verify your PAT token is set
+echo $SMARTTEST_TOKEN
+
+# Test connection to SmartTest
+curl -H "Authorization: Bearer $SMARTTEST_TOKEN" https://api.smarttest.com/health
+```
+
+**Target API Authentication:**
+```bash
+# Verify target API credentials are set
+echo $AUTH_CONFIG_123_TOKEN
+
+# Check which auth configs your scenarios use in the SmartTest dashboard
+```
+
+### Network Issues
+
+```bash
+# Test with custom config
+python smarttest.py run --scenario-id 123 --config .smarttest.yml
+
+# Enable request debugging
+SMARTTEST_DEBUG=1 python smarttest.py run --scenario-id 123
+```
+
+### Rate Limiting
+
+The CLI automatically handles rate limiting with exponential backoff. If you encounter persistent rate limiting:
+
+1. Reduce concurrency in `.smarttest.yml`
+2. Contact support to increase rate limits
+3. Spread execution across longer time periods
+
+## Support
+
+- 🌐 Platform: https://ai-smart-test.vercel.app/
+- 📚 Documentation: https://ai-smart-test.vercel.app/docs
+- 💬 Support: ai.smart.test.contact@gmail.com
