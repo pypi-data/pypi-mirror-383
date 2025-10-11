@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: image_tools_anderson1985
+Version: 0.1.0
+Summary: Pacote simples de processamento de imagens
+Home-page: https://github.com/andersonasnunes/image_tools_andernunes
+Author: Anderson Nunes
+Author-email: ander_snunes@icloud.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: Pillow>=9.0.0
+
+# image_tools
+
+Pacote simples para processamento de imagens em Python.
+
+## Funcionalidades
+- Desfoque (blur)
+- Conversão para tons de cinza
+- Redimensionamento
+
+## Instalação
+```bash
+pip install image_tools
+```
+
+## Exemplo de uso
+```python
+from image_tools import blur_image, grayscale_image, resize_image
+
+blur_image("input.jpg", "blur.jpg", radius=3)
+grayscale_image("input.jpg", "gray.jpg")
+resize_image("input.jpg", "resized.jpg", 200, 200)
+```
