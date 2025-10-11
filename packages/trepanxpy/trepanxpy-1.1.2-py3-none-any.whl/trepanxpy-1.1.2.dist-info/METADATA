@@ -1,0 +1,39 @@
+Metadata-Version: 2.4
+Name: trepanxpy
+Version: 1.1.2
+Summary: GDB-like Debugger for x-python in the Trepan family
+Author-email: Rocky Bernstein <rb@dustyfeet.com>
+License-Expression: GPL-3.0-or-later
+Project-URL: Homepage, https://pypi.org/project/trepan-xpy/
+Project-URL: Downloads, https://github.com/Trepan-Debuggers/trepan-xpy/releases
+Keywords: Python bytecode,bytecode,disassembler
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Debuggers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Programming Language :: Python :: 3.0
+Classifier: Programming Language :: Python :: 3.1
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Description-Content-Type: text/x-rst
+Requires-Dist: decompyle3>=3.9.2
+Requires-Dist: term-background>=1.0.5
+Requires-Dist: trepan3k>=1.5.0
+Requires-Dist: uncompyle6>=3.9.3
+Requires-Dist: x-python>=1.5.3
+Provides-Extra: dev
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Provides-Extra: full
+Requires-Dist: prompt-toolkit; extra == "full"
