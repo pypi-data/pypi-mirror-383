@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: blepcord
+Version: 0.0.1
+Summary: A library for interacting with Discord's HTTP and Interactions API.
+Author: Hackysack
+Author-email: Hackysack <h4cky54ck@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/h4cky54ck/blepcord
+Project-URL: Bug Tracker, https://github.com/h4cky54ck/blepcord/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohttp
+Requires-Dist: pynacl
+Dynamic: license-file
+
+# blepcord
+A framework for interacting with Discord using only the HTTP API.

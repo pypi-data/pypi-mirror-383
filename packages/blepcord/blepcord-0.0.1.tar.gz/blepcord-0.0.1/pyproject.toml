@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blepcord"
+dynamic = ["version", "readme"]
+authors = [
+  { name = "Hackysack" }, { name = "Hackysack", email = "h4cky54ck@gmail.com" },
+]
+description = "A library for interacting with Discord's HTTP and Interactions API."
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = { text = "MIT" }
+dependencies = ["aiohttp", "pynacl"]
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["blepcord"]
+namespaces = false
+
+[tool.setuptools.dynamic]
+version = { attr = "blepcord.__version__" }
+readme = { file = ["README.md"], content-type = "text/markdown" }
+
+[project.urls]
+"Homepage" = "https://github.com/h4cky54ck/blepcord"
+"Bug Tracker" = "https://github.com/h4cky54ck/blepcord/issues"
