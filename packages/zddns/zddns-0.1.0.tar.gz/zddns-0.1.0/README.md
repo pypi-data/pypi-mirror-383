@@ -1,0 +1,135 @@
+# ZDDNS
+
+[![CI](https://github.com/gzamboni/zddns/actions/workflows/ci.yml/badge.svg)](https://github.com/gzamboni/zddns/actions/workflows/ci.yml)
+[![CD](https://github.com/gzamboni/zddns/actions/workflows/cd.yml/badge.svg)](https://github.com/gzamboni/zddns/actions/workflows/cd.yml)
+[![PyPI version](https://badge.fury.io/py/zddns.svg)](https://badge.fury.io/py/zddns)
+[![Docker Hub](https://img.shields.io/docker/pulls/gzamboni/zddns.svg)](https://hub.docker.com/r/gzamboni/zddns)
+[![GitHub Container Registry](https://img.shields.io/badge/GitHub%20Container-Registry-blue)](https://github.com/gzamboni/zddns/pkgs/container/zddns)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A Python utility to automatically update Cloudflare DNS records with your network's external IP address.
+
+## Features
+
+- Automatically discovers your external IP address
+- Updates specified Cloudflare DNS records
+- Configurable via YAML configuration file
+- Command-line interface for easy usage
+- Logging for tracking updates and troubleshooting
+- Docker support for containerized deployment
+- CI/CD pipeline for automated testing and deployment
+
+## Installation
+
+### From PyPI
+
+```bash
+# Install the latest version
+pip install zddns
+```
+
+### From Source
+
+```bash
+# Clone the repository
+git clone https://github.com/gzamboni/zddns.git
+cd zddns
+
+# Using uv (recommended)
+uv pip install .
+
+# Or using pip
+pip install .
+```
+
+### Using Docker
+
+```bash
+# Pull from Docker Hub
+docker pull gzamboni/zddns:latest
+
+# Or pull from GitHub Container Registry
+docker pull ghcr.io/gzamboni/zddns:latest
+
+# Run with Docker
+docker run -v /path/to/config:/config gzamboni/zddns
+```
+
+See [DOCKER.md](DOCKER.md) for more detailed Docker instructions.
+
+## Configuration
+
+Create a configuration file at `~/.config/zddns/config.yaml` with the following structure:
+
+```yaml
+cloudflare:
+  api_token: "your-cloudflare-api-token"
+  zone_id: "your-zone-id"
+  record_name: "subdomain.example.com"
+  ttl: 120  # Optional, defaults to 1 (automatic)
+  proxied: true  # Optional, defaults to false
+
+ip_providers:
+  - "https://api.ipify.org"
+  - "https://ifconfig.me/ip"
+  - "https://icanhazip.com"
+
+check_interval: 300  # Seconds between checks, defaults to 300 (5 minutes)
+```
+
+You can also specify a custom configuration file location using the `--config` option.
+
+## Usage
+
+```bash
+# Run once and exit
+zddns --once
+
+# Run as a daemon, checking periodically
+zddns
+
+# Specify a custom configuration file
+zddns --config /path/to/config.yaml
+
+# Show current IP without updating DNS
+zddns --show-ip
+
+# Show help
+zddns --help
+```
+
+## Docker Compose Example
+
+```yaml
+version: '3'
+
+services:
+  zddns:
+    image: gzamboni/zddns:latest
+    container_name: zddns
+    restart: unless-stopped
+    volumes:
+      - ./config:/config
+    environment:
+      - TZ=UTC
+```
+
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+
+## Security
+
+For security issues, please see our [Security Policy](SECURITY.md).
+
+## Code of Conduct
+
+Please note that this project is released with a [Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a list of changes in each release.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
