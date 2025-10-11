@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "streamlit-audio-stream-player"
+version = "0.2.0"
+description = "Beautiful audio stream player component for Streamlit with frequency visualization and state animations"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Benson Sung", email = "benson.bs.sung@gmail.com"}
+]
+dependencies = [
+    "streamlit>=1.0.0",
+]
+keywords = ["streamlit", "audio", "visualizer", "frequency", "component"]
+
+[project.urls]
+Homepage = "https://github.com/bensonbs/streamlit-audio-stream-player"
+Repository = "https://github.com/bensonbs/streamlit-audio-stream-player"
+Issues = "https://github.com/bensonbs/streamlit-audio-stream-player/issues"
+
