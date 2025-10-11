@@ -1,0 +1,241 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "delta-microscopy"
+dynamic = ["version"]
+description = "Segments and tracks bacteria"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+keywords = [
+    "bacteria",
+    "fluorescence",
+    "microscopy",
+]
+authors = [
+    { name = "Jean-Baptiste Lugagne", email = "jblugagne@bu.edu" },
+    { name = "Owen OConnor", email = "ooconnor@bu.edu" },
+    { name = "Virgile Andreani", email = "andreani@bu.edu" },
+]
+dependencies = [
+    # Scientific Python core packages
+    # Update according to https://scientific-python.org/specs/spec-0000/
+    "numpy >= 2.0",
+    "scipy >= 1.12",
+    "matplotlib>=3.10.1,<4",
+    "scikit-image >= 0.25",
+    "xarray >= 2023.09, <2025.09",
+
+    # Other packages
+    # Update as needed
+    "pooch >= 1.8",
+    "opencv-python-headless >= 4.8",
+    "tqdm >= 4.66",
+    "ffmpeg-python >= 0.2",
+    "netcdf4 >= 1.7",
+    "bioio >= 1.4",
+    "bioio-imageio >= 1.0",
+    "bioio-tifffile >= 1.0",
+    "bioio-nd2 >= 1.0",
+    "pip >= 24.0",
+    "termcolor >= 2.4",
+    "keras >= 3.4",
+    "pytest >= 7.5",
+    "pytest-cov >= 4.2",
+    "elasticdeform >= 0.5",
+    "pre-commit >= 3.4",
+    "tomli-w>=1.1.0,<2",
+
+    # Indirect dependencies
+    # Specified to temporarily fix problems
+    # Remove if possible
+    # ome-types: dependency of bioio-nd2 -> nd2
+    "ome-types >= 0.6.1, <0.7",
+]
+
+[project.scripts]
+delta = "delta.cli:main"
+
+[project.optional-dependencies]
+docs = [
+    # Scientific Python core packages
+    # Update according to https://scientific-python.org/specs/spec-0000/
+
+    # Other packages
+    # Update as needed
+    "sphinx >= 8.0",
+    "numpydoc >= 1.8",
+    "sphinx-design >= 0.6",
+    "furo >= 2024.8.6",
+    "torch >= 2.5",
+]
+torch-cpu = [
+    "torch >= 2.5",
+]
+torch-gpu = [
+    "torch >= 2.5",
+]
+jax-cpu = [
+    "jax >= 0.7",
+]
+jax-gpu = [
+    "jax[cuda12] >= 0.7",
+]
+tf-cpu = [
+    "tensorflow >= 2.18",
+]
+tf-gpu = [
+    "tensorflow[and-cuda] >= 2.18",
+]
+
+[project.license]
+text = "MIT License"
+
+[project.urls]
+repository = "https://gitlab.com/delta-microscopy/delta"
+documentation = "https://delta.readthedocs.io"
+
+[tool.setuptools]
+packages = ["delta"]
+
+[tool.setuptools-git-versioning]
+enabled = true
+dev_template = "{tag}+{branch}{ccount}.{sha}"
+dirty_template = "{tag}+{branch}{ccount}.{sha}.dirty"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    # TODOs and stuff
+    "FIX",
+    # Object does not implement __hash__ method
+    "PLW1641",
+    # Use of assert detected
+    "S101",
+    # Private member accessed
+    "SLF001",
+    # Pandas
+    "PD",
+    # Magic values in comparisons
+    "PLR2004",
+    # Copyright
+    "CPY",
+    # Type annotation for **kwargs
+    "ANN003",
+    # Too many things
+    "PLR09",
+    # Too complex
+    "C901",
+    # Line too long
+    "E501",
+    # Unnecessary assign
+    "RET504",
+    # Causes conflicts on dual-boot systems
+    "EXE002",
+    # Documentation (TODO: to remove)
+    "DOC201",
+    "DOC501",
+
+    # Rules that don't play well with ruff format
+    # Commas
+    "COM812",
+    # Implicitly concatenated string literals on one line
+    "ISC001",
+    # Whitespace before punctuation
+    "E203",
+]
+preview = true
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.flake8-pytest-style]
+parametrize-names-type = "csv"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+"tests/test_*.py" = ["ANN", "D100", "D101", "D102", "D103", "S101", "PLR2004", "N999", "ERA001"]
+"scripts/*.py" = ["INP001", "T201", "ERA001"]
+"docs/source/conf.py" = ["INP001", "A001"]
+
+[tool.mypy]
+strict = false
+warn_unreachable = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+packages = ["delta", "scripts"]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.deptry.package_module_name_map]
+opencv-python-headless = "cv2"
+
+[tool.deptry.per_rule_ignores]
+DEP002 = ["pip", "pytest", "pytest-cov", "pre-commit"]
+
+[tool.pytest.ini_options]
+minversion = "7"
+testpaths = ["tests"]
+log_cli_level = "INFO"
+xfail_strict = true
+addopts = ["-ra", "--strict-config", "--strict-markers", "-k not test_train"]
+
+[tool.pixi.feature.cuda]
+channels = ["nvidia"]
+dependencies = { cuda = ">=12" }
+
+[tool.pixi.feature.torch]
+activation = { env = { KERAS_BACKEND = "torch" } }
+
+[tool.pixi.feature.jax]
+activation = { env = { KERAS_BACKEND = "jax" } }
+
+[tool.pixi.feature.tf]
+activation = { env = { KERAS_BACKEND = "tensorflow" } }
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+delta-microscopy = { path = ".", editable = true }
+
+[tool.pixi.dependencies]
+libxml2 = ">=2.13"
+libxslt = ">=1.1"
+lxml = ">=5, <6"
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+docs = { features = ["docs"], solve-group = "default" }
+torch-cpu = { features = ["torch-cpu", "torch"], solve-group = "torch" }
+torch-gpu = { features = ["cuda", "torch-gpu", "torch"], solve-group = "torch" }
+jax-cpu = { features = ["jax-cpu", "jax"], solve-group = "jax" }
+jax-gpu = { features = ["jax-gpu", "jax"], solve-group = "jax" }
+tf-gpu = { features = ["tf-gpu", "tf"], solve-group = "tf" }
+tf-cpu = { features = ["tf-cpu", "tf"], solve-group = "tf" }
+
+[tool.hatch]
+
+[tool.hatch.build.targets.wheel]
+packages = ["delta"]
+
+[tool.hatch.version]
+path = "delta/_version.py"

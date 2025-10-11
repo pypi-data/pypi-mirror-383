@@ -1,0 +1,15 @@
+# Configuration file for the `typos` spell-checker
+# https://github.com/crate-ci/typos
+
+[default.extend-words]
+nd = "nd"   # for .nd2 files
+nly = "nly"  # two occurences in imgops.py
+ome = "ome"  # for the OME-TIFF format
+Ba = "Ba"  # a random string in an asset url
+GTI = "GTI"  # a random string in an asset url
+Comput = "Comput"  # abbrevation of PLoS Comput Biol
+setp = "setp"  # matplotlib
+
+[type.svg]
+extend-glob = ["*.svg"]
+check-file = false
