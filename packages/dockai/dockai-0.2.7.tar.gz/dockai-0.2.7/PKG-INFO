@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: dockai
+Version: 0.2.7
+Summary: AI destekli Docker log analiz aracı (CLI + Cloud)
+Author: Ahmet Atakan
+License: MIT
+Requires-Python: >=3.9
+Requires-Dist: click
+Requires-Dist: docker
+Requires-Dist: openai
+Requires-Dist: requests
+Requires-Dist: termcolor
+Requires-Dist: fastapi
+Requires-Dist: uvicorn
+Requires-Dist: stripe
+Requires-Dist: python-dotenv
+Requires-Dist: jwt
+Dynamic: author
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
