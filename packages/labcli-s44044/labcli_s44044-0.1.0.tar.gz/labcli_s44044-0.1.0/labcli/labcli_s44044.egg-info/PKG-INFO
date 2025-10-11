@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: labcli-s44044
+Version: 0.1.0
+Summary: A simple CLI to list and run lab programs
+Author-email: Shakthivel C <shakthic007@gmail.com>
+License-Expression: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+labmanager
+=========
+
+A small CLI tool to list and run Python lab programs stored in `programs/`.
+
+Usage examples:
+
+Run with module mode:
+
+python -m labcli list
+python -m labcli run hello
+
+Package layout:
+
+labcli/
+  __init__.py
+  __main__.py
+  cli.py
+programs/
+  hello.py
+  math_demo.py
