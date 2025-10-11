@@ -1,0 +1,10 @@
+[project]
+name = "dishka-faststream"
+version = "0.0.2"
+description = "Integration package for Dishka DI and FastStream framework"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "dishka",
+    "faststream",
+]
