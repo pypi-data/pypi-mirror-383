@@ -1,0 +1,1 @@
+cargo2rpm
