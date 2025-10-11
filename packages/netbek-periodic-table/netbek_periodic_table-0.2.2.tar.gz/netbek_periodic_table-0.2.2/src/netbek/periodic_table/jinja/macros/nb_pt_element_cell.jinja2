@@ -1,0 +1,44 @@
+{%- macro nb_pt_element_cell(element, show_at_default=false, show_at_wide=false, add_class_name=none) %}
+  {# {%- set category_id = element.category | attr("value") | default(element.category) %} #}
+  {%- set category_id = element.category %}
+  {%- set class_name = "nb-pt-cell" %}
+  {%- if show_at_default %}
+    {%- set class_name = class_name + " nb-pt-cell--at-default" %}
+  {%- endif %}
+  {%- if show_at_wide %}
+    {%- set class_name = class_name + " nb-pt-cell--at-wide" %}
+  {%- endif %}
+  {%- if add_class_name %}
+    {%- set class_name = class_name + " " + add_class_name %}
+  {%- endif %}
+
+<td class="{{ class_name }}" data-block="{{ element.block }}" data-category="{{ category_id }}">
+  <span class="nb-pt-element">
+    <span class="nb-pt-element__basic">
+      <span class="nb-pt-element__atomic-number">
+        {{ element.atomic_number }}
+      </span>
+      <span class="nb-pt-element__symbol">
+        {{ element.symbol }}
+      </span>
+    </span>
+    <span class="nb-pt-element__extended">
+      <span class="nb-pt-element__name">
+        {{ element.name }}
+      </span>
+      <span class="nb-pt-element__properties">
+        <span class="nb-pt-element__atomic-mass">
+          {%- if element.atomic_mass %}
+            {{ element.atomic_mass }}
+          {%- endif %}
+        </span>
+        <span class="nb-pt-element__electronegativity">
+          {%- if element.electronegativity %}
+            {{ element.electronegativity }}
+          {%- endif %}
+        </span>
+      </span>
+    </span>
+  </span>
+</td>
+{%- endmacro %}

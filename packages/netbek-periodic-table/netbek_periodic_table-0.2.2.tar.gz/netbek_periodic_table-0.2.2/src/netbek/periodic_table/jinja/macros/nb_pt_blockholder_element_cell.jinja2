@@ -1,0 +1,7 @@
+{%- macro nb_pt_blockholder_element_cell(start, end, category) %}
+<td class="nb-pt-cell nb-pt-cell--blockholder" data-category="{{ category }}">
+  <span class="nb-pt-element">
+    <span class="nb-pt-element__atomic-number">{{ start }} - {{ end }}</span>
+  </span>
+</td>
+{%- endmacro %}
