@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "horreum"
+version = "0.19"
+description = "Horreum python library"
+keywords = ["horreum", "performance", "change-detection"]
+authors = ["Andrea Lamparelli <alampare@redhat.com>"]
+maintainers = [
+    "Andrea Lamparelli <alampare@redhat.com>",
+    "John O'Hara <johara@redhat.com>",
+    "Stale Pedersen <spederse@redhat.com>"
+]
+license = "Apache 2.0"
+readme = "README.md"
+homepage = "https://github.com/Hyperfoil/horreum-client-python"
+include = [
+    "src/horreum/raw_client/**/*", # this folder includes auto-generated client
+]
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/Hyperfoil/horreum-client-python/issues"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+microsoft-kiota-abstractions = "^1.7.1"
+microsoft-kiota-http = "^1.7.1"
+microsoft-kiota-serialization-json = "^1.7.0"
+microsoft-kiota-serialization-text = "^1.7.0"
+python-keycloak = "^3.9.1"
+microsoft-kiota-serialization-form = "^1.7.0"
+microsoft-kiota-serialization-multipart = "^1.7.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+pytest-asyncio = "^0.23.6"
+nox = "^2024.3.2"
+nox-poetry = "^1.0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
