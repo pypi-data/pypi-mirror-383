@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: nucom
+Version: 0.1.0
+Summary: Numerical Computing Framework
+Author-email: Suresh Neethimohan <mohansuresh333@gmail.com>
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
+# NuCom
+
+**NuCom** (Numerical Computing) is a high-performance numerical computing framework for Python.  
+It provides easy-to-use abstractions for array operations, linear algebra, and accelerated computation on CPUs and GPUs.
+
+## Features
+
+- **Numerical Computing Made Simple**: Easy-to-use array and matrix operations.
+- **High Performance**: Optimized for multi-core CPUs and GPU acceleration.
+- **Pythonic API**: Similar in style to NumPy, making it easy to learn and integrate.
+- **Extensible**: Designed for adding custom operations and backends.
+
+## Installation
+
+```bash
+pip install nucom
