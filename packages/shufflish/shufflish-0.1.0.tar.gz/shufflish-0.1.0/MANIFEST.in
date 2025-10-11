@@ -1,0 +1,6 @@
+recursive-include shufflish *.py *.pyx *.pxd *.h *.c
+include LICENSE
+exclude .*
+prune .github
+prune doc
+prune test
