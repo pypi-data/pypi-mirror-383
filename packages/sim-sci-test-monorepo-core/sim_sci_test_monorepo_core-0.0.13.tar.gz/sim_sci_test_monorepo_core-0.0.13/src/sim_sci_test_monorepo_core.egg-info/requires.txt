@@ -1,0 +1,15 @@
+vivarium_build_utils
+
+[dev]
+pytest>=7.0
+pytest-cov
+pytest-mock
+black
+isort
+flake8
+sim-sci-test-monorepo-core[docs]
+
+[docs]
+sphinx>=5.0
+sphinx-rtd-theme
+sphinx-autodoc-typehints

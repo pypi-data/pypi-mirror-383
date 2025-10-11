@@ -1,0 +1,43 @@
+Metadata-Version: 2.4
+Name: sim-sci-test-monorepo-core
+Version: 0.0.13
+Summary: Core functionality for sim_sci_test_monorepo
+Project-URL: Homepage, https://github.com/ihmeuw/sim_sci_test_monorepo
+Project-URL: Repository, https://github.com/ihmeuw/sim_sci_test_monorepo
+Project-URL: Issues, https://github.com/ihmeuw/sim_sci_test_monorepo/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: <3.12,>=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: vivarium_build_utils
+Provides-Extra: docs
+Requires-Dist: sphinx>=5.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme; extra == "docs"
+Requires-Dist: sphinx-autodoc-typehints; extra == "docs"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: pytest-mock; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: sim-sci-test-monorepo-core[docs]; extra == "dev"
+
+# sim_sci_test_monorepo.core
+
+Core functionality for the sim_sci_test_monorepo namespace package.
+
+## Installation
+
+```bash
+pip install sim-sci-test-monorepo-core
+```
+
+## Usage
+
+```python
+from sim_sci_test_monorepo.core import ...
+```

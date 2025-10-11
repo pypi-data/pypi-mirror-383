@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools-scm>=8.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sim-sci-test-monorepo-core"
+dynamic = ["version"]
+description = "Core functionality for sim_sci_test_monorepo"
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "vivarium_build_utils",
+]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=5.0",
+    "sphinx-rtd-theme",
+    "sphinx-autodoc-typehints",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "pytest-mock",
+    "black",
+    "isort",
+    "flake8",
+    "sim-sci-test-monorepo-core[docs]",
+]
+
+[project.urls]
+Homepage = "https://github.com/ihmeuw/sim_sci_test_monorepo"
+Repository = "https://github.com/ihmeuw/sim_sci_test_monorepo"
+Issues = "https://github.com/ihmeuw/sim_sci_test_monorepo/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools_scm]
+write_to = "src/sim_sci_test_monorepo/core/_version.py"
+version_scheme = "python-simplified-semver"
+local_scheme = "no-local-version"
+tag_regex = "^core-v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
+search_parent_directories = true
+git_describe_command = "git describe --dirty --tags --long --match 'core-v*'"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/"]
+
+[tool.black]
+line-length = 94
+target-version = ['py310']
+exclude = '''.*_version\.py'''
+
+[tool.isort]
+profile = "black"
+line_length = 94
+multi_line_output = 3 # Vertical Hanging Indent, see https://pypi.org/project/isort/
+skip_glob = ["*/_version.py"]
+
+[tool.mypy]
+# This is the global mypy configuration.
+strict = true  # See all the enabled flags `mypy --help | grep -A 10 'Strict mode'`
+disallow_any_unimported = false
+implicit_reexport = true
+exclude = [
+    'build',
+]
+
+disable_error_code = []
+
+# handle mypy errors when 3rd party packages are not typed.
+[[tool.mypy.overrides]]
+module = []
+ignore_missing_imports = true
