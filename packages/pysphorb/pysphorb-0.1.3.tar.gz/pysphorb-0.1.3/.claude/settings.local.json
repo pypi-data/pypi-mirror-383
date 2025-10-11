@@ -1,0 +1,35 @@
+{
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "10000",
+    "BASH_MAX_TIMEOUT_MS": "300000",
+    "BASH_MAX_OUTPUT_LENGTH": "30000"
+  },
+  "permissions": {
+    "allow": [
+      "Read(//home/sehyuncha/workspace/bind_test/**)",
+      "Bash(pkg-config:*)",
+      "Bash(g++:*)",
+      "Bash(python3 -m pip install:*)",
+      "Bash(source:*)",
+      "Bash(pip install:*)",
+      "Bash(python3:*)",
+      "Bash(tree:*)",
+      "Bash(uv pip install:*)",
+      "Bash(uv run:*)",
+      "Read(//home/sehyuncha/workspace/orbismap/**)",
+      "Bash(git remote remove:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: PySPHORB - Python bindings for SPHORB feature detector\n\nFeatures:\n- Python bindings using pybind11\n- Support for NumPy 2.0+ and C++17\n- SPHORB feature detection and description for panoramic images\n- Clean project structure with proper documentation\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git branch:*)",
+      "Read(//home/sehyuncha/workspace/pypi_test/**)",
+      "Bash(jobs:*)",
+      "Read(//home/sehyuncha/**)",
+      "Bash(killall:*)",
+      "Bash(uv pip uninstall:*)",
+      "Read(//tmp/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
