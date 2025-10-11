@@ -1,0 +1,721 @@
+Metadata-Version: 2.4
+Name: semanticscout
+Version: 2.4.1
+Summary: A semantic code search MCP server for AI agents to index and retrieve code from codebases
+Author-email: Psynosaur <psynosaur@gmail.com>
+Maintainer-email: Psynosaur <psynosaur@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/Psynosaur/SemanticScout
+Project-URL: Repository, https://github.com/Psynosaur/SemanticScout.git
+Project-URL: Issues, https://github.com/Psynosaur/SemanticScout/issues
+Project-URL: Documentation, https://github.com/Psynosaur/SemanticScout#readme
+Keywords: mcp,context-engine,code-search,vector-database,ai-agents,semantic-search,ollama,chromadb
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: mcp[cli]>=1.2.0
+Requires-Dist: chromadb>=0.4.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: tree-sitter>=0.20.0
+Requires-Dist: tree-sitter-languages>=1.10.0; python_version < "3.13"
+Requires-Dist: httpx>=0.25.0
+Requires-Dist: pathspec>=0.11.0
+Requires-Dist: watchdog>=3.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: chardet>=5.0.0
+Requires-Dist: networkx>=3.2.1
+Requires-Dist: igraph>=0.11.3
+Requires-Dist: pygtrie>=2.5.0
+Requires-Dist: sortedcontainers>=2.4.0
+Requires-Dist: diskcache>=5.6.3
+Requires-Dist: msgpack>=1.0.7
+Requires-Dist: lz4>=4.3.2
+Requires-Dist: psutil>=5.9.0
+Requires-Dist: multilspy>=0.0.15
+Requires-Dist: sentence-transformers>=2.2.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.11.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: pytest-benchmark>=4.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.5.0; extra == "dev"
+Provides-Extra: fast
+Requires-Dist: sentence-transformers>=2.2.0; extra == "fast"
+
+# SemanticScout 🔍
+
+> A hybrid code intelligence system for AI agents - combining semantic search with structural understanding
+
+[![Version](https://img.shields.io/badge/version-2.4.0-blue)]()
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-75%25-yellow)]()
+[![Python](https://img.shields.io/badge/python-3.12-blue)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)]()
+
+SemanticScout is a **Model Context Protocol (MCP) server** that provides hybrid code intelligence by combining semantic search with structural code understanding. It goes beyond simple text matching to understand code relationships, dependencies, and architecture.
+
+## 🎉 What's New in v2.4.0
+
+### 🧠 LSP Integration - 7% More Accurate Symbol Extraction!
+
+- ✅ **Language Server Protocol (LSP)** - Uses real language servers for symbol extraction (default)
+- ✅ **Multi-Language Support** - Python (jedi), C# (omnisharp), TypeScript/JavaScript (tsserver)
+- ✅ **Intelligent Fallback** - Automatically falls back to tree-sitter if LSP unavailable
+- ✅ **Session-Based Lifecycle** - Servers stay alive for entire MCP session (no startup overhead)
+- ✅ **7% More Symbols** - LSP extracts 2,722 symbols vs 2,542 for tree-sitter (7.1% improvement)
+- ✅ **Better Accuracy** - Language servers provide more accurate symbol information than AST parsing
+
+### Performance Comparison: LSP vs Tree-sitter
+
+| Metric | Tree-sitter | LSP (jedi) | Improvement |
+|--------|-------------|------------|-------------|
+| **Symbols Extracted** | 2,542 | 2,722 | +7.1% |
+| **Dependencies Tracked** | 63 | 63 | Same |
+| **Indexing Time** | 1.85s | 3.88s | 2.1x slower |
+| **Accuracy** | Good | Excellent | Better |
+
+**When to use LSP:**
+- ✅ **Default**: LSP is now the default for supported languages (Python, C#, TypeScript, JavaScript)
+- ✅ **Accuracy matters**: When you need the most accurate symbol extraction
+- ✅ **Production use**: For production codebases where quality > speed
+
+**When to disable LSP:**
+- ⚠️ **Speed critical**: If indexing speed is more important than accuracy
+- ⚠️ **Unsupported languages**: For languages without LSP support (falls back automatically)
+
+## 🎉 What's New in v2.2.0
+
+### 🚀 Incremental Indexing - 5-10x Faster Updates!
+
+- ✅ **Incremental Indexing** - Only indexes changed files (5-10x speedup for small changes)
+- ✅ **Chunk-Level Granularity** - Only re-embeds changed code chunks (50%+ reuse rate)
+- ✅ **Parallel Processing** - Async parallel updates with 4x+ speedup
+- ✅ **Hybrid Change Detection** - Automatic Git-based or hash-based detection
+- ✅ **Model Switching** - Reuse indexes when switching embedding models (if dimensions match)
+- ✅ **Real-Time Updates** - Process file change events from editors via MCP
+
+### Performance Benchmarks
+
+- **Incremental indexing**: 10x faster for 5% file changes
+- **Chunk-level reuse**: 50% fewer embeddings generated
+- **Parallel updates**: 4.15x speedup with 3 workers
+
+## ✨ Features
+
+### Core Capabilities
+
+- 🔍 **Semantic Code Search** - Find code using natural language queries
+- 🎯 **Symbol Resolution** - Precise function/class/variable lookup (95%+ accuracy)
+- 🔗 **Dependency Tracking** - Understand code relationships and call graphs (90%+ completeness)
+- 🧠 **Hybrid Retrieval** - Combines semantic, symbol, and dependency-based search
+- 📊 **Context Expansion** - Intelligent code context with dependency awareness
+
+### Technical Features
+
+- 🧠 **LSP Integration (Default)** - Language Server Protocol for 7% more accurate symbol extraction (Python, C#, TypeScript, JavaScript)
+- � **Local Embeddings (Default)** - sentence-transformers included (fast, no setup) or Ollama (optional, GPU support)
+- 🌳 **AST-Based Fallback** - tree-sitter for unsupported languages or when LSP unavailable (11 languages)
+- 🗄️ **Symbol Tables** - SQLite-based symbol storage with FTS5 full-text search
+- 📈 **Dependency Graphs** - NetworkX-based graph analysis and traversal
+- 🌐 **Multi-Language Support** - TypeScript, JavaScript, Python, Java, C#, Go, Rust, Ruby, PHP, C, C++
+- ⚡ **High Performance** - <100ms queries, <4s per file indexing (LSP), <1GB memory
+- 🔒 **Security Built-in** - Path validation, rate limiting, and resource limits
+- 🤖 **MCP Integration** - Works with Claude Desktop and other MCP clients
+
+## 🚀 Quick Start
+
+Get started in **under 2 minutes** with **uvx** - zero installation, zero configuration required!
+
+### Prerequisites
+
+- **uv** - [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+- **Claude Desktop** (or other MCP client) - [Install Claude Desktop](https://claude.ai/download)
+
+**That's it!** No Ollama, no language servers, no additional setup needed. Everything is included.
+
+### 1. Configure Claude Desktop
+
+Add to your Claude Desktop MCP configuration (`%APPDATA%\Claude\claude_desktop_config.json` on Windows or `~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"]
+    }
+  }
+}
+```
+
+**That's it!** This uses the default configuration:
+- ✅ **LSP integration** - Accurate symbol extraction (Python, C#, TypeScript, JavaScript)
+- ✅ **sentence-transformers** - Fast local embeddings (no Ollama needed)
+- ✅ **All enhancement features** - Symbol tables, dependency graphs, hybrid search
+
+**Note:** We specify `--python 3.12` because some dependencies don't yet support Python 3.13. If you only have Python 3.13, install Python 3.12 with `brew install python@3.12` (Mac) or download from [python.org](https://www.python.org/downloads/) (Windows).
+
+### 2. Restart Claude Desktop
+
+That's it! SemanticScout will be automatically downloaded and run when Claude needs it.
+
+**✨ Benefits:**
+- ✅ No manual installation
+- ✅ No Ollama or language server setup required
+- ✅ Always uses latest version
+- ✅ Automatic dependency management
+- ✅ Isolated environment per run
+- ✅ Works on Windows, Mac, and Linux
+- ✅ Data stored in `~/.semanticscout/`
+
+### Optional: Custom Data Directory
+
+By default, data is stored in `~/.semanticscout/`. To use a custom location:
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": [
+        "--python", "3.12",
+        "semanticscout@latest",
+        "--data-dir", "/path/to/your/data"
+      ]
+    }
+  }
+}
+```
+
+---
+
+## 🔄 Incremental Indexing
+
+SemanticScout v2.2.0 introduces incremental indexing for **5-10x faster updates** when code changes.
+
+### How It Works
+
+**Automatic Change Detection:**
+- **Git repositories**: Uses `git diff` to detect changed files since last index
+- **Non-Git directories**: Uses MD5 file hashing to detect changes
+- **Chunk-level granularity**: Only re-embeds changed code chunks (not entire files)
+
+**Usage:**
+
+```python
+# Full indexing (indexes all files)
+index_codebase(path="/path/to/project")
+
+# Incremental indexing (only indexes changed files - 5-10x faster!)
+index_codebase(path="/path/to/project", incremental=True)
+```
+
+**Performance:**
+- **Small changes (1-10% of files)**: 5-10x faster
+- **Chunk-level reuse**: 50%+ fewer embeddings generated
+- **Parallel processing**: 4x+ speedup with multiple files
+
+**When to use:**
+- ✅ **Incremental**: After initial indexing, for regular code updates
+- ✅ **Full**: First-time indexing, major refactors, model changes
+
+### Real-Time File Change Events
+
+Process file changes from editors in real-time:
+
+```python
+# Process file change events
+process_file_changes(
+    collection_name="my_project",
+    changes=json.dumps({
+        "events": [
+            {"type": "modified", "path": "src/main.py", "timestamp": 1234567890}
+        ],
+        "workspace_root": "/path/to/project",
+        "debounce_ms": 500
+    }),
+    auto_update=True  # Apply changes immediately
+)
+```
+
+**Security:** All file paths are validated to prevent path traversal attacks.
+
+---
+
+## 🧠 LSP Integration Configuration
+
+SemanticScout v2.4.0 uses **Language Server Protocol (LSP)** by default for more accurate symbol extraction.
+
+### How It Works
+
+**LSP vs Tree-sitter:**
+- **LSP (default)**: Uses real language servers (jedi, omnisharp, tsserver) for symbol extraction
+  - ✅ 7% more symbols extracted (2,722 vs 2,542)
+  - ✅ More accurate type information and signatures
+  - ✅ Better handling of complex language features
+  - ⚠️ 2x slower indexing (3.88s vs 1.85s per file)
+- **Tree-sitter (fallback)**: Fast AST-based parsing
+  - ✅ Very fast indexing
+  - ✅ Works for all languages
+  - ⚠️ Less accurate symbol extraction
+
+**Automatic Fallback:**
+- LSP is used for supported languages (Python, C#, TypeScript, JavaScript)
+- Tree-sitter is used for unsupported languages or if LSP fails
+- No configuration needed - it just works!
+
+### Supported Languages
+
+| Language | LSP Server | Status |
+|----------|------------|--------|
+| **Python** | jedi | ✅ Enabled by default |
+| **C#** | omnisharp | ✅ Enabled by default |
+| **TypeScript** | tsserver | ✅ Enabled by default |
+| **JavaScript** | tsserver | ✅ Enabled by default |
+| Go, Rust, Java, etc. | tree-sitter | ✅ Fallback |
+
+### Disabling LSP (Use Tree-sitter Only)
+
+If you prefer faster indexing over accuracy, you can disable LSP:
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"],
+      "env": {
+        "SEMANTICSCOUT_CONFIG_JSON": "{\"enhancement_config\":{\"lsp_integration\":{\"enabled\":false}}}"
+      }
+    }
+  }
+}
+```
+
+### Per-Language Configuration
+
+Disable LSP for specific languages:
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"],
+      "env": {
+        "SEMANTICSCOUT_CONFIG_JSON": "{\"enhancement_config\":{\"lsp_integration\":{\"languages\":{\"python\":{\"enabled\":false}}}}}"
+      }
+    }
+  }
+}
+```
+
+**Note:** LSP servers are automatically installed via the `multilspy` package (included in dependencies).
+
+---
+
+## ⚡ Advanced Configuration
+
+### Default Configuration (Recommended)
+
+**No configuration needed!** The default setup uses:
+- **LSP integration** - Accurate symbol extraction (Python, C#, TypeScript, JavaScript)
+- **sentence-transformers** - Fast local embeddings (30-60 sec for 500 chunks)
+- **All enhancement features** - Symbol tables, dependency graphs, hybrid search
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"]
+    }
+  }
+}
+```
+
+### Embedding Provider Options
+
+SemanticScout supports multiple embedding providers:
+
+| Provider | Speed | Setup Required | Use Case |
+|----------|-------|----------------|----------|
+| **sentence-transformers** (default) | ~30-60 sec for 500 chunks | ✅ None | Best for most users |
+| **Ollama (async)** | ~2.6-4.4 min for 500 chunks | Ollama server | GPU acceleration, larger models |
+| **Ollama (sequential)** | ~26-44 min for 500 chunks | Ollama server | Legacy/testing |
+
+#### Option 1: sentence-transformers (Default - Recommended)
+
+**Already configured!** This is the default. Available models:
+- `all-MiniLM-L6-v2` - 384 dims, very fast, good quality (default)
+- `all-mpnet-base-v2` - 768 dims, higher quality, slower
+- `paraphrase-MiniLM-L6-v2` - 384 dims, optimized for paraphrase
+
+To use a different model:
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"],
+      "env": {
+        "SEMANTICSCOUT_CONFIG_JSON": "{\"embedding\":{\"provider\":\"sentence-transformers\",\"model\":\"all-mpnet-base-v2\"}}"
+      }
+    }
+  }
+}
+```
+
+#### Option 2: Ollama (Optional - For GPU Acceleration)
+
+Requires Ollama server running locally:
+
+```bash
+# Start Ollama and pull model
+ollama serve
+ollama pull nomic-embed-text
+```
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"],
+      "env": {
+        "OLLAMA_BASE_URL": "http://localhost:11434",
+        "OLLAMA_MODEL": "nomic-embed-text",
+        "OLLAMA_MAX_CONCURRENT": "10",
+        "SEMANTICSCOUT_CONFIG_JSON": "{\"embedding\":{\"provider\":\"ollama\"}}"
+      }
+    }
+  }
+}
+```
+
+---
+
+## 📖 Usage
+
+Once configured in Claude Desktop, you can use natural language to interact with the MCP server:
+
+### Example Conversations
+
+**Index a codebase:**
+```
+You: "Index my codebase at /workspace"
+Claude: [Calls index_codebase tool and shows indexing progress]
+```
+
+**Search for code:**
+```
+You: "Find the authentication logic"
+Claude: [Calls search_code tool and shows relevant code snippets]
+```
+
+**List indexed projects:**
+```
+You: "What codebases have been indexed?"
+Claude: [Calls list_collections tool and shows all indexed projects]
+```
+
+**Clear an index:**
+```
+You: "Delete the index for my old project"
+Claude: [Calls clear_index tool after confirmation]
+```
+
+### Available MCP Tools
+
+The server exposes these tools to Claude (you don't call them directly):
+
+#### Core Tools
+
+| Tool | Description | Parameters |
+|------|-------------|------------|
+| `index_codebase` | Index a codebase for semantic and structural search | `path` (required) |
+| `search_code` | Search with natural language + context expansion | `query`, `collection_name`, `top_k`, `expansion_level` |
+| `list_collections` | List all indexed codebases | None |
+| `get_indexing_status` | Get statistics for a collection | `collection_name` |
+| `clear_index` | Delete a collection (permanent) | `collection_name` |
+
+#### Enhanced Tools (Symbol & Dependency Analysis)
+
+| Tool | Description | Parameters |
+|------|-------------|------------|
+| `find_symbol` | Find symbols by name (functions, classes, etc.) | `symbol_name`, `collection_name`, `symbol_type`, `limit` |
+| `find_callers` | Find all functions that call a given symbol | `symbol_name`, `collection_name`, `max_depth` |
+| `trace_dependencies` | Trace dependency chains between files | `file_path`, `collection_name`, `direction`, `max_depth` |
+
+## ⚙️ Environment Variables
+
+**Most users don't need to configure anything!** The defaults work great.
+
+### Optional Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MAX_FILE_SIZE_MB` | `10.0` | Skip files larger than this |
+| `MAX_CODEBASE_SIZE_GB` | `10.0` | Maximum total codebase size |
+| `MAX_FILES` | `100000` | Maximum number of files |
+| `CHUNK_SIZE_MIN` | `500` | Minimum chunk size (chars) |
+| `CHUNK_SIZE_MAX` | `1500` | Maximum chunk size (chars) |
+| `LOG_LEVEL` | `INFO` | Logging level |
+
+### Ollama-Specific Variables (Only if using Ollama)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL |
+| `OLLAMA_MODEL` | `nomic-embed-text` | Embedding model to use |
+| `OLLAMA_MAX_CONCURRENT` | `10` | Max concurrent requests |
+
+### Example with Custom Settings
+
+```json
+{
+  "mcpServers": {
+    "semanticscout": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "semanticscout@latest"],
+      "env": {
+        "MAX_FILE_SIZE_MB": "20.0",
+        "LOG_LEVEL": "DEBUG"
+      }
+    }
+  }
+}
+```
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐
+│   MCP Client    │  (Claude Desktop, etc.)
+│  (AI Agent)     │
+└────────┬────────┘
+         │ JSON-RPC over STDIO
+         │
+┌────────▼────────┐
+│   MCP Server    │
+│  (FastMCP)      │
+└────────┬────────┘
+         │
+    ┌────┴────┬────────┬──────────┬──────────┐
+    │         │        │          │          │
+┌───▼───┐ ┌──▼──┐ ┌───▼────┐ ┌──▼────┐ ┌───▼────┐
+│Indexer│ │Query│ │Hybrid  │ │Vector │ │Symbol/ │
+│       │ │Anal │ │Retriev │ │ Store │ │DepGraph│
+└───┬───┘ └──┬──┘ └───┬────┘ └───┬───┘ └───┬────┘
+    │        │        │          │         │
+┌───▼────────▼────────▼──────────▼─────────▼───┐
+│    ChromaDB + SQLite + NetworkX + Caches     │
+└──────────────────────────────────────────────┘
+```
+
+### Core Components
+
+- **File Discovery**: Finds code files, respects `.gitignore`
+- **LSP Processor**: Uses Language Server Protocol for accurate symbol extraction (Python, C#, TypeScript, JavaScript)
+- **AST Processor**: Parses code with tree-sitter, extracts symbols and dependencies (fallback or unsupported languages)
+- **Code Chunker**: AST-based semantic chunking
+- **Embedding Provider**: Generates vector embeddings (Ollama or sentence-transformers)
+- **Vector Store**: Stores and searches embeddings (ChromaDB)
+- **Symbol Table**: SQLite-based symbol storage with FTS5 search
+- **Dependency Graph**: NetworkX-based graph analysis
+- **Query Analyzer**: Classifies queries and routes to optimal strategy
+- **Hybrid Retriever**: Coordinates semantic, symbol, and dependency search
+- **Context Expander**: Intelligent context expansion with dependency awareness
+- **Security Validators**: Path validation, rate limiting, input sanitization
+
+## 🧪 Development
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov
+
+# Run specific test file
+pytest tests/unit/test_semantic_search.py -v
+```
+
+### Test Coverage
+
+Current coverage: **73%** (351 tests passing)
+
+**Core Components:**
+- File Discovery: 80%
+- Code Chunker: 89%
+- Ollama Provider: 92%
+- Vector Store: 89%
+- Query Processor: 100%
+- Semantic Search: 99%
+- Security Validators: 95%
+
+**Enhanced Components:**
+- AST Processor: 82%
+- Symbol Table: 79%
+- Dependency Graph: 84%
+- Query Analyzer: 100%
+- Hybrid Retriever: 97%
+- Context Expander: 82%
+- Performance Monitoring: 93%
+
+### Project Structure
+
+```
+semanticscout/
+├── src/semanticscout/
+│   ├── mcp_server.py              # MCP server entry point
+│   ├── config/                    # Configuration management
+│   │   ├── __init__.py
+│   │   └── enhancement_config.py
+│   ├── logging_config.py          # Logging setup
+│   ├── indexer/                   # Indexing components
+│   │   ├── file_discovery.py
+│   │   ├── code_chunker.py
+│   │   └── pipeline.py
+│   ├── lsp/                       # LSP integration (NEW in v2.4.0)
+│   │   ├── __init__.py
+│   │   ├── language_server_manager.py
+│   │   ├── lsp_processor.py
+│   │   └── lsp_symbol_mapper.py
+│   ├── ast_processing/            # AST parsing & symbol extraction (fallback)
+│   │   ├── ast_processor.py
+│   │   └── ast_cache.py
+│   ├── symbol_table/              # Symbol storage & lookup
+│   │   └── symbol_table.py
+│   ├── dependency_graph/          # Dependency tracking
+│   │   └── dependency_graph.py
+│   ├── query_analysis/            # Query classification
+│   │   └── query_analyzer.py
+│   ├── embeddings/                # Embedding providers
+│   │   ├── base.py
+│   │   └── ollama_provider.py
+│   ├── vector_store/              # Vector database
+│   │   └── chroma_store.py
+│   ├── retriever/                 # Search components
+│   │   ├── query_processor.py
+│   │   ├── semantic_search.py
+│   │   ├── hybrid_retriever.py
+│   │   └── context_expander.py
+│   ├── performance/               # Performance monitoring
+│   │   ├── metrics.py
+│   │   ├── memory.py
+│   │   └── parallel.py
+│   └── security/                  # Security & validation
+│       └── validators.py
+├── tests/                         # Unit & integration tests
+│   ├── unit/                      # Unit tests (200+ tests)
+│   ├── integration/               # Integration tests
+│   └── validation/                # Validation tests
+├── examples/                      # Example scripts
+├── docs/                          # Documentation
+│   ├── API_REFERENCE.md
+│   ├── USER_GUIDE.md
+│   ├── CONFIGURATION.md
+│   └── PERFORMANCE_TUNING.md
+├── config/                        # Configuration files
+│   └── enhancement_config.template.json
+└── data/                          # Runtime data
+    ├── symbol_tables/
+    ├── dependency_graphs/
+    └── ast_cache/
+```
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `docs/` directory:
+
+- **[API_REFERENCE.md](docs/API_REFERENCE.md)** - Complete API documentation for all MCP tools
+- **[USER_GUIDE.md](docs/USER_GUIDE.md)** - User guide with examples and best practices
+- **[CONFIGURATION.md](docs/CONFIGURATION.md)** - Configuration options and feature flags
+- **[PERFORMANCE_TUNING.md](docs/PERFORMANCE_TUNING.md)** - Performance optimization guide
+
+### Examples
+
+See the [examples/](examples/) directory for working examples:
+
+- `test_full_pipeline.py` - Complete indexing and search workflow
+- `test_retrieval_system.py` - Advanced search with filtering
+- `index_weather_unified.py` - Real-world codebase indexing
+
+## 🐛 Troubleshooting
+
+### Python Version Issues
+
+**Error:** `No module named 'onnxruntime'` or tree-sitter compatibility issues
+
+**Solution:** Use Python 3.12 (not 3.14). See [PYTHON_VERSION_ISSUE.md](PYTHON_VERSION_ISSUE.md).
+
+### Ollama Not Running (Only if using Ollama)
+
+**Error:** `Ollama server not available`
+
+**Solution:** The default configuration uses sentence-transformers (no Ollama needed). If you explicitly configured Ollama, start it:
+```bash
+ollama serve
+ollama pull nomic-embed-text
+```
+
+Or switch back to the default (sentence-transformers) by removing Ollama configuration.
+
+### Rate Limit Exceeded
+
+**Error:** `Rate limit exceeded: Maximum X requests per hour`
+
+**Solution:** Adjust rate limits in `.env`:
+```bash
+MAX_INDEXING_REQUESTS_PER_HOUR=20
+MAX_SEARCH_REQUESTS_PER_MINUTE=200
+```
+
+### Path Not Allowed
+
+**Error:** `Path is not within allowed directories`
+
+**Solution:** The server only allows indexing within the current working directory by default.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new functionality
+4. Ensure all tests pass
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 🙏 Acknowledgments
+
+- [Anthropic](https://anthropic.com/) for the MCP protocol
+- [Ollama](https://ollama.ai/) for local embeddings
+- [ChromaDB](https://www.trychroma.com/) for vector storage
+- [Tree-sitter](https://tree-sitter.github.io/) for code parsing
+- [multilspy](https://github.com/microsoft/monitors4codegen) for LSP integration
+- [Jedi](https://jedi.readthedocs.io/), [OmniSharp](https://www.omnisharp.net/), and [TypeScript Language Server](https://github.com/typescript-language-server/typescript-language-server) for language servers
+
+---
+
+**Built with ❤️ for the AI agent ecosystem**
+
