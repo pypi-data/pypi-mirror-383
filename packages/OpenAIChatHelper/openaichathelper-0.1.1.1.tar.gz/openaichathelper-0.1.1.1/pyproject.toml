@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling>=1.25", "hatch-vcs>=0.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "OpenAIChatHelper"
+dynamic = ["version"]
+description = "A helper package for OpenAI API"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Yining Hong", email = "yhong3@andrew.cmu.edu" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["openai>=1.0.0", "markdown-it-py>=3.0.0", "mdformat>=0.7.0"]
+
+[project.urls]
+Homepage = "https://github.com/<you>/<repo>"
+Issues = "https://github.com/<you>/<repo>/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/OpenAIChatHelper"]
+
+[tool.hatch.build]
+include = ["/src", "/README.md", "/LICENSE"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.vcs]
+tag-pattern = "v*"
+fallback-version = "0.0.0"
