@@ -1,0 +1,49 @@
+Metadata-Version: 2.4
+Name: oxgram
+Version: 0.0.7
+Summary: ㅤ
+Home-page: https://github.com/Clinton-Abraham
+Author: Clinton Abraham
+Author-email: clintonabrahamc@gmail.com
+Keywords: bot,bots,telegram
+Classifier: Natural Language :: English
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Localization
+Classifier: Topic :: Software Development :: User Interfaces
+Classifier: Topic :: Software Development :: Version Control
+Requires-Python: ~=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pyrofork
+Requires-Dist: tgcryptos
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+<p align="center">
+ 📦 <a href="https://pypi.org/project/oxgram" style="text-decoration:none;">Oxgram</a>
+</p>
+
+
+```python
+
+from Oxgram.functions import Pyrogram
+
+dcid = await Pyrogram.get01(update)
+
+print(dcid)
+
+```
