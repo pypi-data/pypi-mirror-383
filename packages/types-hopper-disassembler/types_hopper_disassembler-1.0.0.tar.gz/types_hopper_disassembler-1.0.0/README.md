@@ -1,0 +1,52 @@
+# Hopper Disassembler Python API Type Stubs
+
+## What is it?
+
+These type stubs provide intelligent code completion, type checking, and enhanced developer
+experience when writing automation scripts for Hopper. These stubs transform the scripting process from guesswork into a
+confident, productive workflow by offering:
+
+- **Smart Autocomplete**: Get instant suggestions for methods, properties, and classes as you type
+- **Real-time Type Checking**: Catch errors before runtime with static type analysis
+- **Enhanced Documentation**: Access comprehensive API documentation directly in your IDE
+- **Improved Code Navigation**: Easily explore the Hopper API with reliable jump-to-definition features
+- **Professional Development Experience**: Enjoy the same comfort of modern Python development tools
+
+[stubs-in-action.mp4](assets/stubs-in-action.mp4)
+
+## Installation
+
+```bash
+pip install types-hopper-disassembler
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/fi5t/hopper-disassembler-stubs.git
+cd hopper-disassembler-stubs
+pip install -e .
+```
+
+## Usage
+
+Once installed, your IDE will automatically provide type hints for Hopper scripts:
+
+![autocomplete.png](assets/autocomplete.png)
+
+```python
+# type: ignore
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from hopper_api import Document, GlobalInformation
+
+# Get type hints and autocomplete!
+doc: Document = Document.getCurrentDocument()
+version = GlobalInformation.getHopperVersion()
+
+print(version)
+
+for segment in doc.getSegmentsList():
+    print(segment.getName())
+```

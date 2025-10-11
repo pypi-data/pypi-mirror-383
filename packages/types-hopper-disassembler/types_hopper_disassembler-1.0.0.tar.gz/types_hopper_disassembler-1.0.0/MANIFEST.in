@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include src/hopper_api-stubs *.pyi
+include src/hopper_api-stubs/py.typed
