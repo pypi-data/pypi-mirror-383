@@ -1,0 +1,14 @@
+
+[lint]
+ruff
+mypy
+types-requests
+
+[release]
+build
+towncrier
+twine
+
+[test]
+packaging
+pytest
