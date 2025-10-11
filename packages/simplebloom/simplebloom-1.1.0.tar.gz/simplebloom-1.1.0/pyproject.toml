@@ -1,0 +1,32 @@
+[project]
+name = "simplebloom"
+description = "A dumb but fast bloom filter."
+readme = "README.rst"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+]
+requires-python = ">=3.9"
+license = "MIT"
+authors = [
+  {name = "Joachim Folz", email = "joachim.folz@dfki.de"},
+]
+keywords = ["bloom", "filter", "bloomfilter"]
+dynamic = ["dependencies", "version"]
+
+[project.urls]
+Documentation = "https://github.com/jfolz/simplebloom/blob/main/README.rst"
+Source = "https://github.com/jfolz/simplebloom"
+Tracker = "https://github.com/jfolz/simplebloom/issues"
+
+[build-system]
+requires = ["setuptools>=77.0.3", "wheel", "cython~=3.1.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+enable = ["pypy"]
+skip = "cp3[1-9][0-9]t-* *i686* *win32* *universal2*"
+environment = "PIP_ONLY_BINARY=:all:"
+build-verbosity = 1
+test-requires = "pytest>=5.3.2"
+test-command = "pytest {project}/test -vv"

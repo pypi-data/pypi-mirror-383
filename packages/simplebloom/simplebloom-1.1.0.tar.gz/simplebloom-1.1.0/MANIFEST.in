@@ -1,0 +1,5 @@
+recursive-include simplebloom *.py *.pyx *.pxd *.h *.c
+include LICENSE
+exclude .*
+prune .github
+prune test
