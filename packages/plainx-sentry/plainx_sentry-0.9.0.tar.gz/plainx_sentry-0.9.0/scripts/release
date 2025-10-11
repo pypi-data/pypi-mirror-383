@@ -1,0 +1,5 @@
+#!/bin/sh -e
+uv build
+uv publish
+git push
+gh release create
