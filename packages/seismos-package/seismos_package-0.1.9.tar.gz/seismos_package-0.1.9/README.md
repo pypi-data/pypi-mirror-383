@@ -1,0 +1,270 @@
+# Seismos Python Package
+
+## Table of contents
+- [Structured logging with structlog](#structured-logging-with-structlog)
+  - [Basic configuration](#basic-configuration)
+- [Middleware for automatic logging context](#middleware-for-automatic-logging-context)
+  - [FastAPI quick start](#fastapi-quick-start)
+- [ASGI Request Logging Middleware (FastAPI/Starlette)](#asgi-request-logging-middleware-fastapistarlette)
+  - [What gets logged](#what-gets-logged)
+  - [Notes](#notes)
+- [Why use structured logging](#why-use-structured-logging)
+- [Development of this project](#development-of-this-project)
+
+
+## Structured logging with structlog
+Structlog is a powerful logging library for structured, context-aware logging.
+More details can be found in the [structlog](https://www.structlog.org/en/stable/).
+
+### Basic configuration
+
+instead of `logger = logging.getLogger(__name__)` it is `logger = structlog.get_logger(__name__)`
+
+```python
+    from seismos_package.logging import LoggingConfigurator
+    from seismos_package.config import SeismosConfig
+    import structlog
+
+    config = SeismosConfig()
+
+    LoggingConfigurator(
+        service_name=config.APP_NAME,
+        log_level='INFO',
+        setup_logging_dict=True
+    ).configure_structlog(
+        formatter='plain_console',
+        formatter_std_lib='plain_console'
+    )
+
+    logger = structlog.get_logger(__name__)
+    logger.debug("This is a DEBUG log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.info("This is an INFO log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.warning("This is a WARNING log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.error("This is an ERROR log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.critical("This is a CRITICAL log message", key_1="value_1", key_2="value_2", key_n="value_n")
+
+    try:
+        1 / 0
+    except ZeroDivisionError:
+        logger.exception("An EXCEPTION log with stack trace occurred", key_1="value_1", key_2="value_2")
+
+
+```
+![basic example](images/plain_console_logger.png)
+
+
+In production, you should aim for structured, machine-readable logs that can be easily ingested by log aggregation and monitoring tools like ELK (Elasticsearch, Logstash, Kibana), Datadog, or Prometheus:
+
+```python
+    from seismos_package.logging import LoggingConfigurator
+    from seismos_package.config import SeismosConfig
+    import structlog
+
+    config = SeismosConfig()
+
+    LoggingConfigurator(
+        service_name=config.APP_NAME,
+        log_level='INFO',
+        setup_logging_dict=True
+    ).configure_structlog(
+        formatter='json_formatter',
+        formatter_std_lib='json_formatter'
+    )
+
+    logger = structlog.get_logger(__name__)
+    logger.debug("This is a DEBUG log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.info("This is an INFO log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.warning("This is a WARNING log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.error("This is an ERROR log message", key_1="value_1", key_2="value_2", key_n="value_n")
+    logger.critical("This is a CRITICAL log message", key_1="value_1", key_2="value_2", key_n="value_n")
+
+    try:
+        1 / 0
+    except ZeroDivisionError:
+        logger.exception("An EXCEPTION log with stack trace occurred", key_1="value_1", key_2="value_2")
+```
+
+![logger with different keys](images/json_logger.png)
+
+
+## Middleware for automatic logging context
+
+The middleware adds request_id, IP, and user_id to every log during a request/response cycle.
+This middleware module provides logging context management for both Flask and FastAPI applications using structlog.
+
+Flask Middleware (add_request_context_flask): Captures essential request data such as the request ID, method, and path, binding them to the structlog context for better traceability during the request lifecycle.
+
+FastAPI: Use the ASGI RequestLoggingMiddleware for structured request/response logging and request context propagation. Legacy helpers (add_request_context_fastapi and FastAPIRequestContextMiddleware) were removed; migrate to RequestLoggingMiddleware.
+
+This setup ensures structured, consistent logging across both frameworks, improving traceability and debugging in distributed systems.
+
+
+This guide explains how to set up and use structlog for structured logging in a Flask application. The goal is to have a consistent and centralized logging setup that can be reused across the application.
+The logger is initialized once in the main application file (e.g., app.py).
+
+```python
+from flask import Flask
+from seismos_package.logging.middlewares import FlaskRequestContextMiddleware
+from seismos_package.logging import LoggingConfigurator
+from seismos_package.config import SeismosConfig
+import structlog
+
+config = SeismosConfig()
+LoggingConfigurator(
+    service_name=config.APP_NAME,
+    log_level="INFO",
+    setup_logging_dict=True,
+).configure_structlog(formatter='json_formatter', formatter_std_lib='json_formatter')
+
+app = Flask(__name__)
+# Wrap the WSGI app to bind request context (id, method, path) into structlog
+app.wsgi_app = FlaskRequestContextMiddleware(app.wsgi_app)
+
+logger = structlog.get_logger(__name__)
+
+@app.route("/")
+def home():
+    logger.info("Context set for request")
+    return "Hello, World!"
+```
+
+![logger with context flask](images/flask_logger_with_context.png)
+
+You can use the same logger instance across different modules by importing structlog directly.
+Example (services.py):
+
+
+```python
+    import structlog
+
+    logger = structlog.get_logger(__name__)
+    logger.info("Processing data started", data_size=100)
+```
+Key Points:
+
+- Centralized Configuration: The logger is initialized once in app.py.
+- Consistent Usage: structlog.get_logger(__name__) is imported and used across all files.
+- Context Management: Context is managed using structlog.contextvars.bind_contextvars().
+- Structured Logging: The JSON formatter ensures logs are machine-readable.
+
+### FastAPI quick start
+
+```python
+from fastapi import FastAPI
+from seismos_package.logging.middlewares import RequestLoggingMiddleware
+
+app = FastAPI()
+app.add_middleware(
+    RequestLoggingMiddleware,
+    slow_request_threshold_ms=2000,
+    propagate_request_id=True,
+    # optional tuning
+    skip_paths={"/healthz", "/metrics"},
+    skip_prefixes=("/metrics",),
+    sample_2xx_rate=0.5,  # sample successful 2xx/3xx
+)
+```
+
+#### Key behaviors
+- Request ID priority: `traceparent` → `X-Request-Id` → `X-Amzn-Trace-Id` → UUID
+- Response headers propagation (when propagate_request_id=True):
+  - Always sets `X-Request-Id` (if not present)
+  - If `traceparent` was present in the request, it is also added back to the response
+- Skipping noisy traffic: OPTIONS, exact `skip_paths`, and any path starting with items in `skip_prefixes`
+- Slow requests: end log includes `slow_request` (bool) and `slow_threshold_ms` (int|None)
+- Sensitive header sanitization:
+  - `Authorization` preserves scheme only (e.g., `Bearer ***`)
+  - `Cookie`, `Set-Cookie`, `X-API-Key` are redacted as `<redacted>`
+- Streaming-safe: response_size accumulates across multiple `http.response.body` messages; request/response bodies are never read/buffered by the middleware
+
+#### Suggested production defaults
+- `slow_request_threshold_ms=2000`
+- `skip_paths={"/healthz", "/metrics"}` and `skip_prefixes=("/metrics",)`
+- `sample_2xx_rate` between 0.1 and 0.5 depending on expected traffic
+
+#### Testing status
+100% coverage across seismos_package; unit tests cover sampling (on/off), 2xx/3xx/4xx/5xx, exceptions before response start, large uploads (middleware doesn’t read body), streaming responses, skip rules, and header propagation.
+
+
+
+Automatic injection of:
+-   user_id
+-   IP
+-   request_id
+-  request_method
+
+
+This a console view, in prod it will be json (using python json logging to have standard logging and structlog logging as close as possible)
+
+
+## Why use structured logging
+-   Standard logging often outputs plain text logs, which can be challenging for log aggregation tools like EFK Stack or Grafana Loki to process effectively.
+-   Structured logging outputs data in a machine-readable format (e.g., JSON), making it easier for log analysis tools to filter and process logs efficiently.
+-   With structured logging, developers can filter logs by fields such as request_id, user_id, and transaction_id for better traceability across distributed systems.
+-   The primary goal is to simplify debugging, enable better error tracking, and improve observability with enhanced log analysis capabilities.
+-   Structured logs are designed to be consumed primarily by machines for monitoring and analytics, while still being readable for developers when needed.
+-   This package leverages structlog, a library that enhances Python's standard logging by providing better context management and a flexible structure for log messages.
+
+
+# Development of this project
+
+Please install [poetry](https://python-poetry.org/docs/#installation) as this is the tool we use for releasing and development.
+
+    poetry install && poetry run pytest -rs --cov=seismos_package -s
+
+To run tests inside docker:
+
+    poetry install --with dev && poetry run pytest -rs --cov=seismos_package
+
+To run pre-commit:
+    poetry run pre-commit run --all-files
+
+
+## ASGI Request Logging Middleware (FastAPI/Starlette)
+
+The package ships a production-friendly ASGI middleware that logs each HTTP request/response using structlog.
+It is safe for large payloads and streaming responses (e.g., CSV), because it does not buffer bodies.
+
+Key features:
+- Severity by status: 2xx/3xx (info), 4xx (warning), 5xx (error)
+- Response size counting without reading the body
+- Sanitized headers (Authorization shows scheme only: e.g., "Bearer ***")
+- Request correlation with X-Request-Id propagation
+- Skip noisy paths and sample successful requests
+
+Minimal setup in FastAPI:
+
+```python
+from fastapi import FastAPI
+from seismos_package.logging import LoggingConfigurator
+from seismos_package.config import SeismosConfig
+from seismos_package.logging.middlewares import RequestLoggingMiddleware
+
+config = SeismosConfig()
+LoggingConfigurator(
+    service_name=config.APP_NAME,
+    log_level="INFO",
+    setup_logging_dict=True,
+).configure_structlog(formatter="json_formatter", formatter_std_lib="json_formatter")
+
+app = FastAPI()
+
+# Add logging middleware last (outermost) so it wraps all handlers and middlewares
+app.add_middleware(
+    RequestLoggingMiddleware,
+    slow_request_threshold_ms=2000,      # optional: warn on slow requests
+    propagate_request_id=True,           # adds X-Request-Id if missing
+    skip_paths={"/healthz", "/metrics"}, # skip noisy endpoints entirely
+    sample_2xx_rate=0.2,                 # log roughly 20% of successful requests
+)
+```
+
+### What gets logged
+- Start: method, path, query, client_ip, user_agent, request sizes/types (no body)
+- End: status_code, duration_ms, response_size, response content type, and request metadata
+- Errors (4xx/5xx): includes sanitized request/response headers; unexpected exceptions include traceback
+
+### Notes
+- "Skip paths" disables both start/end logs for the given paths
+- Sampling applies only to 2xx/3xx end logs; errors are always logged
+- Request ID priority: X-Request-Id, then traceparent, then X-Amzn-Trace-Id; the chosen ID is propagated back as X-Request-Id

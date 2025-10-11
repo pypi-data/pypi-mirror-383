@@ -1,0 +1,127 @@
+[tool.poetry]
+name = "seismos-package"
+version = "0.1.9"
+description = "Seismos internal Python package for structured logging and utilities."
+authors = ["Seismos"]
+readme = "README.md"
+keywords = ["logging", "utilities", "internal-package"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: Other/Proprietary License"
+]
+packages = [{ include = "seismos_package" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.13"
+structlog = "^24.4.0"
+python-json-logger = "^3.2.1"
+fastapi = ">=0.114.2,<0.116.0"
+httpx = "^0.28.1"
+flask = "^2.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-cov = { version = "^6.0.0", python = ">=3.9" }
+pre-commit = { version = "4.*", python = ">=3.9" }
+ipdb = "^0.13.13"
+ipython = { version = "^8.24.0", python = ">=3.10" }
+ruff = "0.8.*"
+
+[tool.coverage.report]
+exclude_lines = [
+    "no cov",
+    "pragma: no cover",
+    "def __str__",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+omit = ["*/tests/*"]
+
+[tool.ruff]
+# Docs: https://beta.ruff.rs/docs/
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".pre-commit-cache",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    "venv",
+    "docs",
+    "__pycache",
+    "**/migrations/*",
+]
+
+line-length = 120
+
+
+[tool.ruff.lint]
+# Rules: https://beta.ruff.rs/docs/rules/
+select = [
+    "F",
+    "FA",
+    "E",
+    "B",
+    "C",
+    "C4",
+    "C90",
+    "I",
+    "N",
+    "EXE",
+    "ISC",
+    "ICN",
+    "INP",
+    "INT",
+    "PIE",
+    "SIM",
+    "W",
+    "T20",
+    "UP",
+    "T10",
+    "G",
+    "DJ",
+    "ERA",
+    "TID252",
+    "RUF100",
+    "TRY300",
+    "TRY301",
+    "TRY400",
+    "FLY",
+    "S",
+    "BLE",
+    "DTZ",
+    "PYI",
+    "RSE",
+    "RET",
+    "PTH",
+    "PL",
+    "PERF",
+    "RUF",
+]
+# Later on might be useful C/C90 (Compexity), ERA (Found commented-out code), FBT
+ignore = ["ISC001", "B008", "SIM102", "S101", "RUF012", "EXE002", "FA102", "UP007", "UP006"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+  "anyio: mark test to run under AnyIO (async tests)",
+]
