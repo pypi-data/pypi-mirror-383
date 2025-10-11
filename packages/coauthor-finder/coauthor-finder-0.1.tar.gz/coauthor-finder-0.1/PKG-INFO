@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: coauthor-finder
+Version: 0.1
+Summary: A simple tool to list all your coauthors and the year of lastest collaboration.
+Home-page: https://github.com/ChenLiu-1996/CoauthorFinder
+Author: Chen Liu
+Author-email: chen.liu.cl2482@yale.edu
+License: CC BY-NC-SA
+Keywords: coauthor,google scholar
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Description-Content-Type: text/markdown
+
+<h1 align="center">
+&#127759; <code>CoauthorFinder</code>:
+
+List All Your Coauthors for Your Next Grant Application
+</h1>
+
+<div align="center">
+
+[![Twitter](https://img.shields.io/twitter/follow/ChenLiu-1996.svg?style=social)](https://twitter.com/ChenLiu_1996)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-ChenLiu-1996?color=blue)](https://www.linkedin.com/in/chenliu1996/)
+<br>
+[![Latest PyPI version](https://img.shields.io/pypi/v/coauthor-finder.svg)](https://pypi.org/project/coauthor-finder/)
+[![PyPI download 3 month](https://static.pepy.tech/badge/coauthor-finder)](https://pepy.tech/projects/coauthor-finder)
+[![PyPI download month](https://img.shields.io/pypi/dm/coauthor-finder.svg)](https://pypistats.org/packages/coauthor-finder)
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
+
+</div>
+
+&#127942; A simple tool to list all your coauthors and the year of lastest collaboration.
+
+&#11088; There is **no need to fork** this repo unless you want to make custom changes.
+
+&#128640; It only takes **one line to install** and **4 lines to run**!
+
+&#128073; This is just a tool I wrote for my advisor when she is reporting coauthors for her grant. I will not be responding to custom requests.
+
+<br>
+
+I am [Chen Liu](https://chenliu-1996.github.io/), a Computer Science PhD Candidate at Yale University.
+
+Research areas: Machine Learning (Manifold Learning, Dynamics Modeling, Multimodal, Self-Supervised Learning).
+
+## Purpose
+This is a simple Python tool to list all your coauthors and year of lastest collaboration, in a csv format.
+
+It is easy to install (available on [PyPI](https://pypi.org/project/coauthor-finder/)) and easy to use.
+
+## Minimalistic User Guide
+This is for users familiar with python. I am not in the mood of providing a comprehensive guide.
+### &#128640; 1 line to install.
+```
+pip install coauthor-finder
+```
+### &#128640; 4 lines to run.
+```python3
+from coauthor_finder import generate_coauthor_list
+
+if __name__ == '__main__':
+    scholar_id = '3rDjnykAAAAJ'  # This is my Google Scholar ID. Replace this with your ID.
+    generate_coauthor_list(scholar_id)
+```
+
+
+## Dependencies
+Dependencies are already taken care of when you install via pip.
+
+## Acknowledgements
+This script was written under the assistance of Claude, but of course after intense debugging.
