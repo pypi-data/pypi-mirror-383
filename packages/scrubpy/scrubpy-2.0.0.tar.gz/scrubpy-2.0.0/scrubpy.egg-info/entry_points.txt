@@ -1,0 +1,4 @@
+[console_scripts]
+scrubpy = scrubpy.cli:app
+scrubpy-chat = scrubpy.chat_assistant:main
+scrubpy-web = scrubpy.web.launcher:main
