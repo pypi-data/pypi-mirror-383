@@ -1,0 +1,36 @@
+[project]
+name = "citiespy"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+description = "Cities."
+dynamic = ["version"]
+
+[dependency-groups]
+dev = [
+    "maturin==1.9.6",
+    "pytest==8.4.2",
+    "pytest-benchmark==5.1.0",
+    "pytest-cov==7.0.0",
+    "ruff==0.13.1",
+]
+
+[build-system]
+requires = ["maturin>=1,<2"]
+build-backend = "maturin"
+
+[tool.maturin]
+features = ["pyo3/extension-module", "pyo3/generate-import-lib"]
+manifest-path = "citiespy/Cargo.toml"
+
+[project.urls]
+"Source Code" = "https://github.com/ringsaturn/go-cities.json"
+Issues = "https://github.com/ringsaturn/go-cities.json/issues"
+Documentation = "https://github.com/ringsaturn/go-cities.json"

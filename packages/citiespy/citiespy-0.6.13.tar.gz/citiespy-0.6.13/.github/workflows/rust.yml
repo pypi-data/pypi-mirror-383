@@ -1,0 +1,22 @@
+name: Rust
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "citiespy/**"
+      - "src/**"
+      - ".github/workflows/rust.yaml"
+      - "data/*"
+      - "rust-toolchain.toml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: cargo build
+      - run: cargo test
