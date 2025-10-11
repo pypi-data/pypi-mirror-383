@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: ascii_library
+Version: 1.2.40
+Summary: Your project description
+Author-email: Georg Heiler <georg.heiler@ascii.ac.at>, Hernan Picatto <hernan.picatto@ascii.ac.at>
+License: MIT
+Project-URL: repository, https://github.com/ascii-supply-networks/research-space/tree/main/src/pipelines/ascii_library
+Requires-Python: >=3.9
+License-File: LICENSE
+Requires-Dist: dagster<1.12,>=1.11.10
+Requires-Dist: dagster-pipes<1.12,>=1.11.10
+Requires-Dist: boto3
+Dynamic: license-file
