@@ -1,0 +1,5 @@
+[console_scripts]
+opensafely = opensafely:main
+
+[opentelemetry_context]
+contextvars_context = opensafely._vendor.opentelemetry.context.contextvars_context:ContextVarsRuntimeContext
