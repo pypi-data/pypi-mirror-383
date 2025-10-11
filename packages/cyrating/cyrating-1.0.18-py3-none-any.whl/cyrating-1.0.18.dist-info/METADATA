@@ -1,0 +1,322 @@
+Metadata-Version: 2.1
+Name: cyrating
+Version: 1.0.18
+Summary: Python wrapper for https://www.cyrating.com
+Home-page: https://www.cyrating.com
+License: ISC
+Keywords: cyrating
+Author: Cyrating
+Author-email: tech@cyrating.com
+Requires-Python: >=3.6,<4.0
+Classifier: License :: OSI Approved
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Security
+Requires-Dist: PyJWT (>=2.1.0,<3.0.0)
+Requires-Dist: configparser (>=5.0.2,<6.0.0)
+Requires-Dist: requests (>=2.25.1,<3.0.0)
+Description-Content-Type: text/markdown
+
+# python-cyrating
+
+A python wrapper for Cyrating https://www.cyrating.com.
+
+[![Latest PyPI Release](https://img.shields.io/pypi/v/cyrating.svg)](https://pypi.org/project/cyrating/)
+[![License](https://img.shields.io/pypi/l/cyrating.svg)](https://github.com/wq/python-requirejs/blob/master/LICENSE)
+[![Python Support](https://img.shields.io/pypi/pyversions/cyrating.svg)](https://pypi.org/project/cyrating/)
+
+## Installation
+
+```sh
+pip install cyrating
+```
+
+Then in your application root directory use the following command to set up your configuration including your Cyrating token which is provided in your user interface:
+
+```sh
+echo -e "[cyrating]\ntoken: cyratingtoken" > cyrating.ini
+```
+
+## Usage example
+
+```python
+>>> import cyrating
+>>> cr = cyrating.init()
+```
+
+The init method takes into account 2 optional parameters:
+
+- token: the Cyrating token
+- proxies: the list of proxies to use when making a request. See [requests docs](https://requests.readthedocs.io/en/master/user/advanced/#proxies) for more information
+
+Additional methods listed below are available
+
+| Method         | Description                                                                                           |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| main_company   | returns the structure of the main company                                                             |
+| entities       | returns a list of entities                                                                            |
+| suppliers      | returns a list of suppliers                                                                           |
+| competitors    | returns a list of competitors                                                                         |
+| domains        | returns a list of domains for a company                                                               |
+| assets         | returns a list of assets for a given company                                                          |
+| technologies   | returns a list of identified technologies for a given company                                         |
+| set_tags       | sets tags to a given domain (require admin privileges)                                                |
+| facts          | returns the results of best practices controls                                                        |
+| events         | returns a list of active reputation events                                                            |
+| certificate    | returns a certificate of a given company                                                              |
+| members        | returns a list of members, including child subscriptions' ones (require admin privileges)             |
+| rating_history | returns a list of the last 52 ratings numbers for a given company                                     |
+| scope          | returns a list of the last 52 scopes (domain names) taking into account for rating of a given company |
+| scope_trends   | returns a list of the last applied scope updates including added and removed domains                  |
+| add_asset      | request to add an asset to the rating's scope for a given company                                     |
+| remove_asset   | request to remove an asset from the rating's scope for a given company                                |
+| cancel_update  | request to cancel a request of a scope update an asset                                                |
+| scope_updates  | returns a list of the requested added and removed domains for a given compnany                        |
+
+# Examples
+
+**Get info of the main company**
+The method main_company returns a company identified as the main company.
+
+```python
+>>> cr.main_company()
+[...]
+```
+
+**Get the list of entities**
+The method entities returns the list of companies identified as entities.
+
+```python
+>>> cr.entities()
+[...]
+```
+
+**Get the list of suppliers**
+The method suppliers returns the list of companies identified as suppliers.
+
+```python
+>>> cr.suppliers()
+[...]
+```
+
+**Get the list of competitors**
+The method competitors returns the list of companies identified as competitors.
+
+```python
+>>> cr.suppliers()
+[...]
+```
+
+**Tag a domain or an AS Number**
+The method set_tags affects a list of tags to a domain name or an AS Number. All assets related with this domain name or with this AS Number will be updated too.
+
+```python
+>>> cr.set_tags('example.com', ['tag1', 'tag2'])
+[...]
+>>> cr.set_tags('ASXXXXX', ['tag3'])
+[...]
+```
+
+**Get the list of assets**
+
+The method assets returns a list of assets with tags and type attributes. Each key of this dictionary represents an asset and is linked to the following attributes:
+
+- asset: the asset name
+- type: type of the asset, may be 'domain', 'host' or 'ip'
+- country: geolocation data for IP assets only
+- entities: list of entities linked with the asset. Entities are the ones included in the subscription.
+- tags: list of tags linked with the asset
+- related: list of assets linked with the asset
+- domains: list of domains linked with the asset
+
+```python
+>>> cr.assets(main_company)
+[...]
+```
+
+**Get the list of detected technologies**
+
+The method technologies returns a list of detected technologies for a given company. _assets_
+parameter is optional and is needed to provide tags association
+
+Each item of the detected technologies includes the following attributes:
+
+- name: name of the detected technology
+- category: name of the technology category
+- asset: name of the asset supporting the detected technology
+- domain: domain name / AS Number linked with the asset
+- entities: list of entities linked with the asset. Entities are the ones included in the subscription.
+- tags: list of tags linked with the asset
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.technologies(main_company, assets=cr.assets(main_company))
+[...]
+```
+
+**Get the results of best practices controls**
+
+The method facts returns the results of best practices controls. _assets_
+parameter is optional and is needed to provide tags association. _extra_filter_ is also an optional to filter results server-side.
+
+Each item of the results includes the following attributes:
+
+- domain: domain name / AS Number linked with the asset
+- category: name of the best practice's category
+- entities: list of entities linked with the asset. Entities are the ones included in the subscription.
+- tags: list of tags linked with the asset
+- type: type of the asset, may be 'domain', 'host' or 'ip'
+- name: name of the resource
+- results: raw results of the control
+- grade: unitary score of the control
+- impact: impact on rating of controls which lead to a downgrade.
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.facts(main_company, assets=cr.assets(main_company))
+[...]
+```
+
+**Get the list of active reputation events**
+
+The method events returns a list of active reputation events. _assets_
+parameter is optional and is needed to provide tags association.
+
+An active reputation event includes the following attributes:
+
+- name: name of the asset concerned
+- category: name of the reputation's category
+- domains: list of domains / AS Numbers linked with the asset
+- entities: list of entities linked with the asset. Entities are the ones included in the subscription.
+- tags: list of tags linked with the asset
+- type: type of the asset, may be 'domain', 'host' or 'ip'
+- source: a dictionary with the tag and the url of the reputation source
+- occurrences: dates of occurrences of the event
+- score: deprecated, replaced by impact
+- impact: impact on rating of the company. Please note that Cyrating algorithm streamlines this score by resource and reputation's category
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.events(main_company, assets=cr.assets(main_company))
+[...]
+```
+
+**Returns certificate of a given company**
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.certificate(main_company)
+```
+
+**Save the certificate of a given company to a file**
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.certificate(main_company, filename='Cyrating - Certificate of {}.pdf'.format(main_company['name']))
+```
+
+**Get the list of members**
+
+```python
+>>> cr.members()
+[...]
+```
+
+**Get a list of the last 52 ratings for a given company**
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.rating_history(main_company)
+[...]
+```
+
+**Get a list of the last 52 scopes for a given company**
+
+The method scope returns a list of the last 52 scopes for a given _company_. A scope is a list of domain names taking into account for rating of a given company
+
+A scope includes the following attribute:
+
+- domainnames: list of domains names supporting our rating
+
+```python
+>>> main_company = cr.main_company()
+>>> cr.scope(main_company)
+[...]
+```
+
+**Get a list of scope trends**
+
+An additional method is available to get scope trends for a given company including added domains and removed domains between several ratings.
+
+A scope includes the following attributes:
+
+- added: domains added to a rating scope
+- removed: domains removed from a rating scope
+- date: date of rating
+
+```python
+>>> main_company = cr.main_company()
+>>> scope = cr.scope(main_company)
+>>> updates = cr.scope_trends(scope)
+[...]
+```
+
+**Ask to add an asset**
+
+The method add_asset ask to add an asset to current scope for a specific company. You can define the type of the asset to add ('domain', 'subdomain') and optionnal tags related to the asset. 
+
+
+```python
+>>> cr.add_asset(company=main_company, name="domainname_to_add", type="domain", tags=['tag1', 'tag2'])
+```
+
+**Ask to remove an asset**
+
+The method remove_asset ask to remove an asset from current scope for a specific company.
+
+
+```python
+>>> cr.remove_asset(company=main_company, name="domainname_to_remove", type="domain")
+```
+
+**Cancel a requested scope update**
+
+The method cancel_update is to cancel a requested scope update for a specific company.
+
+
+```python
+>>> cr.cancel_update(company=main_company, name="domainname_to_remove")
+```
+
+
+**Get the list of requested scope updates**
+
+The method scope_updates returns the list of requested scope updates to cancel for a specific company.
+
+
+```python
+>>> cr.scope_updates(company=main_company)
+[...]
+```
+
+## Regression
+
+After version 1.0.15, the method assets returns a list instead of a dictionary.
+After version 1.0.18, the method scope_updates have been renamed scope_trends. A new method scope_updates return the current requested scope updates.
+
+## Meta
+
+Cyrating – [@cyrating](https://twitter.com/cyrating) – hello@cyrating.com
+
+Distributed under the ISCL licence. See `LICENSE` for more information.
+
+## Contributing
+
+1. Send issues to issues@cyrating.com
+
