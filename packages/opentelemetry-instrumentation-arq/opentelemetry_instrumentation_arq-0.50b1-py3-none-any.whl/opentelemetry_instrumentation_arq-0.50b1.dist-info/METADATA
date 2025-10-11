@@ -1,0 +1,61 @@
+Metadata-Version: 2.4
+Name: opentelemetry-instrumentation-arq
+Version: 0.50b1
+Summary: Arq instrumentation for OpenTelemetry
+Author-email: fcfangcc <swjfc22@live.com>
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: opentelemetry-api
+Requires-Dist: opentelemetry-instrumentation
+Requires-Dist: opentelemetry-semantic-conventions
+Requires-Dist: wrapt<2.0.0,>=1.0.0
+Provides-Extra: instruments
+Requires-Dist: arq; extra == "instruments"
+Provides-Extra: dev
+Requires-Dist: build; extra == "dev"
+Dynamic: license-file
+
+OpenTelemetry Arq Instrumentation
+===================================================
+
+This library provides automatic and manual instrumentation of `arq <https://github.com/python-arq/arq>`_
+
+auto-instrumentation using the opentelemetry-instrumentation package is also supported.
+
+
+Installation
+------------
+
+.. code-block:: shell
+
+    pip install opentelemetry-instrumentation-arq
+
+Usage
+------
+
+.. code-block:: python
+
+    from opentelemetry.instrumentation.arq import ArqInstrumentor
+
+    ArqInstrumentor.instrument()
+
+Test
+------
+
+.. code-block:: shell
+
+    python -m unittest tests/*
+
+
+References
+----------
+
+* `OpenTelemetry Project <https://opentelemetry.io/>`_
+* `OpenTelemetry Python Examples <https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples>`_
