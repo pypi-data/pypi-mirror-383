@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: example_package_skyguy
+Version: 0.1.1
+Summary: A small template package that does cool things.
+Project-URL: Source Code, https://codeberg.org/skyguy/retinet
+Author-email: Kevin Steen <code@kevinsteen.net>
+License-Expression: AGPL-3.0-or-later
+License-File: LICENSE
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Dist: cryptography>=3.4.7
+Requires-Dist: pyserial>=3.5
+Provides-Extra: dev
+Description-Content-Type: text/markdown
+
+# Example package
+
+Simple example package
