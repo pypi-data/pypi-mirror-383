@@ -1,0 +1,62 @@
+Metadata-Version: 2.3
+Name: tortoise-vector
+Version: 0.0.0
+Summary: pgvector implementation for Tortoise-ORM
+License: MIT
+Author: Sebastien Nicolet
+Author-email: snicolet95@gmail.com
+Requires-Python: >=3.10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: tortoise-orm[asyncpg] (>=0.23)
+Project-URL: Documentation, https://github.com/Chr0nos/tortoise_vector/blob/master/tortoise_vector/README.md
+Project-URL: Homepage, https://github.com/Chr0nos/tortoise_vector
+Project-URL: Repository, https://github.com/Chr0nos/tortoise_vector.git
+Description-Content-Type: text/markdown
+
+# Implementation of vector for Tortoise-ORM
+This package adds the support of `pgvector` vectors to Tortoise-ORM as a new type of fields.
+That way you can filter/order by cosine similarity distances for scementic search using embeddings.
+Here's an example for openai's embeddings but this will work with any kind of embeddings.
+Usage:
+
+```python
+from tortoise.models import Model, QuerySet
+from tortoise_vector.field import VectorField
+from tortoise_vector.expression import CosineSimilarity
+
+
+OPENAI_VECTOR_SIZE = 1536
+
+
+class MyModel(Model):
+    # vectors have a fixed size, openai uses 1536 dimensions
+    embedding = VectorField(vector_size=OPENAI_VECTOR_SIZE)
+
+
+
+async def get_embedding_from_text(string: str) -> list[float]:
+    ...
+
+
+async def get_nearst_models(text: str) -> QuerySet[MyModel]:
+    embedding = await get_embedding_from_text(text)
+    return (
+        MyModel
+        .all()
+        .annotate(
+            distance=CosineSimilarity(
+                "embedding",
+                embedding,
+                OPENAI_VECTOR_SIZE
+            )
+        )
+        .order_by("distance")
+    )
+```
+
+
