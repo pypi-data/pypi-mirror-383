@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: senstore
+Version: 0.6.2
+Summary: Minimalistic vectorized sentence store
+Home-page: https://github.com/ptarau/senstore.git
+Author: Paul Tarau
+Author-email: ptarau@gmail.com
+License: MIT
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: networkx
+Requires-Dist: scipy
+Requires-Dist: pysbd
+Requires-Dist: fastembed
+Requires-Dist: vecstore
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: summary
+
+Minimalistic vector store for sentences segmented from text.
+See test.py for examples of use.
