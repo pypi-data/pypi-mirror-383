@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "upflame"
+version = "0.1.0"
+description = "Upflame Labs core packages with pretty print features."
+authors = ["Victor Amit <dev@amit.work>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "upflame", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.urls]
+homepage = "https://github.com/upflame/upflame"
+repository = "https://github.com/upflame/upflame"
+documentation = "https://github.com/upflame/upflame#readme"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+upflame = "upflame.__main__:main"
