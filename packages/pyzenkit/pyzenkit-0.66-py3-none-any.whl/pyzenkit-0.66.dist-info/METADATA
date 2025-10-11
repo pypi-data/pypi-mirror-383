@@ -1,0 +1,91 @@
+Metadata-Version: 2.4
+Name: pyzenkit
+Version: 0.66
+Summary: Python 3 script and daemon toolkit
+Home-page: https://pypi.org/project/pyzenkit/
+Author: Honza Mach
+Author-email: honza.mach.ml@gmail.com
+License: MIT
+Project-URL: Documentation, https://709.gitlab-pages.cesnet.cz/mentat/pyzenkit/master/html/manual.html
+Project-URL: Source, https://gitlab.cesnet.cz/709/mentat/pyzenkit
+Project-URL: Tracker, https://gitlab.cesnet.cz/709/mentat/pyzenkit/-/issues
+Keywords: library console script daemon
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Environment :: Console
+License-File: LICENSE.txt
+Requires-Dist: python-dotenv
+Requires-Dist: jsonschema
+Requires-Dist: pydgets
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: summary
+
+PyZenKit - README
+================================================================================
+
+.. warning::
+
+    Although production code is based on this library, it should still be considered
+    as work in progress.
+
+
+Introduction
+--------------------------------------------------------------------------------
+
+This package contains collection of usefull tools and utilities and framework
+for creating console applications, scripts and system services (daemons) in
+Python 3. It provides easily extendable and customizable base implementations
+of generic application, script or daemon and which take care of many common
+issues and tasks like configuration loading and merging, command line argument
+parsing, logging setup, etc.
+
+The extensive documentation and tutorials is still under development, however
+usage examples and demonstration applications are provided right in the source
+code of appropriate module. Just execute the module with Python3 interpretter
+to see the demonstration::
+
+    python3 path/to/application.py --help
+
+
+Framework features
+--------------------------------------------------------------------------------
+
+Currently the framework package contains following features:
+
+``pyzenkit.jsonconf``
+    Module for handling JSON based configuration files and directories.
+
+``pyzenkit.daemonizer``
+    Module for taking care of all process daemonization tasks.
+
+``pyzenkit.baseapp``
+    Module for writing generic console applications.
+
+``pyzenkit.zenscript``
+    Module for writing generic console scripts with built-in support for repeated
+    executions (for example by cron-like service).
+
+``pyzenkit.zendaemon``
+    Module for writing generic system services (daemons).
+
+
+Copyright
+--------------------------------------------------------------------------------
+
+| Copyright (C) since 2016 CESNET, z.s.p.o (http://www.ces.net/)
+| Copyright (C) since 2015 Honza Mach <honza.mach.ml@gmail.com>
+| Use of this package is governed by the MIT license, see LICENSE file.
+|
+| This project was initially written for personal use of the original author.
+| Later it was developed much further and used for project of author`s employer.
+|
