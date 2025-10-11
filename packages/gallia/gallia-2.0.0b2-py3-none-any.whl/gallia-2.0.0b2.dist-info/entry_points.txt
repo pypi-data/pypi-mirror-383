@@ -1,0 +1,10 @@
+[console_scripts]
+cursed-hr = gallia.cli.cursed_hr:main
+gallia = gallia.cli.gallia:main
+hr = gallia.cli.hr:main
+netzteil = gallia.cli.netzteil:main
+
+[gallia_plugins]
+uds = gallia.plugins.uds:UDSPlugin
+xcp = gallia.plugins.xcp:XCPPlugin
+
