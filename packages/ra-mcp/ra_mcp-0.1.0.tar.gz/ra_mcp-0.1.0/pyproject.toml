@@ -1,0 +1,75 @@
+[project]
+name = "ra-mcp"
+version = "0.1.0"
+description = "Riksarkivet first MCPs to expose APIs in dataplattformen and htrflow"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "asyncio>=4.0.0",
+    "fastmcp>=2.12.3",
+    "lxml>=6.0.2",
+    "pydantic>=2.11.9",
+    "rich>=14.1.0",
+    "starlette>=0.48.0",
+    "typer>=0.19.2",
+    "types-lxml>=2025.8.25",
+]
+license = "Apache-2.0"
+keywords = [
+    "mcp",
+    "mcp server",
+    "model context protocol",
+    "ra-mcp",
+    "search",
+    "browse",
+    "iiif",
+    "llm",
+    "agent",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+    "ty",
+]
+
+[project.scripts]
+ra = "ra_mcp.cli:app"
+
+[build-system]
+requires = ["uv_build>=0.8.18"]
+build-backend = "uv_build"
+
+
+[tool.ruff.lint]
+ignore = []
+
+[tool.ruff]
+line-length = 160
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+known-first-party = ["ra-mcp"]
+
+[tool.ty]
+# error-on-warning = true
+
+[tool.ty.environment]
+python-version = "3.12"
+
+
+[tool.pytest.ini_options]
+env = ["PY_COLORS=1"]
+markers = []
+testpaths = ["tests"]
