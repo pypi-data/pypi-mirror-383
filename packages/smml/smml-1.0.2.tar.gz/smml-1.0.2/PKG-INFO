@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: smml
+Version: 1.0.2
+Summary: ML utils for Semantic Modeling
+License: MIT
+Author: Binh Vu
+Author-email: bvu687@gmail.com
+Requires-Python: >=3.12,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Requires-Dist: libactor (>=2.6.0,<3.0.0)
+Requires-Dist: orjson (>=3.10.16,<4.0.0)
+Requires-Dist: polars (>=1.21.0,<2.0.0)
+Requires-Dist: pyarrow (>=19.0.0,<20.0.0)
+Requires-Dist: sem-desc (>=6.18.3,<7.0.0)
+Requires-Dist: serde2 (>=1.9.0,<2.0.0)
+Requires-Dist: torch (>=2.7.0,<3.0.0)
+Requires-Dist: torchaudio (>=2.7.0,<3.0.0)
+Requires-Dist: torchvision (>=0.22.0,<0.23.0)
+Description-Content-Type: text/markdown
+
+

@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "smml"
+version = "1.0.2"
+description = "ML utils for Semantic Modeling"
+authors = ["Binh Vu <bvu687@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pyarrow = "^19.0.0"
+polars = "^1.21.0"
+torch = "^2.7.0"
+torchvision = "^0.22.0"
+torchaudio = "^2.7.0"
+orjson = "^3.10.16"
+serde2 = "^1.9.0"
+libactor = "^2.6.0"
+sem-desc = "^6.18.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
