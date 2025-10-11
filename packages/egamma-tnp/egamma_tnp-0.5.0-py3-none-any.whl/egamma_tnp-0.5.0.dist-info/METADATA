@@ -1,0 +1,54 @@
+Metadata-Version: 2.4
+Name: egamma-tnp
+Version: 0.5.0
+Summary: E/Gamma Tag & Probe framework.
+Project-URL: Homepage, https://github.com/iasonkrom/egamma-tnp
+Project-URL: Bug Tracker, https://github.com/iasonkrom/egamma-tnp/issues
+Author-email: Iason Krommydas <ik23@rice.edu>
+Maintainer-email: Iason Krommydas <ik23@rice.edu>
+License: BSD-3-Clause
+License-File: LICENSE
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Software Development
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Requires-Dist: awkward!=2.8.9
+Requires-Dist: click>=8.0.4
+Requires-Dist: coffea[dask,rucio]>=2025.7.0
+Requires-Dist: dask<2025
+Requires-Dist: distributed<2025
+Requires-Dist: pyarrow<21.0.0
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == 'dev'
+Requires-Dist: pytest; extra == 'dev'
+Requires-Dist: ruff; extra == 'dev'
+Provides-Extra: fit
+Requires-Dist: iminuit; extra == 'fit'
+Requires-Dist: ipywidgets; extra == 'fit'
+Requires-Dist: numba-stats; extra == 'fit'
+Requires-Dist: pyside6; extra == 'fit'
+Requires-Dist: scipy; extra == 'fit'
+Description-Content-Type: text/markdown
+
+# egamma-tnp
+
+[![ci](https://github.com/ikrommyd/egamma-tnp/actions/workflows/ci.yml/badge.svg)](https://github.com/ikrommyd/egamma-tnp/actions?query=workflow%3ACI%2FCD+event%3Aschedule+branch%3Amaster)
+[![PyPI Version](https://badge.fury.io/py/egamma-tnp.svg)](https://badge.fury.io/py/egamma-tnp)
+![Downloads](https://img.shields.io/pypi/dm/egamma-tnp.svg)
+
+E/Gamma Tag & Probe framework using [coffea](https://github.com/CoffeaTeam/coffea).
