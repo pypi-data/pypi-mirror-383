@@ -1,0 +1,106 @@
+Metadata-Version: 2.3
+Name: gallia
+Version: 2.0.0b2
+Summary: Extendable Pentesting Framework
+Author: AISEC Pentesting Team
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Topic :: Security
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: aiosqlite>=0.18
+Requires-Dist: argcomplete>=2,<4
+Requires-Dist: boltons>=24.1.0
+Requires-Dist: construct>=2.10,<3.0
+Requires-Dist: platformdirs>=2.6,<5.0
+Requires-Dist: pydantic>=2.12,<3.0
+Requires-Dist: tabulate>=0.9
+Requires-Dist: zstandard>=0.19 ; python_full_version < '3.14'
+Requires-Dist: more-itertools>=10.3.0,<11.0.0 ; python_full_version < '3.12' and sys_platform == 'win32'
+Requires-Dist: sphinx>=8.0 ; extra == 'dev'
+Requires-Dist: construct-typing>=0.5.2,<0.7.0 ; extra == 'dev'
+Requires-Dist: mypy>=1.0,<2.0 ; extra == 'dev'
+Requires-Dist: myst-parser>=3.0.1,<4.1 ; extra == 'dev'
+Requires-Dist: pylsp-mypy>=0.6,<0.8 ; extra == 'dev'
+Requires-Dist: pylsp-rope>=0.1,<0.2 ; extra == 'dev'
+Requires-Dist: pytest>=7.1,<9.0 ; extra == 'dev'
+Requires-Dist: pytest-asyncio>=0.20,<0.26 ; extra == 'dev'
+Requires-Dist: pytest-cov>=4,<7 ; extra == 'dev'
+Requires-Dist: python-lsp-server>=1.5,<2.0 ; extra == 'dev'
+Requires-Dist: reuse>=4.0,<6.0 ; extra == 'dev'
+Requires-Dist: ruff>=0.9.0 ; extra == 'dev'
+Requires-Dist: rust-just>=1.38.0 ; extra == 'dev'
+Requires-Dist: sphinx-rtd-theme>=3 ; extra == 'dev'
+Requires-Dist: types-tabulate>=0.9,<0.10 ; extra == 'dev'
+Requires-Dist: types-boltons>=25.0.0.20250919 ; extra == 'dev'
+Maintainer: Stefan Tatschner, Tobias Specht
+Maintainer-email: Stefan Tatschner <stefan.tatschner@aisec.fraunhofer.de>, Tobias Specht <tobias.specht@aisec.fraunhofer.de>
+Requires-Python: >=3.11, <3.15
+Project-URL: Bug Tracker, https://github.com/Fraunhofer-AISEC/gallia/issues
+Project-URL: Documentation, https://fraunhofer-aisec.github.io/gallia
+Project-URL: Repository, https://github.com/Fraunhofer-AISEC/gallia
+Provides-Extra: dev
+Description-Content-Type: text/markdown
+
+<!--
+SPDX-FileCopyrightText: AISEC Pentesting Team
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+# Gallia
+
+[![docs](https://img.shields.io/badge/-docs-green)](https://fraunhofer-aisec.github.io/gallia)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/gallia)](https://pypi.python.org/pypi/gallia/)
+[![PyPI - License](https://img.shields.io/pypi/l/gallia)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![PyPI](https://img.shields.io/pypi/v/gallia)](https://pypi.python.org/pypi/gallia/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10696368.svg)](https://zenodo.org/doi/10.5281/zenodo.10696368)
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/gallia.svg)](https://repology.org/project/gallia/versions)
+
+Gallia is an extendable pentesting framework with the focus on the automotive domain.
+The scope of the toolchain is conducting penetration tests from a single ECU up to whole cars.
+Currently, the main focus lies on the [UDS](https://www.iso.org/standard/72439.html) interface.
+Acting as a generic interface, the logging functionality implements reproducible tests and enables post-processing tasks.
+The [rendered documentation](https://fraunhofer-aisec.github.io/gallia) is available via Github Pages.
+
+Keep in mind that this project is intended for research and development usage only!
+Inappropriate usage might cause irreversible damage to the device under test.
+We do not take any responsibility for damage caused by the usage of this tool.
+
+## Testimonials
+
+Levent Çelik et al. in [Comparing Open-Source UDS Implementations Through Fuzz Testing](https://saemobilus.sae.org/papers/comparing-open-source-uds-implementations-fuzz-testing-2024-01-2799):
+
+> Among the implementations we've identified, Gallia stands out as the most robust and dependable by a significant margin.
+
+## Quickstart
+
+See the [setup instructions](https://fraunhofer-aisec.github.io/gallia/setup.html).
+
+First create a config template with `--template`, store it to a file called [`gallia.toml`](https://fraunhofer-aisec.github.io/gallia/config.html), and adjust it to your needs.
+`gallia` reads this file to set the defaults of the command line flags.
+All options correspond to a command line flag; the only required option for scans is `gallia.scanner.target`, for instance `isotp://can0?src_addr=0x123&dst_addr=0x312&tx_padding=0xaa&rx_padding=0xaa`.
+
+```
+$ gallia --template > gallia.toml
+```
+
+You are all set to start your first scan, for instance read the diagnostic trouble codes:
+
+```
+$ gallia primitive uds dtc read
+```
+
+The target can also be specified by the `--target` option on the command line.
+For the format of the `--target` argument see the [transports documentation](https://fraunhofer-aisec.github.io/gallia/transports.html).
+
+## Acknowledgments
+
+This work was partly funded by the German Federal Ministry of Education and Research (BMBF) as part of the [SecForCARs](https://www.secforcars.de/) project (grant no. 16KIS0790).
+A short presentation and demo video is available at this [page](https://www.secforcars.de/demos/10-automotive-scanning-framework.html).
+
