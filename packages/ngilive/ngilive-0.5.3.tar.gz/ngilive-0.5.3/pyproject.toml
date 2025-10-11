@@ -1,0 +1,27 @@
+[project]
+name = "ngilive"
+version = "v0.5.3"
+description = ""
+authors = [
+    {name = "Ole-Jakob Olsen",email = "ole.jakob.olsen@ngi.no"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+
+
+[tool.poetry]
+packages = [
+    { include = "ngilive", from = "src" },
+]
+
+[tool.poetry.dependencies]
+httpx = "^0.28.1"
+pydantic = "^2.11.9"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+pdoc = "^15.0.4"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
