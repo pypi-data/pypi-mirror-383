@@ -1,0 +1,6 @@
+[console_scripts]
+pump-portal-mcp = pump_portal_mcp_server.server:main
+pump-portal-mcp-server = pump_portal_mcp_server.server:main
+
+[fastmcp]
+pump-portal-mcp-server = pump_portal_mcp_server.server:create_app
