@@ -1,0 +1,13 @@
+transformers[torch]
+torch
+
+[dev]
+ruff
+pytest
+pytest-xdist
+
+[train]
+datasets
+evaluate
+scikit-learn
+wandb
