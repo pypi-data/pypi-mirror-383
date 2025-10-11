@@ -1,0 +1,56 @@
+[project]
+name = "dataclass-click"
+version = "1.0.4"  # Replaced in CI pipeline
+description = "Use PEP 593 annotations to define click options and arguments"
+authors = [
+    {name = "Philip Couling", email = "couling@gmail.com"},
+]
+readme = "README.md"
+repository = "https://github.com/couling/dataclass-click"
+requires-python = ">=3.10"
+dependencies = [
+    "click>8.0.0,<9"
+]
+classifiers = [
+    "License :: OSI Approved :: BSD License"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+click = "^8.0.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.0.0"
+coverage = "^7.4.1"
+mypy = "^1.8.0"
+
+
+[tool.poetry.group.dev.dependencies]
+yapf = "^0.40.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+source = [
+    "dataclass_click",
+]
+
+[tool.yapf]
+based_on_style = "pep8"
+column_limit = 120
+split_before_first_argument = true
+each_dict_entry_on_separate_line = false
+
+[tool.mypy]
+packages = [
+    "dataclass_click",
+    "tests",
+]
+check_untyped_defs = true
