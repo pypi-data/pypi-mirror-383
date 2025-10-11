@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: NESTML
+Version: 8.2.0
+Summary: NESTML is a domain specific language that supports the specification of neuron models in a precise and concise syntax, based on the syntax of Python. Model equations can either be given as a simple string of mathematical notation or as an algorithm written in the built-in procedural language. The equations are analyzed by NESTML to compute an exact solution if possible or use an  appropriate numeric solver otherwise.
+Home-page: https://github.com/nest/nestml
+License: GNU General Public License v2.0
+License-File: LICENSE
+Requires-Dist: numpy (>=1.8.2)
+Requires-Dist: scipy
+Requires-Dist: sympy
+Requires-Dist: antlr4-python3-runtime (==4.13.2)
+Requires-Dist: setuptools
+Requires-Dist: Jinja2 (>=2.10)
+Requires-Dist: astropy
+Requires-Dist: semver
+Requires-Dist: odetoolbox (>=2.5.9)
+Requires-Dist: typing ; python_version < "3.5"
+
