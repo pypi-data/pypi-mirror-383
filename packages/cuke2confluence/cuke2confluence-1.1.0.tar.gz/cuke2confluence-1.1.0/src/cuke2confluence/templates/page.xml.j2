@@ -1,0 +1,15 @@
+<ac:layout>
+    <ac:layout-section ac:type="single">
+        <ac:layout-cell>
+            <h1>{{ title|x }}</h1>
+            <p><em>Erstellt: {{ generated_at|x }}</em></p>
+
+            {% include "summary_table.xml.j2" %}
+            <h2>Features</h2>
+            {% include "features_table.xml.j2" %}
+
+            <h2>Details</h2>
+            {% include "feature_details.xml.j2" %}
+        </ac:layout-cell>
+    </ac:layout-section>
+</ac:layout>

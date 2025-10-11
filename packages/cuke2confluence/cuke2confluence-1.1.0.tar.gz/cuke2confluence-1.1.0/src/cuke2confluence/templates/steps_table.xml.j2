@@ -1,0 +1,48 @@
+<table>
+    <colgroup><col/><col/><col/><col/><col/></colgroup>
+    <tbody>
+        <tr>
+            <th>Status</th><th>Step</th><th>Dauer</th><th>Fehler</th><th>Anhänge</th>
+        </tr>
+        {% for st in s.steps %}
+            <tr>
+                <td>
+                    {% set ok = (st.status == 'passed') %}
+                    {{ status_macro(ok) }}
+                </td>
+                <td>{{ st.text|x }}</td>
+                <td>{{ st.duration|ms|x }}</td>
+                <td>
+                    {% if st.error %}
+                        {{ code_block(st.error, 'text') }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if st.attachments and st.attachments|length > 0 %}
+                        <ul>
+                            {% for a in st.attachments %}
+                                <li>
+                                    {% if a.is_image %}
+                                        <ac:image>
+                                            <ri:attachment ri:filename="{{ a.fname|x }}"/>
+                                        </ac:image>
+                                        <span>{{ a.title|x }}</span>
+                                    {% else %}
+                                        <ac:link>
+                                            <ri:attachment ri:filename="{{ a.fname|x }}"/>
+                                            <ac:plain-text-link-body><![CDATA[{{ a.title }}]]></ac:plain-text-link-body>
+                                        </ac:link>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        –
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

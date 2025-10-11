@@ -1,0 +1,4 @@
+{% for f in features %}
+    {% set scen_block %}{% include 'scenario_block.xml.j2' %}{% endset %}
+    {{ expand('Feature: ' ~ f.name, scen_block) }}
+{% endfor %}

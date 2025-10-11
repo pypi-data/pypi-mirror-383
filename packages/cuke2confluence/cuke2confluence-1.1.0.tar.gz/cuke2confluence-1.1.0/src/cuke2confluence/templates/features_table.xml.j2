@@ -1,0 +1,19 @@
+<table>
+    <colgroup><col/><col/><col/><col/><col/><col/><col/></colgroup>
+    <tbody>
+        <tr>
+            <th>Status</th><th>Feature</th><th>Tags</th><th>Passed</th><th>Failed</th><th>Skipped</th><th>Dauer</th>
+        </tr>
+        {% for f in features %}
+            <tr>
+                <td>{{ status_macro(f.failed == 0) }}</td>
+                <td>{{ f.name|x }}</td>
+                <td>{{ (f.tags|join(", "))|x }}</td>
+                <td>{{ f.passed }}</td>
+                <td>{{ f.failed }}</td>
+                <td>{{ f.skipped }}</td>
+                <td>{{ f.duration|ms|x }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

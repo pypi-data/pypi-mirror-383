@@ -1,0 +1,21 @@
+<ac:structured-macro ac:name="panel">
+  <ac:parameter ac:name="title">Zusammenfassung</ac:parameter>
+  <ac:rich-text-body>
+    <table>
+      <colgroup><col/><col/><col/><col/><col/><col/></colgroup>
+      <tbody>
+        <tr>
+          <th>Features</th><th>Szenarien</th><th>Passed</th><th>Failed</th><th>Skipped</th><th>Gesamtdauer</th>
+        </tr>
+        <tr>
+          <td>{{ totals.features }}</td>
+          <td>{{ totals.scenarios }}</td>
+          <td>{{ status_macro(true) }} {{ totals.passed }}</td>
+          <td>{{ status_macro(false) }} {{ totals.failed }}</td>
+          <td>{{ totals.skipped }}</td>
+          <td>{{ totals.duration|ms|x }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ac:rich-text-body>
+</ac:structured-macro>

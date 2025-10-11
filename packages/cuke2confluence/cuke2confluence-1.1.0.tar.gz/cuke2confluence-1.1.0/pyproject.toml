@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cuke2confluence"
+version = "1.1.0"
+description = "Render Cucumber JSON to Confluence Storage Format (Jinja2 templates) and optional publish."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Steffen Jacobs", email = "kontakt@steffenjacobs.de" }]
+requires-python = ">=3.9"
+dependencies = [
+    "jinja2>=3.1,<4"
+]
+keywords = ["cucumber", "confluence", "bdd", "reports"]
+
+[project.optional-dependencies]
+publish = ["requests>=2.31,<3"]
+test = ["pytest>=8", "pytest-cov>=5"]
+
+[project.scripts]
+cuke2conf = "cuke2confluence.cli:main"
+
+[tool.hatch.build]
+include = [
+    "src/cuke2confluence/**",
+    "README.md",
+    "LICENSE"
+]
+
+# Templates als Package-Data einbinden
+[tool.hatch.build.targets.wheel]
+packages = ["src/cuke2confluence"]
+only-include = ["src/cuke2confluence"]
+artifacts = []
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "LICENSE", "pyproject.toml"]
+
+[project.urls]
+"Homepage" = "https://github.com/sjacobs/cuke2conf"
+"Bug Tracker" = "https://github.com/sjacobs/cuke2conf/issues"
