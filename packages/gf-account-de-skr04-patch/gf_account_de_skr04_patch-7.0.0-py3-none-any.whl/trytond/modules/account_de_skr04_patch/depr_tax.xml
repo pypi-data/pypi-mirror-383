@@ -1,0 +1,259 @@
+<?xml version="1.0" ?>
+<!-- This file is part of the account-de-skr04-patch module for Tryton form gruenfischer.de.
+ The COPYRIGHT file at the top level of
+ this repository contains the full copyright notices and license terms.-->
+<tryton>
+    <data>
+        <record id="account_de_skr04.tax_group_vst_reduced" model="account.tax.group">
+            <field name="name">DEPR_Vorsteuer ermäßigt</field>
+            <field name="code">vst_reduced</field>
+            <field name="kind">purchase</field>
+        </record>
+        <record id="account_de_skr04.tax_group_ust" model="account.tax.group">
+            <field name="name">DEPR_Umsatzsteuer</field>
+            <field name="code">ust</field>
+            <field name="kind">sale</field>
+        </record>
+        <record id="account_de_skr04.tax_group_vst" model="account.tax.group">
+            <field name="name">DEPR_Vorsteuer</field>
+            <field name="code">vst</field>
+            <field name="kind">purchase</field>
+        </record>
+        <record id="account_de_skr04.tax_not_taxable_eu" model="account.tax.template">
+            <field name="name">DEPR_nicht steuerbar für Drittland-EU</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">nicht steuerbar</field>
+            <field name="type">percentage</field>
+            <field eval="Decimal('0')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3803"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3803"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_s13b_abs1_19_vst_ust" model="account.tax.template">
+            <field name="name">DEPR_Erhaltene EU-Leistungen §13b Abs.1 UStG - 19%</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% VSt / 19% USt</field>
+            <field name="type">none</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_s13b_abs1_19_vst" model="account.tax.template">
+            <field name="name">DEPR_19% Vorsteuer aus erhaltenen EU-Leistungen §13b Abs.1</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% VSt</field>
+            <field name="type">percentage</field>
+            <field name="rate" eval="Decimal('0.19')"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1407"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1407"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_s13b_abs1_19_vst_ust"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_s13b_abs1_19_ust" model="account.tax.template">
+            <field name="name">DEPR_19% Umsatzsteuer aus erhaltenen EU-Leistungen §13b Abs.1</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% USt</field>
+            <field name="type">percentage</field>
+            <field name="rate" eval="Decimal('-0.19')"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3837"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3837"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_s13b_abs1_19_vst_ust"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_s13b_abs2_19_vst_ust" model="account.tax.template">
+            <field name="name">DEPR_Andere EU-Leistungen §13b Abs.2 Nr.1,2,4 bis 11 UStG - 19%</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% VSt / 19% USt</field>
+            <field name="type">none</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_s13b_abs2_19_vst" model="account.tax.template">
+            <field name="name">DEPR_19% Vorsteuer aus anderen EU-Leistungen §13b Abs.2</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% VSt</field>
+            <field name="type">percentage</field>
+            <field name="rate" eval="Decimal('0.19')"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1407"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1407"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_s13b_abs2_19_vst_ust"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_s13b_abs2_19_ust" model="account.tax.template">
+            <field name="name">DEPR_19% Umsatzsteuer aus anderen EU-Leistungen §13b Abs.2</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% USt</field>
+            <field name="type">percentage</field>
+            <field name="rate" eval="Decimal('-0.19')"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3837"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3837"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_s13b_abs2_19_vst_ust"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_19_purchase" model="account.tax.template">
+            <field name="name">DEPR_Innergem. Erwerb 19%USt/19%VSt</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">innergem. Erwerb 19%</field>
+            <field name="type">none</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_19_purchase_ust" model="account.tax.template">
+            <field name="name">DEPR_19% Umsatzsteuer aus innergem. Erwerb</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% USt</field>
+            <field name="type">percentage</field>
+            <field eval="Decimal('-.19')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3804"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3804"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_19_purchase"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_19_purchase_vst" model="account.tax.template">
+            <field name="name">DEPR_19% Vorsteuer aus innergem. Erwerb</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% VSt</field>
+            <field name="type">percentage</field>
+            <field eval="Decimal('.19')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1404"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1404"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_19_purchase"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_7_purchase" model="account.tax.template">
+            <field name="name">DEPR_Innergem. Erwerb 7%USt/7%VSt</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">innergem. Erwerb 7%</field>
+            <field name="type">none</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst_reduced"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_7_purchase_ust" model="account.tax.template">
+            <field name="name">DEPR_7% Umsatzsteuer aus innergem. Erwerb</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">7% USt</field>
+            <field name="type">percentage</field>
+            <field eval="Decimal('-.07')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3802"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3802"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_7_purchase"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_7_purchase_vst" model="account.tax.template">
+            <field name="name">DEPR_7% Vorsteuer aus innergem. Erwerb</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">7% VSt</field>
+            <field name="type">percentage</field>
+            <field eval="Decimal('.07')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1402"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1402"/>
+            <field name="parent" ref="account_de_skr04.tax_eu_7_purchase"/>
+        </record>
+        <record id="account_de_skr04.tax_eu_sale" model="account.tax.template">
+            <field name="name">DEPR_Steuerfreie innergem. Lieferung (§4 Abs. 1b UStG) </field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">steuerfreie innergem. Lieferung</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_ust"/>
+            <field eval="Decimal('0')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3800"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3800"/>
+        </record>
+        <record id="account_de_skr04.tax_export" model="account.tax.template">
+            <field name="name">DEPR_Steuerfreie Ausfuhr (§4 Nr. 1a UStG)</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">steuerfreie Ausfuhr</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_ust"/>
+            <field eval="Decimal('0')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3800"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3800"/>
+        </record>
+        <record id="account_de_skr04.tax_import_19" model="account.tax.template">
+            <field name="name">DEPR_19% Einfuhrumsatzsteuer</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% EUSt</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst"/>
+            <field eval="Decimal('.19')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1433"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1433"/>
+        </record>
+        <record id="account_de_skr04.tax_import_7" model="account.tax.template">
+            <field name="name">DEPR_7% Einfuhrumsatzsteuer</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">7% EUSt</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst_reduced"/>
+            <field eval="Decimal('.07')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1433"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1433"/>
+        </record>
+        <record id="account_de_skr04.tax_not_taxable" model="account.tax.template">
+            <field name="name">DEPR_nicht steuerbar</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">nicht steuerbar</field>
+            <field name="type">percentage</field>
+            <field eval="Decimal('0')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3800"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3800"/>
+        </record>
+        <record id="account_de_skr04.tax_ust_19" model="account.tax.template">
+            <field name="name">DEPR_19% Umsatzsteuer</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% USt</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_ust"/>
+            <field eval="Decimal('.19')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3806"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3806"/>
+        </record>
+        <record id="account_de_skr04.tax_ust_7" model="account.tax.template">
+            <field name="name">DEPR_7% Umsatzsteuer</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">7% USt</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_ust"/>
+            <field eval="Decimal('.07')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_3801"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_3801"/>
+        </record>
+        <record id="account_de_skr04.tax_vst_19" model="account.tax.template">
+            <field name="name">DEPR_19% Vorsteuer</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">19% VSt</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst"/>
+            <field eval="Decimal('.19')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1406"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1406"/>
+        </record>
+        <record id="account_de_skr04.tax_vst_7" model="account.tax.template">
+            <field name="name">DEPR_7% Vorsteuer</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="description">7% VSt</field>
+            <field name="type">percentage</field>
+            <field name="group" ref="account_de_skr04.tax_group_vst_reduced"/>
+            <field eval="Decimal('.07')" name="rate"/>
+            <field name="invoice_account" ref="account_de_skr04.account_1401"/>
+            <field name="credit_note_account" ref="account_de_skr04.account_1401"/>
+        </record>
+        <record id="account_de_skr04.tax_rule_eu_no_id_purchase" model="account.tax.rule.template">
+            <field name="name">DEPR_Lieferant EU (ohne Ust-ID)</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="kind">purchase</field>
+        </record>
+        <record id="account_de_skr04.tax_rule_non_eu_purchase" model="account.tax.rule.template">
+            <field name="name">DEPR_Lieferant Ausland</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="kind">purchase</field>
+        </record>
+        <record id="account_de_skr04.tax_rule_eu_vat_id_sale" model="account.tax.rule.template">
+            <field name="name">DEPR_Kunde EU Unternehmen (mit USt-ID)</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="kind">sale</field>
+        </record>
+        <record id="account_de_skr04.tax_rule_non_eu_sale" model="account.tax.rule.template">
+            <field name="name">DEPR_Kunde Ausland</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="kind">sale</field>
+        </record>
+        <record id="account_de_skr04.tax_rule_eu_vat_id_purchase" model="account.tax.rule.template">
+            <field name="name">DEPR_Lieferant EU Unternehmen (mit USt-ID)</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="kind">purchase</field>
+        </record>
+        <record id="account_de_skr04.tax_rule_eu_no_id_sale" model="account.tax.rule.template">
+            <field name="name">DEPR_Kunde EU (ohne USt-ID)</field>
+            <field name="account" ref="account_de_skr04.root_de"/>
+            <field name="kind">sale</field>
+        </record>
+    </data>
+</tryton>
