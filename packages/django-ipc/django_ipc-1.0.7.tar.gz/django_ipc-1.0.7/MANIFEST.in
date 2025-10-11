@@ -1,0 +1,73 @@
+# django-ipc MANIFEST.in - Source Distribution Configuration
+
+# Include essential documentation
+include README.md
+include CHANGELOG.md
+include LICENSE
+include MANIFEST.in
+
+# Include requirements files
+include requirements*.txt
+
+# Include source code
+recursive-include src/django_ipc *.py
+recursive-include src/django_ipc *.json
+recursive-include src/django_ipc *.yaml
+recursive-include src/django_ipc *.yml
+recursive-include src/django_ipc *.jinja2
+recursive-include src/django_ipc *.j2
+
+# Include code generation templates
+recursive-include src/django_ipc/codegen/templates *
+
+# Exclude markdown files except listed above
+recursive-exclude * *.md
+include README.md
+include CHANGELOG.md
+
+# Exclude cache files
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *.so
+recursive-exclude * *.dylib
+
+# Exclude tests
+recursive-exclude tests *
+exclude pytest.ini
+exclude tox.ini
+exclude .coveragerc
+
+# Exclude development files
+exclude .editorconfig
+exclude .pre-commit-config.yaml
+exclude poetry.lock
+exclude .env*
+exclude *.log
+
+# Exclude version control
+recursive-exclude .git *
+recursive-exclude .github *
+exclude .gitignore
+exclude .gitattributes
+
+# Exclude build artifacts
+recursive-exclude dist *
+recursive-exclude build *
+recursive-exclude *.egg-info *
+
+# Exclude IDE files
+recursive-exclude .idea *
+recursive-exclude .vscode *
+recursive-exclude .DS_Store *
+
+# Exclude documentation source (keep only generated)
+recursive-exclude docs/source *
+recursive-exclude docs/_build *
+
+# Exclude examples (they're in docs/examples in final package)
+exclude examples/*
+
+# Exclude Node.js files
+exclude package*.json
+exclude yarn*.lock
+recursive-exclude node_modules *
