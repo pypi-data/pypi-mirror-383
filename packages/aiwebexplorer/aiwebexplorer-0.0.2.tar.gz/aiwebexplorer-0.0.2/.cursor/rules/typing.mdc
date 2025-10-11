@@ -1,0 +1,17 @@
+---
+alwaysApply: true
+glob: "**/*.py"
+---
+
+# Typing Rules
+
+- Always use modern typing syntax (e.g., `list` instead of `List`, `dict` instead of `Dict`)
+- Import types from the `typing` module when needed
+- Use type hints for all function parameters and return values
+- Use `Optional[T]` instead of `Union[T, None]`
+- Use `list[T]`, `dict[K, V]`, `set[T]` instead of `List[T]`, `Dict[K, V]`, `Set[T]`
+- Always include type annotations for class attributes
+- Use `Any` sparingly and document why it's necessary
+- Prefer `Protocol` over `ABC` for structural typing
+- Use `Literal` for string/enum-like values
+- Use `TypedDict` for dictionary structures with known keys

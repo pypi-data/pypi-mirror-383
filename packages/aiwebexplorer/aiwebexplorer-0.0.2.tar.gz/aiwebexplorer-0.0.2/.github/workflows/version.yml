@@ -1,0 +1,155 @@
+name: Version Management
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch full history for version checking
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+
+    - name: Check version consistency
+      run: |
+        # With setuptools_scm, version is dynamic and comes from git tags
+        # Check if we have proper git tags for versioning
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        echo "Latest git tag: $LATEST_TAG"
+        
+        if [[ -z "$LATEST_TAG" ]]; then
+          echo "⚠️  No git tags found. Consider creating an initial tag (e.g., v0.1.0)"
+        else
+          echo "✅ Found git tag: $LATEST_TAG"
+          # Check if tag follows semantic versioning
+          if [[ "$LATEST_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "✅ Tag follows semantic versioning format"
+          else
+            echo "⚠️  Tag does not follow semantic versioning format (expected: v1.2.3)"
+          fi
+        fi
+
+  create-release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    needs: check-version
+    permissions:
+      contents: write  # Required to push tags and create releases
+      id-token: write  # For PyPI trusted publishing
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Check commit message and extract version
+      id: version
+      run: |
+        # Check if commit message contains release trigger
+        if [[ "${{ github.event.head_commit.message }}" != *"chore: release"* ]]; then
+          echo "❌ Commit message does not contain 'chore: release'. Skipping release."
+          echo "skipped=true" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+        
+        # Extract version from commit message like "chore: release v1.2.3"
+        VERSION=$(echo "${{ github.event.head_commit.message }}" | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -1)
+        if [[ -z "$VERSION" ]]; then
+          echo "❌ No version found in commit message. Expected format: 'chore: release v1.2.3'"
+          exit 1
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "tag=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Create Git Tag
+      if: steps.version.outputs.skipped != 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag -a "${{ steps.version.outputs.tag }}" -m "Release ${{ steps.version.outputs.tag }}"
+        # Use token for authentication
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git push origin "${{ steps.version.outputs.tag }}"
+
+    - name: Install dependencies
+      if: steps.version.outputs.skipped != 'true'
+      run: uv sync --locked --all-extras --dev
+
+    - name: Run tests before publishing
+      if: steps.version.outputs.skipped != 'true'
+      run: make test
+      env:
+        ENV: CI
+
+    - name: Run linting
+      if: steps.version.outputs.skipped != 'true'
+      run: make lint-check
+
+    - name: Verify version matches tag
+      if: steps.version.outputs.skipped != 'true'
+      run: |
+        # Get the tag that was just created
+        TAG_NAME="${{ steps.version.outputs.tag }}"
+        echo "Tag: $TAG_NAME"
+        
+        # Check that setuptools_scm can derive the version from the tag
+        EXPECTED_VERSION=${TAG_NAME#v}  # Remove 'v' prefix
+        echo "Expected version: $EXPECTED_VERSION"
+        
+        # Verify setuptools_scm can find the tag
+        if git describe --tags --exact-match HEAD | grep -q "^$TAG_NAME$"; then
+          echo "✅ Tag $TAG_NAME is properly set on current commit"
+        else
+          echo "❌ Tag $TAG_NAME not found on current commit"
+          exit 1
+        fi
+
+    - name: Show package version
+      if: steps.version.outputs.skipped != 'true'
+      run: |
+        # Show what version setuptools_scm will use
+        uv run python -c "import aiwebexplorer; print(f'Package version: {aiwebexplorer.__version__}')"
+
+    - name: Build package
+      if: steps.version.outputs.skipped != 'true'
+      run: uv build
+
+    - name: Publish to PyPI
+      if: steps.version.outputs.skipped != 'true'
+      run: uv publish
+
+    - name: Create GitHub Release
+      if: steps.version.outputs.skipped != 'true'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.version.outputs.tag }}
+        release_name: Release ${{ steps.version.outputs.tag }}
+        body: |
+          ## Changes in this release
+          
+          See the [changelog](CHANGELOG.md) for detailed information about this release.
+        draft: false
+        prerelease: false
