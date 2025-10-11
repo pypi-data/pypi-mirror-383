@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fastapi-pulse"
+version = "0.2.0"
+authors = [
+  { name="Parham Davari", email="parham.davarii@gmail.com" },
+]
+description = "Check your FastAPI's pulse with one line of code. Instant health monitoring and dashboard."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Framework :: FastAPI",
+]
+dependencies = [
+    "fastapi",
+    "tdigest>=0.5.2",
+    "httpx>=0.23.0",  # Required for both testing and CLI
+]
+
+[project.urls]
+"Homepage" = "https://github.com/parhamdavari/fastapi-pulse"
+"Bug Tracker" = "https://github.com/parhamdavari/fastapi-pulse/issues"
+
+[project.scripts]
+pulse-cli = "fastapi_pulse.cli:main"
+
+[project.optional-dependencies]
+cli = [
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0.0",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",      # For measuring coverage
+    "pytest-asyncio>=0.18.0", # For handling async test functions
+    "httpx>=0.23.0",          # The modern async HTTP client for testing
+    "numpy>=1.20.0",          # For calculating trusted percentile values in tests
+]
+dev = [
+    "uvicorn",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.coverage.run]
+source = ["fastapi_pulse"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
