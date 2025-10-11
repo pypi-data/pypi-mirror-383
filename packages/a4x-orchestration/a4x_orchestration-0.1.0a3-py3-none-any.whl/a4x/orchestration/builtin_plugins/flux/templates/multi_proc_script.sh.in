@@ -1,0 +1,23 @@
+#!{{ shell }}
+
+{% if resources is not none %}
+flux run --ntasks {{ resources.num_procs }} \
+    {% if resources.num_cores is not none %}
+    --cores-per-task={{ resources.num_cores }} \
+    {% endif %}
+    {% if resources.num_gpus is not none %}
+    --gpus-per-task={{ resources.num_gpus }} \
+    {% endif %}
+    {% if resources.num_nodes is not none %}
+    --nodes={{ resources.num_nodes }} \
+    {% endif %}
+    {% if resources.exclusive is not none and resources.exclusive %}
+    --exclusive \
+    {% endif %}
+    {% if resources.input is not none %}
+    --input="{{ resources.input }}" \
+    {% endif %}
+    {{ command | join(" ") }}
+{%- else -%}
+{{ command | join(" ") }}
+{%- endif -%}
