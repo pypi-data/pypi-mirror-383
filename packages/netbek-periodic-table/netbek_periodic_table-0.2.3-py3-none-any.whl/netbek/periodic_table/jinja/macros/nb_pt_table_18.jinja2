@@ -1,0 +1,80 @@
+{%- from "./nb_pt_axis_cell.jinja2" import nb_pt_axis_cell %}
+{%- from "./nb_pt_element_cell.jinja2" import nb_pt_element_cell %}
+{%- from "./nb_pt_empty_cell.jinja2" import nb_pt_empty_cell %}
+{%- from "./nb_pt_blockholder_element_cell.jinja2" import nb_pt_blockholder_element_cell %}
+
+{%- macro nb_pt_table_18(elements, groups) %}
+<table class="nb-pt-table nb-pt-table--18">
+  <tr class="nb-pt-row">
+    {%- for i in range(0, 18) %}
+      {%- if i == 0 or i == 17 %}
+        {{ nb_pt_axis_cell(groups[i + 1] | safe) }}
+      {%- else %}
+        {{ nb_pt_empty_cell() }}
+      {%- endif %}
+    {%- endfor %}
+  </tr>
+  <tr class="nb-pt-row">
+    {%- for element in elements %}
+      {%- if element.atomic_number == 3 or element.atomic_number == 11 or element.atomic_number == 19 or element.atomic_number == 37 or element.atomic_number == 55 or element.atomic_number == 87 %}
+  </tr>
+  <tr class="nb-pt-row">
+      {%- endif %}
+
+      {%- if element.atomic_number == 2 %}
+        {%- for i in range(0, 16) %}
+          {%- if i == 0 or i >= 11 %}
+            {{ nb_pt_axis_cell(groups[1 + i + 1] | safe) }}
+          {%- else %}
+            {{ nb_pt_empty_cell() }}
+          {%- endif %}
+        {%- endfor %}
+      {%- elif element.atomic_number == 5 %}
+        {%- for i in range(0, 10) %}{{ nb_pt_empty_cell() }}{%- endfor %}
+      {%- elif element.atomic_number == 13 %}
+        {%- for i in range(0, 10) %}{{ nb_pt_axis_cell(groups[2 + i + 1] | safe) }}{%- endfor %}
+      {%- endif %}
+
+      {%- if element.atomic_number == 57 %}
+        {{ nb_pt_blockholder_element_cell(57, 71, "lanthanide") }}
+      {%- elif element.atomic_number == 89 %}
+        {{ nb_pt_blockholder_element_cell(89, 103, "actinide") }}
+      {%- endif %}
+
+      {%- if element.atomic_number >= 57 and element.atomic_number <= 71 %}
+        {{ nb_pt_element_cell(element, true, false, "" if element.show_at_default else "nb-pt-cell--hide-at-default") }}
+      {%- elif element.atomic_number >= 89 and element.atomic_number <= 103 %}
+        {{ nb_pt_element_cell(element, true, false, "" if element.show_at_default else "nb-pt-cell--hide-at-default") }}
+      {%- else %}
+        {{ nb_pt_element_cell(element, false, false, "" if element.show_at_default else "nb-pt-cell--hide-at-default") }}
+      {%- endif %}
+    {%- endfor %}
+  </tr>
+
+  <tr class="nb-pt-row">
+    {%- for i in range(0, 18) %}{{ nb_pt_empty_cell() }}{%- endfor %}
+  </tr>
+
+  <tr class="nb-pt-row">
+    {{ nb_pt_empty_cell() }}
+    {{ nb_pt_empty_cell() }}
+    {%- for element in elements %}
+      {%- if element.atomic_number >= 57 and element.atomic_number <= 71 %}
+        {{ nb_pt_element_cell(element, false, true, "" if element.show_at_default else "nb-pt-cell--hide-at-default") }}
+      {%- endif %}
+    {%- endfor %}
+    {{ nb_pt_empty_cell() }}
+  </tr>
+
+  <tr class="nb-pt-row">
+    {{ nb_pt_empty_cell() }}
+    {{ nb_pt_empty_cell() }}
+    {%- for element in elements %}
+      {%- if element.atomic_number >= 89 and element.atomic_number <= 103 %}
+        {{ nb_pt_element_cell(element, false, true, "" if element.show_at_default else "nb-pt-cell--hide-at-default") }}
+      {%- endif %}
+    {%- endfor %}
+    {{ nb_pt_empty_cell() }}
+  </tr>
+</table>
+{%- endmacro %}
