@@ -1,0 +1,129 @@
+name: basic test
+
+on:
+  push:
+    tags:
+      - ".*"
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+      - feat/3.0-release
+
+jobs:
+  simple-checks:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: pre-commit/action@v3.0.0
+
+  unit-tests:
+    runs-on: ubuntu-24.04
+    needs: simple-checks
+
+    env:
+      TOXENV: py3
+      TOXCFG: tox.ini
+
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/cache@v4
+        env:
+          cache-name: cache-${TOXENV}
+        with:
+          path: .tox
+          key: ${{ runner.os }}-tox-${{ env.cache-name }}-${{ hashFiles('pyproject.toml') }}-${{ matrix.python-version }}
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}-${{ matrix.python-version }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: run tests
+        run: |
+          uv sync --all-extras
+          uvx --python ${{ matrix.python-version }} tox -c ${TOXCFG} -e ${TOXENV}
+
+  integration-tests:
+    runs-on: ubuntu-24.04
+    needs: unit-tests
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # integration tests
+          - TOXENV: py3-generic
+            TOXCFG: tox-integration.ini
+          - TOXENV: py3-mqtt
+            TOXCFG: tox-integration.ini
+          - TOXENV: py3-hooks
+            TOXCFG: tox-integration.ini
+          - TOXENV: py3-advanced
+            TOXCFG: tox-integration.ini
+          - TOXENV: py3-grpc
+            TOXCFG: tox-integration.ini
+
+    services:
+      docker:
+        image: docker
+
+    env:
+      TOXENV: ${{ matrix.TOXENV }}
+      TOXCFG: ${{ matrix.TOXCFG }}
+
+    steps:
+      - uses: docker/setup-buildx-action@v3
+        continue-on-error: true
+
+      - uses: actions/checkout@v5
+
+      - uses: actions/cache@v4
+        env:
+          cache-name: cache-${{ matrix.TOXENV }}
+        with:
+          path: .tox
+          key: ${{ runner.os }}-tox-${{ env.cache-name }}-${{ hashFiles('pyproject.toml') }}
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install Protoc
+        if: ${{ contains(matrix.TOXENV, 'grpc') }}
+        uses: arduino/setup-protoc@v3
+        with:
+          version: "23.x"
+
+      - name: Run tests
+        run: |
+          uv sync --all-extras
+          uvx tox -c ${TOXCFG} -e ${TOXENV}
