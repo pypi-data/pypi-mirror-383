@@ -1,0 +1,147 @@
+Metadata-Version: 2.4
+Name: wordwrap
+Version: 0.2.0
+Summary: A simple library for wrapping text to a fixed column width.
+Author: pigmonchu
+License: MIT License
+        
+        Copyright (c) 2025 pigmonchu
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+Dynamic: requires-python
+
+
+
+# wordwrap
+
+Wordwrap is a Python library for wrapping text to a fixed column width, designed for easy import and use in your own projects.
+
+## Installation
+
+Install from source (local):
+
+```bash
+pip install .
+```
+
+## Usage as a library
+
+Import and use the main API:
+
+```python
+from wordwrap import WordWrap
+
+result = WordWrap.wrap_text("This is a long line of text.", 10)
+if result.is_success():
+   print(result.value)  # Wrapped text with lines <= 10 chars
+else:
+   print(f"Error: {result.error}")
+```
+
+## API
+
+
+# wordwrap
+
+Wordwrap is a Python library for wrapping text to a fixed column width, designed for easy import and robust error handling.
+
+## Installation
+
+Install from PyPI:
+
+```bash
+pip install wordwrap
+```
+
+Or from source (local):
+
+```bash
+pip install .
+```
+
+## Usage
+
+Import and use the main API:
+
+```python
+from wordwrap import WordWrap
+
+result = WordWrap.wrap_text("This is a long line of text.", 10)
+if result.is_success():
+    print(result.value)  # Wrapped text with lines <= 10 chars
+else:
+    print(f"Error: {result.error}")
+```
+
+## API Reference
+
+### WordWrap.wrap_text(text: str, column_width: int) -> Result
+
+- Returns a `Result` object:
+  - `.value`: Wrapped text (string)
+  - `.error`: Error message (string)
+- Input validation:
+  - `text` must be a string
+  - `column_width` must be a positive integer
+
+## Features
+- Wraps text to a specified column width, preserving words
+- Handles long words and whitespace correctly
+- Returns a Result object for error handling
+- Python 3.8+
+
+## Examples
+
+```python
+from wordwrap import WordWrap
+
+# Example 1: Short text
+result = WordWrap.wrap_text("word", 10)
+print(result.value)  # "word"
+
+# Example 2: Text exactly the column width
+result = WordWrap.wrap_text("word123456", 10)
+print(result.value)  # "word123456"
+
+# Example 3: Text that requires splitting
+result = WordWrap.wrap_text("a long line of text", 10)
+print(result.value)  # "a long \nline of \ntext"
+
+# Example 4: Long words
+result = WordWrap.wrap_text("word superlongword text", 9)
+print(result.value)  # "word \nsuperlong\nword text"
+
+# Example 5: Multiple spaces
+result = WordWrap.wrap_text("word    with   spaces", 10)
+print(result.value)  # "word    \nwith   \nspaces"
+```
+
+## License
+MIT
+
+---
+
+### Background
+
+This library is inspired by the Word Wrap kata by Robert C. Martin (Uncle Bob).
