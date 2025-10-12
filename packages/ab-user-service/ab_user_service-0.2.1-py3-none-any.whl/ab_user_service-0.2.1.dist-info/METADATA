@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: ab-user-service
+Version: 0.2.1
+Author-email: Matthew Coulter <53892067+mattcoulter7@users.noreply.github.com>
+License-File: LICENSE
+Requires-Python: <4,>=3.12
+Requires-Dist: ab-alembic-auto-migrate<1,>=0.2.0
+Requires-Dist: ab-database[postgres-async,postgres-sync]<1,>=0.2.2
+Requires-Dist: ab-logging>=0.1.2
+Requires-Dist: ab-user<1,>=0.1.7
+Requires-Dist: fastapi<0.116,>=0.115.14
+Requires-Dist: pydantic[email]<3,>=2.11.7
+Requires-Dist: uvicorn<0.36,>=0.35.0
+Description-Content-Type: text/markdown
+
+# Open Banking, Opened | User Service
+
+User Service for Open Banking, Opened API packages.
