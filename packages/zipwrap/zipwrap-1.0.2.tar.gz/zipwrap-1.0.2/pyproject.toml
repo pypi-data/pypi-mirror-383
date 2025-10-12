@@ -1,0 +1,24 @@
+[project]
+name = "zipwrap"
+version = "1.0.2"
+description = "A config-driven wrapper around the Linux `zip` tool"
+authors = [
+    {name = "DJ Stomp",email = "85457381+DJStompZone@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+license = { text = "MIT" }
+dependencies = [
+    "tqdm (>=4.67.1,<5.0.0)"
+]
+
+[tool.poetry.scripts]
+zipwrap = "zipwrap.cli:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+
