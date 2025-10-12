@@ -1,0 +1,61 @@
+# img-scale-to-webp
+
+A simple and efficient command-line tool to convert images in a folder to the WebP format, aiming for a specific target file size. It also backs up the original images.
+
+## Features
+
+* **Batch Conversion**: Convert all images in a folder at once.
+* **Target Size**: Aims to create WebP images around a specified file size in KB.
+* **Resize**: Optionally resize images to a maximum width.
+* **Recursive**: Process images in subfolders.
+* **Backup**: Automatically backs up original images to a separate folder.
+* **Supported Formats**: `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`, `.bmp`
+
+## Installation
+
+You can install `img-scale-to-webp` from PyPI:
+
+```bash
+pip install img-scale-to-webp
+```
+
+## Usage
+
+The basic command is straightforward:
+
+```bash
+img-scale-to-webp --folder /path/to/your/images
+```
+
+### Examples
+
+**1. Convert images in a folder to a target size of 500 KB:**
+
+```bash
+img-scale-to-webp --folder "My_Photos" --target-kb 500
+```
+
+**2. Convert images and resize them to a maximum width of 1200 pixels:**
+
+```bash
+img-scale-to-webp --folder "My_Photos" --max-width 1200
+```
+
+**3. Recursively convert all images in a folder and its subfolders:**
+
+```bash
+img-scale-to-webp --folder "My_Photos" --recursive
+```
+
+### Command-line Options
+
+| Argument      | Description                                                | Default |
+|---------------|------------------------------------------------------------|---------|
+| `--folder`    | **Required.** The folder containing the images.            |         |
+| `--target-kb` | The target size for each image in kilobytes.               | `1024`  |
+| `--max-width` | Optional maximum width to resize images. Set to 0 to disable. | `1920`  |
+| `--recursive` | Process images in subfolders.                              | `False` |
+
+## License
+
+This project is licensed under the MIT License.
