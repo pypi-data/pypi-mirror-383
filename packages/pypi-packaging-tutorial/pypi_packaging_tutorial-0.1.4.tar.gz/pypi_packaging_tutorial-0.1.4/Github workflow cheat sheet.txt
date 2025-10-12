@@ -1,0 +1,37 @@
+Github workflow cheat sheet
+
+1. Tests
+
+
+Add test dependencies
+uv add flake8 pytest coverage pycodestyle autopep8
+
+Use latest (2.3.1) for autopep8, otherwise it errors out because it needs outdated packages like  lib2to3 (remove then uv pip install autopep==2.3.1). Reason is probably that python version is set to include 3.8 which has the older autopep8 version.
+
+
+Exclude files from testing:
+package_root/.coveragerc
+[run]
+omit = *_version.py
+
+
+Add .github/workflow/tests.yml file with on push trigger
+
+
+
+2. Badge
+Readme.md:
+![GitHub Actions Workflow Status](https://github.com/k4144/pypi_packaging_turorial/actions/workflows/tests.yml/badge.svg)
+
+
+
+3. linting
+Use on folder src, tests
+For folder tests:
+uv run flake8 tests # shows format errors
+uv run autopep8 -i -a -a -r tests # fixes format errors
+
+if errors remain, fix manually or ignore by adding error number, e.g:
+project_root/setup.cfg
+[flake8]
+ignore=F401,F811

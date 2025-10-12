@@ -1,0 +1,64 @@
+name: Code Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -e ".[dev]"  # Install package in editable mode with dev dependencies
+          
+      - name: Run tests with coverage
+        run: |
+          pytest tests/
+      
+      - name: Generate coverage report
+        run: coverage report -m > coverage_report.txt
+      
+      - name: Update coverage gist
+        env:
+          GIST_ID: ${{ secrets.COVERAGE_GIST_ID }}
+          GITHUB_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: |
+          coverage_percentage=$(grep "TOTAL" coverage_report.txt | awk '{print $4}' | sed 's/%//')
+          if (( $(echo "$coverage_percentage >= 75" | bc -l) )); then
+          color="brightgreen"
+          elif (( $(echo "$coverage_percentage >= 50" | bc -l) )); then
+          color="orange"
+          elif (( $(echo "$coverage_percentage >= 25" | bc -l) )); then
+          color="purple"
+          else
+          color="red"
+          fi
+          coverage_message="${coverage_percentage}%"
+          curl -L \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/gists/$GIST_ID \
+            -d '{"files":{"coverage.json":{"content":"{\"label\":\"coverage\",\"message\":\"'$coverage_message'\",\"color\":\"'$color'\"}"}}}'
+          
+           
+           
+
+
+
+
+
+   
