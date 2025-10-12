@@ -1,0 +1,39 @@
+Metadata-Version: 2.4
+Name: rushclis
+Version: 0.1.1
+Summary: python cli tool
+Home-page: https://github.com/meatdumplings0019/rushcli
+Author: ndrzy
+Author-email: dandan0019@outlook.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires: colorama
+Requires: rushlib
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires
+Dynamic: requires-python
+Dynamic: summary
+
+﻿# RushCli
+
+Python cli class tools
+
+## Install
+
+``
+python.exe scripts/install.py
+``
+
+## Use
+
+继承RushCli类即可.
