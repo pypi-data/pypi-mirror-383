@@ -1,0 +1,115 @@
+Metadata-Version: 2.1
+Name: pm4mkb
+Version: 0.1.4
+Summary: Library that is intended to operate with various process mining tasks.
+Author: Maximov Pavel, MKB team
+Author-email: pm291097@list.ru
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: dataclassy==1.0.*
+Requires-Dist: joblib==1.4.*
+Requires-Dist: loguru==0.7.*
+Requires-Dist: StrEnum==0.4.*
+Requires-Dist: threadpoolctl==3.5
+Requires-Dist: typing-extensions==4.12.*
+Requires-Dist: eval-type-backport==0.2.*
+Requires-Dist: pydantic==2.9.*
+Requires-Dist: pydantic-numpy==5.0.2
+Requires-Dist: openpyxl==3.1.*
+Requires-Dist: numba==0.60.*
+Requires-Dist: numpy==1.26.*
+Requires-Dist: pandas==2.2.*
+Requires-Dist: pandas-downcast==1.2.*
+Requires-Dist: pandarallel==1.6.*
+Requires-Dist: pyarrow==17.*
+Requires-Dist: dateparser==1.2
+Requires-Dist: scipy==1.13.*
+Requires-Dist: XlsxWriter==3.2.*
+Requires-Dist: translatepy==2.3
+Requires-Dist: Faker==26.3.*
+Requires-Dist: tqdm==4.66.*
+Requires-Dist: nbformat==5.10.*
+Requires-Dist: ipywidgets==8.1.*
+Requires-Dist: matplotlib==3.9.*
+Requires-Dist: seaborn==0.13.*
+Requires-Dist: plotly==5.23.*
+Requires-Dist: pillow>=10.1
+Requires-Dist: grandalf==0.8
+Requires-Dist: networkx==3.2.*
+Requires-Dist: pydotplus==2.0.*
+Requires-Dist: graphviz==0.20.*
+Requires-Dist: mlxtend==0.23.*
+Requires-Dist: scikit-learn==1.5.*
+Requires-Dist: shap==0.46.*
+Requires-Dist: pymorphy3==2.0.*
+Requires-Dist: bpemb==0.3.*
+Requires-Dist: catboost==1.2.*
+Requires-Dist: statsmodels==0.14.*
+Requires-Dist: torch==2.2.*
+Requires-Dist: transformers==4.44.*
+
+![](https://github.com/pm291097/pm4mkb/blob/main/imgs/Logo.png?raw=true)
+
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pm4mkb)](https://pypi.org/project/pm4mkb)
+[![PyPI - Version](https://img.shields.io/pypi/v/pm4mkb)](https://pypi.org/project/pm4mkb)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pm4mkb)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+### [Documentation](https://process-mining-mkb.readthedocs.io/en/latest/)  |  [Installation](#installation) | [Quick start](#quick-start)
+# MKBProcessMining (PM4MKB) – Process Mining Python framework
+PM4MKB is an open-source Python library for conducting a comprehensive analysis of business processes with the use of process mining and machine learning techniques. By implementing this tool, objective and deep insights into the process on all levels can be revealed. These insights are then used to detect problems such as bottlenecks and deviations and identify potential opportunities for process improvement and optimization.
+
+Authors: Process Mining for MKB Team.
+
+# Installation
+
+To install PM4MKB framework on your machine from PyPI:
+```bash
+pip install pm4mkb
+```
+To install from sources:
+```bash
+git clone https://github.com/pm291097/pm4mkb.git
+
+cd MKB_Process_Mining
+pip install .
+```
+
+Additionally, you have to install graphviz executables and add the path to the executables to PATH variable:  
+https://graphviz.org/download/
+
+# Quick start
+
+There are some steps for quick start for your process log analysis:
+* Create a DataHolder object:
+```python
+from pm4mkb import SuccessInputs, DurationUnits
+
+path = "example_data.xlsx"
+data_holder = DataHolder(
+    data=path,
+    col_case="id",
+    col_stage="action",
+    col_start_time="start_time",
+    col_end_time="end_time",
+    col_user="user_id",
+    col_text="text",
+    success_inputs=SuccessInputs(entries={"Подписание документов ", "Принято"}),
+)
+
+data_holder.data.head()
+```
+* Apply AutoInsights:
+```python
+from pm4mkb.autoinsights import AutoInsights
+
+auto_insights = AutoInsights(data_holder, successful_stage="Принято")
+auto_insights.apply()
+```
+
+# License
+This project is released under the [MIT License](https://github.com/pm291097/pm4mkb/blob/main/LICENSE).
