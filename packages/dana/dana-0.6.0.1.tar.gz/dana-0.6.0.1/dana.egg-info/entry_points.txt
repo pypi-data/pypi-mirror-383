@@ -1,0 +1,6 @@
+[console_scripts]
+adana = adana.apps.dana.__main__:main
+adana-ls = adana.core.lang.lsp.server:main
+adana-repl = adana.apps.repl.__main__:main
+dana = dana.apps.cli.__main__:main
+dana-ls = dana.core.lang.lsp.server:main
