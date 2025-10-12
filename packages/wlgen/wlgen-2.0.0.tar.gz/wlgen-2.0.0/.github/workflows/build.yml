@@ -1,0 +1,28 @@
+name: build pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: external workflow
+    uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
+    permissions:
+      actions: write
+      contents: write
+      packages: write
+    with:
+      tool: "uv"
+      install: "sync --all-extras --group lint"
+      lint: "run ruff check"
+      test: "run python -m unittest discover"
+      build_branch: "build"
+      build_main: "build"
+      event_name: ${{ github.event_name }}
+      artifact_path: "dist"
+      publish_github_release: "true"
+    secrets:
+      UV_TOKEN: ${{ secrets.UV_TOKEN }}
