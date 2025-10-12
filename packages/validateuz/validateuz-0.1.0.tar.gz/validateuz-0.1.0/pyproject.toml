@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "validateuz"
+version = "0.1.0"
+authors = [
+  { name = "Bobojon", email = "pubgmbobojon@gmail.com" },
+]
+description = "The number one validating library in Uzbekistan"
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://instagram.com/bbbv_vv11"
+Issues = "https://github.com/bbbv-vv11/validateuz"
