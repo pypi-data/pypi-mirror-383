@@ -1,0 +1,650 @@
+# 🚀 LLM Evaluation Framework
+
+<div align="center">
+
+[![License](https://img.shields.io/github/license/isathish/LLMEvaluationFramework?style=for-the-badge&color=blue)](LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-212%20Passed-success?style=for-the-badge&logo=pytest)](https://github.com/isathish/LLMEvaluationFramework)
+[![Coverage](https://img.shields.io/badge/Coverage-89%25-success?style=for-the-badge&logo=codecov)](https://github.com/isathish/LLMEvaluationFramework)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)](https://python.org)
+[![Documentation](https://img.shields.io/badge/Docs-MkDocs-blue?style=for-the-badge&logo=gitbook)](https://isathish.github.io/LLMEvaluationFramework/)
+
+**🌟 Enterprise-Grade Python Framework for Large Language Model Evaluation & Testing 🌟**
+
+*Built with production-ready standards • Type-safe • Comprehensive testing • Full CLI support*
+
+[📚 **Documentation**](https://isathish.github.io/LLMEvaluationFramework/) • [� **Quick Start**](#-quick-start) • [💡 **Examples**](examples/) • [🐛 **Report Issues**](https://github.com/isathish/LLMEvaluationFramework/issues)
+
+</div>
+
+---
+
+## 🌟 What Makes This Special?
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎯 **Production Ready**
+- **212 comprehensive tests** with **89% coverage**
+- Complete type hints throughout codebase
+- Robust error handling with custom exceptions
+- Enterprise-grade logging and monitoring
+
+### ⚡ **High Performance**
+- Async inference engine for concurrent evaluations
+- Batch processing capabilities
+- Cost optimization and tracking
+- Memory-efficient data handling
+
+</td>
+<td width="50%">
+
+### �️ **Developer Friendly**
+- Intuitive CLI interface for all operations
+- Comprehensive documentation with examples
+- Modular architecture for easy extension
+- Multiple storage backends (JSON, SQLite)
+
+### 📊 **Rich Analytics**
+- Multiple scoring strategies (Accuracy, F1, Custom)
+- Detailed performance metrics
+- Cost analysis and optimization
+- Exportable evaluation reports
+
+</td>
+</tr>
+</table>
+
+---
+
+## � Quick Installation
+
+```bash
+# Install from PyPI (Recommended)
+pip install llm-evaluation-framework
+
+# Or install from source for latest features
+git clone https://github.com/isathish/LLMEvaluationFramework.git
+cd LLMEvaluationFramework
+pip install -e .
+```
+
+**Requirements**: Python 3.8+ • No external dependencies for core functionality
+
+---
+
+## ⚡ Quick Start
+
+### 🐍 Python API (Recommended)
+
+```python
+from llm_evaluation_framework import (
+    ModelRegistry, 
+    ModelInferenceEngine, 
+    TestDatasetGenerator
+)
+
+# 1️⃣ Setup the registry and register your model
+registry = ModelRegistry()
+registry.register_model("gpt-3.5-turbo", {
+    "provider": "openai",
+    "api_cost_input": 0.0015,
+    "api_cost_output": 0.002,
+    "capabilities": ["reasoning", "creativity", "coding"]
+})
+
+# 2️⃣ Generate test cases
+generator = TestDatasetGenerator()
+test_cases = generator.generate_test_cases(
+    use_case={"domain": "general", "required_capabilities": ["reasoning"]},
+    count=10
+)
+
+# 3️⃣ Run evaluation
+engine = ModelInferenceEngine(registry)
+results = engine.evaluate_model("gpt-3.5-turbo", test_cases)
+
+# 4️⃣ Analyze results
+print(f"✅ Accuracy: {results['aggregate_metrics']['accuracy']:.1%}")
+print(f"💰 Total Cost: ${results['aggregate_metrics']['total_cost']:.4f}")
+print(f"⏱️  Total Time: {results['aggregate_metrics']['total_time']:.2f}s")
+```
+
+### 🖥️ Command Line Interface
+
+```bash
+# Evaluate a model with specific capabilities
+llm-eval evaluate --model gpt-3.5-turbo --test-cases 10 --capability reasoning
+
+# Generate a custom test dataset
+llm-eval generate --capability coding --count 20 --output my_dataset.json
+
+# Score predictions against references
+llm-eval score --predictions "Hello world" "Good morning" \
+               --references "Hello world" "Good evening" \
+               --metric accuracy
+
+# List available capabilities and models
+llm-eval list
+```
+
+---
+
+## �️ Core Architecture
+
+<div align="center">
+
+```mermaid
+graph TB
+    CLI[🖥️ CLI Interface<br/>llm-eval] --> Engine[⚙️ Inference Engine<br/>ModelInferenceEngine]
+    
+    Engine --> Registry[🗄️ Model Registry<br/>ModelRegistry]
+    Engine --> Generator[🧪 Dataset Generator<br/>TestDatasetGenerator]
+    Engine --> Scoring[📊 Scoring Strategies<br/>AccuracyScoringStrategy]
+    
+    Registry --> Models[(🤖 Models<br/>gpt-3.5-turbo, gpt-4, etc.)]
+    
+    Engine --> Storage[💾 Persistence Layer]
+    Storage --> JSON[📄 JSON Store]
+    Storage --> SQLite[🗃️ SQLite Store]
+    
+    Engine --> Utils[🛠️ Utilities]
+    Utils --> Logger[📝 Advanced Logging]
+    Utils --> ErrorHandler[🛡️ Error Handling]
+    Utils --> AutoSuggest[💡 Auto Suggestions]
+```
+
+</div>
+
+### 🎯 Core Components
+
+| Component | Description | Key Features |
+|-----------|-------------|--------------|
+| **🔥 Inference Engine** | Execute and evaluate LLM inferences | Async processing, cost tracking, batch operations |
+| **🗄️ Model Registry** | Centralized model management | Multi-provider support, configuration management |
+| **🧪 Dataset Generator** | Create synthetic test cases | Capability-based generation, domain-specific tests |
+| **📊 Scoring Strategies** | Multiple evaluation metrics | Accuracy, F1-score, custom metrics |
+| **💾 Persistence Layer** | Dual storage backends | JSON files, SQLite database with querying |
+| **🛡️ Error Handling** | Robust error management | Custom exceptions, retry mechanisms |
+| **📝 Logging System** | Advanced logging capabilities | File rotation, structured logging |
+
+---
+
+## 🎯 Feature Highlights
+
+### 🚀 **What You Can Do**
+
+<table>
+<tr>
+<td width="33%">
+
+#### 🔬 **Research & Benchmarking**
+- Compare multiple LLM providers
+- Standardized evaluation metrics  
+- Reproducible experiments
+- Performance benchmarking
+
+</td>
+<td width="33%">
+
+#### 🏢 **Enterprise Integration**
+- CI/CD pipeline integration
+- Automated regression testing
+- Cost optimization analysis
+- Quality assurance workflows
+
+</td>
+<td width="33%">
+
+#### 💰 **Cost Management**
+- Real-time cost tracking
+- Provider cost comparison
+- Budget optimization
+- ROI analysis
+
+</td>
+</tr>
+</table>
+
+### 📊 **Supported Capabilities**
+
+```python
+# Available evaluation capabilities
+CAPABILITIES = [
+    "reasoning",      # Logical reasoning and problem-solving
+    "creativity",     # Creative writing and ideation
+    "factual",        # Factual accuracy and knowledge
+    "instruction",    # Instruction following
+    "coding"          # Code generation and debugging
+]
+```
+
+### 🎮 **Interactive Examples**
+
+<details>
+<summary>🔍 <strong>Click to see Advanced Usage Examples</strong></summary>
+
+#### 📈 **Batch Evaluation with Multiple Models**
+
+```python
+from llm_evaluation_framework import ModelRegistry, ModelInferenceEngine
+from llm_evaluation_framework.persistence import JSONStore
+
+# Setup multiple models
+registry = ModelRegistry()
+models = {
+    "gpt-3.5-turbo": {"provider": "openai", "cost_input": 0.0015},
+    "gpt-4": {"provider": "openai", "cost_input": 0.03},
+    "claude-3": {"provider": "anthropic", "cost_input": 0.015}
+}
+
+for name, config in models.items():
+    registry.register_model(name, config)
+
+# Run comparative evaluation
+engine = ModelInferenceEngine(registry)
+results = {}
+
+for model_name in models.keys():
+    print(f"🚀 Evaluating {model_name}...")
+    result = engine.evaluate_model(model_name, test_cases)
+    results[model_name] = result
+    
+    # Save results
+    store = JSONStore(f"results_{model_name}.json")
+    store.save_evaluation_result(result)
+
+# Compare results
+for model, result in results.items():
+    accuracy = result['aggregate_metrics']['accuracy']
+    cost = result['aggregate_metrics']['total_cost']
+    print(f"📊 {model}: {accuracy:.1%} accuracy, ${cost:.4f} cost")
+```
+
+#### 🎯 **Custom Scoring Strategy**
+
+```python
+from llm_evaluation_framework.evaluation.scoring_strategies import ScoringContext
+
+class CustomCosineSimilarityStrategy:
+    """Custom scoring using cosine similarity."""
+    
+    def calculate_score(self, predictions, references):
+        # Your custom scoring logic here
+        from sklearn.metrics.pairwise import cosine_similarity
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        
+        vectorizer = TfidfVectorizer()
+        vectors = vectorizer.fit_transform(predictions + references)
+        
+        pred_vectors = vectors[:len(predictions)]
+        ref_vectors = vectors[len(predictions):]
+        
+        similarities = cosine_similarity(pred_vectors, ref_vectors)
+        return similarities.diagonal().mean()
+
+# Use custom strategy
+custom_strategy = CustomCosineSimilarityStrategy()
+context = ScoringContext(custom_strategy)
+score = context.evaluate(predictions, references)
+print(f"🎯 Custom similarity score: {score:.3f}")
+```
+
+#### 🔄 **Async Evaluation Pipeline**
+
+```python
+import asyncio
+from llm_evaluation_framework.engines.async_inference_engine import AsyncInferenceEngine
+
+async def run_async_evaluation():
+    """Run multiple evaluations concurrently."""
+    
+    async_engine = AsyncInferenceEngine(registry)
+    
+    # Define multiple evaluation tasks
+    tasks = []
+    for capability in ["reasoning", "creativity", "coding"]:
+        task = async_engine.evaluate_async(
+            model_name="gpt-3.5-turbo",
+            test_cases=test_cases,
+            capability=capability
+        )
+        tasks.append(task)
+    
+    # Run all evaluations concurrently
+    results = await asyncio.gather(*tasks)
+    
+    # Process results
+    for i, result in enumerate(results):
+        capability = ["reasoning", "creativity", "coding"][i]
+        accuracy = result['aggregate_metrics']['accuracy']
+        print(f"✅ {capability}: {accuracy:.1%}")
+
+# Run async evaluation
+asyncio.run(run_async_evaluation())
+```
+
+</details>
+
+---
+
+## 📚 Documentation & Resources
+
+<div align="center">
+
+### 📖 **Comprehensive Documentation Available**
+
+[![Documentation](https://img.shields.io/badge/Read%20the%20Docs-blue?style=for-the-badge&logo=gitbook)](https://isathish.github.io/LLMEvaluationFramework/)
+
+</div>
+
+| Section | Description | Link |
+|---------|-------------|------|
+| 🚀 **Getting Started** | Installation, quick start, and basic concepts | [View Guide](https://isathish.github.io/LLMEvaluationFramework/categories/getting-started/) |
+| 🧠 **Core Concepts** | Understanding the framework architecture | [Learn More](https://isathish.github.io/LLMEvaluationFramework/categories/core-concepts/) |
+| 🖥️ **CLI Usage** | Complete command-line interface documentation | [CLI Guide](https://isathish.github.io/LLMEvaluationFramework/categories/cli-usage/) |
+| 📊 **API Reference** | Detailed API documentation with examples | [API Docs](https://isathish.github.io/LLMEvaluationFramework/categories/api-reference/) |
+| 💡 **Examples** | Practical examples and tutorials | [View Examples](https://isathish.github.io/LLMEvaluationFramework/categories/examples/) |
+| 🛠️ **Developer Guide** | Contributing guidelines and development setup | [Dev Guide](https://isathish.github.io/LLMEvaluationFramework/developer-guide/) |
+
+---
+
+## 🧪 Testing & Quality
+
+<div align="center">
+
+### 🏆 **High-Quality Codebase with Comprehensive Testing**
+
+</div>
+
+<table>
+<tr>
+<td width="25%" align="center">
+
+**📈 Test Coverage**
+<br>
+<strong style="font-size: 2em; color: #28a745;">89%</strong>
+<br>
+<em>Comprehensive test coverage</em>
+
+</td>
+<td width="25%" align="center">
+
+**✅ Total Tests**
+<br>
+<strong style="font-size: 2em; color: #007bff;">212</strong>
+<br>
+<em>All tests passing</em>
+
+</td>
+<td width="25%" align="center">
+
+**🔧 Test Files**
+<br>
+<strong style="font-size: 2em; color: #6f42c1;">10+</strong>
+<br>
+<em>Modular test structure</em>
+
+</td>
+<td width="25%" align="center">
+
+**⚡ Test Types**
+<br>
+<strong style="font-size: 2em; color: #fd7e14;">4+</strong>
+<br>
+<em>Unit, Integration, Edge Cases</em>
+
+</td>
+</tr>
+</table>
+
+### 🚀 **Run Tests Locally**
+
+```bash
+# Run all tests
+pytest
+
+# Run with detailed coverage report
+pytest --cov=llm_evaluation_framework --cov-report=html
+
+# Run specific test categories
+pytest tests/test_model_inference_engine_comprehensive.py  # Core engine tests
+pytest tests/test_cli_comprehensive.py                     # CLI tests
+pytest tests/test_persistence_comprehensive.py            # Storage tests
+
+# View coverage report
+open htmlcov/index.html
+```
+
+### 📊 **Test Categories**
+
+| Test Type | Count | Description |
+|-----------|-------|-------------|
+| **🔧 Unit Tests** | 150+ | Individual component testing |
+| **🔗 Integration Tests** | 40+ | Component interaction testing |
+| **🎯 Edge Case Tests** | 20+ | Error conditions and boundaries |
+| **⚡ Performance Tests** | 10+ | Speed and memory optimization |
+
+---
+
+## 🤝 Contributing
+
+<div align="center">
+
+### 🌟 **We Welcome Contributors!**
+
+[![Contributors](https://img.shields.io/github/contributors/isathish/LLMEvaluationFramework?style=for-the-badge)](https://github.com/isathish/LLMEvaluationFramework/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/isathish/LLMEvaluationFramework?style=for-the-badge)](https://github.com/isathish/LLMEvaluationFramework/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/isathish/LLMEvaluationFramework?style=for-the-badge)](https://github.com/isathish/LLMEvaluationFramework/pulls)
+
+</div>
+
+### 🛠️ **Development Setup**
+
+```bash
+# 1️⃣ Fork and clone the repository
+git clone https://github.com/YOUR_USERNAME/LLMEvaluationFramework.git
+cd LLMEvaluationFramework
+
+# 2️⃣ Create a virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# 3️⃣ Install in development mode
+pip install -e ".[dev]"
+
+# 4️⃣ Run tests to ensure everything works
+pytest
+
+# 5️⃣ Install pre-commit hooks (optional but recommended)
+pre-commit install
+```
+
+### 📝 **Contribution Guidelines**
+
+1. **🍴 Fork** the repository
+2. **🌿 Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **✅ Write** tests for your changes
+4. **🧪 Run** the test suite (`pytest`)
+5. **📝 Commit** your changes (`git commit -m 'Add amazing feature'`)
+6. **🚀 Push** to the branch (`git push origin feature/amazing-feature`)
+7. **🔀 Open** a Pull Request
+
+### 🎯 **What We're Looking For**
+
+- 🐛 Bug fixes and improvements
+- 📚 Documentation enhancements
+- ✨ New features and capabilities
+- 🧪 Additional test cases
+- 🎨 UI/UX improvements for CLI
+- 🔧 Performance optimizations
+
+---
+
+## 📋 Requirements & Compatibility
+
+### 🐍 **Python Version Support**
+
+| Python Version | Status | Notes |
+|----------------|--------|-------|
+| **Python 3.8** | ✅ Supported | Minimum required version |
+| **Python 3.9** | ✅ Supported | Fully tested |
+| **Python 3.10** | ✅ Supported | Recommended |
+| **Python 3.11** | ✅ Supported | Latest features |
+| **Python 3.12+** | ✅ Supported | Future-ready |
+
+### 📦 **Dependencies**
+
+```python
+# Core dependencies (automatically installed)
+REQUIRED = [
+    # No external dependencies for core functionality!
+    # Framework uses only Python standard library
+]
+
+# Optional development dependencies
+DEVELOPMENT = [
+    "pytest>=7.0.0",           # Testing framework
+    "pytest-cov>=4.0.0",      # Coverage reporting
+    "black>=22.0.0",           # Code formatting
+    "flake8>=5.0.0",           # Code linting
+    "mypy>=1.0.0",             # Type checking
+    "pre-commit>=2.20.0",      # Git hooks
+]
+```
+
+### 🌐 **Platform Support**
+
+- ✅ **Linux** (Ubuntu, CentOS, RHEL)
+- ✅ **macOS** (Intel & Apple Silicon)
+- ✅ **Windows** (10, 11)
+- ✅ **Docker** containers
+- ✅ **CI/CD** environments (GitHub Actions, Jenkins, etc.)
+
+---
+
+## 📄 License
+
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+**This project is licensed under the MIT License**
+
+*You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software.*
+
+[📜 **Read the full license**](LICENSE)
+
+</div>
+
+---
+
+## 🙏 Acknowledgments & Credits
+
+<div align="center">
+
+### 🌟 **Built with Love and Open Source**
+
+</div>
+
+- **🚀 Inspiration**: Born from the need for standardized, reliable LLM evaluation tools
+- **🏗️ Architecture**: Built with modern Python best practices and enterprise standards
+- **🧪 Testing**: Comprehensive test coverage ensuring production reliability  
+- **👥 Community**: Driven by developers, researchers, and AI practitioners
+- **📚 Documentation**: Extensive documentation for developers at all levels
+
+### 🔧 **Technology Stack**
+
+| Technology | Purpose | Why We Chose It |
+|------------|---------|----------------|
+| **🐍 Python 3.8+** | Core Language | Wide adoption, excellent ecosystem |
+| **📋 Type Hints** | Code Safety | Better IDE support, fewer runtime errors |
+| **🧪 Pytest** | Testing Framework | Industry standard, excellent plugin ecosystem |
+| **📊 SQLite** | Database Storage | Lightweight, serverless, reliable |
+| **📝 MkDocs** | Documentation | Beautiful docs, Markdown-based |
+| **🎨 Rich CLI** | User Interface | Modern, intuitive command-line experience |
+
+---
+
+## 📞 Support & Community
+
+<div align="center">
+
+### 💬 **Get Help & Connect**
+
+[![GitHub Issues](https://img.shields.io/badge/Issues-Get%20Help-red?style=for-the-badge&logo=github)](https://github.com/isathish/LLMEvaluationFramework/issues)
+[![GitHub Discussions](https://img.shields.io/badge/Discussions-Join%20Community-blue?style=for-the-badge&logo=github)](https://github.com/isathish/LLMEvaluationFramework/discussions)
+[![Documentation](https://img.shields.io/badge/Docs-Read%20Here-green?style=for-the-badge&logo=gitbook)](https://isathish.github.io/LLMEvaluationFramework/)
+
+</div>
+
+### 🆘 **Getting Support**
+
+| Type | Where to Go | Response Time |
+|------|-------------|---------------|
+| **🐛 Bug Reports** | [GitHub Issues](https://github.com/isathish/LLMEvaluationFramework/issues) | 24-48 hours |
+| **❓ Questions** | [GitHub Discussions](https://github.com/isathish/LLMEvaluationFramework/discussions) | Community-driven |
+| **📚 Documentation** | [Online Docs](https://isathish.github.io/LLMEvaluationFramework/) | Always available |
+| **💡 Feature Requests** | [GitHub Issues](https://github.com/isathish/LLMEvaluationFramework/issues) | Weekly review |
+
+### 📈 **Project Statistics**
+
+<div align="center">
+
+![GitHub stars](https://img.shields.io/github/stars/isathish/LLMEvaluationFramework?style=social)
+![GitHub forks](https://img.shields.io/github/forks/isathish/LLMEvaluationFramework?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/isathish/LLMEvaluationFramework?style=social)
+
+</div>
+
+---
+
+## 🔗 Important Links
+
+<div align="center">
+
+### 🌐 **Quick Access**
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| **📦 PyPI Package** | [pypi.org/project/llm-evaluation-framework](https://pypi.org/project/llm-evaluation-framework/) | Install via pip |
+| **📚 Documentation** | [isathish.github.io/LLMEvaluationFramework](https://isathish.github.io/LLMEvaluationFramework/) | Complete documentation |
+| **💻 Source Code** | [github.com/isathish/LLMEvaluationFramework](https://github.com/isathish/LLMEvaluationFramework) | View source & contribute |
+| **🐛 Issue Tracker** | [github.com/.../issues](https://github.com/isathish/LLMEvaluationFramework/issues) | Report bugs & request features |
+| **💬 Discussions** | [github.com/.../discussions](https://github.com/isathish/LLMEvaluationFramework/discussions) | Community discussion |
+
+</div>
+
+---
+
+<div align="center">
+
+## 🎉 **Thank You for Using LLM Evaluation Framework!**
+
+<br>
+
+**Made with ❤️ by [Sathish Kumar N](https://github.com/isathish)**
+
+*If you find this project useful, please consider giving it a ⭐️*
+
+<br>
+
+[![Star this repo](https://img.shields.io/github/stars/isathish/LLMEvaluationFramework?style=social)](https://github.com/isathish/LLMEvaluationFramework/stargazers)
+
+<br>
+
+---
+
+### 🚀 **Ready to Get Started?**
+
+```bash
+pip install llm-evaluation-framework
+```
+
+**[📚 Read the Documentation](https://isathish.github.io/LLMEvaluationFramework/) • [🚀 View Examples](examples/) • [💬 Join Discussions](https://github.com/isathish/LLMEvaluationFramework/discussions)**
+
+---
+
+*Built for developers, researchers, and AI practitioners who demand reliable, production-ready LLM evaluation tools.*
+
+</div>
