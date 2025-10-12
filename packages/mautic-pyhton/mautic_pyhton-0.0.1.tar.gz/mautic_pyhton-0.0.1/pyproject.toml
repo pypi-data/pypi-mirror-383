@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools","wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mautic-pyhton"
+version = "0.0.1"
+description = "A mautic api library for pyhton"
+authors = [
+       { name = "Isakiye Afasha", email="afashaisakiye@gmail.com" }
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.6"
+dependencies = [
+    "requests",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/iamafasha/mautic-pyhton"
