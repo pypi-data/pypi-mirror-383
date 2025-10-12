@@ -1,0 +1,127 @@
+name: Test
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --all-files --hook-stage=manual
+      - name: Help message if pre-commit fail
+        if: ${{ failure() }}
+        run: |
+          echo "You can install pre-commit hooks to automatically run formatting"
+          echo "on each commit with:"
+          echo "    pre-commit install"
+          echo "or you can run by hand on staged files with"
+          echo "    pre-commit run"
+          echo "or after-the-fact on already committed files with"
+          echo "    pre-commit run --all-files --hook-stage=manual"
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version:
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+          - '3.13'
+          - '3.14'
+          - 'pypy3.9'
+          - 'pypy3.10'
+          - 'pypy3.11'
+        exclude:
+          - os: windows-latest
+            python-version: 'pypy3.9'
+          - os: windows-latest
+            python-version: 'pypy3.10'
+          - os: windows-latest
+            python-version: 'pypy3.11'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install anycorn
+        run: python -m pip install -e ".[test]"
+
+      - name: Check types
+        if: ${{ (matrix.python-version == '3.13') && (matrix.os == 'ubuntu-latest') }}
+        run: mypy src/anycorn/ tests/
+
+      - name: Run tests
+        run: pytest
+
+
+  h2spec:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: update pip
+        run: |
+          python -m pip install -U wheel
+          python -m pip install -U setuptools
+          python -m pip install -U pip
+      - run: python -m pip install trio .
+
+      - name: Run server
+        working-directory: compliance/h2spec
+        run: nohup anycorn --keyfile key.pem --certfile cert.pem http_server:app &
+
+      - name: Download h2spec
+        run: |
+          wget https://github.com/summerwind/h2spec/releases/download/v2.6.0/h2spec_linux_amd64.tar.gz
+          tar -xvf h2spec_linux_amd64.tar.gz
+
+      - name: Run h2spec
+        run: ./h2spec -tk -h 127.0.0.1 -p 8000 -o 10
+
+  autobahn:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: update pip
+        run: |
+          python -m pip install -U wheel
+          python -m pip install -U setuptools
+          python -m pip install -U pip
+      - run: python -m pip install trio .
+      - name: Run server
+        working-directory: compliance/autobahn
+        run: nohup anycorn ws_server:app &
+
+      - name: Run Unit Tests
+        working-directory: compliance/autobahn
+        run: docker run --rm --network=host -v "${PWD}/:/config" -v "${PWD}/reports:/reports" --name fuzzingclient crossbario/autobahn-testsuite wstest -m fuzzingclient -s /config/fuzzingclient.json && python3 summarise.py
