@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "patchllm"
+
+version = "1.0.0" 
+
+description = "An interactive agent for codebase modification using LLMs" 
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+  {name="nassimberrada"},
+]
+
+dependencies = [
+    "litellm",
+    "python-dotenv",
+    "rich",
+    "prompt_toolkit",
+ 
+    "InquirerPy"
+]
+
+[project.scripts]
+
+patchllm = "patchllm.cli.entrypoint:main"
+
+[project.optional-dependencies]
+voice = [
+    "SpeechRecognition",
+    "pyttsx3"
+]
+url = [
+    "html2text"
+]
+
+all = [
+    "SpeechRecognition",
+    "pyttsx3",
+    "html2text"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
