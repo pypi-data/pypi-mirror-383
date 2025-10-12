@@ -1,0 +1,77 @@
+[tool.poetry]
+name = "llmgraph"
+version = "1.4.1" # NOTE: sync with consts.py
+description = "Create knowledge graphs with LLMs"
+authors = ["Dylan Hogg <dylanhogg@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/dylanhogg/llmgraph"
+keywords = ["Knowledge graph", "LLM"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+]
+include = ["prompts.yaml"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+httpx = "^0.25.0"
+networkx = "^3.5"
+beautifulsoup4 = "^4.14.2"
+pyvis = "^0.3.2"
+joblib = "^1.5.2"
+tenacity = "^9.1.2"
+omegaconf = "^2.3.0"
+matplotlib = "^3.10.7"
+python-dotenv = "^1.1.1"
+click = "^8.3.0"
+typer = "^0.19.2"
+rich = "^14.2.0"
+tqdm = "^4.67.1"
+loguru = "^0.7.2"
+litellm = "^1.77.7"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+black = "^25.9.0"
+ruff = "^0.3.4"
+coverage = "^7.10.7"
+pre-commit = "^4.3.0"
+pip-audit = "^2.9.0"
+
+[tool.poetry.scripts]
+llmgraph = 'llmgraph.console:typer_app'
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+
+[tool.ruff]
+# https://docs.astral.sh/ruff/rules/
+lint.select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "C90", # mccabe complexity
+]
+lint.ignore = [
+    "E501", # line too long, handled by black
+    "D203", # 1 blank line required before class docstring
+]
+lint.fixable = ["ALL"]
+lint.unfixable = []
+line-length = 120
+extend-exclude = [".joblib_cache"]
+target-version = "py38"
