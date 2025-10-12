@@ -1,0 +1,65 @@
+# audio-pitch-separation
+
+**Extract and separate audio signals by pitch from `.mp3` or `.wav` files.**
+Harmonic, percussive, and note-wise components are visualized and saved as `.wav` files automatically.
+
+![track visualization](./example/figure.png)
+
+## Features
+
+-   Supports both `mp3` and `wav` audio input
+-   Separates harmonic & percussive components using HPSS
+-   Extracts note-wise waveforms via Constant-Q Transform (CQT)
+-   Visualizes all audio tracks as waveform plots
+-   Saves each pitch as an individual `.wav` file
+-   Easy GUI file picker (via PyQt5)
+
+## Installation
+
+```bash
+pip install audipart
+```
+
+## Usage
+
+```
+python -m audipart
+```
+
+1. A GUI window will prompt you to select an .mp3 or .wav audio file.
+2. From the selected audio, the following will be generated:
+    - harmonic.wav and percussive.wav using HPSS
+    - .wav files for each pitch from C2 to C8
+    - A waveform plot saved as figure.png
+3. All output files will be saved in a new folder named after the input file (excluding the extension).
+
+
+> you can also import audipart like this [demo](example/demo.ipynb).
+
+## Example
+
+For example, if you select song.mp3, the following directory will be created:
+
+```
+song/
+├── harmonic.wav
+├── percussive.wav
+├── C2.wav
+├── C#2.wav
+├── ...
+├── C8.wav
+└── figure.png
+```
+
+## TODO
+
+-   Extract note-wise MIDI representation
+
+## License
+
+MIT License.
+
+## Acknowledgements
+
+-   [librosa](https://librosa.org/)
+-   [HPS](https://www.audiolabs-erlangen.de/resources/MIR/FMP/C8/C8S1_HPS.html)
