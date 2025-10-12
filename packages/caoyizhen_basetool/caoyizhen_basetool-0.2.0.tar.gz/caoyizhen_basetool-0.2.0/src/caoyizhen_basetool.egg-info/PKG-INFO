@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: caoyizhen_basetool
+Version: 0.2.0
+Summary: Add your description here
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: tqdm>=4.67.1
+Provides-Extra: pandas
+Requires-Dist: openpyxl>=3.1.5; extra == "pandas"
+Requires-Dist: pandas>=2.3.3; extra == "pandas"
+Requires-Dist: tqdm>=4.67.1; extra == "pandas"
+Provides-Extra: loguru
+Requires-Dist: loguru>=0.7.3; extra == "loguru"
+
+# Introduction
+
+工作中经常用到的工具
