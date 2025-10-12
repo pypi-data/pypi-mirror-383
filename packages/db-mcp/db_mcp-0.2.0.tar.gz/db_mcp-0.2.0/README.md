@@ -1,0 +1,637 @@
+# DB-MCP: Universal Database MCP Server
+
+**Connect AI agents to any SQL database** using the Model Context Protocol (MCP).
+
+DB-MCP is a Python-based MCP server that lets AI agents query, analyze, and interact with your databases through natural language. Supports PostgreSQL, MySQL, SQL Server, and SQLite.
+
+---
+
+## Installation
+
+### Quick Start (Recommended)
+
+```bash
+# Install from PyPI
+pip install db-mcp
+
+# Generate example configuration
+db-mcp --init
+
+# Edit config.json with your database details
+# Then run the server
+db-mcp --config config.json
+```
+
+That's it! Now configure your AI agent to connect to the server (see below).
+
+---
+
+## System Architecture
+
+```mermaid
+graph LR
+    A[AI Agent] -->|MCP Protocol| B[DB-MCP Server]
+    B -->|SQLAlchemy| C[PostgreSQL]
+    B -->|SQLAlchemy| D[MySQL]
+    B -->|SQLAlchemy| E[SQLite]
+    B -->|SQLAlchemy| F[SQL Server]
+  
+    G[config.json] -.->|Configuration| B
+    H[.env] -.->|Credentials| B
+  
+    style A fill:#4CAF50
+    style B fill:#2196F3
+    style C fill:#336791
+    style D fill:#4479A1
+    style E fill:#003B57
+    style F fill:#CC2927
+```
+
+**Components:**
+
+* **AI Agent** : Any MCP-compatible AI client (Claude Desktop, Cursor, etc.)
+* **DB-MCP Server** : Universal database adapter with security controls
+* **SQLAlchemy** : Database abstraction layer for multiple database types
+* **Configuration** : JSON config + environment variables for credentials
+---
+
+## Query Flow Diagram
+
+```mermaid
+sequenceDiagram
+    participant Agent as AI Agent
+    participant MCP as DB-MCP Server
+    participant Pool as Connection Pool
+    participant DB as Database
+  
+    Agent->>MCP: Natural Language Query
+    Note over MCP: Parse request & validate
+  
+    MCP->>MCP: Security Check<br/>(read-only mode?)
+  
+    MCP->>Pool: Request connection
+    Pool->>DB: Execute SQL
+    DB->>Pool: Return results
+    Pool->>MCP: Results (max 100 rows)
+  
+    MCP->>MCP: Format results as JSON
+    MCP->>Agent: Structured response
+  
+    Note over Agent: Agent processes and<br/>presents to user
+```
+
+**Flow Steps:**
+
+1. Agent sends natural language query via MCP protocol
+2. DB-MCP validates and converts to SQL
+3. Security checks applied (read-only enforcement)
+4. Connection pooling manages database access
+5. Results returned and formatted
+6. Agent presents results to user
+---
+
+## Features
+
+* **Universal Connectivity** : One server for PostgreSQL, MySQL, SQL Server, and SQLite
+* **Secure by Default** : Read-only mode, query validation, connection pooling
+* **Easy Setup** : Simple JSON configuration, works with any MCP-compatible agent
+* **5 Powerful Tools** : Query execution, schema inspection, explain plans, and more
+* **PyPI Ready** : Installable via pip for easy distribution
+
+---
+
+## Complete Setup Guide
+
+### Step 1: Install DB-MCP
+
+```bash
+pip install db-mcp
+```
+
+### Step 2: Install Database Drivers
+
+Install the drivers you need for your database(s):
+
+```bash
+# For PostgreSQL
+pip install psycopg2-binary
+
+# For MySQL
+pip install mysql-connector-python
+
+# For SQL Server (Windows only)
+pip install pyodbc
+```
+
+**Note:** SQLite support is built-in, no additional driver needed.
+
+### Step 3: Create Configuration
+
+Generate an example config file:
+
+```bash
+db-mcp --init
+```
+
+This creates a `config.json` file with examples for all database types. Edit it with your actual database details:
+
+```json
+{
+  "databases": {
+    "my_database": {
+      "type": "postgresql",
+      "host": "localhost",
+      "port": 5432,
+      "database": "mydb",
+      "username": "user",
+      "password": "password",
+      "read_only": true
+    }
+  }
+}
+```
+
+**Supported database types:** `postgresql`, `mysql`, `sqlite`, `mssql`
+
+**Important:** Remove database entries you don't need from config.json
+
+### Step 4: Test the Server
+
+Run the server to make sure it connects:
+
+```bash
+db-mcp --config config.json
+```
+
+You should see:
+
+```
+==================================================
+DB-MCP Server Starting...
+==================================================
+Loaded 1 database(s): my_database
+Connected to database 'my_database' (postgresql)
+Server ready and listening for connections
+==================================================
+```
+
+Press `Ctrl+C` to stop the test.
+
+### Step 5: Connect Your AI Agent
+
+#### For Claude Desktop
+
+Edit your Claude Desktop config file:
+
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+**Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+Add this configuration:
+
+**Windows:**
+
+```json
+{
+  "mcpServers": {
+    "database": {
+      "command": "db-mcp",
+      "args": [
+        "--config",
+        "C:\\path\\to\\your\\config.json"
+      ]
+    }
+  }
+}
+```
+
+**Mac/Linux:**
+
+```json
+{
+  "mcpServers": {
+    "database": {
+      "command": "db-mcp",
+      "args": [
+        "--config",
+        "/path/to/your/config.json"
+      ]
+    }
+  }
+}
+```
+
+**Important:** Use absolute paths for config.json location.
+
+#### For Other MCP-Compatible Agents
+
+Configure according to your agent's MCP server setup instructions. The server communicates via standard MCP protocol over stdio.
+
+### Step 6: Restart Your AI Agent
+
+Completely restart your AI agent to load the MCP server.
+
+---
+
+## Usage Examples
+
+Once connected, you can ask your agent questions like:
+
+* "What tables are in my database?"
+* "Show me the schema for the users table"
+* "How many active users do I have?"
+* "What are the top 10 products by sales?"
+* "Explain the query plan for selecting recent orders"
+* "Give me a sample of data from the customers table"
+
+Your agent will automatically use the appropriate tools to query your database.
+
+---
+
+## Configuration Reference
+
+### Database Configuration Options
+
+```json
+{
+  "databases": {
+    "database_name": {
+      "type": "postgresql",        // Required: postgresql, mysql, sqlite, mssql
+      "host": "localhost",         // Required for all except SQLite
+      "port": 5432,               // Optional: default port for each DB type
+      "database": "dbname",       // Required: database name
+      "username": "user",         // Required for most databases
+      "password": "pass",         // Required for most databases
+      "read_only": true,          // Optional: default true (recommended)
+      "pool_size": 5,             // Optional: connection pool size (default 5)
+      "max_overflow": 2,          // Optional: max extra connections (default 2)
+      "pool_timeout": 30          // Optional: connection timeout (default 30s)
+    }
+  }
+}
+```
+
+### SQLite Configuration
+
+```json
+{
+  "databases": {
+    "my_sqlite": {
+      "type": "sqlite",
+      "path": "./database.db",    // Path to SQLite file
+      "read_only": false          // SQLite can be read-write
+    }
+  }
+}
+```
+
+### Using Environment Variables
+
+You can reference environment variables in your config (recommended for passwords):
+
+```json
+{
+  "databases": {
+    "prod": {
+      "type": "postgresql",
+      "host": "localhost",
+      "username": "$DB_USER",      // Will read from environment
+      "password": "$DB_PASSWORD"   // Will read from environment
+    }
+  }
+}
+```
+
+Create a `.env` file:
+
+```
+DB_USER=myuser
+DB_PASSWORD=mysecurepassword
+```
+
+---
+
+## Available Tools
+
+Your AI agent has access to these 5 tools:
+
+### 1. `list_databases`
+
+Lists all configured databases.
+
+### 2. `get_schema`
+
+Get database schema information.
+
+* Without table name: Lists all tables and columns
+* With table name: Detailed schema for specific table
+
+### 3. `execute_query`
+
+Execute SQL queries (SELECT only in read-only mode).
+
+* Automatically limits results to 100 rows
+* Returns data in JSON format
+
+### 4. `explain_query`
+
+Get query execution plan without running the query.
+
+* Useful for query optimization
+* Shows how database will execute the query
+
+### 5. `get_table_sample`
+
+Quick preview of table data.
+
+* Returns first 10 rows by default
+* Fast way to inspect table contents
+
+---
+
+## Security Best Practices
+
+1. **Always use `read_only: true` for production databases**
+2. **Create dedicated read-only database users**
+3. **Never commit passwords to version control**
+4. **Use environment variables for sensitive credentials**
+5. **Limit connection pool size to prevent overwhelming database**
+6. **Review agent queries before allowing write access**
+
+### Creating Read-Only Database Users
+
+**PostgreSQL:**
+
+```sql
+CREATE USER readonly_user WITH PASSWORD 'password';
+GRANT CONNECT ON DATABASE mydb TO readonly_user;
+GRANT USAGE ON SCHEMA public TO readonly_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly_user;
+```
+
+**MySQL:**
+
+```sql
+CREATE USER 'readonly_user'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT ON mydb.* TO 'readonly_user'@'localhost';
+```
+
+---
+
+## Enabling Write Access
+
+⚠️ **WARNING:** Write access allows your AI agent to modify data!
+
+To allow INSERT, UPDATE, DELETE operations:
+
+1. **BACKUP YOUR DATABASE FIRST**
+2. Change `"read_only": false` in config.json
+3. Ensure database user has write permissions
+4. Restart your agent
+5. Test thoroughly with non-critical data
+To allow INSERT, UPDATE, DELETE operations:
+
+1. Change `"read_only": false` in config.json
+2. Ensure database user has write permissions
+3. Restart your agent
+4. **BACKUP YOUR DATABASE FIRST**
+
+See `WRITE_ACCESS_GUIDE.md` for detailed instructions and safety tips.
+
+---
+
+## Development
+
+### Project Structure
+
+```
+db-mcp/
+├── src/
+│   └── db_mcp/
+│       ├── __init__.py       # Package initialization
+│       ├── server.py          # Main MCP server
+│       ├── database.py        # Database connection manager
+│       ├── tools.py           # MCP tool definitions
+│       └── config.py          # Configuration handling
+├── config.example.json        # Example configuration
+├── requirements.txt           # Python dependencies
+├── setup.py                   # PyPI packaging
+└── README.md                  # This file
+```
+
+### Running Tests
+
+```bash
+# Test with SQLite (no setup required)
+echo '{"databases": {"test": {"type": "sqlite", "path": ":memory:", "read_only": false}}}' > test_config.json
+python src/db_mcp/server.py --config test_config.json
+```
+
+---
+
+---
+
+## Multi-Database Support
+
+DB-MCP can connect to multiple databases simultaneously:
+
+```json
+{
+  "databases": {
+    "prod_postgres": {
+      "type": "postgresql",
+      "host": "prod.server.com",
+      "database": "production",
+      "read_only": true
+    },
+    "staging_mysql": {
+      "type": "mysql",
+      "host": "staging.server.com",
+      "database": "staging",
+      "read_only": false
+    },
+    "local_sqlite": {
+      "type": "sqlite",
+      "path": "./local.db",
+      "read_only": false
+    }
+  }
+}
+```
+
+Your agent can then specify which database to query:
+
+* "Query the prod_postgres database"
+* "Show tables in staging_mysql"
+* "Add data to local_sqlite"
+
+---
+
+## Performance Tuning
+
+### Connection Pooling
+
+Adjust pool settings based on your workload:
+
+```json
+{
+  "pool_size": 10,        // Max persistent connections
+  "max_overflow": 5,      // Additional connections during spikes
+  "pool_timeout": 30,     // Wait time for available connection
+  "pool_recycle": 3600    // Recycle connections after 1 hour
+}
+```
+
+### Query Optimization
+
+1. Use `explain_query` tool to analyze query performance
+2. Add indexes on frequently queried columns
+3. Limit result sets (automatic 100-row limit)
+4. Use connection pooling (enabled by default)
+
+---
+
+## Troubleshooting
+
+### "Database not connected"
+
+* Check your database credentials in config.json
+* Verify the database server is running
+* Test connection with a database client first
+
+### "QueuePool limit exceeded"
+
+* Reduce `pool_size` in config
+* Check for long-running queries
+* Ensure connections are being properly released
+
+### "Only SELECT queries allowed"
+
+* Database is in read-only mode (by design for safety)
+* Change `read_only: false` if you need write access
+* Create a separate non-read-only database config
+
+### Windows ODBC Driver Issues (SQL Server)
+
+* Install "ODBC Driver 17 for SQL Server" from Microsoft
+* Download: https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server
+
+### "config.json not found"
+
+* Use absolute paths in Claude Desktop config
+* Run `db-mcp --init` to generate example config
+* Make sure you're in the right directory
+
+### Command not found: db-mcp
+
+* Make sure you installed with pip: `pip install db-mcp`
+* Try: `python -m db_mcp.server --config config.json`
+* Check if Python Scripts directory is in PATH
+
+---
+
+## Supported Databases
+
+| Database   | Driver                 | Connection String Format                             |
+| ---------- | ---------------------- | ---------------------------------------------------- |
+| PostgreSQL | psycopg2               | `postgresql://user:pass@host:port/db`              |
+| MySQL      | mysql-connector-python | `mysql+mysqlconnector://user:pass@host:port/db`    |
+| SQLite     | built-in               | `sqlite:///path/to/file.db`                        |
+| SQL Server | pyodbc                 | `mssql+pyodbc://user:pass@host:port/db?driver=...` |
+
+---
+
+## Development & Contributing
+
+### Local Development Setup
+
+If you want to contribute or modify the code:
+
+```bash
+# Clone the repository
+git clone https://github.com/fenil210/Database-MCP
+cd Database-MCP
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install in development mode
+pip install -e .
+
+# Install all database drivers
+pip install -e ".[all]"
+```
+
+### Project Structure
+
+```
+db-mcp/
+├── src/
+│   └── db_mcp/
+│       ├── __init__.py       # Package initialization
+│       ├── server.py          # Main MCP server
+│       ├── database.py        # Database connection manager
+│       ├── tools.py           # MCP tool definitions
+│       └── config.py          # Configuration handling
+├── requirements.txt           # Python dependencies
+├── setup.py                   # PyPI packaging
+└── README.md                  # This file
+```
+
+### Running Tests
+
+```bash
+# Test with SQLite (no setup required)
+db-mcp --init
+# Edit config.json to only include the my_sqlite_db entry
+db-mcp --config config.json
+```
+
+Contributions welcome! Feel free to:
+
+* Add support for more databases
+* Improve error handling
+* Add more tools
+* Enhance documentation
+
+---
+
+## License
+
+MIT License - See LICENSE file for details
+
+---
+
+## Support
+
+For issues and questions:
+
+* GitHub Issues: https://github.com/fenil210/Database-MCP/issues
+* MCP Documentation: https://modelcontextprotocol.io/
+
+---
+
+## Changelog
+
+### Version 0.1.0
+
+* Initial release
+* Support for PostgreSQL, MySQL, SQLite, SQL Server
+* 5 core tools for database operations
+* Read-only mode by default
+* Connection pooling
+* Environment variable support
+* `--init` command for easy configuration
+
+---
+
+## Acknowledgments
+
+Built with the Model Context Protocol (MCP) by Anthropic. Uses SQLAlchemy for universal database connectivity.
+
+---
+
+**Connect any AI agent to any database with DB-MCP!**
+
+Install now: `pip install db-mcp`
