@@ -1,0 +1,16 @@
+lxml>=4.0
+
+[docs]
+furo==2025.9.25
+Sphinx~=8.2.3
+
+[syntax]
+Pygments>=2.7
+
+[test]
+black~=25.9
+isort~=7.0.0
+lxml-stubs~=0.5.1
+mypy~=1.18.2
+ruff~=0.14.0
+types-Pygments~=2.19
