@@ -1,0 +1,80 @@
+Metadata-Version: 2.4
+Name: RigExpert
+Version: 0.1.3
+Summary: Draw Smith charts, VSWR graphs and more from RigExpert or NanoVNA .s1p files.
+Author: Fred C.
+License: BSD 3-Clause License
+        
+        Copyright (c) 2023, Fred Cirera
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+        
+        3. Neither the name of the copyright holder nor the names of its
+           contributors may be used to endorse or promote products derived from
+           this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        
+Project-URL: Homepage, https://github.com/0x9900/RigExpert
+Project-URL: Tracker, https://github.com/0x9900/RigExpert/issues
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Telecommunications Industry
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Requires-Dist: scikit-rf
+Provides-Extra: dev
+Requires-Dist: build; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: pylint; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: license-file
+
+# RigExpert
+
+RigExpert is a tool designed to analyze and visualize antenna performance. It takes measurement data from devices like the RigExpert antenna analyzer or NanoVNA and generates detailed charts that help users understand their antenna's behavior.
+
+These charts include impedance plots, VSWR (Voltage Standing Wave Ratio) graphs, and Smith charts, which are essential for fine-tuning and optimizing antenna systems.
+
+
+### Example:
+
+```
+% RigExpert -t "Mike's Delta loop 20" -f ~/Downloads/M2.s1p --range 12:33 -A -D
+08/30/24 08:13:40 - 242 INFO - /tmp/mike-s-delta-loop-20-all.png
+08/30/24 08:13:40 - 225 INFO - /tmp/mike-s-delta-loop-20-dual.png
+```
+----
+
+<img src="https://raw.githubusercontent.com/0x9900/RigExpert/main/examples/mike-s-delta-loop-20-all.png" width="940">
+
+----
+
+<img src="https://raw.githubusercontent.com/0x9900/RigExpert/main/examples/mike-s-delta-loop-20-dual.png" width="940">
