@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coined_party"
+version = "0.0.0a10"
+description = "A text based party game that will soon destroy nintendo party games (cuz there's no way I even come close to BOTW)."
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [{name = "Yoosif Alquwatly", email = "yalquwatly@gmail.com"}]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "http://github.com/YoosifPlasma/Programs/tags"

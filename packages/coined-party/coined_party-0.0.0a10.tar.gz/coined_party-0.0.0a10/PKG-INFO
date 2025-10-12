@@ -1,0 +1,83 @@
+Metadata-Version: 2.4
+Name: coined_party
+Version: 0.0.0a10
+Summary: A text based party game that will soon destroy nintendo party games (cuz there's no way I even come close to BOTW).
+Author-email: Yoosif Alquwatly <yalquwatly@gmail.com>
+License: Copyright (c) 2025 Yoosif Alquwatly
+        
+        All rights reserved.
+        
+        You are allowed to:
+        - Download and use this project for personal or educational purposes.
+        - Record gameplay footage and share or post it online, with credit to the author.
+        
+        You are NOT allowed to:
+        - Modify, copy, distribute, or sell this project or its source code.
+        - Claim this project as your own.
+        - Use this project for commercial purposes.
+        
+        For any permissions beyond these, you must contact the author.
+Project-URL: Homepage, http://github.com/YoosifPlasma/Programs/tags
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+INSTRUCTIONS:
+To install Coined Party using PyPI, just open your terminal or command prompt an d run:
+
+pip install coined-party
+
+if that doesn't work, do...
+
+python3 -m pip install --upgrade coined-party
+
+This will automatically download and install the game from the Python Package Index (PyPI) along with everything it needs. Once installed, you can start the game anytime by typing:
+
+python -m coined_party
+
+Make sure you have Python 3.8 or newer installed before running the commands. You can check by typing python3 --version in your terminal. If you don’t have Python, download it from python.org/downloads.
+
+ABOUT:
+Welcome to the best party game in the history of party games (I destroyed Nintendo. Not even a competition). 
+
+Okay, not really. But, trust me, it'll be Top 1 soon. Just gotta...
+  add more games
+  add graphics
+  make better jokes (irony)
+  add more games
+  add multiplayer
+  make sure you can actually see the games being played (graphics)
+
+I still have a lot of work to work on (Grammar). However, here's what I've got so far.
+
+You download run the python file (Coined Party.py if it isn't obvious) and they ask for your name, without any context. So, you give them a fake name and proceed to be thrown into the Gaming lounge of your imagination (because I didn't add graphics yet 😢). The game room explains the options you have. It lists games you can play, and asks which one you want to play. It also asks you if you want to quit or restart. But that feature is useless. I mean come on, there's no way you'll stop playing the best video game ever produced!
+
+
+Game 1 - Look Away:
+Imagine you look at something. Now imagine robot looks at something. If something == something, you lose. If something != something, you win!! 
+If I were a MAN explaining this to you, it'd be like this...
+  The objective of the game is to look in a direction different to the two bots playing against you. You get ten coins for every round won. This game is luck based, so good luck! 
+Currently, choosing your direction is done by typing in a number. 
+  1 = up
+  2 = down
+  3 = left 
+  4 = right
+Directions don't really matter, because, again, NO GRAPHICS!!
+
+
+Game 2 - Slot Machine:
+Readme is getting a bit long, so here...
+There are three slots with four emoji options. You place your bet. If all three slots are the same emoji, you get 5x the bet placed. If only two are the same, you get 2x. If none are, you get nothing =( womp womp.
+
+
+Game 3 - Pig:
+1 sucks. You know why? Because I'm never number 1 =(
+So, I made 1 evil. If you roll two dice and you roll a 1, you lose! If you roll two 1s, you catastrophically lose! That means your entire bank account will be drained (with your consent, just sign here _______ ;) )
+Bank account as in in game bank account. 
+"Well, that's it? When do I win?", you definetly did not ask yourself. Easy...
+Before starting the game, you're asked to set a threshold. Upon rolling, if you continue and reach the threshold without rolling a 1, you WIN! You earn the amount rolled.
+
+
+Anyway, leave me alone. I need to go code graphics [     learn from scratch : = )    ]
+I need mario bankrupt.
