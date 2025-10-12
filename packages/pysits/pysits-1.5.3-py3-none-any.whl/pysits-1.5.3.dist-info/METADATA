@@ -1,0 +1,125 @@
+Metadata-Version: 2.4
+Name: pysits
+Version: 1.5.3
+Summary: Python wrapper for the sits R package
+Project-URL: Homepage, https://github.com/e-sensing/pysits
+Project-URL: Issue Tracker, https://github.com/e-sensing/pysits/issues
+Author-email: Gilberto Camara <gilberto.camara.inpe@gmail.com>, Felipe Carlos <efelipecarlos@gmail.com>, Felipe Carvalho <lipecaso@gmail.com>, Pedro Brito <pedro_brito1997@hotmail.com>, Rolf Simoes <rolfsimoes@gmail.com>
+Maintainer-email: Felipe Carlos <efelipecarlos@gmail.com>, Felipe Carvalho <lipecaso@gmail.com>
+License: GPL-2.0-only
+License-File: LICENSE
+Keywords: R wrapper,deep learning,earth observation,land use and land cover,lulc,machine learning,remote sensing,satellite,time series
+Classifier: Environment :: GPU :: NVIDIA CUDA
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: GNU General Public License v2 (GPLv2)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: GIS
+Requires-Python: <4,>=3.10
+Requires-Dist: geopandas>=1.1.0
+Requires-Dist: jinja2>=3.1.6
+Requires-Dist: matplotlib>=3.10.1
+Requires-Dist: pandas>=2.2.3
+Requires-Dist: pillow>=11.1.0
+Requires-Dist: pyarrow>=20.0.0
+Requires-Dist: rpy2<4.0.0,>=3.5.17
+Requires-Dist: shapely>=2.1.1
+Provides-Extra: dev
+Requires-Dist: cloudpickle>=3.1.1; extra == 'dev'
+Requires-Dist: pre-commit>=3.6.0; extra == 'dev'
+Requires-Dist: pytest-cov>=6.1.1; extra == 'dev'
+Requires-Dist: pytest-randomly>=3.16.0; extra == 'dev'
+Requires-Dist: pytest>=7.4.4; extra == 'dev'
+Requires-Dist: ruff>=0.11.12; extra == 'dev'
+Provides-Extra: xarray
+Requires-Dist: affine>=2.4.0; extra == 'xarray'
+Requires-Dist: dask>=2025.3.0; extra == 'xarray'
+Requires-Dist: rioxarray>=0.18.2; extra == 'xarray'
+Requires-Dist: xarray>=2025.3.0; extra == 'xarray'
+Description-Content-Type: text/markdown
+
+# pysits
+
+Python wrapper for the [sits](https://github.com/e-sensing/sits) R package.
+
+## 📦 Installation
+
+To install `pysits` with pip:
+
+```bash
+pip install pysits
+```
+
+or the development version:
+
+```bash
+pip install git+https://github.com/e-sensing/pysits.git
+```
+
+> To use `pysits`, you must have [sits](https://github.com/e-sensing/sits) installed. For more information, refer to the [official sits documentation](https://e-sensing.github.io/sitsbook/setup.html).
+
+## 🛠 Development setup (for contributors)
+
+To set up a local development environment:
+
+**1.** Clone the repo and access it:
+
+```bash
+git clone https://github.com/e-sensing/pysits.git
+cd pysits
+```
+
+**2.** Create a virtual environment using [uv](https://github.com/astral-sh/uv)
+
+```bash
+uv venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+```
+
+**3.** Install the project in editable mode with development tools:
+
+```bash
+uv pip install -e ".[dev]"
+```
+
+### 🔍 Run tests
+
+We use `pytest` for testing:
+
+```bash
+pytest
+```
+
+### 🧹 Code formatting
+
+To keep the codebase clean and consistent we use [ruff](https://github.com/astral-sh/ruff):
+
+```bash
+ruff format .
+```
+
+### 🧪 Linting
+
+We use [ruff](https://github.com/astral-sh/ruff) for static analysis:
+
+```bash
+ruff check .
+```
+
+> The `examples/` directory is excluded from linting.
+
+## 📚 Learn more
+
+To learn all about `sits`, including its concepts, API, and real-world examples, we recommend accessing the [official sits book](https://e-sensing.github.io/sitsbook/). The book provides examples in both R and Python.
+
+## 🤝 Contributing
+
+We welcome contributions! Please:
+
+- Fork the repository
+- Create a feature branch
+- Submit a pull request with a clear description
+
+## 📄 License
+
+`pysits` is distributed under the GPL-2.0 license. See [LICENSE](./LICENSE) for more details.
