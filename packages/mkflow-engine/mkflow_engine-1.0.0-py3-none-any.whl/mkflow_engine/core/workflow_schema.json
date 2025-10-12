@@ -1,0 +1,176 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IDE Agent Workflow Schema",
+  "description": "工作流定义JSON Schema，基于六大原则设计",
+  "type": "object",
+  "properties": {
+    "workflow": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工作流唯一标识符"
+        },
+        "name": {
+          "type": "string",
+          "description": "工作流名称"
+        },
+        "description": {
+          "type": "string",
+          "description": "工作流描述"
+        },
+        "version": {
+          "type": "string",
+          "description": "工作流版本"
+        }
+      },
+      "required": ["id", "name", "version"]
+    },
+    "stages": {
+      "type": "array",
+      "description": "阶段定义数组",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "阶段唯一标识符"
+          },
+          "name": {
+            "type": "string",
+            "description": "阶段名称"
+          },
+          "description": {
+            "type": "string",
+            "description": "阶段描述"
+          },
+          "steps": {
+            "type": "array",
+            "description": "步骤定义数组",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "步骤唯一标识符"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "步骤名称"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "步骤描述"
+                },
+                "work_nodes": {
+                  "type": "array",
+                  "description": "工作节点定义数组",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "工作节点唯一标识符"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "工作节点名称"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": ["action", "decision", "input", "output"],
+                        "description": "工作节点类型"
+                      },
+                      "action": {
+                        "type": "string",
+                        "description": "执行动作"
+                      },
+                      "conditions": {
+                        "type": "array",
+                        "description": "执行条件",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "feedback_rules": {
+                        "type": "object",
+                        "description": "反馈规则",
+                        "properties": {
+                          "success": {
+                            "type": "string",
+                            "description": "成功反馈"
+                          },
+                          "failure": {
+                            "type": "string",
+                            "description": "失败反馈"
+                          },
+                          "warning": {
+                            "type": "string",
+                            "description": "警告反馈"
+                          }
+                        }
+                      }
+                    },
+                    "required": ["id", "name", "type"]
+                  }
+                },
+                "pointers": {
+                  "type": "array",
+                  "description": "指针定义数组",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "指针唯一标识符"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "指针名称"
+                      },
+                      "target": {
+                        "type": "string",
+                        "description": "指向目标（节点ID）"
+                      },
+                      "condition": {
+                        "type": "string",
+                        "description": "指针激活条件"
+                      }
+                    },
+                    "required": ["id", "name", "target"]
+                  }
+                }
+              },
+              "required": ["id", "name"]
+            }
+          },
+          "end_conditions": {
+            "type": "array",
+            "description": "结束条件",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["success", "failure", "timeout", "manual"],
+                  "description": "结束条件类型"
+                },
+                "condition": {
+                  "type": "string",
+                  "description": "结束条件表达式"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "结束消息"
+                }
+              },
+              "required": ["type", "condition"]
+            }
+          }
+        },
+        "required": ["id", "name"]
+      }
+    }
+  },
+  "required": ["workflow", "stages"]
+}
