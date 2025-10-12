@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=64", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moon-cloud-coder"
+version = "0.0.1"
+description = "AI-powered command line tool for developers using Qwen models"
+readme = "README.md"
+authors = [{name = "Moon Cloud Coder Team"}]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "dashscope==1.22.1",
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "openai>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy"
+]
+
+[project.scripts]
+moon-cloud-coder = "moon_cloud_coder.main:app"
+
+[project.urls]
+Homepage = "https://github.com/your-username/moon-cloud-coder"
+Repository = "https://github.com/your-username/moon-cloud-coder"
+Documentation = "https://github.com/your-username/moon-cloud-coder/blob/main/README.md"
+Issues = "https://github.com/your-username/moon-cloud-coder/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"

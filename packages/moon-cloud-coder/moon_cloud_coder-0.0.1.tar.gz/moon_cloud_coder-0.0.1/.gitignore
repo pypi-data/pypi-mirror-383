@@ -1,0 +1,251 @@
+# 虚拟环境
+**/fc_venv/
+**/venv/
+**/env/
+**/ENV/
+**/.venv/
+**/env.bak/
+**/venv.bak/
+**/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# AI/ML 特定文件
+# 模型文件
+*.h5
+*.pkl
+*.pickle
+*.joblib
+*.model
+*.ckpt
+*.pt
+*.pth
+*.weights
+models/
+checkpoints/
+saved_models/
+
+# 数据文件
+data/
+dataset/
+datasets/
+*.csv
+*.json
+*.xml
+*.parquet
+*.feather
+*.xlsx
+*.xls
+
+# 向量数据库
+*.faiss
+*.index
+vector_store/
+embeddings/
+faiss_store/
+
+# 缓存文件
+cache/
+.cache/
+tmp/
+temp/
+*_cache/
+data_cache/
+
+# 配置文件中的敏感信息
+config.ini
+settings.ini
+secrets.yaml
+*.key
+*.secret
+api_keys.txt
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+
+# 日志文件
+*.log
+logs/
+*.out
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# Node.js (如果有前端组件)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 图片和媒体文件（如果不需要版本控制）
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.mp4
+# *.avi
+# *.mov
+
+# 测试覆盖率
+.coverage
+htmlcov/
+
+# 文档生成
+docs/_build/
