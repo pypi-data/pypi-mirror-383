@@ -1,0 +1,68 @@
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wordwrap"
+version = "0.2.4"
+description = "A simple library for wrapping text to a fixed column width."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+	{name = "pigmonchu"}
+]
+maintainers = [
+	{name = "pigmonchu"}
+]
+keywords = [
+	"wordwrap", "text", "wrap", "column", "formatting", "nlp", "text-processing"
+]
+classifiers = [
+	"Development Status :: 4 - Beta",
+	"Intended Audience :: Developers",
+	"License :: OSI Approved :: MIT License",
+	"Operating System :: OS Independent",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Topic :: Software Development :: Libraries :: Python Modules",
+	"Topic :: Text Processing :: General"
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+	"pytest>=7.0.0",
+	"pytest-cov>=4.0.0",
+	"black>=22.0.0",
+	"flake8>=4.0.0",
+	"mypy>=1.0.0",
+	"pre-commit>=2.20.0",
+]
+docs = [
+	"sphinx>=5.0.0",
+	"sphinx-rtd-theme>=1.0.0",
+]
+test = [
+	"pytest>=7.0.0",
+	"pytest-cov>=4.0.0",
+	"pytest-mock>=3.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/pigmonchu/wordwrap"
+Documentation = "https://github.com/pigmonchu/wordwrap#readme"
+Repository = "https://github.com/pigmonchu/wordwrap"
+"Bug Tracker" = "https://github.com/pigmonchu/wordwrap/issues"
+Changelog = "https://github.com/pigmonchu/wordwrap/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["wordwrap"]
+
+[tool.setuptools.package-data]
+wordwrap = ["py.typed"]
