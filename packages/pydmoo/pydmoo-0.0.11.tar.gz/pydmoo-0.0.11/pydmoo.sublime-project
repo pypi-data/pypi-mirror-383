@@ -1,0 +1,39 @@
+{
+    "build_systems": [
+        {
+            "file_patterns": ["*.py"],
+            "selector": "source.python",
+            "working_dir": "$project_path",
+            "path": ".venv/bin:$PATH",
+            "name": "Python3 Local",
+            "cmd": ["python3", "-u", "$file"],
+            "env": {
+                "PYTHONIOENCODING": "utf-8",
+                "PYTHONPATH": "."
+            },
+            "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)"
+        }
+    ],
+    "settings": {
+        // LSP
+        "LSP": {
+            "LSP-pyright": {
+                "settings": {
+                    // Put your settings here
+                    "python.pythonPath": "../.venv/bin/python",
+                }
+            }
+        },
+    },
+    "folders": [
+        { "path": "." },
+        { "path": "data" },
+        { "path": "docs" },
+        { "path": "examples" },
+        { "path": "tutorials" },
+        { "path": "pydmoo" },
+        { "path": "tests" },
+        { "path": "tests_temp" },
+        { "path": ".venv/lib/python3.12/site-packages/pymoo" },
+    ]
+}
