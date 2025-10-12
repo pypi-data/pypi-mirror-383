@@ -1,0 +1,82 @@
+Metadata-Version: 2.4
+Name: verified-numpy
+Version: 0.1.0
+Summary: A robust verification wrapper for NumPy arrays using functional and contract paradigms.
+Author-email: J-joon <jjkim030309@gmail.com>
+License: MIT
+License-File: LICENSE
+Requires-Python: >=3.12
+Requires-Dist: numpy
+Requires-Dist: static-error-handler
+Provides-Extra: dev
+Requires-Dist: black; extra == 'dev'
+Requires-Dist: coverage[toml]>=7; extra == 'dev'
+Requires-Dist: hypothesis>=6.110; extra == 'dev'
+Requires-Dist: mypy>=1.10; extra == 'dev'
+Requires-Dist: pytest-cov>=5; extra == 'dev'
+Requires-Dist: pytest>=8; extra == 'dev'
+Requires-Dist: ruff>=0.6; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# Verified Numpy
+
+A robust verification wrapper for NumPy arrays using functional and contract paradigms.
+
+---
+
+## Install
+
+```
+uv pip install verified_numpy
+```
+
+## Usage
+
+```
+    # An example policy. Users can create their own by combining validators.
+    verify_policy: Final[Validator] = combine((
+        v_dtype(np.float64),
+        v_ndim(2),
+        v_finite,
+        v_nonempty,
+        v_row_major_contiguous,
+    ))
+    # --- Happy Path: Create and use a valid array ---
+    print("--- Basic Success Case ---")
+    valid_np_array = np.ascontiguousarray([[1.0, 2.0], [3.0, 4.0]])
+    va_res = make_verified(valid_np_array, policy=verify_policy)
+
+    if va_res.is_ok():
+        va = va_res.value
+        print(f"Successfully created VerifiedArray with shape: {va.shape}")
+
+        # Use safe, explicit properties
+        print(f"Array dtype: {va.dtype}, ndim: {va.ndim}")
+
+        # Use NumPy functions that work via __array__ protocol
+        print(f"Sum calculated by NumPy: {np.sum(va)}")
+
+        # --- Safe Transformation ---
+        print("\n--- Safe Transformation via apply_and_verify ---")
+        centered_res = va.apply_and_verify(lambda arr: arr - arr.mean())
+        if centered_res.is_ok():
+            print(f"Centered array:\n{centered_res.value.value}")
+        else:
+            print(f"Centering failed: {centered_res.error}")
+
+        # --- Operator Error ---
+        print("\n--- Testing Disabled Operator ---")
+        try:
+            # This will fail intentionally, demonstrating the strong contract boundary.
+            result = va + 1
+        except TypeError as e:
+            print(f"Caught expected error: {e}")
+
+    # --- Failure Path: Try to create an invalid array ---
+    print("\n--- Failure Case (Wrong DType) ---")
+    invalid_np_array = np.array([[1, 2], [3, 4]], dtype=np.int32)
+    va_res_fail = make_verified(invalid_np_array, policy=verify_policy)
+
+    if va_res_fail.is_err():
+        print(f"Verification failed as expected: {va_res_fail.error}")
+```
