@@ -1,0 +1,125 @@
+# 🎯 Koubou Advanced Example
+# This demonstrates all available features with professional artisan quality
+
+project:
+  name: "Advanced Koubou Showcase"
+  output_dir: "output"
+
+devices:
+  - "iPhone 16 Pro - Black Titanium - Portrait"
+  - "iPad Air 13\" - M2 - Space Gray - Landscape"
+
+defaults:
+  background:
+    type: "linear"
+    colors: ["#667eea", "#764ba2", "#f093fb"]
+    direction: 135
+
+screenshots:
+  feature_showcase:
+    background:
+      type: "linear"
+      colors: ["#667eea", "#764ba2", "#f093fb"]
+      direction: 135
+    content:
+      - type: "image"
+        asset: "screenshots/feature_screen.png"
+        position: ["50%", "55%"]
+        scale: 0.5
+        frame: true
+
+      - type: "text"
+        content: "Revolutionary Features"
+        position: ["50%", "10%"]
+        size: 52
+        weight: "bold"
+        color: "#ffffff"
+        stroke_width: 2
+        stroke_color: "#000000"
+        rotation: 8  # Rotate text with stroke 8 degrees
+
+      - type: "text"
+        content: "✨ AI-Powered Analysis"
+        position: ["50%", "20%"]
+        size: 28
+        color: "#ffffff"
+        alignment: "center"
+
+      - type: "text"
+        content: "🚀 Lightning Fast Performance"
+        position: ["50%", "26%"]
+        size: 28
+        color: "#ffffff"
+        alignment: "center"
+
+      - type: "text"
+        content: "🔒 Privacy First Design"
+        position: ["50%", "32%"]
+        size: 28
+        color: "#ffffff"
+        alignment: "center"
+
+  gradient_showcase:
+    background:
+      type: "radial"
+      colors: ["#ff9a9e", "#fecfef", "#feca57"]
+      center: ["30%", "20%"]
+    content:
+      - type: "image"
+        asset: "screenshots/settings.png"
+        position: ["50%", "60%"]
+        scale: 0.4
+        frame: true
+
+      - type: "text"
+        content: "Customizable Experience"
+        position: ["50%", "15%"]
+        size: 42
+        weight: "bold"
+        gradient:
+          type: "linear"
+          colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"]
+          direction: 45
+        stroke_width: 2
+        stroke_gradient:
+          type: "linear"
+          colors: ["#333333", "#666666"]
+          direction: 45
+
+      - type: "text"
+        content: "Personalize every detail to match your style"
+        position: ["50%", "25%"]
+        size: 24
+        color: "#2c2c54"
+        alignment: "center"
+
+  rotation_showcase:
+    background:
+      type: "conic"
+      colors: ["#667eea", "#764ba2", "#f093fb", "#667eea"]
+      center: ["50%", "50%"]
+    content:
+      - type: "image"
+        asset: "screenshots/app_logo.png"
+        position: ["30%", "40%"]
+        scale: 0.6
+        rotation: 25  # Rotate image 25 degrees
+
+      - type: "text"
+        content: "Dynamic Rotation"
+        position: ["70%", "30%"]
+        size: 36
+        gradient:
+          type: "linear"
+          colors: ["#ff6b6b", "#4ecdc4"]
+          direction: 45
+        stroke_width: 1
+        stroke_color: "#ffffff"
+        rotation: -12  # Rotate gradient text -12 degrees
+
+      - type: "text"
+        content: "Perfect Balance"
+        position: ["50%", "70%"]
+        size: 24
+        color: "#2c3e50"
+        rotation: 3  # Subtle rotation
