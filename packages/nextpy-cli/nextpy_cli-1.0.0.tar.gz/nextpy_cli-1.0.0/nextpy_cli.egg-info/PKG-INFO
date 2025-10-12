@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: nextpy-cli
+Version: 1.0.0
+Summary: CLI tool to scaffold FastAPI + Next.js full-stack applications
+Author-email: VesperAkshay <vesperakshay@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/VesperAkshay/nextpy
+Project-URL: Repository, https://github.com/VesperAkshay/nextpy
+Project-URL: Issues, https://github.com/VesperAkshay/nextpy/issues
+Keywords: cli,fastapi,nextjs,vite,react,fullstack,scaffold,boilerplate,generator,python,typescript,docker,postgresql,mongodb,sqlite
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: typer[all]>=0.9.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: questionary>=2.0.0
