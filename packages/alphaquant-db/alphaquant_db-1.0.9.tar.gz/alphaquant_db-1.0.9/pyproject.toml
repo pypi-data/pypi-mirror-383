@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alphaquant-db"
+version = "1.0.9"
+description = "Async MongoDB client using Motor for Alphaquant"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "Shashank Gupta", email = "developer@alphaco.ai"}]
+license = {text = "MIT"}
+keywords = ["mongodb", "motor", "async", "database", "pymongo"]
+dependencies = [
+    "motor>=3.7.1",
+    "pymongo>=4.5.0",
+    "python-dotenv>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=22.0.0",
+    "flake8>=4.0.0",
+    "mypy>=0.950"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/AlphaCoAI-Projects/dadar"
+"Bug Reports" = "https://github.com/AlphaCoAI-Projects/dadar/issues"
+"Source" = "https://github.com/AlphaCoAI-Projects/dadar"
+
+[tool.setuptools.packages.find]
+where = ["."]
