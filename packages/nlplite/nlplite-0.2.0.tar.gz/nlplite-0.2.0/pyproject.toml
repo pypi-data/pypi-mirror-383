@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nlplite"
+version = "0.2.0"
+description = "Fast lightweight NLP library for concept and segment extraction with negation/uncertainty detection."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Vidul Panickan", email = "apvidul@gmail.com" }]
+dependencies = [
+  "pyahocorasick"  
+]
+
+[project.scripts]
+nlplite = "nlplite.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+nlplite = ["py.typed"]

@@ -1,0 +1,161 @@
+Metadata-Version: 2.4
+Name: nlplite
+Version: 0.2.0
+Summary: Fast lightweight NLP library for concept and segment extraction with negation/uncertainty detection.
+Author-email: Vidul Panickan <apvidul@gmail.com>
+License: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyahocorasick
+Dynamic: license-file
+
+# NLPLite
+
+Fast, lightweight NLP for concept extraction with sentence/paragraph segments and negation/uncertainty detection.
+
+## Highlights
+
+- **Fast string matching**: Aho–Corasick with a pure‑Python fallback in case C is not available.
+- **Whole‑word, case‑insensitive**: term matching with smart longest match capture.
+- **Negation & uncertainty**: term hits accompanied by negation status `:Y` (YES), `:N` (NO), `:U` (UNCERTAIN).
+- **Segment text**: return the sentence or paragraph containing each hit (or ±N chars around the term hit).
+- **Code mapping**: map terms to codes (ICD, SNOMED, CUIs, etc).
+- **Simple CLI**: one command to search, extract, convert codes, or get assertion status.
+
+## Install
+
+```bash
+pip install nlplite
+```
+
+## Quick Start 
+
+### 1) Search, locate and extract terms or phrases within a large text file 🕵️
+
+```python
+from nlplite import search_terms
+
+text = "Patient has heart failure. He denies chest pain but reports headache."
+hits = search_terms(text, ["heart failure", "headache"], window_size="sentence")
+
+print(hits)
+# [
+#   ('heart failure', 12, 24, 'Patient has heart failure.'),
+#   ('headache', 53, 60, 'He denies chest pain but reports headache.')
+# ]
+```
+
+**Return shape:** `(term, start_postion, end_position, [context])`  
+`window_size` may be an int (±N chars), `"sentence"`, `"paragraph"`, or `None`.
+
+**Offsets:** Set `include_offsets=False` to skip `start/end` locations from results.
+
+
+### 2) Translate your text to codes (Clinical usecase: Term-CUI, Term-ICD code) 
+
+```python
+from nlplite import convert_text_to_codes
+
+dictionary = [("diabetes", "E11"), ("hypertension", "I10"), ("stroke", "I63")]
+text = "No stroke. Has hypertension and diabetes."
+
+# All occurrences with locations
+rows = convert_text_to_codes(text, dictionary, negation_check=True, unique=False)
+print(rows)
+# [('I63:N', 3, 8), ('I10:Y', 13, 24), ('E11:Y', 29, 37)]
+
+```
+
+**Notes:**
+
+- When `negation_check=True`, the code fields carry a flag `:Y`/`:N`/`:U`.
+
+- If your file is two columns with a header (term,code), pass `sep=","` (or `"tab"`) and leave `header=True` (default).
+
+- Turn off`start/end` locations from results by passing `include_offsets=False`
+
+### 3) Extract sentences, paragraphs or string surrounding terms of interest 📚
+
+```python
+from nlplite import extract_terms_with_window
+
+# Dictionary can be a path to CSV/TSV or an in‑memory dict/list.
+dictionary = [("heart failure", "I50.9"), ("chest pain", "R07.9"), ("headache", "R51")]
+
+text = "Patient has heart failure. He denies chest pain but reports headache."
+rows = extract_terms_with_window(
+    text=text,
+    dictionary=dictionary,      # or "terms.csv"
+    window_size="sentence",     # 'sentence' | 'paragraph' | int | None
+    include_code=None,          # auto-include codes if present
+    include_offsets=True,
+    negation_check=True         # adds :Y / :N / :U flags
+)
+
+print(rows)
+# [
+#   ('heart failure:Y', 'I50.9:Y', 12, 24, 'Patient has heart failure.'),
+#   ('chest pain:N',    'R07.9:N', 33, 42, 'He denies chest pain but reports headache.'),
+#   ('headache:Y',      'R51:Y',   53, 60, 'He denies chest pain but reports headache.')
+# ]
+```
+
+
+
+## CLI Quickstart
+
+After installing, use the `nlplite` command.
+
+### Search (inline text) 🔎
+
+```bash
+nlplite --search \
+  --terms "heart","heart failure" \
+  --text "Patient has heart failure. He denies chest pain." \
+  --window sentence \
+  --no-offsets \
+  --format json
+#  [["heart failure",12,24,"Patient has heart failure."]]
+```
+
+### Extract with dictionary file + negation 🧠
+
+```bash
+# terms.csv (with header):
+# term,code
+# heart failure,I50.9
+# chest pain,R07.9
+# headache,R51
+
+nlplite --extract --dict terms.csv --sep "," \
+  --text "note.txt" \
+  --window paragraph \
+  --negation \
+  --format text
+# Example line:
+# Term: chest pain (negated), Code: R07.9, Location: 123-132, Context: "..."
+```
+
+### Convert to unique codes only 🔄
+
+```bash
+nlplite --convert --dict terms.csv --sep "," \
+  --text "note.txt" \
+  --unique --format json
+# → ["I50.9:Y","R07.9:N","R51:Y"]
+```
+
+**Tips:**
+- Use `--neg-window N` to restrict how far a negation/uncertainty cue can reach.
+- `--format json|csv|text` controls output shape.
+- `--no-header` if your dictionary file has no header row.
+- `--convert` does not support `--window` (by design).
+- `--no-offsets` to skip `start/end` locations from results.
+
+
+## Notes
+
+- **Matching** is case‑insensitive and respects word boundaries; overlapping hits resolve to the longest match first.
+- **Performance** uses a C‑accelerated automaton when `pyahocorasick` is present; a pure‑Python fallback maintains portability.
+- **Segmentation** (`window_size`) can be an integer (±N characters), `"sentence"`, or `"paragraph"`.
