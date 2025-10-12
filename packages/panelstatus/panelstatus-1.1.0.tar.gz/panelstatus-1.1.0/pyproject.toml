@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "panelstatus"
+version = "1.1.0"
+description = "Dead simple GNOME panel status updates - inspired by ggplot2"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Maxime Rivest", email = "mrive052@gmail.com"}
+]
+keywords = ["gnome", "status", "panel", "notification", "gui"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Software Development :: User Interfaces",
+]
+
+[project.urls]
+Homepage = "https://github.com/maximerivest/panelstatus"
+Repository = "https://github.com/maximerivest/panelstatus"
+Issues = "https://github.com/maximerivest/panelstatus/issues"
+
+[project.scripts]
+panelstatus-install = "panelstatus:install_extension"
+
+[tool.setuptools]
+packages = ["panelstatus"]
+
+[tool.setuptools.package-data]
+panelstatus = ["gnome_extension/*"]
