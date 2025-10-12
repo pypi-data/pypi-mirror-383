@@ -1,0 +1,67 @@
+Metadata-Version: 2.4
+Name: ocrmypdf-appleocr
+Version: 0.2.2
+Summary: Plugin to run OCRmyPDF with Apple Vision Framework OCR engine
+Author-email: Masahiro Kiyota <hiro@juzbox.com>
+License: MIT License
+        
+        Copyright (c) 2025 Masahiro Kiyota
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/mkyt/OCRmyPDF-AppleOCR
+Project-URL: Repository, https://github.com/mkyt/OCRmyPDF-AppleOCR.git
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyobjc-core
+Requires-Dist: pyobjc-framework-Vision
+Requires-Dist: pyobjc-framework-Cocoa
+Requires-Dist: langdetect
+Requires-Dist: ocrmypdf>=14.2.1
+Requires-Dist: Pillow>=10.0.1
+Dynamic: license-file
+
+# OCRmyPDF AppleOCR
+
+This is a plugin for [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF/) that enables OCR using the Apple Vision Framework on macOS.
+
+## Installation
+
+```bash
+pip install ocrmypdf-appleocr
+```
+
+## Usage
+
+```bash
+ocrmypdf -l jpn --plugin ocrmypdf_appleocr input.pdf output.pdf
+ocrmypdf -l jpn --plugin ocrmypdf_appleocr input.pdf output.pdf
+```
+
+Note that only [`hocr` renderer](https://ocrmypdf.readthedocs.io/en/latest/advanced.html#changing-the-pdf-renderer) is supported for this plugin.
+
+
+## Options
+
+- `--appleocr-disable-correction`: Disable language correction in Apple Vision OCR (default: False)
+- `--appleocr-recognition-level`: Recognition level for Apple Vision OCR (default: accurate). Choices are `fast` and `accurate`.
+- `-l` or `--language`: Specify the language(s) for OCR in ISO 639-2 three-letter codes. Use `und` for undetermined language. Combine
+
+If you specify `und` or specify multiple languages, the plugin will attempt to detect the language using the `langdetect` library. Note that the accuracy of language detection may vary depending on the content of the document.
