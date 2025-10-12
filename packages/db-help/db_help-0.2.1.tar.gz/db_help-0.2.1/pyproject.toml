@@ -1,0 +1,14 @@
+[project]
+name = "db-help"
+version = "0.2.1"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [ "anyio>=4.10.0", "dotenv>=0.9.9", "fastapi>=0.116.2", "mysql-connector-python>=9.4.0", "pymysql>=1.1.2", "pytest>=8.4.2", "pytest-asyncio>=1.2.0", "pytest-tornasync>=0.6.0.post2", "qdrant-client>=1.15.1", "requests>=2.32.5", "sqlalchemy>=2.0.43", "toml>=0.10.2", "uvicorn>=0.35.0", "volcengine-python-sdk>=4.0.22",]
+
+[tool.setuptools.package-data]
+db_help = [ "config.yaml",]
+
+[tool.pytest.ini_options]
+testpaths = [ "tests",]
+pythonpath = [ "src",]
