@@ -1,0 +1,33 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "payple-hj3415"
+version = "0.1.0"
+authors = [{name = "Hyungjin Kim", email = "hj3415@gmail.com"}]
+description = "payple-hj3415 is the program for using payple"
+readme = "README.md"
+classifiers = ["License :: OSI Approved :: MIT License"]
+dependencies = [
+    "django",
+    "requests",
+]
+
+[project.urls]
+Home = "https://www.hyungjin.kr"
+
+[tool.flit.sdist]
+exclude = [
+    "manage.py",
+    "db.sqlite3",
+    "media/",
+    "myproject/",
+    "testapp/",
+    ".git/",
+    ".gitignore",
+    "__pycache__/",
+    "*.pyc",
+    ".DS_Store",
+    "orders/",
+]
