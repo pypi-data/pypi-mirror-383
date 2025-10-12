@@ -1,0 +1,21 @@
+query gqlAccountWizardSystemProperties {
+  systemProperties {
+    sitePreferences {
+      signupRequiredFields
+      signupAddressRequiredFields
+      signupVisibleFields
+      signupAddressVisibleFields
+
+      footerPrivacyUrl
+    }
+  }
+}
+
+query gqlPersonInvitationByCode($code: String!) {
+  personInvitationByCode(code: $code) {
+    id
+    valid
+    hasEmail
+    hasPerson
+  }
+}

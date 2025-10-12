@@ -1,0 +1,69 @@
+mutation deleteDashboardWidgets($ids: [ID!]!) {
+  deleteDashboardWidgets(ids: $ids) {
+    deletedIds
+  }
+}
+
+mutation updateDashboardWidgets($input: [BatchPatchDashboardWidgetInput!]!) {
+  updateDashboardWidgets(input: $input) {
+    items: dashboardWidgets {
+      __typename
+      id
+      status
+      title
+
+      canDelete
+      canEdit
+    }
+  }
+}
+
+mutation updateCalendarWidgets($input: [BatchPatchCalendarWidgetInput!]!) {
+  updateCalendarWidgets(input: $input) {
+    items: dashboardWidgets {
+      id
+      status
+      title
+
+      selectedCalendars
+
+      canDelete
+      canEdit
+    }
+  }
+}
+
+mutation updateExternalLinkWidgets(
+  $input: [BatchPatchExternalLinkWidgetInput!]!
+) {
+  updateExternalLinkWidgets(input: $input) {
+    items: dashboardWidgets {
+      id
+      status
+      title
+
+      url
+      iconUrl
+
+      canDelete
+      canEdit
+    }
+  }
+}
+
+mutation updateStaticContentWidgets(
+  $input: [BatchPatchStaticContentWidgetInput!]!
+) {
+  updateStaticContentWidgets(input: $input) {
+    items: dashboardWidgets {
+      id
+      status
+      title
+
+      content
+
+      canDelete
+      canEdit
+    }
+  }
+}

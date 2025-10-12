@@ -1,0 +1,81 @@
+query person($id: ID) {
+  object: personByIdOrMe(id: $id) {
+    id
+    username
+    userid
+    firstName
+    additionalName
+    lastName
+    fullName
+    shortName
+
+    description
+
+    sex
+    addresses {
+      id
+      addressTypes {
+        id
+        name
+      }
+      street
+      housenumber
+      postalCode
+      place
+      country
+    }
+    phoneNumber
+    mobileNumber
+    email
+    dateOfBirth
+    placeOfBirth
+
+    secondaryImageUrl
+    photo {
+      url
+      name
+    }
+    avatar {
+      url
+      name
+    }
+
+    guardians {
+      id
+      fullName
+    }
+    children {
+      id
+      fullName
+    }
+    primaryGroup {
+      id
+    }
+    memberOf {
+      id
+      name
+      avatarUrl
+      schoolTerm {
+        id
+        name
+      }
+    }
+    ownerOf {
+      id
+      name
+      avatarUrl
+      schoolTerm {
+        id
+        name
+      }
+    }
+
+    canEdit
+    canDelete
+    canChangePersonPreferences
+    canInvitePerson
+    canImpersonatePerson
+    canChangePassword
+    canSendPasswordResetRequest
+  }
+}

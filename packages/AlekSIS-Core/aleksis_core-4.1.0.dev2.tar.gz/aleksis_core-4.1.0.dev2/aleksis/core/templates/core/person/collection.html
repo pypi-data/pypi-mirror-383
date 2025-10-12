@@ -1,0 +1,10 @@
+{% load rules %}
+
+<div class="collection person-collection">
+  {% for person in persons %}
+    <a class="collection-item avatar waves-effect" href="{% url "person_by_id" person.pk %}">
+      {% include "core/partials/avatar_content.html" with person_or_user=person class="materialize-circle" img_class="materialize-circle" %}
+      {{ person }}
+    </a>
+  {% endfor %}
+</div>

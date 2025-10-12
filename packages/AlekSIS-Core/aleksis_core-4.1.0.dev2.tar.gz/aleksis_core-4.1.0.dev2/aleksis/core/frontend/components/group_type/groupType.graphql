@@ -1,0 +1,66 @@
+query groupTypes($orderBy: [String], $filters: JSONString) {
+  items: groupTypes(orderBy: $orderBy, filters: $filters) {
+    id
+    name
+    description
+    ownersCanSeeGroups
+    ownersCanSeeMembers
+    ownersCanSeeMembersAllowedInformation
+    availableRoles {
+      id
+      name
+      fgColor
+      bgColor
+    }
+    canEdit
+    canDelete
+  }
+}
+
+mutation createGroupTypes($input: [BatchCreateGroupTypeInput]!) {
+  createGroupTypes(input: $input) {
+    items: groupTypes {
+      id
+      name
+      description
+      ownersCanSeeGroups
+      ownersCanSeeMembers
+      ownersCanSeeMembersAllowedInformation
+      availableRoles {
+        id
+        name
+        fgColor
+        bgColor
+      }
+      canEdit
+      canDelete
+    }
+  }
+}
+
+mutation deleteGroupTypes($ids: [ID]!) {
+  deleteGroupTypes(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateGroupTypes($input: [BatchPatchGroupTypeInput]!) {
+  updateGroupTypes(input: $input) {
+    items: groupTypes {
+      id
+      name
+      description
+      ownersCanSeeGroups
+      ownersCanSeeMembers
+      ownersCanSeeMembersAllowedInformation
+      availableRoles {
+        id
+        name
+        fgColor
+        bgColor
+      }
+      canEdit
+      canDelete
+    }
+  }
+}

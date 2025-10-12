@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block browser_title %}{% blocktrans %}Network error{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  <h3>
+    <i class="material-icons iconify left medium" style="font-size: 2.92rem;" data-icon="mdi:wifi-strength-alert-outline"></i>
+    {% blocktrans %}No connection to server.{% endblocktrans %}
+  </h3>
+
+  <p class="flow-text">
+    {% blocktrans %}
+      This page is not available without a connection to the server. Please check your internet connection and try again.
+      If you are connected and the error persists, please contact the system administrators:
+    {% endblocktrans %}
+  </p>
+  {% include "core/partials/admins_list.html" %}
+  <a onClick="window.location.reload();" class="btn secondary waves-effect waves-light">
+    <i class="material-icons left">refresh</i>
+    {% trans "Retry" %}
+  </a>
+{% endblock %}

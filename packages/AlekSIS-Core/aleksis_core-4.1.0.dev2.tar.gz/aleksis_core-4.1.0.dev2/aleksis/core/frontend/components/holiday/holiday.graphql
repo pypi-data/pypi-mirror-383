@@ -1,0 +1,42 @@
+query holidays($orderBy: [String], $filters: JSONString) {
+  items: holidays(orderBy: $orderBy, filters: $filters) {
+    id
+    holidayName
+    dateStart
+    dateEnd
+    canEdit
+    canDelete
+  }
+}
+
+mutation createHolidays($input: [BatchCreateHolidayInput]!) {
+  createHolidays(input: $input) {
+    items: holidays {
+      id
+      holidayName
+      dateStart
+      dateEnd
+      canEdit
+      canDelete
+    }
+  }
+}
+
+mutation deleteHolidays($ids: [ID]!) {
+  deleteHolidays(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateHolidays($input: [BatchPatchHolidayInput]!) {
+  updateHolidays(input: $input) {
+    items: holidays {
+      id
+      holidayName
+      dateStart
+      dateEnd
+      canEdit
+      canDelete
+    }
+  }
+}

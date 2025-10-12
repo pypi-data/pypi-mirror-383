@@ -1,0 +1,47 @@
+fragment announcementFields on AnnouncementType {
+  id
+  datetimeStart
+  datetimeEnd
+  title
+  description
+  priority
+  isGlobal
+  recipientGroups {
+    id
+    shortName
+  }
+  recipientPersons {
+    id
+    fullName
+  }
+  canDelete
+  canEdit
+}
+
+query announcements {
+  items: announcements {
+    ...announcementFields
+  }
+}
+
+mutation createAnnouncements($input: [BatchCreateAnnouncementInput]!) {
+  createAnnouncements(input: $input) {
+    items: announcements {
+      ...announcementFields
+    }
+  }
+}
+
+mutation deleteAnnouncements($ids: [ID]!) {
+  deleteAnnouncements(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation patchAnnouncements($input: [BatchPatchAnnouncementInput]!) {
+  patchAnnouncements(input: $input) {
+    items: announcements {
+      ...announcementFields
+    }
+  }
+}

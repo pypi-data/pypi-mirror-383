@@ -1,0 +1,19 @@
+query whoAmI($permissions: [String]!) {
+  whoAmI {
+    id
+    username
+    isAuthenticated
+    isAnonymous
+    isImpersonate
+    person {
+      id
+      fullName
+      avatarContentUrl
+      isDummy
+    }
+    permissions: globalPermissionsByName(permissions: $permissions) {
+      name
+      result
+    }
+  }
+}

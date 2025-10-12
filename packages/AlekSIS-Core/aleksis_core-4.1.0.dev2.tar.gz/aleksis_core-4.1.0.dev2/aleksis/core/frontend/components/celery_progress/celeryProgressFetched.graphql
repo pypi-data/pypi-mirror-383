@@ -1,0 +1,7 @@
+mutation celeryProgressFetched($id: ID!) {
+  celeryProgressFetched(id: $id) {
+    celeryProgress {
+      state
+    }
+  }
+}

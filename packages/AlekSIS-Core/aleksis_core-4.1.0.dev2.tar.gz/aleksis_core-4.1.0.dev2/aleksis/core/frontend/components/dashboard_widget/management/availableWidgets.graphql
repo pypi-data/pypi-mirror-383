@@ -1,0 +1,8 @@
+query widgetTypes {
+  dashboard {
+    widgetTypes {
+      typeName
+      modelName
+    }
+  }
+}

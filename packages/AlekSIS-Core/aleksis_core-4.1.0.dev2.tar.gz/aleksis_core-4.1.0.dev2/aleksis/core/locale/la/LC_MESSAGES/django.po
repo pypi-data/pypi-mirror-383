@@ -1,0 +1,2998 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-10 11:13+0200\n"
+"PO-Revision-Date: 2020-12-19 12:57+0000\n"
+"Last-Translator: Julian <leuckerj@gmail.com>\n"
+"Language-Team: Latin <https://translate.edugit.org/projects/aleksis/aleksis/la/>\n"
+"Language: la\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#: aleksis/core/apps.py:171
+msgid "You have been logged out successfully."
+msgstr ""
+
+#: aleksis/core/apps.py:181
+msgid "OpenID Connect scope"
+msgstr ""
+
+#: aleksis/core/apps.py:182
+msgid "Given name, family name, link to profile and picture if existing."
+msgstr ""
+
+#: aleksis/core/apps.py:183
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Postal addresses"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/apps.py:184
+#: aleksis/core/templates/templated_email/account_registered.email:13
+#: aleksis/core/templates/templated_email/account_registered.email:28
+#: aleksis/core/templates/templated_email/account_registered.email:43
+#: aleksis/core/templates/templated_email/account_registered.email:57
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Email address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/apps.py:185
+#, fuzzy
+#| msgid "Mobile phone"
+msgid "Home and mobile phone"
+msgstr "Numerus telephoni mobilis"
+
+#: aleksis/core/apps.py:186 aleksis/core/models.py:720
+#: aleksis/core/models.py:1334
+msgid "Groups"
+msgstr "Greges"
+
+#: aleksis/core/data_checks.py:67
+msgid "Ignore problem"
+msgstr ""
+
+#: aleksis/core/data_checks.py:332
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Deactivate DashboardWidget"
+msgstr "Forum"
+
+#: aleksis/core/data_checks.py:346
+msgid "Ensure that there are no broken DashboardWidgets."
+msgstr ""
+
+#: aleksis/core/data_checks.py:347
+msgid "The DashboardWidget was reported broken automatically."
+msgstr ""
+
+#: aleksis/core/data_checks.py:369
+#, python-brace-format
+msgid "Validate field {field} of model {model}."
+msgstr ""
+
+#: aleksis/core/data_checks.py:372
+msgid "The field {} couldn't be validated successfully."
+msgstr ""
+
+#: aleksis/core/data_checks.py:394
+msgid "Ensure that there are no disallowed usernames."
+msgstr ""
+
+#: aleksis/core/data_checks.py:395
+msgid "A user with a disallowed username was reported automatically."
+msgstr ""
+
+#: aleksis/core/data_checks.py:416
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Change email address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/data_checks.py:421
+msgid "Ensure that email addresses are unique among all persons"
+msgstr ""
+
+#: aleksis/core/data_checks.py:422
+#, fuzzy
+#| msgid "E-mail address"
+msgid "There was a non-unique email address."
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/data_checks.py:488
+msgid "Auto-adjust Colors"
+msgstr ""
+
+#: aleksis/core/data_checks.py:540
+msgid "Validate contrast accessibility of colors of customizable objects."
+msgstr ""
+
+#: aleksis/core/data_checks.py:541
+msgid "The colors of this object are not accessible."
+msgstr ""
+
+#: aleksis/core/data_checks.py:574
+msgid "Auto-adjust Color"
+msgstr ""
+
+#: aleksis/core/data_checks.py:602
+msgid "Validate that theme colors are accessible."
+msgstr ""
+
+#: aleksis/core/data_checks.py:603
+msgid "The color does not provide enough contrast"
+msgstr ""
+
+#: aleksis/core/filters.py:43
+msgid "Search by name"
+msgstr "Quaerere cum breve nomine"
+
+#: aleksis/core/filters.py:56
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Search by contact details"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/filters.py:77
+msgid "Permission"
+msgstr ""
+
+#: aleksis/core/filters.py:85
+msgid "Content type"
+msgstr ""
+
+#: aleksis/core/filters.py:98 aleksis/core/models.py:974
+msgid "User"
+msgstr ""
+
+#: aleksis/core/filters.py:120 aleksis/core/models.py:719
+msgid "Group"
+msgstr "Grex"
+
+#: aleksis/core/forms.py:36 aleksis/core/models.py:177
+msgid "School term"
+msgstr "Anus scolae"
+
+#: aleksis/core/forms.py:37
+#, fuzzy
+#| msgid "Data management"
+msgid "Common data"
+msgstr "Adminstratio datarum"
+
+#: aleksis/core/forms.py:38 aleksis/core/models.py:231
+#: aleksis/core/models.py:238
+msgid "Persons"
+msgstr "personae"
+
+#: aleksis/core/forms.py:39 aleksis/core/models.py:307
+#: aleksis/core/models.py:774 aleksis/core/models.py:1332
+msgid "Photo"
+msgstr "Photographia"
+
+#: aleksis/core/forms.py:106 aleksis/core/models.py:275
+msgid "First name"
+msgstr "Primus nomen"
+
+#: aleksis/core/forms.py:107 aleksis/core/models.py:276
+msgid "Last name"
+msgstr "Secondus nomen"
+
+#: aleksis/core/forms.py:116
+#, fuzzy
+#| msgid "E-mail address"
+msgid "A person is using this e-mail address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/forms.py:144
+#, fuzzy
+#| msgid "Who should see the announcement?"
+msgid "Who should get the permission?"
+msgstr "Quis nuntium videatne?"
+
+#: aleksis/core/forms.py:145
+msgid "On what?"
+msgstr ""
+
+#: aleksis/core/forms.py:171
+msgid "Select objects which the permission should be granted for:"
+msgstr ""
+
+#: aleksis/core/forms.py:174
+msgid "Grant the permission for all objects"
+msgstr ""
+
+#: aleksis/core/forms.py:182
+msgid "You must select at least one group or person which should get the permission."
+msgstr ""
+
+#: aleksis/core/forms.py:187
+msgid "You must grant the permission to all objects or to specific objects."
+msgstr ""
+
+#: aleksis/core/forms.py:322
+msgid "The selected action does not exist."
+msgstr ""
+
+#: aleksis/core/forms.py:333
+msgid "You do not have permission to run {} on all selected objects."
+msgstr ""
+
+#: aleksis/core/forms.py:389
+msgid "No valid selection."
+msgstr ""
+
+#: aleksis/core/health_checks.py:21
+#, fuzzy
+#| msgid "Write your announcement:"
+msgid "There are unresolved data problems."
+msgstr "Scribe nuntium:"
+
+#: aleksis/core/health_checks.py:40
+msgid "Error accessing backup storage: {}"
+msgstr ""
+
+#: aleksis/core/health_checks.py:50
+msgid "Last backup {}!"
+msgstr ""
+
+#: aleksis/core/health_checks.py:52
+msgid "No backup found!"
+msgstr ""
+
+#: aleksis/core/health_checks.py:79
+msgid "No backup result found!"
+msgstr ""
+
+#: aleksis/core/mixins.py:538
+#, fuzzy
+#| msgid "Edit school term"
+msgid "Linked school term"
+msgstr "Muta anum scolae"
+
+#: aleksis/core/models.py:107
+msgid "Boolean (Yes/No)"
+msgstr ""
+
+#: aleksis/core/models.py:108
+msgid "Text (one line)"
+msgstr ""
+
+#: aleksis/core/models.py:109
+msgid "Date"
+msgstr "dies"
+
+#: aleksis/core/models.py:110
+msgid "Date and time"
+msgstr "Dies et hora"
+
+#: aleksis/core/models.py:111
+msgid "Decimal number"
+msgstr ""
+
+#: aleksis/core/models.py:112 aleksis/core/models.py:298
+msgid "E-mail address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:113
+msgid "Integer"
+msgstr ""
+
+#: aleksis/core/models.py:114
+#, fuzzy
+#| msgid "E-mail address"
+msgid "IP address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:115
+msgid "Boolean or empty (Yes/No/Neither)"
+msgstr ""
+
+#: aleksis/core/models.py:116
+msgid "Text (multi-line)"
+msgstr ""
+
+#: aleksis/core/models.py:117
+msgid "Time"
+msgstr "tempus"
+
+#: aleksis/core/models.py:118
+msgid "URL / Link"
+msgstr ""
+
+#: aleksis/core/models.py:141 aleksis/core/models.py:190
+#: aleksis/core/models.py:881 aleksis/core/models.py:1279
+#: aleksis/core/models.py:2492 aleksis/core/models.py:2810
+#: aleksis/core/models.py:3232
+#: aleksis/core/templates/templated_email/account_registered.email:10
+#: aleksis/core/templates/templated_email/account_registered.email:27
+#: aleksis/core/templates/templated_email/account_registered.email:40
+#: aleksis/core/templates/templated_email/account_registered.email:56
+msgid "Name"
+msgstr "Nomen"
+
+#: aleksis/core/models.py:143 aleksis/core/models.py:911
+#: aleksis/core/models.py:1746
+msgid "Start date"
+msgstr ""
+
+#: aleksis/core/models.py:144 aleksis/core/models.py:912
+#: aleksis/core/models.py:1747
+msgid "End date"
+msgstr ""
+
+#: aleksis/core/models.py:163
+msgid "The start date must be earlier than the end date."
+msgstr ""
+
+#: aleksis/core/models.py:170
+msgid "There is already a school term for this time or a part of this time."
+msgstr ""
+
+#: aleksis/core/models.py:178
+msgid "School terms"
+msgstr "ani scolae"
+
+#: aleksis/core/models.py:203
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Address Type"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:204
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Address Types"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:209
+#: aleksis/core/templates/templated_email/account_registered.email:16
+#: aleksis/core/templates/templated_email/account_registered.email:46
+msgid "Street"
+msgstr "Via"
+
+#: aleksis/core/models.py:210
+msgid "Street number"
+msgstr "Numerus domini"
+
+#: aleksis/core/models.py:211
+#: aleksis/core/templates/templated_email/account_registered.email:18
+#: aleksis/core/templates/templated_email/account_registered.email:48
+msgid "Postal code"
+msgstr "Numerus directorius"
+
+#: aleksis/core/models.py:212
+#: aleksis/core/templates/templated_email/account_registered.email:19
+#: aleksis/core/templates/templated_email/account_registered.email:49
+msgid "Place"
+msgstr "Urbs"
+
+#: aleksis/core/models.py:213
+#: aleksis/core/templates/templated_email/account_registered.email:20
+#: aleksis/core/templates/templated_email/account_registered.email:50
+msgid "Country"
+msgstr ""
+
+#: aleksis/core/models.py:219 aleksis/core/models.py:1330
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:220 aleksis/core/models.py:292
+#: aleksis/core/models.py:3244
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Addresses"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:237 aleksis/core/models.py:1205
+#: aleksis/core/models.py:2530
+#: aleksis/core/templates/templated_email/account_registered.email:8
+#: aleksis/core/templates/templated_email/account_registered.email:38
+msgid "Person"
+msgstr "Persona"
+
+#: aleksis/core/models.py:240
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view addresses"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:241
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view contact details"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:242
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view photo"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:243
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view avatar image"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:244
+#, fuzzy
+#| msgid "Persons and accounts"
+msgid "Can view persons groups"
+msgstr "Personae et computi"
+
+#: aleksis/core/models.py:245
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Can view personal details"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/models.py:246
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Can view persons aggregated availability feed"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/models.py:247
+msgid "Can change the password of the linked user"
+msgstr ""
+
+#: aleksis/core/models.py:248
+msgid "Can send a password reset request for the linked user"
+msgstr ""
+
+#: aleksis/core/models.py:260
+msgid "female"
+msgstr "femininum"
+
+#: aleksis/core/models.py:261
+msgid "male"
+msgstr "maskulinum"
+
+#: aleksis/core/models.py:262
+msgid "other"
+msgstr ""
+
+#: aleksis/core/models.py:272 aleksis/core/models.py:1611
+msgid "Linked user"
+msgstr ""
+
+#: aleksis/core/models.py:278
+msgid "Additional name(s)"
+msgstr "addita nomines"
+
+#: aleksis/core/models.py:282 aleksis/core/models.py:739
+#: aleksis/core/models.py:883 aleksis/core/models.py:1703
+#: aleksis/core/models.py:2493
+msgid "Short name"
+msgstr "Breve nomen"
+
+#: aleksis/core/models.py:295
+msgid "Home phone"
+msgstr "Numerus telephoni domi"
+
+#: aleksis/core/models.py:296
+msgid "Mobile phone"
+msgstr "Numerus telephoni mobilis"
+
+#: aleksis/core/models.py:300
+#: aleksis/core/templates/templated_email/account_registered.email:12
+#: aleksis/core/templates/templated_email/account_registered.email:42
+msgid "Date of birth"
+msgstr "Dies natalis"
+
+#: aleksis/core/models.py:301
+#, fuzzy
+#| msgid "Date of birth"
+msgid "Place of birth"
+msgstr "Dies natalis"
+
+#: aleksis/core/models.py:303
+msgid "Sex"
+msgstr "Genus"
+
+#: aleksis/core/models.py:311 aleksis/core/models.py:778
+msgid "This is an official photo, used for official documents and for internal use cases."
+msgstr ""
+
+#: aleksis/core/models.py:316 aleksis/core/models.py:782
+msgid "Display picture / Avatar"
+msgstr ""
+
+#: aleksis/core/models.py:319 aleksis/core/models.py:785
+msgid "This is a picture or an avatar for public display."
+msgstr ""
+
+#: aleksis/core/models.py:324
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Related persons"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/models.py:332
+msgid "Primary group"
+msgstr ""
+
+#: aleksis/core/models.py:335 aleksis/core/models.py:978
+#: aleksis/core/models.py:1002 aleksis/core/models.py:1315
+#: aleksis/core/models.py:2230 aleksis/core/models.py:2494
+#: aleksis/core/models.py:2532 aleksis/core/models.py:2871
+#: aleksis/core/models.py:3061
+msgid "Description"
+msgstr "Descriptio"
+
+#: aleksis/core/models.py:722
+msgid "Can assign child groups to groups"
+msgstr ""
+
+#: aleksis/core/models.py:723
+#, fuzzy
+#| msgid "Persons and accounts"
+msgid "Can view statistics about group."
+msgstr "Personae et computi"
+
+#: aleksis/core/models.py:724
+msgid "Can view groups aggregated availability feed"
+msgstr ""
+
+#: aleksis/core/models.py:737 aleksis/core/models.py:1704
+#, fuzzy
+#| msgid "Last name"
+msgid "Long name"
+msgstr "Secondus nomen"
+
+#: aleksis/core/models.py:750
+msgid "Members"
+msgstr ""
+
+#: aleksis/core/models.py:753
+msgid "Owners"
+msgstr ""
+
+#: aleksis/core/models.py:760
+msgid "Parent groups"
+msgstr ""
+
+#: aleksis/core/models.py:768
+msgid "Type of group"
+msgstr ""
+
+#: aleksis/core/models.py:888
+#, fuzzy
+#| msgid "Official name"
+msgid "Reciprocal name"
+msgstr "Officialis nomen"
+
+#: aleksis/core/models.py:891
+#, fuzzy
+#| msgid "Official name"
+msgid "iCal name"
+msgstr "Officialis nomen"
+
+#: aleksis/core/models.py:893
+#, fuzzy
+#| msgid "Last name"
+msgid "vCard name"
+msgstr "Secondus nomen"
+
+#: aleksis/core/models.py:895
+msgid "Foreground color"
+msgstr ""
+
+#: aleksis/core/models.py:896
+msgid "Background color"
+msgstr ""
+
+#: aleksis/core/models.py:902
+msgid "Role"
+msgstr ""
+
+#: aleksis/core/models.py:903 aleksis/core/models.py:909
+msgid "Roles"
+msgstr ""
+
+#: aleksis/core/models.py:977 aleksis/core/models.py:1001
+#: aleksis/core/models.py:1521 aleksis/core/models.py:2229
+#: aleksis/core/models.py:2525 aleksis/core/models.py:2870
+#: aleksis/core/models.py:3059
+msgid "Title"
+msgstr "Titulus"
+
+#: aleksis/core/models.py:980
+msgid "Application"
+msgstr ""
+
+#: aleksis/core/models.py:986
+msgid "Activity"
+msgstr ""
+
+#: aleksis/core/models.py:987
+msgid "Activities"
+msgstr ""
+
+#: aleksis/core/models.py:993
+msgid "Sender"
+msgstr "Mittens"
+
+#: aleksis/core/models.py:998
+msgid "Recipient"
+msgstr ""
+
+#: aleksis/core/models.py:1003 aleksis/core/models.py:1280
+msgid "Link"
+msgstr ""
+
+#: aleksis/core/models.py:1008 aleksis/core/models.py:1282
+#: aleksis/core/models.py:1661
+msgid "Icon"
+msgstr "Nota"
+
+#: aleksis/core/models.py:1012
+#, fuzzy
+#| msgid "Notification"
+msgid "Send notification at"
+msgstr "Nuntius"
+
+#: aleksis/core/models.py:1014
+msgid "Read"
+msgstr ""
+
+#: aleksis/core/models.py:1015
+msgid "Sent"
+msgstr ""
+
+#: aleksis/core/models.py:1020 aleksis/core/models.py:2213
+msgid "Calendar alarm"
+msgstr ""
+
+#: aleksis/core/models.py:1041
+#, fuzzy
+#| msgid "Notifications"
+msgid "Notification"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:1042 aleksis/core/preferences.py:30
+msgid "Notifications"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:1060
+msgid "Off"
+msgstr ""
+
+#: aleksis/core/models.py:1061
+msgid "Ready"
+msgstr ""
+
+#: aleksis/core/models.py:1062
+msgid "Broken"
+msgstr ""
+
+#: aleksis/core/models.py:1063
+msgid "On"
+msgstr ""
+
+#: aleksis/core/models.py:1070
+#, fuzzy
+#| msgid "System status"
+msgid "Status"
+msgstr "Status systemae"
+
+#: aleksis/core/models.py:1073
+#, fuzzy
+#| msgid "Site title"
+msgid "Widget Title"
+msgstr "Titulus paginae"
+
+#: aleksis/core/models.py:1101
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Can edit default dashboard"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1102
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard Widget"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1103
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard Widgets"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1107
+msgid "URL"
+msgstr ""
+
+#: aleksis/core/models.py:1108
+#, fuzzy
+#| msgid "Icon"
+msgid "Icon URL"
+msgstr "Nota"
+
+#: aleksis/core/models.py:1122
+msgid "External link widget"
+msgstr ""
+
+#: aleksis/core/models.py:1123
+msgid "External link widgets"
+msgstr ""
+
+#: aleksis/core/models.py:1127
+msgid "Content"
+msgstr ""
+
+#: aleksis/core/models.py:1141
+msgid "Static content widget"
+msgstr ""
+
+#: aleksis/core/models.py:1142
+msgid "Static content widgets"
+msgstr ""
+
+#: aleksis/core/models.py:1148
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Selected calendars"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/models.py:1166
+msgid "Allowed calendars"
+msgstr ""
+
+#: aleksis/core/models.py:1167
+msgid "If no specific calendars are selected, all calendars are allowed."
+msgstr ""
+
+#: aleksis/core/models.py:1198
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Calendar widget"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1199
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Calendar widgets"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1209
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widget"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1217
+#, fuzzy
+#| msgid "Notification"
+msgid "Configuration"
+msgstr "Nuntius"
+
+#: aleksis/core/models.py:1221 aleksis/core/models.py:1224
+msgid "X position"
+msgstr ""
+
+#: aleksis/core/models.py:1228
+msgid "Width"
+msgstr ""
+
+#: aleksis/core/models.py:1231
+msgid "Height"
+msgstr ""
+
+#: aleksis/core/models.py:1246
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widget order"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1247
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Dashboard widget orders"
+msgstr "Forum"
+
+#: aleksis/core/models.py:1253
+msgid "Menu ID"
+msgstr ""
+
+#: aleksis/core/models.py:1266
+msgid "Custom menu"
+msgstr ""
+
+#: aleksis/core/models.py:1267
+msgid "Custom menus"
+msgstr ""
+
+#: aleksis/core/models.py:1277
+msgid "Menu"
+msgstr ""
+
+#: aleksis/core/models.py:1289
+msgid "Custom menu item"
+msgstr ""
+
+#: aleksis/core/models.py:1290
+msgid "Custom menu items"
+msgstr ""
+
+#: aleksis/core/models.py:1314
+msgid "Title of type"
+msgstr ""
+
+#: aleksis/core/models.py:1318
+msgid "Owners of groups with this group type can see the groups"
+msgstr ""
+
+#: aleksis/core/models.py:1321
+msgid "Owners of groups with this group type can see group members"
+msgstr ""
+
+#: aleksis/core/models.py:1329
+#, fuzzy
+#| msgid "Persons"
+msgid "Personal details"
+msgstr "personae"
+
+#: aleksis/core/models.py:1331
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Contact details"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:1333
+#: aleksis/core/templates/core/partials/avatar_content.html:14
+#: aleksis/core/templates/core/partials/avatar_content.html:15
+msgid "Avatar"
+msgstr ""
+
+#: aleksis/core/models.py:1338
+msgid "Information owners of groups with this group type can see of the group's members"
+msgstr ""
+
+#: aleksis/core/models.py:1345
+msgid "Available roles"
+msgstr ""
+
+#: aleksis/core/models.py:1352
+#, fuzzy
+#| msgid "Group"
+msgid "Group type"
+msgstr "Grex"
+
+#: aleksis/core/models.py:1353
+#, fuzzy
+#| msgid "Groups"
+msgid "Group types"
+msgstr "Greges"
+
+#: aleksis/core/models.py:1364
+#, fuzzy
+#| msgid "System status"
+msgid "Can view system status"
+msgstr "Status systemae"
+
+#: aleksis/core/models.py:1365
+#, fuzzy
+#| msgid "Data management"
+msgid "Can manage data"
+msgstr "Adminstratio datarum"
+
+#: aleksis/core/models.py:1366
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Can impersonate"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/models.py:1367
+msgid "Can use search"
+msgstr ""
+
+#: aleksis/core/models.py:1368
+msgid "Can change site preferences"
+msgstr ""
+
+#: aleksis/core/models.py:1369
+msgid "Can change person preferences"
+msgstr ""
+
+#: aleksis/core/models.py:1370
+msgid "Can change group preferences"
+msgstr ""
+
+#: aleksis/core/models.py:1371
+msgid "Can test PDF generation"
+msgstr ""
+
+#: aleksis/core/models.py:1372
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Can invite persons"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/models.py:1373
+msgid "Can view birthday calendar"
+msgstr ""
+
+#: aleksis/core/models.py:1374
+msgid "Can reset passwords for users"
+msgstr ""
+
+#: aleksis/core/models.py:1375
+msgid "Can change passwords for users"
+msgstr ""
+
+#: aleksis/core/models.py:1402
+msgid "Related data check task"
+msgstr ""
+
+#: aleksis/core/models.py:1410
+msgid "Issue solved"
+msgstr ""
+
+#: aleksis/core/models.py:1411
+#, fuzzy
+#| msgid "Notifications"
+msgid "Notification sent"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:1424
+msgid "Data check result"
+msgstr ""
+
+#: aleksis/core/models.py:1425
+msgid "Data check results"
+msgstr ""
+
+#: aleksis/core/models.py:1427
+msgid "Can run data checks"
+msgstr ""
+
+#: aleksis/core/models.py:1428
+msgid "Can solve data check problems"
+msgstr ""
+
+#: aleksis/core/models.py:1435
+#, fuzzy
+#| msgid "E-mail address"
+msgid "E-Mail address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:1494 aleksis/core/models.py:2878
+#: aleksis/core/models.py:3141
+msgid "Owner"
+msgstr ""
+
+#: aleksis/core/models.py:1498
+msgid "File expires at"
+msgstr ""
+
+#: aleksis/core/models.py:1501
+msgid "Generated HTML file"
+msgstr ""
+
+#: aleksis/core/models.py:1504
+msgid "Generated PDF file"
+msgstr ""
+
+#: aleksis/core/models.py:1511
+msgid "PDF file"
+msgstr ""
+
+#: aleksis/core/models.py:1512
+msgid "PDF files"
+msgstr ""
+
+#: aleksis/core/models.py:1516
+#: aleksis/core/templates/templated_email/celery_failure.email:10
+#: aleksis/core/templates/templated_email/celery_failure.email:29
+msgid "Task ID"
+msgstr ""
+
+#: aleksis/core/models.py:1518
+msgid "Task user"
+msgstr ""
+
+#: aleksis/core/models.py:1522
+#, fuzzy
+#| msgid "Icon"
+msgid "Back URL"
+msgstr "Nota"
+
+#: aleksis/core/models.py:1523
+msgid "Progress title"
+msgstr ""
+
+#: aleksis/core/models.py:1524
+msgid "Error message"
+msgstr ""
+
+#: aleksis/core/models.py:1525
+msgid "Success message"
+msgstr ""
+
+#: aleksis/core/models.py:1526
+msgid "Redirect on success URL"
+msgstr ""
+
+#: aleksis/core/models.py:1528
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Additional button title"
+msgstr "addita nomines"
+
+#: aleksis/core/models.py:1530
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Additional button URL"
+msgstr "addita nomines"
+
+#: aleksis/core/models.py:1532
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Additional button icon"
+msgstr "addita nomines"
+
+#: aleksis/core/models.py:1534
+msgid "Result fetched"
+msgstr ""
+
+#: aleksis/core/models.py:1561
+msgid "Background task completed successfully"
+msgstr ""
+
+#: aleksis/core/models.py:1562
+msgid "The background task '{}' has been completed successfully."
+msgstr ""
+
+#: aleksis/core/models.py:1568
+msgid "Background task failed"
+msgstr ""
+
+#: aleksis/core/models.py:1569
+msgid "The background task '{}' has failed."
+msgstr ""
+
+#: aleksis/core/models.py:1578
+msgid "Background task"
+msgstr ""
+
+#: aleksis/core/models.py:1592
+msgid "Task user assignment"
+msgstr ""
+
+#: aleksis/core/models.py:1593
+msgid "Task user assignments"
+msgstr ""
+
+#: aleksis/core/models.py:1614
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Additional attributes"
+msgstr "addita nomines"
+
+#: aleksis/core/models.py:1655
+msgid "Allowed scopes that clients can request"
+msgstr ""
+
+#: aleksis/core/models.py:1665
+msgid "This image will be shown as icon in the authorization flow. It should be squared."
+msgstr ""
+
+#: aleksis/core/models.py:1712
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Can view room timetable"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/models.py:1714
+msgid "Room"
+msgstr ""
+
+#: aleksis/core/models.py:1715
+msgid "Rooms"
+msgstr ""
+
+#: aleksis/core/models.py:1742
+#, fuzzy
+#| msgid "Date and time"
+msgid "Start date and time"
+msgstr "Dies et hora"
+
+#: aleksis/core/models.py:1744
+#, fuzzy
+#| msgid "Date and time"
+msgid "End date and time"
+msgstr "Dies et hora"
+
+#: aleksis/core/models.py:1745
+#, fuzzy
+#| msgid "Time"
+msgid "Timezone"
+msgstr "tempus"
+
+#: aleksis/core/models.py:1749
+msgid "Recurrences"
+msgstr ""
+
+#: aleksis/core/models.py:1757
+msgid "Amended base event"
+msgstr ""
+
+#: aleksis/core/models.py:2006
+msgid "Calendar Event"
+msgstr ""
+
+#: aleksis/core/models.py:2007
+msgid "Calendar Events"
+msgstr ""
+
+#: aleksis/core/models.py:2069
+msgid "Audio"
+msgstr ""
+
+#: aleksis/core/models.py:2070
+msgid "Display"
+msgstr ""
+
+#: aleksis/core/models.py:2071 aleksis/core/models.py:3233
+msgid "Email"
+msgstr ""
+
+#: aleksis/core/models.py:2072
+msgid "Procedure"
+msgstr ""
+
+#: aleksis/core/models.py:2076
+msgid "Event"
+msgstr ""
+
+#: aleksis/core/models.py:2080
+#, fuzzy
+#| msgid "Notifications"
+msgid "Action"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2083
+#, fuzzy
+#| msgid "Notification"
+msgid "Send notifications"
+msgstr "Nuntius"
+
+#: aleksis/core/models.py:2214
+msgid "Calendar alarms"
+msgstr ""
+
+#: aleksis/core/models.py:2231
+msgid "Link to detailed view"
+msgstr ""
+
+#: aleksis/core/models.py:2232
+msgid "Priority"
+msgstr ""
+
+#: aleksis/core/models.py:2235
+#, fuzzy
+#| msgid "Announcements"
+msgid "Global announcement"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2236
+msgid "Show this announcement for everyone"
+msgstr ""
+
+#: aleksis/core/models.py:2305 aleksis/core/models.py:2319
+#, fuzzy
+#| msgid "Announcements"
+msgid "Announcement"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2306
+msgid "Announcements"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2334
+#, fuzzy
+#| msgid "Announcements"
+msgid "Announcement alarm"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2335
+#, fuzzy
+#| msgid "Announcements"
+msgid "Announcement alarms"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2378
+#, fuzzy
+#| msgid "Announcements"
+msgid "Announcement recipient"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2379
+#, fuzzy
+#| msgid "Announcements"
+msgid "Announcement recipients"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:2386
+msgid "Free/Busy"
+msgstr ""
+
+#: aleksis/core/models.py:2433
+msgid "Free/busy status generated by events in feed {} for event {}"
+msgstr ""
+
+#: aleksis/core/models.py:2440 aleksis/core/models.py:2502
+msgid "Free"
+msgstr ""
+
+#: aleksis/core/models.py:2441
+msgid "Busy"
+msgstr ""
+
+#: aleksis/core/models.py:2497
+msgid "Public"
+msgstr ""
+
+#: aleksis/core/models.py:2498
+msgid "This indicates whether this type should be publicly available."
+msgstr ""
+
+#: aleksis/core/models.py:2500
+msgid "Color"
+msgstr ""
+
+#: aleksis/core/models.py:2504
+msgid "This indicates whether availability events with this type should count as free."
+msgstr ""
+
+#: aleksis/core/models.py:2512 aleksis/core/models.py:2538
+msgid "Availability type"
+msgstr ""
+
+#: aleksis/core/models.py:2513
+msgid "Availability types"
+msgstr ""
+
+#: aleksis/core/models.py:2520 aleksis/core/models.py:2680
+msgid "Availability events"
+msgstr ""
+
+#: aleksis/core/models.py:2544
+msgid "Free: {} ({})"
+msgstr ""
+
+#: aleksis/core/models.py:2547
+msgid "Busy: {} ({})"
+msgstr ""
+
+#: aleksis/core/models.py:2675
+msgid "Free: {}"
+msgstr ""
+
+#: aleksis/core/models.py:2676
+msgid "Busy: {}"
+msgstr ""
+
+#: aleksis/core/models.py:2679
+msgid "Availability event"
+msgstr ""
+
+#: aleksis/core/models.py:2687
+msgid "Birthdays"
+msgstr ""
+
+#: aleksis/core/models.py:2705
+msgid "{}'s birthday"
+msgstr ""
+
+#: aleksis/core/models.py:2791 aleksis/core/models.py:2860
+msgid "Holidays"
+msgstr ""
+
+#: aleksis/core/models.py:2859
+msgid "Holiday"
+msgstr ""
+
+#: aleksis/core/models.py:2861
+msgid "Can view holiday calendar"
+msgstr ""
+
+#: aleksis/core/models.py:2866
+#, fuzzy
+#| msgid "Persons"
+msgid "Personal events"
+msgstr "personae"
+
+#: aleksis/core/models.py:2872 aleksis/core/models.py:3062
+#, fuzzy
+#| msgid "Notifications"
+msgid "Location"
+msgstr "Nuntii"
+
+#: aleksis/core/models.py:3044
+msgid "Percent completed"
+msgstr ""
+
+#: aleksis/core/models.py:3048
+msgid "Completed on"
+msgstr ""
+
+#: aleksis/core/models.py:3055
+msgid "Parent todo"
+msgstr ""
+
+#: aleksis/core/models.py:3132
+#, fuzzy
+#| msgid "Persons"
+msgid "Personal todos"
+msgstr "personae"
+
+#: aleksis/core/models.py:3236
+#, fuzzy
+#| msgid "Group"
+msgid "Related group"
+msgstr "Grex"
+
+#: aleksis/core/models.py:3322
+#, fuzzy
+#| msgid "Impersonation"
+msgid "Organisation"
+msgstr "Simulare aliquem"
+
+#: aleksis/core/models.py:3323
+#, fuzzy
+#| msgid "Impersonation"
+msgid "Organisations"
+msgstr "Simulare aliquem"
+
+#: aleksis/core/models.py:3339
+#, fuzzy
+#| msgid "Persons"
+msgid "Personal event alarm"
+msgstr "personae"
+
+#: aleksis/core/models.py:3340
+#, fuzzy
+#| msgid "Persons"
+msgid "Personal event alarms"
+msgstr "personae"
+
+#: aleksis/core/preferences.py:26
+msgid "General"
+msgstr ""
+
+#: aleksis/core/preferences.py:27
+msgid "School"
+msgstr "Scola"
+
+#: aleksis/core/preferences.py:28
+msgid "Theme"
+msgstr ""
+
+#: aleksis/core/preferences.py:29
+msgid "Mail"
+msgstr ""
+
+#: aleksis/core/preferences.py:31
+msgid "Footer"
+msgstr ""
+
+#: aleksis/core/preferences.py:32
+#, fuzzy
+#| msgid "Data management"
+msgid "Accounts"
+msgstr "Adminstratio datarum"
+
+#: aleksis/core/preferences.py:33
+#, fuzzy
+#| msgid "Notifications"
+msgid "Authentication"
+msgstr "Nuntii"
+
+#: aleksis/core/preferences.py:34
+#, fuzzy
+#| msgid "Impersonation"
+msgid "Internationalisation"
+msgstr "Simulare aliquem"
+
+#: aleksis/core/preferences.py:35
+msgid "Calendar"
+msgstr ""
+
+#: aleksis/core/preferences.py:36
+msgid "People"
+msgstr "Personae"
+
+#: aleksis/core/preferences.py:46
+msgid "Site title"
+msgstr "Titulus paginae"
+
+#: aleksis/core/preferences.py:58
+msgid "Site description"
+msgstr "Descriptio paginae"
+
+#: aleksis/core/preferences.py:68
+msgid "Primary colour"
+msgstr ""
+
+#: aleksis/core/preferences.py:80
+msgid "Secondary colour"
+msgstr ""
+
+#: aleksis/core/preferences.py:92
+#, fuzzy
+#| msgid "Logout"
+msgid "Logo"
+msgstr "nomen retractare"
+
+#: aleksis/core/preferences.py:103
+msgid "Favicon"
+msgstr ""
+
+#: aleksis/core/preferences.py:114
+#, fuzzy
+#| msgid "Icon"
+msgid "PWA-Icon"
+msgstr "Nota"
+
+#: aleksis/core/preferences.py:124
+msgid "PWA-Icon is maskable"
+msgstr ""
+
+#: aleksis/core/preferences.py:136
+#, fuzzy
+#| msgid "Last name"
+msgid "Mail out name"
+msgstr "Secondus nomen"
+
+#: aleksis/core/preferences.py:147
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Mail out address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/preferences.py:160
+msgid "Link to privacy policy"
+msgstr ""
+
+#: aleksis/core/preferences.py:172
+msgid "Link to imprint"
+msgstr ""
+
+#: aleksis/core/preferences.py:183
+msgid "Name format for addressing"
+msgstr ""
+
+#: aleksis/core/preferences.py:200
+msgid "Channels to use for notifications"
+msgstr ""
+
+#: aleksis/core/preferences.py:211
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Select Design"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/preferences.py:213
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "System Design"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/preferences.py:214
+msgid "Light mode"
+msgstr ""
+
+#: aleksis/core/preferences.py:215
+msgid "Dark mode"
+msgstr ""
+
+#: aleksis/core/preferences.py:227
+msgid "Regular expression to match primary group, e.g. '^Class .*'"
+msgstr ""
+
+#: aleksis/core/preferences.py:238
+msgid "Field on person to match primary group against"
+msgstr ""
+
+#: aleksis/core/preferences.py:250
+msgid "Automatically create new persons for new users"
+msgstr ""
+
+#: aleksis/core/preferences.py:259
+msgid "Automatically link existing persons to new users by their e-mail address"
+msgstr ""
+
+#: aleksis/core/preferences.py:270
+msgid "Display name of the school"
+msgstr ""
+
+#: aleksis/core/preferences.py:281
+msgid "Official name of the school, e.g. as given by supervisory authority"
+msgstr "Officialis nomen scolae, e. g."
+
+#: aleksis/core/preferences.py:289
+msgid "Allow users to change their passwords"
+msgstr ""
+
+#: aleksis/core/preferences.py:297
+msgid "Allow users to reset their passwords"
+msgstr ""
+
+#: aleksis/core/preferences.py:305
+msgid "Enable signup"
+msgstr ""
+
+#: aleksis/core/preferences.py:317
+msgid "Required fields on the person model for sign-up. First and last name are always required."
+msgstr ""
+
+#: aleksis/core/preferences.py:336
+msgid "Required fields on the address model for sign-up."
+msgstr ""
+
+#: aleksis/core/preferences.py:355
+msgid "Visible fields on the person model for sign-up. First and last name are always visible."
+msgstr ""
+
+#: aleksis/core/preferences.py:374
+msgid "Visible fields on the address model for sign-up."
+msgstr ""
+
+#: aleksis/core/preferences.py:389
+msgid "Regular expression for allowed usernames"
+msgstr ""
+
+#: aleksis/core/preferences.py:397
+msgid "Enable invitations"
+msgstr ""
+
+#: aleksis/core/preferences.py:405
+msgid "Length of invite code. (Default 3: abcde-acbde-abcde)"
+msgstr ""
+
+#: aleksis/core/preferences.py:413
+msgid "Size of packets. (Default 5: abcde)"
+msgstr ""
+
+#: aleksis/core/preferences.py:424
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Allowed Grant Flows for OAuth applications"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/preferences.py:437
+msgid "Send emails if data checks detect problems"
+msgstr ""
+
+#: aleksis/core/preferences.py:448
+msgid "Email recipients for data checks problem emails"
+msgstr ""
+
+#: aleksis/core/preferences.py:459
+msgid "Email recipient groups for data checks problem emails"
+msgstr ""
+
+#: aleksis/core/preferences.py:468
+msgid "Show dashboard to users without login"
+msgstr ""
+
+#: aleksis/core/preferences.py:477
+msgid "Allow users to edit their dashboard"
+msgstr ""
+
+#: aleksis/core/preferences.py:488
+msgid "Fields on person model which are editable by themselves."
+msgstr ""
+
+#: aleksis/core/preferences.py:503
+msgid "Editable fields on person model which should trigger a notification on change"
+msgstr ""
+
+#: aleksis/core/preferences.py:517
+msgid "Contact for notification if a person changes their data"
+msgstr ""
+
+#: aleksis/core/preferences.py:528
+msgid "Contact for notification when a new account is registered"
+msgstr ""
+
+#: aleksis/core/preferences.py:539
+msgid "Prefer personal photos over avatars"
+msgstr ""
+
+#: aleksis/core/preferences.py:549
+msgid "PDF file expiration duration"
+msgstr ""
+
+#: aleksis/core/preferences.py:550
+msgid "in minutes"
+msgstr ""
+
+#: aleksis/core/preferences.py:560
+msgid "Automatically update the dashboard and its widgets"
+msgstr ""
+
+#: aleksis/core/preferences.py:570
+msgid "Automatically update the dashboard and its widgets sitewide"
+msgstr ""
+
+#: aleksis/core/preferences.py:580 aleksis/core/preferences.py:602
+msgid "First day that appears in the calendar"
+msgstr ""
+
+#: aleksis/core/preferences.py:582 aleksis/core/preferences.py:605
+msgid "Monday"
+msgstr ""
+
+#: aleksis/core/preferences.py:583 aleksis/core/preferences.py:606
+msgid "Tuesday"
+msgstr ""
+
+#: aleksis/core/preferences.py:584 aleksis/core/preferences.py:607
+msgid "Wednesday"
+msgstr ""
+
+#: aleksis/core/preferences.py:585 aleksis/core/preferences.py:608
+msgid "Thursday"
+msgstr ""
+
+#: aleksis/core/preferences.py:586 aleksis/core/preferences.py:609
+msgid "Friday"
+msgstr ""
+
+#: aleksis/core/preferences.py:587 aleksis/core/preferences.py:610
+msgid "Saturday"
+msgstr ""
+
+#: aleksis/core/preferences.py:588 aleksis/core/preferences.py:611
+msgid "Sunday"
+msgstr ""
+
+#: aleksis/core/preferences.py:604
+msgid "Use page default"
+msgstr ""
+
+#: aleksis/core/preferences.py:623
+msgid "Birthday calendar feed color"
+msgstr ""
+
+#: aleksis/core/preferences.py:635
+msgid "Holiday calendar feed color"
+msgstr ""
+
+#: aleksis/core/preferences.py:647
+msgid "Free/busy event calendar feed color"
+msgstr ""
+
+#: aleksis/core/preferences.py:659
+msgid "Color of free events in availability event calendar feed"
+msgstr ""
+
+#: aleksis/core/preferences.py:671
+msgid "Color of busy events in availability event calendar feed"
+msgstr ""
+
+#: aleksis/core/preferences.py:681
+msgid "Color of free events in aggregated free/busy calendar feed."
+msgstr ""
+
+#: aleksis/core/preferences.py:693
+msgid "Color of busy events in aggregated free/busy calendar feed."
+msgstr ""
+
+#: aleksis/core/preferences.py:703
+msgid "Personal events feed color"
+msgstr ""
+
+#: aleksis/core/preferences.py:716
+msgid "Activated calendars"
+msgstr ""
+
+#: aleksis/core/preferences.py:734
+msgid "Comma-separated list of disallowed usernames"
+msgstr ""
+
+#: aleksis/core/preferences.py:743
+msgid "Roles selectable for Person-to-Person relationships"
+msgstr ""
+
+#: aleksis/core/preferences.py:754
+msgid "Role set for a relationship between inviter and invitee"
+msgstr ""
+
+#: aleksis/core/schema/data_check.py:76
+msgid "Progress: Run data checks"
+msgstr ""
+
+#: aleksis/core/schema/data_check.py:77
+#, fuzzy
+#| msgid "System status"
+msgid "Run data checks …"
+msgstr "Status systemae"
+
+#: aleksis/core/schema/data_check.py:78
+msgid "There was a problem while running data checks."
+msgstr ""
+
+#: aleksis/core/schema/data_check.py:79
+msgid "The data checks were run successfully."
+msgstr ""
+
+#: aleksis/core/schema/data_check.py:104
+msgid "The requested solve option does not exist"
+msgstr ""
+
+#: aleksis/core/schema/person.py:628
+msgid "Signup is not enabled."
+msgstr ""
+
+#: aleksis/core/schema/person.py:643 aleksis/core/util/auth_helpers.py:254
+msgid "This username is not allowed."
+msgstr ""
+
+#: aleksis/core/schema/person.py:653
+msgid "A user with this username or e-mail already exists."
+msgstr ""
+
+#: aleksis/core/schema/person.py:675
+#, fuzzy, python-format
+#| msgid "E-mail address"
+msgid "A person using the e-mail address %s already exists."
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/schema/person.py:709
+#, fuzzy
+#| msgid "Persons and accounts"
+msgid "You registered an account"
+msgstr "Personae et computi"
+
+#: aleksis/core/schema/user.py:119
+msgid "Changing passwords is not allowed."
+msgstr ""
+
+#: aleksis/core/schema/user.py:121
+msgid "Please enter the correct old password."
+msgstr ""
+
+#: aleksis/core/settings.py:566
+msgid "English"
+msgstr "Britannicus"
+
+#: aleksis/core/settings.py:567
+msgid "German"
+msgstr "Germanus"
+
+#: aleksis/core/settings.py:568
+msgid "Ukrainian"
+msgstr ""
+
+#: aleksis/core/tables.py:39 aleksis/core/templates/core/pages/delete.html:22
+msgid "Delete"
+msgstr ""
+
+#: aleksis/core/tables.py:41
+#, fuzzy
+#| msgid "Notifications"
+msgid "Actions"
+msgstr "Nuntii"
+
+#: aleksis/core/templates/403.html:14 aleksis/core/templates/500.html:10
+#: aleksis/core/templates/oauth2_provider/authorize.html:54
+#: aleksis/core/templates/oauth2_provider/logout_confirm.html:58
+msgid "Error"
+msgstr ""
+
+#: aleksis/core/templates/403.html:14
+msgid ""
+"You are not allowed to access the requested page or\n"
+"          object."
+msgstr ""
+
+#: aleksis/core/templates/403.html:19 aleksis/core/templates/404.html:16
+#: aleksis/core/templates/406.html:18
+msgid ""
+"\n"
+"            If you think this is an error in AlekSIS, please contact your site\n"
+"            administrators:\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/404.html:12 aleksis/core/templates/406.html:14
+msgid ""
+"\n"
+"            If you were redirected by a link on an external page,\n"
+"            it is possible that that link was outdated.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/406.html:11
+msgid "Requested object could not be rendered."
+msgstr ""
+
+#: aleksis/core/templates/500.html:10
+msgid ""
+"An unexpected error has\n"
+"          occurred."
+msgstr ""
+
+#: aleksis/core/templates/500.html:13
+msgid ""
+"\n"
+"            Your site administrators will automatically be notified about this\n"
+"            error. You can also contact them directly:\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/500.html:21 aleksis/core/templates/offline.html:22
+msgid "Retry"
+msgstr ""
+
+#: aleksis/core/templates/account/account_inactive.html:5
+#: aleksis/core/templates/account/account_inactive.html:6
+msgid "Account inactive"
+msgstr ""
+
+#: aleksis/core/templates/account/account_inactive.html:14
+msgid "Account inactive."
+msgstr ""
+
+#: aleksis/core/templates/account/account_inactive.html:17
+msgid ""
+"\n"
+"            This account is currently inactive. If you think this is an\n"
+"            error, please contact one of your site administrators.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/account/email/base_message.txt:5
+msgid "Hello!"
+msgstr ""
+
+#: aleksis/core/templates/account/email/base_message.txt:9
+msgid "Your AlekSIS team"
+msgstr ""
+
+#: aleksis/core/templates/account/email/email_confirmation_message.txt:6
+#, python-format
+msgid ""
+"Someone tried to register an account with the username %(user_display)s and your e-mail address on %(site_domain)s.\n"
+"If it was you, please confirm the registration by clicking on the following link:"
+msgstr ""
+
+#: aleksis/core/templates/account/email_confirm.html:5
+#: aleksis/core/templates/account/email_confirm.html:6
+#: aleksis/core/templates/account/email_confirm.html:17
+#: aleksis/core/templates/socialaccount/login.html:17
+#, fuzzy
+#| msgid "Notification"
+msgid "Confirm"
+msgstr "Nuntius"
+
+#: aleksis/core/templates/account/email_confirm.html:12
+#, python-format
+msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
+msgstr ""
+
+#: aleksis/core/templates/account/email_confirm.html:25
+#, python-format
+msgid "This e-mail confirmation link expired or is invalid. Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: aleksis/core/templates/account/login.html:6
+#: aleksis/core/templates/account/login.html:11
+msgid "Sign In"
+msgstr ""
+
+#: aleksis/core/templates/account/login.html:22
+#, python-format
+msgid "If you have not created an account yet, then please %(link)ssign up%(end_link)s first."
+msgstr ""
+
+#: aleksis/core/templates/account/login.html:35
+msgid "Login"
+msgstr "nomen profiteri"
+
+#: aleksis/core/templates/account/login.html:46
+msgid "Sign in with a passkey"
+msgstr ""
+
+#: aleksis/core/templates/account/login.html:51
+msgid "Send me a sign-in code"
+msgstr ""
+
+#: aleksis/core/templates/account/password_reset.html:5
+#: aleksis/core/templates/account/password_reset.html:15
+#: aleksis/core/templates/account/password_reset.html:23
+#: aleksis/core/templates/account/password_reset_done.html:5
+#: aleksis/core/templates/account/verification_email_required.html:5
+#: aleksis/core/templates/account/verification_email_required.html:6
+msgid "Reset password"
+msgstr ""
+
+#: aleksis/core/templates/account/password_reset.html:17
+msgid "Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it."
+msgstr ""
+
+#: aleksis/core/templates/account/password_reset.html:30
+msgid ""
+"Please contact one of your site administrators, if you\n"
+"        have any trouble resetting your password:"
+msgstr ""
+
+#: aleksis/core/templates/account/password_reset_done.html:15
+msgid "Password reset mail sent"
+msgstr ""
+
+#: aleksis/core/templates/account/password_reset_done.html:18
+#: aleksis/core/templates/account/verification_email_required.html:16
+msgid ""
+"\n"
+"            We have sent you an e-mail. Please contact one of your site\n"
+"            administrators if you do not receive it within a few minutes.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/account/verification_email_required.html:14
+msgid "Password reset mail sent!"
+msgstr ""
+
+#: aleksis/core/templates/account/verification_sent.html:5
+#: aleksis/core/templates/account/verification_sent.html:6
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Verify your email address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/templates/account/verification_sent.html:14
+msgid "Verify your email!"
+msgstr ""
+
+#: aleksis/core/templates/account/verification_sent.html:16
+msgid ""
+"\n"
+"            This part of the site requires us to verify that you are who you claim to be.\n"
+"            For this purpose, we require that you verify ownership of your e-mail address.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/account/verification_sent.html:22
+msgid ""
+"\n"
+"            We have sent an e-mail to you for verification.\n"
+"            Please click on the link inside this e-mail. Please\n"
+"            contact us if you do not receive it within a few minutes.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/core/base_print.html:74
+msgid "Powered by AlekSIS®"
+msgstr ""
+
+#: aleksis/core/templates/core/edit_dashboard.html:6
+#: aleksis/core/templates/core/edit_dashboard.html:13
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Edit dashboard"
+msgstr "Forum"
+
+#: aleksis/core/templates/core/edit_dashboard.html:8
+#: aleksis/core/templates/core/edit_dashboard.html:15
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Edit default dashboard"
+msgstr "Forum"
+
+#: aleksis/core/templates/core/edit_dashboard.html:24
+msgid ""
+"\n"
+"          On this page you can arrange your personal dashboard. You can drag any items from \"Available widgets\" to \"Your\n"
+"          Dashboard\" or change the order by moving the widgets. After you have finished, please don't forget to click on\n"
+"          \"Save\".\n"
+"        "
+msgstr ""
+
+#: aleksis/core/templates/core/edit_dashboard.html:30
+msgid ""
+"\n"
+"          On this page you can arrange the default dashboard which is shown when a user doesn't arrange his own\n"
+"          dashboard. You can drag any items from \"Available widgets\" to \"Default Dashboard\" or change the order\n"
+"          by moving the widgets. After you have finished, please don't forget to click on \"Save\".\n"
+"        "
+msgstr ""
+
+#: aleksis/core/templates/core/edit_dashboard.html:48
+msgid "Available widgets"
+msgstr ""
+
+#: aleksis/core/templates/core/edit_dashboard.html:57
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Your dashboard"
+msgstr "Forum"
+
+#: aleksis/core/templates/core/edit_dashboard.html:59
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Default dashboard"
+msgstr "Forum"
+
+#: aleksis/core/templates/core/group/edit.html:11
+#: aleksis/core/templates/core/group/edit.html:12
+msgid "Edit group"
+msgstr ""
+
+#: aleksis/core/templates/core/pages/delete.html:6
+#, python-format
+msgid "Delete %(object_name)s"
+msgstr ""
+
+#: aleksis/core/templates/core/pages/delete.html:13
+#, python-format
+msgid ""
+"\n"
+"      Do you really want to delete the %(object_name)s \"%(object)s\"?\n"
+"    "
+msgstr ""
+
+#: aleksis/core/templates/core/pages/test_pdf.html:7
+#: aleksis/core/templates/core/pages/test_pdf.html:8
+msgid "Test PDF generation"
+msgstr ""
+
+#: aleksis/core/templates/core/pages/test_pdf.html:14
+msgid ""
+"\n"
+"        This simple view can be used to ensure the correct function of the built-in PDF generation system.\n"
+"      "
+msgstr ""
+
+#: aleksis/core/templates/core/partials/announcements.html:8
+#: aleksis/core/templates/core/partials/announcements.html:35
+#, python-format
+msgid ""
+"\n"
+"              Valid for %(from)s\n"
+"            "
+msgstr ""
+
+#: aleksis/core/templates/core/partials/announcements.html:12
+#, python-format
+msgid ""
+"\n"
+"              Valid from %(from)s until %(until)s\n"
+"            "
+msgstr ""
+
+#: aleksis/core/templates/core/partials/announcements.html:39
+#, python-format
+msgid ""
+"\n"
+"              Valid for %(from)s – %(until)s\n"
+"            "
+msgstr ""
+
+#: aleksis/core/templates/core/partials/avatar_content.html:18
+#: aleksis/core/templates/core/partials/avatar_content.html:19
+#, fuzzy
+#| msgid "Notifications"
+msgid "Identicon"
+msgstr "Nuntii"
+
+#: aleksis/core/templates/core/partials/crud_events.html:15
+msgid "Changed by"
+msgstr ""
+
+#: aleksis/core/templates/core/partials/crud_events.html:15
+msgid "Unknown"
+msgstr ""
+
+#: aleksis/core/templates/core/partials/save_button.html:3
+msgid "Save"
+msgstr ""
+
+#: aleksis/core/templates/core/partials/splash_screen.html:11
+msgid ""
+"\n"
+"      This webbrowser doesn't support JavaScript, or its execution is blocked. Please use another browser to continue.\n"
+"    "
+msgstr ""
+
+#: aleksis/core/templates/core/partials/splash_screen.html:17
+msgid ""
+"\n"
+"      The maintenance mode is currently enabled. Please try again later.\n"
+"    "
+msgstr ""
+
+#: aleksis/core/templates/core/perms/assign.html:12
+#: aleksis/core/templates/core/perms/assign.html:13
+msgid "Assign permission"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/assign.html:17
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Selected permission"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/templates/core/perms/assign.html:26
+msgid "Assign"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:13
+#: aleksis/core/templates/core/perms/list.html:14
+msgid "Manage permissions"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:21
+msgid "Assign a new permission"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:25
+msgid "Select"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:34
+msgid "Global (user)"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:38
+msgid "Global (group)"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:42
+msgid "Object (user)"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:46
+msgid "Object (group)"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:52
+msgid "Filter permissions"
+msgstr ""
+
+#: aleksis/core/templates/core/perms/list.html:58
+msgid "Update"
+msgstr ""
+
+#: aleksis/core/templates/core/person/create.html:12
+#: aleksis/core/templates/core/person/create.html:13
+#, fuzzy
+#| msgid "Stop impersonation"
+msgid "Create person"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/templates/core/person/edit.html:12
+#: aleksis/core/templates/core/person/edit.html:13
+msgid "Edit person"
+msgstr ""
+
+#: aleksis/core/templates/dynamic_preferences/form.html:5
+msgid "Preferences"
+msgstr ""
+
+#: aleksis/core/templates/dynamic_preferences/form.html:9
+msgid "Site preferences"
+msgstr ""
+
+#: aleksis/core/templates/dynamic_preferences/form.html:11
+msgid "My preferences"
+msgstr ""
+
+#: aleksis/core/templates/dynamic_preferences/form.html:13
+#, python-format
+msgid "Preferences for %(instance)s"
+msgstr ""
+
+#: aleksis/core/templates/dynamic_preferences/form.html:25
+msgid "Save preferences"
+msgstr ""
+
+#: aleksis/core/templates/invitations/disabled.html:5
+msgid "The invite feature is disabled"
+msgstr ""
+
+#: aleksis/core/templates/invitations/disabled.html:13
+msgid "The invite feature is disabled."
+msgstr ""
+
+#: aleksis/core/templates/invitations/disabled.html:15
+msgid "To enable it, switch on the corresponding checkbox in the authentication section of the "
+msgstr ""
+
+#: aleksis/core/templates/invitations/disabled.html:16
+msgid "site preferences page"
+msgstr ""
+
+#: aleksis/core/templates/invitations/forms/_invite.html:9
+#: aleksis/core/templates/invitations/forms/_invite.html:10
+#: aleksis/core/templates/invitations/forms/_invite.html:21
+msgid "Invite"
+msgstr ""
+
+#: aleksis/core/templates/invitations/forms/_invite.html:17
+#, fuzzy
+#| msgid "E-mail address"
+msgid "Invite by email address"
+msgstr "Inscriptio electronica"
+
+#: aleksis/core/templates/invitations/forms/_invite.html:26
+msgid "Generate invitation code"
+msgstr ""
+
+#: aleksis/core/templates/invitations/forms/_invite.html:30
+msgid "Generate code"
+msgstr ""
+
+#: aleksis/core/templates/invitations/forms/_invite.html:34
+msgid "Invitations"
+msgstr ""
+
+#: aleksis/core/templates/invitations/messages/invite_accepted.txt:3
+#, python-format
+msgid "The invitation for %(email)s has been accepted."
+msgstr ""
+
+#: aleksis/core/templates/oauth2_provider/authorize.html:5
+#: aleksis/core/templates/socialaccount/login.html:5
+#: aleksis/core/templates/socialaccount/login.html:6
+msgid "Authorize"
+msgstr ""
+
+#: aleksis/core/templates/oauth2_provider/authorize.html:23
+#, fuzzy, python-format
+#| msgid "Stop impersonation"
+msgid "Authorize %(name)s"
+msgstr "Simulandum aliquem finire"
+
+#: aleksis/core/templates/oauth2_provider/authorize.html:25
+msgid "The application requests access to the following scopes:"
+msgstr ""
+
+#: aleksis/core/templates/oauth2_provider/authorize.html:40
+msgid "Allow"
+msgstr ""
+
+#: aleksis/core/templates/oauth2_provider/authorize.html:43
+msgid "Disallow"
+msgstr ""
+
+#: aleksis/core/templates/oauth2_provider/logout_confirm.html:5
+#: aleksis/core/templates/oauth2_provider/logout_confirm.html:29
+#, fuzzy
+#| msgid "Notification"
+msgid "Confirm Logout"
+msgstr "Nuntius"
+
+#: aleksis/core/templates/oauth2_provider/logout_confirm.html:27
+#, python-format
+msgid "Confirm Logout requested by %(name)s"
+msgstr ""
+
+#: aleksis/core/templates/oauth2_provider/logout_confirm.html:44
+msgid "Logout"
+msgstr "nomen retractare"
+
+#: aleksis/core/templates/oauth2_provider/logout_confirm.html:47
+msgid "Cancel"
+msgstr ""
+
+#: aleksis/core/templates/offline.html:5
+msgid "Network error"
+msgstr ""
+
+#: aleksis/core/templates/offline.html:10
+msgid "No connection to server."
+msgstr ""
+
+#: aleksis/core/templates/offline.html:14
+msgid ""
+"\n"
+"      This page is not available without a connection to the server. Please check your internet connection and try again.\n"
+"      If you are connected and the error persists, please contact the system administrators:\n"
+"    "
+msgstr ""
+
+#: aleksis/core/templates/search/search.html:7
+#: aleksis/core/templates/search/search.html:22
+msgid "Search"
+msgstr "Quaerere"
+
+#: aleksis/core/templates/search/search.html:8
+msgid "Global Search"
+msgstr ""
+
+#: aleksis/core/templates/search/search.html:15
+msgid "Search Term"
+msgstr ""
+
+#: aleksis/core/templates/search/search.html:26
+msgid "Results"
+msgstr ""
+
+#: aleksis/core/templates/search/search.html:38
+msgid "No search results could be found to your search."
+msgstr ""
+
+#: aleksis/core/templates/search/search.html:87
+msgid "Please enter a search term above."
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/authentication_error.html:5
+#: aleksis/core/templates/socialaccount/authentication_error.html:6
+msgid "Third-party Account Login Failure"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/authentication_error.html:13
+msgid "Third-party Account Login Failure."
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/authentication_error.html:15
+msgid ""
+"\n"
+"            An error occurred while attempting to login via your third-party account.\n"
+"            Please contact one of your site administrators.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/connections.html:5
+#: aleksis/core/templates/socialaccount/connections.html:6
+#, fuzzy
+#| msgid "Notifications"
+msgid "Connections"
+msgstr "Nuntii"
+
+#: aleksis/core/templates/socialaccount/connections.html:24
+msgid "Remove"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/connections.html:34
+msgid "You currently have no third-party accounts connected to this account."
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/connections.html:37
+msgid "Add a Third-party Account"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/login.html:12
+#, python-format
+msgid "You are about to connect a new third party account from %(provider)s."
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/login.html:23
+#, python-format
+msgid "You are about to sign in using a third party account from %(provider)s."
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/login.html:28
+msgid "Continue"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/login_cancelled.html:5
+#: aleksis/core/templates/socialaccount/login_cancelled.html:6
+#: aleksis/core/templates/socialaccount/login_cancelled.html:13
+msgid "Login cancelled"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/login_cancelled.html:15
+#, python-format
+msgid ""
+"\n"
+"            You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>.\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/signup.html:5
+#: aleksis/core/templates/socialaccount/signup.html:6
+msgid "Signup"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/signup.html:12
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"        %(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/signup.html:23
+msgid "Sign up"
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/snippets/provider_list.html:12
+#, python-format
+msgid ""
+"\n"
+"                Login with %(name)s\n"
+"              "
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/snippets/provider_list.html:25
+#, python-format
+msgid ""
+"\n"
+"            Login with %(name)s\n"
+"          "
+msgstr ""
+
+#: aleksis/core/templates/socialaccount/snippets/provider_list.html:35
+msgid ""
+"\n"
+"          No third-party account providers available.\n"
+"        "
+msgstr ""
+
+#: aleksis/core/templates/templated_email/account_registered.email:3
+#: aleksis/core/templates/templated_email/account_registered.email:35
+#, fuzzy
+#| msgid "Data management"
+msgid "New account"
+msgstr "Adminstratio datarum"
+
+#: aleksis/core/templates/templated_email/account_registered.email:6
+#, python-format
+msgid "New account: %(person)s"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/account_registered.email:11
+#: aleksis/core/templates/templated_email/account_registered.email:41
+msgid "Username"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/account_registered.email:14
+#: aleksis/core/templates/templated_email/account_registered.email:29
+#: aleksis/core/templates/templated_email/account_registered.email:44
+#: aleksis/core/templates/templated_email/account_registered.email:58
+#, fuzzy
+#| msgid "Mobile phone"
+msgid "Mobile number"
+msgstr "Numerus telephoni mobilis"
+
+#: aleksis/core/templates/templated_email/account_registered.email:17
+#: aleksis/core/templates/templated_email/account_registered.email:47
+#, fuzzy
+#| msgid "Street number"
+msgid "Housenumber"
+msgstr "Numerus domini"
+
+#: aleksis/core/templates/templated_email/account_registered.email:25
+#: aleksis/core/templates/templated_email/account_registered.email:54
+msgid "Guardian"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/base.email:5
+#: aleksis/core/templates/templated_email/base.email:16
+#: aleksis/core/templates/templated_email/invitation.email:6
+#: aleksis/core/templates/templated_email/invitation.email:14
+msgid "Hello"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/celery_failure.email:4
+#, python-format
+msgid "Celery task %(task_name)s failed!"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/celery_failure.email:7
+#, python-format
+msgid "the celery task %(task_name)s failed with following information:"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/celery_failure.email:9
+#: aleksis/core/templates/templated_email/celery_failure.email:28
+msgid "Task"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/celery_failure.email:11
+#: aleksis/core/templates/templated_email/celery_failure.email:30
+#, fuzzy
+#| msgid "Site description"
+msgid "Raised exception"
+msgstr "Descriptio paginae"
+
+#: aleksis/core/templates/templated_email/celery_failure.email:12
+#: aleksis/core/templates/templated_email/celery_failure.email:31
+#, fuzzy
+#| msgid "Additional name(s)"
+msgid "Positional arguments"
+msgstr "addita nomines"
+
+#: aleksis/core/templates/templated_email/celery_failure.email:15
+#: aleksis/core/templates/templated_email/celery_failure.email:38
+msgid "Keyword arguments"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/celery_failure.email:22
+#, python-format
+msgid ""
+"\n"
+"      the celery task %(task_name)s failed with following information:\n"
+"    "
+msgstr ""
+
+#: aleksis/core/templates/templated_email/data_checks.email:3
+msgid "The system detected some new problems with your data."
+msgstr ""
+
+#: aleksis/core/templates/templated_email/data_checks.email:6
+msgid ""
+"the system detected some new problems with your data.\n"
+"Please take some time to inspect them and solve the issues or mark them as ignored."
+msgstr ""
+
+#: aleksis/core/templates/templated_email/data_checks.email:15
+msgid ""
+"\n"
+"   the system detected some new problems with your data.\n"
+"   Please take some time to inspect them and solve the issues or mark them as ignored.\n"
+"  "
+msgstr ""
+
+#: aleksis/core/templates/templated_email/data_checks.email:23
+#, fuzzy
+#| msgid "Site description"
+msgid "Problem description"
+msgstr "Descriptio paginae"
+
+#: aleksis/core/templates/templated_email/data_checks.email:24
+msgid "Count of objects with new problems"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/invitation.email:4
+#, python-format
+msgid "Invitation to register on %(site)s"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/invitation.email:6
+#: aleksis/core/templates/templated_email/invitation.email:14
+#, python-format
+msgid "Hello %(person)s"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/invitation.email:9
+#: aleksis/core/templates/templated_email/invitation.email:18
+#, python-format
+msgid "you have been invited to register on %(site)s. If you would like to accept this invitation, please click on the following link:"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/notification.email:4
+#, fuzzy
+#| msgid "Notification"
+msgid "New notification for"
+msgstr "Nuntius"
+
+#: aleksis/core/templates/templated_email/notification.email:6
+#: aleksis/core/templates/templated_email/notification.email:20
+#, fuzzy, python-format
+#| msgid "Notifications"
+msgid "Hello %(notification_user)s,"
+msgstr "Nuntii"
+
+#: aleksis/core/templates/templated_email/notification.email:9
+#: aleksis/core/templates/templated_email/notification.email:23
+#, fuzzy
+#| msgid "Notification"
+msgid "we got a new notification for you:"
+msgstr "Nuntius"
+
+#: aleksis/core/templates/templated_email/notification.email:15
+#: aleksis/core/templates/templated_email/notification.email:29
+#, fuzzy
+#| msgid "Edit school information"
+msgid "More information"
+msgstr "Muta informationes scolae"
+
+#: aleksis/core/templates/templated_email/notification.email:17
+#, python-format
+msgid "Sent by %(trans_sender)s at %(trans_created_at)s"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/notification.email:34
+#, python-format
+msgid ""
+"\n"
+"            Sent by %(trans_sender)s at %(trans_created_at)s\n"
+"        "
+msgstr ""
+
+#: aleksis/core/templates/templated_email/person_changed.email:4
+#, python-format
+msgid "%(person)s changed their data!"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/person_changed.email:7
+#, python-format
+msgid "the person %(person)s recently changed the following fields:"
+msgstr ""
+
+#: aleksis/core/templates/templated_email/person_changed.email:15
+#, python-format
+msgid ""
+"\n"
+"    the person %(person)s recently changed the following fields:\n"
+"  "
+msgstr ""
+
+#: aleksis/core/util/notifications.py:68
+msgid "E-Mail"
+msgstr ""
+
+#: aleksis/core/util/notifications.py:69
+msgid "SMS"
+msgstr ""
+
+#: aleksis/core/util/pdf.py:191
+msgid "Progress: Generate PDF file"
+msgstr ""
+
+#: aleksis/core/util/pdf.py:192
+msgid "Generating PDF file …"
+msgstr ""
+
+#: aleksis/core/util/pdf.py:193
+msgid "The PDF file has been generated successfully."
+msgstr ""
+
+#: aleksis/core/util/pdf.py:194
+msgid "There was a problem while generating the PDF file."
+msgstr ""
+
+#: aleksis/core/util/pdf.py:196
+msgid "Download PDF"
+msgstr ""
+
+#: aleksis/core/views.py:236
+msgid "The group has been saved."
+msgstr ""
+
+#: aleksis/core/views.py:326
+msgid "The requested preference registry does not exist"
+msgstr ""
+
+#: aleksis/core/views.py:345
+msgid "The preferences have been saved successfully."
+msgstr ""
+
+#: aleksis/core/views.py:368
+msgid "The group has been deleted."
+msgstr ""
+
+#: aleksis/core/views.py:512
+msgid "We have successfully assigned the permissions."
+msgstr ""
+
+#: aleksis/core/views.py:522
+msgid "The global user permission has been deleted."
+msgstr ""
+
+#: aleksis/core/views.py:532
+msgid "The global group permission has been deleted."
+msgstr ""
+
+#: aleksis/core/views.py:542
+msgid "The object user permission has been deleted."
+msgstr ""
+
+#: aleksis/core/views.py:552
+msgid "The object group permission has been deleted."
+msgstr ""
+
+#: aleksis/core/views.py:576
+msgid "The third-party account could not be disconnected because it is the only login method available."
+msgstr ""
+
+#: aleksis/core/views.py:583
+msgid "The third-party account has been successfully disconnected."
+msgstr ""
+
+#: aleksis/core/views.py:629
+msgid "Person was invited successfully and an email with further instructions has been send to them."
+msgstr ""
+
+#: aleksis/core/views.py:637
+msgid "Person was invited successfully. Their key is"
+msgstr ""
+
+#: aleksis/core/views.py:640
+msgid "Person was already invited."
+msgstr ""
+
+#, fuzzy, python-format
+#~| msgid "Stop impersonation"
+#~ msgid "Login for %(name)s"
+#~ msgstr "Simulandum aliquem finire"
+
+#, fuzzy
+#~| msgid "E-mail address"
+#~ msgid "Address data"
+#~ msgstr "Inscriptio electronica"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "Additional data"
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Data management"
+#~ msgid "Account data"
+#~ msgstr "Adminstratio datarum"
+
+#, fuzzy
+#~| msgid "Site title"
+#~ msgid "Widget is broken"
+#~ msgstr "Titulus paginae"
+
+#, fuzzy, python-format
+#~| msgid "Stop impersonation"
+#~ msgid "Create %(widget)s"
+#~ msgstr "Simulandum aliquem finire"
+
+#, fuzzy, python-format
+#~| msgid "Stop impersonation"
+#~ msgid "Create %(name)s"
+#~ msgstr "Simulandum aliquem finire"
+
+#, fuzzy
+#~| msgid "System status"
+#~ msgid "Data checks"
+#~ msgstr "Status systemae"
+
+#, fuzzy
+#~| msgid "System status"
+#~ msgid "Registered checks"
+#~ msgstr "Status systemae"
+
+#~ msgid "System status"
+#~ msgstr "Status systemae"
+
+#, fuzzy
+#~| msgid "System status"
+#~ msgid "System checks"
+#~ msgstr "Status systemae"
+
+#, fuzzy
+#~| msgid "System status"
+#~ msgid "System health checks"
+#~ msgstr "Status systemae"
+
+#, fuzzy
+#~| msgid "Date"
+#~ msgid "Date done"
+#~ msgstr "dies"
+
+#, fuzzy
+#~| msgid "Edit school information"
+#~ msgid "Accept invitation"
+#~ msgstr "Muta informationes scolae"
+
+#, fuzzy
+#~| msgid "E-mail address"
+#~ msgid "Full home postal address"
+#~ msgstr "Inscriptio electronica"
+
+#~ msgid "Who should see the announcement?"
+#~ msgstr "Quis nuntium videatne?"
+
+#~ msgid "Write your announcement:"
+#~ msgstr "Scribe nuntium:"
+
+#~ msgid "Guardians / Parents"
+#~ msgstr "Parentes"
+
+#, fuzzy
+#~| msgid "Announcements"
+#~ msgid "Edit announcement"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Who should see the announcement?"
+#~ msgid "Publish new announcement"
+#~ msgstr "Quis nuntium videatne?"
+
+#, fuzzy
+#~| msgid "Who should see the announcement?"
+#~ msgid "Save and publish announcement"
+#~ msgstr "Quis nuntium videatne?"
+
+#, fuzzy
+#~| msgid "Write your announcement:"
+#~ msgid "There are no announcements."
+#~ msgstr "Scribe nuntium:"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "Register OAuth2 Application"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "OAuth2 Application"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "Skip Authorisation"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "Edit OAuth2 Application"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "OAuth2 Applications"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Edit school information"
+#~ msgid "Register new application"
+#~ msgstr "Muta informationes scolae"
+
+#, fuzzy
+#~| msgid "System status"
+#~ msgid "Statistics"
+#~ msgstr "Status systemae"
+
+#, fuzzy
+#~| msgid "Group"
+#~ msgid "Edit group type"
+#~ msgstr "Grex"
+
+#, fuzzy
+#~| msgid "Group"
+#~ msgid "Create group type"
+#~ msgstr "Grex"
+
+#, fuzzy
+#~| msgid "Site description"
+#~ msgid "Help text / description"
+#~ msgstr "Descriptio paginae"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "Addtitional field for groups"
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "Addtitional fields for groups"
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "Additional fields"
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "Edit additional field"
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "Create additional field"
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Additional name(s)"
+#~ msgid "The additional field has been saved."
+#~ msgstr "addita nomines"
+
+#, fuzzy
+#~| msgid "Edit school term"
+#~ msgid "Create school term"
+#~ msgstr "Muta anum scolae"
+
+#~ msgid "Edit school term"
+#~ msgstr "Muta anum scolae"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "Authorized applications"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "No authorized applications."
+#~ msgstr "Nuntii"
+
+#~ msgid "Dashboard"
+#~ msgstr "Forum"
+
+#~ msgid "Admin"
+#~ msgstr "Administratio"
+
+#~ msgid "Data management"
+#~ msgstr "Adminstratio datarum"
+
+#, fuzzy
+#~| msgid "Stop impersonation"
+#~ msgid "Invite person"
+#~ msgstr "Simulandum aliquem finire"
+
+#~ msgid "Stop impersonation"
+#~ msgstr "Simulandum aliquem finire"
+
+#, fuzzy
+#~| msgid "Persons and accounts"
+#~ msgid "Third-party accounts"
+#~ msgstr "Personae et computi"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "Recent notifications"
+#~ msgstr "Nuntii"
+
+#, fuzzy
+#~| msgid "Edit school information"
+#~ msgid "More information →"
+#~ msgstr "Muta informationes scolae"
+
+#, fuzzy
+#~| msgid "Edit school information"
+#~ msgid "Licence information"
+#~ msgstr "Muta informationes scolae"
+
+#, fuzzy
+#~| msgid "Edit school information"
+#~ msgid "More information about the EUPL"
+#~ msgstr "Muta informationes scolae"
+
+#, fuzzy
+#~| msgid "Impersonation"
+#~ msgid "Impersonate"
+#~ msgstr "Simulare aliquem"
+
+#, fuzzy
+#~| msgid "Impersonation"
+#~ msgid "Invite user"
+#~ msgstr "Simulare aliquem"
+
+#, fuzzy
+#~| msgid "Impersonation"
+#~ msgid "Is person active?"
+#~ msgstr "Simulare aliquem"
+
+#~ msgid "Impersonation"
+#~ msgstr "Simulare aliquem"
+
+#, fuzzy
+#~| msgid "Notifications"
+#~ msgid "OAuth2 applications"
+#~ msgstr "Nuntii"
+
+#~ msgid "Persons and accounts"
+#~ msgstr "Personae et computi"
+
+#, fuzzy
+#~| msgid "Persons and accounts"
+#~ msgid "Can link persons to accounts"
+#~ msgstr "Personae et computi"
+
+#, fuzzy
+#~| msgid "Persons and accounts"
+#~ msgid "Link persons to accounts"
+#~ msgstr "Personae et computi"
+
+#~ msgid "School logo"
+#~ msgstr "Imago scolae"
+
+#~ msgid "Manage school"
+#~ msgstr "Administra scholam"
+
+#~ msgid "Schools"
+#~ msgstr "Scholae"

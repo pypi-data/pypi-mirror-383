@@ -1,0 +1,5 @@
+mutation setTodoCompleted($id: ID!, $completed: DateTime) {
+  setTodoCompleted(id: $id, completed: $completed) {
+    ok
+  }
+}

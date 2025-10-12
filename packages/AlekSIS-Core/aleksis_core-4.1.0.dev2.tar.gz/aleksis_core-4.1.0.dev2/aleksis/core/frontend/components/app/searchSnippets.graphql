@@ -1,0 +1,10 @@
+query search($q: String!) {
+  searchSnippets(query: $q, limit: 5) {
+    obj {
+      name
+      absoluteUrl
+      icon
+    }
+    text
+  }
+}

@@ -1,0 +1,8 @@
+mutation markAllNotificationsRead {
+  markAllNotificationsRead {
+    notifications {
+      id
+      read
+    }
+  }
+}

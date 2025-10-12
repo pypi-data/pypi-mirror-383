@@ -1,0 +1,10 @@
+query currentAnnouncements {
+  announcements: currentAnnouncements {
+    id
+    datetimeStart
+    datetimeEnd
+    title
+    description
+    priority
+  }
+}

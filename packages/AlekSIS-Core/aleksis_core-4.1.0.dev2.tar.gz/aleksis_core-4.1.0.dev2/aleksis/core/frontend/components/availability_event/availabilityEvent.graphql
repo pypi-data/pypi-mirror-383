@@ -1,0 +1,60 @@
+fragment availabilityEventFields on AvailabilityEventType {
+  id
+  person {
+    id
+    fullName
+  }
+  title
+  description
+  availabilityType {
+    id
+    name
+    shortName
+    free
+    color
+  }
+  datetimeStart
+  datetimeEnd
+  dateStart
+  dateEnd
+  timezone
+  recurrences
+  canEdit
+  canDelete
+}
+
+query availabilityEvents($orderBy: [String], $filters: JSONString) {
+  items: availabilityEvents(orderBy: $orderBy, filters: $filters) {
+    ...availabilityEventFields
+  }
+}
+
+query myAvailabilityEvents($orderBy: [String], $filters: JSONString) {
+  items: myAvailabilityEvents(orderBy: $orderBy, filters: $filters) {
+    ...availabilityEventFields
+  }
+}
+
+mutation createAvailabilityEvents(
+  $input: [BatchCreateAvailabilityEventInput]!
+) {
+  createAvailabilityEvents(input: $input) {
+    items: availabilityEvents {
+      ...availabilityEventFields
+    }
+  }
+}
+
+mutation deleteAvailabilityEvents($ids: [ID]!) {
+  deleteAvailabilityEvents(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateAvailabilityEvents($input: [BatchPatchAvailabilityEventInput]!) {
+  updateAvailabilityEvents(input: $input) {
+    items: availabilityEvents {
+      ...availabilityEventFields
+    }
+  }
+}

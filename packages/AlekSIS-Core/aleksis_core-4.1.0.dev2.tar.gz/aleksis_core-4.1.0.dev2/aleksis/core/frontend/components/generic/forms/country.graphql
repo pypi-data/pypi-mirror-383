@@ -1,0 +1,6 @@
+query countries {
+  items: countries {
+    code
+    name
+  }
+}

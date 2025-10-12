@@ -1,0 +1,1007 @@
+{
+  "about": {
+    "about_aleksis": "Über AlekSIS®",
+    "about_aleksis_1": "Diese Plattform wird mit AlekSIS®, einem webbasierten Schulinformationssystem (SIS), welches für die Verwaltung und/oder Veröffentlichung von Bildungseinrichtungen verwendet werden kann. AlekSIS ist freie Software und kann von jedem benutzt werden.",
+    "about_aleksis_2": "AlekSIS® ist eine eingetragene Wortmarke des Open-Source-Projektes AlekSIS, vertreten durch den Teckids e.V.",
+    "free_open_source_licence": "Freie/Open Source Lizenz",
+    "free_software": "Freie Software",
+    "full_licence_text": "Kompletter Lizenztext",
+    "licence_consists_of": "Die Lizenz besteht aus",
+    "licence_information": "Lizenzinformationen",
+    "licence_information_1": "Der Core und die offiziellen Apps von AlekSIS sind unter der EUPL, Version 1.2 oder später, lizenziert. Für Lizenzinformationen zu Apps von Drittanbietern, wenn installiert, siehe direkt bei der jeweiligen App weiter unten auf dieser Seite. Die Lizenzen sind wie folgt markiert:",
+    "licence_type": "Lizenztyp",
+    "licenced_under": "Lizensiert unter",
+    "more_information_eupl": "Weitere Informationen über die EUPL",
+    "open_source": "Open Source",
+    "other_licence": "Andere Lizenz",
+    "page_title": "Über AlekSIS®",
+    "proprietary": "Proprietär",
+    "show_copyright": "Copyright anzeigen",
+    "source_code": "Quellcode",
+    "website_of_aleksis": "Website von AlekSIS"
+  },
+  "accounts": {
+    "change_password": {
+      "action": "Passwort ändern",
+      "confirm_password": "Passwort bestätigen",
+      "menu_title": "Passwort ändern",
+      "menu_title_foreign": "Passwort für {fullName} ändern",
+      "menu_title_self": "Passwort ändern",
+      "new_password": "Neues Passwort",
+      "old_password": "Aktuelles Passwort",
+      "title": "Passwort ändern",
+      "title_foreign": "Passwort für {fullName} ändern"
+    },
+    "invitation": {
+      "accept_invitation": {
+        "menu_title": "Einladung akzeptieren"
+      },
+      "invite_person": {
+        "menu_title": "Person einladen"
+      }
+    },
+    "login": {
+      "menu_title": "Anmelden"
+    },
+    "logout": {
+      "menu_title": "Abmelden"
+    },
+    "reset_password": {
+      "button": "Link zum Passwort-Zurücksetzen senden",
+      "contact_admins": "Bitte kontaktieren Sie einen der Administratoren, wenn Sie irgendwelche Probleme beim Zurücksetzen des Passwortes haben:",
+      "description": "Der Link ist gültig. Bitte geben Sie ein neues Passwort ein:",
+      "done": {
+        "message": "Wir haben Ihnen eine E-Mail gesendet, wenn ein Benutzerkonto mit dieser E-Mail existiert. Bitte kontaktieren Sie einen Ihrer Administratoren, wenn Sie diese nicht innerhalb weniger Minuten erhalten. Sie können diesen Tab jetzt schließen.",
+        "title": "Link zum Zurücksetzen des Passwortes versendet"
+      },
+      "email": "E-Mail-Adresse",
+      "foreign_user": {
+        "confirm": {
+          "message": "Der Benutzer wird einen Link zum Zurücksetzen seines Passworts empfangen. Er kann sich weiterhin mit seinem aktuellen Passwort anmelden, bis es geändert wurde.",
+          "title": "E-Mail zum Passwortzurücksetzen senden?"
+        }
+      },
+      "invalid_key": "Der Link zum Passwortzurücksetzen ist ungültig. Dies kann sein, wenn er bereits verwendet wurde oder abgelaufen ist.",
+      "message": "Passwort vergessen? Geben Sie Ihre E-Mail-Adresse hier ein und wir werden Ihnen eine E-Mail zum Zurücksetzen des Passwortes schicken.",
+      "title": "Passwort zurücksetzen"
+    },
+    "signup": {
+      "form": {
+        "existing_account_alert": "Haben Sie bereits ein Konto? Dann melden Sie sich bitte an.",
+        "help_text": {
+          "guardian": "Für Erziehungsberechtigte",
+          "participant": "Für Teilnehmende"
+        },
+        "login_button": "Zum Login gehen",
+        "rules": {
+          "confirm_email": {
+            "no_match": "Die E-Mail-Adressen stimmen nicht überein"
+          },
+          "confirm_password": {
+            "no_match": "Die Passwörter stimmen nicht überein"
+          }
+        },
+        "steps": {
+          "account": {
+            "fields": {
+              "confirm_password": {
+                "label": "Passwort bestätigen"
+              },
+              "password": {
+                "label": "Passwort"
+              },
+              "username": {
+                "label": "Benutzername"
+              }
+            },
+            "title": "Konto"
+          },
+          "additional_data": {
+            "fields": {
+              "date_of_birth": {
+                "label": "Geburtsdatum"
+              },
+              "description": {
+                "label": "Beschreibung"
+              },
+              "photo": {
+                "label": "Foto"
+              },
+              "place_of_birth": {
+                "label": "Geburtsort"
+              },
+              "sex": {
+                "label": "Geschlecht"
+              }
+            },
+            "title": "Zusätzliche Daten"
+          },
+          "address_data": {
+            "fields": {
+              "country": {
+                "label": "Land"
+              },
+              "housenumber": {
+                "label": "Hausnummer"
+              },
+              "place": {
+                "label": "Ort"
+              },
+              "postal_code": {
+                "label": "Postleitzahl"
+              },
+              "street": {
+                "label": "Straße"
+              }
+            },
+            "title": "Adressdaten"
+          },
+          "base_data": {
+            "fields": {
+              "additional_name": {
+                "label": "Zusätzliche Namen"
+              },
+              "first_name": {
+                "label": "Vorname"
+              },
+              "last_name": {
+                "label": "Nachname"
+              },
+              "short_name": {
+                "label": "Kurzname"
+              }
+            },
+            "title": "Basisdaten"
+          },
+          "confirm": {
+            "card_title": "Ihre Kontodaten",
+            "invitation_used": "Einige persönliche Daten werden aus den Daten, die mit der von Ihnen akzeptierten Einladung zusammenhängen, übernommen.",
+            "privacy_policy": {
+              "label": "Ich habe die {url} gelesen und stimme ihnen zu.",
+              "url_text": "Datenschutzerklärung"
+            },
+            "title": "Kontoregistrierung bestätigen"
+          },
+          "contact_data": {
+            "fields": {
+              "mobile_number": {
+                "label": "Handynummer"
+              },
+              "phone_number": {
+                "label": "Festnetznummer"
+              }
+            },
+            "title": "Kontaktdaten"
+          },
+          "email": {
+            "choose_mode": {
+              "back": "Zurück",
+              "continue_aleksis": "Neue E-Mail-Adresse",
+              "continue_existing_account": "Ich habe bereits ein Konto",
+              "continue_own": "Existierende E-Mail-Adresse"
+            },
+            "fields": {
+              "confirm_email": {
+                "label": "E-Mail-Adresse bestätigen"
+              },
+              "email": {
+                "label": "E-Mail-Adresse"
+              }
+            },
+            "title": "E-Mail-Adresse"
+          },
+          "invitation": {
+            "autofilled": "Der Einladungscode wurde automatisch ausgefüllt.",
+            "fields": {
+              "invitation_code": {
+                "help_text": "Wenn Sie einen Einladungscode haben, geben Sie ihn bitte ein.",
+                "label": "Einladungscode"
+              }
+            },
+            "next": {
+              "code_required": "Einladungscode notwendig",
+              "with_code": "Mit Code fortfahren",
+              "without_code": "Ohne Code fortfahren"
+            },
+            "not_valid": "Der eingegebene Einladungscode ist nicht gültig.",
+            "title": "Einladungscode"
+          }
+        },
+        "submitted": {
+          "submitted_successfully": "Ihr Konto wurde erfolgreich registriert. Sie können sich jetzt mit Ihren Zugangsdaten anmelden.",
+          "title": "Registrierung erfolgreich!"
+        }
+      },
+      "menu_title": "Registrieren"
+    },
+    "social_connections": {
+      "menu_title": "Drittanbieter-Konten"
+    },
+    "two_factor": {
+      "activated": "Aktiviert",
+      "deactivate": {
+        "button": "Deaktivieren",
+        "description": "Sind Sie sicher, dass Sie diese Zwei-Faktor-Authentifizierungs-Methode deaktivieren wollen? Dies wird die Sicherheit Ihres Kontos reduzieren.",
+        "title": "Zwei-Faktor-Authentifizierungs-Methode deaktivieren"
+      },
+      "deactivate_button": "Deaktivieren",
+      "deactivated": "Nicht aktiviert",
+      "menu_title": "2FA",
+      "recovery_codes": {
+        "copy": "Codes kopieren",
+        "count": "Keine Wiederherstellungscodes übrig|Ein Wiederherstellungscode übrig|{count} Wiederherstellungscodes übrig",
+        "description": "Wenn Sie keines Ihrer Geräte benutzen können, können Sie mit einem Wiederherstellungscode auf Ihr Konto zugreifen.",
+        "dialog_description": "Die folgenden Wiederherstellungscodes sind unbenutzt. Bitte bewahren Sie diese an einem sicheren Ort auf. Sie können diese verwenden, um auf Ihr Konto zuzugreifen, wenn keines Ihrer anderen Geräte funktioniert.",
+        "dialog_title": "Wiederherstellungscodes",
+        "download_button": "Codes herunterladen",
+        "generate_button": "Neue Codes generieren",
+        "generate_question": "Sie sind dabei, einen neuen Satz an Wiederherstellungscodes für Ihr Konto zu generieren. Diese Aktion wird alle existierenden Codes ungültig machen. Sind Sie sicher?",
+        "generate_title": "Neue Wiederherstellungscodes generieren",
+        "show_button": "Codes anzeigen",
+        "title": "Wiederherstellungscodes"
+      },
+      "title": "Zwei-Faktor-Authentifizierung",
+      "totp": {
+        "activate": {
+          "button": "Aktivieren",
+          "copy_secret": "Geheimnis kopieren",
+          "copy_url": "URL kopieren",
+          "description": "Um Ihr Konto mit Zwei-Faktor-Authentifizierung zu schützen, scannen Sie den folgenden QR-Code mit Ihrer Authenticator-App\nDann geben Sie den von der App generierten Code unten ein.",
+          "enter_code": "Authenticator-Code eingeben:",
+          "title": "Authenticator-App aktivieren"
+        },
+        "activate_button": "Authenticator-App aktivieren",
+        "description": "Sie generieren Einmalcodes mit einer Authenticator-App.",
+        "title": "Authenticator-App"
+      },
+      "webauthn": {
+        "activate_button": "Sicherheitsschlüssel hinzufügen",
+        "count": "Keine Sicherheitsschlüssel|Ein Sicherheitsschlüssel|{count} Sicherheitsschlüssel",
+        "description": "Sie nutzen einen Sicherheitsschlüssel (entweder als externes Gerät oder integriert in Ihr persönliches Gerät).",
+        "dialog_add_button": "Sicherheitsschlüssel hinzufügen",
+        "dialog_description": "Warten auf einen Sicherheitsschlüssel ...",
+        "dialog_name_description": "Bitte geben Sie Ihrem neuen Sicherheitsschlüssel einen Namen.",
+        "dialog_title": "Sicherheitsschlüssel hinzufügen",
+        "key_added_at": "Hinzugefügt am {created}.",
+        "key_detected": "Sicherheitsschlüssel erfolgreich erkannt",
+        "key_last_used_at": "Zuletzt benutzt am {last_used}.",
+        "key_name": "Name",
+        "key_never_used": "Nie benutzt.",
+        "title": "Sicherheitsschlüssel"
+      }
+    }
+  },
+  "action_select": {
+    "incompatible_selection_message": "Aktion wurde für eine inkompatible Auswahl aufgerufen."
+  },
+  "actions": {
+    "abort": "Abbrechen",
+    "account_menu": "Kontomenü öffnen",
+    "back": "Zurück",
+    "back_to_start": "Zurück zur Startseite",
+    "cancel": "Abbrechen",
+    "change_status": "Status ändern",
+    "clear": "Feld leeren",
+    "clear_filters": "Filter zurücksetzen",
+    "close": "Schließen",
+    "collapse": {
+      "down": "Nach unten klappen",
+      "left": "Nach links klappen",
+      "right": "Nach rechts klappen",
+      "up": "Nach oben klappen"
+    },
+    "confirm": "Bestätigen",
+    "confirm_deletion": "Sind Sie sicher, dass Sie dieses Objekt löschen wollen?",
+    "confirm_deletion_multiple": "Sind Sie sicher, dass Sie diese Objekte löschen wollen?",
+    "continue": "Weiter",
+    "copied": "Kopiert",
+    "copy": "Kopieren",
+    "create": "Hinzufügen",
+    "create_widget": "Widget erstellen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "expand": {
+      "down": "Nach unten erweitern",
+      "left": "Nach links erweitern",
+      "right": "Nach rechts erweitern",
+      "up": "Nach oben erweitern"
+    },
+    "filter": "Filter",
+    "list_notifications": "Liste der Benachrichtigungen öffnen",
+    "more": "Mehr",
+    "more_actions": "Mehr Aktionen",
+    "next": "Weiter",
+    "open_details": "Details ansehen",
+    "open_in_new": "In neuem Tab öffnen",
+    "save": "Speichern",
+    "scroll_next": "Zu nächsten scrollen",
+    "scroll_prev": "Zu vorherigem scrollen",
+    "search": "Suchen",
+    "select_action": "Aktion auswählen",
+    "select_all": "Alle auswählen",
+    "select_school_term": "Auswahl für aktives Schuljahr öffnen",
+    "stop_editing": "Bearbeiten beenden",
+    "title": "Aktionen",
+    "toggle_sidenav": "Anzeige der Seitennavigation umschalten",
+    "type_to_search": "Tippen Sie, um zu suchen",
+    "update": "Aktualisieren"
+  },
+  "administration": {
+    "data_check": {
+      "check_again": "Daten erneut prüfen",
+      "detected_problems": {
+        "headers": {
+          "id": "ID",
+          "problem": "Entdecktes Problem",
+          "related_model": "Betroffenes Modell",
+          "related_object": "Betroffenes Objekt",
+          "show_details": "Details anzeigen",
+          "solve_options": "Optionen, das Problem zu lösen"
+        },
+        "show_object": "Objekt anzeigen",
+        "title": "Gefundene Probleme"
+      },
+      "menu_title": "Datenprüfungen",
+      "no_problems_detected": {
+        "text": "Das System hat keine Probleme mit Ihren Daten entdeckt.",
+        "title": "Alles ist gut."
+      },
+      "problems_detected": {
+        "text": "Bitte gehen Sie alle Daten durch und prüfen Sie, ob weitere Aktionen notwendig sind.",
+        "title": "Das System hat einige Problemen mit Ihren Daten gefunden."
+      },
+      "registered_checks": {
+        "help_text": "Das System wird nach folgenden Problemen suchen:",
+        "title": "Registrierte Prüfungen"
+      }
+    },
+    "menu_title": "Administration",
+    "system_status": {
+      "celery_tasks": {
+        "headers": {
+          "date_done": "Erledigungszeitpunkt",
+          "status": "Status",
+          "task_id": "ID",
+          "task_name": "Task"
+        },
+        "title": "Celery Task-Ergebnisse"
+      },
+      "menu_title": "System-Status",
+      "system_checks": {
+        "debug_mode": {
+          "disabled": {
+            "subtitle": "Debug-Modus ist deaktiviert. Standard-Fehlerseiten werden bei Fehlern angezeigt.",
+            "title": "Debug-Modus deaktivert"
+          },
+          "enabled": {
+            "subtitle": "Der Server gibt Debug-Informationen bei Fehlern zurück. Nicht im Produktivbetrieb nutzen!",
+            "title": "Debug-Modus aktiviert"
+          }
+        },
+        "maintenance_mode": {
+          "disabled": {
+            "subtitle": "Jeder kann die Seite aufrufen.",
+            "title": "Wartungsmodus deaktiviert"
+          },
+          "enabled": {
+            "subtitle": "Nur Administratoren und Besucher von internen IP-Adressen können die Seite aufrufen.",
+            "title": "Wartungsmodus aktiviert"
+          }
+        },
+        "title": "Systemprüfungen"
+      },
+      "system_health": {
+        "headers": {
+          "identifier": "Dienst",
+          "status": "Status",
+          "time_taken": "Dauer"
+        },
+        "title": "Systemprüfungen"
+      }
+    }
+  },
+  "alerts": {
+    "page_cached": "Diese Seite enthält vielleicht veraltete Informationen, da es keine Internetverbindung gibt."
+  },
+  "announcement": {
+    "datetime_end": "Gültig bis",
+    "datetime_start": "Gültig von",
+    "description": "Beschreibung",
+    "description_hint": "Beschreibung wird in den Details angezeigt, z. B. nach dem Klicken auf das Banner",
+    "explanation": "Ankündigungen sind wichtige Nachrichten für bestimmte Personen, Gruppen oder alle, gültig für eine bestimmte Zeitspanne. Während dieser Spanne werden sie als Banner unter der App-Bar sowie im Ankündigungskalender angezeigt. Zusätzlich werden die betroffenen Personen über die Ankündigung benachrichtigt.",
+    "is_global": "Globale Ankündigung",
+    "is_global_hint": "Wenn die Ankündigung global ist, wird sie allen Personen unabhängig von den ausgewählten Empfängern angezeigt. Die Information über Empfänger wird möglicherweise in anderen Apps trotzdem benutzt.",
+    "menu_title": "Ankündigungen",
+    "notifications_global_hint": "Dies wird am {when} Benachrichtigungen an alle Personen senden.",
+    "notifications_hint": "Dies wird am {when} Benachrichtigungen an die ausgewählten Empfänger senden.",
+    "priority": "Priorität",
+    "priority_hint": "Optional, Ankündigungen mit einer höheren Priorität werden zuerst angezeigt",
+    "recipient_groups": "Empfängergruppen",
+    "recipient_persons": "Empfängerpersonen",
+    "title": "Titel",
+    "title_hint": "Titel wird immer angezeigt, z. B. im Banner",
+    "title_plural": "Ankündigungen"
+  },
+  "availability_event": {
+    "availability_type": "Typ",
+    "busy": "Blockiert",
+    "create": "Verfügbarkeitstermin erstellen",
+    "datetime_end": "Ende",
+    "datetime_start": "Start",
+    "description": "Beschreibung",
+    "dialog": {
+      "create_button": "Verfügbarkeitstermin erstellen",
+      "create_title": "Verfügbarkeitstermin erstellen",
+      "edit_title": "Verfügbarkeitstermin bearbeiten"
+    },
+    "free": "Frei",
+    "menu_title": "Meine Verfügbarkeitstermine",
+    "recurrences": {
+      "none": "Keine Wiederholung",
+      "until": "bis"
+    },
+    "title": "Titel",
+    "title_plural": "Meine Verfügbarkeitstermine"
+  },
+  "availability_type": {
+    "color": "Farbe",
+    "create": "Verfügbarkeitstyp erstellen",
+    "description": "Beschreibung",
+    "free": {
+      "help_text": "Dies gibt an, ob Verfügbarkeitstermine mit diesem Typ als frei zählen sollen.",
+      "label": "Frei"
+    },
+    "menu_title": "Verfügbarkeitstypen",
+    "name": "Name",
+    "public": {
+      "help_text": "Dies gibt an, ob dieser Typ öffentlich verfügbar sein soll, z. B. für die Erstellung von Verfügbarkeitsereignissen in dem dafür vorgesehenen Frontend.",
+      "label": "Öffentlich"
+    },
+    "short_name": "Kurzname",
+    "title_plural": "Verfügbarkeitstypen"
+  },
+  "base": {
+    "about_aleksis": "Über AlekSIS® — The Free School Information System",
+    "about_copyright": "© Das AlekSIS-Team",
+    "imprint": "Impressum",
+    "logo": "Logo",
+    "no_permission": "Keine Berechtigung",
+    "no_permission_message_long": "Sie haben keine Berichtigung, diese Seite zu sehen. Bitte melden Sie sich mit einem anderen Konto an.",
+    "no_permission_message_long_not_logged_in": "Sie haben keine Berechtigung, um diese Seite zu sehen. Bitte melden Sie sich mit Ihrem Konto an.",
+    "no_permission_message_short": "Keine Berechtigung",
+    "no_permission_redirect_text": "Zur Anmeldung gehen",
+    "person_is_dummy": "Ihr Administratorenkonto ist mit keiner Person verknüpft. Deshalb wurde Ihr Konto mit einer Dummyperson verknüpft.",
+    "privacy_policy": "Datenschutzerklärung",
+    "user_not_linked_to_person": "Ihr Benutzerkonto ist nicht mit einer Person verknüpft. Das bedeutet, dass Sie keine schulbezogenen Informationen aufrufen können. Bitte wenden Sie sich an die Verwaltenden von AlekSIS an Ihrer Schule."
+  },
+  "browser_errors": {
+    "browsers_compatibility": "AlekSIS ist mit diesem Browser oder seiner Version nicht kompatibel. Bitte benutzen Sie eine aktuelle Version von Firefox (empfohlen) oder eines anderen gängigen Browsers.",
+    "incompatible_browser": "Inkompatibler Browser"
+  },
+  "calendar": {
+    "cancelled": "Fällt aus",
+    "create_event": {
+      "availability_events": {
+        "create_title": "Verfügbarkeit erstellen",
+        "edit_title": "Verfügbarkeit bearbeiten"
+      },
+      "create_button": "Termin erstellen",
+      "create_title": "Termin erstellen",
+      "date_end": "Ende",
+      "date_start": "Start",
+      "datetime_end": "Ende",
+      "datetime_start": "Start",
+      "description": "Beschreibung",
+      "edit_title": "Termin bearbeiten",
+      "event_types": {
+        "b": "Abwesenheit",
+        "f": "Verfügbarkeit",
+        "personal_event": "Persönlicher Termin",
+        "personal_todo": "Persönliche Aufgabe",
+        "title": "Terminart"
+      },
+      "full_day": "Ganzer Tag",
+      "is_not_recurring": "Einmaliger Termin",
+      "is_recurring": "Regelmäßiger Termin",
+      "personal_events": {
+        "create_title": "Persönlichen Termin erstellen",
+        "edit_title": "Persönlichen Termin bearbeiten",
+        "groups": "Teilnehmende Gruppen",
+        "location": "Ort",
+        "persons": "Teilnehmende Personen"
+      },
+      "personal_todos": {
+        "completed": "Erledigt am",
+        "completed_switch": "Erledigt",
+        "create_title": "Persönliche Aufgabe erstellen",
+        "due": "Fällig am",
+        "edit_title": "Persönliche Aufgabe bearbeiten",
+        "groups": "Teilnehmende Gruppen",
+        "location": "Ort",
+        "percent_completed": "Prozent erledigt",
+        "persons": "Teilnehmende Personen"
+      },
+      "recurrences": "Wiederholung",
+      "title": "Titel"
+    },
+    "day": "Tag",
+    "download_all": "Alle herunterladen",
+    "download_ics": "ICS herunterladen",
+    "ics_to_clipboard": "Link zu Kalender-ICS in die Zwischenablage kopieren",
+    "menu_title": "Kalender",
+    "month": "Monat",
+    "more_events": "{n} weitere",
+    "my_calendars": "Meine Kalender",
+    "no_calendar_event_card": {
+      "description": "Wählen Sie Kalendereinträge aus, um sie hier anzuzeigen",
+      "select_button": "Kalendereinträge auswählen",
+      "title": "Keine Kalendereinträge ausgewählt"
+    },
+    "select": "Kalender auswählen",
+    "today": "Heute",
+    "todos": {
+      "show_completed": "Erledigte Aufgaben anzeigen ({count})"
+    },
+    "views": {
+      "calendar": "Kalender",
+      "todos": "Aufgaben"
+    },
+    "week": "Woche"
+  },
+  "celery_progress": {
+    "error_message": "Der Vorgang konnte nicht erfolgreich beendet werden.",
+    "progress_title": "Wird geladen ...",
+    "running_tasks": "1 laufende Aufgabe | {number} laufende Aufgaben",
+    "success_message": "Der Vorgang wurde erfolgreich beendet."
+  },
+  "crud_components": {
+    "infinite_scrolling_date_sorted_iterator": {
+      "load": {
+        "load_more": "{increment} weitere Tage laden",
+        "no_items": "Keine Einträge gefunden zwischen {dateStart} und {dateEnd}."
+      }
+    },
+    "iterator_empty_message": {
+      "load_more": "Mehr Einträge laden",
+      "no_data": "Keine Einträge gefunden",
+      "no_data_with_dates": "Keine Einträge zwischen {dateStart} und {dateEnd} gefunden",
+      "no_results": "Keine Suchergebnisse für {search}"
+    }
+  },
+  "dashboard": {
+    "customizing_notice": "Sie haben Ihr Dashboard nicht angepasst, sodass Sie das Standard-Dashboard sehen. Bitte klicken Sie auf \"Dashboard bearbeiten\", um Ihr persönliches Dashboard anzupassen.",
+    "dashboard_widget": {
+      "menu_title": "Dashboard-Widgets",
+      "status": {
+        "BROKEN": "Kaputt",
+        "OFF": "Unvollständig",
+        "OFF_helper": "Vervollständigen Sie die Konfiguration des Widgets, um es zu aktivieren",
+        "ON": "Aktiv",
+        "READY": "Inaktiv"
+      },
+      "title": "Dashboard-Widget",
+      "title_plural": "Dashboard-Widgets"
+    },
+    "dashboard_widgets": {
+      "calendar": {
+        "fields": {
+          "allowed_calendars": "Auswählbare Kalender",
+          "allowed_calendars_hint": "Wenn keine spezifischen Kalender ausgewählt sind, sind alle Kalender erlaubt.",
+          "selected_calendars": "Ausgewählte Kalender",
+          "selected_calendars_hint": "Wenn keine spezifischen Kalender ausgewählt sind, werden alle Kalender angezeigt."
+        },
+        "name": "Kalender-Widget",
+        "shortName": "Kalender"
+      },
+      "external_link": {
+        "fields": {
+          "icon_url": "Link zu angezeigtem Bild",
+          "url": "Externe URL"
+        },
+        "name": "Externer-Link-Widget",
+        "shortName": "Ext. Link"
+      },
+      "static_content": {
+        "fields": {
+          "content": "Inhalt",
+          "content_hint": "Verwendung von HTML wird unterstützt.",
+          "preview": "Vorschau"
+        },
+        "name": "Statischer-Inhalt-Widget",
+        "shortName": "Statischer Inhalt"
+      }
+    },
+    "edit": "Dashboard bearbeiten",
+    "manage_dashboard_hint": "Passen Sie Ihr Dashboard durch das Bewegen und Loslassen von Widgets an.",
+    "manage_default_dashboard": "Standard-Dashboard verwalten",
+    "manage_default_dashboard_hint": "Passen Sie das Standard-Dashboard durch das Bewegen und Loslassen von Widgets an.",
+    "menu_title": "Dashboard"
+  },
+  "data_check": {
+    "menu_title": "Datenprüfungen"
+  },
+  "data_management": "Datenverwaltung",
+  "date_select": {
+    "label": "Datum auswählen"
+  },
+  "download_pdf": {
+    "download": "Herunterladen",
+    "notice": "Wenn der Download nicht automatisch beginnt, klicken Sie bitte auf den Button unten.",
+    "title": "PDF-Datei wird heruntergeladen ..."
+  },
+  "error_code": "Fehlercode: {errorCode}",
+  "forms": {
+    "date_time": {
+      "date": "Datum",
+      "time": "Zeit"
+    },
+    "errors": {
+      "date_too_early": "Bitte geben Sie ein späteres Datum ein.",
+      "date_too_late": "Bitte geben Sie ein früheres Datum ein.",
+      "invalid_color": "Dies ist keine gültige Farbe.",
+      "invalid_date": "Dies ist kein gültiges Datum.",
+      "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "invalid_time": "Dies ist keine gültige Zeit.",
+      "not_a_number": "Keine gültige Nummer",
+      "not_a_whole_number": "Bitte geben Sie eine ganze Zahl ein",
+      "not_equal": "Der Wert muss {field} entsprechen.",
+      "number_too_big": "Bitte geben Sie eine kleinere Zahl ein.",
+      "number_too_small": "Bitte geben Sie eine größere Zahl ein.",
+      "passwords_do_not_match": "Die Passwörter stimmen nicht überein.",
+      "required": "Dieses Feld ist verpflichtend.",
+      "string_too_long": "Bitte geben Sie weniger als {maxLength} Zeichen ein.",
+      "string_too_short": "Bitte geben Sie mindestens {maxLength} Zeichen ein.",
+      "username_not_allowed": "Dies ist kein erlaubter Benutzername",
+      "username_not_ascii": "Der Benutzername enthält die folgenden verbotenen Buchstaben: {characters}."
+    },
+    "file": {
+      "hint": "Existierende Datei: {fileName}"
+    },
+    "labels": {
+      "comment": "Kommentar",
+      "end": "Ende",
+      "persons": "Personen",
+      "start": "Start"
+    },
+    "recurrence": {
+      "frequencies": {
+        "daily": "Täglich",
+        "monthly": "Monatlich",
+        "weekly": "Wöchentlich",
+        "yearly": "Jährlich"
+      },
+      "frequency": "Wiederholung",
+      "no_repeat": "Keine Wiederholung",
+      "start": "Von",
+      "until": "Bis"
+    }
+  },
+  "free_busy": {
+    "overview": {
+      "menu_title": "Alle Verfügbarkeiten",
+      "no_selection": {
+        "description": "Wähle Personen oder Gruppen auf der linken Seite aus, um ihre Verfügbarkeiten anzuzeigen",
+        "title": "Keine Person oder Gruppe ausgewählt"
+      },
+      "search": "Personen und Gruppen durchsuchen",
+      "select": "Personen und Gruppen auswählen"
+    },
+    "types": {
+      "groups": "Gruppen",
+      "persons": "Personen"
+    }
+  },
+  "generic_messages": {
+    "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "success": "Der Vorgang wurde erfolgreich beendet."
+  },
+  "graphql": {
+    "snackbar_error_message": "Beim Abrufen der Seitendaten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "snackbar_success_message": "Der Vorgang wurde erfolgreich beendet."
+  },
+  "group": {
+    "avatar_url": "Avatar",
+    "child_groups": "Kind-Gruppen",
+    "child_groups_n": "Keine Kindgruppen | {n} Kindgruppe | {n} Kindgruppen",
+    "confirm_delete": "Möchten Sie diese Gruppe wirklich löschen?",
+    "group_type": "Gruppentypen",
+    "groups_and_child_groups": "Gruppen und Kindgruppen",
+    "member_of_n": "Keine Gruppenmitgliedschaften | Mitglied in einer Gruppe | Mitglied in {n} Gruppen",
+    "menu_title": "Gruppen",
+    "name": "Name",
+    "no_groups": "Keine Gruppen",
+    "owner_of_n": "Keine Gruppeneigentümerschaften | Besitzt eine Gruppe | Besitzt {n} Gruppen",
+    "ownership": "Gruppen-Eigentümerschaft",
+    "parent_groups": "Übergeordnete Gruppen",
+    "parent_groups_n": "Keine übergeordneten Gruppen | {n} übergeordnete Gruppe | {n} übergeordnete Gruppen",
+    "properties": "Eigenschaften",
+    "school_term": "Schuljahr",
+    "short_name": "Kurzname",
+    "statistics": {
+      "age_average": "Durchschnittsalter",
+      "age_range": "Altersbereich",
+      "age_range_from_to": "{min} - {max} Jahre",
+      "members_n": "Keine Mitglieder | Ein Mitglied | {n} Mitglieder",
+      "title": "Statistiken"
+    },
+    "tabs": {
+      "members": "Gruppenmitglieder",
+      "members_tab": "Mitglieder"
+    },
+    "title": "Gruppe",
+    "title_plural": "Gruppen"
+  },
+  "group_type": {
+    "additional_attributes": "Zusätzliche Attribute",
+    "allowed_information": {
+      "address": "Adresse",
+      "avatar": "Avatar",
+      "contact_details": "Kontaktdetails",
+      "groups": "Gruppen",
+      "personal_details": "Persönliche Details",
+      "photo": "Foto"
+    },
+    "available_roles": "Verfügbare Rollen",
+    "create": "Gruppentyp erstellen",
+    "description": "Beschreibung",
+    "menu_title": "Gruppentypen",
+    "name": "Name",
+    "no_group_type": "Kein Gruppentyp",
+    "owners_can_see_groups": "Besitzer von Gruppen mit diesem Gruppentyp können die Gruppen sehen",
+    "owners_can_see_members": "Besitzer von Gruppen mit diesem Gruppentyp können die Gruppenmitglieder sehen",
+    "owners_can_see_members_allowed_information": "Informationen, die Besitzer von Gruppen mit diesem Gruppentyp über die Gruppenmitglieder sehen können",
+    "owners_can_see_members_including": "(einschließlich {allowedInformation})",
+    "title": "Gruppentyp",
+    "title_plural": "Gruppentypen"
+  },
+  "holiday": {
+    "create_holiday": "Ferien erstellen",
+    "date_end": "Enddatum",
+    "date_start": "Startdatum",
+    "holiday_name": "Name",
+    "menu_title": "Ferien",
+    "title": "Ferien",
+    "title_plural": "Ferien"
+  },
+  "ical_feed": {
+    "menu_title": "Kalender-Feeds"
+  },
+  "legacy": {
+    "unworthy": "Die Lebensform, die diese Seite erstellt hat, hat dem allmächtigen Aleksolotl keine Unterwerfung gezeigt."
+  },
+  "network_errors": {
+    "back_to_start": "Zurück zur Startseite",
+    "error_404": "404",
+    "no_connection_to_server": "Verbindung zum Server kann nicht hergestellt werden.",
+    "offline_notification": "Sie sind offline. Einige Funktionen werden nicht funktionieren und einige Daten werden nicht aktuell sein.",
+    "page_not_found": "Die aufgerufene Seite oder Ressource konnte nicht gefunden werden.",
+    "service_unavailable": "Der Server ist aktuell im Wartungsmodus und daher temporär nicht erreichbar.",
+    "snackbar_error_message": "Es ist ein Netzwerkfehler aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "notifications": {
+    "mark_all_as_read": "Alle als gelesen markieren",
+    "mark_as_read": "Als gelesen markieren",
+    "more_information": "Mehr Informationen",
+    "no_notifications": "Sie haben keine neuen Benachrichtigungen.",
+    "notifications": "Benachrichtigungen"
+  },
+  "oauth": {
+    "application": {
+      "algorithm": "Algorithmus",
+      "algorithm_hmac": "HMAC mit SHA-2 256",
+      "algorithm_no_oidc": "Keine OIDC-Unterstützung",
+      "algorithm_rsa": "RSA mit SHA-2 256",
+      "allowed_scopes": "Erlaubte Scopes",
+      "client_id": "Client-ID",
+      "client_secret": "Client-Secret",
+      "client_secret_hint": "Wird beim Speichern gehasht. Kopieren Sie es jetzt, wenn es ein neues Secret ist.",
+      "client_type": "Client-Typ",
+      "client_type_confidential": "confidential",
+      "client_type_public": "public",
+      "icon": "Symbol",
+      "menu_title": "OAuth-Anwendungen",
+      "name": "Name",
+      "redirect_uris": "Weiterleitungs-URLs",
+      "redirect_uris_hint": "Liste erlaubter URIs. Mit Leerzeichen getrennt.",
+      "skip_authorization": "Authentifizierung überspringen",
+      "title": "OAuth-Anwendung",
+      "title_plural": "OAuth-Anwendungen"
+    },
+    "authorized_application": {
+      "access_since": "Zugriff seit {date}",
+      "description": "Die folgenden Drittanbieter-Anwendungen haben Zugriff auf Ihr Konto. Sie können den Zugriff für diejenigen, die Sie nicht mehr brauchen oder denen Sie nicht mehr vertrauen, jederzeit widerrufen.",
+      "has_access_to": "Hat Zugriff auf:",
+      "menu_title": "Drittanbieter-Anwendungen",
+      "revoke": "Zugriff widerrufen",
+      "revoke_question": "Sind Sie sicher, dass Sie den Zugriff für folgende Anwendung widerrufen wollen?",
+      "subtitle": "Drittanbieter-Anwendungen mit Zugriff auf Ihr Konto",
+      "title": "Drittanbieter-Anwendungen",
+      "valid_until": "Gültig bis {date}"
+    },
+    "authorized_token": {
+      "menu_title": "Autorisierte Anwendungen"
+    }
+  },
+  "people": "Menschen",
+  "permissions": {
+    "manage": {
+      "menu_title": "Berechtigungen verwalten"
+    }
+  },
+  "person": {
+    "account_menu_title": "Konto",
+    "additional_image": "Weiteres Bild",
+    "additional_name": "Zusätzlicher Name",
+    "address": "Adresse",
+    "addresses": "Adressen",
+    "avatar": "Avatar",
+    "birth_date": "Geburtsdatum",
+    "birth_date_and_birth_place": "Geburtsdatum und Geburtsort",
+    "birth_date_and_birth_place_formatted": "{date} in {place}",
+    "birth_place": "Geburtsort",
+    "children": "Kinder",
+    "confirm_delete": "Wollen Sie wirklich diese Person löschen?",
+    "country": "Land",
+    "date_of_birth": "Geburtsdatum",
+    "delete": "Löschen",
+    "description": "Beschreibung",
+    "details": "Kontaktdaten",
+    "email": "E-Mail",
+    "email_address": "E-Mail-Adresse",
+    "first_name": "Vorname",
+    "form": {
+      "create": "Person erstellen",
+      "edit": "Person bearbeiten",
+      "titles": {
+        "address": "Adresse",
+        "advanced_personal_data": "Zusätzliche persönliche Daten",
+        "base_data": "Basisdaten",
+        "contact_data": "Kontaktdaten"
+      }
+    },
+    "guardians": "Erziehungsberechtigte / Eltern",
+    "home": "Festnetz",
+    "housenumber": "Hausnummer",
+    "impersonation": {
+      "impersonate": "Verkleiden",
+      "impersonating": "Verkleidet als",
+      "stop": "Verkleidung beenden"
+    },
+    "invite": "Einladen",
+    "last_name": "Nachname",
+    "logged_in_as": "Angemeldet als",
+    "menu_title": "Personen",
+    "mobile": "Handy",
+    "mobile_number": "Handynummer",
+    "name": "Name",
+    "no_additional_image": "Diese Person hat kein weiteres Bild hochgeladen",
+    "no_persons": "Keine Personen",
+    "page_title": "Person",
+    "phone_number": "Telefonnummer",
+    "photo": "Foto",
+    "place": "Ort",
+    "place_of_birth": "Geburtsort",
+    "postal_code": "Postleitzahl",
+    "primary_group": "Primärgruppe",
+    "sex": {
+      "f": "Weiblich",
+      "field": "Geschlecht",
+      "m": "Männlich",
+      "x": "Divers"
+    },
+    "sex_description": "Geschlecht",
+    "short_name": "Kurzname",
+    "street": "Straße",
+    "title": "Person",
+    "title_plural": "Personen",
+    "user": "Verknüpfter Benutzer",
+    "username": "Benutzername",
+    "view_in_new_tab": "{fullName} in neuem Tab anzeigen"
+  },
+  "personal_events": {
+    "create_button": "Termin erstellen",
+    "create_title": "Persönlichen Termin erstellen",
+    "date_end": "Ende",
+    "date_start": "Start",
+    "datetime_end": "Ende",
+    "datetime_start": "Start",
+    "description": "Beschreibung",
+    "edit_title": "Persönlichen Termin bearbeiten",
+    "groups": "Teilnehmende Gruppen",
+    "is_full_day": "Ganztägig",
+    "is_not_recurring": "Einmalig",
+    "is_recurring": "Wiederkehrend",
+    "location": "Ort",
+    "persons": "Teilnehmende Personen",
+    "recurrences": "Wiederholen",
+    "title": "Titel"
+  },
+  "preferences": {
+    "person": {
+      "change_preferences": "Einstellungen",
+      "menu_title": "Einstellungen"
+    },
+    "site": {
+      "menu_title": "Konfiguration"
+    }
+  },
+  "role": {
+    "bg_color": "Hintergrundfarbe",
+    "create": "Rolle erstellen",
+    "fg_color": "Vordergrundfarbe",
+    "ical_participation_role": "iCal-Teilnahme-Rolle",
+    "menu_title": "Rollen",
+    "name": "Name",
+    "reciprocal_name": "Gegenseitiger Name",
+    "short_name": "Kurzname",
+    "title": "Rolle",
+    "title_plural": "Rollen",
+    "vcard_related_type": "vCard-Beziehungs-Typ"
+  },
+  "room": {
+    "create_room": "Neuen Raum erstellen",
+    "menu_title": "Räume",
+    "name": "Name",
+    "short_name": "Kurzname",
+    "title_plural": "Räume"
+  },
+  "school_term": {
+    "active_school_term": {
+      "select_action": "Aktuelles auswählen",
+      "subtitle": "Die Auswahl wird auf allen Seiten in AlekSIS berücksichtigt.",
+      "title": "Aktives Schuljahr",
+      "warning": "Hinweis: Sie sehen aktuell Daten aus einem anderen Schuljahr ({termName}). Informationen können daher veraltet sein und entsprechen möglicherweise nicht dem aktuellen Stand."
+    },
+    "after": "Endet nach",
+    "before": "Beginnt vor",
+    "create_school_term": "Schuljahr erstellen",
+    "current": "Aktuell",
+    "date_end": "Enddatum",
+    "date_start": "Startdatum",
+    "menu_title": "Schuljahre",
+    "name": "Name",
+    "title": "Schuljahr",
+    "title_plural": "Schuljahre"
+  },
+  "selection": {
+    "num_items_selected": "Keine Objekte ausgewählt | 1 Objekt ausgewählt | {n} Objekte ausgewählt"
+  },
+  "service_worker": {
+    "new_version_available": {
+      "body": "AlekSIS® wurde im Hintergrund aktualisiert. Um {instance} weiterhin zu verwenden, muss die Aktualisierung jetzt eingespielt werden.",
+      "header": "Neue Version verfügbar"
+    },
+    "update": "Fertigstellen"
+  },
+  "status": {
+    "changes": "Sie haben nicht gespeicherte Änderungen.",
+    "error": "Beim Speichern der letzten Änderungen ist ein Fehler aufgetreten.",
+    "object_create_success": "Das Objekt wurde erfolgreich erstellt.",
+    "object_delete_success": "Das Objekt wurde erfolgreich gelöscht.",
+    "object_edit_success": "Das Objekt wurde erfolgreich bearbeitet.",
+    "objects_delete_success": "Die Objekte wurden erfolgreich gelöscht.",
+    "saved": "Alle Änderungen sind gespeichert.",
+    "updating": "Änderungen werden synchronisiert."
+  },
+  "time": {
+    "years_n": "Keine Jahre | ein Jahr | {n} Jahre"
+  },
+  "weekdays": {
+    "A_0": "Montag",
+    "A_1": "Dienstag",
+    "A_2": "Mittwoch",
+    "A_3": "Donnerstag",
+    "A_4": "Freitag",
+    "A_5": "Samstag",
+    "A_6": "Sonntag"
+  },
+  "weekdays_short": {
+    "A_0": "Mo",
+    "A_1": "Di",
+    "A_2": "Mi",
+    "A_3": "Do",
+    "A_4": "Fr",
+    "A_5": "Sa",
+    "A_6": "So"
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "about": {
+    "about_aleksis": "Щодо AlekSIS®",
+    "about_aleksis_1": "Ця платформа базується на AlekSIS®, веб-інструменті інформаційної системи для навчання (SIS), за допомогою якої можна керувати та/або висвітлювати організаційні моменти навчальних закладів. AlekSIS — безплатне ПЗ і ним може користуватися будь-хто.",
+    "about_aleksis_2": "AlekSIS® — зареєстрована торгова марка проекту з відкритим сирцевим кодом AlekSIS, що представлена Teckids e.V.",
+    "free_open_source_licence": "Ліцензія Безкоштовного або Відкритого Коду (Open Source)",
+    "free_software": "Вільне ПЗ",
+    "full_licence_text": "Повний текст ліцензії",
+    "licence_consists_of": "Ліцензія складається з",
+    "licence_information": "Ліцензійна інформація",
+    "licence_information_1": "Ядро та офіційні додатки AlekSIS ліцензовані EUPL, версії 1.2 та новіше. Для отримання інформації щодо додатків третіх сторін, якщо такі встановлені, перейдіть до відповідних компонентів нижче. Ці ліцензії мають таку позначку:",
+    "licence_type": "Тип Ліцензії",
+    "licenced_under": "Ліцензовано під",
+    "more_information_eupl": "Більше інформації щодо EUPL",
+    "open_source": "Відкрите ПЗ",
+    "other_licence": "Інша ліцензія",
+    "page_title": "Щодо AlekSIS®",
+    "proprietary": "Пропрієтарне",
+    "show_copyright": "Показати авторські права",
+    "source_code": "Сирцевий код",
+    "website_of_aleksis": "Веб-сайт AlekSIS"
+  },
+  "accounts": {
+    "change_password": {
+      "menu_title": "Змінити пароль"
+    },
+    "invitation": {
+      "accept_invitation": {
+        "menu_title": "Прийняти запрошення"
+      },
+      "invite_person": {
+        "menu_title": "Запросити особу"
+      }
+    },
+    "login": {
+      "menu_title": "Увійти"
+    },
+    "logout": {
+      "menu_title": "Вийти"
+    },
+    "signup": {
+      "form": {
+        "steps": {
+          "account": {
+            "fields": {
+              "password": {
+                "label": "Пароль"
+              }
+            }
+          },
+          "additional_data": {
+            "fields": {
+              "description": {
+                "label": "Опис"
+              },
+              "photo": {
+                "label": "Фото"
+              }
+            }
+          },
+          "base_data": {
+            "fields": {
+              "short_name": {
+                "label": "Коротка назва"
+              }
+            },
+            "title": "Основні дані"
+          },
+          "contact_data": {
+            "title": "Контактні дані"
+          }
+        }
+      },
+      "menu_title": "Зареєструватися"
+    },
+    "social_connections": {
+      "menu_title": "Облікові записи третіх сторін"
+    },
+    "two_factor": {
+      "add_authentication_method": "Додати метод аутентифікації",
+      "backup_codes_count": "У Вас не залишилося резервних кодів.|У Вас залишився лише один резервний код.|У Вас залишилося {counter} резервних кодів.",
+      "backup_codes_description": "Якщо Ви не зможете скористатися ніяким зі своїх пристроїв, Ви зможете отримати доступ до облікового запису за допомогою резервних кодів.",
+      "backup_codes_title": "Резервні коди",
+      "disable_button": "Вимкнути двофакторну аутентифікацію",
+      "disable_description": "Хоча ми рішуче застерігаємо Вас від цього, Ви можете вимкнути двофакторну аутентифікацію для свого облікового запису.",
+      "disable_title": "Вимкнути двофакторну аутентифікацію",
+      "enable_button": "Увімкнути двофакторну аутентифікацію",
+      "enable_description": "Двофакторна аутентифікація у Вашому обліковому записі не працює. Для кращої безпеки увімкніть двофакторну аутентифікацію.",
+      "enable_title": "Двофакторна аутентифікація зараз вимкнена",
+      "menu_title": "2FA",
+      "methods": {
+        "call": "Ми зателефонуємо на Ваш мобільний та скажемо одноразовий код.",
+        "email": "Ми надішлемо Вам одноразові коди на Вашу ел.пошту.",
+        "generator": "Ви генеруєте одноразові коди за допомогою генератора кодів.",
+        "sms": "Ми надішлемо Вам одноразові коди на Ваш мобільний.",
+        "webauthn": "Ви використовуєте ключ безпеки (зовнішній або вбудований у Ваш персональний пристрій).",
+        "yubikey": "Ви використовуєте YubiKey для створення одноразових кодів."
+      },
+      "other_devices_description": "Якщо Ваш основний пристрій аутентифікації буде недоступний під час входу, Ви можете скористатися одним з цих пристроїв:",
+      "other_devices_title": "Інші пристрої аутентифікації",
+      "primary_device_description": "Під час входу в систему AlekSIS попросить Вас підтвердити вхід за допомогою наступного пристрою. Якщо цей пристрій буде недоступний, Ви зможете скористатися резервним пристроєм.",
+      "primary_device_title": "Основний пристрій для аутентифікації",
+      "title": "Двофакторна аутентифікація",
+      "webauthn": {
+        "key_name": "Назва"
+      }
+    }
+  },
+  "actions": {
+    "back": "Назад",
+    "cancel": "Скасувати",
+    "clear_filters": "Очистити фільтри",
+    "close": "Закрити",
+    "confirm_deletion": "Ви дійсно хочете видалити цей об'єкт?",
+    "confirm_deletion_multiple": "Ви дійсно хочете видалити ці об'єкти?",
+    "copied": "Скопійовано",
+    "copy": "Копіювати",
+    "create": "Додати",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "filter": "Фільтр",
+    "save": "Зберегти",
+    "search": "Пошук",
+    "select_action": "Виберіть дії",
+    "select_all": "Вибрати все",
+    "stop_editing": "Завершити редагування",
+    "title": "Дії",
+    "update": "Оновити"
+  },
+  "administration": {
+    "data_check": {
+      "detected_problems": {
+        "headers": {
+          "id": "ID",
+          "related_object": "Залежні об'єкти"
+        }
+      }
+    },
+    "menu_title": "Адміністрація",
+    "system_status": {
+      "celery_tasks": {
+        "headers": {
+          "status": "Стан",
+          "task_id": "ID"
+        }
+      },
+      "menu_title": "Стан системи",
+      "system_health": {
+        "headers": {
+          "status": "Стан"
+        }
+      }
+    }
+  },
+  "alerts": {
+    "page_cached": "Через відсутність інтернет-з'єднання ця сторінка може містити застарілу інформацію."
+  },
+  "announcement": {
+    "description": "Опис",
+    "menu_title": "Оголошення",
+    "title": "Оголошення",
+    "title_plural": "Оголошення"
+  },
+  "availability_event": {
+    "availability_status": "Стан",
+    "description": "Опис"
+  },
+  "availability_type": {
+    "description": "Опис",
+    "name": "Назва",
+    "public": {
+      "label": "Публічний"
+    },
+    "short_name": "Коротка назва"
+  },
+  "base": {
+    "about_aleksis": "Щодо AlekSIS® — The Free School Information System",
+    "imprint": "Реквізити",
+    "logo": "Логотип",
+    "no_permission": "Немає дозволу",
+    "no_permission_message_long": "Ви не маєте дозволу на перегляд цієї сторінки. Увійдіть, будь ласка, з іншим обліковим записом.",
+    "no_permission_message_short": "Немає дозволу",
+    "no_permission_redirect_text": "На сторінку входу",
+    "person_is_dummy": "Ваш адміністративний обліковий запис не поєднаний з жодною особою. Через це до Вашого облікового запису приєднана фейкова особа.",
+    "privacy_policy": "Політика приватності",
+    "user_not_linked_to_person": "Ваш обліковий запис не пов'язаний з фізособою. Це означає, що Ви не маєте жодного доступу до навчальної інформації. Зверніться, будь ласка, до адміністраторів AlekSIS у своєму навчальному закладі."
+  },
+  "calendar": {
+    "cancelled": "Скасовано",
+    "create_event": {
+      "description": "Опис",
+      "personal_events": {
+        "location": "Розташування"
+      },
+      "personal_todos": {
+        "location": "Розташування"
+      }
+    },
+    "day": "День",
+    "download_all": "Отримати всі",
+    "download_ics": "Отримати ICS",
+    "ics_to_clipboard": "Скопіювати посилання на ICS календаря до буфера обміну",
+    "menu_title": "Календар",
+    "month": "Місяць",
+    "my_calendars": "Мої календарі",
+    "select": "Виберіть календар",
+    "today": "Сьогодні",
+    "week": "Тиждень"
+  },
+  "celery_progress": {
+    "error_message": "Завершити цю операцію успішно не вдалося.",
+    "progress_title": "Завантаження ...",
+    "running_tasks": "Виконується 1 завдання | Виконуються {number} завдань",
+    "success_message": "Операція успішно завершена."
+  },
+  "crud_components": {
+    "iterator_empty_message": {
+      "no_results": "Результатів пошуку {search} немає"
+    }
+  },
+  "dashboard": {
+    "dashboard_widget": {
+      "menu_title": "Віджети інформпанелі",
+      "title": "Віджет інформпанелі",
+      "title_plural": "Віджети інформпанелі"
+    },
+    "dashboard_widgets": {
+      "static_content": {
+        "fields": {
+          "content": "Зміст"
+        }
+      }
+    },
+    "menu_title": "Інформпанель"
+  },
+  "data_check": {
+    "menu_title": "Перевірки даних"
+  },
+  "download_pdf": {
+    "download": "Звантажити",
+    "notice": "Якщо отримання не почалося автоматично, натисніть, будь ласка, кнопку, що нижче.",
+    "title": "Отримання файлу PDF ..."
+  },
+  "forms": {
+    "date_time": {
+      "date": "Дата",
+      "time": "Час"
+    },
+    "errors": {
+      "invalid_color": "Неприпустимий колір.",
+      "invalid_date": "Неприпустима дата.",
+      "invalid_time": "Неприпустимий час.",
+      "not_a_number": "Неприпустиме число",
+      "not_a_whole_number": "Будь ласка, введіть ціле число",
+      "number_too_big": "Будь ласка, введіть менше число.",
+      "number_too_small": "Будь ласка, введіть більше число.",
+      "required": "Це поле обов'язкове."
+    },
+    "labels": {
+      "comment": "Коментар",
+      "persons": "Особи"
+    }
+  },
+  "free_busy": {
+    "types": {
+      "groups": "Групи",
+      "persons": "Особи"
+    }
+  },
+  "graphql": {
+    "snackbar_error_message": "Під час отримання даних сторінки виникла помилка. Спробуйте, будь ласка, ще раз.",
+    "snackbar_success_message": "Операція успішно завершена."
+  },
+  "group": {
+    "groups_and_child_groups": "Групи та підлеглі групи",
+    "menu_title": "Групи",
+    "name": "Назва",
+    "group_type": "Тип групи",
+    "ownership": "Власність групи",
+    "short_name": "Коротка назва",
+    "title": "Група",
+    "title_plural": "Групи"
+  },
+  "group_type": {
+    "allowed_information": {
+      "address": "Адреса",
+      "contact_details": "Контактні дані",
+      "groups": "Групи",
+      "photo": "Фото"
+    },
+    "description": "Опис",
+    "menu_title": "Типи груп",
+    "name": "Назва",
+    "title": "Тип групи",
+    "title_plural": "Типи груп"
+  },
+  "holiday": {
+    "create_holiday": "Створити вихідний",
+    "date_end": "Дата закінчення",
+    "date_start": "Дата початку",
+    "holiday_name": "Назва",
+    "menu_title": "Вихідні",
+    "title": "Вихідний",
+    "title_plural": "Вихідні"
+  },
+  "ical_feed": {
+    "menu_title": "Канали календарів"
+  },
+  "legacy": {
+    "unworthy": "Форма життя, яка створила цю сторінку, не підкорилася всемогутньому Алексолотлю."
+  },
+  "network_errors": {
+    "back_to_start": "Повернутися додому",
+    "error_404": "404",
+    "offline_notification": "Ви в автономному режимі. Деякі функції можуть не працювати та деякі дані можуть не оновлюватися.",
+    "page_not_found": "Сторінка, яку Ви запитували, або ресурс із нею не знайдено.",
+    "snackbar_error_message": "Сталася мережева помилка. Спробуйте ще раз, будь ласка."
+  },
+  "notifications": {
+    "mark_as_read": "Позначити прочитаним",
+    "more_information": "Докладніше",
+    "no_notifications": "У Вас немає нових сповіщень.",
+    "notifications": "Сповіщення"
+  },
+  "oauth": {
+    "application": {
+      "icon": "Піктограма",
+      "menu_title": "Додатки OAuth2",
+      "name": "Назва",
+      "title": "Додаток OAuth2",
+      "title_plural": "Додатки OAuth2"
+    },
+    "authorized_application": {
+      "access_since": "Доступ з {date}",
+      "description": "Згадані сторонні додатки мають доступ до Вашого облікового запису. Доступ, який більше не потрібен або якому більше не довіряєте, можете відкликати будь-коли.",
+      "has_access_to": "Має доступ до:",
+      "menu_title": "Сторонні додатки",
+      "revoke": "Відкликати доступ",
+      "revoke_question": "Ви дійсно хочете відкликати доступ для цього додатку?",
+      "subtitle": "Сторонні додатки з доступом до Вашого облікового запису",
+      "title": "Сторонні додатки",
+      "valid_until": "Дійсне до {date}"
+    },
+    "authorized_token": {
+      "menu_title": "Авторизовані додатки"
+    }
+  },
+  "people": "Люди",
+  "permissions": {
+    "manage": {
+      "menu_title": "Керування дозволами"
+    }
+  },
+  "person": {
+    "account_menu_title": "Обліковий запис",
+    "additional_image": "Додаткове зображення",
+    "address": "Адреса",
+    "avatar": "Аватар",
+    "children": "Діти",
+    "delete": "Видалити",
+    "description": "Опис",
+    "details": "Контактні дані",
+    "form": {
+      "titles": {
+        "address": "Адреса",
+        "advanced_personal_data": "Додаткові особисті дані",
+        "base_data": "Основні дані",
+        "contact_data": "Контактні дані"
+      }
+    },
+    "guardians": "Батьки / опікуни",
+    "home": "домашній телефон",
+    "impersonation": {
+      "impersonate": "Маскування",
+      "impersonating": "Маскуючись як",
+      "stop": "Зупинити маскування"
+    },
+    "invite": "Запрошення",
+    "logged_in_as": "Вхід виконано як",
+    "menu_title": "Особи",
+    "mobile": "мобільний телефон",
+    "name": "Назва",
+    "no_additional_image": "Ця особа не завантажила додаткове зображення",
+    "no_persons": "Нікого немає",
+    "page_title": "Особа",
+    "photo": "Фото",
+    "short_name": "Коротка назва",
+    "title": "Особа",
+    "title_plural": "Особи"
+  },
+  "personal_events": {
+    "description": "Опис",
+    "location": "Розташування"
+  },
+  "preferences": {
+    "person": {
+      "change_preferences": "Властивості",
+      "menu_title": "Властивості"
+    },
+    "site": {
+      "menu_title": "Конфігурація"
+    }
+  },
+  "role": {
+    "name": "Назва",
+    "short_name": "Коротка назва"
+  },
+  "room": {
+    "create_room": "Створити нову кімнату",
+    "menu_title": "Кімнати",
+    "name": "Назва",
+    "short_name": "Коротка назва",
+    "title_plural": "Кімнати"
+  },
+  "school_term": {
+    "after": "Закінчується після",
+    "before": "Починається перед",
+    "create_school_term": "Створити Навчальний рік",
+    "date_end": "Дата закінчення",
+    "date_start": "Дата початку",
+    "menu_title": "Навчальні роки",
+    "name": "Назва",
+    "title": "Навчальний рік",
+    "title_plural": "Навчальні роки"
+  },
+  "selection": {
+    "num_items_selected": "Не вибрано жодного об'єкта | Обраний 1 об'єкт | Обрано {n} об'єктів"
+  },
+  "service_worker": {
+    "dismiss": "Відмовитися",
+    "new_version_available": "Доступна нова версія програми",
+    "update": "Оновити"
+  },
+  "status": {
+    "changes": "У Вас є незбережені зміни.",
+    "error": "Під час збереження останньої зміни виникла помилка.",
+    "object_create_success": "Об'єкт успішно створений.",
+    "object_delete_success": "Об'єкт успішно видалений.",
+    "object_edit_success": "Об'єкт успішно змінений.",
+    "objects_delete_success": "Об'єкти успішно видалені.",
+    "saved": "Усі зміни збережені.",
+    "updating": "Зміни синхронізуються."
+  },
+  "weekdays": {
+    "A_0": "Понеділок",
+    "A_1": "Вівторок",
+    "A_2": "Середа",
+    "A_3": "Четвер",
+    "A_4": "П'ятниця",
+    "A_5": "Субота",
+    "A_6": "Неділя"
+  }
+}

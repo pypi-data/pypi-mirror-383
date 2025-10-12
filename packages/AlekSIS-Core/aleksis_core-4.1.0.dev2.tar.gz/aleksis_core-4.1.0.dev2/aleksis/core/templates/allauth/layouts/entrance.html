@@ -1,0 +1,14 @@
+{% extends "allauth/layouts/base.html" %}
+{% block inner_content %}
+  <div class="row">
+    <div class="col m1 l2 xl3"></div>
+    <div class="col s12 m10 l8 xl6">
+    <div class="card">
+    <div class="card-content">
+      {% block content %}{% endblock %}
+    </div>
+    </div>
+    </div>
+    <div class="col m1 l2 xl3"></div>
+  </div>
+{% endblock %}

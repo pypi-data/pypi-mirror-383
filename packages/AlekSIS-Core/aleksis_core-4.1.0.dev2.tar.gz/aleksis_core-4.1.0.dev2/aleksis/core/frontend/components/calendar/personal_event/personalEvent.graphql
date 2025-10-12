@@ -1,0 +1,44 @@
+fragment personalEventFields on PersonalEventType {
+  id
+  title
+  description
+  location
+
+  datetimeStart
+  datetimeEnd
+  dateStart
+  dateEnd
+  timezone
+  recurrences
+
+  persons {
+    id
+    fullName
+  }
+  groups {
+    id
+    shortName
+  }
+}
+
+mutation createPersonalEvents($input: [BatchCreatePersonalEventInput]!) {
+  createPersonalEvents(input: $input) {
+    items: personalEvents {
+      ...personalEventFields
+    }
+  }
+}
+
+mutation deletePersonalEvents($ids: [ID]!) {
+  deletePersonalEvents(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updatePersonalEvents($input: [BatchPatchPersonalEventInput]!) {
+  updatePersonalEvents(input: $input) {
+    items: personalEvents {
+      ...personalEventFields
+    }
+  }
+}

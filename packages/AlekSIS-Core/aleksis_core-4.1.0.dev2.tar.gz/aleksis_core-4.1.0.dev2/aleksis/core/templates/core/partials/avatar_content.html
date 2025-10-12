@@ -1,0 +1,28 @@
+{% load rules i18n %}
+{% has_perm 'core.view_avatar_rule' request.user person_or_user as can_view_avatar %}
+{% has_perm 'core.view_photo_rule' request.user person_or_user as can_view_photo %}
+{% if SITE_PREFERENCES.account__person_prefer_photo and person_or_user.photo and can_view_photo %}
+  <div class="{% firstof class "clip-circle" %}">
+    <img class="{% firstof img_class "hundred-percent" %}" src="{{ person_or_user.photo.url }}"
+         alt="{{ person_or_user.full_name }}" {% if title %} title="{{ person_or_user.full_name }}"{% endif %}/>
+  </div>
+{% elif person_or_user.identicon_url %}
+  {# If this is a person #}
+  <div class="{% firstof class "clip-circle" %}">
+    {% if can_view_avatar %}
+      <img class="{% firstof img_class "hundred-percent" %}" src="{{ person_or_user.avatar_url }}"
+           alt="{{ person_or_user.full_name }} ({% trans "Avatar" %})" {% if title %}
+           title="{{ person_or_user.full_name }} ({% trans "Avatar" %})"{% endif %}/>
+    {% else %}
+      <img class="{% firstof img_class "hundred-percent" %}" src="{{ person_or_user.identicon_url }}"
+           alt="{{ person_or_user.full_name }} ({% trans "Identicon" %})" {% if title %}
+           title="{{ person_or_user.full_name }} ({% trans "Identicon" %})"{% endif %} />
+    {% endif %}
+  </div>
+
+{% else %}
+  {# There is a user without a person #}
+  <div class="{% firstof class "clip-circle" %} no-image">
+    <i class="material-icons">person</i>
+  </div>
+{% endif %}

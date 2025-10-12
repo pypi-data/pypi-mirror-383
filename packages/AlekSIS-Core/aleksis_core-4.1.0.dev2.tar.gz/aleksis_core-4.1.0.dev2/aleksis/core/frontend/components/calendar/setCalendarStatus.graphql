@@ -1,0 +1,5 @@
+mutation setCalendarStatus($calendars: [String]!) {
+  setCalendarStatus(calendars: $calendars) {
+    ok
+  }
+}

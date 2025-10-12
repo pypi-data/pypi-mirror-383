@@ -1,0 +1,54 @@
+{% load static i18n any_js %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <base href="{{ BASE_URL }}" />
+
+  {% include "core/partials/meta.html" %}
+
+  <title>
+    {% block no_browser_title %}
+      {% block browser_title %}{% endblock %} —
+    {% endblock %}
+    {{ SITE_PREFERENCES.general__title }}
+  </title>
+
+  {% include_css "material-design-icons" %}
+  {% include_css "Roboto100" %}
+  {% include_css "Roboto300" %}
+  {% include_css "Roboto400" %}
+  {% include_css "Roboto500" %}
+  {% include_css "Roboto700" %}
+  {% include_css "Roboto900" %}
+  {% include_css "paper-css" %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static "print-simple.css" %}"/>
+
+  {% block size %}
+    <style>
+      @page {
+        size: {{ width }}mm {{ height }}mm;
+      }
+
+      @media print {
+        html, body {
+          width: {{ width }}mm;
+        }
+      }
+
+      .sheet {
+        width: {{ width }}mm;
+        height: {{ height|add:-1 }}.73mm;
+      }
+    </style>
+  {% endblock %}
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

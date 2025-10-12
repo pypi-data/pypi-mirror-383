@@ -1,0 +1,36 @@
+{# -*- engine:django -*- #}
+{% load django_vite i18n any_js %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <base href="{{ BASE_URL }}">
+
+    {% include "core/partials/meta.html" %}
+    <title>{{ SITE_PREFERENCES.general__title }}</title>
+
+    {{ FRONTEND_SETTINGS|json_script:"frontend_settings" }}
+
+    {% if not need_maintenance_response %}
+      {% vite_hmr_client %}
+    {% endif %}
+  </head>
+
+  <body>
+    <main id="app">
+      <!-- HTML and CSS in #app will be replaced by vue -->
+      {% include "core/partials/splash_screen.html" %}
+
+      <app ref="aleksisApp"></app>
+    </main>
+
+    {% block no_frontend %}
+      {% if not need_maintenance_response %}
+        {% vite_asset 'aleksis/core/frontend/index.js' %}
+        {% vite_legacy_asset 'aleksis/core/frontend/index-legacy.js' %}
+        {% vite_legacy_polyfills nomodule=False %}
+      {% endif %}
+    {% endblock no_frontend %}
+  </body>
+</html>

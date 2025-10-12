@@ -1,0 +1,62 @@
+{% load i18n %}
+
+{% block subject %} {% trans "New account" %} {{ person }} {% endblock %}
+
+{% block plain %}
+    {% blocktrans with person=person %}New account: {{ person }}{% endblocktrans %}
+
+    **** {% trans "Person" %} ****
+
+    * {% trans "Name" %}: {{ person }}
+    * {% trans "Username" %} {{ person.user.username }}
+    * {% trans "Date of birth" %}: {{ person.date_of_birth }}
+    * {% trans "Email address" %}: {{ person.email }}
+    * {% trans "Mobile number" %}: {{ person.mobile_number }}
+    {% if address %}
+    * {% trans "Street" %}: {{ address.street }}
+    * {% trans "Housenumber" %}: {{ address.housenumber }}
+    * {% trans "Postal code" %}: {{ address.postal_code }}
+    * {% trans "Place" %}: {{ address.place }}
+    * {% trans "Country" %}: {{ address.country }}
+    {% endif %}
+
+
+    {% for relationship in guardian_relationships.all %}
+    **** {% trans "Guardian" %} ****
+
+    * {% trans "Name" %}: {{ relationship.person }}
+    * {% trans "Email address" %}: {{ relationship.person.email }}
+    * {% trans "Mobile number" %}: {{ relationship.person.mobile_number }}
+    {% endfor %}
+{% endblock %}
+
+{% block html %}
+<main>
+    <p>{% trans "New account" %}: {{ person }}</p>
+
+    <blockquote>
+        <h5>{% trans "Person" %}</h5>
+        <ul>
+            <li>{% trans "Name" %}: {{ person }}</li>
+	    <li>{% trans "Username" %}: {{ person.user.username }}</li>
+            <li>{% trans "Date of birth" %}: {{ person.date_of_birth }}</li>
+            <li>{% trans "Email address" %}: {{ person.email }}</li>
+            <li>{% trans "Mobile number" %}: {{ person.mobile_number }}</li>
+            {% if address %}
+            <li>{% trans "Street" %}: {{ address.street }}</li>
+            <li>{% trans "Housenumber" %}: {{ address.housenumber }}</li>
+            <li>{% trans "Postal code" %}: {{ address.postal_code }}</li>
+            <li>{% trans "Place" %}: {{ address.place }}</li>
+            <li>{% trans "Country" %}: {{ address.country }}</li>
+            {% endif %}
+        </ul>
+	{% for relationship in guardian_relationships.all %}
+        <h5>{% trans "Guardian" %}</h5>
+        <ul>
+	    <li>{% trans "Name" %}: {{ relationship.person }}</li>
+	    <li>{% trans "Email address" %}: {{ relationship.person.email }}</li>
+	    <li>{% trans "Mobile number" %}: {{ relationship.person.mobile_number }}</li>
+	</ul>
+	{% endfor %}
+    </blockquote>
+{% endblock %}

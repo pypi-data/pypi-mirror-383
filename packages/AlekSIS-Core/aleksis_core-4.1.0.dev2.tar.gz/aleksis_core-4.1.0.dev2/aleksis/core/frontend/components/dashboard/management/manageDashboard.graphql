@@ -1,0 +1,44 @@
+mutation reorderDashboardWidgets(
+  $widgetData: [ReorderDashboardWidgetInput!]!
+  $isDefaultDashboard: Boolean
+) {
+  reorderDashboardWidgets(
+    widgetData: $widgetData
+    isDefaultDashboard: $isDefaultDashboard
+  ) {
+    created {
+      id
+      x
+      y
+      width
+      height
+      context
+      widget {
+        __typename
+        id
+        status
+        title
+      }
+    }
+    updated {
+      id
+      x
+      y
+      width
+      height
+      context
+      widget {
+        __typename
+        id
+        status
+        title
+      }
+    }
+  }
+}
+
+mutation deleteDashboardWidgetInstances($ids: [ID!]!) {
+  deleteDashboardWidgetInstances(ids: $ids) {
+    deletionCount
+  }
+}

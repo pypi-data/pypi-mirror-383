@@ -1,0 +1,110 @@
+{# -*- engine:django -*- #}
+
+{% load i18n static any_js rules %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  {% include "core/partials/meta.html" %}
+
+  {# CSS #}
+  {% include_css "material-design-icons" %}
+  {% include_css "Roboto100" %}
+  {% include_css "Roboto300" %}
+  {% include_css "Roboto400" %}
+  {% include_css "Roboto500" %}
+  {% include_css "Roboto700" %}
+  {% include_css "Roboto900" %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  {# Add i18n names for calendar (for use in datepicker) #}
+  {# Passing the locale is not necessary for the scripts to work, but prevents caching issues #}
+  <script src="{% url "javascript-catalog" %}?locale={{ LANGUAGE_CODE }}" type="text/javascript"></script>
+  <script src="{% url "calendarweek_i18n_js" %}?first_day=6&amp;locale={{ LANGUAGE_CODE }}"
+          type="text/javascript"></script>
+
+  {% if SENTRY_ENABLED %}
+    {% if SENTRY_TRACE_ID %}
+      <meta name="sentry-trace" content="{{ SENTRY_TRACE_ID }}" />
+    {% endif %}
+    {% include_js "Sentry" %}
+    {{ SENTRY_SETTINGS|json_script:"sentry_settings" }}
+    <script type="text/javascript">
+      const sentry_settings = JSON.parse(document.getElementById('sentry_settings').textContent);
+
+      Sentry.init({
+        dsn: sentry_settings.dsn,
+        environment: sentry_settings.environment,
+        tracesSampleRate: sentry_settings.traces_sample_rate,
+        integrations: [new Sentry.Integrations.BrowserTracing()]
+      });
+    </script>
+  {% endif %}
+
+  <script type="text/javascript" src="{% url 'config.js' %}"></script>
+  {% include_js "iconify" %}
+
+  {# Include jQuery early to provide $(document).ready #}
+  {% include_js "jQuery" %}
+
+  <title>
+    {% block no_browser_title %}
+      {% block browser_title %}{% endblock %}
+    {% endblock %}
+  </title>
+
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="without-menu">
+
+<main role="main" id="mainReduced">
+
+  {% block no_page_title %}
+    <h1>{% block page_title %}{% endblock %}</h1>
+  {% endblock %}
+
+  {% block auth_content %}
+    {% block content %}{% endblock %}
+  {% endblock %}
+</main>
+
+{% include_js "luxon" %}
+{% include_js "materialize" %}
+{% include_js "sortablejs" %}
+{% include_js "jquery-sortablejs" %}
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    function findLink(el) {
+      if (el.href) {
+        return el.href;
+      } else if (el.parentElement) {
+        return findLink(el.parentElement);
+      } else {
+        return null;
+      }
+    };
+
+    function clickCallback(e) {
+      const link = findLink(e.target);
+      if (link == null) {
+        return;
+      }
+
+      const newUrl = new URL(link);
+      const currentUrl = new URL(window.location.href);
+      if(newUrl.origin !== currentUrl.origin) {
+        console.debug("External link clicked. Redirecting to " + link + " in new tab.");
+        e.preventDefault();
+        window.open(link, '_blank');
+      }
+    };
+
+    document.addEventListener('click', clickCallback, false);
+  })
+</script>
+</body>
+</html>

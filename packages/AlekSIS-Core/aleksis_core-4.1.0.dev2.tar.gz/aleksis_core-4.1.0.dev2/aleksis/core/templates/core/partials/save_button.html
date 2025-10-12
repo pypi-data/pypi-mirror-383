@@ -1,0 +1,6 @@
+{% load i18n %}
+<button type="submit" class="btn waves-effect waves-light green">
+  {% trans "Save" as default %}
+  <i class="material-icons left iconify" data-icon="{{ icon|default:"mdi:content-save-outline" }}"></i>
+  {{ caption|default:default }}
+</button>

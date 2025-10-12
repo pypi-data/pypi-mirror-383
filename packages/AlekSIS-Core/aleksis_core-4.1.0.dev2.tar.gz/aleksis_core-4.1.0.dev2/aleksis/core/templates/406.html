@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+  <div class="container">
+    <div class="card red">
+      <div class="card-content white-text">
+        <i class="material-icons iconify small left" data-icon="mdi:alert-octagon-outline"></i>
+        <span class="card-title">
+          {% blocktrans %}Requested object could not be rendered.{% endblocktrans %}
+        </span>
+        <p>
+          {% blocktrans %}
+            If you were redirected by a link on an external page,
+            it is possible that that link was outdated.
+          {% endblocktrans %}
+          {% blocktrans %}
+            If you think this is an error in AlekSIS, please contact your site
+            administrators:
+          {% endblocktrans %}
+        </p>
+        {% include "core/partials/admins_list.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

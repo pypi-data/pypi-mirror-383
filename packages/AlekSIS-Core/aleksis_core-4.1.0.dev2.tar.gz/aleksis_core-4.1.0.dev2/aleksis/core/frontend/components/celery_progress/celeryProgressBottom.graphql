@@ -1,0 +1,17 @@
+query celeryProgressByUser {
+  celeryProgressByUser {
+    state
+    success
+    progress {
+      current
+      total
+      percent
+    }
+    complete
+    meta {
+      id
+      title
+      progressTitle
+    }
+  }
+}

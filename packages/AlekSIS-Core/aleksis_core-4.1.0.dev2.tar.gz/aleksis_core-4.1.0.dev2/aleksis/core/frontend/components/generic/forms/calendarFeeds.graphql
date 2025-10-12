@@ -1,0 +1,9 @@
+query fieldCalendarFeeds {
+  items: calendar {
+    calendarFeeds {
+      name
+      verboseName
+      description
+    }
+  }
+}

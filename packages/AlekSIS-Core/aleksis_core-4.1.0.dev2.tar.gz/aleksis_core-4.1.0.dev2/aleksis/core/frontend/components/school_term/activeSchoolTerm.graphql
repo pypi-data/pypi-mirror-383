@@ -1,0 +1,37 @@
+query activeSchoolTerm {
+  activeSchoolTerm {
+    id
+    name
+    dateStart
+    dateEnd
+    current
+    canEdit
+    canDelete
+  }
+}
+
+query schoolTermsForActiveSchoolTerm {
+  schoolTerms {
+    id
+    name
+    dateStart
+    dateEnd
+    current
+    canEdit
+    canDelete
+  }
+}
+
+mutation setActiveSchoolTerm($id: ID!) {
+  setActiveSchoolTerm(id: $id) {
+    activeSchoolTerm {
+      id
+      name
+      dateStart
+      dateEnd
+      current
+      canEdit
+      canDelete
+    }
+  }
+}

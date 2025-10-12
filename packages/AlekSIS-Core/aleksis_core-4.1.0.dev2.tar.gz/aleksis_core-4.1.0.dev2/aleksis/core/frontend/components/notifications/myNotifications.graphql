@@ -1,0 +1,18 @@
+query myNotifications {
+  myNotifications: whoAmI {
+    id
+    person {
+      id
+      notifications {
+        id
+        title
+        description
+        link
+        icon
+        created
+        sender
+        read
+      }
+    }
+  }
+}

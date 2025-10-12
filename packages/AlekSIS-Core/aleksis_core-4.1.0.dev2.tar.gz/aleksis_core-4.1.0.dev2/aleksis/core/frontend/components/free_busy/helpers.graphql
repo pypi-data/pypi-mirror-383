@@ -1,0 +1,16 @@
+query gqlPersons {
+  persons {
+    id
+    fullName
+  }
+}
+
+query gqlGroups {
+  groups {
+    id
+    shortName
+    members {
+      id
+    }
+  }
+}
