@@ -1,0 +1,8 @@
+query pdf($id: ID!) {
+  pdf: pdfById(id: $id) {
+    id
+    file {
+      url
+    }
+  }
+}

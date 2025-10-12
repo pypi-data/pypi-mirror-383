@@ -1,0 +1,6 @@
+query avatarContent($id: ID) {
+  person: personByIdOrMe(id: $id) {
+    id
+    image: avatarContentUrl
+  }
+}

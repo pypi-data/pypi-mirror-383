@@ -1,0 +1,9 @@
+query gqlObjectPermissions($input: [ObjectPermissionInputType]!) {
+  objectPermissions(input: $input) {
+    name
+    objId
+    objType
+    appLabel
+    result
+  }
+}

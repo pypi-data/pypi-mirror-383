@@ -1,0 +1,5 @@
+mutation revokeOauthTokens($ids: [ID]!) {
+  revokeOauthTokens(ids: $ids) {
+    ok
+  }
+}

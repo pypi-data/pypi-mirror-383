@@ -1,0 +1,79 @@
+query twoFactor {
+  twoFactor {
+    totp {
+      id
+      activated
+      secret
+      totpUrl
+      totpQrCode
+    }
+    recoveryCodes {
+      unusedCodeCount
+      totalCodeCount
+    }
+    webauthn {
+      authenticators {
+        id
+        createdAt
+        lastUsedAt
+        name
+      }
+    }
+  }
+}
+
+query didRecentlyAuthenticate {
+  didRecentlyAuthenticate: twoFactor {
+    didRecentlyAuthenticate
+  }
+}
+
+query recoveryCodes {
+  twoFactor {
+    recoveryCodes {
+      unusedCodeCount
+      totalCodeCount
+      unusedCodes
+    }
+  }
+}
+
+query webauthnCredentialCreationOptions {
+  twoFactor {
+    webauthn {
+      credentialCreationOptions
+    }
+  }
+}
+
+mutation activateTotp($code: String!) {
+  activateTotp(code: $code) {
+    authenticator {
+      id
+      activated
+    }
+  }
+}
+
+mutation deactivateAuthenticator($id: ID!) {
+  deactivateAuthenticator(id: $id) {
+    success
+  }
+}
+
+mutation generateRecoveryCodes {
+  generateRecoveryCodes {
+    authenticator {
+      unusedCodeCount
+      totalCodeCount
+    }
+  }
+}
+
+mutation addSecurityKey($name: String!, $credential: JSONString!) {
+  addSecurityKey(name: $name, credential: $credential) {
+    authenticator {
+      id
+    }
+  }
+}

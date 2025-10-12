@@ -1,0 +1,39 @@
+query gqlDataChecks {
+  dataChecks {
+    problemName
+    verboseName
+  }
+}
+
+query gqlDataCheckResults {
+  dataCheckResults {
+    id
+    relatedObject {
+      id
+      instanceVerboseName
+      classVerboseName
+      absoluteUrl
+    }
+    solved
+    relatedCheck {
+      problemName
+      verboseName
+      solveOptions {
+        name
+        verboseName
+      }
+    }
+  }
+}
+
+mutation runDataChecks {
+  runDataChecks {
+    taskId
+  }
+}
+
+mutation solveDataCheckResult($result: ID!, $solveOption: String!) {
+  solveDataCheckResult(result: $result, solveOption: $solveOption) {
+    ok
+  }
+}

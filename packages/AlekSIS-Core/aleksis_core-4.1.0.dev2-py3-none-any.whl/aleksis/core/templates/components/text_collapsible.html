@@ -1,0 +1,13 @@
+<span class="text-collapsible opened">
+    <span class="a">
+      {% include template with item=qs.first %} –
+      {% include template with item=qs.last %}
+    </span>
+    <i class="material-icons iconify open-icon" title="Show more">plus-circle-outline</i>
+    <span class="b">
+      {% for item in qs %}
+        {% include template with item=item %}
+      {% endfor %}
+    </span>
+    <i class="material-icons iconify close-icon" title="Show less">minus-circle-outline</i>
+</span>

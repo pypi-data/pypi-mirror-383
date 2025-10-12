@@ -1,0 +1,7 @@
+{% if form.non_field_errors %}
+  <div class="alert error">
+    {% for error in form.non_field_errors %}
+      <div><i class="material-icons iconify left" data-icon="mdi:alert-octagon-outline"></i> {{ error }}</div>
+    {% endfor %}
+  </div>
+{% endif %}

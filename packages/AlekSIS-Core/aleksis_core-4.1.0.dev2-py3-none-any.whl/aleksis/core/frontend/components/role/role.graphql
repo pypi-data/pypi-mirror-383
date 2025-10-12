@@ -1,0 +1,54 @@
+query roles($orderBy: [String], $filters: JSONString) {
+  items: roles(orderBy: $orderBy, filters: $filters) {
+    id
+    name
+    shortName
+    reciprocalName
+    icalParticipationRole
+    vcardRelatedType
+    fgColor
+    bgColor
+    canEdit
+    canDelete
+  }
+}
+
+mutation createRoles($input: [BatchCreateRoleInput]!) {
+  createRoles(input: $input) {
+    items: roles {
+      id
+      name
+      shortName
+      reciprocalName
+      icalParticipationRole
+      vcardRelatedType
+      fgColor
+      bgColor
+      canEdit
+      canDelete
+    }
+  }
+}
+
+mutation deleteRoles($ids: [ID]!) {
+  deleteRoles(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateRoles($input: [BatchPatchRoleInput]!) {
+  updateRoles(input: $input) {
+    items: roles {
+      id
+      name
+      shortName
+      reciprocalName
+      icalParticipationRole
+      vcardRelatedType
+      fgColor
+      bgColor
+      canEdit
+      canDelete
+    }
+  }
+}

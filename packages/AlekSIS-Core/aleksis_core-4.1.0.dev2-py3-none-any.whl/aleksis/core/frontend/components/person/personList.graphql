@@ -1,0 +1,21 @@
+query persons($orderBy: [String], $filters: JSONString) {
+  items: persons(orderBy: $orderBy, filters: $filters) {
+    id
+    firstName
+    lastName
+    shortName
+    fullName
+    primaryGroup {
+      id
+      name
+    }
+    canEdit
+    canDelete
+  }
+}
+
+mutation deletePersons($ids: [ID]!) {
+  deletePersons(ids: $ids) {
+    deletionCount
+  }
+}

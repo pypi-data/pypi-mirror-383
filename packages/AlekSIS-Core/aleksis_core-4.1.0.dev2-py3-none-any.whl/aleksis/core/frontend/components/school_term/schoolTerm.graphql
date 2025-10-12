@@ -1,0 +1,42 @@
+query schoolTerms($orderBy: [String], $filters: JSONString) {
+  items: schoolTerms(orderBy: $orderBy, filters: $filters) {
+    id
+    name
+    dateStart
+    dateEnd
+    canEdit
+    canDelete
+  }
+}
+
+mutation createSchoolTerms($input: [BatchCreateSchoolTermInput]!) {
+  createSchoolTerms(input: $input) {
+    items: schoolTerms {
+      id
+      name
+      dateStart
+      dateEnd
+      canEdit
+      canDelete
+    }
+  }
+}
+
+mutation deleteSchoolTerms($ids: [ID]!) {
+  deleteSchoolTerms(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateSchoolTerms($input: [BatchPatchSchoolTermInput]!) {
+  updateSchoolTerms(input: $input) {
+    items: schoolTerms {
+      id
+      name
+      dateStart
+      dateEnd
+      canEdit
+      canDelete
+    }
+  }
+}

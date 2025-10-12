@@ -1,0 +1,53 @@
+fragment oauthApplicationFields on OAuthApplicationType {
+  id
+  name
+  icon {
+    url
+    name
+  }
+  clientId
+  clientType
+  algorithm
+  allowedScopes
+  redirectUris
+  skipAuthorization
+  canDelete
+  canEdit
+}
+
+query oauthApplications {
+  items: oauthApplications {
+    ...oauthApplicationFields
+  }
+}
+
+query gqlOauthScopes {
+  items: oauthScopes {
+    name
+    description
+  }
+}
+
+mutation createOauthApplications($input: [BatchCreateOAuthApplicationInput]!) {
+  createOauthApplications(input: $input) {
+    items: oAuthApplications {
+      ...oauthApplicationFields
+      clientId
+      clientSecret
+    }
+  }
+}
+
+mutation deleteOauthApplications($ids: [ID]!) {
+  deleteOauthApplications(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateOauthApplications($input: [BatchPatchOAuthApplicationInput]!) {
+  updateOauthApplications(input: $input) {
+    items: oAuthApplications {
+      ...oauthApplicationFields
+    }
+  }
+}

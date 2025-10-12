@@ -1,0 +1,7 @@
+mutation sendAccountRegistration(
+  $accountRegistration: AccountRegistrationInputType!
+) {
+  sendAccountRegistration(accountRegistration: $accountRegistration) {
+    ok
+  }
+}

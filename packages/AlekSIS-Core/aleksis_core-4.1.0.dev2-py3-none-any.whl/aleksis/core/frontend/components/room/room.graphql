@@ -1,0 +1,39 @@
+query rooms($orderBy: [String], $filters: JSONString) {
+  items: rooms(orderBy: $orderBy, filters: $filters) {
+    id
+    name
+    shortName
+    canEdit
+    canDelete
+  }
+}
+
+mutation createRooms($input: [BatchCreateRoomInput]!) {
+  createRooms(input: $input) {
+    items: rooms {
+      id
+      name
+      shortName
+      canEdit
+      canDelete
+    }
+  }
+}
+
+mutation deleteRooms($ids: [ID]!) {
+  deleteRooms(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateRooms($input: [BatchPatchRoomInput]!) {
+  updateRooms(input: $input) {
+    items: rooms {
+      id
+      name
+      shortName
+      canEdit
+      canDelete
+    }
+  }
+}

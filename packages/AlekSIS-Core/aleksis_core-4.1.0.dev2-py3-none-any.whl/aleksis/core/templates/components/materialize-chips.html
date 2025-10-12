@@ -1,0 +1,12 @@
+<div class="chip {{ classes }}">
+  {% if img %}
+    <img class="{{ img_classes }}" src="{{ img }}" alt="{{ alt }}">
+  {% endif %}
+  {% if icon %}
+    <i class="material-icons iconify left" data-icon="{{ icon }}"></i>
+  {% endif %}
+  {{ content }}
+  {% if close %}
+    <i class="material-icons iconify" data-icon="mdi:close"></i>
+  {% endif %}
+</div>

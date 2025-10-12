@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+
+{% load i18n material_form %}
+
+{% block browser_title %}{% blocktrans %}Confirm Logout{% endblocktrans %}{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+  {% if not error %}
+    <div class="col m1 l2 xl3"></div>
+    <div class="col s12 m10 l8 xl6">
+      <div class="card">
+        <form id="authorizationForm" method="post">
+          <div class="card-content">
+            {% csrf_token %}
+
+            {% if application and application.icon %}
+              <div class="center-via-flex margin-bottom">
+                <div class="application-circle materialboxed z-depth-2">
+                  <img src="{{ application.icon.url }}" alt="{{ application.name }}" class="hundred-percent">
+                </div>
+              </div>
+            {% endif %}
+            <div class="card-title {% if application and application.icon %}center{% endif %}">
+              {% if application %}
+                {% blocktrans with name=application.name %}Confirm Logout requested by {{ name }}{% endblocktrans %}
+              {% else %}
+                {% trans "Confirm Logout" %}
+              {% endif %}
+            </div>
+            {% for field in form %}
+              {% if field.is_hidden %}
+                {{ field }}
+              {% endif %}
+            {% endfor %}
+
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+
+          </div>
+          <div class="card-action-light">
+              <button type="submit" class="btn green waves-effect waves-light btn-margin" name="allow" value="Logout">
+                <i class="material-icons iconify left" data-icon="mdi:check-all"></i> {% trans "Logout" %}
+              </button>
+              <button type="submit" class="btn red waves-effect waves-light btn-margin" value="Cancel">
+                <i class="material-icons iconify left" data-icon="mdi:close"></i> {% trans "Cancel" %}
+              </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% else %}
+    <div class="container">
+      <div class="card red">
+        <div class="card-content white-text">
+          <div class="material-icons iconify small left" data-icon="mdi:alert-octagon-outline"></div>
+          <span class="card-title">{% trans "Error" %}: {{ error.error }}</span>
+          <p>
+            {{ error.description }}
+          </p>
+          <p>
+            Please verify if the application is configured correctly or contact one of your site administrators:
+          </p>
+          {% include "core/partials/admins_list.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+query formPersons($orderBy: [String], $filters: JSONString) {
+  items: persons(orderBy: $orderBy, filters: $filters) {
+    id
+    shortName
+    fullName
+  }
+}

@@ -1,0 +1,39 @@
+query gqlSystemProperties {
+  systemProperties {
+    availableLanguages {
+      code
+      nameTranslated
+      nameLocal
+      cookie
+    }
+    defaultLanguage {
+      code
+      nameTranslated
+      nameLocal
+      cookie
+    }
+    sitePreferences {
+      themePrimary
+      themeSecondary
+      themeLogo {
+        url
+      }
+      themeDesign
+      generalTitle
+      accountPersonPreferPhoto
+      footerImprintUrl
+      footerPrivacyUrl
+      inviteEnabled
+      signupEnabled
+    }
+  }
+}
+
+query gqlUsernameSystemProperties {
+  usernameSystemProperties: systemProperties {
+    sitePreferences {
+      authAllowedUsernameRegex
+      authDisallowedUids
+    }
+  }
+}

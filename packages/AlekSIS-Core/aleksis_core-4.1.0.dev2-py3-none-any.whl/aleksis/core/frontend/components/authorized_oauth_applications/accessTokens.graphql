@@ -1,0 +1,19 @@
+query oauthAccessTokens {
+  accessTokens: oauthAccessTokens {
+    id
+    created
+    updated
+    expires
+    scopes {
+      name
+      description
+    }
+    application {
+      id
+      name
+      icon {
+        absoluteUrl
+      }
+    }
+  }
+}

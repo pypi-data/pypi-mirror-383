@@ -1,0 +1,167 @@
+{
+  "accounts": {
+    "login": {
+      "menu_title": "nomen profiteri"
+    },
+    "logout": {
+      "menu_title": "nomen retractare"
+    },
+    "signup": {
+      "form": {
+        "steps": {
+          "additional_data": {
+            "fields": {
+              "date_of_birth": {
+                "label": "Dies natalis"
+              },
+              "description": {
+                "label": "Descriptio"
+              },
+              "photo": {
+                "label": "Photographia"
+              },
+              "sex": {
+                "label": "Genus"
+              }
+            }
+          },
+          "address_data": {
+            "fields": {
+              "place": {
+                "label": "Urbs"
+              },
+              "postal_code": {
+                "label": "Numerus directorius"
+              },
+              "street": {
+                "label": "Via"
+              }
+            }
+          },
+          "base_data": {
+            "fields": {
+              "additional_name": {
+                "label": "addita nomines"
+              },
+              "first_name": {
+                "label": "Primus nomen"
+              },
+              "last_name": {
+                "label": "Secondus nomen"
+              },
+              "short_name": {
+                "label": "Breve nomen"
+              }
+            }
+          }
+        }
+      }
+    },
+    "two_factor": {
+      "webauthn": {
+        "key_name": "Nomen"
+      }
+    }
+  },
+  "actions": {
+    "search": "Quaerere"
+  },
+  "announcement": {
+    "description": "Descriptio",
+    "menu_title": "Nuntii",
+    "title": "Titulus",
+    "title_plural": "Nuntii"
+  },
+  "availability_event": {
+    "description": "Descriptio",
+    "title": "Titulus"
+  },
+  "availability_type": {
+    "description": "Descriptio",
+    "name": "Nomen"
+  },
+  "calendar": {
+    "create_event": {
+      "description": "Descriptio",
+      "title": "Titulus"
+    }
+  },
+  "forms": {
+    "date_time": {
+      "date": "dies",
+      "time": "tempus"
+    },
+    "labels": {
+      "persons": "personae"
+    }
+  },
+  "free_busy": {
+    "types": {
+      "groups": "Greges",
+      "persons": "personae"
+    }
+  },
+  "group": {
+    "menu_title": "Greges",
+    "name": "Nomen",
+    "short_name": "Breve nomen",
+    "title": "Grex",
+    "title_plural": "Greges"
+  },
+  "group_type": {
+    "allowed_information": {
+      "groups": "Greges",
+      "photo": "Photographia"
+    },
+    "description": "Descriptio",
+    "name": "Nomen"
+  },
+  "holiday": {
+    "holiday_name": "Nomen"
+  },
+  "notifications": {
+    "notifications": "Nuntii"
+  },
+  "oauth": {
+    "application": {
+      "icon": "Nota",
+      "name": "Nomen"
+    }
+  },
+  "people": "Personae",
+  "person": {
+    "birth_date": "Dies natalis",
+    "date_of_birth": "Dies natalis",
+    "description": "Descriptio",
+    "guardians": "Parentes",
+    "home": "Numerus telephoni domi",
+    "menu_title": "personae",
+    "mobile": "Numerus telephoni mobilis",
+    "name": "Nomen",
+    "page_title": "Persona",
+    "photo": "Photographia",
+    "place": "Urbs",
+    "postal_code": "Numerus directorius",
+    "sex": {
+      "field": "Genus"
+    },
+    "sex_description": "Genus",
+    "street": "Via",
+    "title": "Persona",
+    "title_plural": "personae"
+  },
+  "personal_events": {
+    "description": "Descriptio",
+    "title": "Titulus"
+  },
+  "role": {
+    "name": "Nomen",
+    "short_name": "Breve nomen"
+  },
+  "room": {
+    "name": "Nomen"
+  },
+  "school_term": {
+    "name": "Nomen"
+  }
+}

@@ -1,0 +1,24 @@
+{% extends "templated_email/base.email" %}
+{% load i18n %}
+
+{% block subject_content %}{% blocktrans with site=site_name %}Invitation to register on {{ site }}{% endblocktrans %}{% endblock %}
+
+{% block plain_greeting %}{% if person %}{% blocktrans with person=person.addressing_name %}Hello {{ person }}{% endblocktrans %}{% else %}{% trans "Hello" %}{% endif %},{% endblock %}
+
+{% block plain_content %}
+{% blocktrans with site=site_name %}you have been invited to register on {{ site }}. If you would like to accept this invitation, please click on the following link:{% endblocktrans %}
+
+{{ invite_url }}
+{% endblock %}
+
+{% block html_greeting %}{% if person %}{% blocktrans with person=person.addressing_name %}Hello {{ person }}{% endblocktrans %}{% else %}{% trans "Hello" %}{% endif %},{% endblock %}
+
+{% block html_content %}
+ <p>
+  {% blocktrans with site=site_name %}you have been invited to register on {{ site }}. If you would like to accept this invitation, please click on the following link:{% endblocktrans %}
+ </p>
+
+ <a href="{{ invite_url}}">
+  {{ invite_url }}
+ </a>
+{% endblock %}

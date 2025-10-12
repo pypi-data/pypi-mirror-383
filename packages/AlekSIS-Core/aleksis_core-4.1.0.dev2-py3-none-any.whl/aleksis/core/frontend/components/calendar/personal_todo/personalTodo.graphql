@@ -1,0 +1,47 @@
+fragment personalTodoFields on PersonalTodoType {
+  id
+  title
+  description
+  location
+
+  datetimeStart
+  datetimeEnd
+  dateStart
+  dateEnd
+  timezone
+  recurrences
+
+  persons {
+    id
+    fullName
+  }
+  groups {
+    id
+    shortName
+  }
+
+  percentComplete
+  completed
+}
+
+mutation createPersonalTodos($input: [BatchCreatePersonalTodoInput]!) {
+  createPersonalTodos(input: $input) {
+    items: personalTodos {
+      ...personalTodoFields
+    }
+  }
+}
+
+mutation deletePersonalTodos($ids: [ID]!) {
+  deletePersonalTodos(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updatePersonalTodos($input: [BatchPatchPersonalTodoInput]!) {
+  updatePersonalTodos(input: $input) {
+    items: personalTodos {
+      ...personalTodoFields
+    }
+  }
+}

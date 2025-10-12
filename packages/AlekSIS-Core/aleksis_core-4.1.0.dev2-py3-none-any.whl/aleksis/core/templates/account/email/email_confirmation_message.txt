@@ -1,0 +1,7 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load html_helpers %}
+{% load i18n %}
+
+{% block content %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Someone tried to register an account with the username {{ user_display }} and your e-mail address on {{ site_domain }}.
+If it was you, please confirm the registration by clicking on the following link:{% endblocktrans %} {{ activate_url|remove_prefix:"/django/" }}{% endblock %}

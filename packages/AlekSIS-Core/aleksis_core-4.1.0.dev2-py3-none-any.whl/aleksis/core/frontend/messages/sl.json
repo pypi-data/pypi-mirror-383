@@ -1,0 +1,1001 @@
+{
+  "about": {
+    "about_aleksis": "",
+    "about_aleksis_1": "",
+    "about_aleksis_2": "",
+    "free_open_source_licence": "",
+    "free_software": "",
+    "full_licence_text": "",
+    "licence_consists_of": "",
+    "licence_information": "",
+    "licence_information_1": "",
+    "licence_type": "",
+    "licenced_under": "",
+    "more_information_eupl": "",
+    "open_source": "",
+    "other_licence": "",
+    "page_title": "",
+    "proprietary": "",
+    "show_copyright": "",
+    "source_code": "",
+    "website_of_aleksis": ""
+  },
+  "accounts": {
+    "change_password": {
+      "menu_title": "",
+      "menu_title_self": "",
+      "menu_title_foreign": "",
+      "title": "",
+      "title_foreign": "",
+      "action": "",
+      "old_password": "",
+      "new_password": "",
+      "confirm_password": ""
+    },
+    "reset_password": {
+      "title": "",
+      "description": "",
+      "message": "",
+      "button": "",
+      "email": "",
+      "contact_admins": "",
+      "done": {
+        "title": "",
+        "message": ""
+      },
+      "invalid_key": "",
+      "foreign_user": {
+        "confirm": {
+          "title": "",
+          "message": ""
+        }
+      }
+    },
+    "invitation": {
+      "accept_invitation": {
+        "menu_title": ""
+      },
+      "invite_person": {
+        "menu_title": ""
+      }
+    },
+    "login": {
+      "menu_title": ""
+    },
+    "logout": {
+      "menu_title": ""
+    },
+    "signup": {
+      "menu_title": "",
+      "form": {
+        "login_button": "",
+        "submitted": {
+          "title": "",
+          "submitted_successfully": ""
+        },
+        "existing_account_alert": "",
+        "steps": {
+          "invitation": {
+            "title": "",
+            "next": {
+              "with_code": "",
+              "without_code": "",
+              "code_required": ""
+            },
+            "not_valid": "",
+            "autofilled": "",
+            "fields": {
+              "invitation_code": {
+                "label": "",
+                "help_text": ""
+              }
+            }
+          },
+          "email": {
+            "title": "",
+            "choose_mode": {
+              "continue_aleksis": "",
+              "continue_own": "",
+              "continue_existing_account": "",
+              "back": ""
+            },
+            "fields": {
+              "email": {
+                "label": ""
+              },
+              "confirm_email": {
+                "label": ""
+              }
+            }
+          },
+          "account": {
+            "title": "",
+            "fields": {
+              "username": {
+                "label": ""
+              },
+              "password": {
+                "label": ""
+              },
+              "confirm_password": {
+                "label": ""
+              }
+            }
+          },
+          "base_data": {
+            "title": "",
+            "fields": {
+              "first_name": {
+                "label": ""
+              },
+              "additional_name": {
+                "label": ""
+              },
+              "last_name": {
+                "label": ""
+              },
+              "short_name": {
+                "label": ""
+              }
+            }
+          },
+          "address_data": {
+            "title": "",
+            "fields": {
+              "street": {
+                "label": ""
+              },
+              "housenumber": {
+                "label": ""
+              },
+              "postal_code": {
+                "label": ""
+              },
+              "place": {
+                "label": ""
+              },
+              "country": {
+                "label": ""
+              }
+            }
+          },
+          "contact_data": {
+            "title": "",
+            "fields": {
+              "mobile_number": {
+                "label": ""
+              },
+              "phone_number": {
+                "label": ""
+              }
+            }
+          },
+          "additional_data": {
+            "title": "",
+            "fields": {
+              "date_of_birth": {
+                "label": ""
+              },
+              "place_of_birth": {
+                "label": ""
+              },
+              "sex": {
+                "label": ""
+              },
+              "photo": {
+                "label": ""
+              },
+              "description": {
+                "label": ""
+              }
+            }
+          },
+          "confirm": {
+            "privacy_policy": {
+              "label": "",
+              "url_text": ""
+            },
+            "title": "",
+            "invitation_used": "",
+            "card_title": ""
+          }
+        },
+        "rules": {
+          "confirm_email": {
+            "no_match": ""
+          },
+          "confirm_password": {
+            "no_match": ""
+          }
+        },
+        "help_text": {
+          "guardian": "",
+          "participant": ""
+        }
+      }
+    },
+    "social_connections": {
+      "menu_title": ""
+    },
+    "two_factor": {
+      "menu_title": "",
+      "title": "",
+      "totp": {
+        "title": "",
+        "description": "",
+        "activate_button": "",
+        "activate": {
+          "title": "",
+          "description": "",
+          "enter_code": "",
+          "button": "",
+          "copy_url": "",
+          "copy_secret": ""
+        }
+      },
+      "recovery_codes": {
+        "title": "",
+        "count": "",
+        "description": "",
+        "dialog_title": "",
+        "dialog_description": "",
+        "show_button": "",
+        "download_button": "",
+        "generate_button": "",
+        "copy": "",
+        "generate_title": "",
+        "generate_question": ""
+      },
+      "webauthn": {
+        "title": "",
+        "dialog_title": "",
+        "dialog_description": "",
+        "dialog_add_button": "",
+        "key_detected": "",
+        "dialog_name_description": "",
+        "key_name": "",
+        "key_added_at": "",
+        "key_last_used_at": "",
+        "key_never_used": "",
+        "activate_button": "",
+        "description": "",
+        "count": ""
+      },
+      "activated": "",
+      "deactivated": "",
+      "deactivate_button": "",
+      "deactivate": {
+        "title": "",
+        "description": "",
+        "button": ""
+      }
+    }
+  },
+  "actions": {
+    "abort": "",
+    "back": "",
+    "back_to_start": "",
+    "cancel": "",
+    "change_status": "",
+    "clear": "",
+    "clear_filters": "",
+    "close": "",
+    "collapse": {
+      "up": "",
+      "down": "",
+      "left": "",
+      "right": ""
+    },
+    "confirm": "",
+    "confirm_deletion": "",
+    "confirm_deletion_multiple": "",
+    "continue": "",
+    "copied": "",
+    "copy": "",
+    "create": "",
+    "create_widget": "",
+    "delete": "",
+    "edit": "",
+    "edit_title": "",
+    "expand": {
+      "up": "",
+      "down": "",
+      "left": "",
+      "right": ""
+    },
+    "filter": "",
+    "save": "",
+    "search": "",
+    "select_action": "",
+    "select_all": "",
+    "stop_editing": "",
+    "title": "",
+    "update": "",
+    "next": "",
+    "type_to_search": "",
+    "toggle_sidenav": "",
+    "select_school_term": "",
+    "list_notifications": "",
+    "account_menu": "",
+    "more_actions": "",
+    "scroll_prev": "",
+    "scroll_next": "",
+    "open_details": "",
+    "open_in_new": "",
+    "more": "",
+    "view_file": ""
+  },
+  "administration": {
+    "menu_title": "",
+    "system_status": {
+      "menu_title": "",
+      "system_checks": {
+        "title": "",
+        "maintenance_mode": {
+          "enabled": {
+            "title": "",
+            "subtitle": ""
+          },
+          "disabled": {
+            "title": "",
+            "subtitle": ""
+          }
+        },
+        "debug_mode": {
+          "enabled": {
+            "title": "",
+            "subtitle": ""
+          },
+          "disabled": {
+            "title": "",
+            "subtitle": ""
+          }
+        }
+      },
+      "system_health": {
+        "title": "",
+        "headers": {
+          "identifier": "",
+          "status": "",
+          "time_taken": ""
+        }
+      },
+      "celery_tasks": {
+        "title": "",
+        "headers": {
+          "task_name": "",
+          "task_id": "",
+          "date_done": "",
+          "status": ""
+        }
+      }
+    },
+    "data_check": {
+      "menu_title": "",
+      "registered_checks": {
+        "title": "",
+        "help_text": ""
+      },
+      "detected_problems": {
+        "title": "",
+        "headers": {
+          "id": "",
+          "related_model": "",
+          "related_object": "",
+          "problem": "",
+          "show_details": "",
+          "solve_options": ""
+        },
+        "show_object": ""
+      },
+      "problems_detected": {
+        "title": "",
+        "text": ""
+      },
+      "no_problems_detected": {
+        "title": "",
+        "text": ""
+      },
+      "check_again": ""
+    }
+  },
+  "alerts": {
+    "page_cached": ""
+  },
+  "announcement": {
+    "menu_title": "",
+    "title_plural": "",
+    "datetime_start": "",
+    "datetime_end": "",
+    "recipient_groups": "",
+    "recipient_persons": "",
+    "title": "",
+    "title_hint": "",
+    "description": "",
+    "description_hint": "",
+    "priority": "",
+    "priority_hint": "",
+    "is_global": "",
+    "is_global_hint": "",
+    "explanation": "",
+    "notifications_hint": "",
+    "notifications_global_hint": ""
+  },
+  "base": {
+    "about_aleksis": "",
+    "about_copyright": "",
+    "imprint": "",
+    "logo": "",
+    "no_permission": "",
+    "no_permission_message_long": "",
+    "no_permission_message_long_not_logged_in": "",
+    "no_permission_message_short": "",
+    "no_permission_redirect_text": "",
+    "person_is_dummy": "",
+    "privacy_policy": "",
+    "user_not_linked_to_person": ""
+  },
+  "calendar": {
+    "cancelled": "",
+    "day": "",
+    "download_all": "",
+    "download_ics": "",
+    "ics_to_clipboard": "",
+    "menu_title": "",
+    "month": "",
+    "my_calendars": "",
+    "select": "",
+    "today": "",
+    "week": "",
+    "more_events": "",
+    "no_calendar_event_card": {
+      "title": "",
+      "description": "",
+      "select_button": ""
+    },
+    "todos": {
+      "show_completed": ""
+    },
+    "show_calendar_sidebar": "",
+    "create_event": {
+      "create_title": "",
+      "edit_title": "",
+      "create_button": "",
+      "title": "",
+      "description": "",
+      "datetime_start": "",
+      "datetime_end": "",
+      "date_start": "",
+      "date_end": "",
+      "full_day": "",
+      "is_recurring": "",
+      "is_not_recurring": "",
+      "recurrences": "",
+      "event_types": {
+        "title": "",
+        "personal_event": "",
+        "personal_todo": "",
+        "f": "",
+        "b": ""
+      },
+      "personal_events": {
+        "persons": "",
+        "groups": "",
+        "location": "",
+        "create_title": "",
+        "edit_title": ""
+      },
+      "personal_todos": {
+        "persons": "",
+        "groups": "",
+        "location": "",
+        "percent_completed": "",
+        "completed_switch": "",
+        "completed": "",
+        "due": "",
+        "create_title": "",
+        "edit_title": ""
+      },
+      "availability_events": {
+        "create_title": "",
+        "edit_title": ""
+      }
+    },
+    "views": {
+      "calendar": "",
+      "todos": ""
+    }
+  },
+  "celery_progress": {
+    "error_message": "",
+    "progress_title": "",
+    "running_tasks": "",
+    "success_message": ""
+  },
+  "dashboard": {
+    "dashboard_widget": {
+      "menu_title": "",
+      "title": "",
+      "title_plural": "",
+      "widget_title": "",
+      "status": {
+        "OFF": "",
+        "READY": "",
+        "BROKEN": "",
+        "ON": "",
+        "OFF_helper": ""
+      }
+    },
+    "dashboard_widgets": {
+      "calendar": {
+        "name": "",
+        "shortName": "",
+        "fields": {
+          "allowed_calendars": "",
+          "allowed_calendars_hint": "",
+          "selected_calendars": "",
+          "selected_calendars_hint": ""
+        }
+      },
+      "static_content": {
+        "name": "",
+        "shortName": "",
+        "fields": {
+          "content": "",
+          "content_hint": "",
+          "preview": ""
+        }
+      },
+      "external_link": {
+        "name": "",
+        "shortName": "",
+        "fields": {
+          "url": "",
+          "icon_url": ""
+        }
+      }
+    },
+    "manage_dashboard_hint": "",
+    "manage_default_dashboard": "",
+    "manage_default_dashboard_hint": "",
+    "menu_title": "",
+    "edit": "",
+    "customizing_notice": ""
+  },
+  "download_pdf": {
+    "download": "",
+    "notice": "",
+    "title": ""
+  },
+  "graphql": {
+    "snackbar_error_message": "",
+    "snackbar_success_message": ""
+  },
+  "group": {
+    "groups_and_child_groups": "",
+    "menu_title": "",
+    "ownership": "",
+    "title": "",
+    "title_plural": "",
+    "short_name": "",
+    "name": "",
+    "group_type": "",
+    "avatar_url": "",
+    "school_term": "",
+    "no_groups": "",
+    "properties": "",
+    "child_groups": "",
+    "child_groups_n": "",
+    "parent_groups": "",
+    "parent_groups_n": "",
+    "member_of_n": "",
+    "owner_of_n": "",
+    "confirm_delete": "",
+    "statistics": {
+      "title": "",
+      "members_n": "",
+      "age_range": "",
+      "age_range_from_to": "",
+      "age_average": ""
+    },
+    "tabs": {
+      "members": "",
+      "members_tab": ""
+    }
+  },
+  "group_type": {
+    "menu_title": "",
+    "title": "",
+    "title_plural": "",
+    "create": "",
+    "name": "",
+    "description": "",
+    "no_group_type": "",
+    "additional_attributes": "",
+    "owners_can_see_groups": "",
+    "owners_can_see_members": "",
+    "owners_can_see_members_allowed_information": "",
+    "owners_can_see_members_including": "",
+    "allowed_information": {
+      "personal_details": "",
+      "address": "",
+      "contact_details": "",
+      "photo": "",
+      "avatar": "",
+      "groups": ""
+    },
+    "available_roles": ""
+  },
+  "role": {
+    "menu_title": "",
+    "title": "",
+    "title_plural": "",
+    "create": "",
+    "name": "",
+    "short_name": "",
+    "reciprocal_name": "",
+    "ical_participation_role": "",
+    "vcard_related_type": "",
+    "fg_color": "",
+    "bg_color": ""
+  },
+  "holiday": {
+    "menu_title": "",
+    "title": "",
+    "title_plural": "",
+    "create_holiday": "",
+    "date_start": "",
+    "date_end": "",
+    "holiday_name": ""
+  },
+  "ical_feed": {
+    "menu_title": ""
+  },
+  "legacy": {
+    "unworthy": ""
+  },
+  "network_errors": {
+    "back_to_start": "",
+    "error_404": "",
+    "offline_notification": "",
+    "page_not_found": "",
+    "snackbar_error_message": "",
+    "service_unavailable": "",
+    "no_connection_to_server": ""
+  },
+  "browser_errors": {
+    "incompatible_browser": "",
+    "browsers_compatibility": ""
+  },
+  "notifications": {
+    "mark_as_read": "",
+    "mark_all_as_read": "",
+    "more_information": "",
+    "no_notifications": "",
+    "notifications": ""
+  },
+  "o_auth_application": {
+    "menu_title": "",
+    "title": "",
+    "title_plural": "",
+    "name": "",
+    "icon": "",
+    "client_id": "",
+    "client_secret": "",
+    "client_secret_hint": "",
+    "client_type": "",
+    "client_type_confidential": "",
+    "client_type_public": "",
+    "algorithm": "",
+    "algorithm_no_oidc": "",
+    "algorithm_rsa": "",
+    "algorithm_hmac": "",
+    "allowed_scopes": "",
+    "redirect_uris": "",
+    "redirect_uris_hint": "",
+    "skip_authorization": "",
+    "credentials_created": "",
+    "credentials_warning": ""
+  },
+  "oauth": {
+    "authorized_application": {
+      "access_since": "",
+      "description": "",
+      "has_access_to": "",
+      "menu_title": "",
+      "revoke": "",
+      "revoke_question": "",
+      "subtitle": "",
+      "title": "",
+      "valid_until": ""
+    },
+    "authorized_token": {
+      "menu_title": ""
+    }
+  },
+  "people": "",
+  "data_management": "",
+  "permissions": {
+    "manage": {
+      "menu_title": ""
+    }
+  },
+  "person": {
+    "account_menu_title": "",
+    "additional_image": "",
+    "addresses": "",
+    "avatar": "",
+    "photo": "",
+    "birth_date": "",
+    "birth_place": "",
+    "birth_date_and_birth_place_formatted": "",
+    "birth_date_and_birth_place": "",
+    "children": "",
+    "delete": "",
+    "confirm_delete": "",
+    "details": "",
+    "email_address": "",
+    "form": {
+      "create": "",
+      "edit": "",
+      "titles": {
+        "base_data": "",
+        "address": "",
+        "contact_data": "",
+        "advanced_personal_data": ""
+      }
+    },
+    "guardians": "",
+    "home": "",
+    "impersonation": {
+      "impersonate": "",
+      "impersonating": "",
+      "stop": ""
+    },
+    "invite": "",
+    "logged_in_as": "",
+    "menu_title": "",
+    "mobile": "",
+    "name": "",
+    "no_additional_image": "",
+    "no_persons": "",
+    "page_title": "",
+    "title": "",
+    "title_plural": "",
+    "first_name": "",
+    "last_name": "",
+    "short_name": "",
+    "sex": {
+      "field": "",
+      "m": "",
+      "f": "",
+      "x": ""
+    },
+    "primary_group": "",
+    "sex_description": "",
+    "username": "",
+    "view_in_new_tab": "",
+    "user": "",
+    "additional_name": "",
+    "street": "",
+    "housenumber": "",
+    "postal_code": "",
+    "place": "",
+    "country": "",
+    "phone_number": "",
+    "mobile_number": "",
+    "email": "",
+    "date_of_birth": "",
+    "place_of_birth": "",
+    "description": ""
+  },
+  "preferences": {
+    "person": {
+      "change_preferences": "",
+      "menu_title": ""
+    },
+    "site": {
+      "menu_title": ""
+    }
+  },
+  "room": {
+    "create_room": "",
+    "menu_title": "",
+    "name": "",
+    "short_name": "",
+    "title_plural": ""
+  },
+  "school_term": {
+    "after": "",
+    "before": "",
+    "create_school_term": "",
+    "date_end": "",
+    "date_start": "",
+    "menu_title": "",
+    "name": "",
+    "title": "",
+    "title_plural": "",
+    "current": "",
+    "active_school_term": {
+      "title": "",
+      "subtitle": "",
+      "warning": "",
+      "select_action": ""
+    }
+  },
+  "selection": {
+    "num_items_selected": ""
+  },
+  "service_worker": {
+    "new_version_available": {
+      "header": "",
+      "body": ""
+    },
+    "update": ""
+  },
+  "status": {
+    "changes": "",
+    "error": "",
+    "object_create_success": "",
+    "object_delete_success": "",
+    "object_edit_success": "",
+    "objects_delete_success": ""
+  },
+  "generic_messages": {
+    "error": "",
+    "success": ""
+  },
+  "forms": {
+    "labels": {
+      "start": "",
+      "end": "",
+      "comment": "",
+      "persons": ""
+    },
+    "errors": {
+      "required": "",
+      "invalid_date": "",
+      "invalid_time": "",
+      "invalid_color": "",
+      "not_a_number": "",
+      "not_a_whole_number": "",
+      "not_equal": "",
+      "number_too_small": "",
+      "number_too_big": "",
+      "date_too_early": "",
+      "date_too_late": "",
+      "string_too_long": "",
+      "string_too_short": "",
+      "invalid_email": "",
+      "username_not_allowed": "",
+      "username_not_ascii": "",
+      "passwords_do_not_match": ""
+    },
+    "recurrence": {
+      "frequencies": {
+        "daily": "",
+        "weekly": "",
+        "monthly": "",
+        "yearly": ""
+      },
+      "start": "",
+      "until": "",
+      "frequency": "",
+      "no_repeat": ""
+    },
+    "date_time": {
+      "date": "",
+      "time": ""
+    },
+    "file": {
+      "hint": ""
+    }
+  },
+  "weekdays": {
+    "0": "",
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+    "5": "",
+    "6": ""
+  },
+  "weekdays_short": {
+    "0": "",
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+    "5": "",
+    "6": ""
+  },
+  "availability_event": {
+    "menu_title": "",
+    "title_plural": "",
+    "create": "",
+    "description": "",
+    "availability_type": "",
+    "datetime_start": "",
+    "datetime_end": "",
+    "recurrences": {
+      "until": "",
+      "none": ""
+    },
+    "free": "",
+    "busy": "",
+    "title": "",
+    "dialog": {
+      "create_title": "",
+      "edit_title": "",
+      "create_button": ""
+    }
+  },
+  "availability_type": {
+    "menu_title": "",
+    "title_plural": "",
+    "create": "",
+    "name": "",
+    "short_name": "",
+    "description": "",
+    "free": "",
+    "public": "",
+    "free_help_text": "",
+    "public_help_text": "",
+    "color": ""
+  },
+  "free_busy": {
+    "overview": {
+      "menu_title": "",
+      "search": "",
+      "select": "",
+      "no_selection": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "types": {
+      "persons": "",
+      "groups": ""
+    }
+  },
+  "personal_events": {
+    "location": "",
+    "datetime_start": "",
+    "datetime_end": "",
+    "date_start": "",
+    "date_end": "",
+    "is_full_day": "",
+    "is_recurring": "",
+    "is_not_recurring": "",
+    "recurrences": "",
+    "persons": "",
+    "groups": "",
+    "create_title": "",
+    "edit_title": "",
+    "create_button": ""
+  },
+  "date_select": {
+    "label": ""
+  },
+  "crud_components": {
+    "infinite_scrolling_date_sorted_iterator": {
+      "load": {
+        "no_items": "",
+        "load_more": ""
+      }
+    },
+    "iterator_empty_message": {
+      "no_data": "",
+      "no_data_with_dates": "",
+      "no_results": "",
+      "load_more": ""
+    }
+  },
+  "error_code": "",
+  "action_select": {
+    "incompatible_selection_message": ""
+  },
+  "time": {
+    "years_n": ""
+  }
+}

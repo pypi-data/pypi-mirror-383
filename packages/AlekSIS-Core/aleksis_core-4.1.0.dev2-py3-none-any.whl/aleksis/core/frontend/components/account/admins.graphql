@@ -1,0 +1,8 @@
+query admins {
+  systemProperties {
+    admins {
+      name
+      email
+    }
+  }
+}

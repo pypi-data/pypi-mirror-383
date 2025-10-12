@@ -1,0 +1,24 @@
+query gqlSystemStatus {
+  systemProperties {
+    debugMode
+    maintenanceMode
+  }
+}
+
+query gqlHealthCheckPlugins {
+  healthCheckPlugins {
+    status
+    prettyStatus
+    identifier
+    timeTaken
+  }
+}
+
+query gqlCeleryInspectTaskResults {
+  celeryInspectTaskResults {
+    taskName
+    taskId
+    dateDone
+    status
+  }
+}

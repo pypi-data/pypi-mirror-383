@@ -1,0 +1,108 @@
+mutation createPersons($input: [BatchCreatePersonInput]!) {
+  createPersons(input: $input) {
+    items: persons {
+      id
+      firstName
+      lastName
+      additionalName
+      shortName
+      fullName
+
+      addresses {
+        id
+        addressTypes {
+          id
+          name
+        }
+        street
+        housenumber
+        postalCode
+        place
+        country
+      }
+
+      sex
+      phoneNumber
+      mobileNumber
+      email
+      dateOfBirth
+      placeOfBirth
+
+      description
+      primaryGroup {
+        id
+        name
+      }
+      guardians {
+        id
+        firstName
+        lastName
+      }
+
+      canEdit
+      canDelete
+    }
+  }
+}
+
+mutation updatePersons($input: [BatchPatchPersonInput]!) {
+  updatePersons(input: $input) {
+    items: persons {
+      id
+      firstName
+      lastName
+      additionalName
+      shortName
+      fullName
+
+      addresses {
+        id
+        addressTypes {
+          id
+          name
+        }
+        street
+        housenumber
+        postalCode
+        place
+        country
+      }
+
+      sex
+      phoneNumber
+      mobileNumber
+      email
+      dateOfBirth
+      placeOfBirth
+
+      description
+      primaryGroup {
+        id
+        name
+      }
+      guardians {
+        id
+        firstName
+        lastName
+      }
+
+      canEdit
+      canDelete
+    }
+  }
+}
+
+query gqlUsers {
+  users {
+    id
+    username
+  }
+}
+
+query gqlEditableFieldsPreference {
+  systemProperties {
+    sitePreferences {
+      editableFieldsPerson
+    }
+  }
+}

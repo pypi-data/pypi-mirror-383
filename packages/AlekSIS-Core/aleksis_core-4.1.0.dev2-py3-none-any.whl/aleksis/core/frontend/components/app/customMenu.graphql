@@ -1,0 +1,12 @@
+query customMenu($name: String!) {
+  customMenuByName(name: $name) {
+    id
+    name
+    items {
+      id
+      name
+      url
+      icon
+    }
+  }
+}

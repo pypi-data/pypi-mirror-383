@@ -1,0 +1,46 @@
+fragment availabilityTypeFields on AvailabilityTypeType {
+  id
+  name
+  shortName
+  description
+  free
+  public
+  color
+
+  canEdit
+  canDelete
+}
+
+query availabilityTypes($orderBy: [String], $filters: JSONString) {
+  items: availabilityTypes(orderBy: $orderBy, filters: $filters) {
+    ...availabilityTypeFields
+  }
+}
+
+query publicAvailabilityTypes($orderBy: [String], $filters: JSONString) {
+  items: availabilityTypes(orderBy: $orderBy, filters: $filters) {
+    ...availabilityTypeFields
+  }
+}
+
+mutation createAvailabilityTypes($input: [BatchCreateAvailabilityTypeInput]!) {
+  createAvailabilityTypes(input: $input) {
+    items: availabilityTypes {
+      ...availabilityTypeFields
+    }
+  }
+}
+
+mutation deleteAvailabilityTypes($ids: [ID]!) {
+  deleteAvailabilityTypes(ids: $ids) {
+    deletionCount
+  }
+}
+
+mutation updateAvailabilityTypes($input: [BatchPatchAvailabilityTypeInput]!) {
+  updateAvailabilityTypes(input: $input) {
+    items: availabilityTypes {
+      ...availabilityTypeFields
+    }
+  }
+}

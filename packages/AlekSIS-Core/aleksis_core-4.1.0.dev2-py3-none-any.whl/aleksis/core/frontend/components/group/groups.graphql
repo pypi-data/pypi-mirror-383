@@ -1,0 +1,93 @@
+query groups($orderBy: [String], $filters: JSONString) {
+  items: groups(orderBy: $orderBy, filters: $filters) {
+    id
+    shortName
+    name
+    avatarUrl
+    schoolTerm {
+      id
+      name
+    }
+    groupType {
+      id
+      name
+    }
+    canEdit
+    canDelete
+  }
+}
+
+query groupById($id: ID) {
+  object: groupById(id: $id) {
+    id
+    name
+    shortName
+    avatarUrl
+    schoolTerm {
+      id
+      name
+    }
+    groupType {
+      id
+      name
+    }
+    relationships {
+      roles {
+        id
+        name
+        fgColor
+        bgColor
+      }
+      person {
+        id
+        avatarContentUrl
+        firstName
+        lastName
+        fullName
+        shortName
+        dateOfBirth
+        sex
+        email
+        username
+      }
+    }
+    owners {
+      id
+      fullName
+      avatarContentUrl
+    }
+    childGroups {
+      id
+      name
+      avatarUrl
+      schoolTerm {
+        id
+        name
+      }
+    }
+    parentGroups {
+      id
+      name
+      avatarUrl
+      schoolTerm {
+        id
+        name
+      }
+    }
+    statistics {
+      members
+      ageAvg
+      ageRangeMin
+      ageRangeMax
+    }
+
+    canEdit
+    canDelete
+  }
+}
+
+mutation deleteGroups($ids: [ID]!) {
+  deleteGroups(ids: $ids) {
+    deletionCount
+  }
+}

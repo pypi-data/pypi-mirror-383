@@ -1,0 +1,29 @@
+query installedApps {
+  installedApps {
+    name
+    verboseName
+    version
+    copyrights {
+      years
+      name
+      email
+    }
+    licence {
+      verboseName
+      flags {
+        isFsfLibre
+        isOsiApproved
+      }
+      licences {
+        isFsfLibre
+        isOsiApproved
+        name
+        url
+      }
+    }
+    urls {
+      name
+      url
+    }
+  }
+}
