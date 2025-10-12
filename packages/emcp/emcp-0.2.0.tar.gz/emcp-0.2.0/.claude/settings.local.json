@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest test/test_tools.py::test_fs_pwd -v)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv run:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(./sandbox-run.sh:*)",
+      "Bash(timeout 2 uv run server)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
