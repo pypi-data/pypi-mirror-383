@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: yfinance_fetch
+Version: 0.0.1
+Summary: A module for analyzing stock technical, financial, and candlestick pattern data with yfinance and Google Sheets integration.
+Author: Prasad
+Author-email: mr.xprasadx@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+License-File: LICENSE.txt
+Requires-Dist: yfinance>=0.2.40
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: tqdm>=4.66.0
+Requires-Dist: ta>=0.10.2
+Requires-Dist: gspread>=5.12.0
+Requires-Dist: oauth2client>=4.1.3
+Requires-Dist: gspread-dataframe>=3.3.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
