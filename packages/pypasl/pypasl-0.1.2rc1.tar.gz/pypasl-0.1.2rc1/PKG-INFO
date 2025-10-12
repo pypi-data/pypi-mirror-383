@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: pypasl
+Version: 0.1.2rc1
+Summary: PASL (Python As a Scripting Language) is a project dedicated to allowing easier use of Python as a scripting language, mainly with the goal of replacing .sh or .ps1.
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: keyboard>=0.13.5
+Requires-Dist: windows-curses; sys_platform == "win32"
+
+# PASL
+PASL (Python As a Scripting Language) is a cross-platform project dedicated to allowing easier use of Python as a scripting language, mainly with the goal of replacing .sh or .ps1.
