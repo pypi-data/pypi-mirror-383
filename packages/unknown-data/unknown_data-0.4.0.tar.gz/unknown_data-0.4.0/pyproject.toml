@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unknown-data"
+version = "0.4.0"
+description = "A comprehensive library for parsing and processing digital forensics data artifacts with enhanced testing utilities."
+authors = [{ name = "daehan00", email = "daehan00@github.com" }]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["forensics", "data", "artifacts", "parsing", "digital-forensics", "database"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Topic :: Security",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Database",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas>=1.3.0",
+    "numpy",
+    "jsonschema", 
+    "boto3",
+    "sqlalchemy>=2.0.0",
+    "psycopg2-binary"
+]
+
+[project.urls]
+Homepage = "https://github.com/daehan00/unknown_parsing_module"
+Repository = "https://github.com/daehan00/unknown_parsing_module"
+"Bug Tracker" = "https://github.com/daehan00/unknown_parsing_module/issues"
+Documentation = "https://github.com/daehan00/unknown_parsing_module#readme"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "mypy",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
