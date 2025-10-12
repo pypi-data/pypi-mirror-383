@@ -1,0 +1,242 @@
+pyproject.toml
+readme.md
+assets/bullet_hell/enemy.py
+assets/bullet_hell/enemy_bullets.py
+assets/bullet_hell/main.py
+assets/bullet_hell/player.py
+assets/bullet_hell/player_bullets.py
+assets/bullet_hell/setting.py
+assets/bullet_hell/old_verisons/bullet_hell.py
+assets/bullet_hell/old_verisons/enemy.py
+assets/bullet_hell/old_verisons/game_start.py
+assets/bullet_hell/old_verisons/main.py
+assets/bullet_hell/old_verisons/player.py
+assets/startup-assets/tutorial-steps/1-create-sprites/main.py
+assets/startup-assets/tutorial-steps/1-create-sprites/player.py
+assets/startup-assets/tutorial-steps/1-create-sprites-task/enemy.py
+assets/startup-assets/tutorial-steps/1-create-sprites-task/main.py
+assets/startup-assets/tutorial-steps/1-create-sprites-task/player.py
+assets/startup-assets/tutorial-steps/2-basic-events/enemy.py
+assets/startup-assets/tutorial-steps/2-basic-events/main.py
+assets/startup-assets/tutorial-steps/2-basic-events/player.py
+assets/startup-assets/tutorial-steps/2-basic-events-task1/enemy.py
+assets/startup-assets/tutorial-steps/2-basic-events-task1/main.py
+assets/startup-assets/tutorial-steps/2-basic-events-task1/player.py
+assets/startup-assets/tutorial-steps/2-basic-events-task2/enemy.py
+assets/startup-assets/tutorial-steps/2-basic-events-task2/main.py
+assets/startup-assets/tutorial-steps/2-basic-events-task2/player.py
+assets/startup-assets/tutorial-steps/3-loops-conditions/enemy.py
+assets/startup-assets/tutorial-steps/3-loops-conditions/main.py
+assets/startup-assets/tutorial-steps/3-loops-conditions/player.py
+assets/startup-assets/tutorial-steps/3-loops-conditions-task1/enemy.py
+assets/startup-assets/tutorial-steps/3-loops-conditions-task1/main.py
+assets/startup-assets/tutorial-steps/3-loops-conditions-task1/player.py
+assets/startup-assets/tutorial-steps/3-loops-conditions-task2/enemy.py
+assets/startup-assets/tutorial-steps/3-loops-conditions-task2/main.py
+assets/startup-assets/tutorial-steps/3-loops-conditions-task2/player.py
+assets/startup-assets/tutorial-steps/4-variables/enemy.py
+assets/startup-assets/tutorial-steps/4-variables/main.py
+assets/startup-assets/tutorial-steps/4-variables/player.py
+assets/startup-assets/tutorial-steps/5-sprite-object/enemy.py
+assets/startup-assets/tutorial-steps/5-sprite-object/main.py
+assets/startup-assets/tutorial-steps/5-sprite-object/player.py
+assets/startup-assets/tutorial-steps/5-sprite-object-task1/enemy.py
+assets/startup-assets/tutorial-steps/5-sprite-object-task1/main.py
+assets/startup-assets/tutorial-steps/5-sprite-object-task1/player.py
+assets/startup-assets/tutorial-steps/5-sprite-object-task2/enemy.py
+assets/startup-assets/tutorial-steps/5-sprite-object-task2/main.py
+assets/startup-assets/tutorial-steps/5-sprite-object-task2/player.py
+assets/startup-assets/tutorial-steps/6-referencing-sprites/enemy.py
+assets/startup-assets/tutorial-steps/6-referencing-sprites/main.py
+assets/startup-assets/tutorial-steps/6-referencing-sprites/player.py
+assets/startup-assets/tutorial-steps/6-referencing-sprites-task/enemy.py
+assets/startup-assets/tutorial-steps/6-referencing-sprites-task/main.py
+assets/startup-assets/tutorial-steps/6-referencing-sprites-task/player.py
+assets/startup-assets/tutorial-steps/7-parameterised-events/enemy.py
+assets/startup-assets/tutorial-steps/7-parameterised-events/main.py
+assets/startup-assets/tutorial-steps/7-parameterised-events/player.py
+assets/startup-assets/tutorial-steps/7-parameterised-events-msg/enemy.py
+assets/startup-assets/tutorial-steps/7-parameterised-events-msg/main.py
+assets/startup-assets/tutorial-steps/7-parameterised-events-msg/player.py
+assets/startup-assets/tutorial-steps/7-parameterised-events-task/enemy.py
+assets/startup-assets/tutorial-steps/7-parameterised-events-task/main.py
+assets/startup-assets/tutorial-steps/7-parameterised-events-task/player.py
+assets/startup-assets/tutorial-steps/8-backdrop-music/enemy.py
+assets/startup-assets/tutorial-steps/8-backdrop-music/main.py
+assets/startup-assets/tutorial-steps/8-backdrop-music/player.py
+assets/startup-assets/tutorial-steps/9-polish/enemy.py
+assets/startup-assets/tutorial-steps/9-polish/enemy_red.py
+assets/startup-assets/tutorial-steps/9-polish/main.py
+assets/startup-assets/tutorial-steps/9-polish/player.py
+examples/animated_sprite/main.py
+examples/animated_sprite/my_sprite.py
+examples/bullet_hell/enemy.py
+examples/bullet_hell/enemy_bullet.py
+examples/bullet_hell/main.py
+examples/bullet_hell/player.py
+examples/bullet_hell/player_bullet.py
+examples/doodle_jump/main.py
+examples/doodle_jump/platforms.py
+examples/doodle_jump/player.py
+examples/fish/fish.py
+examples/fish/main.py
+examples/fish/assets/bullet_hell/enemy.py
+examples/fish/assets/bullet_hell/enemy_bullets.py
+examples/fish/assets/bullet_hell/main.py
+examples/fish/assets/bullet_hell/player.py
+examples/fish/assets/bullet_hell/player_bullets.py
+examples/fish/assets/bullet_hell/setting.py
+examples/fish/assets/bullet_hell/old_verisons/bullet_hell.py
+examples/fish/assets/bullet_hell/old_verisons/enemy.py
+examples/fish/assets/bullet_hell/old_verisons/game_start.py
+examples/fish/assets/bullet_hell/old_verisons/main.py
+examples/fish/assets/bullet_hell/old_verisons/player.py
+examples/fish/assets/startup-assets/tutorial-steps/1-create-sprites/main.py
+examples/fish/assets/startup-assets/tutorial-steps/1-create-sprites/player.py
+examples/fish/assets/startup-assets/tutorial-steps/1-create-sprites-task/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/1-create-sprites-task/main.py
+examples/fish/assets/startup-assets/tutorial-steps/1-create-sprites-task/player.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events/main.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events/player.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events-task1/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events-task1/main.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events-task1/player.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events-task2/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events-task2/main.py
+examples/fish/assets/startup-assets/tutorial-steps/2-basic-events-task2/player.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions/main.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions/player.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions-task1/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions-task1/main.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions-task1/player.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions-task2/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions-task2/main.py
+examples/fish/assets/startup-assets/tutorial-steps/3-loops-conditions-task2/player.py
+examples/fish/assets/startup-assets/tutorial-steps/4-variables/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/4-variables/main.py
+examples/fish/assets/startup-assets/tutorial-steps/4-variables/player.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object/main.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object/player.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object-task1/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object-task1/main.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object-task1/player.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object-task2/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object-task2/main.py
+examples/fish/assets/startup-assets/tutorial-steps/5-sprite-object-task2/player.py
+examples/fish/assets/startup-assets/tutorial-steps/6-referencing-sprites/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/6-referencing-sprites/main.py
+examples/fish/assets/startup-assets/tutorial-steps/6-referencing-sprites/player.py
+examples/fish/assets/startup-assets/tutorial-steps/6-referencing-sprites-task/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/6-referencing-sprites-task/main.py
+examples/fish/assets/startup-assets/tutorial-steps/6-referencing-sprites-task/player.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events/main.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events/player.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events-msg/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events-msg/main.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events-msg/player.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events-task/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events-task/main.py
+examples/fish/assets/startup-assets/tutorial-steps/7-parameterised-events-task/player.py
+examples/fish/assets/startup-assets/tutorial-steps/8-backdrop-music/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/8-backdrop-music/main.py
+examples/fish/assets/startup-assets/tutorial-steps/8-backdrop-music/player.py
+examples/fish/assets/startup-assets/tutorial-steps/9-polish/enemy.py
+examples/fish/assets/startup-assets/tutorial-steps/9-polish/enemy_red.py
+examples/fish/assets/startup-assets/tutorial-steps/9-polish/main.py
+examples/fish/assets/startup-assets/tutorial-steps/9-polish/player.py
+examples/getting-started/step 1 - create a sprite/main.py
+examples/getting-started/step 1 - create a sprite/player.py
+examples/getting-started/step 2 - control a sprite/main.py
+examples/getting-started/step 2 - control a sprite/player.py
+examples/getting-started/step 3 - backdrops/main.py
+examples/getting-started/step 3 - backdrops/player.py
+examples/getting-started/step 4 - clone a sprite/enemy.py
+examples/getting-started/step 4 - clone a sprite/main.py
+examples/getting-started/step 4 - clone a sprite/player.py
+examples/getting-started/step 4 - clone a sprite (simple)/enemy.py
+examples/getting-started/step 4 - clone a sprite (simple)/main.py
+examples/getting-started/step 4 - clone a sprite (simple)/player.py
+examples/getting-started/step 5 - local variables/enemy.py
+examples/getting-started/step 5 - local variables/main.py
+examples/getting-started/step 5 - local variables/player.py
+examples/getting-started/step 6 - shared variables/enemy.py
+examples/getting-started/step 6 - shared variables/main.py
+examples/getting-started/step 6 - shared variables/player.py
+examples/getting-started/step 7 - Referencing other sprites/enemy.py
+examples/getting-started/step 7 - Referencing other sprites/hearts.py
+examples/getting-started/step 7 - Referencing other sprites/main.py
+examples/getting-started/step 7 - Referencing other sprites/player.py
+examples/getting-started/step 8 - sprite variables/enemy.py
+examples/getting-started/step 8 - sprite variables/hearts.py
+examples/getting-started/step 8 - sprite variables/main.py
+examples/getting-started/step 8 - sprite variables/player.py
+examples/getting-started/step 9 - messages/enemy.py
+examples/getting-started/step 9 - messages/hearts.py
+examples/getting-started/step 9 - messages/main.py
+examples/getting-started/step 9 - messages/player.py
+examples/perspective_background/main.py
+examples/perspective_background/player.py
+examples/perspective_background/trees.py
+examples/simple_pong/ball.py
+examples/simple_pong/left_paddle.py
+examples/simple_pong/main.py
+examples/simple_pong/right_paddle.py
+examples/simple_pong/score_display.py
+examples/tutorial-day1/chest.py
+examples/tutorial-day1/enemy.py
+examples/tutorial-day1/friend.py
+examples/tutorial-day1/main.py
+examples/tutorial-day1/target.py
+examples/tutorial-day1/text.py
+examples/tutorial-day1/in-steps/1-create-sprites/chest.py
+examples/tutorial-day1/in-steps/1-create-sprites/enemy.py
+examples/tutorial-day1/in-steps/1-create-sprites/main.py
+examples/tutorial-day1/in-steps/2-basic-events/chest.py
+examples/tutorial-day1/in-steps/2-basic-events/enemy.py
+examples/tutorial-day1/in-steps/2-basic-events/main.py
+examples/tutorial-day1/in-steps/3-flow/chest.py
+examples/tutorial-day1/in-steps/3-flow/enemy.py
+examples/tutorial-day1/in-steps/3-flow/friend.py
+examples/tutorial-day1/in-steps/3-flow/main.py
+examples/tutorial-day1/in-steps/4-variables/chest.py
+examples/tutorial-day1/in-steps/4-variables/enemy.py
+examples/tutorial-day1/in-steps/4-variables/friend.py
+examples/tutorial-day1/in-steps/4-variables/main.py
+examples/tutorial-day1/in-steps/5-backdrops/chest.py
+examples/tutorial-day1/in-steps/5-backdrops/enemy.py
+examples/tutorial-day1/in-steps/5-backdrops/friend.py
+examples/tutorial-day1/in-steps/5-backdrops/main.py
+pyscratch/__init__.py
+pyscratch/event.py
+pyscratch/game_module.py
+pyscratch/helper.py
+pyscratch/sprite.py
+pyscratch/tools/sprite_preview/main.py
+pyscratch/tools/sprite_preview/settings.py
+pyscratch/tools/sprite_preview/left_panel/frame_preview_card.py
+pyscratch/tools/sprite_preview/left_panel/frame_preview_panel.py
+pyscratch/tools/sprite_preview/main_panel/animation_display.py
+pyscratch/tools/sprite_preview/main_panel/frame_bin.py
+pyscratch/tools/sprite_preview/main_panel/play_edit_ui.py
+pyscratch/tools/sprite_preview/main_panel/set_as_sprite_folder.py
+pyscratch/tools/sprite_preview/main_panel/sprite_edit_ui.py
+pyscratch/tools/sprite_preview/main_panel/warning_message.py
+pyscratch/tools/sprite_preview/right_panel/back_button.py
+pyscratch/tools/sprite_preview/right_panel/cut_button.py
+pyscratch/tools/sprite_preview/right_panel/cut_parameter_fitting.py
+pyscratch/tools/sprite_preview/right_panel/cut_parameters.py
+pyscratch/tools/sprite_preview/right_panel/file_display.py
+pyscratch/tools/sprite_preview/right_panel/file_display_area.py
+pyscratch/tools/sprite_preview/right_panel/spritesheet_view.py
+pyscratch/tools/sprite_preview/right_panel/ss_select_corner.py
+pyscratch/tools/sprite_preview/utils/input_box.py
+pyscratch/tools/sprite_preview/utils/render_wrapped_file_name.py
+pyscratch_pysc.egg-info/PKG-INFO
+pyscratch_pysc.egg-info/SOURCES.txt
+pyscratch_pysc.egg-info/dependency_links.txt
+pyscratch_pysc.egg-info/requires.txt
+pyscratch_pysc.egg-info/top_level.txt
