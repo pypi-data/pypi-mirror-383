@@ -1,0 +1,118 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environments
+.env
+.venv
+.pm
+.mkb
+.mkb_pm
+env/
+venv/
+pm/
+mkb/
+mkb_pm/
+env.bak/
+venv.bak/
+pm.bak/
+mkb.bak/
+mkb_pm.bak/
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+eggs/
+.egg*
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+.DS_Store
+MANIFEST.in
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# IDE settings
+.idea/
+.vscode/
+
+# flake8
+.flake8
+
+# mypy
+.mypy_cache/
+.mypy.ini
+.dmypy.json
+dmypy.json
+
+# sonar-scanner
+.scannerwork
+
+# vandelay
+vandelay-py.js
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage.*
+.cache
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Library appendix
+support files/
+tests/
+profiling/
+sberpm/*/tutorial/
+sberpm/*/*/tutorial/
+
+# Local data / archives
+tutorials/data/
+*.zip
+*.7z
+*.tar
+*.gz
+*.bz2
+*.tar.gz
+*.tar.bz2
+*.iso
+*.dmg
+*.xlsx
+*.csv
+*.pickle
+*.parquet
+*.html
+*.pptx
+*.jpg
+*.svg
+*.pdf
+*.gv
+*.bpmn
+*.log
+*.diff
+*.prof
+*.sh

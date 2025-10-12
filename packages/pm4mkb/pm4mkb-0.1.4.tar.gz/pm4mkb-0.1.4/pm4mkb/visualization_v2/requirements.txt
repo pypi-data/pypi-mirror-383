@@ -1,0 +1,11 @@
+# Requirements for visualization_v2 module
+    
+# Core requirements
+jinja2>=3.0.0
+    
+# Optional for graphviz backend
+graphviz>=0.16  # If using graphviz backend
+
+# Core pm4mkb dependencies, but listed for clarity
+pandas>=1.0.0
+numpy>=1.18.0

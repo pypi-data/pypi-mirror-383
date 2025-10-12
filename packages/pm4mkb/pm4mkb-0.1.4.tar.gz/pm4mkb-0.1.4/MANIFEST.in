@@ -1,0 +1,7 @@
+include .gitignore
+include LICENSE
+include requirements.txt
+global-exclude *~
+global-exclude *.pyc
+global-exclude .svn
+recursive-include pm4mkb *.txt *.csv *.tar *.bin *.json *.model *.pptx *.png *.dump
