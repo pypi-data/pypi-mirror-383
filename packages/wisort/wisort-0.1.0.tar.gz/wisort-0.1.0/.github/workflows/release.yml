@@ -1,0 +1,53 @@
+name: Release
+
+concurrency: 
+  group: production
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    name: SemVer Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+      
+    environment:
+      name: pypi
+      url: https://pypi.org/p/wisort
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install Python (via uv)
+        run: uv python install
+
+      - name: Set up virtualenv
+        run: uv venv
+
+      - name: Install semantic-release
+        run: uv pip install python-semantic-release
+      - name: Semantic Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: uv run semantic-release publish
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error

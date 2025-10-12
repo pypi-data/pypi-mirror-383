@@ -1,0 +1,19 @@
+{
+	"runes": {},
+	"libraries": {
+		"pics": {
+			"destination": "~/Pictures/",
+			"filetypes": ["png", "jpeg", "jpg"],
+			"flatten": true
+		}
+	},
+	"orders": {
+		"recurse": true,
+		"honor_gitignore": true,
+		"ignore_dotfiles": true
+	},
+	"args": {
+		"quiet": false,
+		"force": false
+	}
+}

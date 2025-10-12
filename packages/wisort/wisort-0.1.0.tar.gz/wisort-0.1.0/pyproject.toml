@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.semantic_release]
+version_source = "tag"
+upload_to_pypi = true 
+upload_to_vcs_release = true
+branch = "master"
+build_command = "uv build"
+tag_commit = true
+
+[project]
+name = "wisort"
+version = "0.1.0"
+description = "A system to sort your files"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [{ name = "vividsystem"}]
+license = { file = "LICENSE" }
+dependencies = [
+    "pathspec>=0.12.1",
+    "pydantic>=2.12.0",
+    "questionary>=2.1.1",
+    "typer>=0.19.2",
+]
+
+[project.urls]
+Repository = "https://github.com/vividsystem/wisort"
+
+[project.scripts]
+wisort = "wisort.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wisort"]
