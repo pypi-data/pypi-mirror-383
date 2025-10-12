@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: rebop
+Version: 0.9.3
+Classifier: Programming Language :: Rust
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Requires-Dist: xarray>=2023.10
+Requires-Dist: pytest>=8.3.4,<9 ; extra == 'dev'
+Requires-Dist: maturin>=1.9.6,<2 ; extra == 'dev'
+Requires-Dist: pip>=24.3.1,<25 ; extra == 'dev'
+Requires-Dist: pre-commit>=4.0.1,<5 ; extra == 'dev'
+Requires-Dist: mkdocs>=1.6.1,<2 ; extra == 'doc'
+Requires-Dist: mkdocs-material>=9.5.49,<10 ; extra == 'doc'
+Requires-Dist: mkdocstrings[python]>=0.27.0,<0.28 ; extra == 'doc'
+Provides-Extra: dev
+Provides-Extra: doc
+License-File: LICENSE
+Home-Page: https://armavica.github.io/rebop/
+Requires-Python: >=3.12
