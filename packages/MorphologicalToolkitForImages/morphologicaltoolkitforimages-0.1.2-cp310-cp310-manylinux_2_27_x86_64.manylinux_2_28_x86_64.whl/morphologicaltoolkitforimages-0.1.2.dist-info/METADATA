@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: MorphologicalToolkitForImages
+Version: 0.1.2
+Summary: Biblioteca para geração de árvores morfológicas, extração de atributos e aplicação de filtros em imagens.
+Keywords: morfologia,imagens,PyTorch,C++,Pybind11
+Author-Email: Lucas de Paula Oliveira Santos <lkslukas23@gmail.com>
+License-Expression: MIT
+Requires-Python: >=3.9
+Requires-Dist: torch>=2.0
+Requires-Dist: torchvision>=0.17
+Requires-Dist: torchaudio>=2.0
+Requires-Dist: opencv-python>=4.7
+Requires-Dist: matplotlib>=3.7
+Requires-Dist: numpy>=1.25
+Description-Content-Type: text/markdown
+
