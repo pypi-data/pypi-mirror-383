@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: esp-docs
+Version: 2.1.1
+Summary: Documentation building package used at Espressif
+Home-page: https://github.com/espressif/esp-docs
+Author: Espressif
+Author-email: marius.vikhammer@espressif.com
+Project-URL: Bug Tracker, https://github.com/espressif/esp-docs/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: docutils<0.21
+Requires-Dist: cairosvg==2.5.1
+Requires-Dist: sphinx~=7.1.2
+Requires-Dist: breathe==4.35.0
+Requires-Dist: sphinx-copybutton==0.5.0
+Requires-Dist: sphinx-notfound-page
+Requires-Dist: seqdiag==3.0.0
+Requires-Dist: actdiag==3.0.0
+Requires-Dist: sphinxcontrib-blockdiag==3.0.0
+Requires-Dist: sphinxcontrib-seqdiag==3.0.0
+Requires-Dist: sphinxcontrib-actdiag==3.0.0
+Requires-Dist: sphinxcontrib-nwdiag==2.0.0
+Requires-Dist: sphinxcontrib-wavedrom<3.1,>=3.0
+Requires-Dist: sphinxcontrib-svg2pdfconverter[CairoSVG]==1.2.0
+Requires-Dist: nwdiag==2.0.0
+Requires-Dist: recommonmark
+Requires-Dist: sphinx_selective_exclude==1.0.3
+Requires-Dist: sphinx_idf_theme==2.0.1
+
+
+# Espressif Documentation Build System
+
+Esp-docs is a python based wrapper for the documentation building package Sphinx.
+
+It is intended to simplify and extend Sphinx's functionality to better suit what is needed for building documentation for Espressif's development frameworks
+
+Provides:
+ * Functionality for building documentation for multiple targets (e.g. ESP32 and ESP32-C3) from the same rst source files.
+ * Sphinx extensions used at Espressif
+ * Scripts for deploying docs
+
+For a more in-depth guide on how to install, write, and compile documentation please see [ESP-Docs User Guide](https://docs.espressif.com/projects/esp-docs/en/latest/index.html).
