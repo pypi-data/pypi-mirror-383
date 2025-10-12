@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wolfram-alpha-mcp-server-xiaomayisjh"
+version = "1.0.1"
+description = "Wolfram Alpha MCP Server - 使用移动端API的科学计算和事实查询工具"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Wolfram Alpha MCP Team"}
+]
+maintainers = [
+    {name = "Wolfram Alpha MCP Team"}
+]
+keywords = ["wolfram", "alpha", "mcp", "mathematics", "science", "calculation", "api"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "mcp-server>=0.1.0",
+    "requests>=2.31.0",
+    "anyio>=3.7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/wolfram-alpha-mcp-server"
+Repository = "https://github.com/your-username/wolfram-alpha-mcp-server"
+Issues = "https://github.com/your-username/wolfram-alpha-mcp-server/issues"
+Documentation = "https://github.com/your-username/wolfram-alpha-mcp-server#readme"
+
+[project.scripts]
+wolfram-alpha-mcp = "server_remote:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.txt", "*.json"]

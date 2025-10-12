@@ -1,0 +1,214 @@
+Metadata-Version: 2.4
+Name: wolfram-alpha-mcp-server
+Version: 1.0.0
+Summary: Wolfram Alpha MCP Server - 使用移动端API的科学计算和事实查询工具
+Home-page: https://github.com/your-username/wolfram-alpha-mcp-server
+Author: Wolfram Alpha MCP Team
+Author-email: 
+Maintainer: Wolfram Alpha MCP Team
+License: MIT
+Project-URL: Homepage, https://github.com/your-username/wolfram-alpha-mcp-server
+Project-URL: Repository, https://github.com/your-username/wolfram-alpha-mcp-server
+Project-URL: Issues, https://github.com/your-username/wolfram-alpha-mcp-server/issues
+Project-URL: Documentation, https://github.com/your-username/wolfram-alpha-mcp-server#readme
+Keywords: wolfram,alpha,mcp,mathematics,science,calculation,api
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: mcp-server>=0.1.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: anyio>=3.7.0
+Dynamic: home-page
+Dynamic: requires-python
+
+# Wolfram Alpha MCP Server
+
+Wolfram Alpha MCP Server 是一个基于 Model Context Protocol (MCP) 的服务器，提供对 Wolfram Alpha 移动端 API 的访问，支持科学计算、数学求解等功能。
+
+## 功能特性
+
+- 🔬 **科学计算**: 支持复杂的数学计算和科学问题求解
+- 📝 **分步解答**: 提供详细的数学问题分步解答
+- 🌐 **多格式输出**: 支持 plaintext、JSON 等多种输出格式
+- 🚀 **高性能**: 基于 Wolfram Alpha 移动端 API，响应快速
+- 📡 **流式响应**: 支持 Streamable HTTP 协议，提供实时流式数据
+- ⚡ **实时体验**: 流式工具提供更好的用户交互体验
+
+## 安装
+
+### 从 PyPI 安装
+
+```bash
+pip install wolfram-alpha-mcp-server
+```
+
+### 从源码安装
+
+```bash
+git clone https://github.com/your-username/wolfram-alpha-mcp-server.git
+cd wolfram-alpha-mcp-server
+pip install -e .
+```
+
+## 使用方法
+
+### 1. 启动 MCP 服务器
+
+```bash
+python server_remote.py
+```
+
+或者使用命令行工具：
+
+```bash
+wolfram-alpha-mcp
+```
+
+### 2. 配置 MCP 客户端
+
+在您的 MCP 客户端配置文件中添加以下配置：
+
+```json
+{
+  "mcpServers": {
+    "wolfram-alpha": {
+      "command": "uvx",
+      "args": ["wolfram-alpha-mcp-server@latest"]
+    }
+  }
+}
+```
+
+### 3. 使用工具
+
+服务器提供以下5个工具：
+
+#### `wolfram_alpha_query`
+基础查询工具，用于科学和事实信息查询。
+
+```python
+# 示例查询
+result = await wolfram_alpha_query("What is the derivative of x^2?")
+```
+
+#### `wolfram_mobile_query`
+高级查询工具，支持自定义格式和参数。
+
+```python
+# 示例查询
+result = await wolfram_mobile_query(
+    query="plot sin(x)",
+    format_type="plaintext",
+    output_type="json"
+)
+```
+
+#### `wolfram_step_by_step`
+分步解答工具，专门用于数学问题的详细解答。
+
+```python
+# 示例查询
+result = await wolfram_step_by_step("solve x^2 + 5x + 6 = 0")
+```
+
+#### `wolfram_streaming_query`
+流式查询工具，支持实时流式响应，提供更好的用户体验。
+
+```python
+# 示例流式查询
+result = await wolfram_streaming_query("What is the integral of x^2?")
+import json
+data = json.loads(result)
+for chunk in data['streaming_chunks']:
+    print(f"[{chunk['type']}] {chunk['content']}")
+```
+
+#### `wolfram_streaming_step_by_step`
+流式分步解答工具，实时显示数学问题的分步求解过程。
+
+```python
+# 示例流式分步解答
+result = await wolfram_streaming_step_by_step("solve x^2 + 5x + 6 = 0")
+import json
+data = json.loads(result)
+for chunk in data['streaming_chunks']:
+    print(f"[{chunk['type']}] {chunk['content']}")
+```
+
+## 服务配置
+
+### Server Config
+
+```json
+{
+  "command": "uvx",
+  "args": ["wolfram-alpha-mcp-server@latest"]
+}
+```
+
+### 环境变量
+
+当前版本使用内置的移动端 API 配置，无需额外环境变量。
+
+## 开发
+
+### 项目结构
+
+```
+wolfram-alpha-mcp-server/
+├── server_remote.py      # 远程版本服务器
+├── server.py            # 本地版本服务器
+├── setup.py             # 包安装配置
+├── pyproject.toml       # 项目配置
+├── requirements.txt     # 依赖列表
+├── README.md           # 项目说明
+└── mcp.json           # MCP 客户端配置示例
+```
+
+### 依赖项
+
+- `mcp-server>=0.1.0`: MCP 服务器框架
+- `requests>=2.31.0`: HTTP 请求库
+- `anyio>=3.7.0`: 异步 I/O 库
+
+### 构建和发布
+
+```bash
+# 构建包
+python -m build
+
+# 发布到 PyPI
+python -m twine upload dist/*
+```
+
+## 许可证
+
+本项目采用 MIT 许可证。
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 支持
+
+如果您遇到任何问题，请：
+
+1. 查看 [Issues](https://github.com/xiaomayisjh/wolfram-alpha-mcp-server/issues) 页面
+2. 创建新的 Issue 描述您的问题
+
+## 更新日志
+
+### v1.0.0
+- 初始版本发布
+- 支持基础查询、分步解答、高级查询等功能
+- 支持远程部署和托管
