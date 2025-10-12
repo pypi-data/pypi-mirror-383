@@ -1,0 +1,171 @@
+Metadata-Version: 2.4
+Name: alphalens-modify
+Version: 0.1.0
+Summary: A modified version of alphalens with updated dependencies and fixes
+Home-page: https://github.com/GenjiYin/alphalens-modify
+Author: XiaoYinXu
+Author-email: XiaoYinXu <965418170@qq.com>
+Maintainer-email: XiaoYinXu <965418170@qq.com>
+License: Apache-2.0
+Project-URL: Homepage, https://github.com/GenjiYin/alphalens-modify
+Project-URL: Documentation, https://github.com/GenjiYin/alphalens-modify
+Project-URL: Repository, https://github.com/GenjiYin/alphalens-modify.git
+Project-URL: Bug Tracker, https://github.com/GenjiYin/alphalens-modify/issues
+Keywords: finance,quantitative,factor,analysis,investment
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Financial and Insurance Industry
+Classifier: Topic :: Office/Business :: Financial :: Investment
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas==2.2.3
+Requires-Dist: numpy==1.26.4
+Requires-Dist: scipy==1.14.1
+Requires-Dist: statsmodels==0.14.5
+Requires-Dist: matplotlib==3.9.2
+Requires-Dist: seaborn==0.13.2
+Requires-Dist: IPython
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+
+# AlphaLens Modify
+
+<div align="right">
+  <a href="README_CN.md">🇨🇳 中文</a> | 🇺🇸 English
+</div>
+
+**Author: XiaoYinXu**
+
+AlphaLens Modify is a modified version of the original AlphaLens library with updated dependencies and compatibility fixes for modern Python environments.
+
+## 📊 **Analysis Results Showcase**
+
+*This project includes comprehensive factor analysis capabilities. Here are some example results:*
+
+*本项目包含全面的因子分析功能。以下是一些示例结果：*
+
+### 🔍 **Information Coefficient (IC) Analysis**
+![IC Value Distribution](figures/IC_value_distribution.png)
+
+The Information Coefficient measures the predictive power of alpha factors, showing the correlation between factor values and future returns.
+
+### 📈 **Cumulative Return Analysis**
+![Cumulative Returns](figures/cumlative_return.png)
+
+Cumulative returns demonstrate the long-term performance of factor-based investment strategies over time.
+
+### 📊 **Group Mean Return Analysis**
+![Group Mean Returns](figures/group_mean_return.png)
+
+Group analysis shows how different factor quantiles perform, helping identify the most effective investment segments.
+
+### 🔄 **Factor Turnover Analysis**
+![Turnover Analysis](figures/turnover.png)
+
+Turnover analysis evaluates the stability and trading frequency of factor-based strategies.
+
+## 🚀 **Quick Start**
+
+```python
+import alphalens_modify as al
+import pandas as pd
+
+# Load your factor data and pricing data
+factor_data = pd.read_csv('factor_data.csv')
+price_data = pd.read_csv('price_data.csv')
+
+# Get clean factor and forward returns
+factor_returns = al.utils.get_clean_factor_and_forward_returns(
+    factor_data, 
+    price_data, 
+    periods=[1, 5, 10]
+)
+
+# Create comprehensive analysis
+al.tears.create_summary_tear_sheet(factor_returns)
+al.tears.create_returns_tear_sheet(factor_returns)
+al.tears.create_information_tear_sheet(factor_returns)
+```
+
+## 📦 **Installation**
+
+### From PyPI
+```bash
+pip install alphalens-modify
+```
+
+### From Source
+```bash
+git clone https://github.com/GenjiYin/alphalens-modify.git
+cd alphalens-modify
+pip install -e .
+```
+
+## 📋 **Requirements**
+
+- Python >= 3.12
+- pandas >= 1.0.0
+- numpy >= 1.16.0
+- empyrical >= 0.5.0
+- scipy >= 1.0.0
+- statsmodels >= 0.9.0
+- matplotlib >= 3.0.0
+- seaborn >= 0.9.0
+- IPython >= 7.0.0
+
+## 🎯 **Key Features**
+
+- **Factor Performance Analysis**: Analyze the predictive power of alpha factors
+- **Information Coefficient**: Calculate and visualize IC metrics
+- **Quantile Analysis**: Performance analysis by factor quantiles
+- **Group Analysis**: Sector-based and custom group analysis
+- **Turnover Analysis**: Evaluate factor stability and trading frequency
+- **Event Studies**: Analyze factor performance around specific events
+
+## 📊 **Complete Analysis Pipeline**
+
+The library provides a complete factor analysis workflow:
+
+1. **Data Preparation**: Clean and prepare factor and price data
+2. **Performance Metrics**: Calculate IC, returns, turnover metrics
+3. **Visualization**: Generate comprehensive charts and plots
+4. **Reporting**: Create detailed tear sheets for analysis
+
+## 🔧 **Example Usage**
+
+See the included Jupyter notebook `market_cap_factor_analys.ipynb` for a complete example using market capitalization factor analysis.
+
+**Note:** To run the `market_cap_factor_analys.ipynb` notebook, you need to download the `test_data` folder from the GitHub repository:
+1. Go to the [GitHub repository](https://github.com/GenjiYin/alphalens-modify)
+2. Navigate to the `test_data` folder
+3. Download all the files in the `test_data` folder
+4. Place them in a `test_data` directory in your local project root
+
+The notebook requires these data files to demonstrate the factor analysis functionality.
+
+## 🤝 **Support**
+
+If you encounter any issues or have questions, please open an issue on [GitHub](https://github.com/GenjiYin/alphalens-modify/issues).
+
+## 📄 **License**
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## 👤 **Author**
+
+**XiaoYinXu** - 965418170@qq.com
+
+## 🙏 **Acknowledgments**
+
+This project is based on the original AlphaLens library by Quantopian. Thanks to the original contributors for their work on the factor analysis framework.

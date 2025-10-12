@@ -1,0 +1,38 @@
+# Core documentation files
+include README.md
+include README_CN.md
+include LICENSE
+include pyproject.toml
+include requirements.txt
+
+# Include test data files
+recursive-include alphalens_modify/test_data *.csv
+
+# Include Jupyter notebook examples and figures
+global-include *.ipynb
+recursive-include figures *.png
+
+# Include all Python source files
+recursive-include alphalens_modify *.py
+
+# Exclude unwanted files from packaging
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .git*
+global-exclude .DS_Store
+global-exclude *.log
+global-exclude *.tmp
+global-exclude *.bak
+
+# Exclude development files (keep them in git but not in package)
+global-exclude .gitignore
+global-exclude .github
+global-exclude tests
+global-exclude test_*.py
+prune .github
+prune tests
+
+# Exclude build artifacts
+global-exclude build
+global-exclude dist
+global-exclude *.egg-info
