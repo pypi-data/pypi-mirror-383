@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kalyfo-spark-helper"
+version = "0.0.1"
+description = "A Spark helper class to create and configure optimized Spark sessions with Delta Lake support"
+readme = "README.md"
+authors = [
+    { name = "Konstantinos Kalyfommatos", email = "kkalyfo@gmail.com" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["spark", "pyspark", "delta-lake", "data-engineering"]
+
+dependencies = [
+    "pyspark==4.0.1",
+    "delta-spark==4.0.0",
+    "findspark==2.0.1",
+    "python-dotenv==1.1.1",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/konstantinoskalyfommatos/kalyfo-spark-helper"
+"Bug Tracker" = "https://github.com/konstantinoskalyfommatos/kalyfo-spark-helper/issues"
+"Repository" = "https://github.com/konstantinoskalyfommatos/kalyfo-spark-helper"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["spark_helper*"]
+
+[tool.setuptools.package-data]
+spark_helper = ["py.typed"]
