@@ -1,0 +1,97 @@
+# CryptoGPU - High-Performance GPU-Accelerated Cryptocurrency Wallet Generation
+
+[![PyPI version](https://badge.fury.io/py/crypto-gpu-lib.svg)](https://badge.fury.io/py/crypto-gpu-lib)
+[![Python versions](https://img.shields.io/pypi/pyversions/crypto-gpu-lib.svg)](https://pypi.org/project/crypto-gpu-lib/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A blazing-fast Python library for generating cryptocurrency wallets using NVIDIA GPU acceleration. Supports Bitcoin, Ethereum, Litecoin, Solana, and other major cryptocurrencies with massive parallel processing capabilities.
+
+## 🚀 Features
+
+- **GPU Acceleration**: Utilizes NVIDIA CUDA for massive parallel processing
+- **Multi-Currency Support**: Bitcoin, Ethereum, Litecoin, Solana, Bitcoin Cash, Dogecoin, Dash
+- **High Performance**: Generate thousands of wallets per second
+- **BIP39/BIP44 Compliant**: Full support for mnemonic phrases and hierarchical deterministic wallets
+- **Batch Processing**: Optimized batch generation for maximum throughput
+- **Memory Efficient**: Smart memory management for large-scale operations
+- **Fallback Support**: Automatic CPU fallback when GPU is unavailable
+
+## 📊 Performance
+
+- **GPU Mode**: 8,000+ wallets/second on NVIDIA T4
+- **CPU Mode**: 2,000+ wallets/second with multi-threading
+- **Memory Usage**: <2GB for 10,000 wallet batches
+
+## 🛠️ Installation
+
+```bash
+# CPU version
+pip install crypto-gpu-lib
+
+# GPU version with CUDA support
+pip install crypto-gpu-lib[gpu]
+
+# Development version with all extras
+pip install crypto-gpu-lib[all]
+```
+
+## 🎯 Quick Start
+
+```python
+from crypto_gpu_lib import GPUWalletGenerator, SupportedNetworks
+
+# Initialize generator with GPU acceleration
+generator = GPUWalletGenerator(
+    batch_size=1000,
+    networks=[
+        SupportedNetworks.BITCOIN,
+        SupportedNetworks.ETHEREUM,
+        SupportedNetworks.LITECOIN
+    ]
+)
+
+# Generate a batch of wallets
+batch = generator.generate_batch()
+
+print(f"Generated {len(batch)} wallets in {batch.generation_time:.2f}s")
+
+# Access individual wallets
+for wallet in batch.wallets:
+    print(f"Mnemonic: {wallet.mnemonic}")
+    print(f"BTC Address: {wallet.get_address(SupportedNetworks.BITCOIN)}")
+    print(f"ETH Address: {wallet.get_address(SupportedNetworks.ETHEREUM)}")
+    print("---")
+```
+
+## 🏗️ Supported Networks
+
+| Network | Symbol | Derivation Path | Address Format |
+|---------|--------|----------------|----------------|
+| Bitcoin | BTC | m/44'/0'/0'/0/0 | P2PKH (1...) |
+| Ethereum | ETH | m/44'/60'/0'/0/0 | 0x... |
+| Litecoin | LTC | m/44'/2'/0'/0/0 | P2PKH (L...) |
+| Solana | SOL | m/44'/501'/0'/0/0 | Base58 |
+| Bitcoin Cash | BCH | m/44'/145'/0'/0/0 | P2PKH |
+| Dogecoin | DOGE | m/44'/3'/0'/0/0 | P2PKH (D...) |
+| Dash | DASH | m/44'/5'/0'/0/0 | P2PKH (X...) |
+
+## 🔒 Security Notes
+
+- This library generates cryptographically secure random entropy
+- Private keys are generated using industry-standard algorithms
+- Always verify generated addresses before use
+- Keep private keys secure and never share them
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by the [trillion mnemonic challenge](https://medium.com/@johncantrell97/how-i-checked-over-1-trillion-mnemonics-in-30-hours-to-win-a-bitcoin-635fe051a752)
+- Built with CuPy for GPU acceleration
+- Uses industry-standard cryptographic libraries
+
+---
+
+**⚠️ Disclaimer**: This software is for educational and research purposes. Always verify generated wallets and use proper security practices when handling cryptocurrency.
