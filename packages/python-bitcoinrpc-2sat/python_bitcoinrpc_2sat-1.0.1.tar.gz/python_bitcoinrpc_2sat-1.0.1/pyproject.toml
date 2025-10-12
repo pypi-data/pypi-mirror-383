@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-bitcoinrpc-2sat"
+version = "1.0.1"
+description = "Enhanced version of python-jsonrpc for use with Bitcoin"
+readme = "README.rst"
+license = {text = "LGPL"}
+authors = [
+    {name = "Jeff Garzik", email = "jgarzik@pobox.com"},
+]
+maintainers = [
+    {name = "twosatsmaxi", email = "jgarzik@pobox.com"},
+]
+classifiers = [
+    "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.7"
+
+[project.urls]
+Homepage = "https://github.com/twosatsmaxi/python-bitcoinrpc-2sat"
+Repository = "https://github.com/twosatsmaxi/python-bitcoinrpc-2sat"
+Issues = "https://github.com/twosatsmaxi/python-bitcoinrpc-2sat/issues"
+
+[tool.setuptools]
+packages = ["bitcoinrpc"]
