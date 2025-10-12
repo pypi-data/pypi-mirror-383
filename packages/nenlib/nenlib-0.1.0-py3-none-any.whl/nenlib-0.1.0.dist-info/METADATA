@@ -1,0 +1,53 @@
+Metadata-Version: 2.4
+Name: nenlib
+Version: 0.1.0
+Summary: A library for LLM provider configuration and logging utilities
+Author-email: nenlib <dev@nenlib.com>
+License: MIT
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: langfuse>=0.0.9
+Requires-Dist: pydantic>=2.10.6
+Requires-Dist: python-dotenv
+Requires-Dist: pyyaml
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.4; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Dynamic: license-file
+
+# nenlib
+
+A library for LLM provider configuration and logging utilities.
+
+## Installation
+
+```bash
+pip install nenlib
+# or
+uv add nenlib
+```
+
+## Usage
+
+```python
+from nenlib import PROVIDERS, MLopsConfig, LiteLLMConfig
+
+# Access provider configurations
+print(PROVIDERS)
+
+# Use MLOps configuration
+config = MLopsConfig.get_provider_config("openai")
+
+# Generate LiteLLM configuration
+lite_config = LiteLLMConfig(providers=PROVIDERS)
+model_list = lite_config.generate_model_list()
+```
