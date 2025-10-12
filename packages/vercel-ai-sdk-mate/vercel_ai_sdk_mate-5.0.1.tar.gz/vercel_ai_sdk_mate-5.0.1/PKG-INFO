@@ -1,0 +1,119 @@
+Metadata-Version: 2.3
+Name: vercel_ai_sdk_mate
+Version: 5.0.1
+Summary: Python adaptor library for seamless integration with Vercel AI SDK (TypeScript) backends.
+License: MIT
+Author: Sanhe Hu
+Author-email: husanhe@email.com
+Maintainer: Sanhe Hu
+Maintainer-email: husanhe@email.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Provides-Extra: auto
+Provides-Extra: dev
+Provides-Extra: doc
+Provides-Extra: test
+Requires-Dist: Sphinx (>=7.4.7,<8.0.0) ; extra == "doc"
+Requires-Dist: build (>=1.2.1,<2.0.0) ; extra == "dev"
+Requires-Dist: docfly (==3.0.0) ; extra == "doc"
+Requires-Dist: furo (==2024.8.6) ; extra == "doc"
+Requires-Dist: ipython (>=8.18.1,<8.19.0) ; extra == "doc"
+Requires-Dist: nbsphinx (>=0.8.12,<1.0.0) ; extra == "doc"
+Requires-Dist: pydantic (>=2.0.0,<3.0.0)
+Requires-Dist: pygments (>=2.18.0,<3.0.0) ; extra == "doc"
+Requires-Dist: pytest (>=8.2.2,<9.0.0) ; extra == "test"
+Requires-Dist: pytest-cov (>=6.0.0,<7.0.0) ; extra == "test"
+Requires-Dist: rich (>=13.8.1,<14.0.0) ; extra == "dev"
+Requires-Dist: rstobj (==1.2.1) ; extra == "doc"
+Requires-Dist: sphinx-copybutton (>=0.5.2,<1.0.0) ; extra == "doc"
+Requires-Dist: sphinx-design (>=0.6.1,<1.0.0) ; extra == "doc"
+Requires-Dist: sphinx-jinja (>=2.0.2,<3.0.0) ; extra == "doc"
+Requires-Dist: twine (>=6.0.0,<7.0.0) ; extra == "dev"
+Requires-Dist: wheel (>=0.45.0,<1.0.0) ; extra == "dev"
+Project-URL: Changelog, https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/blob/main/release-history.rst
+Project-URL: Documentation, https://vercel-ai-sdk-mate.readthedocs.io/en/latest/
+Project-URL: Download, https://pypi.org/pypi/vercel-ai-sdk-mate#files
+Project-URL: Homepage, https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project
+Project-URL: Issues, https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/issues
+Project-URL: Repository, https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project
+Description-Content-Type: text/x-rst
+
+
+.. image:: https://readthedocs.org/projects/vercel-ai-sdk-mate/badge/?version=latest
+    :target: https://vercel-ai-sdk-mate.readthedocs.io/en/latest/
+    :alt: Documentation Status
+
+.. image:: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/actions?query=workflow:CI
+
+.. image:: https://codecov.io/gh/MacHu-GWU/vercel_ai_sdk_mate-project/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/MacHu-GWU/vercel_ai_sdk_mate-project
+
+.. image:: https://img.shields.io/pypi/v/vercel-ai-sdk-mate.svg
+    :target: https://pypi.python.org/pypi/vercel-ai-sdk-mate
+
+.. image:: https://img.shields.io/pypi/l/vercel-ai-sdk-mate.svg
+    :target: https://pypi.python.org/pypi/vercel-ai-sdk-mate
+
+.. image:: https://img.shields.io/pypi/pyversions/vercel-ai-sdk-mate.svg
+    :target: https://pypi.python.org/pypi/vercel-ai-sdk-mate
+
+.. image:: https://img.shields.io/badge/✍️_Release_History!--None.svg?style=social&logo=github
+    :target: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/blob/main/release-history.rst
+
+.. image:: https://img.shields.io/badge/⭐_Star_me_on_GitHub!--None.svg?style=social&logo=github
+    :target: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project
+
+------
+
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
+    :target: https://vercel-ai-sdk-mate.readthedocs.io/en/latest/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Install-blue.svg
+    :target: `install`_
+
+.. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
+    :target: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project
+
+.. image:: https://img.shields.io/badge/Link-Submit_Issue-blue.svg
+    :target: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Request_Feature-blue.svg
+    :target: https://github.com/MacHu-GWU/vercel_ai_sdk_mate-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Download-blue.svg
+    :target: https://pypi.org/pypi/vercel-ai-sdk-mate#files
+
+
+Welcome to ``vercel_ai_sdk_mate`` Documentation
+==============================================================================
+.. image:: https://vercel-ai-sdk-mate.readthedocs.io/en/latest/_static/vercel_ai_sdk_mate-logo.png
+    :target: https://vercel-ai-sdk-mate.readthedocs.io/en/latest/
+
+``vercel_ai_sdk_mate`` is a Python adaptor library that bridges the gap between the Vercel AI SDK (originally designed for TypeScript) and Python backends. It provides a seamless integration layer that allows Python developers to leverage the powerful features of Vercel's AI SDK without dealing with language barriers or complex interoperability issues. Whether you're building AI-powered applications, chatbots, or intelligent APIs, this library simplifies the process of connecting your Python backend with Vercel's AI infrastructure, making the development experience smoother and more Pythonic.
+
+This Python library's versioning is aligned with the `Vercel AI SDK (ai package) <https://www.npmjs.com/package/ai>`_. The major and minor version numbers match the AI SDK's major and minor versions, while the micro (patch) version is managed independently for Python-specific updates. For example, ``vercel-ai-sdk-mate`` version ``5.1.x`` is compatible with ``ai`` SDK versions ``>=5.1.0,<5.2.0``.
+
+
+.. _install:
+
+Install
+------------------------------------------------------------------------------
+
+``vercel_ai_sdk_mate`` is released on PyPI, so all you need is to:
+
+.. code-block:: console
+
+    $ pip install vercel-ai-sdk-mate
+
+To upgrade to latest version:
+
+.. code-block:: console
+
+    $ pip install --upgrade vercel-ai-sdk-mate
+
