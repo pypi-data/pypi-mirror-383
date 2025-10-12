@@ -1,0 +1,5 @@
+[console_scripts]
+bullcrypt = bullcrypt.main:main
+
+[bullcrypt.algorithm]
+fernet = bullcrypt.algorithm.fernet:Fernet
