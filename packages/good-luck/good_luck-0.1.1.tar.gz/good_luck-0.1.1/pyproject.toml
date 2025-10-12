@@ -1,0 +1,24 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling>=1.27.0", "hatch-vcs"]
+
+[project]
+name = "good-luck"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=2.7"
+dependencies = []
+dynamic = ["version"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["good_luck"]
+
+[tool.hatch.build.targets.wheel.hooks.autorun]
+dependencies = ["hatch-autorun"]
+code = """
+import sys
+sys.tracebacklimit = 0
+"""
