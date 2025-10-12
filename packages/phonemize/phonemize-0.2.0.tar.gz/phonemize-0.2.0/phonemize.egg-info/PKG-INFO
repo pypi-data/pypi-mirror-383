@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: phonemize
+Version: 0.2.0
+Summary: A lightweight and pure Python library for converting text into phonemes, based on a pre-trained model.
+Author-email: Arcosoph <arcosoph.ai@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/arcosoph/phonemize
+Project-URL: Bug Tracker, https://github.com/arcosoph/phonemize/issues
+Keywords: phonemizer,phoneme,tts,text-to-speech,text-processing,pytorch
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: torch
+Requires-Dist: numpy
+
+If you have any problem installing `dp` library then you can use `phonemize` because `phonemize` is a copy of complete dp.

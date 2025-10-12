@@ -1,0 +1,1 @@
+If you have any problem installing `dp` library then you can use `phonemize` because `phonemize` is a copy of complete dp.
