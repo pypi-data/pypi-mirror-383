@@ -1,0 +1,13 @@
+tasks:
+  lint:
+    help: "Lint code using Ruff linter."
+    cmd: "ruff check ."
+  lint:fix:
+    help: "Lint code and automatically fix issues using Ruff linter."
+    cmd: "ruff check . --fix"
+  format:
+    help: "Format code using Ruff formatter."
+    cmd: "ruff format ."
+  typecheck:
+    help: "Typecheck code using Pyright type checker."
+    cmd: "pyright ."

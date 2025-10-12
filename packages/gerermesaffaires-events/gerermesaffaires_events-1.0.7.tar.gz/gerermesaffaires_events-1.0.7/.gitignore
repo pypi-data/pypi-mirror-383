@@ -1,0 +1,25 @@
+# Byte-compiled
+__pycache__
+
+# PyInstaller build
+*.manifest
+*.spec
+build
+dist
+
+# Python version
+.python-version
+
+# Environments
+.env
+.venv
+env
+venv
+
+# Ruff stuff
+.ruff_cache
+
+# Editors specific
+.fleet
+.idea
+.vscode
