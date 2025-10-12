@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  apiwatchdog:
+    image: theisaac/api-watch-dog:latest
+    container_name: apiwatchdog
+    ports:
+      - "22222:22222"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WATCHDOG_USERNAME=admin
+      - WATCHDOG_PASSWORD=admin
+    command: python -m apiwatchdog
