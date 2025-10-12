@@ -1,0 +1,15 @@
+name: Release Drafter
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update_release_draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        with:
+          config-name: release_drafter_template.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
