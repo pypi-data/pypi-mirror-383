@@ -1,0 +1,236 @@
+# MCP AI Hub - Project Configuration
+# This file defines the package metadata, dependencies, and development tools configuration
+
+[project]
+# Package identification
+name = "mcp-ai-hub"  # PyPI package name
+version = "0.1.3"  # Package version (follow semantic versioning)
+description = "A Model Context Protocol (MCP) server that provides unified access to various AI providers through LiteLM. Chat with OpenAI, Anthropic, and 100+ other AI models using a single, consistent interface."
+readme = "README.md"  # Long description from README file
+
+# Package authors and maintainers
+authors = [
+    { name = "Pengfei Ni", email = "feiskyer@gmail.com" }
+]
+
+# Python version requirements
+# Requires Python 3.10+ for modern typing features and async/await improvements
+requires-python = ">=3.10"
+# Runtime dependencies
+# These packages are required for the MCP AI Hub to function
+dependencies = [
+    # MCP (Model Context Protocol) server implementation
+    # Provides the core MCP server functionality and protocol handling
+    "mcp>=1.2.0",
+
+    # LiteLM - Unified API for 100+ AI providers
+    # Handles API calls to OpenAI, Anthropic, Google, Azure, AWS Bedrock, etc.
+    "litellm>=1.0.0",
+
+    # HTTP client with SOCKS proxy support
+    # Used for API calls to AI providers and supports corporate proxies
+    "httpx[socks]>=0.25.0",
+
+    # YAML configuration file parsing
+    # Handles reading and parsing of ~/.ai_hub.yaml configuration files
+    "pyyaml>=6.0",
+
+    # Data validation and serialization
+    # Used for configuration validation with type safety
+    "pydantic>=2.0.0"
+]
+
+# Package classifiers for PyPI
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+# Development dependencies
+# These packages are only needed for development, testing, and code quality
+[project.optional-dependencies]
+dev = [
+    # Testing framework
+    # Core testing functionality for unit and integration tests
+    "pytest>=7.0.0",
+
+    # Async testing support
+    # Enables testing of async functions and MCP server operations
+    "pytest-asyncio>=0.21.0",
+
+    # Code coverage reporting
+    # Measures test coverage and generates coverage reports
+    "pytest-cov>=4.0.0",
+
+    # Fast Python linter and formatter
+    # Modern alternative to flake8, black, isort, and pylint
+    "ruff>=0.1.0",
+
+    # Static type checker
+    # Ensures type safety and catches type-related bugs
+    "mypy>=1.0.0",
+
+    # Type stubs for PyYAML
+    # Provides type information for YAML library
+    "types-pyyaml>=6.0.0",
+
+    # Git hook framework
+    # Runs code quality checks before commits
+    "pre-commit>=3.0.0"
+]
+
+# Console scripts
+# Defines command-line entry points for the package
+[project.scripts]
+mcp-ai-hub = "mcp_ai_hub.server:main"  # Main CLI command - runs the MCP server
+
+
+# Pytest configuration
+# Settings for the pytest testing framework
+[tool.pytest.ini_options]
+# Test discovery paths
+testpaths = ["tests"]  # Look for tests in the tests directory
+
+# Test file naming patterns
+python_files = ["test_*.py", "*_test.py"]  # Files that contain tests
+python_classes = ["Test*"]  # Test class naming pattern
+python_functions = ["test_*"]  # Test function naming pattern
+
+# Additional pytest options
+addopts = [
+    "--strict-markers",  # Enforce strict marker usage
+    "--strict-config",   # Enforce strict configuration validation
+    "--cov=src/mcp_ai_hub",  # Measure coverage for the main package
+    "--cov-report=term-missing",  # Show missing lines in terminal
+    "--cov-report=html",  # Generate HTML coverage report
+    "--cov-report=xml",   # Generate XML coverage report (for CI)
+]
+
+# Async testing configuration
+asyncio_mode = "auto"  # Automatically handle async tests
+
+# Coverage.py configuration
+# Settings for measuring code coverage during testing
+[tool.coverage.run]
+# Source directories to measure coverage for
+source = ["src/mcp_ai_hub"]  # Only measure coverage for our main package
+
+# Files to exclude from coverage
+omit = [
+    "*/tests/*",  # Don't measure coverage for test files
+    "*/test_*",   # Don't measure coverage for test modules
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+# Ruff configuration
+# Fast Python linter and formatter settings
+[tool.ruff]
+# Target Python version for compatibility
+target-version = "py310"  # Python 3.10+ features
+
+# Maximum line length (matches Black's default)
+line-length = 88  # PEP 8 recommended maximum line length
+
+# Ruff linting rules
+# Configure which rules to enable/disable
+[tool.ruff.lint]
+# Rules to enable (select)
+select = [
+    "E",  # pycodestyle errors - basic Python style errors
+    "W",  # pycodestyle warnings - Python style warnings
+    "F",  # pyflakes - detect undefined variables, imports, etc.
+    "I",  # isort - import sorting and organization
+    "B",  # flake8-bugbear - find likely bugs and design problems
+    "C4", # flake8-comprehensions - optimize comprehensions
+    "UP", # pyupgrade - upgrade syntax to newer Python versions
+    "ARG001", # unused-function-args - detect unused function arguments
+    "SIM", # flake8-simplify - simplify code patterns
+]
+
+# Rules to ignore (disable)
+ignore = [
+    "E501",  # line too long - handled by automatic formatting
+    "B008",  # do not perform function calls in argument defaults - common in FastAPI/MCP
+    "C901",  # too complex - sometimes complexity is necessary for functionality
+]
+
+# Per-file ignore rules
+# Override linting rules for specific files or directories
+[tool.ruff.lint.per-file-ignores]
+# Allow unused imports in __init__.py files (common for package initialization)
+"__init__.py" = ["F401"]  # imported but unused - needed for package structure
+
+# Allow unused arguments in test files (common for test fixtures)
+"tests/*" = ["ARG001"]  # unused-function-args - test functions often have unused parameters
+
+# MyPy configuration
+# Static type checker settings for type safety
+[tool.mypy]
+# Python version target
+python_version = "3.10"  # Target Python 3.10+ features
+
+# Strict type checking options
+warn_return_any = true  # Warn when function returns Any type
+warn_unused_configs = true  # Warn about unused mypy configuration
+
+disallow_untyped_defs = true  # Require type annotations for all functions
+disallow_incomplete_defs = true  # Require complete type annotations
+check_untyped_defs = true  # Type check untyped functions
+disallow_untyped_decorators = true  # Require typed decorators
+
+no_implicit_optional = true  # Don't allow implicit Optional types
+warn_redundant_casts = true  # Warn about unnecessary type casts
+warn_unused_ignores = true  # Warn about unused type: ignore comments
+warn_no_return = true  # Warn about missing return statements
+warn_unreachable = true  # Warn about unreachable code
+strict_equality = true  # Strict equality checking
+show_error_codes = true  # Show error codes in output
+
+# MyPy module overrides
+# Disable type checking for third-party packages that lack type stubs
+[[tool.mypy.overrides]]
+# LiteLM doesn't have complete type stubs, ignore import errors
+module = "litellm.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# MCP library doesn't have complete type stubs, ignore import errors
+module = "mcp.*"
+ignore_missing_imports = true
+
+# Build system configuration
+# Defines how the package should be built and packaged
+[build-system]
+# Build backend requirements
+requires = ["hatchling"]  # Modern Python build backend
+
+# Build backend to use
+build-backend = "hatchling.build"  # Hatchling handles packaging and distribution
+
+# Additional metadata
+[project.urls]
+Homepage = "https://github.com/feiskyer/mcp-ai-hub"
+Repository = "https://github.com/feiskyer/mcp-ai-hub"
+Documentation = "https://github.com/feiskyer/mcp-ai-hub#readme"
+"Bug Tracker" = "https://github.com/feiskyer/mcp-ai-hub/issues"
