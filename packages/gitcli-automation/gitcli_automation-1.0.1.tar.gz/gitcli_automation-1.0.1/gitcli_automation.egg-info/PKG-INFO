@@ -1,0 +1,150 @@
+Metadata-Version: 2.4
+Name: gitcli-automation
+Version: 1.0.1
+Summary: User-friendly command-line tool for Git that simplifies everyday operations. Perfect for developers who want powerful Git functionality without the complexity.
+Home-page: https://github.com/Adelodunpeter25/GitCLI
+Author: Adelodunpeter
+Author-email: Adelodun Peter <adelodunpeter24@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/Adelodunpeter25/GitCLI
+Project-URL: Bug Reports, https://github.com/Adelodunpeter25/issues
+Project-URL: Source, https://github.com/Adelodunpeter25/GitCLI
+Keywords: git,cli,automation,tool,interactive,version-control
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Version Control :: Git
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: colorama>=0.4.6
+Requires-Dist: yaspin>=2.3.0
+Provides-Extra: windows
+Requires-Dist: win10toast>=0.9; extra == "windows"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# GitCLI - Git Operations Automation
+
+GitCLI is a user-friendly command-line tool for Git that simplifies everyday operations. Perfect for developers who want powerful Git functionality without the complexity.
+
+## Features
+
+- 🎨 Colored output and loading spinners
+- 🔔 System notifications (macOS/Linux/Windows)
+- ⌨️ Tab completion in interactive mode
+- 🛡️ Safety checks for destructive operations
+- 🖥️ Cross-platform (macOS, Linux, Windows)
+- 🚀 Direct command execution or interactive mode
+
+## Installation
+
+```bash
+pip install gitcli-automation
+```
+
+## Quick Start
+
+### Interactive Mode
+```bash
+gitcli
+```
+
+### Direct Commands
+```bash
+gitcli status
+gitcli commit
+gitcli push
+gitcli qp              # quick push: stage + commit + push
+gitcli sync            # pull + push
+```
+
+## Available Commands
+
+### Core Operations
+- `commit` - Commit staged changes
+- `push` - Push to remote (with force push option)
+- `pull` - Pull latest changes
+- `sync` - Pull then push in one command
+- `fetch` - Fetch updates without merging
+- `stage` - Stage changes (all or specific files)
+- `status` - Show git status
+- `log` - View commit history
+- `diff` - Show unstaged changes
+- `diff-staged` - Show staged changes
+
+### Branch Management
+- `switch-branch` - Switch to another branch
+- `add-branch` - Create new branch
+- `delete-branch` - Delete a branch
+- `rename-branch` - Rename a branch
+- `list-branch` - List all branches
+
+### Quick Operations
+- `quick-push` or `qp` - Stage, commit & push in one go
+
+### Advanced
+- `amend` - Amend last commit
+- `reset` - Reset to previous commit
+- `remotes` - Manage remote repositories
+- `clone` - Clone a repository
+
+## Command Flexibility
+
+Commands work with spaces, hyphens, or no spaces:
+```bash
+gitcli list-branch    # ✅
+gitcli listbranch     # ✅
+gitcli list branch    # ✅
+```
+
+## Examples
+
+**Quick workflow:**
+```bash
+gitcli qp
+```
+
+**Standard workflow:**
+```bash
+gitcli status
+gitcli diff
+gitcli stage
+gitcli commit
+gitcli push
+```
+
+**Branch workflow:**
+```bash
+gitcli add-branch feature-x
+# ... make changes ...
+gitcli qp
+gitcli switch-branch main
+```
+
+## Requirements
+
+- Python 3.7+
+- Git installed and configured
+
+## Safety Features
+
+- Confirmation prompts for destructive operations
+- Branch protection (can't delete current branch)
+- Force push requires typing "yes"
+- Remote validation before push/pull
+
+## Contributing
+
+Contributions welcome! Visit the [GitHub repository](https://github.com/Adelodunpeter25/GitCLI).
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Author
+
+Adelodunpeter - [GitHub](https://github.com/Adelodunpeter25)
