@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: image_processing_tiagofiorilli
+Version: 0.0.5
+Summary: Image Processing Package using skimage
+Home-page: https://github.com/tiagofiorilli/image_processing_package
+Author: Tiago Fiorilli
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: scikit-image
+Dynamic: author
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# image_processing
+
+### Descrição
+O pacote `image_processing` é usado para:
+- Leitura e salvamento de imagens
+- Ajuste de tamanho (resize)
+- Combinação e comparação
+- Plotagem e histogramas
+
+### Instalação
+Para instalar o pacote localmente:
+```bash
+pip install .
