@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "fake-project"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.coverage.run]
+source = ["src"]
+data_file = ".coverage"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ai-unit-test.llm]
+provider = "mock"
+model = "mock-model"
+temperature = 0.1
+
+[tool.ai-unit-test.indexing]
+backend = "memory"
+index_directory = "data/test_index"
+
+[tool.ai-unit-test]
+test-patterns = ["test_*.py", "*_test.py"]
