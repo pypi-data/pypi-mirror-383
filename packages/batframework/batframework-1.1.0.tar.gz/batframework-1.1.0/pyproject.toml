@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools==76.1.0 "]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batframework"
+description = "Pygame framework for making games easier."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["pygame-ce"]
+version = "1.1.0"
+license = { file = "LICENSE" }
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "1.1.0"
+tag_format = "v$version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+version_files = [
+  "src/batFramework/version.json:version",
+  "pyproject.toml:version"
+]
