@@ -1,0 +1,53 @@
+Metadata-Version: 2.4
+Name: boring-math-special-functions
+Version: 0.1.0
+Summary: Mathematical special functions
+Keywords: special functions,sine,exponential
+Author-email: "Geoffrey R. Scheller" <geoffrey@scheller.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/x-rst
+Classifier: Development Status :: 1 - Planning
+Classifier: Framework :: Pytest
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+License-File: LICENSE
+Requires-Dist: pytest>=8.4.1 ; extra == "test"
+Project-URL: Changelog, https://github.com/grscheller/boring-math-special-functions/blob/main/CHANGELOG.rst
+Project-URL: Documentation, https://grscheller.github.io/boring-math/special_functions/development/build/html/
+Project-URL: Homepage, https://grscheller.github.io/boring-math/homepage/build/html
+Project-URL: Source, https://github.com/grscheller/boring-math-special-functions
+Provides-Extra: test
+
+Boring Math - Special Functions
+===============================
+
+PyPI project
+`boring-math-special-functions
+<https://pypi.org/project/boring-math-special-functions>`_.
+
+The purpose of this project is to compute special functions
+of mathematics and Physics.
+
+Initially these will be done in pure Python, but eventually I
+would like to implement these in something like C, Zig or Rust.
+
+This pypi project is part of the
+`boring math
+<https://grscheller.github.io/boring-math>`_ projects.
+
+Documentation
+-------------
+
+Documentation for this project is hosted on
+`GitHub Pages
+<https://grscheller.github.io/boring-math/special-functions/development/build/html>`_.
+
+Copyright and License
+---------------------
+
+Copyright (c) 2023-2025 Geoffrey R. Scheller. Licensed under the Apache
+License, Version 2.0. See the LICENSE file for details.
+
