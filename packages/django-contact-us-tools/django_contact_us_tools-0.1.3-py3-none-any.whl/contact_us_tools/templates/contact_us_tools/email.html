@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>{{ salutation }},</header>
+    <main>
+        {% if is_feedback %}
+            <p>{{ main_content_fbk }}</p>
+        {% elif not is_feedback and is_main_content_provided %}
+            <p>{{ main_content }}</p>
+        {% else %}
+            <p>Thank you for contacting us. This is an automated response to confirm that we have received your message.</p>
+            <p>
+                Your enquiry has been received and assigned the ticket number #{{ ticket_number }}. We will review your enquiry and respond as soon as we can.
+            </p>
+            <p>For further questions or assistance, or if you wish to add details or comments to your enquiry, please reply to this email.</p>
+        {% endif %}
+        <p>
+            {{ closing }},
+            <br>
+            {{ signature }}
+        </p>
+    </main>
+    <hr>
+    <div style="font-style: italic;">
+        <p style="font-weight: bold;">{{ name }}, {{ date_created }}</p>
+        {{ message }}
+    </div>
+    <hr>
+    <footer>
+        E: {{ from_email }}
+        {% if disp_review_link %}
+            <br>
+            <br>
+            We would love to hear your feedback. Please leave us a review at {{ review_link }}.
+        {% endif %}
+        {% if disp_pp_notice %}
+            <br>
+            <br>
+            This email has been sent in accordance with the {{ business_name }} Privacy Policy
+        {% endif %}
+        {% if disp_cpr_notice %}
+            <br>
+            <br>
+            Copyright {{ copyright_year }} {{ business_name }}
+        {% endif %}
+    </footer>
+</body>
+</html>

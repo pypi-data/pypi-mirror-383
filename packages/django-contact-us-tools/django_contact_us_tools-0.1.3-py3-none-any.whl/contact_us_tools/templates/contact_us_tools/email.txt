@@ -1,0 +1,30 @@
+{% load static %}
+{{ salutation }},
+{% if is_feedback %}
+{{ main_content_fbk }}
+{% elif not is_feedback and is_main_content_provided %}
+{{ main_content }}
+{% else %}
+Thank you for contacting us. This is an automated response to confirm that we have received your message.
+
+Your enquiry has been received and assigned the ticket number #{{ ticket_number }}. We will review your enquiry and respond as soon as we can. For further questions or assistance, or if you wish to add details or comments to your enquiry, please reply to this email.
+{% endif %}
+{{ closing }},
+{{ signature }}
+
+-------------------------------------------------
+{{ name }}, {{ date_created }}
+
+{{ message }}
+-------------------------------------------------
+
+E: {{ from_email }}
+{% if disp_review_link %}
+We would love to hear your feedback. Please leave us a review at {{ review_link }}.
+{% endif %}
+{% if disp_pp_notice %}
+This email has been sent in accordance with the {{ business_name }} Privacy Policy
+{% endif %}
+{% if disp_cpr_notice %}
+Copyright {{ copyright_year }} {{ business_name }}
+{% endif %}
