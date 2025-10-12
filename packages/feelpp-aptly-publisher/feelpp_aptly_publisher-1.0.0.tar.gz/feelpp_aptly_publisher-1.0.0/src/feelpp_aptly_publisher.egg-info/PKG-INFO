@@ -1,0 +1,60 @@
+Metadata-Version: 2.4
+Name: feelpp-aptly-publisher
+Version: 1.0.0
+Summary: Tool to publish Debian packages to Feel++ APT repository via aptly and GitHub Pages
+Author-email: Feel++ Consortium <contact@feelpp.org>
+Maintainer-email: Feel++ Packaging Team <contact@feelpp.org>
+License: LGPL-3.0-or-later
+Project-URL: Homepage, https://github.com/feelpp/apt
+Project-URL: Documentation, https://github.com/feelpp/apt#readme
+Project-URL: Repository, https://github.com/feelpp/apt.git
+Project-URL: Issues, https://github.com/feelpp/apt/issues
+Project-URL: Feel++ Main, https://www.feelpp.org
+Project-URL: APT Repository, https://feelpp.github.io/apt/
+Keywords: apt,debian,packaging,aptly,github-pages,feelpp
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: System :: Archiving :: Packaging
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: flake8>=6.0; extra == "dev"
+Requires-Dist: flake8-bugbear>=23.0; extra == "dev"
+Requires-Dist: flake8-comprehensions>=3.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+Requires-Dist: build>=1.0; extra == "dev"
+Requires-Dist: twine>=4.0; extra == "dev"
+
+# Feel++ APT Repository
+
+**URL**: https://feelpp.github.io/apt/  
+**Public key**: [`feelpp.gpg`](./feelpp.gpg)
+
+## Channels & layout
+- Prefixes (channels): `stable/`, `testing/`, `pr/`
+- Distributions: `jammy`, `noble` (others possible)
+- Components (projects): `feelpp`, `exama`, `hidalgo`, `misc`, …
+
+## Setup (client)
+```bash
+curl -fsSL https://feelpp.github.io/apt/feelpp.gpg \
+  | sudo tee /usr/share/keyrings/feelpp.gpg >/dev/null
+
+# Example: stable + noble, components feelpp and exama
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/feelpp.gpg] \
+https://feelpp.github.io/apt/stable noble feelpp exama" \
+| sudo tee /etc/apt/sources.list.d/feelpp.list
+
+sudo apt update
