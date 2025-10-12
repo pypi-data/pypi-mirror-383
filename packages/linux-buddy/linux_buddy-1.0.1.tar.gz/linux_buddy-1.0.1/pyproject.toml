@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linux-buddy"
+version = "1.0.1"
+description = "Interactive Linux command tutorial with hands-on terminal labs for beginners and ethical hackers"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "GPL-3.0-or-later"}
+authors = [
+    {name = "jo4dan", email = "jordannissi7@gmail.com"}
+]
+maintainers = [
+    {name = "jo4dan", email = "jordannissi7@gmail.com"}
+]
+keywords = [
+    "linux",
+    "tutorial",
+    "command-line",
+    "cli",
+    "education",
+    "ethical-hacking",
+    "cybersecurity",
+    "devops",
+    "terminal",
+    "learning-tool",
+    "beginner",
+    "practice-labs"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Topic :: Education",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Security",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Environment :: Console",
+]
+
+[project.urls]
+Homepage = "https://github.com/jo4dan/linux-buddy"
+Repository = "https://github.com/jo4dan/linux-buddy"
+Issues = "https://github.com/jo4dan/linux-buddy/issues"
+Changelog = "https://github.com/jo4dan/linux-buddy/releases"
+
+[project.scripts]
+linux-buddy = "src.main:main"
+
+[tool.setuptools]
+packages = ["src", "src.data", "src.core", "src.ui", "src.utils"]
+
+[tool.setuptools.package-data]
+src = ["**/*.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | __pycache__
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", ".venv", "build", "dist"]
