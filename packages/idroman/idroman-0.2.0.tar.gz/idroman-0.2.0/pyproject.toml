@@ -1,0 +1,32 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "idroman"
+version = "0.2.0"
+authors = [
+    { name="Improper Decoherence", email="improper.decoherence@proton.me" },
+]
+description = "A module for converting between integers and roman literals."
+readme = "README.md"
+license = { text="MIT License" }
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    
+]
+
+[project.urls]
+Homepage = "https://codeberg.org/decoherence/idroman"
+
+[project.optional-dependencies]
+test = [
+    'pytest>=8.4',
+]
