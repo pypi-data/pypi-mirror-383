@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eipspy"
+version = "0.1.0b1"
+description = "Elite India PowerScript for Python - A comprehensive AI/ML framework designed to simplify and accelerate artificial intelligence development"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "EIPSPy Team", email = "eipspy@eliteindia.org"},
+]
+maintainers = [
+    {name = "EIPSPy Team", email = "eipspy@eliteindia.org"},
+]
+keywords = ["agi", "artificial-intelligence", "machine-learning", "neural-networks", "quantum-computing"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/SaleemLww/EIPSPy"
+Documentation = "https://github.com/SaleemLww/EIPSPy#readme"
+Repository = "https://github.com/SaleemLww/EIPSPy"
+Issues = "https://github.com/SaleemLww/EIPSPy/issues"
+Changelog = "https://github.com/SaleemLww/EIPSPy/blob/main/eipspy-pypi/CHANGELOG.md"
+
+[tool.setuptools]
+zip-safe = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["eipspy*"]
+
+[tool.setuptools.package-data]
+eipspy = ["py.typed"]

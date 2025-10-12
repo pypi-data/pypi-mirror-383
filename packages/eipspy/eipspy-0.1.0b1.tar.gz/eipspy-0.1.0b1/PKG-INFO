@@ -1,0 +1,126 @@
+Metadata-Version: 2.4
+Name: eipspy
+Version: 0.1.0b1
+Summary: Elite India PowerScript for Python - A comprehensive AI/ML framework designed to simplify and accelerate artificial intelligence development
+Author-email: EIPSPy Team <eipspy@eliteindia.org>
+Maintainer-email: EIPSPy Team <eipspy@eliteindia.org>
+License: MIT
+Project-URL: Homepage, https://github.com/SaleemLww/EIPSPy
+Project-URL: Documentation, https://github.com/SaleemLww/EIPSPy#readme
+Project-URL: Repository, https://github.com/SaleemLww/EIPSPy
+Project-URL: Issues, https://github.com/SaleemLww/EIPSPy/issues
+Project-URL: Changelog, https://github.com/SaleemLww/EIPSPy/blob/main/eipspy-pypi/CHANGELOG.md
+Keywords: agi,artificial-intelligence,machine-learning,neural-networks,quantum-computing
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# EIPSPy
+
+[![PyPI version](https://badge.fury.io/py/eipspy.svg)](https://pypi.org/project/eipspy/)
+[![Python versions](https://img.shields.io/pypi/pyversions/eipspy.svg)](https://pypi.org/project/eipspy/)
+[![License](https://img.shields.io/pypi/l/eipspy.svg)](https://pypi.org/project/eipspy/)
+
+**Elite India PowerScript for Python**
+
+A comprehensive AI/ML framework designed to simplify and accelerate artificial intelligence development.
+
+## 🌟 Overview
+
+EIPSPy is an open-source Python framework that provides a unified platform for building AI and machine learning applications. It combines modern AI capabilities with an intuitive interface, making advanced AI accessible to developers of all levels.
+
+## ✨ Key Features
+
+- **🤖 AI Agent Framework** - Build intelligent agents with autonomous decision-making
+- **🧠 Multi-Agent Systems** - Coordinate multiple AI agents for complex tasks
+- **💬 Generative AI** - Text generation, chatbots, and conversational AI
+- **🔍 RAG (Retrieval Augmented Generation)** - Enhance AI with knowledge retrieval
+- **🎨 Visual Intelligence** - Image processing and computer vision capabilities
+- **🗣️ Voice & Audio** - Speech recognition and text-to-speech functionality
+- **📊 Data Management** - Integrated data processing and analytics
+- **🔧 AutoML** - Automated machine learning and model optimization
+
+## 📦 Installation
+
+```bash
+pip install eipspy
+```
+
+## 🚀 Quick Start
+
+```python
+import eipspy
+
+# Get version information
+version = eipspy.get_version()
+print(f"EIPSPy Version: {version}")
+
+# Basic functionality
+message = eipspy.hello_world()
+print(message)
+```
+
+## 🏗️ Project Structure
+
+The framework is organized into modular phases:
+
+- **Foundation** - Core systems, APIs, and integration tools
+- **Generative AI** - Text generation and language models
+- **Visual Intelligence** - Computer vision and image processing
+- **Voice & Audio** - Speech and audio processing
+- **Advanced AI** - Neural architecture search, explainable AI, and ethics
+- **Industry Solutions** - Domain-specific AI applications
+- **Infrastructure** - Deployment and scaling tools
+
+## �️ Requirements
+
+- Python 3.8 or higher
+- pip package manager
+
+## 📖 Documentation
+
+For detailed documentation, tutorials, and examples, visit our [GitHub repository](https://github.com/SaleemLww/EIPSPy).
+
+## 🤝 Contributing
+
+We welcome contributions! Please feel free to submit issues, fork the repository, and create pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Authors
+
+**Saleem Ahmad & EIPSPy Team**
+
+- Email: team@eliteindia.org
+- GitHub: [@SaleemLww](https://github.com/SaleemLww)
+
+## 🔗 Links
+
+- **Repository**: [https://github.com/SaleemLww/EIPSPy](https://github.com/SaleemLww/EIPSPy)
+- **PyPI Package**: [https://pypi.org/project/eipspy/](https://pypi.org/project/eipspy/)
+- **Issues**: [https://github.com/SaleemLww/EIPSPy/issues](https://github.com/SaleemLww/EIPSPy/issues)
+
+## 🌟 Support
+
+If you find EIPSPy helpful, please consider giving it a star ⭐ on GitHub!
+
+---
+
+*Building the future of AI, one line of code at a time.*
