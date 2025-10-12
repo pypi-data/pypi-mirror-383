@@ -1,0 +1,25 @@
+[project]
+name = "lib-pdsi"
+version = "0.1.0"
+description = "Biblioteca simples para uso na matéria de Processamento Digital de Sinais e Imagens"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Raphael Alves", email = "rapha555lima@gmail.com"}
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "matplotlib>=3.10.7",
+    "numpy>=2.3.3",
+    "pandas>=2.3.3",
+    "pytest>=8.4.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/phael-exe/lib_pdsi"
+Repository = "https://github.com/phael-exe/lib_pdsi"
