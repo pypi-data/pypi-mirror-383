@@ -1,0 +1,252 @@
+Metadata-Version: 2.4
+Name: midpoint-cli
+Version: 1.4.0.dev6
+Summary: A command line client to Midpoint Identity Management system.
+License: MIT
+License-File: LICENSE
+Author: Yannick Kirschhoffer
+Author-email: alcibiade@alcibiade.org
+Maintainer: Yannick Kirschhoffer
+Maintainer-email: alcibiade@alcibiade.org
+Requires-Python: >=3.9.0,<4.0.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: System :: Systems Administration
+Requires-Dist: requests (>=2.31,<3.0)
+Requires-Dist: tabulate (>=0.9,<0.10)
+Requires-Dist: unidecode (>=1.3,<2.0)
+Requires-Dist: urllib3 (>=2.0,<3.0)
+Project-URL: Repository, https://gitlab.com/alcibiade/midpoint-cli
+Description-Content-Type: text/markdown
+
+![link=https://badge.fury.io/py/midpoint-cli](https://badge.fury.io/py/midpoint-cli.svg)
+
+## Midpoint CLI
+
+This project is a command line client interface used to drive an Evolveum Midpoint identity management server.
+
+The objectives of this tool are to enable:
+
+* Administrator access to run tasks and review data
+* Scripting for remote controlled automation
+* Test scenarios implementation
+
+The client currently supports:
+
+* Users and Organizational units display
+* User search
+* Running tasks synchronously
+* Retrieving object definitions of any kind
+* Uploading objects from local files and applying patches
+
+Features currently under development:
+
+* Auto-completion to search of IDs or task names
+* Improved task results display: retrieve and display a human readable status output
+* Any other tasks that would be submitted in the issue tracker of this project on Gitlab
+
+The strong points of this project are:
+
+* All commands can be run directly or using an interactive prompt session
+* Colorful output
+* A user-friendly bash compatible command line history management
+* Full interactive help system
+* A classical midpoint-cli [command] [command options] syntax
+
+## Usage
+
+### General syntax
+
+```bash
+usage: midpoint-cli [-h] [-v] [-u USERNAME] [-p PASSWORD] [-U URL]
+                    [command] [arg [arg ...]]
+
+An interactive Midpoint command line client.
+
+positional arguments:
+  command               Optional command to be executed immediately.
+  arg                   Optional command arguments.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         Set the username to authenticate this session.
+  -u USERNAME, --username USERNAME
+                        Set the username to authenticate this session.
+  -p PASSWORD, --password PASSWORD
+                        Set the password to authenticate this session.
+  -U URL, --url URL     Midpoint base URL
+
+Available commands:
+  get       Get an XML definition from the server from an existing OID reference.
+  put       Create/Update a server object based on an XML structure.
+  delete    Delete a server object based on its type and OID.
+
+  task      Manage server tasks.
+  resource  Manage resources on the server.
+
+  org       Manage organizations.
+  user      Manage users.
+
+Midpoint-cli version 0.7.0, created and maintained by Yannick Kirschhoffer alcibiade@alcibiade.org
+```
+
+### Exernal configuration files (since v1.2)
+
+Settings can be provided from an external configuration file. It can be either:
+
+* .midpoint-cli.cfg in the home directory of the current user
+* midpoint-cli.cfg in the current working directory
+
+The syntax is as follows:
+
+```
+[Midpoint]
+url = https://localhost:8080/midpoint/
+username = administrator
+password = ...
+```
+
+### Environment variables (since v1.2)
+
+The script will scan environment variables to read input parameters. This is
+particularily useful for injection of password or in-container execution.
+
+The variables are:
+
+* MIDPOINT_URL
+* MIDPOINT_USERNAME
+* MIDPOINT_PASSWORD
+
+## Requirements
+
+This program is compatible with Python version 3.7 or above.
+
+## Installation
+
+### Through PyPI
+
+The most common way to install midpoint-cli on your own computer is to use the PyPI repository:
+
+```bash
+yk@lunar:~$ pip3 install midpoint-cli
+Collecting midpoint-cli
+  Downloading https://files.pythonhosted.org/packages/91/03/eaebde078e3560dfa919924d0a7c395f07a2e3fc9740223ea53db3afad05/midpoint-cli-0.7.0.tar.gz
+
+[...]
+
+Successfully built midpoint-cli clint tabulate args
+Installing collected packages: args, clint, idna, urllib3, chardet, certifi, requests, tabulate, midpoint-cli
+Successfully installed args-0.1.0 certifi-2019.9.11 chardet-3.0.4 clint-0.5.1 idna-2.8 midpoint-cli-0.7.0 requests-2.22.0 tabulate-0.8.5 urllib3-1.25.6
+
+```
+
+### Development build
+
+Dependency management, build and test is managed using Python Poetry.
+
+To install Poetry, please refer to [the official Python Poetry website](https://python-poetry.org/).
+
+To install the current development version from GIT:
+
+```bash
+yk@lunar:~/dev$ git clone https://gitlab.com/alcibiade/midpoint-cli.git
+Cloning into 'midpoint-cli'...
+remote: Enumerating objects: 374, done.
+remote: Counting objects: 100% (374/374), done.
+remote: Compressing objects: 100% (176/176), done.
+remote: Total 374 (delta 229), reused 299 (delta 175)
+Receiving objects: 100% (374/374), 62.84 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (229/229), done.
+
+yk@lunar:~/dev$ poetry install 
+Creating virtualenv midpoint-cli-54EjqR0S-py3.12 in /home/yk/.cache/pypoetry/virtualenvs
+Updating dependencies
+Resolving dependencies... (5.1s)
+
+Package operations: 13 installs, 0 updates, 0 removals
+
+  - Installing args (0.1.0)
+  - Installing certifi (2024.8.30)
+  - Installing charset-normalizer (3.3.2)
+  - Installing idna (3.10)
+  - Installing iniconfig (2.0.0)
+  - Installing packaging (24.1)
+  - Installing pluggy (1.5.0)
+  - Installing urllib3 (2.2.3)
+  - Installing clint (0.5.1)
+  - Installing pytest (8.3.3)
+  - Installing requests (2.32.3)
+  - Installing tabulate (0.9.0)
+  - Installing unidecode (1.3.8)
+
+Writing lock file
+
+Installing the current project: midpoint-cli (1.4.0.dev2)
+                
+yk@lunar:~/dev$ poetry run midpoint-cli --version
+Midpoint CLI Version 1.4.0.dev2
+
+```
+
+### Anaconda
+
+Anaconda packages are not available yet.
+
+## Setting up a sanbox environment
+
+If you wish to test this project locally and don’t have a midpoint server available, you can use the
+following instructions.
+
+### Using the Evolveum managed Docker image
+
+Pull the image locally:
+
+```bash
+yk@lunar:~$ docker pull evolveum/midpoint
+Using default tag: latest
+latest: Pulling from evolveum/midpoint
+
+[...]
+
+Digest: sha256:1e29b7e891d17bf7b1cf1853c84609e414c3a71d5c420aa38927200b2bdecc8e
+Status: Downloaded newer image for evolveum/midpoint:latest
+docker.io/evolveum/midpoint:latest
+
+
+```
+
+Then run the server and bind the port 8080:
+
+```bash
+yk@lunar:~$ docker run -d --name midpoint-1 -p8080:8080 evolveum/midpoint
+c048d519395ca48c8e94e361a2239b1c35c5e5305a29600895056e030d6a576f
+
+yk@lunar:~$ midpoint-cli
+Welcome to Midpoint client ! Type ? for a list of commands
+midpoint> users
+OID                                   Name           Title    FullName                Status    EmpNo    Email    OU
+------------------------------------  -------------  -------  ----------------------  --------  -------  -------  ----
+00000000-0000-0000-0000-000000000002  administrator           midPoint Administrator  enabled
+midpoint>
+
+yk@lunar:~$ docker stop midpoint-1
+midpoint-1
+```
+
+## Deployment of a new version
+
+* Update revision in src/midpoint_cli/__init__.py
+* Commit and tag with corresponding version number
+* Generate markdown documentation: downdoc README.adoc
+* Build distribution: poetry build
+* Upload distribution to PyPI: poetry publish
+
