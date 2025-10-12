@@ -1,0 +1,37 @@
+Metadata-Version: 2.4
+Name: datavlt
+Version: 0.1.1
+Summary: Lightweight data storage and REST API with web dashboard (JSON / CSV / SQLite)
+Home-page: https://github.com/yourname/datavit
+Author: Unknown
+Author-email: Unknown <maksalmaz15@gmail.com>
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
+# 📊 Datavlt
+
+A lightweight Python library for data storage, processing, and visualization — with REST API, web dashboard, and support for JSON, CSV, and SQLite.
+
+---
+
+## 🚀 Features
+
+- 🔐 **API Key Authentication**
+- 🌐 **Built-in Web Interface (HTML + JS)**
+- 💾 **Supports JSON, CSV, and SQLite**
+- 🧩 **Data Validation**
+- ⚙️ **REST API (GET, POST, Filter)**
+- 🔍 **Data Processing and Filtering**
+
+---
+
+## 📦 Installation
+
+Clone the repository:
+
+```bash
+cd datavit
+pip install .

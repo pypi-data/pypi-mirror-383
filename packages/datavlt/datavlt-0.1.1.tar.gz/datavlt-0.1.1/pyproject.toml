@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datavlt"
+version = "0.1.1"
+description = "Lightweight data storage and REST API with web dashboard (JSON / CSV / SQLite)"
+readme = "README.md"
+authors = [
+    { name="Unknown", email="maksalmaz15@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = []
