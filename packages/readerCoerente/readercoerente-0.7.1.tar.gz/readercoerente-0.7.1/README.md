@@ -1,0 +1,224 @@
+# Sensore Coerente Cohaerentia - lettore file TDMS
+
+Pacchetto per lettura e visualizzazione delle misure salvate da software per sensore Coerente sviluppato da Cohaerentia.
+
+## Installazione
+
+Il pacchetto è disponibile su PyPi e può essere installato tramite pip:
+
+```bash
+pip install readerCoerente
+```
+
+In alternativa, scaricare il wheel dal repository e installare tramite pip:
+
+```bash
+pip install <path_to_wheel>
+```
+
+## Utilizzo
+
+Importare pacchetto:
+
+```python
+from readerCoerente import File, multipleFiles, detrend,
+```
+
+### Caricamento dei dati
+
+#### Singolo file
+
+Si utilizza la classe `File`, specificando il percorso al file da caricare.
+
+```python
+prova = File('data/2023-07-19_15-15-20_prova0_Ph.tdms')
+print(prova)
+```
+
+Dove si è usato `print` per ottenere alcune informazioni di base sul file caricato.
+
+#### Multipli files concatenati
+
+E' possibile concatenare i dati contenuti in multipli files, se contenuti nella stessa cartella `folder` e con le stesse proprietà (per esempio, stessa frequenza di campionamento). Il pacchetto *non* verifica la continuità temporale dei dati contenuti nei files. Indicare nel parametro `filename` il path "comune" nei files. Per esempio, se i files sono:
+
+```plain
+data/2023-07-19_15-23-53_prova3_Ph.tdms
+data/2023-07-19_15-24-06_prova3_Ph.tdms
+data/2023-07-19_15-24-12_prova3_Ph.tdms
+data/2023-07-19_15-24-37_prova3_Ph.tdms
+```
+
+è sufficiente indicare `filename = 'prova3'`.
+
+```python
+provaMulti = multipleFiles(folder="data",filename="prova3")
+print(provaMulti)
+```
+
+E' possibile selezionare un intervallo temporale specifico per l'analisi, indicando i parametri `start_time_utc` e `stop_time_utc` (in formato `datetime`). Il default di `start_time_utc` è il primo istante di campionamento del primo file, mentre il default di `stop_time_utc` è l'ultimo istante di campionamento dell'ultimo file.
+
+```python
+from datetime import datetime, timedelta
+start_time = datetime(2025,9,8,10,0,0)
+stop_time = start_time + timedelta(hours=6)
+
+folder = "<folder_path>"
+prova_range = multipleFiles(folder=folder,filename="<file_common_name>.tdms",
+                            start_time_utc=start_time,stop_time_utc=stop_time)
+```
+
+Un esempio di caricamento di dati a blocchi, della durata di una settimana, partendo dal primo lunedì disponibile:
+
+```python
+from glob import glob
+from os.path import join
+from datetime import datetime, timedelta
+import numpy as np
+
+def next_weekday(date: np.datetime64, weekday: int) -> np.datetime64:
+    days_ahead = weekday - date.tolist().date().weekday()
+    if days_ahead <= 0: # Target day already happened this week
+        days_ahead += 7
+    next_weekday_datetime = datetime.combine(date.tolist().date() + timedelta(days_ahead), datetime.min.time())
+    return np.datetime64(next_weekday_datetime)
+
+folder = "<folder_path>"
+files = sorted(glob(join(folder, "<file_common_name>.tdms")))
+
+first_time_available = File(files[0]).start_time
+print("First time available:", first_time_available)
+first_actual_monday = next_weekday(first_time_available, 0)
+print("First actual monday:", first_actual_monday)
+temp = File(files[-1])
+last_time_available = temp.start_time + np.timedelta64(int(temp.n_samples / temp.freq_sampling * 1000), 'ms')
+print("Last time available:", last_time_available)
+measurement_duration = last_time_available - first_actual_monday
+print("Measurement duration (days):", measurement_duration.astype('timedelta64[D]'))
+
+days_per_plot = 7
+number_of_plots = int(np.ceil(measurement_duration.astype('timedelta64[D]') / np.timedelta64(days_per_plot, 'D')))
+print("Number of plots:", number_of_plots)
+
+time_windows: list[tuple[np.datetime64, np.datetime64]] = list()
+for plot_index in range(number_of_plots):
+    start_time = first_actual_monday + np.timedelta64(plot_index * days_per_plot, 'D')
+    end_time = min(start_time + np.timedelta64(days_per_plot, 'D'), last_time_available)
+    print(f"Plot {plot_index+1}/{number_of_plots}: from {start_time} to {end_time}")
+    dati = multipleFiles(folder=folder, filename="installazione", start_time_utc=start_time, stop_time_utc=end_time)
+```
+
+#### Lettura file .ini con parametri di normalizzazione
+
+```python
+from readerCoerente import read_config
+para = read_config("Cohaerentia3PD_003.ini")
+print(para)
+```
+
+### Metodi
+
+Per accedere al numpy array della fase, per esempio per plottarlo:
+
+```python
+import plotly.graph_objects as go
+go.Figure(layout=dict(title=prova.filename, xaxis_title='Time (s)', yaxis_title='Phase (rad)'),
+          data=[go.Scatter(x=prova.time, y=prova.phase)]).show()
+```
+
+Per convertire i radianti ad allungamento relativo misurato si può utilizzare il metodo `convertToElongation` che converte i radianti in metri. Di default viene utilizzato il coefficiente teorico per fibra in silica: rad = 9.239e6 metri. E' possibile utilizzarne uno differente attraverso il parametro opzionale `coefficient`.
+
+```python
+allungamento = prova.convert_to_elongation()
+```
+
+O, analogamente, per convertire a variazione di temperatura, utilizzare il metodo `.convert_to_temperature()` che utilizza il coefficiente di temperatura per fibra pari a 42.56 rad/°C*m ed è quindi necessario indicare anche la lunghezza del ramo dell'interferometro. Anche in questo caso è possibile utilizzare un coefficiente differente specificandolo nel parametro `coefficient`.
+
+Se presenti nel file TDMS, è possibile accedere a tutti i canali, per esempio per plottarne una parte:
+
+```python
+for ch in prova.channels_name:
+    data = getattr(prova,ch)
+```
+
+### Analisi spettrali
+
+Per calcolare la **power spectrum density**, per esempio della fase:
+
+```python
+from scipy import signal
+
+freqs, psd = signal.welch(sig, fs=prova.freq_sampling,nperseg=1024)
+
+go.Figure(layout=dict(title='PSD: power spectral density',
+                      xaxis_title='Frequency [Hz]',
+                      yaxis_title='Power', yaxis_type='log'),
+          data=[go.Scatter(x=freqs, y=psd)]).show()
+```
+
+### Detrend
+
+Per esempio, utilizzando la funzione `detrend` del pacchetto, che è un `filtfilt` passa alto.
+
+```python
+ph_detrend = detrend(prova.phase, prova.freq_sampling, highpass_cutoff_Hz=100)
+
+go.Figure(layout=dict(title=f"{prova.filename} detrended", xaxis_title='Time (s)', yaxis_title='Phase (rad)'),
+          data=[go.Scatter(x=prova.time, y=ph_detrend)]).show()
+```
+
+### Esportazione dei dati in file h5
+
+Per visualizzare i file h5 si può utilizzare Visual Studio Code con l'estensione H5Web.
+
+```python
+prova.export_to_h5('data/prova.h5')
+```
+
+### Sottocampionamento
+
+Il metodo della classe si chiama `.undersampling()` e accetta parametro opzionale chiamato `factor` il cui valore di default è pari a 100. Esiste poi parametro opzionale `what` che accetta valori `{'all', 'phase', 'channel'}` e serve per stabilire cosa viene sottocampionato.
+
+Nel caso in cui si sia interessati a non perdere per sempre quei campioni sarebbe necessario o ricaricare il file, creando di fatto un nuovo oggetto da zero, oppure si deve copiare in un nuovo oggetto prima di effettuare il sottocampionamento. La copia di oggetti non può essere effettuata con un semplice:
+
+```python
+provaunder = prova
+```
+
+ma è necessario utilizzare il pacchetto `copy`:
+
+```python
+import copy
+provaunder = copy.deepcopy(prova)
+```
+
+### Asse dei tempi assoluta
+
+Attenzione che plotly diventa particolarmente lento in questo caso; si consiglia quindi di sottocampionare i dati prima di plottarli. Utilizzando la proprietà `.absolute_time`:
+
+```python
+import copy
+under_data = copy.deepcopy(misure[0])
+under_data.undersampling(factor=50)
+go.Figure(data=go.Scatter(x=under_data.absolute_time, y=under_data.phase)).show()
+```
+
+## Compatibilità con Obspy
+
+Il pacchetto `readerCoerente` è compatibile con Obspy, in particolare con la classe `Trace`. E' possibile convertire un oggetto `File` o `multipleFiles` in un oggetto `Trace`.
+
+```python
+from obspy.core.trace import Trace,Stats
+
+dati = multipleFiles(folder=folder, filename="installazione")
+print(f"Loaded data from {dati.start_time} to {dati.start_time + timedelta(seconds=len(dati.phase)/dati.freq_sampling)}")
+
+obs_stats = Stats(header=dict(delta=1/dati.freq_sampling, starttime=dati.start_time.astype(datetime)))
+obs_trace = Trace(data=dati.phase, header=obs_stats)
+obs_trace.filter("highpass", freq=2,)
+
+fig_dayplot = obs_trace.plot(#starttime=UTCDateTime("2025-09-28T18:00:00"),
+    type='dayplot',interval=60,
+    tick_format='%d/%m %H:%M', right_vertical_labels=True,
+    title=f"{create_window_time_str(time_window[0], time_window[1])} - Detrended Phase (rad)", size=(2500,2000),
+    outfile='plot.png', dpi=200)
+```
