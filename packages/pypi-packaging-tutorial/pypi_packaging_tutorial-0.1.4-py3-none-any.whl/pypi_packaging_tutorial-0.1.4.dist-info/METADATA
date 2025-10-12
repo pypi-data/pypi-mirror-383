@@ -1,0 +1,50 @@
+Metadata-Version: 2.4
+Name: pypi-packaging-tutorial
+Version: 0.1.4
+Summary: simple python packaging tutorial
+Author-email: Your Name <you@example.com>
+License: MIT License
+        
+        Copyright (c) [year] [your name]
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: coverage>=7.6.1
+Requires-Dist: pycodestyle>=2.9.1
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=3.0; extra == "dev"
+Requires-Dist: flake8>=4.0; extra == "dev"
+Requires-Dist: black>=22.0; extra == "dev"
+Requires-Dist: mypy>=0.900; extra == "dev"
+Requires-Dist: tox>=3.24; extra == "dev"
+Dynamic: license-file
+
+![GitHub Actions Workflow Status](https://github.com/k4144/pypi_packaging_turorial/actions/workflows/tests.yml/badge.svg)
+
+![GitHub Actions Workflow Status](https://img.shields.io/endpoint?style=flat&url=https://gist.githubusercontent.com/k4144/ad3c2477fce563053e8a472d4126a137/raw&logo=pytest)
+
+
+provides a simple example to test pypi publishing and github workflows
+
+
+example usage:
+from multiply.by_three import multiply_by_three
+from divide.by_three import divide_by_three
+
+multiply_by_three(9)
+divide_by_three(21)
