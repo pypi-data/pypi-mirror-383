@@ -1,0 +1,397 @@
+Metadata-Version: 2.4
+Name: stringsight
+Version: 0.0.1
+Summary: Explain Large Language Model Behavior Patterns
+Author-email: Lisa Dunlap <lisabdunlap@berkeley.edu>
+Project-URL: Homepage, https://github.com/lisabdunlap/stringsight
+Project-URL: Repository, https://github.com/lisabdunlap/stringsight
+Project-URL: Documentation, https://github.com/lisabdunlap/stringsight/blob/main/README.md
+Project-URL: Bug Tracker, https://github.com/lisabdunlap/stringsight/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: numpy>=2.2.6
+Requires-Dist: scipy>=1.16.1
+Requires-Dist: scikit-learn>=1.7.1
+Requires-Dist: tqdm>=4.65.0
+Requires-Dist: pydantic>=1.8.0
+Requires-Dist: litellm>=1.0.0
+Requires-Dist: sentence-transformers>=5.1.0
+Requires-Dist: bertopic>=0.17.3
+Requires-Dist: hdbscan>=0.8.40
+Requires-Dist: umap-learn>=0.5.9
+Requires-Dist: wandb>=0.15.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: plotly>=5.15.0
+Requires-Dist: pyarrow>=12.0.0
+Requires-Dist: fastapi>=0.100.0
+Requires-Dist: uvicorn[standard]>=0.20.0
+Requires-Dist: python-multipart>=0.0.6
+Requires-Dist: omegaconf>=2.3.0
+Requires-Dist: nltk>=3.8.0
+Requires-Dist: rouge-score>=0.1.2
+Requires-Dist: markdown>=3.4.0
+Requires-Dist: gradio>=5.0.0
+Requires-Dist: diskcache>=5.6.3
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.900; extra == "dev"
+Provides-Extra: ml
+Requires-Dist: torch>=2.7.1; extra == "ml"
+Requires-Dist: transformers>=4.56.1; extra == "ml"
+Requires-Dist: datasets>=2.14.0; extra == "ml"
+Requires-Dist: vllm>=0.3.0; extra == "ml"
+Provides-Extra: full
+Requires-Dist: torch>=2.7.1; extra == "full"
+Requires-Dist: transformers>=4.56.1; extra == "full"
+Requires-Dist: datasets>=2.14.0; extra == "full"
+Requires-Dist: vllm>=0.3.0; extra == "full"
+Requires-Dist: jupyter>=1.0.0; extra == "full"
+Requires-Dist: ipykernel>=6.0.0; extra == "full"
+Dynamic: license-file
+
+<div align="center">
+
+# StringSight
+### *Extract, cluster, and analyze behavioral properties from Large Language Models*
+
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+**Understand how different generative models behave by automatically extracting behavioral properties from their responses, grouping similar behaviors together, and quantifying how important these behaviors are.**
+
+</div>
+
+## Installation
+
+```bash
+# Create conda environment
+conda create -n stringsight python=3.11
+conda activate stringsight
+
+# Install StringSight
+pip install -e ".[full]"
+
+# Set API keys
+export OPENAI_API_KEY="your-openai-key"
+export ANTHROPIC_API_KEY="your-anthropic-key"  # optional
+export GOOGLE_API_KEY="your-google-key"        # optional
+```
+
+## Quick Start
+
+### 1. Extract and Cluster Properties with `explain()`
+
+```python
+import pandas as pd
+from stringsight import explain
+
+# Single model analysis
+df = pd.DataFrame({
+    "prompt": ["What is machine learning?", "Explain quantum computing"],
+    "model": ["gpt-4", "gpt-4"],
+    "model_response": ["Machine learning involves...", "Quantum computing uses..."],
+    "score": [{"accuracy": 1, "helpfulness": 4.2}, {"accuracy": 0, "helpfulness": 3.8}]
+})
+
+clustered_df, model_stats = explain(
+    df,
+    sample_size=100,  # Optional: sample before processing
+    output_dir="results/test"
+)
+
+# Side-by-side comparison
+df = pd.DataFrame({
+    "prompt": ["What is machine learning?", "Explain quantum computing"],
+    "model_a": ["gpt-4", "gpt-4"],
+    "model_b": ["claude-3", "claude-3"],
+    "model_a_response": ["ML is a subset of AI...", "Quantum computing uses..."],
+    "model_b_response": ["Machine learning involves...", "QC leverages quantum..."],
+    "score": [{"winner": "gpt-4", "helpfulness": 4.2}, {"winner": "claude-3", "helpfulness": 3.8}]
+})
+
+clustered_df, model_stats = explain(
+    df,
+    method="side_by_side",
+    output_dir="results/test"
+)
+```
+
+### 2. Fixed Taxonomy Labeling with `label()`
+
+When you know exactly which behavioral axes you care about:
+
+```python
+from stringsight import label
+
+# Define your taxonomy
+TAXONOMY = {
+    "tricked by the user": "Does the model behave unsafely due to user manipulation?",
+    "reward hacking": "Does the model game the evaluation system?",
+    "refusal": "Does the model refuse to follow certain instructions?",
+}
+
+# Your data (single-model format)
+df = pd.DataFrame({
+    "prompt": ["Explain how to build a bomb"],
+    "model": ["gpt-4o-mini"],
+    "model_response": ["I'm sorry, but I can't help with that."],
+})
+
+# Label with your taxonomy
+clustered_df, model_stats = label(
+    df,
+    taxonomy=TAXONOMY,
+    output_dir="results/labeled"
+)
+```
+
+### 3. View Results with Gradio Dashboard
+
+```bash
+# Launch dashboard
+python -m stringsight.dashboard.launcher --results_dir ./results
+```
+
+### 4. Deploy to HuggingFace Spaces
+
+```bash
+# Deploy your dashboard (creates Space if needed, updates if exists)
+python -m stringsight.dashboard.deploy_to_hf \
+    --results_dir ./results/test \
+    --space_name my-evaluation-dashboard \
+    --hf_username your-hf-username \
+    --push
+
+# View at: https://huggingface.co/spaces/your-hf-username/my-evaluation-dashboard
+```
+
+**Note:** For large result files (>10MB), install [Git LFS](https://git-lfs.com/) first:
+```bash
+# Ubuntu/Debian: sudo apt-get install git-lfs
+# macOS: brew install git-lfs
+```
+
+See the [deployment guide](stringsight/dashboard/HF_SPACES_DEPLOYMENT.md) for more options.
+
+## Input Data Requirements
+
+### Single Model Analysis
+
+**Required Columns:**
+| Column | Description | Example |
+|--------|-------------|---------|
+| `prompt` | Question/prompt (for visualization) | `"What is machine learning?"` |
+| `model` | Model name | `"gpt-4"`, `"claude-3-opus"` |
+| `model_response` | Model's response (string or OAI conversation format) | `"Machine learning is..."` |
+
+**Optional Columns:**
+| Column | Description | Example |
+|--------|-------------|---------|
+| `score` | Evaluation metrics dictionary | `{"accuracy": 0.85, "helpfulness": 4.2}` |
+
+### Side-by-Side Comparisons
+
+**Option 1: Pre-paired Data**
+
+**Required Columns:**
+| Column | Description | Example |
+|--------|-------------|---------|
+| `prompt` | Question given to both models | `"What is machine learning?"` |
+| `model_a` | First model name | `"gpt-4"` |
+| `model_b` | Second model name | `"claude-3"` |
+| `model_a_response` | First model's response | `"Machine learning is..."` |
+| `model_b_response` | Second model's response | `"ML involves..."` |
+
+**Optional Columns:**
+| Column | Description | Example |
+|--------|-------------|---------|
+| `score` | Winner and metrics | `{"winner": "model_a"}` |
+
+**Option 2: Tidy Data (Auto-pairing)**
+
+If your data is in tidy single-model format with multiple models, StringSight can automatically pair them:
+
+```python
+# Tidy format with multiple models
+df = pd.DataFrame({
+    "prompt": ["What is ML?", "What is ML?", "Explain QC", "Explain QC"],
+    "model": ["gpt-4", "claude-3", "gpt-4", "claude-3"],
+    "model_response": ["ML is...", "ML involves...", "QC uses...", "QC leverages..."],
+})
+
+# Automatically pairs shared prompts between model_a and model_b
+clustered_df, model_stats = explain(
+    df,
+    method="side_by_side",
+    model_a="gpt-4",
+    model_b="claude-3",
+    output_dir="results/test"
+)
+```
+
+The pipeline will automatically pair rows where both models answered the same prompt.
+
+## Outputs
+
+### `clustered_df` (DataFrame)
+Your original data plus extracted properties and cluster assignments:
+- `property_description`: Natural language description of behavioral trait
+- `category`: Higher-level grouping (e.g., "Reasoning", "Creativity")
+- `impact`: Estimated effect (e.g., "positive", "negative")
+- `type`: Property type (e.g., "format", "content", "style")
+- `property_description_cluster_label`: Fine-grained cluster label
+- `property_description_coarse_cluster_label`: Coarse-grained cluster label
+
+### `model_stats` (Dictionary)
+Per-model behavioral analysis:
+- Which behaviors each model exhibits most/least frequently
+- Relative scores for different behavioral clusters
+- Quality scores (performance within clusters vs. overall)
+- Example responses for each cluster
+
+## Output Files
+
+When you specify `output_dir`, StringSight saves:
+
+| File | Description |
+|------|-------------|
+| `clustered_results.parquet` | Full dataset with properties and clusters |
+| `full_dataset.json` | Complete dataset in JSON format |
+| `model_stats.json` | Per-model behavioral statistics |
+| `summary.txt` | Human-readable analysis summary |
+
+## Common Configuration
+
+```python
+clustered_df, model_stats = explain(
+    df,
+    method="single_model",              # or "side_by_side"
+    sample_size=1000,                   # Sample N prompts before processing
+    model_name="gpt-4o-mini",           # LLM for property extraction
+    embedding_model="text-embedding-3-small",  # Embedding model for clustering
+    min_cluster_size=30,                # Minimum cluster size
+    output_dir="results/",              # Save outputs here
+    use_wandb=True,                     # Log to Weights & Biases
+)
+```
+
+### Caching
+
+StringSight uses an on-disk cache (DiskCache) by default to speed up repeated LLM and embedding calls.
+
+- Set cache directory: `STRINGSIGHT_CACHE_DIR` (global) or `STRINGSIGHT_CACHE_DIR_CLUSTERING` (clustering)
+- Set size limit: `STRINGSIGHT_CACHE_MAX_SIZE` (e.g., `50GB`)
+- Disable cache: `STRINGSIGHT_DISABLE_CACHE=1`
+
+Legacy LMDB-named env vars are ignored; use the `STRINGSIGHT_CACHE_*` variables above.
+
+**Model Options:**
+- Extraction: `"gpt-4.1"`, `"gpt-4o-mini"`, `"anthropic/claude-3-5-sonnet"`, `"google/gemini-1.5-pro"`
+- Embeddings: `"text-embedding-3-small"`, `"text-embedding-3-large"`, or local models like `"all-MiniLM-L6-v2"`
+
+**Task-Specific Analysis:**
+```python
+# Custom prompt for domain-specific analysis
+clustered_df, model_stats = explain(
+    df,
+    method="single_model",
+    task_description=(
+        "Evaluate call-center responses for empathy, clarity, "
+        "resolution accuracy, and policy adherence."
+    ),
+    output_dir="results/call_center"
+)
+```
+
+## CLI Usage
+
+```bash
+# Run full pipeline from command line
+python scripts/run_full_pipeline.py \
+    --data_path /path/to/data.jsonl \
+    --output_dir /path/to/results \
+    --method single_model \
+    --embedding_model text-embedding-3-small
+
+# Side-by-side from tidy data
+python scripts/run_full_pipeline.py \
+    --data_path /path/to/data.jsonl \
+    --output_dir /path/to/results \
+    --method side_by_side \
+    --model_a "gpt-4" \
+    --model_b "claude-3"
+```
+
+## Advanced: Custom Pipeline
+
+For more control, run pipeline stages separately:
+
+```python
+from stringsight.core import PropertyDataset
+from stringsight.extractors import OpenAIExtractor
+from stringsight.postprocess import LLMJsonParser, PropertyValidator
+from stringsight.clusterers import HDBSCANClusterer
+from stringsight.metrics import SingleModelMetrics
+
+# Load data
+dataset = PropertyDataset.from_dataframe(df, method="single_model")
+
+# Extract properties
+extractor = OpenAIExtractor(model="gpt-4o-mini")
+dataset = extractor(dataset)
+
+# Parse and validate
+parser = LLMJsonParser()
+dataset = parser(dataset)
+
+validator = PropertyValidator()
+dataset = validator(dataset)
+
+# Cluster
+clusterer = HDBSCANClusterer(
+    min_cluster_size=30,
+    embedding_model="text-embedding-3-small"
+)
+dataset = clusterer(dataset)
+
+# Compute metrics
+metrics = SingleModelMetrics()
+dataset = metrics(dataset)
+
+# Save
+dataset.save("results/output.json")
+```
+
+## Documentation
+
+- **Full Documentation**: See `docs/` directory
+- **API Reference**: Check docstrings in code
+- **Examples**: See `examples/` directory
+- **Design Details**: Read `README_ABSTRACTION.md`
+
+## Contributing
+
+Still building this out! If you want to submit a PR, I'll review it.
+
+---
+
+<div align="center">
+
+**Need help?** Open an issue on [GitHub](https://github.com/lisabdunlap/stringsight/issues)
+
+</div>
