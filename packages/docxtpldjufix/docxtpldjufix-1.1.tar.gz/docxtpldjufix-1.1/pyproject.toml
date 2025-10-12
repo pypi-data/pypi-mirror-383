@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docxtpldjufix"
+version = "1.1"
+requires-python = ">=3.10"
+
+description = "Fixed through properties docxtpl library, no more deprecated pkg_resources"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: Microsoft :: Windows",
+]
+
+keywords = ["jinja2"]
+dependencies = [
+    "python-docx",
+    "jinja2",
+    "lxml",
+]
+
+[project.optional-dependencies]
+subdoc = ["docxcompose"]
+docs = ["Sphinx", "sphinxcontrib-napoleon"]
+
+[dependency-groups]
+dev = [
+    "mypy >=1.18.2; python_version >= '3.9'",
+    "lxml-stubs >=0.5.1; python_version >= '3.9'",
+    "flake8 >=7.3.0; python_version >= '3.9'"
+]
+
+[project.urls]
+homepage = "https://github.com/elapouya/python-docx-template"
+repository = "https://github.com/elapouya/python-docx-template.git"
+document = "https://docxtpl.readthedocs.org"

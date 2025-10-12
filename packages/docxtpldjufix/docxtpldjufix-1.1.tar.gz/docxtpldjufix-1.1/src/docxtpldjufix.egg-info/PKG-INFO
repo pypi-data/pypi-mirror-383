@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: docxtpldjufix
+Version: 1.1
+Summary: Fixed through properties docxtpl library, no more deprecated pkg_resources
+Project-URL: homepage, https://github.com/elapouya/python-docx-template
+Project-URL: repository, https://github.com/elapouya/python-docx-template.git
+Project-URL: document, https://docxtpl.readthedocs.org
+Keywords: jinja2
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Microsoft :: Windows
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: python-docx
+Requires-Dist: jinja2
+Requires-Dist: lxml
+Provides-Extra: subdoc
+Requires-Dist: docxcompose; extra == "subdoc"
+Provides-Extra: docs
+Requires-Dist: Sphinx; extra == "docs"
+Requires-Dist: sphinxcontrib-napoleon; extra == "docs"
+Dynamic: license-file
+
+ATTENTION!
+This library was not created by me! The original author is:
+authors = [{name="Eric Lapouyade", email="elapouya@proton.me"}]
+
+Here are the links to his stuff:
+homepage = "https://github.com/elapouya/python-docx-template"
+repository = "https://github.com/elapouya/python-docx-template.git"
+document = "https://docxtpl.readthedocs.org"
+
+Also the workaround the deprecation issue cased pkg_resources was not invented by me either.
+I found it on github (https://github.com/dlt-hub/dlt/pull/2707) and I believe I discovered it from the user: djudjuu
+
+All of the credit goes to the people mentioned above.
