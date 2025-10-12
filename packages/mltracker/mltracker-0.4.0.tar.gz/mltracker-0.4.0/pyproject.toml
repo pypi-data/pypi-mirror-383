@@ -1,0 +1,36 @@
+[project]
+name = "mltracker"
+version = "0.4.0"
+description = "Track machine learning experiments."
+authors = [
+    {name = "entropy-flux",email = "eric.hermosis@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12, <4.0"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^8.4.2"
+
+
+[tool.poetry.group.tinydb.dependencies]
+tinydb = "^4.8.2"
+
+
+[tool.poetry.group.adapters.dependencies]
+attrs = "^25.3.0"
+cattrs = "^25.2.0"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.21"
+mkdocstrings = {extras = ["python"], version = "^0.30.1"}
+
