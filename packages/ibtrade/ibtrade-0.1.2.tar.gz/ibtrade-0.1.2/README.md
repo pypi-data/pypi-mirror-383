@@ -1,0 +1,80 @@
+# Data Collection and Strategy Development Tools
+The ibtrade Python package provides a set of classes that support
+ * Requesting and retrieving real-time and historical market data
+ * Developing trading strategies
+ * Back testing trading strategies
+ * Deploying trading strategies
+
+## Package Dependencies
+ * [ibapi](https://test.pypi.org/project/ibapi/)
+ * [psycopg2](https://pypi.org/project/psycopg2)
+ * [evtdis](https://test.pypi.org/project/evtdis/)
+
+## Build
+### Tool Dependencies
+#### pipx
+``` bash
+ sudo apt update
+ sudo apt install pipx
+```
+#### Hatch
+``` bash
+pipx install hatch
+```
+### Build Command Sequence
+First create a hatch environment.
+``` bash
+hatch env create
+hatch shell
+```
+Run the build, test, lint and coverage.
+``` bash
+hatch build
+hatch run dev:test
+hatch run dev:lint
+hatch run dev:cov
+```
+
+## Publish
+``` bash
+ pipx run twine upload --repository testpypi dist/* 
+```
+
+### PYPI RC File
+The format of PYPI "run commands" (rc) file (~/.pypirc) is:
+```
+[distutils]
+index-servers =
+    pypi
+    testpypi
+
+[pypi]
+repository = https://upload.pypi.org/legacy/
+username = __token__
+password = pypi-<TOKEN>
+
+[testpypi]
+repository = https://test.pypi.org/legacy/
+username = __token__
+password = pypi-<TOKEN>
+```
+Replace `pypi-<TOKEN>` with a token generated in the Account Settings section of the respective pipy site.
+
+<!--
+```bash
+ python -m twine check dist/*
+ python -m twine upload --repository testpypi dist/*
+```
+-->
+
+```bash
+hatch run dev:pip index versions evtdis -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple
+hatch run dev:pip index versions ibapi -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple
+hatch run dev:pip index versions psycopg2 -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple
+
+hatch run dev:pip install evtdis==0.1.4 -i https://test.pypi.org/simple
+hatch run dev:pip install ibapi==10.40.1 -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple
+
+```
+
+
