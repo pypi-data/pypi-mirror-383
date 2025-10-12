@@ -1,0 +1,99 @@
+# pytest-smart-rerun
+
+[![PyPI](https://img.shields.io/pypi/v/pytest-smart-rerun.svg)](https://pypi.org/project/pytest-smart-rerun/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+`pytest-smart-rerun` is a lightweight Pytest plugin that retries flaky tests with configurable attempts and delays. It integrates directly with Pytest's hook system, requires no external dependencies, and works out of the box from the command line or via per-test decorators.
+
+## Installation
+
+```bash
+pip install pytest-smart-rerun
+```
+
+For local development:
+
+```bash
+git clone https://github.com/AkhileshKr/pytest-smart-rerun.git
+cd pytest-smart-rerun
+pip install -e .
+```
+
+## Quick start
+
+Retry all failing tests up to three times with a one second delay:
+
+```bash
+pytest --smart-rerun --smart-rerun-max=3 --smart-rerun-delay=1
+```
+
+Use the `smart_rerun` marker to target specific flaky tests:
+
+```python
+import pytest
+
+
+@pytest.mark.smart_rerun(max=4, delay=0.5)
+def test_eventually_consistent_service(client):
+    response = client.read_state()
+    assert response.status_code == 200
+```
+
+Combine both for a default retry policy with test-level overrides.
+
+## CLI options
+
+- `--smart-rerun`: enable smart reruns for the test session.
+- `--smart-rerun-max=N`: set the total number of attempts per test (default: 2).
+- `--smart-rerun-delay=SECONDS`: add a delay between retries (default: 0).
+
+Invalid values raise a Pytest `UsageError`, keeping failure feedback obvious.
+
+## Features
+
+- Intelligent reruns driven purely by Pytest hooks—no external dependencies.
+- Automatic attempt logging with rerun-aware reporting in the terminal.
+- Per-test overrides through `@pytest.mark.smart_rerun(max=..., delay=...)`.
+- Works alongside existing Pytest plugins and respects fixture/state isolation.
+
+## Roadmap
+
+1. Exponential and linear backoff strategies (`--smart-rerun-backoff`).
+2. Retry filtering by exception classes (`--smart-rerun-errors`).
+3. Structured JSON retry reports (`--smart-rerun-report`).
+4. Global configuration via `pytest.ini` defaults.
+5. CI-friendly colour output and aggregate analytics summaries.
+
+## Phase 3: AI Extension Proposal
+
+The long-term vision is to evolve `pytest-smart-rerun` into an AI-assisted resilience toolkit by adopting the Model Context Protocol (MCP). This optional extension would unlock:
+
+- **AI-powered failure analysis:** Forward stack traces, captured logs, and environment metadata to an MCP endpoint so an LLM can classify failures (e.g. deterministic bug vs flaky network) and suggest next actions.
+- **Natural-language retry policies:** Allow developers to express strategies like “rerun timeout or network errors up to three times” and have the MCP agent translate that instruction into structured plugin configuration.
+- **Smart pattern detection:** Correlate persistent failures across CI dimensions and have the MCP model generate summaries plus recommended fixes, written straight into a JSON report for future sessions.
+- **Contextual debugging hints:** When repeated retries still fail, attach LLM-suggested remediation steps or related repo references to the terminal summary and persisted `smart_rerun_ai_report.json`.
+
+In practice this phase would add an `--smart-rerun-ai` flag (and matching `pytest.ini` toggle), an MCP client wrapper, asynchronous request handling, optional local caching, and redaction safeguards for sensitive data. The design keeps outbound calls disabled by default, supports on-prem MCP deployments, and positions the project as an AI-native testing showcase for future releases.
+
+## Development
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -U pip setuptools wheel
+pip install -e .[test]
+pytest -v
+pytest --smart-rerun --smart-rerun-max=3 --smart-rerun-delay=1 -v
+```
+
+## Release workflow
+
+1. `python -m build`
+2. `python -m twine check dist/*`
+3. `python -m twine upload dist/*`
+
+Refer to [Publishing to PyPI](https://packaging.python.org/tutorials/packaging-projects/) for account setup and API tokens.
+
+## License
+
+MIT © 2025 Akilesh KR. See [LICENSE](LICENSE) for full text.
