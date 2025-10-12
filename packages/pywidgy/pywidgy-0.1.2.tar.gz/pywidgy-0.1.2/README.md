@@ -1,0 +1,57 @@
+# pywidgy
+A lightweight, composable widget framework for Python terminal apps.
+
+![Example image](docs/demo.gif)
+
+## Install
+```bash
+pip install pywidgy
+```
+
+## Quickstart
+Here is a simple example to create a dialog for with checkboxes. For more examples see `examples/` directory.
+```python
+#!/usr/bin/env python3
+import sys
+
+import pywidgy
+from pywidgy import Checkboxes
+
+def main() -> int:
+    pywidgy.init()
+
+    widget=Checkboxes(
+        title="Select your xepa:",
+        options=["apa", "bepa", "cepa", "depa", "eepa", "fepa"],
+        size=(80, 100),
+        exit_cb=pywidgy.close,
+    )
+    pywidgy.spawn(widget)
+    pywidgy.run()
+    selected=widget.selected
+    print(f"You selected {selected}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+```
+
+## Development
+Using nix it is very easy to start developing. Just do
+```
+nix develop
+```
+to get the development environment up and running. From within the development environment you can run use `tox` build targets to run linter, formatter, mypy, etc.
+To run all statical code analysis, run
+```
+tox -e lint
+```
+and to format the code, run
+```
+tox -e format
+```
+
+## Contributing
+Contributions, reporting issues and feature requests are welcome!
+
