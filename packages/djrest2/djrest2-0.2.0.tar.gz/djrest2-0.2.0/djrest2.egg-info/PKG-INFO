@@ -1,0 +1,296 @@
+Metadata-Version: 2.4
+Name: djrest2
+Version: 0.2.0
+Summary: A small and simple REST library for Django based on class-based views
+Author-email: Emma Delescolle <emma@levit.be>
+License: MIT
+Project-URL: Homepage, https://gitlab.levitnet.be/levit/djrest
+Project-URL: Repository, https://gitlab.levitnet.be/levit/djrest.git
+Project-URL: Documentation, https://emma.has-a.blog/articles/why-do-we-need-an-external-app-for-rest.html
+Keywords: django,rest,api,class-based-views
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.0
+Classifier: Framework :: Django :: 5.1
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Django>=4.2
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-django; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: nox; extra == "dev"
+Requires-Dist: factory-boy; extra == "dev"
+Requires-Dist: django-classy-doc; extra == "dev"
+Requires-Dist: uv; extra == "dev"
+Dynamic: license-file
+
+# djrest2
+
+A small and simple REST library for Django based on class-based views.
+
+djrest2 provides a lightweight alternative to Django REST Framework for simple REST API needs. It's built on Django's existing class-based views and provides automatic JSON serialization, request parsing, and proper HTTP status codes out of the box.
+
+## Installation
+
+### From PyPI
+
+```bash
+pip install djrest2
+```
+
+### From Git Repository
+
+```bash
+pip install git+https://gitlab.levitnet.be/levit/djrest.git
+```
+
+### Development Setup
+
+This project uses [uv](https://github.com/astral-sh/uv) for dependency management:
+
+```bash
+# Clone the repository
+git clone https://gitlab.levitnet.be/levit/djrest.git
+cd djrest
+
+# Create virtual environment and install dependencies
+uv sync --dev
+
+# Run the sample application
+cd sample
+python manage.py migrate
+python manage.py runserver
+```
+
+## Quick Start Guide
+
+### 1. Create API Views
+
+```python
+from django.db import models
+from djrest import ListCreateView, UpdateDeleteView
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+class CategoryListCreateView(ListCreateView):
+    model = Category
+    fields = ('name',)
+
+class CategoryUpdateDeleteView(UpdateDeleteView):
+    model = Category
+    fields = ('name',)
+```
+
+### 2. Configure URLs
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('api/categories/', views.CategoryListCreateView.as_view()),
+    path('api/categories/<int:pk>/', views.CategoryUpdateDeleteView.as_view()),
+]
+```
+
+### 3. Use the API
+
+```bash
+# List categories
+curl http://localhost:8000/api/categories/
+
+# Create a category
+curl -X POST http://localhost:8000/api/categories/ \
+     -H "Content-Type: application/json" \
+     -d '{"name": "Electronics"}'
+
+# Update a category
+curl -X PUT http://localhost:8000/api/categories/1/ \
+     -H "Content-Type: application/json" \
+     -d '{"name": "Updated Electronics"}'
+
+# Delete a category
+curl -X DELETE http://localhost:8000/api/categories/1/
+```
+
+## API Reference
+
+For comprehensive API documentation, generate the docs using django-classy-doc:
+
+```bash
+python sample/manage.py classify -o docs/api/$(python -c "from djrest.__version__ import __version__; print(__version__)")/
+```
+
+### Core Classes
+
+- **`JsonResponse`**: Extended Django JsonResponse that handles empty data for 204 status codes
+- **`RestViewMixin`**: Base mixin providing JSON serialization, request parsing, and form handling
+- **`ListCreateView`**: Combines Django's BaseListView and BaseCreateView for collection endpoints
+- **`UpdateDeleteView`**: Extends BaseUpdateView with PUT/DELETE support for individual resources
+
+## Advanced Usage
+
+### Pagination
+
+djrest2 supports pagination through Django's built-in pagination. When you add `paginate_by` to your view, the response will include pagination metadata:
+
+```python
+class CategoryListCreateView(ListCreateView):
+    model = Category
+    fields = ('name',)
+    paginate_by = 10  # Enable pagination with 10 items per page
+```
+
+Response format with pagination:
+```json
+{
+    "results": [
+        {"pk": 1, "name": "Electronics"},
+        {"pk": 2, "name": "Books"}
+    ],
+    "pagination": {
+        "count": 25,
+        "page": 1,
+        "num_pages": 3
+    }
+}
+```
+
+Without pagination, only the `results` array is returned:
+```json
+{
+    "results": [
+        {"pk": 1, "name": "Electronics"},
+        {"pk": 2, "name": "Books"}
+    ]
+}
+```
+
+You can customize the pagination metadata by overriding `get_pagination_metadata()`:
+
+```python
+class CustomPaginatedView(ListCreateView):
+    model = Product
+    fields = ('name', 'price')
+    paginate_by = 20
+
+    def get_pagination_metadata(self, context):
+        metadata = super().get_pagination_metadata(context)
+        if metadata:
+            # Add custom fields to pagination metadata
+            metadata['page_size'] = self.paginate_by
+        return metadata
+```
+
+### Custom Serialization
+
+```python
+class ProductListCreateView(ListCreateView):
+    model = Product
+    fields = ('name', 'price', 'category')
+
+    def serialize_one(self, obj):
+        data = super().serialize_one(obj)
+        data['category_name'] = obj.category.name
+        return data
+```
+
+### Error Handling
+
+```python
+class CustomAPIView(ListCreateView):
+    model = MyModel
+    fields = ('field1', 'field2')
+
+    def handle_json_error(self, error):
+        # Custom JSON error handling
+        return self.response_class(
+            {'custom_error': str(error)},
+            status=400
+        )
+```
+
+### Authentication Integration
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class ProtectedCategoryView(LoginRequiredMixin, ListCreateView):
+    model = Category
+    fields = ('name',)
+```
+
+## Configuration
+
+Add these optional settings to your Django settings:
+
+```python
+# Maximum JSON request body size (default: 10MB)
+DJREST_MAX_JSON_SIZE = 10 * 1024 * 1024
+```
+
+## Testing
+
+Run tests using nox to test across multiple Python and Django versions:
+
+```bash
+# Run all tests
+nox
+
+# Run tests for specific Python/Django combination
+nox -s "test-3.12(django='5.1')"
+
+# Run linting
+nox -s lint
+
+# Generate documentation
+nox -s docs
+```
+
+Or run tests directly:
+
+```bash
+cd sample
+python manage.py test shop.tests
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature-name`)
+3. Make your changes
+4. Run tests (`nox`)
+5. Commit your changes (`git commit -am 'Add feature'`)
+6. Push to the branch (`git push origin feature-name`)
+7. Create a Pull Request
+
+### Development Tools
+
+This project uses:
+- [ruff](https://github.com/astral-sh/ruff) for linting and formatting
+- [nox](https://nox.thea.codes/) for testing across environments
+- [pre-commit](https://pre-commit.com/) for git hooks
+- [pytest](https://pytest.org/) for testing
+- [factory-boy](https://factoryboy.readthedocs.io/) for test data generation
+
+## Design Philosophy
+
+dj-rest is designed to be minimal yet powerful. Read more about the motivation and design principles in Emma's blog post: [Why do we need an external app for REST?](https://emma.has-a.blog/articles/why-do-we-need-an-external-app-for-rest.html)
+
+## License
+
+MIT License - see LICENSE file for details.

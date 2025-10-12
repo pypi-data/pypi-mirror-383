@@ -1,0 +1,11 @@
+Django>=4.2
+
+[dev]
+pytest
+pytest-django
+pytest-cov
+ruff
+nox
+factory-boy
+django-classy-doc
+uv
