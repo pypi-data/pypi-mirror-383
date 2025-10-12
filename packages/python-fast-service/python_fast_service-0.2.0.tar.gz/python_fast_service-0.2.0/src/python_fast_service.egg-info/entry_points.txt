@@ -1,0 +1,3 @@
+[console_scripts]
+abt = ab.client.cli:cli
+pfs = ab.apps.gunicorn:run
