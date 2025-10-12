@@ -1,0 +1,107 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linear-ticket-cli"
+version = "1.0.0"
+description = "A comprehensive command-line tool for managing Linear tickets with AI-agent friendly interfaces"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Davide Vittori", email = "me@vittoridavid.com"}
+]
+maintainers = [
+    {name = "Davide Vittori", email = "me@vittoridavid.com"}
+]
+keywords = [
+    "linear",
+    "cli",
+    "ticket-management",
+    "project-management",
+    "ai-agent",
+    "automation",
+    "graphql",
+    "productivity"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+    "Environment :: Console"
+]
+requires-python = ">=3.7"
+dependencies = [
+    "requests>=2.31.0",
+    "fuzzywuzzy>=0.18.0",
+    "python-levenshtein>=0.21.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/vittoridavide/linear-cli"
+Repository = "https://github.com/vittoridavide/linear-cli"
+Issues = "https://github.com/vittoridavide/linear-cli/issues"
+Documentation = "https://github.com/vittoridavide/linear-cli#readme"
+
+[project.scripts]
+linear = "linear_search:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy"
+]
+
+[tool.setuptools]
+py-modules = ["linear_search", "linear_client", "ticket_search"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["linear*"]
+exclude = ["tests*", "venv*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | venv
+)/
+'''
+
+[tool.mypy]
+python_version = "3.7"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

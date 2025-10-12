@@ -1,0 +1,23 @@
+# Include the README and other documentation files
+include README.md
+include LICENSE
+include CONTRIBUTING.md
+include SECURITY.md
+include .env.example
+
+# Include the requirements file
+include requirements.txt
+
+# Include examples directory
+recursive-include examples *.md
+
+# Include any shell scripts
+include setup_alias.sh
+include dev-setup.sh
+
+# Exclude unnecessary files
+exclude .gitignore
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude venv *
+recursive-exclude .git *
