@@ -1,0 +1,38 @@
+Metadata-Version: 2.4
+Name: expression-parser
+Version: 0.0.6
+Summary: Sandboxed expression parser
+Home-page: https://github.com/lhelwerd/expression-parser
+Author: Leon Helwerda
+Author-email: l.s.helwerda@liacs.leidenuniv.nl
+License: Apache License, Version 2.0
+Keywords: expression,parser,sandbox
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Software Development :: Interpreters
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: summary
+
+Python sandboxed expression parser.
+This parser can calculate the results of a single simple expression,
+disallowing any complicated functions or control structures, with support for
+custom variable and function environment contexts.
