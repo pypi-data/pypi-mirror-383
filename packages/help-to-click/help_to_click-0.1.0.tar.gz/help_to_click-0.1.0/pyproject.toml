@@ -1,0 +1,38 @@
+[project]
+name = "help-to-click"
+version = "0.1.0"
+description = "Parse CLI help text and generate Click commands, plain Python functions, or standalone CLI files"
+readme = "README.md"
+authors = [
+    { name = "ZackaryW", email = "36378555+ZackaryW@users.noreply.github.com" }
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+dependencies = [
+    "click>=8.0.0",
+]
+keywords = ["cli", "click", "parser", "code-generation", "command-line"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: System :: Systems Administration",
+]
+
+[project.urls]
+Homepage = "https://github.com/ZackaryW/help_to_click"
+Repository = "https://github.com/ZackaryW/help_to_click"
+Issues = "https://github.com/ZackaryW/help_to_click/issues"
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
