@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-contact-us-tools"
+version = "0.1.3"
+dependencies = [
+    "django>=5.1"
+]
+description = "A Django app to handle un-authenticated user enquiries."
+readme = "README.rst"
+requires-python = ">= 3.10"
+authors = [
+    {name = "Egide Ndazimana", email = "egide.n1997@gmail.com"},
+]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 5.1",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Repository = "https://github.com/egiden/django-contact-us-tools.git"
