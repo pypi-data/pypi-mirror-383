@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: easymoe
+Version: 0.1.0
+Summary: easymoe v1.0.0
+Author: Author
+Author-email: sangyoon <oogleg600@gmail.com>
+License: MIT
+Project-URL: Homepage, https://pypi.org/project/easymoe/
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# My Package
+간단히 `train()` 함수로 학습을 시작할 수 있는 PyPI 패키지입니다.
+
+## 사용 방법
+```bash
+pip install my-package
+```
+```python
+import my_package
+my_package.train()
+```
+
+## 라이선스
+MIT License
