@@ -1,0 +1,11 @@
+[project]
+name = "l0n0l2fa"
+version = "1.0.1"
+description = "TOTP 2FA"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = ['aiohttp', 'pyotp', 'qrcode']
+# 主页、源码、文档等链接
+urls = {Homepage = "https://gitee.com/l00n00l/l0n0l2fa"}
+[project.scripts]
+l0n0l2fa = "main:main"
