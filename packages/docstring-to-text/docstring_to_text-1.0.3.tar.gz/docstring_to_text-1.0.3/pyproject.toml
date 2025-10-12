@@ -1,0 +1,74 @@
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "docstring-to-text"
+dynamic = ["version"]
+# version = "0.0.1" # used dynamically, see tool.hatch.version
+description = "A simple pip package converting docstrings into clean text (proper paragraphs and indents)"
+authors = [
+	{ name="Lex Darlog (Lex-DRL)" },
+]
+readme = "README.md"
+# https://packaging.python.org/en/latest/specifications/core-metadata/#license-expression
+# https://spdx.org/licenses/
+license = "MPL-2.0"
+license-files = ["LICEN[CS]E*"]
+requires-python = ">=3.7"
+classifiers = [
+	"Programming Language :: Python :: 3",
+	"Operating System :: OS Independent",
+	"License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/Lex-DRL/Py-docstring-to-text"
+Issues = "https://github.com/Lex-DRL/Py-docstring-to-text/issues"
+
+[project.optional-dependencies]
+# For: pip install .[test]
+test = [
+	"pytest",
+	"pytest-cov",
+]
+
+[tool.hatch.version]
+path = "src/docstring_to_text/___package_meta.py"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]  # Don't scan for tests anywhere else; speeds up test collection
+addopts = [
+	"--import-mode=importlib",  # Recommended for new projects to avoid sys.path manipulation issues
+	"-ra",  # Show summary of all test outcomes
+	"--ignore=tests/data/",  # Excludes this exact path from discovery
+	"--cov=docstring_to_text",  # Measure the package coverage
+	"--cov-report=term-missing",  # Show missing lines in terminal
+	"--cov-fail-under=0",  # Never fail tests due to low coverage
+]
+
+[tool.coverage.run]
+source = ["src/docstring_to_text"]
+omit = [
+	"*/tests/*",
+	"*/test_*",
+	"*/__pycache__/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+	"pragma: no cover",
+	"def __repr__",
+	"if self\\.debug",
+	"if settings\\.DEBUG",
+	"raise AssertionError",
+	"raise NotImplementedError",
+	"if 0:",
+	"if __name__ == [\"']__main__[\"']:",
+	"@(abc\\.)?abstractmethod",
+]
+ignore_errors = true
+precision = 2  # Number of shown decimal places. E.g.: 12.34%
