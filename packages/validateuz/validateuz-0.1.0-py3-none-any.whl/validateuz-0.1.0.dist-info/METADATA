@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: validateuz
+Version: 0.1.0
+Summary: The number one validating library in Uzbekistan
+Author-email: Bobojon <pubgmbobojon@gmail.com>
+License: MIT
+Project-URL: Homepage, https://instagram.com/bbbv_vv11
+Project-URL: Issues, https://github.com/bbbv-vv11/validateuz
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+# The best Validator in Uzbekistan by email, password, username, birthday validation
+
+# The Installation
+```
+pip install validateuz
+```
+
+# Tutorial
+
+```
+import validateuz
+
+validateuz.pass8and64(password) #email, username, fullname
+```
