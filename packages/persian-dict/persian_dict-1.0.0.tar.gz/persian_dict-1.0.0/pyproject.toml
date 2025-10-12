@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "persian-dict"
+version = "1.0.0"
+description = "A comprehensive English-Persian dictionary library"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {file = "LICENSE"}
+keywords = ["dictionary", "english", "persian", "farsi", "translation", "language", "nlp"]
+authors = [
+    {name = "Ehsan Fazli", email = "ehsanfazlinejad@gmail.com"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Education",
+    "Natural Language :: Persian",
+    "Natural Language :: English",
+]
+
+[project.urls]
+Homepage = "https://github.com/tsshack/persian-dict"
+Repository = "https://github.com/tsshack/persian-dict"
+Documentation = "https://github.com/tsshack/persian-dict/docs"
+"Bug Tracker" = "https://github.com/tsshack/persian-dict/issues"
+
+[project.scripts]
+persian-dict = "persian_dict.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["persian_dict*"]
+
+[tool.setuptools.package-data]
+persian_dict = ["data/ata/**/*.json"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "build>=0.8.0",
+    "twine>=4.0.0",
+]
+web = [
+    "flask>=2.0",
+    "fastapi>=0.68",
+    "uvicorn>=0.15",
+]

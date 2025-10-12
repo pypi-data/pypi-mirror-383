@@ -1,0 +1,9 @@
+include README.md
+include LICENSE
+include requirements.txt
+include MANIFEST.in
+recursive-include persian_dict *.py
+recursive-include data/ata *.json
+recursive-include examples *.py
+recursive-include tests *.py
+recursive-include docs *.md

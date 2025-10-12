@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: persian-dict
+Version: 1.0.0
+Summary: A comprehensive English-Persian dictionary library
+Home-page: https://github.com/tsshack/persian-dict
+Author: Ehsan Fazli
+Author-email: Ehsan Fazli <ehsanfazlinejad@gmail.com>
+Project-URL: Homepage, https://github.com/tsshack/persian-dict
+Project-URL: Repository, https://github.com/tsshack/persian-dict
+Project-URL: Documentation, https://github.com/tsshack/persian-dict/docs
+Project-URL: Bug Tracker, https://github.com/tsshack/persian-dict/issues
+Keywords: dictionary,english,persian,farsi,translation,language,nlp
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: Topic :: Education
+Classifier: Natural Language :: Persian
+Classifier: Natural Language :: English
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: build>=0.8.0; extra == "dev"
+Requires-Dist: twine>=4.0.0; extra == "dev"
+Provides-Extra: web
+Requires-Dist: flask>=2.0; extra == "web"
+Requires-Dist: fastapi>=0.68; extra == "web"
+Requires-Dist: uvicorn>=0.15; extra == "web"
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
