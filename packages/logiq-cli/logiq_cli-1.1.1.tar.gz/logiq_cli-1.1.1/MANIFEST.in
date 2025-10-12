@@ -1,0 +1,10 @@
+include README.md
+include cli_requirements.txt
+
+# Exclude all environment files from distribution
+exclude .env
+exclude */.env
+global-exclude *.env
+
+# Include optional models if present
+recursive-include aiagent/Scripts/models *
