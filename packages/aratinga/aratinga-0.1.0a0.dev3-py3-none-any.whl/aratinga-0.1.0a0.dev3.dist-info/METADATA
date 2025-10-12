@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: aratinga
+Version: 0.1.0a0.dev3
+Summary: Wagtail + Voreios Extensions enabling rapid development of brasilian public educational-focused websites.
+Project-URL: Source, https://github.com/roraimae/aratinga
+Author-email: Roraimae <fabio@voreios.com.br>
+License: BSD 3-Clause License
+        
+        Copyright (c) 2024, roraimae
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+        
+        3. Neither the name of the copyright holder nor the names of its
+           contributors may be used to endorse or promote products derived from
+           this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+License-File: LICENSE
+Requires-Python: >=3.12
+Requires-Dist: django<5.3,>=5.2
+Requires-Dist: wagtail<7.2,>=7.1
+Description-Content-Type: text/markdown
+
+<h1 align="center">
+    <picture>
+        <source media="(prefers-color-scheme: light)" srcset=".github/aratinga.svg">
+        <source media="(prefers-color-scheme: dark)" srcset=".github/aratinga-inverse.svg">
+        <img width="343" src=".github/aratinga.svg" alt="Aratinga">
+    </picture>
+</h1>
+
+# Aratinga - CMS
+
+Aratinga é um sistema de gerenciamento de Conteúdo para internet (_Content Management System_ em inglês) em Python / Django e Wagtail
+
+Uma alternativa profissional para criação e marketing de websites com Wagtail.
+
+
+aratinga start mysite
+
+Creating a Aratinga project called mysite
+Success! mysite has been created
+
+        Next steps:
+            1. cd mysite/
+            2. python manage.py migrate
+            3. python manage.py createsuperuser
+            4. python manage.py runserver
+            5. Go to http://localhost:8000/admin/ and start editing!
