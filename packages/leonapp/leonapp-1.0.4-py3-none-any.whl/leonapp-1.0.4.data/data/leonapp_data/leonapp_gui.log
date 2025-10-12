@@ -1,0 +1,31 @@
+2025-10-12 16:34:17 | INFO     | __main__:main:3111 - 日志系统配置完成，PyQt5相关日志已集成到loguru
+2025-10-12 16:34:17 | INFO     | __main__:main:3113 - LeonApp Prerelease 2 启动
+2025-10-12 16:34:17 | INFO     | __main__:main:3132 - 已设置QFluentWidgets主题色: #ff4169e1
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getallapps，参数: {'page': 1, 'limit': 5, 'sort': 'latest', 't': 'getallapps'}
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getacc，参数: {'page': 1, 'limit': 3, 't': 'getacc'}
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getallapps，参数: {'page': 1, 'limit': 20, 't': 'getallapps'}
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getalltags，参数: {'page': 1, 'limit': 20, 't': 'getalltags'}
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getalldevelopers，参数: {'page': 1, 'limit': 20, 't': 'getalldevelopers'}
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getacc，参数: {'page': 1, 'limit': 20, 't': 'getacc'}
+2025-10-12 16:34:18 | INFO     | __main__:make_request:101 - API请求开始: getcount，参数: {'t': 'getcount'}
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getallapps，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:116 - API返回数据: getallapps，数据长度: 4146 字符，前500字符: {"status": "success", "data": {"apps": [{"id": 25, "name": "落日下载 - 下载B站视频", "description": "## 👏欢迎使用落日下载 ##\r\n#### 目录\r\n> 1.应用介绍\r\n\r\n> 2.应用开源文档\r\n##### 应用介绍：\r\n- 1 本应用由JGZ_YES开发\r\n- 2 本应用完全免费不可商用\r\n- 3 本应用为开源应用，下载地址：[Beta-0.1-重制版](https://doc.lrgdmc.cn/download/lrxz/)\r\n- 4 应用文档(请认真阅读再使用,需下载支持库,具体看⬇️)：[文档跳转](https://doc.lrgdmc.cn/sunsetdownload.php)\r\n##### 应用开源文档：\r\n###### 1.本应用遵循<strong>AGPL3协议</strong>\r\n<a href=\"https://www.gnu.org/licenses/agpl-3.0\"><img src=\"https://img.shi...
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getallapps，数据获取完成
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getalldevelopers，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:116 - API返回数据: getalldevelopers，数据长度: 1569 字符，前500字符: {"status": "success", "data": {"developers": [{"id": 10, "username": "hou", "email": "housiyuan2022@outlook.com", "created_at": "2025-09-25 11:36:41", "app_count": 0, "total_downloads": 0}, {"id": 9, "username": "JGZ_YES", "email": "luoriguodu@qq.com", "created_at": "2025-09-20 16:56:24", "app_count": 4, "total_downloads": "0"}, {"id": 8, "username": "JGZ_YES_废弃", "email": "dhsgsggsgagsgshshshshhshshshshs@qq.com", "created_at": "2025-09-20 16:34:39", "app_count": 0, "total_downloads": 0}, {"id":...
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getalldevelopers，数据获取完成
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getallapps，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:116 - API返回数据: getallapps，数据长度: 9134 字符，前500字符: {"status": "success", "data": {"apps": [{"id": 25, "name": "落日下载 - 下载B站视频", "description": "## 👏欢迎使用落日下载 ##\r\n#### 目录\r\n> 1.应用介绍\r\n\r\n> 2.应用开源文档\r\n##### 应用介绍：\r\n- 1 本应用由JGZ_YES开发\r\n- 2 本应用完全免费不可商用\r\n- 3 本应用为开源应用，下载地址：[Beta-0.1-重制版](https://doc.lrgdmc.cn/download/lrxz/)\r\n- 4 应用文档(请认真阅读再使用,需下载支持库,具体看⬇️)：[文档跳转](https://doc.lrgdmc.cn/sunsetdownload.php)\r\n##### 应用开源文档：\r\n###### 1.本应用遵循<strong>AGPL3协议</strong>\r\n<a href=\"https://www.gnu.org/licenses/agpl-3.0\"><img src=\"https://img.shi...
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getallapps，数据获取完成
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getcount，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:118 - API返回数据: getcount，完整数据: {"status": "success", "data": {"total_apps": "18", "total_developers": "10", "total_tags": "11", "total_announcements": "6", "total_downloads": "0"}}
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getcount，数据获取完成
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getalltags，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:118 - API返回数据: getalltags，完整数据: {"status": "success", "data": [{"id": "6", "name": "NSFW"}, {"id": "9", "name": "Web应用"}, {"id": "7", "name": "启动器"}, {"id": "11", "name": "开源项目"}, {"id": "5", "name": "恐怖"}, {"id": "8", "name": "控制台应用"}, {"id": "1", "name": "搬运"}, {"id": "3", "name": "模组"}, {"id": "2", "name": "游戏"}, {"id": "10", "name": "血腥"}, {"id": "4", "name": "资源包"}]}
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getalltags，数据获取完成
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getacc，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:116 - API返回数据: getacc，数据长度: 1309 字符，前500字符: {"status": "success", "data": [{"id": "12", "title": "反馈问题/建议", "content": "如果你想反馈问题/建议，请到leonmmcoset.jjxmm.win:2000/LeonMMcoset/leonapp/issues/new/choose反馈", "created_at": "2025-09-24 22:57:21"}, {"id": "11", "title": "我们发布了我们的API文档", "content": "请查看我们的[API Fox](https://leonapp.apifox.cn)文档来学习如何使用LeonAPP API。\r\n\r\n> 如果你是普通用户而不是开发者，请忽略这个公告。", "created_at": "2025-09-21 12:04:01"}, {"id": "10", "title": "关于公司内部对LeonAPP名称改动的说明", "content": "因为公司内部关于LeonAPP是否要改名为MiaoAPP导致公司矛盾的问题，LeonAPP开源项目仓库所有者Le...
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getacc，数据获取完成
+2025-10-12 16:34:19 | INFO     | __main__:make_request:107 - API请求成功: getacc，状态码: 200
+2025-10-12 16:34:19 | INFO     | __main__:make_request:116 - API返回数据: getacc，数据长度: 1309 字符，前500字符: {"status": "success", "data": [{"id": "12", "title": "反馈问题/建议", "content": "如果你想反馈问题/建议，请到leonmmcoset.jjxmm.win:2000/LeonMMcoset/leonapp/issues/new/choose反馈", "created_at": "2025-09-24 22:57:21"}, {"id": "11", "title": "我们发布了我们的API文档", "content": "请查看我们的[API Fox](https://leonapp.apifox.cn)文档来学习如何使用LeonAPP API。\r\n\r\n> 如果你是普通用户而不是开发者，请忽略这个公告。", "created_at": "2025-09-21 12:04:01"}, {"id": "10", "title": "关于公司内部对LeonAPP名称改动的说明", "content": "因为公司内部关于LeonAPP是否要改名为MiaoAPP导致公司矛盾的问题，LeonAPP开源项目仓库所有者Le...
+2025-10-12 16:34:19 | INFO     | __main__:make_request:125 - API响应成功: getacc，数据获取完成
