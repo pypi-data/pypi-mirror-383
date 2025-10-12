@@ -1,0 +1,355 @@
+Metadata-Version: 2.1
+Name: pyhannom
+Version: 0.1.3
+Summary: A Python toolkit for the digitization of Han-Nom characters, enabling AI and natural language processing applications with Vietnamese Han-Nom data.
+Author-email: Zijie ZHANG <zijiezhang@link.cuhk.edu.hk>
+License: MIT License (for code)
+        
+        Copyright (c) 2025 Zijie ZHANG
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+        
+        -------------------------------------------------------------------------------
+        Data Usage Notice
+        
+        This project includes data derived from the "委班復生漢喃越南 Uỷ ban Phục sinh Hán Nôm Việt Nam" project:
+        
+        - https://www.hannom-rcv.org/BCHNCTD.html  
+        - https://www.hannom-rcv.org/Lookup-CHNC.html  
+        
+        All rights to the original data belong to the "委班復生漢喃越南 Uỷ ban Phục sinh Hán Nôm Việt Nam".
+        The data included in this package is provided strictly for research and
+        educational purposes. Commercial use of the data is NOT permitted.
+        
+        Redistribution or modification of the data must include proper attribution
+        to the original source and comply with any additional requirements set by
+        the "委班復生漢喃越南 Uỷ ban Phục sinh Hán Nôm Việt Nam".
+Project-URL: Homepage, https://pypi.org/project/pyhannom/
+Requires-Python: >=3.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# PyHanNom
+
+## 📖 Introduction  
+**PyHanNom** is a Python package dedicated to the **modernization and digitization of Han-Nom characters**, the classical script system of Vietnam. In the era of **artificial intelligence**, where Python has become the dominant language for computation and research, it is essential to provide robust tools that connect **modern Vietnamese Latin script (Quốc Ngữ)** with its **Han-Nom heritage**.  
+
+This package offers a foundation for computational work with Han-Nom by enabling **bidirectional lookup and conversion ↔️** at both the syllable, character, and word levels. Beyond simple character matching, PyHanNom is designed as part of a broader effort to make Han-Nom resources **machine-readable 💻, searchable 🔍, and ready for integration into AI-driven applications 🚀**.  
+
+By bridging modern orthography with historical scripts, PyHanNom contributes to:  
+- 🏛️ the **preservation and revival** of Han-Nom in digital form,  
+- 📚 the **development of linguistic resources** for computational linguistics and digital humanities,  
+- 🔮 and the **future of AI applications**, such as building parallel corpora between Latin Vietnamese and Han-Nom, or supporting natural language processing tasks.  
+
+PyHanNom is therefore not only a practical tool for researchers and developers today, but also a step toward the **long-term goal of bringing Han-Nom into the digital and AI era 🌏**.
+
+---
+
+## 📂 Data Source
+- This project includes data derived from the **"委班復生漢喃越南 Uỷ ban Phục sinh Hán Nôm Việt Nam"** project:  
+  - https://www.hannom-rcv.org/BCHNCTD.html  
+  - https://www.hannom-rcv.org/Lookup-CHNC.html  
+- All rights to the original data belong to the *委班復生漢喃越南 Ủy ban Phục sinh Hán Nôm Việt Nam*.  
+- The data included in this package is provided strictly for **research and educational purposes**. Commercial use of the data is **NOT permitted**.  
+- Since the mappings are directly derived from this source, **all case handling and annotations in PyHanNom remain exactly consistent with the original data**. For details, please refer to the original source above.  
+
+---
+
+## ⚙️ Installation
+```bash
+pip install pyhannom
+```
+
+---
+
+## 🚀 Usage
+
+### 1. Load the syllable–character table
+Before using any lookup functions, you need to load the Han-Nom syllable–character mapping table:
+
+```python
+from pyhannom import load_syllable_char_table
+
+hannom_syllable_char_table = load_syllable_char_table()
+```
+
+This `hannom_syllable_char_table` handle must be passed into the following functions.
+
+#### Function signature
+```python
+load_syllable_char_table()
+```
+
+- **returns**: a syllable/character-level mapping table to be used with syllable/character-level functions.
+
+---
+
+### 2. Convert Latin syllable → Han-Nom character
+Use `get_chuhannom_from_latin` to retrieve the Han-Nom character(s) corresponding to a given Vietnamese Latin syllable.
+
+Each Han-Nom character in the bracket is the simplified version of the one outside the bracket.
+
+```python
+from pyhannom import get_chuhannom_from_latin
+
+result = get_chuhannom_from_latin(
+    hannom_syllable_char_table,
+    "buộc"
+)
+print(result)  # e.g. ['𫃚']
+```
+
+```python
+from pyhannom import get_chuhannom_from_latin
+
+result = get_chuhannom_from_latin(
+    hannom_syllable_char_table,
+    "anh"
+)
+print(result)  # e.g. ['英', '英', '映', '罌', '嚶', '櫻', '鶯（𦾉）', '鸚']
+```
+
+#### Function signature
+```python
+get_chuhannom_from_latin(
+    handle,
+    input_latin_syllable: str,
+    normalize_input_case: bool = True,
+    case_insensitive_match: bool = True
+)
+```
+
+- **handle**: the syllable–character table loaded by `load_syllable_char_table`.
+- **input_latin_syllable** *(str)*: a single Vietnamese syllable in Latin script.
+- **normalize_input_case** *(bool, default=True)*: whether to normalize the input to lowercase before matching.
+- **case_insensitive_match** *(bool, default=True)*: whether to perform case-insensitive matching.
+- **returns**: a list of the matched Han-Nom characters corresponding to the input syllable.
+
+---
+
+### 3. Convert Latin syllable → Han-Nom Unicode code points
+Use `get_chuhannom_unicode_from_latin` to retrieve the **Unicode code points** of the Han-Nom character(s) corresponding to a given Vietnamese Latin syllable.  
+
+This function has the same input parameters as `get_chuhannom_from_latin`, but instead of returning the characters themselves, it returns their Unicode representations.
+
+Each Unicode code point in the bracket represents the Unicode code point of the Han-Nom character in the bracket introduced in the last section.
+
+```python
+from pyhannom import get_chuhannom_unicode_from_latin
+
+result = get_chuhannom_unicode_from_latin(
+    hannom_syllable_char_table,
+    "buộc"
+)
+print(result)  # e.g. ['U+2B0DA']
+```
+
+```python
+from pyhannom import get_chuhannom_unicode_from_latin
+
+result = get_chuhannom_unicode_from_latin(
+    hannom_syllable_char_table,
+    "anh"
+)
+print(result)  
+# e.g. ['U+82F1', 'U+82F1', 'U+6620', 'U+7F4C', 'U+56B6', 'U+6AFB', 'U+9DAF (U+26F89)', 'U+9E1A']
+```
+
+#### Function signature
+```python
+get_chuhannom_unicode_from_latin(
+    handle,
+    input_latin_syllable: str,
+    normalize_input_case: bool = True,
+    case_insensitive_match: bool = True
+)
+```
+
+- **handle**: the syllable–character table loaded by `load_syllable_char_table`.
+- **input_latin_syllable** *(str)*: a single Vietnamese syllable in Latin script.
+- **normalize_input_case** *(bool, default=True)*: whether to normalize the input to lowercase before matching.
+- **case_insensitive_match** *(bool, default=True)*: whether to perform case-insensitive matching.
+- **returns**: a list of Unicode code points (as strings) corresponding to the matched Han-Nom characters.
+
+---
+
+### 4. Convert Han-Nom character → Latin syllable
+Use `get_latin_from_chuhannom` to retrieve the Vietnamese Latin syllable(s) corresponding to a given Han-Nom character.
+
+```python
+from pyhannom import get_latin_from_chuhannom
+
+result = get_latin_from_chuhannom(
+    hannom_syllable_char_table,
+    "心"
+)
+print(result)  # e.g. ['TÂM', 'tim']
+```
+
+#### Function signature
+```python
+get_latin_from_chuhannom(
+    handle,
+    input_chuhannom: str,
+    normalize_output_case: bool = False
+)
+```
+
+- **handle**: the syllable–character table loaded by `load_syllable_char_table`.  
+- **input_chuhannom** *(str)*: a single Han-Nom character.  
+- **normalize_output_case** *(bool, default=False)*: whether to normalize all returned Latin syllables to lowercase.  
+- **returns**: a list of corresponding Vietnamese Latin syllables.
+
+---
+
+### 5. Load the word-level table
+Before using word-level lookup functions, you need to load the Han-Nom **word-level mapping table**.  
+
+This table is built on top of the syllable–character table:
+
+```python
+from pyhannom import load_word_table
+
+hannom_word_table = load_word_table(hannom_syllable_char_table)
+```
+
+#### Function signature
+```python
+load_word_table(handle)
+```
+
+- **handle**: the syllable–character table loaded by `load_syllable_char_table`.  
+- **returns**: a word-level mapping table to be used with word-level functions.
+
+---
+
+### 6. Convert Latin syllables → Han-Nom words
+Use `get_chuhannom_word_from_latin` to retrieve Han-Nom word(s) corresponding to a given sequence of Vietnamese Latin syllables.  
+
+The function checks whether all provided Latin syllables occur as substrings within a Latin word in the word-level dictionary. If this condition is satisfied, it returns all matching Han-Nom words together with their Latin equivalents (and optional annotations).
+```python
+from pyhannom import get_chuhannom_word_from_latin
+
+result = get_chuhannom_word_from_latin(
+    hannom_word_table,
+    "ác tâ"
+)
+print(result)
+# e.g. {('革新', 'cách tân'), ('賓客', 'tân khách'), ('惡心', 'ác tâm')}
+```
+
+```python
+from pyhannom import get_chuhannom_word_from_latin
+
+result = get_chuhannom_word_from_latin(
+    hannom_word_table,
+    "hưng hửng"
+)
+print(result)
+# e.g. {('烝𬋙', 'chưng hửng', '[𠸨]'), ('𬋙𬋙', 'hưng hửng', '[𠸨]')}
+```
+
+#### Function signature
+```python
+get_chuhannom_word_from_latin(
+    handle,
+    input_latin_syllables: str,
+    normalize_input_case: bool = False,
+    case_insensitive_match: bool = True
+)
+```
+
+- **handle**: the word-level table loaded by `load_word_table`.  
+- **input_latin_syllables** *(str)*: one or more Vietnamese Latin syllables.  
+- **normalize_input_case** *(bool, default=False)*: whether to normalize the input to lowercase before matching.  
+- **case_insensitive_match** *(bool, default=True)*: whether to perform case-insensitive matching.  
+- **returns**: a `set` of tuples. Each tuple contains:  
+  1. Han-Nom word (string)  
+  2. Corresponding Latin word (string)  
+  3. Optional annotation (string, may not always be present)
+
+---
+
+### 7. Convert Han-Nom words → Latin words
+Use `get_latin_word_from_chuhannom` to retrieve the Vietnamese Latin word(s) corresponding to a given Han-Nom word or phrase.  
+The function checks whether the provided Han-Nom string (one or more characters) occurs as a substring within any Han-Nom word in the word-level dictionary. If this condition is satisfied, it returns all matching words together with their Latin equivalents (and optional annotations).
+
+```python
+from pyhannom import get_latin_word_from_chuhannom
+
+result = get_latin_word_from_chuhannom(
+    hannom_word_table,
+    "稱雄"
+)
+print(result)
+# e.g. {('稱雄', 'xưng hùng'), ('稱雄稱霸', 'xưng hùng xưng bá')}
+```
+
+```python
+from pyhannom import get_latin_word_from_chuhannom
+
+result = get_latin_word_from_chuhannom(
+    hannom_word_table,
+    "汴𠲅"
+)
+print(result)
+# e.g. {('汴𠲅', 'bin (pin) sạc', '[摱]')}
+```
+
+#### Function signature
+```python
+get_latin_word_from_chuhannom(
+    handle,
+    input_chuhannom: str,
+    normalize_output_case: bool = False
+)
+```
+
+- **handle**: the word-level table loaded by `load_word_table`.  
+- **input_chuhannom** *(str)*: one or more Han-Nom characters forming a string.  
+- **normalize_output_case** *(bool, default=False)*: whether to normalize all returned Latin words to lowercase.  
+- **returns**: a `set` of tuples. Each tuple contains:  
+  1. Han-Nom word (string)  
+  2. Corresponding Latin word (string)  
+  3. Optional annotation (string, may not always be present)
+
+---
+
+## 📜 License
+- **Code**: Licensed under the [MIT License](LICENSE).  
+- **Data**: Derived from the *委班復生漢喃越南 Ủy ban Phục sinh Hán Nôm Việt Nam* project. Redistribution or modification of the data must include proper attribution and comply with the requirements set by the original source.  
+
+---
+
+## 🤝 Contributing
+- Pull requests are welcome.  
+- For major changes, please open an issue first to discuss what you’d like to change.  
+- Make sure to update tests as appropriate.
+
+---
+
+## 🌏 Acknowledgments
+- This project makes use of data derived from the **"委班復生漢喃越南 Uỷ ban Phục sinh Hán Nôm Việt Nam"** project:  
+  - https://www.hannom-rcv.org/BCHNCTD.html  
+  - https://www.hannom-rcv.org/Lookup-CHNC.html  
+- All rights to the original data belong to the *委班復生漢喃越南 Ủy ban Phục sinh Hán Nôm Việt Nam*.  
+- I would like to express my gratitude to the open-source Han-Nom community and the *委班復生漢喃越南 Ủy ban Phục sinh Hán Nôm Việt Nam* project for making these resources available for research and educational purposes.  
+- If there is any infringement or concern regarding the use of this data, please contact me immediately. I will respond promptly to resolve the issue, including the possibility of removing this project if necessary.  
+
+---
