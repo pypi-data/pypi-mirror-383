@@ -1,0 +1,38 @@
+Metadata-Version: 2.3
+Name: githubcontribs
+Version: 0.1.0
+Summary: Simple analytics for GitHub contributions across an organization.
+Author-email: Lamin Labs <open-source@lamin.ai>
+Requires-Python: >=3.10,<3.14
+Description-Content-Type: text/markdown
+Requires-Dist: pandas
+Requires-Dist: requests
+Requires-Dist: dotenv
+Requires-Dist: pre-commit ; extra == "dev"
+Requires-Dist: nox ; extra == "dev"
+Requires-Dist: pytest>=6.0 ; extra == "dev"
+Requires-Dist: pytest-cov ; extra == "dev"
+Requires-Dist: nbproject_test ; extra == "dev"
+Project-URL: Home, https://github.com/laminlabs/githubcontribs
+Provides-Extra: dev
+
+# githubcontribs: Simple analytics for GitHub contributions across an organization
+
+Install:
+
+```bash
+pip install githubcontribs
+```
+
+Quickstart:
+
+```python
+import githubcontribs
+fetcher = githubcontribs.Fetcher("laminlabs")
+df = fetcher.run("lamindb")
+df.head()
+#> Dataframe of contributions
+```
+
+Contributing: Please run `pre-commit install` and `gitmoji -i` on the CLI before starting to work on this repository!
+
