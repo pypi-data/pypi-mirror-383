@@ -1,0 +1,75 @@
+Metadata-Version: 2.4
+Name: ddmail_email_remover
+Version: 0.0.2
+Summary: Web application API for removing email accounts on disc for the DDMail project.
+Project-URL: Homepage, https://github.com/drzobin/ddmail_email_remover
+Project-URL: Issues, https://github.com/drzobin/ddmail_email_remover/issues
+Author-email: Robin Larsson <me@drz.se>
+License-Expression: AGPL-3.0
+License-File: LICENSE
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Requires-Dist: argon2-cffi
+Requires-Dist: ddmail-validators
+Requires-Dist: flask
+Requires-Dist: gunicorn
+Requires-Dist: toml
+Provides-Extra: dev
+Requires-Dist: argon2-cffi; extra == 'dev'
+Requires-Dist: ddmail-validators; extra == 'dev'
+Requires-Dist: flake8; extra == 'dev'
+Requires-Dist: flask; extra == 'dev'
+Requires-Dist: gunicorn; extra == 'dev'
+Requires-Dist: hatchling; extra == 'dev'
+Requires-Dist: pytest-cov; extra == 'dev'
+Requires-Dist: toml; extra == 'dev'
+Requires-Dist: twine; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: argon2-cffi; extra == 'test'
+Requires-Dist: ddmail-validators; extra == 'test'
+Requires-Dist: flake8; extra == 'test'
+Requires-Dist: flask; extra == 'test'
+Requires-Dist: gunicorn; extra == 'test'
+Requires-Dist: pytest-cov; extra == 'test'
+Requires-Dist: toml; extra == 'test'
+Description-Content-Type: text/markdown
+
+# What is ddmail_email_remover
+Web application API for removing email accounts on disc for the ddmail project.
+
+## What is DDMail
+DDMail is a e-mail system/service that prioritizes security. A current production example can be found at www.ddmail.se
+
+## Operating system
+Developt for and tested on debian 12.
+
+## Installing using pip
+`pip install ddmail-email-remover`
+
+## Building and installing from source using hatchling.
+Step 1: clone github repo<br>
+`git clone https://github.com/drzobin/ddmail_email_remover [code path]`<br>
+`cd [code path]`<br>
+<br>
+Step 2: Setup python virtual environments<br>
+`python -m venv [venv path]`<br>
+`source [venv path]/bin/activate`<br>
+<br>
+Step 3: Install package and required dependencies<br>
+`pip install -e .[dev]`<br>
+<br>
+Step 4: Build package<br>
+`python -m pip install --upgrade build`<br>
+`python -m build `<br><br>
+Packages is now located under dist folder<br>
+<br>
+Step 5: Install package<br>
+`pip install dist/[package name].whl`
+
+## Testing
+`cd [code path]`<br>
+`pytest --cov=ddmail_email_remover tests/ --config=[config file path] --password=[password]`
+
+## Coding
+Follow PEP8 and PEP257. Use Flake8 with flake8-docstrings for linting. Strive for 100% test coverage.
