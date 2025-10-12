@@ -1,0 +1,105 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[project]
+name = "mtg_parser"
+version = "0.0.1a50"
+requires-python = ">=3.9"
+license = "EUPL-1.2"
+description = "Magic: the Gathering decklist parser"
+readme = "README.md"
+authors = [
+    { name = "Ludovic Heyberger", email = "940408+lheyberger@users.noreply.github.com" },
+]
+dependencies = [
+    "beautifulsoup4 (>=4.12,<5.0)",
+    "pyparsing (>=3.1,<4.0)",
+]
+
+
+[project.urls]
+homepage = "https://github.com/lheyberger/mtg-parser"
+repository = "https://github.com/lheyberger/mtg-parser"
+documentation = "https://github.com/lheyberger/mtg-parser"
+
+
+[tool.poetry.group.dev.dependencies]
+check-wheel-contents = "^0.6"
+cloudscraper = ">=1.2.71,<2.0.0"
+coverage = {extras = ["toml"], version = "^7.3"}
+httpx = { extras = ["brotli", "http2", "zstd"], version = ">=0.28.0,<1.0.0" }
+more-itertools = "^10.1"
+pytest = "^7.4"
+python-dotenv = "^1.0.1"
+respx = "^0.21.1"
+ruff = "^0.11.6"
+tabulate = "^0.9"
+
+
+[tool.ruff]
+line-length = 120
+
+
+[tool.ruff.lint]
+select = [
+    "A",  # flake8-builtins codes
+    "ARG",  # flake8-unused-arguments codes
+    "B",  # flake8-bugbear codes
+    "C901",  # Complexity (e.g., C901 for too complex)
+    "COM",  # flake8-commas codes
+    "E",  # Error codes (e.g., E501 for line length)
+    "ERA",  # eradicate codes
+    "F",  # Flake8 codes (e.g., F401 for imported but unused)
+    "G",  # flake8-logging-format codes
+    "INP",  # flake8-no-pep420 codes
+    "ISC",  # flake8-implicit-str-concat codes
+    "N",  # Pep8 naming conventions
+    "PD",  # pandas-vet codes
+    "PIE",  # flake8-pie codes
+    "PL",  # Pylint codes
+    "PT",  # flake8-pytest-style codes
+    "PTH",  # pathlib codes
+    "RET",  # flake8-return codes
+    "RSE",  # flake8-raise codes
+    "S",  # Bandit codes
+    "SIM",  # flake8-simplify codes
+    "SLF",  # flake8-self codes
+    "T10",  # flake8-debugger codes
+    "T20",  # flake8-print codes
+    "TCH",  # flake8-tidy-imports codes
+    "UP",  # Pyupgrade codes
+    "W",  # Warning codes (e.g., W605 for invalid escape sequence)
+    "YTT",  # flake8-2020 codes
+]
+ignore = [
+    "COM819", # flake8-commas, prohibited-trailing-comma
+    "N811", # pep8-naming, constant-imported-as-non-constant
+    "RET504", # flake8-return, unnecessary-assign
+    "S101", # flake8-bandit, assert
+    "S301", # flake8-bandit, suspicious-pickle-usage
+    "T201", # flake8-print, print
+]
+
+
+[tool.ruff.lint.pylint]
+max-args = 6
+
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+
+
+[tool.coverage.run]
+source = [ "src" ]
+
+
+[tool.coverage.paths]
+source = [ "src" ]
+
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
