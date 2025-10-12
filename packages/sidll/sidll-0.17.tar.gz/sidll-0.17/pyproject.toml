@@ -1,0 +1,29 @@
+# pyproject.toml
+[project]
+name = "sidll"
+version = "0.17"
+description = "Sparse Indexed Doubly Linked List"
+readme = "README.md"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+]
+authors = [
+	{name = "John Goh", email = "jkh.goh@gmail.com"}
+]
+requires-python = ">=3.8" 
+
+[build-system]
+requires = [
+    "setuptools>=40,<60.0",
+    "wheel",
+    "scikit-build-core>=0.11.0",
+	"pybind11",
+]
+build-backend = "scikit_build_core.build"
+
+[tool.cibuildwheel]
+skip = "pp38-*"
