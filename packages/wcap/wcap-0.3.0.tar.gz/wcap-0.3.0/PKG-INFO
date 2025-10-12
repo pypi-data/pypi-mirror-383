@@ -1,0 +1,43 @@
+Metadata-Version: 2.4
+Name: wcap
+Version: 0.3.0
+Summary: Capture web pages as images using Selenium and the Firefox webdriver.
+Project-URL: Documentation, https://github.com/yaph/wcap#readme
+Project-URL: Issues, https://github.com/yaph/wcap/issues
+Project-URL: Source, https://github.com/yaph/wcap
+Author-email: Ramiro Gómez <code@ramiro.org>
+License-Expression: MIT
+License-File: LICENSE
+Keywords: firefox,html to image,screenshot,selenium,webpage to image
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.10
+Requires-Dist: selenium
+Description-Content-Type: text/markdown
+
+# wcap
+
+Capture web pages as images using Selenium and the Firefox webdriver.
+
+# Usage
+
+    wcap --dimensions 1500x1100 --wait 5 https://ukealong.com/key/c/ img/c.png
+
+If Firefox is installed as a Snap on Ubuntu, you need to set the binary location.
+
+    wcap --dimensions 1500x1100 --wait 5 --binary-location /snap/firefox/current/usr/lib/firefox/firefox https://ukealong.com/key/c/ img/c.png
+
+# Installation
+
+    pip install wcap
+
+In order for `wcap` to work you need to install the [Firefox web browser](https://www.mozilla.org/firefox) and [geckodriver](https://github.com/mozilla/geckodriver). To install `geckodriver` download the release for your operating system from https://github.com/mozilla/geckodriver/releases and move the executable file to a directory that is included in your PATH environment variable.
+
+## Authors
+
+`wcap` was written by [Ramiro Gómez](https://ramiro.org/).
