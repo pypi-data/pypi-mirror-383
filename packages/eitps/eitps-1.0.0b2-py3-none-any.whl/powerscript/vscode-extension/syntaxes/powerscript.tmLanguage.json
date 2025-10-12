@@ -1,0 +1,273 @@
+{
+  "name": "PowerScript",
+  "scopeName": "source.powerscript",
+  "fileTypes": ["ps"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#operators" },
+    { "include": "#functions" },
+    { "include": "#classes" },
+    { "include": "#variables" },
+    { "include": "#punctuation" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.powerscript",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.powerscript",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.powerscript",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.powerscript",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.powerscript",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.powerscript",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.template.powerscript",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "constant.character.escape.powerscript",
+              "match": "\\\\."
+            },
+            {
+              "name": "meta.embedded.expression.powerscript",
+              "begin": "\\$\\{",
+              "end": "\\}",
+              "patterns": [
+                { "include": "$self" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.decimal.powerscript",
+          "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+        },
+        {
+          "name": "constant.numeric.hex.powerscript",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.powerscript",
+          "match": "\\b0[bB][01]+\\b"
+        },
+        {
+          "name": "constant.numeric.octal.powerscript",
+          "match": "\\b0[oO][0-7]+\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.powerscript",
+          "match": "\\b(if|else|while|for|in|break|continue|return|try|catch|finally|throw)\\b"
+        },
+        {
+          "name": "keyword.declaration.powerscript",
+          "match": "\\b(class|function|constructor|let|const|var|import|export|from|default)\\b"
+        },
+        {
+          "name": "keyword.modifier.powerscript",
+          "match": "\\b(public|private|protected|static|async|await)\\b"
+        },
+        {
+          "name": "keyword.other.powerscript",
+          "match": "\\b(this|super|new|typeof|instanceof|enum|interface|namespace|module)\\b"
+        },
+        {
+          "name": "constant.language.powerscript",
+          "match": "\\b(true|false|null|undefined)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.primitive.powerscript",
+          "match": "\\b(string|number|boolean|void|any|unknown|never|object)\\b"
+        },
+        {
+          "name": "support.type.builtin.powerscript",
+          "match": "\\b(Array|Promise|Map|Set|Date|RegExp|Error|Function)\\b"
+        },
+        {
+          "name": "entity.name.type.powerscript",
+          "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.powerscript",
+          "match": "(=|\\+=|-=|\\*=|/=|%=|\\*\\*=|<<=|>>=|&=|\\|=|\\^=)"
+        },
+        {
+          "name": "keyword.operator.comparison.powerscript",
+          "match": "(==|!=|===|!==|<|<=|>|>=)"
+        },
+        {
+          "name": "keyword.operator.logical.powerscript",
+          "match": "(&&|\\|\\||!)"
+        },
+        {
+          "name": "keyword.operator.arithmetic.powerscript",
+          "match": "(\\+|\\-|\\*|/|%|\\*\\*)"
+        },
+        {
+          "name": "keyword.operator.bitwise.powerscript",
+          "match": "(&|\\||\\^|~|<<|>>)"
+        },
+        {
+          "name": "keyword.operator.other.powerscript",
+          "match": "(\\?\\?|\\?\\.|\\?|:|=>|\\.\\.\\.)"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "meta.function.powerscript",
+          "begin": "\\b(async\\s+)?(function)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(\\()",
+          "beginCaptures": {
+            "1": { "name": "keyword.modifier.powerscript" },
+            "2": { "name": "keyword.declaration.powerscript" },
+            "3": { "name": "entity.name.function.powerscript" },
+            "4": { "name": "punctuation.definition.parameters.begin.powerscript" }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.parameters.end.powerscript" }
+          },
+          "patterns": [
+            { "include": "#function-parameters" }
+          ]
+        },
+        {
+          "name": "entity.name.function.powerscript",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+        }
+      ]
+    },
+    "classes": {
+      "patterns": [
+        {
+          "name": "meta.class.powerscript",
+          "begin": "\\b(class)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*({)",
+          "beginCaptures": {
+            "1": { "name": "keyword.declaration.powerscript" },
+            "2": { "name": "entity.name.class.powerscript" },
+            "3": { "name": "punctuation.definition.class.begin.powerscript" }
+          },
+          "end": "}",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.class.end.powerscript" }
+          },
+          "patterns": [
+            { "include": "$self" }
+          ]
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "meta.variable.powerscript",
+          "begin": "\\b(let|const|var)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:)?\\s*([a-zA-Z_][a-zA-Z0-9_<>\\[\\]]*)?",
+          "beginCaptures": {
+            "1": { "name": "keyword.declaration.powerscript" },
+            "2": { "name": "variable.name.powerscript" },
+            "3": { "name": "punctuation.separator.type.powerscript" },
+            "4": { "name": "entity.name.type.powerscript" }
+          },
+          "end": "(?=;|\\n|=)",
+          "patterns": [
+            { "include": "$self" }
+          ]
+        }
+      ]
+    },
+    "function-parameters": {
+      "patterns": [
+        {
+          "name": "meta.parameter.powerscript",
+          "match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:)\\s*([a-zA-Z_][a-zA-Z0-9_<>\\[\\]]*)",
+          "captures": {
+            "1": { "name": "variable.parameter.powerscript" },
+            "2": { "name": "punctuation.separator.type.powerscript" },
+            "3": { "name": "entity.name.type.powerscript" }
+          }
+        },
+        {
+          "name": "variable.parameter.powerscript",
+          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.terminator.statement.powerscript",
+          "match": ";"
+        },
+        {
+          "name": "punctuation.separator.comma.powerscript",
+          "match": ","
+        },
+        {
+          "name": "punctuation.accessor.powerscript",
+          "match": "\\."
+        },
+        {
+          "name": "punctuation.definition.block.powerscript",
+          "match": "[{}]"
+        },
+        {
+          "name": "punctuation.definition.array.powerscript",
+          "match": "[\\[\\]]"
+        },
+        {
+          "name": "punctuation.definition.parameters.powerscript",
+          "match": "[()]"
+        }
+      ]
+    }
+  }
+}

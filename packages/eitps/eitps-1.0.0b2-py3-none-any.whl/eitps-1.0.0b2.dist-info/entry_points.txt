@@ -1,0 +1,11 @@
+[console_scripts]
+powerscriptc = powerscript.cli.cli:main
+ps = powerscript.cli.cli:ps_smart_command
+ps-create = powerscript.cli.cli:main
+ps-run = powerscript.cli.cli:main
+psc = powerscript.cli.cli:main
+tps = powerscript.cli.cli:main
+tps-build = powerscript.cli.cli:smart_compile
+tps-compile = powerscript.cli.cli:compile_command
+tps-create = powerscript.cli.cli:create_command
+tps-run = powerscript.cli.cli:run_command
