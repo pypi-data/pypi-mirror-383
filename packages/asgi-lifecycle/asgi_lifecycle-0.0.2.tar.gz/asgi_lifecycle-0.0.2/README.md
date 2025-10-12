@@ -1,0 +1,235 @@
+# asgi-lifecycle
+
+Flexible ASGI application lifecycle management for Python web frameworks (Django, FastAPI, Starlette, Celery, and more).
+
+## Features
+- **Hook-based startup/shutdown**: Register async or sync functions to run on app startup/shutdown.
+- **Context-aware**: Hooks receive a rich context object (service type, environment, config, metadata).
+- **Service filtering**: Only run hooks for relevant service types (main app, worker, API, scheduler, etc).
+- **Singleton manager**: Application-wide lifecycle state and hook registry.
+- **Decorator API**: Clean, Pythonic `@lifespan.on_start` and `@lifespan.on_shutdown` decorators.
+- **Async and sync support**: Works with both async and sync hooks.
+- **Timeouts and error handling**: Robust shutdown with timeouts and logging.
+- **Framework-agnostic**: Integrates with any ASGI app, including Django, FastAPI, Starlette, Celery, etc.
+
+## Why asgi-lifespan?
+
+### vs Django's built-in ASGI
+- ✅ **Startup/shutdown hooks** vs no lifecycle management
+- ✅ **Service type filtering** vs no service differentiation
+- ✅ **Priority ordering** vs no execution control
+- ✅ **Rich context object** vs no context passing
+- ✅ **Error handling & timeouts** vs no error management
+- ✅ **Multiple hooks per phase** vs no hook system at all
+
+
+### vs FastAPI's lifespan
+- ✅ Framework-agnostic
+- ✅ Multiple hooks per phase
+- ✅ Service type filtering
+- ✅ Singleton management
+
+
+## Performance
+
+- **Minimal overhead**: Hooks only run during startup/shutdown
+- **Async-first**: Built for modern async Python
+- **Timeout protection**: Prevents hanging shutdowns
+- **Error isolation**: Failed hooks don't stop others
+
+
+## Installation
+
+```bash
+pip install asgi-lifecycle
+```
+
+## Quickstart
+
+```python
+from asgi_lifecycle import lifespan, LifespanContext, ServiceType
+
+@lifespan.on_start(priority=1, service_types=["app", "api"])
+async def setup_database(context: LifespanContext):
+    await database.connect()
+    context.set_metadata("database_connected", True)
+
+@lifespan.on_shutdown(priority=1, service_types=["app", "api"])
+async def close_database(context: LifespanContext):
+    if context.get_metadata("database_connected", False):
+        await database.disconnect()
+
+```
+
+## API Reference
+
+### Lifespan
+- `on_start(priority=0, name=None, service_types=None)`: Decorator to register a startup hook.
+- `on_shutdown(priority=0, name=None, service_types=None)`: Decorator to register a shutdown hook.
+- `startup(context: LifespanContext)`: Run all startup hooks for the given context.
+- `shutdown(context: LifespanContext)`: Run all shutdown hooks for the given context.
+- `is_initialized()`: Check if the manager is initialized.
+- `reset_instance()`: Reset the singleton (for testing).
+
+### LifespanContext
+- `service_type`: The type of service ("app", "worker", "api", "scheduler", "test").
+- `environment`: Environment name ("development", "production", etc).
+- `config`: Arbitrary config dict.
+- `metadata`: Arbitrary metadata dict.
+- `get_config(key, default=None)`: Get config value.
+- `set_metadata(key, value)`: Set metadata value.
+- `get_metadata(key, default=None)`: Get metadata value.
+
+## Example Integrations
+
+### Django ASGI
+
+
+#### 1. Register Lifecycle Hooks
+
+Add startup and shutdown hooks to your Django settings module. These will run when the ASGI app starts and stops.
+
+```python
+# Basic startup hook
+@lifespan.on_start()
+async def setup_logging(context: LifespanContext):
+    """Configure logging when the ASGI app starts."""
+    logging.basicConfig(level=logging.INFO)
+    logger.info(f"Starting {context.service_type} in {context.environment}")
+
+# Database setup (only for main app)
+@lifespan.on_start(priority=1, service_types=["app"])
+async def setup_database(context: LifespanContext):
+    """Setup database connections."""
+    if context.environment == "production":
+        await database.connect_with_ssl()
+    else:
+        await database.connect()
+    
+    context.set_metadata("database_connected", True)
+    logger.info("Database connected")
+
+# Shutdown hook
+@lifespan.on_shutdown(priority=1, service_types=["app"])
+async def close_database(context: LifespanContext):
+    """Clean up database connections."""
+    if context.get_metadata("database_connected", False):
+        await database.disconnect()
+        logger.info("Database disconnected")
+```
+
+#### 2. Integrate LifespanMiddleware
+
+Wrap your Django ASGI application with `LifespanMiddleware` to enable lifecycle hooks.
+
+```python
+# my_django_project/my_django_app/asgi.py
+
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
+
+import django
+django.setup()  # Initialize Django before any other imports
+
+from django.core.asgi import get_asgi_application
+from asgi_lifecycle import LifespanMiddleware, LifespanContext
+
+# Create the base ASGI application
+django_app = get_asgi_application()
+
+# Wrap with lifespan middleware
+application = LifespanMiddleware(django_app)
+```
+
+#### 4. Import Your Lifecycle Modules
+
+Make sure to import any modules containing lifecycle hooks:
+
+```python
+# In your settings.py
+import myapp.lifecycle  # This registers the hooks
+import myapp.database.lifecycle  # This too
+```
+
+### FastAPI
+```python
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from asgi_lifecycle import lifespan, LifespanContext
+
+@asynccontextmanager
+async def lifespan_context(app: FastAPI):
+    # Startup
+    context = LifespanContext(service_type="api")
+    await lifespan.startup(context)
+    
+    yield
+    
+    # Shutdown
+    await lifespan.shutdown(context)
+
+app = FastAPI(lifespan=lifespan_context)
+```
+
+### Celery Worker
+```python
+from celery.signals import worker_init, worker_shutdown
+from asgiref.sync import async_to_sync
+from asgi_lifecycle import lifespan, LifespanContext
+
+@worker_init.connect
+def init_worker_process(sender=None, conf=None, **kwargs):
+    context = LifespanContext(service_type="worker", environment="production", config={"celery_conf": conf})
+    async_to_sync(lifespan.startup)(context)
+
+@worker_shutdown.connect
+def shutdown_worker_process(sender=None, **kwargs):
+    context = LifespanContext(service_type="worker", environment="production")
+    async_to_sync(lifespan.shutdown)(context)
+```
+
+### Service Types
+```python
+# Only runs in main app
+@lifespan.on_start(service_types=["app"])
+async def setup_web_server():
+    pass
+
+# Only runs in worker
+@lifespan.on_start(service_types=["worker"])
+async def setup_worker_pool():
+    pass
+
+# Runs in both
+@lifespan.on_start(service_types=["app", "worker"])
+async def setup_shared_resources():
+    pass
+```
+
+### Error Handling
+```python
+@lifespan.on_start(priority=1)
+async def setup_database():
+    try:
+        await database.connect()
+        logger.info("Database connected")
+    except Exception as e:
+        logger.error(f"Database connection failed: {e}")
+        # Don't re-raise - let other hooks continue
+```
+
+## License
+MIT
+
+## Author
+Tarek Sanger
+
+## Contributing
+Pull requests and issues welcome! See CONTRIBUTING.md.
+
+## Roadmap
+
+- [ ] Auto-discovery of lifecycle modules
+- [ ] Built-in health checks
+- [ ] Metrics integration
+- [ ] Configuration file support
