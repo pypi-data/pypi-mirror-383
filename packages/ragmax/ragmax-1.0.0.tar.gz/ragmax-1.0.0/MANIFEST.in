@@ -1,0 +1,26 @@
+# Include documentation
+include README.md
+include LICENSE
+include requirements.txt
+
+# Include TypeScript source
+recursive-include src *.ts
+recursive-include src *.sql
+
+# Include configuration
+include docker-compose.yml
+include tsconfig.json
+include package.json
+
+# Include Python package
+recursive-include python *.py
+recursive-include python/universal_memory/templates *
+recursive-include python/universal_memory/config *
+
+# Exclude
+exclude .env
+exclude .gitignore
+recursive-exclude * __pycache__
+recursive-exclude * *.pyc
+recursive-exclude * *.pyo
+recursive-exclude * .DS_Store

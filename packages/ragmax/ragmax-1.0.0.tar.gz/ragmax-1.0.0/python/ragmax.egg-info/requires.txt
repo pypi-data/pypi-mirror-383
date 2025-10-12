@@ -1,0 +1,17 @@
+docker>=6.0.0
+pyyaml>=6.0
+requests>=2.31.0
+click>=8.1.0
+rich>=13.0.0
+python-dotenv>=1.0.0
+
+[cloud]
+boto3>=1.28.0
+google-cloud-storage>=2.10.0
+azure-storage-blob>=12.19.0
+
+[dev]
+pytest>=7.0.0
+black>=22.0.0
+flake8>=4.0.0
+mypy>=0.950
