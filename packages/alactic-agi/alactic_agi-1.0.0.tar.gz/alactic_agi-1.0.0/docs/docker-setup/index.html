@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALACTIC AGI Framework - Docker Deployment Guide</title>
+    <style>
+        /* Professional Documentation Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .header .version {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #f8f9fa;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-left: 4px solid #3498db;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .nav a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        h4 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+            position: relative;
+        }
+
+        .code-block .language {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: #3498db;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .inline-code {
+            background: #f1f3f4;
+            color: #d73a49;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1565c0;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-color: #ff9800;
+            color: #ef6c00;
+        }
+
+        .alert-success {
+            background: #e8f5e8;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* Progress Steps */
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            counter-increment: step-counter;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: 20px;
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Service Grid */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+
+        .service-card h4 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status-success { background: #d4edda; color: #155724; }
+        .status-warning { background: #fff3cd; color: #856404; }
+        .status-error { background: #f8d7da; color: #721c24; }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer .company-info {
+            margin-bottom: 20px;
+        }
+
+        .footer .support-info {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 0 10px;
+            }
+        }
+
+        /* Syntax highlighting for code */
+        .keyword { color: #ff7b72; }
+        .string { color: #a5d6ff; }
+        .comment { color: #8b949e; font-style: italic; }
+        .number { color: #79c0ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>ALACTIC AGI Framework</h1>
+            <div class="subtitle">Enterprise AI Dataset Processing Platform</div>
+            <div class="subtitle">Docker Deployment & Orchestration Guide</div>
+            <div class="version">Version 1.0.0 | Docker Deployment v1.0</div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#prerequisites">Prerequisites</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+                <li><a href="#monitoring">Monitoring Stack</a></li>
+                <li><a href="#management">Management</a></li>
+                <li><a href="#scaling">Scaling</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Overview Section -->
+            <section id="overview">
+                <h2>🐳 Docker Deployment Overview</h2>
+                
+                <div class="alert alert-info">
+                    <strong>Enterprise Docker Deployment:</strong> ALACTIC AGI Framework provides complete containerization with enterprise-grade monitoring, service discovery, and automated scaling capabilities.
+                </div>
+
+                <h3>Deployment Benefits</h3>
+                <ul>
+                    <li><strong>Production Ready:</strong> Pre-configured for enterprise environments</li>
+                    <li><strong>Auto-Scaling:</strong> Dynamic resource allocation based on load</li>
+                    <li><strong>Complete Observability:</strong> Prometheus + Grafana + AlertManager stack</li>
+                    <li><strong>Service Discovery:</strong> Automatic component communication</li>
+                    <li><strong>High Availability:</strong> Built-in redundancy and failover</li>
+                    <li><strong>Security First:</strong> Network isolation and secure communication</li>
+                </ul>
+
+                <h3>Container Architecture</h3>
+                <table>
+                    <tr>
+                        <th>Service</th>
+                        <th>Container</th>
+                        <th>Purpose</th>
+                        <th>Port</th>
+                        <th>Dependencies</th>
+                    </tr>
+                    <tr>
+                        <td>ALACTIC AGI Core</td>
+                        <td>alactic-agi</td>
+                        <td>Main processing framework</td>
+                        <td>5000</td>
+                        <td>Solr, Redis</td>
+                    </tr>
+                    <tr>
+                        <td>API Gateway</td>
+                        <td>alactic-api</td>
+                        <td>REST API interface</td>
+                        <td>3000</td>
+                        <td>Core framework</td>
+                    </tr>
+                    <tr>
+                        <td>Apache Solr</td>
+                        <td>solr</td>
+                        <td>Search & indexing</td>
+                        <td>8983</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>Prometheus</td>
+                        <td>prometheus</td>
+                        <td>Metrics collection</td>
+                        <td>9090</td>
+                        <td>All services</td>
+                    </tr>
+                    <tr>
+                        <td>Grafana</td>
+                        <td>grafana</td>
+                        <td>Monitoring dashboards</td>
+                        <td>3001</td>
+                        <td>Prometheus</td>
+                    </tr>
+                    <tr>
+                        <td>AlertManager</td>
+                        <td>alertmanager</td>
+                        <td>Alert routing</td>
+                        <td>9093</td>
+                        <td>Prometheus</td>
+                    </tr>
+                    <tr>
+                        <td>Node Exporter</td>
+                        <td>node-exporter</td>
+                        <td>System metrics</td>
+                        <td>9100</td>
+                        <td>None</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Prerequisites Section -->
+            <section id="prerequisites">
+                <h2>📋 Prerequisites</h2>
+
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h4>🐳 Docker Requirements</h4>
+                        <ul>
+                            <li>Docker Engine 20.10.0+ (Latest recommended)</li>
+                            <li>Docker Compose v2.0+ (Plugin version)</li>
+                            <li>Docker Desktop (Windows/Mac)</li>
+                            <li>Minimum 8GB RAM allocated to Docker</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <h4>💻 System Resources</h4>
+                        <ul>
+                            <li><strong>CPU:</strong> 4+ cores (8+ recommended)</li>
+                            <li><strong>Memory:</strong> 16GB+ RAM (32GB for production)</li>
+                            <li><strong>Storage:</strong> 200GB+ available space</li>
+                            <li><strong>Network:</strong> Internet connectivity</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <h4>🌐 Network Configuration</h4>
+                        <ul>
+                            <li>Ports 3000-3001, 5000, 8983, 9090-9100 available</li>
+                            <li>Docker network: 172.20.0.0/16</li>
+                            <li>External access for monitoring dashboards</li>
+                            <li>DNS resolution for container communication</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <h4>🔧 Prerequisites Installation</h4>
+                        <div class="code-block">
+                            <div class="language">PowerShell</div>
+# Install Docker Desktop (Windows)
+winget install Docker.DockerDesktop
+
+# Or download from: https://docker.com/products/docker-desktop
+
+# Verify installation
+docker --version
+docker-compose --version
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Production Deployment:</strong> For enterprise production environments, allocate minimum 32GB RAM and ensure SSD storage for optimal performance with 1M+ documents.
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture">
+                <h2>🏗️ Docker Architecture</h2>
+
+                <h3>Service Architecture Diagram</h3>
+                <div class="code-block">
+                    <div class="language">ASCII</div>
+┌─────────────────────────────────────────────────────────────────┐
+│                     ALACTIC AGI Docker Stack                    │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │   Grafana   │    │ AlertManager│    │ Prometheus  │        │
+│  │   :3001     │◄───┤    :9093    │◄───┤    :9090    │        │
+│  └─────────────┘    └─────────────┘    └─────┬───────┘        │
+│                                               │                │
+│  ┌─────────────┐    ┌─────────────┐         │                │
+│  │ ALACTIC API │    │ALACTIC Core │◄────────┼────────────────┤
+│  │   :3000     │◄───┤   :5000     │         │                │
+│  └─────────────┘    └──────┬──────┘         │                │
+│                             │                │                │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │    Solr     │◄───┤    Redis    │    │Node Exporter│        │
+│  │   :8983     │    │   :6379     │    │   :9100     │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+└─────────────────────────────────────────────────────────────────┘
+                        External Access Ports:
+                     3000 (API), 3001 (Grafana), 9090 (Prometheus)
+                </div>
+
+                <h3>Network Configuration</h3>
+                <div class="code-block">
+                    <div class="language">YAML</div>
+<span class="comment"># Docker Compose Network Definition</span>
+networks:
+  alactic-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: <span class="string">172.20.0.0/16</span>
+
+<span class="comment"># Service IP Assignment</span>
+services:
+  alactic-core:
+    networks:
+      alactic-network:
+        ipv4_address: <span class="string">172.20.0.10</span>
+  
+  solr:
+    networks:
+      alactic-network:
+        ipv4_address: <span class="string">172.20.0.20</span>
+        
+  prometheus:
+    networks:
+      alactic-network:
+        ipv4_address: <span class="string">172.20.0.30</span>
+                </div>
+
+                <h3>Storage Volumes</h3>
+                <table>
+                    <tr>
+                        <th>Volume</th>
+                        <th>Mount Point</th>
+                        <th>Purpose</th>
+                        <th>Persistence</th>
+                    </tr>
+                    <tr>
+                        <td>solr-data</td>
+                        <td>/var/solr</td>
+                        <td>Solr index and configuration</td>
+                        <td>Persistent</td>
+                    </tr>
+                    <tr>
+                        <td>prometheus-data</td>
+                        <td>/prometheus</td>
+                        <td>Metrics time-series data</td>
+                        <td>Persistent</td>
+                    </tr>
+                    <tr>
+                        <td>grafana-data</td>
+                        <td>/var/lib/grafana</td>
+                        <td>Dashboards and configurations</td>
+                        <td>Persistent</td>
+                    </tr>
+                    <tr>
+                        <td>alactic-logs</td>
+                        <td>/app/logs</td>
+                        <td>Application logs</td>
+                        <td>Persistent</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Deployment Section -->
+            <section id="deployment">
+                <h2>🚀 Deployment Guide</h2>
+
+                <div class="steps">
+                    <div class="step">
+                        <h3>Environment Preparation</h3>
+                        
+                        <div class="code-block">
+                            <div class="language">PowerShell</div>
+# Clone the repository
+git clone https://github.com/AlacticAI/alactic-agi.git
+cd alactic-agi
+
+# Verify Docker is running
+docker info
+
+# Check available resources
+docker system df
+docker system events --since 5m
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>Resource Check:</strong> Ensure Docker has sufficient resources allocated before proceeding with deployment.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>Configuration Setup</h3>
+                        
+                        <h4>Docker Compose Configuration</h4>
+                        <div class="code-block">
+                            <div class="language">YAML</div>
+<span class="comment"># docker-compose-monitoring-test.yml</span>
+version: <span class="string">'3.8'</span>
+
+services:
+  <span class="comment"># ALACTIC AGI Core Service</span>
+  alactic-agi:
+    build: .
+    container_name: alactic-agi-core
+    ports:
+      - <span class="string">"5000:5000"</span>
+      - <span class="string">"8080:8080"</span>
+    environment:
+      - ALACTIC_DEBUG=false
+      - ALACTIC_SOLR_URL=http://solr:8983/solr/super_rag
+      - PROMETHEUS_ENABLED=true
+    volumes:
+      - <span class="string">./data:/app/data</span>
+      - <span class="string">alactic-logs:/app/logs</span>
+    networks:
+      - alactic-network
+    depends_on:
+      - solr
+      - redis
+    restart: unless-stopped
+    healthcheck:
+      test: [<span class="string">"CMD"</span>, <span class="string">"curl"</span>, <span class="string">"-f"</span>, <span class="string">"http://localhost:5000/health"</span>]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  <span class="comment"># Apache Solr</span>
+  solr:
+    image: solr:9-slim
+    container_name: alactic-solr
+    ports:
+      - <span class="string">"8983:8983"</span>
+    volumes:
+      - <span class="string">solr-data:/var/solr</span>
+      - <span class="string">./solr_config:/opt/solr/server/solr/configsets/alactic_config</span>
+    networks:
+      - alactic-network
+    restart: unless-stopped
+    command: solr-precreate super_rag /opt/solr/server/solr/configsets/alactic_config
+
+volumes:
+  solr-data:
+  prometheus-data:
+  grafana-data:
+  alactic-logs:
+
+networks:
+  alactic-network:
+    driver: bridge
+                        </div>
+
+                        <h4>Environment Variables Configuration</h4>
+                        <div class="code-block">
+                            <div class="language">Bash</div>
+# Create .env file for production
+cat > .env << 'EOF'
+# ALACTIC AGI Configuration
+ALACTIC_DEBUG=false
+ALACTIC_LOG_LEVEL=INFO
+ALACTIC_MAX_WORKERS=8
+
+# Database Configuration
+ALACTIC_SOLR_URL=http://solr:8983/solr/super_rag
+ALACTIC_REDIS_URL=redis://redis:6379/0
+
+# Monitoring Configuration
+PROMETHEUS_ENABLED=true
+GRAFANA_ADMIN_PASSWORD=alactic_secure_admin_2024
+ALERTMANAGER_EMAIL=alerts@alacticai.com
+
+# Security Configuration
+JWT_SECRET_KEY=your_jwt_secret_key_here
+API_RATE_LIMIT=1000
+EOF
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>Stack Deployment</h3>
+                        
+                        <h4>Basic Deployment</h4>
+                        <div class="code-block">
+                            <div class="language">PowerShell</div>
+# Deploy the complete stack
+docker-compose -f docker-compose-monitoring-test.yml up -d
+
+# Check deployment status
+docker-compose -f docker-compose-monitoring-test.yml ps
+
+# View logs
+docker-compose -f docker-compose-monitoring-test.yml logs -f
+                        </div>
+
+                        <h4>Production Deployment</h4>
+                        <div class="code-block">
+                            <div class="language">PowerShell</div>
+# Production deployment with resource limits
+docker-compose -f docker-compose-monitoring.yml up -d
+
+# Scale specific services
+docker-compose -f docker-compose-monitoring.yml up -d --scale alactic-agi=3
+
+# Deploy with specific environment
+docker-compose -f docker-compose-monitoring.yml --env-file .env.production up -d
+                        </div>
+
+                        <div class="alert alert-success">
+                            <strong>Deployment Complete!</strong> All services should now be running. Check the status with <span class="inline-code">docker-compose ps</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>Service Verification</h3>
+                        
+                        <div class="code-block">
+                            <div class="language">PowerShell</div>
+# Comprehensive service health check
+python validate_docker_stack.py
+
+# Individual service checks
+curl http://localhost:5000/health        # ALACTIC AGI Core
+curl http://localhost:3000/api/health    # API Gateway  
+curl http://localhost:8983/solr/admin/ping  # Solr
+curl http://localhost:9090/-/healthy     # Prometheus
+curl http://localhost:3001/api/health    # Grafana
+
+# Check service connectivity
+docker exec alactic-agi-core curl http://solr:8983/solr/admin/ping
+docker exec prometheus curl http://alactic-agi:8080/metrics
+                        </div>
+
+                        <h4>Expected Service Status</h4>
+                        <table>
+                            <tr>
+                                <th>Service</th>
+                                <th>URL</th>
+                                <th>Expected Response</th>
+                                <th>Status</th>
+                            </tr>
+                            <tr>
+                                <td>ALACTIC Core</td>
+                                <td>http://localhost:5000/health</td>
+                                <td>{"status": "healthy"}</td>
+                                <td><span class="status-badge status-success">✓ Running</span></td>
+                            </tr>
+                            <tr>
+                                <td>API Gateway</td>
+                                <td>http://localhost:3000/api/health</td>
+                                <td>{"status": "ok"}</td>
+                                <td><span class="status-badge status-success">✓ Running</span></td>
+                            </tr>
+                            <tr>
+                                <td>Apache Solr</td>
+                                <td>http://localhost:8983/solr/admin/ping</td>
+                                <td>{"status": "OK"}</td>
+                                <td><span class="status-badge status-success">✓ Running</span></td>
+                            </tr>
+                            <tr>
+                                <td>Prometheus</td>
+                                <td>http://localhost:9090/-/healthy</td>
+                                <td>Prometheus is Healthy</td>
+                                <td><span class="status-badge status-success">✓ Running</span></td>
+                            </tr>
+                            <tr>
+                                <td>Grafana</td>
+                                <td>http://localhost:3001/api/health</td>
+                                <td>{"database": "ok"}</td>
+                                <td><span class="status-badge status-success">✓ Running</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Monitoring Section -->
+            <section id="monitoring">
+                <h2>📊 Enterprise Monitoring Stack</h2>
+
+                <div class="alert alert-info">
+                    <strong>Complete Observability:</strong> ALACTIC AGI includes enterprise-grade monitoring with Prometheus, Grafana, and AlertManager for production observability.
+                </div>
+
+                <h3>Monitoring Components</h3>
+
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h4>📈 Prometheus Configuration</h4>
+                        <div class="code-block">
+                            <div class="language">YAML</div>
+<span class="comment"># monitoring/prometheus-simple.yml</span>
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: <span class="string">'alactic-agi'</span>
+    static_configs:
+      - targets: [<span class="string">'alactic-agi:8080'</span>]
+    scrape_interval: 5s
+    metrics_path: <span class="string">'/metrics'</span>
+
+  - job_name: <span class="string">'node-exporter'</span>
+    static_configs:
+      - targets: [<span class="string">'node-exporter:9100'</span>]
+
+rule_files:
+  - <span class="string">"/etc/prometheus/alerts.yml"</span>
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <h4>🚨 AlertManager Setup</h4>
+                        <div class="code-block">
+                            <div class="language">YAML</div>
+<span class="comment"># monitoring/alertmanager/alertmanager-simple.yml</span>
+global:
+  smtp_smarthost: <span class="string">'localhost:587'</span>
+  smtp_from: <span class="string">'alerts@alacticai.com'</span>
+
+route:
+  group_by: [<span class="string">'alertname'</span>]
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: <span class="string">'web.hook'</span>
+
+receivers:
+- name: <span class="string">'web.hook'</span>
+  email_configs:
+  - to: <span class="string">'support@alacticai.com'</span>
+    subject: <span class="string">'ALACTIC AGI Alert: {{ .GroupLabels.alertname }}'</span>
+    body: |
+      Alert: {{ .GroupLabels.alertname }}
+      Instance: {{ .CommonLabels.instance }}
+      Severity: {{ .CommonLabels.severity }}
+      Description: {{ .CommonAnnotations.description }}
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <h4>📊 Grafana Dashboards</h4>
+                        <p>Pre-configured dashboards include:</p>
+                        <ul>
+                            <li><strong>ALACTIC AGI Overview:</strong> Business metrics and KPIs</li>
+                            <li><strong>System Performance:</strong> CPU, memory, disk usage</li>
+                            <li><strong>Application Metrics:</strong> Request rates, response times</li>
+                            <li><strong>Solr Monitoring:</strong> Query performance, index status</li>
+                            <li><strong>Error Tracking:</strong> Error rates and failure analysis</li>
+                        </ul>
+                        
+                        <div class="alert alert-info">
+                            <strong>Default Credentials:</strong><br>
+                            Username: admin<br>
+                            Password: alactic_secure_admin_2024
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <h4>🔍 Node Exporter Metrics</h4>
+                        <p>System-level monitoring includes:</p>
+                        <ul>
+                            <li>CPU utilization and load averages</li>
+                            <li>Memory usage and swap activity</li>
+                            <li>Disk I/O and filesystem usage</li>
+                            <li>Network traffic and connections</li>
+                            <li>Process and service status</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Monitoring URLs</h3>
+                <table>
+                    <tr>
+                        <th>Service</th>
+                        <th>URL</th>
+                        <th>Purpose</th>
+                        <th>Credentials</th>
+                    </tr>
+                    <tr>
+                        <td>Grafana Dashboards</td>
+                        <td><a href="http://localhost:3001" target="_blank">http://localhost:3001</a></td>
+                        <td>Visual monitoring dashboards</td>
+                        <td>admin / alactic_secure_admin_2024</td>
+                    </tr>
+                    <tr>
+                        <td>Prometheus UI</td>
+                        <td><a href="http://localhost:9090" target="_blank">http://localhost:9090</a></td>
+                        <td>Metrics exploration and alerting</td>
+                        <td>None required</td>
+                    </tr>
+                    <tr>
+                        <td>AlertManager UI</td>
+                        <td><a href="http://localhost:9093" target="_blank">http://localhost:9093</a></td>
+                        <td>Alert management and routing</td>
+                        <td>None required</td>
+                    </tr>
+                    <tr>
+                        <td>ALACTIC Metrics</td>
+                        <td><a href="http://localhost:8080/metrics" target="_blank">http://localhost:8080/metrics</a></td>
+                        <td>Raw Prometheus metrics</td>
+                        <td>None required</td>
+                    </tr>
+                </table>
+
+                <h3>Custom Metrics Integration</h3>
+                <div class="code-block">
+                    <div class="language">Python</div>
+<span class="comment"># Example: Adding custom business metrics</span>
+<span class="keyword">from</span> monitoring <span class="keyword">import</span> MetricsCollector
+
+<span class="comment"># Initialize metrics in your application</span>
+metrics = MetricsCollector()
+
+<span class="comment"># Record business metrics</span>
+metrics.record_counter(<span class="string">"documents_processed_total"</span>, <span class="number">1</span>, 
+                     {<span class="string">"source"</span>: <span class="string">"web_crawler"</span>, <span class="string">"status"</span>: <span class="string">"success"</span>})
+
+metrics.record_gauge(<span class="string">"processing_queue_size"</span>, queue_size)
+
+metrics.record_timer(<span class="string">"document_processing_duration_seconds"</span>, 
+                   processing_time, {<span class="string">"document_type"</span>: <span class="string">"research_paper"</span>})
+
+<span class="comment"># Metrics automatically exposed at /metrics endpoint</span>
+                </div>
+            </section>
+
+            <!-- Management Section -->
+            <section id="management">
+                <h2>🔧 Stack Management</h2>
+
+                <h3>Daily Operations</h3>
+
+                <h4>Service Management Commands</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Start the entire stack
+docker-compose -f docker-compose-monitoring-test.yml up -d
+
+# Stop the entire stack
+docker-compose -f docker-compose-monitoring-test.yml down
+
+# Restart specific service
+docker-compose -f docker-compose-monitoring-test.yml restart alactic-agi
+
+# View service logs
+docker-compose -f docker-compose-monitoring-test.yml logs -f alactic-agi
+
+# Check service status
+docker-compose -f docker-compose-monitoring-test.yml ps
+
+# Update and restart services
+docker-compose -f docker-compose-monitoring-test.yml pull
+docker-compose -f docker-compose-monitoring-test.yml up -d
+                </div>
+
+                <h4>Resource Monitoring</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Monitor resource usage
+docker stats
+
+# Check disk usage
+docker system df
+
+# View container details
+docker inspect alactic-agi-core
+
+# Check network connectivity
+docker network ls
+docker network inspect alactic-agi_alactic-network
+
+# Backup volumes
+docker run --rm -v alactic-agi_solr-data:/data -v ${PWD}:/backup alpine tar czf /backup/solr-backup.tar.gz -C /data .
+                </div>
+
+                <h3>Data Management</h3>
+
+                <h4>Backup Operations</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Create backup script
+cat > backup_alactic.ps1 << 'EOF'
+$BackupDir = "C:\ALACTIC_Backups\$(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss')"
+New-Item -ItemType Directory -Path $BackupDir -Force
+
+# Backup Solr data
+docker run --rm -v alactic-agi_solr-data:/data -v "${BackupDir}:/backup" alpine tar czf /backup/solr-data.tar.gz -C /data .
+
+# Backup Prometheus data  
+docker run --rm -v alactic-agi_prometheus-data:/data -v "${BackupDir}:/backup" alpine tar czf /backup/prometheus-data.tar.gz -C /data .
+
+# Backup Grafana data
+docker run --rm -v alactic-agi_grafana-data:/data -v "${BackupDir}:/backup" alpine tar czf /backup/grafana-data.tar.gz -C /data .
+
+# Backup configuration files
+Copy-Item -Path ".\docker-compose-monitoring-test.yml" -Destination "${BackupDir}\"
+Copy-Item -Path ".\config.ini" -Destination "${BackupDir}\"
+Copy-Item -Path ".\.env" -Destination "${BackupDir}\"
+
+Write-Host "Backup completed: $BackupDir"
+EOF
+
+# Run backup
+.\backup_alactic.ps1
+                </div>
+
+                <h4>Restore Operations</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Restore from backup
+$BackupDir = "C:\ALACTIC_Backups\2024-01-15_14-30-00"
+
+# Stop services
+docker-compose -f docker-compose-monitoring-test.yml down
+
+# Restore volumes
+docker run --rm -v alactic-agi_solr-data:/data -v "${BackupDir}:/backup" alpine tar xzf /backup/solr-data.tar.gz -C /data
+docker run --rm -v alactic-agi_prometheus-data:/data -v "${BackupDir}:/backup" alpine tar xzf /backup/prometheus-data.tar.gz -C /data
+docker run --rm -v alactic-agi_grafana-data:/data -v "${BackupDir}:/backup" alpine tar xzf /backup/grafana-data.tar.gz -C /data
+
+# Restart services
+docker-compose -f docker-compose-monitoring-test.yml up -d
+                </div>
+
+                <h3>Security Management</h3>
+
+                <h4>Container Security</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Security audit
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/docker-bench
+
+# Check for vulnerabilities
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock quay.io/coreos/clair-local-scan
+
+# Update container security
+docker-compose -f docker-compose-monitoring-test.yml pull
+docker-compose -f docker-compose-monitoring-test.yml up -d
+
+# Review security logs
+docker-compose -f docker-compose-monitoring-test.yml logs | grep -i "security\|error\|fail"
+                </div>
+
+                <h4>Network Security</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Check exposed ports
+netstat -tlnp | grep -E "(3000|3001|5000|8983|9090)"
+
+# Firewall configuration (Ubuntu/CentOS)
+ufw allow 3000/tcp comment "ALACTIC API"
+ufw allow 3001/tcp comment "Grafana Dashboard"
+ufw allow 9090/tcp comment "Prometheus"
+
+# Block internal ports from external access
+ufw deny 5000/tcp comment "ALACTIC Core - Internal Only"
+ufw deny 8983/tcp comment "Solr - Internal Only"
+                </div>
+            </section>
+
+            <!-- Scaling Section -->
+            <section id="scaling">
+                <h2>📈 Scaling & Performance</h2>
+
+                <div class="alert alert-info">
+                    <strong>Enterprise Scaling:</strong> ALACTIC AGI supports horizontal and vertical scaling for enterprise workloads processing millions of documents.
+                </div>
+
+                <h3>Horizontal Scaling</h3>
+
+                <h4>Multi-Instance Deployment</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Scale ALACTIC AGI core service
+docker-compose -f docker-compose-monitoring-test.yml up -d --scale alactic-agi=3
+
+# Scale with load balancer
+cat > docker-compose-scaled.yml << 'EOF'
+version: '3.8'
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - alactic-agi-1
+      - alactic-agi-2
+      - alactic-agi-3
+    networks:
+      - alactic-network
+
+  alactic-agi-1:
+    extends:
+      file: docker-compose-monitoring-test.yml
+      service: alactic-agi
+    container_name: alactic-agi-1
+
+  alactic-agi-2:
+    extends:
+      file: docker-compose-monitoring-test.yml
+      service: alactic-agi
+    container_name: alactic-agi-2
+
+  alactic-agi-3:
+    extends:
+      file: docker-compose-monitoring-test.yml
+      service: alactic-agi
+    container_name: alactic-agi-3
+EOF
+
+# Deploy scaled configuration
+docker-compose -f docker-compose-scaled.yml up -d
+                </div>
+
+                <h4>Load Balancer Configuration</h4>
+                <div class="code-block">
+                    <div class="language">Nginx</div>
+# nginx.conf for load balancing
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream alactic_backend {
+        server alactic-agi-1:5000;
+        server alactic-agi-2:5000;
+        server alactic-agi-3:5000;
+        
+        # Health checks
+        keepalive 32;
+    }
+
+    server {
+        listen 80;
+        
+        location / {
+            proxy_pass http://alactic_backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            
+            # Timeouts
+            proxy_connect_timeout 30s;
+            proxy_send_timeout 30s;
+            proxy_read_timeout 30s;
+        }
+        
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+    }
+}
+                </div>
+
+                <h3>Vertical Scaling</h3>
+
+                <h4>Resource Limits Configuration</h4>
+                <div class="code-block">
+                    <div class="language">YAML</div>
+<span class="comment"># Production resource limits</span>
+services:
+  alactic-agi:
+    deploy:
+      resources:
+        limits:
+          cpus: <span class="string">'4.0'</span>
+          memory: 8G
+        reservations:
+          cpus: <span class="string">'2.0'</span>
+          memory: 4G
+    environment:
+      - ALACTIC_MAX_WORKERS=8
+      - JAVA_OPTS=-Xmx4g -Xms2g
+
+  solr:
+    deploy:
+      resources:
+        limits:
+          cpus: <span class="string">'2.0'</span>
+          memory: 4G
+        reservations:
+          cpus: <span class="string">'1.0'</span>
+          memory: 2G
+    environment:
+      - SOLR_HEAP=3g
+                </div>
+
+                <h3>Performance Optimization</h3>
+
+                <h4>Docker Performance Tuning</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Docker daemon optimization (daemon.json)
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ],
+  "default-ulimits": {
+    "nofile": {
+      "Name": "nofile",
+      "Hard": 64000,
+      "Soft": 64000
+    }
+  }
+}
+
+# Restart Docker daemon
+Restart-Service docker
+                </div>
+
+                <h4>Application Performance Tuning</h4>
+                <div class="code-block">
+                    <div class="language">INI</div>
+# config.ini for high-performance deployment
+[DEFAULT]
+debug = false
+log_level = WARNING
+max_workers = 16
+batch_size = 1000
+
+[DATABASE]
+solr_url = http://solr:8983/solr/super_rag
+solr_timeout = 60
+connection_pool_size = 20
+
+[SCRAPING]
+max_pages = 100000
+delay = 0.5
+concurrent_requests = 16
+download_timeout = 30
+
+[MONITORING]
+metrics_enabled = true
+high_performance_mode = true
+metrics_buffer_size = 10000
+                </div>
+
+                <h3>Auto-Scaling with Docker Swarm</h3>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Initialize Docker Swarm
+docker swarm init
+
+# Deploy stack with auto-scaling
+docker stack deploy -c docker-compose-swarm.yml alactic
+
+# Configure auto-scaling rules
+docker service update --replicas 5 alactic_alactic-agi
+docker service update --limit-cpu 2 --limit-memory 4g alactic_alactic-agi
+
+# Monitor service scaling
+docker service ls
+docker service ps alactic_alactic-agi
+                </div>
+            </section>
+
+            <!-- Troubleshooting Section -->
+            <section id="troubleshooting">
+                <h2>🔧 Troubleshooting</h2>
+
+                <h3>Common Docker Issues</h3>
+
+                <div class="alert alert-warning">
+                    <strong>Before troubleshooting:</strong> Always run <span class="inline-code">python validate_docker_stack.py</span> for comprehensive diagnostics.
+                </div>
+
+                <table>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Symptoms</th>
+                        <th>Solution</th>
+                        <th>Prevention</th>
+                    </tr>
+                    <tr>
+                        <td>Container fails to start</td>
+                        <td>Exit code 1, restart loops</td>
+                        <td>Check logs: <code>docker logs container_name</code></td>
+                        <td>Validate configuration before deployment</td>
+                    </tr>
+                    <tr>
+                        <td>Service communication failure</td>
+                        <td>Connection refused, timeouts</td>
+                        <td>Verify network: <code>docker network inspect</code></td>
+                        <td>Use service names for inter-container communication</td>
+                    </tr>
+                    <tr>
+                        <td>Out of memory errors</td>
+                        <td>OOMKilled, performance degradation</td>
+                        <td>Increase memory limits or optimize application</td>
+                        <td>Monitor memory usage with <code>docker stats</code></td>
+                    </tr>
+                    <tr>
+                        <td>Port binding conflicts</td>
+                        <td>Port already in use errors</td>
+                        <td>Check port usage: <code>netstat -tlnp</code></td>
+                        <td>Use Docker networks instead of host ports</td>
+                    </tr>
+                </table>
+
+                <h3>Diagnostic Commands</h3>
+
+                <h4>Comprehensive Stack Diagnosis</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Complete stack validation
+python validate_docker_stack.py
+
+# Service-specific diagnostics
+docker-compose -f docker-compose-monitoring-test.yml ps
+docker-compose -f docker-compose-monitoring-test.yml logs --tail=100
+
+# Network connectivity testing
+docker exec alactic-agi-core ping solr
+docker exec alactic-agi-core curl http://solr:8983/solr/admin/ping
+docker exec prometheus curl http://alactic-agi:8080/metrics
+
+# Resource usage monitoring
+docker stats --no-stream
+docker system df
+docker system events --since 10m
+                </div>
+
+                <h4>Container Health Checks</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Individual container health checks
+docker exec alactic-agi-core curl -f http://localhost:5000/health
+docker exec alactic-solr curl -f http://localhost:8983/solr/admin/ping
+docker exec prometheus curl -f http://localhost:9090/-/healthy
+docker exec grafana curl -f http://localhost:3001/api/health
+
+# Check container processes
+docker exec alactic-agi-core ps aux
+docker exec alactic-agi-core netstat -tlnp
+
+# Inspect container configuration
+docker inspect alactic-agi-core | jq '.[] | {State, NetworkSettings, Mounts}'
+                </div>
+
+                <h3>Performance Issues</h3>
+
+                <h4>Memory and CPU Optimization</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Monitor resource usage
+docker stats --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}"
+
+# Optimize memory usage
+docker-compose -f docker-compose-monitoring-test.yml restart alactic-agi
+
+# Check for memory leaks
+docker exec alactic-agi-core python -c "
+import psutil
+process = psutil.Process()
+print(f'Memory: {process.memory_info().rss / 1024 / 1024:.2f} MB')
+print(f'CPU: {process.cpu_percent()}%')
+"
+
+# Garbage collection
+docker exec alactic-agi-core python -c "import gc; gc.collect(); print('GC completed')"
+                </div>
+
+                <h4>Storage Issues</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Check disk usage
+docker system df -v
+
+# Clean up unused resources
+docker system prune -f
+docker volume prune -f
+docker image prune -f
+
+# Check volume usage
+docker exec alactic-solr df -h /var/solr
+docker exec prometheus df -h /prometheus
+
+# Monitor log file sizes
+docker exec alactic-agi-core du -sh /app/logs/*
+docker-compose -f docker-compose-monitoring-test.yml logs --tail=1 | wc -l
+                </div>
+
+                <h3>Network Troubleshooting</h3>
+
+                <h4>Service Discovery Issues</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Check DNS resolution
+docker exec alactic-agi-core nslookup solr
+docker exec alactic-agi-core nslookup prometheus
+
+# Network connectivity testing
+docker exec alactic-agi-core telnet solr 8983
+docker exec prometheus telnet alactic-agi 8080
+
+# Inspect network configuration
+docker network ls
+docker network inspect alactic-agi_alactic-network
+
+# Check iptables rules (Linux)
+docker exec alactic-agi-core iptables -L -n
+                </div>
+
+                <h3>Recovery Procedures</h3>
+
+                <h4>Emergency Recovery</h4>
+                <div class="code-block">
+                    <div class="language">PowerShell</div>
+# Emergency stack restart
+docker-compose -f docker-compose-monitoring-test.yml down
+docker system prune -f
+docker-compose -f docker-compose-monitoring-test.yml up -d
+
+# Restore from backup
+$BackupDir = "C:\ALACTIC_Backups\latest"
+docker-compose -f docker-compose-monitoring-test.yml down -v
+docker run --rm -v alactic-agi_solr-data:/data -v "${BackupDir}:/backup" alpine tar xzf /backup/solr-data.tar.gz -C /data
+docker-compose -f docker-compose-monitoring-test.yml up -d
+
+# Validate recovery
+python validate_docker_stack.py
+                </div>
+
+                <h3>Getting Support</h3>
+                <div class="alert alert-info">
+                    <strong>Enterprise Support Channels:</strong>
+                    <ul>
+                        <li>📧 Email: <a href="mailto:support@alacticai.com">support@alacticai.com</a></li>
+                        <li>🎫 Support Portal: <a href="https://support.alacticai.com">support.alacticai.com</a></li>
+                        <li>📞 Emergency Hotline: +1-800-ALACTIC (24/7 Enterprise Support)</li>
+                        <li>💬 Slack: #alactic-support (Enterprise customers)</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="company-info">
+                <h3>ALACTIC AGI Framework v1.0.0</h3>
+                <p>Enterprise Docker Deployment Guide</p>
+                <p>Developed by <strong>Alactic Inc.</strong></p>
+                <p>Author: <strong>Yash Parashar</strong></p>
+            </div>
+            <div class="support-info">
+                <p>For technical support and enterprise licensing:</p>
+                <p>📧 <a href="mailto:support@alacticai.com" style="color: #3498db;">support@alacticai.com</a></p>
+                <p>🌐 <a href="https://www.alacticai.com" style="color: #3498db;">www.alacticai.com</a></p>
+                <p>📞 Enterprise Support: +1-800-ALACTIC</p>
+                <p>© 2025 Alactic Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

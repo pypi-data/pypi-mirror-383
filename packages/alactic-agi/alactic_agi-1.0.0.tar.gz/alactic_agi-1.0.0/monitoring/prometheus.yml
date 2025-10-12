@@ -1,0 +1,48 @@
+# ALACTIC AGI - Prometheus Configuration
+# Scrapes metrics from ALACTIC AGI Framework components
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "/etc/prometheus/alert-rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # ALACTIC AGI Framework metrics
+  - job_name: 'alactic-agi'
+    static_configs:
+      - targets: ['alactic-agi:8080']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Node.js API metrics
+  - job_name: 'alactic-api'
+    static_configs:
+      - targets: ['api:3000']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+
+  # Solr metrics
+  - job_name: 'solr'
+    static_configs:
+      - targets: ['solr:8983']
+    scrape_interval: 30s
+    metrics_path: '/solr/admin/metrics'
+
+  # System metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

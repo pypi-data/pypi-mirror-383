@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALACTIC AGI Framework - Documentation Hub</title>
+    <style>
+        /* Professional Documentation Hub Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 4em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header .version {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 1.1em;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Documentation Grid */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .doc-card .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .doc-card h2 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .doc-card .description {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .doc-card .features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .doc-card .features li {
+            padding: 8px 0;
+            color: #555;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .doc-card .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .doc-card .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .doc-card .btn:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6c5ce7);
+            transform: translateY(-2px);
+        }
+
+        /* Company Info */
+        .company-info {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .company-info h3 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .company-info .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .company-info .info-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .company-info .info-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .quick-links h3 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .quick-link {
+            display: block;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #2c3e50;
+            padding: 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .quick-link:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #fff;
+            transform: translateY(-5px);
+        }
+
+        .quick-link .link-icon {
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .quick-link .link-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .quick-link .link-desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer .support-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer .support-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            transition: background 0.3s ease;
+        }
+
+        .footer .support-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .docs-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .doc-card {
+                padding: 30px;
+            }
+            
+            .container {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>ALACTIC AGI Framework</h1>
+            <div class="subtitle">Enterprise AI Dataset Processing Platform</div>
+            <div class="subtitle">Complete Documentation Hub</div>
+            <div class="version">Version 1.0.0 | Professional Documentation Suite</div>
+        </div>
+
+        <!-- Documentation Grid -->
+        <div class="docs-grid">
+            <!-- Local Setup Documentation -->
+            <div class="doc-card">
+                <div class="icon">🖥️</div>
+                <h2>Local Setup Guide</h2>
+                <div class="description">
+                    Complete guide for setting up ALACTIC AGI Framework on your local development environment with full monitoring capabilities.
+                </div>
+                <ul class="features">
+                    <li>Step-by-step installation instructions</li>
+                    <li>Python 3.10+ environment setup</li>
+                    <li>Apache Solr configuration</li>
+                    <li>Enterprise monitoring integration</li>
+                    <li>Troubleshooting and debugging</li>
+                    <li>API reference and examples</li>
+                </ul>
+                <a href="local-setup/index.html" class="btn">View Local Setup Guide</a>
+            </div>
+
+            <!-- Docker Setup Documentation -->
+            <div class="doc-card">
+                <div class="icon">🐳</div>
+                <h2>Docker Deployment Guide</h2>
+                <div class="description">
+                    Enterprise-grade Docker deployment with complete orchestration, monitoring stack, and production-ready configurations.
+                </div>
+                <ul class="features">
+                    <li>Multi-container orchestration</li>
+                    <li>Prometheus + Grafana + AlertManager</li>
+                    <li>Horizontal and vertical scaling</li>
+                    <li>Service discovery and networking</li>
+                    <li>Production security and backup</li>
+                    <li>Performance optimization</li>
+                </ul>
+                <a href="docker-setup/index.html" class="btn">View Docker Deployment Guide</a>
+            </div>
+        </div>
+
+        <!-- Company Info -->
+        <div class="company-info">
+            <h3>About ALACTIC AGI Framework</h3>
+            <p>Developed by <strong>Alactic Inc.</strong> | Created by <strong>Yash Parashar</strong></p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Framework Version</strong>
+                    v1.0.0 - Production Ready
+                </div>
+                <div class="info-item">
+                    <strong>Technology Stack</strong>
+                    Python 3.10+, Node.js, Apache Solr, Docker
+                </div>
+                <div class="info-item">
+                    <strong>Enterprise Features</strong>
+                    Monitoring, Scaling, Security, Performance
+                </div>
+                <div class="info-item">
+                    <strong>Support Level</strong>
+                    Enterprise 24/7 Support Available
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+            <h3>Quick Access Links</h3>
+            <div class="links-grid">
+                <a href="local-setup/index.html#installation" class="quick-link">
+                    <div class="link-icon">⚡</div>
+                    <div class="link-title">Quick Start</div>
+                    <div class="link-desc">Get started in 5 minutes</div>
+                </a>
+                
+                <a href="local-setup/index.html#api-reference" class="quick-link">
+                    <div class="link-icon">📚</div>
+                    <div class="link-title">API Reference</div>
+                    <div class="link-desc">Complete API documentation</div>
+                </a>
+                
+                <a href="docker-setup/index.html#monitoring" class="quick-link">
+                    <div class="link-icon">📊</div>
+                    <div class="link-title">Monitoring</div>
+                    <div class="link-desc">Enterprise observability</div>
+                </a>
+                
+                <a href="docker-setup/index.html#scaling" class="quick-link">
+                    <div class="link-icon">📈</div>
+                    <div class="link-title">Scaling</div>
+                    <div class="link-desc">Production scaling guide</div>
+                </a>
+                
+                <a href="local-setup/index.html#troubleshooting" class="quick-link">
+                    <div class="link-icon">🔧</div>
+                    <div class="link-title">Troubleshooting</div>
+                    <div class="link-desc">Common issues & solutions</div>
+                </a>
+                
+                <a href="docker-setup/index.html#management" class="quick-link">
+                    <div class="link-icon">⚙️</div>
+                    <div class="link-title">Management</div>
+                    <div class="link-desc">Stack management tools</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>
+                <h4>ALACTIC AGI Framework v1.0.0</h4>
+                <p>Professional Documentation Suite</p>
+                <p>© 2025 Alactic Inc. All rights reserved.</p>
+            </div>
+            
+            <div class="support-links">
+                <a href="mailto:support@alacticai.com">📧 Technical Support</a>
+                <a href="https://www.alacticai.com">🌐 Company Website</a>
+                <a href="https://github.com/AlacticAI/alactic-agi">🐙 GitHub Repository</a>
+                <a href="tel:+1-800-ALACTIC">📞 Enterprise Hotline</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

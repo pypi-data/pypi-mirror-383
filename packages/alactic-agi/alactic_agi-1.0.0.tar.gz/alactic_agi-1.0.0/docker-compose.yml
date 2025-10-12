@@ -1,0 +1,51 @@
+services:
+  solr:
+    image: solr:9
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solr_data_host:/var/solr/data
+      - ./solr_config:/opt/solr/server/solr/configsets/super_rag:ro
+    entrypoint:
+      - bash
+      - -c
+      - "solr-precreate super_rag /opt/solr/server/solr/configsets/super_rag && exec solr -f"
+    command: ["-f", "-Dlog4j.configurationFile=/opt/solr/server/solr/configsets/super_rag/log4j2.xml"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8983/solr"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./api
+    working_dir: /app
+    command: ["node", "src/server.js"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api:/app
+      - ./synthesizer:/app/synthesizer
+    environment:
+      - SOLR_HOST=solr
+      - SYNTH_PATH=../synthesizer/rules/synthesize
+
+  alactic_agi:
+    build: .
+    depends_on:
+      solr:
+        condition: service_healthy
+      api:
+        condition: service_started
+    environment:
+      - SOLR_URL=http://solr:8983/solr/super_rag
+      - API_URL=http://api:3000/query
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./crawler:/app/crawler
+      - ./indexer:/app/indexer
+      - ./data:/app/data
+    command: ["python", "alactic_framework.py"]

@@ -1,0 +1,9 @@
+[alactic_agi.plugins]
+default_crawler = alactic_agi.crawler:DefaultCrawler
+prometheus_monitor = alactic_agi.monitoring:PrometheusMonitor
+solr_indexer = alactic_agi.indexer:SolrIndexer
+
+[console_scripts]
+alactic-agi = alactic_agi.cli:main
+alactic-demo = alactic_agi.demo:run_demo
+alactic-monitor = alactic_agi.monitoring:start_monitoring

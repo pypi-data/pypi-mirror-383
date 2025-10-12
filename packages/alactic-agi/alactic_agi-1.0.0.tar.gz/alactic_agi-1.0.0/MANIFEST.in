@@ -1,0 +1,35 @@
+# MANIFEST.in for ALACTIC AGI Framework
+# Include additional files in the Python package
+
+include README.md
+include LICENSE
+include CHANGELOG.md
+include requirements.txt
+include config.ini
+include pyproject.toml
+
+# Include configuration files
+recursive-include src/alactic_agi/config *.ini *.yml *.yaml
+
+# Include documentation
+recursive-include docs *.html *.css *.js *.md
+
+# Include example configurations
+include docker-compose*.yml
+include Dockerfile
+include monitoring/*.yml
+
+# Include test files (optional)
+# recursive-include tests *.py
+
+# Exclude unnecessary files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude __pycache__
+global-exclude .git*
+global-exclude .DS_Store
+global-exclude *.egg-info
+global-exclude .pytest_cache
+global-exclude .coverage
+global-exclude .mypy_cache

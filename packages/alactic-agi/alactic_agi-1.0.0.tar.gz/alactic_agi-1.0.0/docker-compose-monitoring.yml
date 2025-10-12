@@ -1,0 +1,131 @@
+# ALACTIC AGI - Professional Monitoring Stack
+# Prometheus + Grafana + ALACTIC AGI Framework
+
+version: '3.8'
+
+services:
+  # Main ALACTIC AGI Framework
+  alactic-agi:
+    build: .
+    ports:
+      - "5000:5000"  # Flask API
+      - "8080:8080"  # Monitoring dashboard
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - MONITORING_ENABLED=true
+      - PROMETHEUS_ENDPOINT=http://prometheus:9090
+    depends_on:
+      - solr
+      - prometheus
+    networks:
+      - alactic-monitoring
+
+  # Apache Solr Search Engine
+  solr:
+    image: solr:9
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solr_config:/opt/solr/server/solr/configsets/super_rag
+      - solr_data:/var/solr
+    environment:
+      - SOLR_HEAP=1g
+    command: 
+      - solr-precreate
+      - super_rag
+      - /opt/solr/server/solr/configsets/super_rag
+    networks:
+      - alactic-monitoring
+
+  # Node.js API Server
+  api:
+    build: ./api
+    ports:
+      - "3000:3000"
+    environment:
+      - SOLR_URL=http://solr:8983/solr/super_rag
+      - MONITORING_ENABLED=true
+    depends_on:
+      - solr
+    networks:
+      - alactic-monitoring
+
+  # Prometheus Metrics Collection
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - alactic-monitoring
+
+  # Grafana Visualization Dashboard
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"  # Grafana on port 3001 to avoid conflict
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/etc/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=alactic123
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    depends_on:
+      - prometheus
+    networks:
+      - alactic-monitoring
+
+  # AlertManager for Professional Alerting
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - alertmanager_data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=http://localhost:9093'
+    networks:
+      - alactic-monitoring
+
+  # Node Exporter for System Metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - alactic-monitoring
+
+volumes:
+  solr_data:
+  prometheus_data:
+  grafana_data:
+  alertmanager_data:
+
+networks:
+  alactic-monitoring:
+    driver: bridge
