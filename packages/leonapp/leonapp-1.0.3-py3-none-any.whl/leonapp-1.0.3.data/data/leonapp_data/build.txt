@@ -1,0 +1,1 @@
+py -m nuitka --show-progress --show-memory --standalone --windows-disable-console --plugin-enable=pyqt5 --output-dir=output --include-data-dir=assets=assets --windows-icon-from-ico=icon.ico --output-filename=leonapp leonapp_gui.py
