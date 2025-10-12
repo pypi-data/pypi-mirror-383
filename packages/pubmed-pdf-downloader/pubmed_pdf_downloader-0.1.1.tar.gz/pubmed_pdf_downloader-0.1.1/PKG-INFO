@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: pubmed_pdf_downloader
+Version: 0.1.1
+Summary: A package to download PDFs from PubMed Central using PMCIDs.
+Home-page: https://github.com/arundasan91/pubmed_pdf_downloader
+Author: Arun Das
+Author-email: ard212@pitt.edu
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+License-File: LICENSE
+Requires-Dist: requests
+Requires-Dist: beautifulsoup4
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
