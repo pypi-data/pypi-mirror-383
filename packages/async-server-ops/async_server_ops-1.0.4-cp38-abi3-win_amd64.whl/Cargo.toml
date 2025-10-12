@@ -1,0 +1,25 @@
+[package]
+name = "async_server_ops"
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+description = "Async remote file ops over SSH (scp) with robust defaults and Python bindings"
+readme = "README.md"
+repository = "https://example.com/async_server_ops"
+
+[lib]
+name = "async_server_ops"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+python = ["dep:pyo3", "pyo3/extension-module", "pyo3/abi3-py38"]
+
+[dependencies]
+tokio = { version = "1.47", features = ["process", "macros", "rt-multi-thread", "io-util", "fs", "time"] }
+async-trait = "0.1"
+thiserror = "1"
+which = "6"
+
+# PyO3 optional; enabled by the `python` feature
+pyo3 = { version = "0.20", optional = true, features = ["macros", "abi3-py38"] }
