@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: hnte-codec
+Version: 2.0.0
+Summary: HNTE compressed & encrypted file format codec, takes less space than usual text files.(花のテクストエクステンション　－ Hana no Text Extension)
+Author-email: Elif İrem Atmaca <elifirematmaca2010@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/ElifIremAtmaca/hnte-codec
+Project-URL: Source, https://github.com/ElifIremAtmaca/hnte_codec
+Project-URL: Issues, https://github.com/ElifIremAtmaca/hnte_codec/issues
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: cryptography>=42.0.0
+Dynamic: license-file
+
+#HNTE Codec
+
+An lightweight Python implementation of the HNTE container format:
+compressed (Deflate) + optional AES-GCM encryption + CRC integrity.
+
+##Features
+• V1 (XOR + Deflate) and (AES-GCM + Deflate)
+• Supports Latin-5 (ISO-8859-9) and UTF-8 encodings.
+• Integrity-Checked and tamper-evident
+
+##Install
+```bash
+pip install hnte-codec
+
+---------------------------------------
+Usage---
+
+from hnte_codec import save_text, load_text
+key = b"A"*32 #256-bit AES key
+save_text("demo.hnte", "Hello World!", key=key)
+print(load_text("demo.hnte", key=key))

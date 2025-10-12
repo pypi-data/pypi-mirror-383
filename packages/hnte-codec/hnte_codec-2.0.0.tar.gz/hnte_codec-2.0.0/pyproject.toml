@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hnte-codec"
+version = "2.0.0"
+description = "HNTE compressed & encrypted file format codec, takes less space than usual text files.(花のテクストエクステンション　－ Hana no Text Extension)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+authors = [
+    { name = "Elif İrem Atmaca" , email = "elifirematmaca2010@gmail.com"}
+]
+dependencies = [
+    "cryptography>=42.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/ElifIremAtmaca/hnte-codec"
+Source = "https://github.com/ElifIremAtmaca/hnte_codec"
+Issues = "https://github.com/ElifIremAtmaca/hnte_codec/issues"
