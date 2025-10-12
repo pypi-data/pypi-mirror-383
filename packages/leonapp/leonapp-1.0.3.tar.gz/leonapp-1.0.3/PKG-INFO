@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: leonapp
+Version: 1.0.3
+Summary: LeonAPP应用程序启动器
+Home-page: https://github.com/JGZYES/leonapp
+Author: JGZ_YES
+Author-email: luoriguodu@qq.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: PyQt5==5.15.7
+Requires-Dist: PyQt5-Qt5==5.15.2
+Requires-Dist: PyQt5-sip==12.11.0
+Requires-Dist: requests==2.31.0
+Requires-Dist: PyQt-Fluent-Widgets[full]==1.8.7
+Requires-Dist: markdown==3.5.2
+
+# LeonAPP
+
+LeonAPP应用程序启动器，通过命令行快速启动leonapp_gui.py。
+
+## 安装
+pip install leonapp
+## 使用方法
+
+安装完成后，在命令行中输入：
+leonapp
+程序会自动查找并运行根目录下的leonapp_gui.py文件。
+
+## 注意事项
+
+确保leonapp_gui.py存在于以下位置之一：
+- 当前工作目录
+- 你的用户主目录
+- 系统PATH环境变量包含的路径中
+    
