@@ -1,0 +1,6 @@
+[console_scripts]
+cerb = cerb_code.runners.cerb_launcher:main
+cerb-hook = cerb_code.runners.hook_monitor:main
+cerb-mcp = cerb_code.backend.mcp_server:main
+cerb-monitor-server = cerb_code.backend.monitor:main
+cerb-ui = cerb_code.runners.kerberos:main
