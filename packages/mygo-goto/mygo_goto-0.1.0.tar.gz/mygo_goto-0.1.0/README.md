@@ -1,0 +1,74 @@
+# MyGO - **I**nteractive **T**oolset **S**upporting **M**ulti-directional **Y**ielding **G**oto **O**perations
+
+<p align="center">
+  <img src="logo.svg" alt="mygo logo" width="200"/>
+</p>
+
+**I**mplementation **T**hat **S**imulates **M**ind-bending **Y**et **G**lorious **O**perations - A Python package that provides simple label/goto capabilities within the same function using AST transformation.
+
+⚠️ **Warning**: This library is for research and educational purposes only. **Do not use in production environments.**
+
+[![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![License: MPL 2.0](https://img.shields.io/badge/license-MPL_2.0-brightgreen.svg)](LICENSE)
+
+## Features
+
+* `label("NAME")`: Records a jumpable "label line".
+* `goto("NAME")`: Jumps to the label line on the next line event through a one-time `sys.settrace`.
+
+This implementation uses AST (Abstract Syntax Tree) transformation to:
+- Collect label locations during the first pass
+- Rewrite goto statements to target line numbers during the second pass
+- Compile the transformed AST back to executable code
+
+Limitations are the same as pdb j:
+
+* Can only jump within the same function, not across functions/stacks.
+* Cannot跨越 with/try/except/finally/yield/await and other structural boundaries.
+* Target line must have real bytecode (this implementation changes the label line to a constant expression to ensure it can be landed).
+
+## Installation
+
+You can install `mygo` from PyPI:
+
+```bash
+pip install mygo
+```
+
+Or, install from source:
+
+```bash
+git clone https://github.com/AndreaFrederica/Python-Dream-It-s-MyGO.git
+cd Python-Dream-It-s-MyGO
+uv sync
+```
+
+## Usage
+
+```python
+from mygo import enable_goto, label, goto
+
+@enable_goto
+def demo():
+    print("A")
+    label("L")
+    print("B-before")
+    goto("L")
+    print("C-after")  # This line will never execute
+
+demo()
+```
+
+More examples can be found in the `examples/` directory.
+
+## Contributing
+
+Issues and Pull Requests are welcome!
+
+## License
+
+This project is open source under Mozilla Public License 2.0. See [LICENSE](LICENSE) file for details.
+
+## Contact Author
+
+Email: andreafrederica@outlook.com

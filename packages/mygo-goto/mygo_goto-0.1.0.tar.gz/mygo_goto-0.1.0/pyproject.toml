@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mygo-goto"
+authors = [
+    { name = "AndreaFrederica", email = "andreafrederica@outlook.com" },
+]
+description = "A Python package for MyGO(Simple Goto)"
+readme = "README.md"
+license = { text = "MPL-2.0" }
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Operating System :: OS Independent",
+]
+dynamic = ["version"]
+dependencies = [
+    # 运行时依赖 - 这个包实际上不需要任何外部依赖
+]
+
+[project.optional-dependencies]
+dev = [
+    "pip>=25.2",
+    "setuptools>=80.9.0",
+    "twine>=6.2.0",
+    "wheel>=0.45.1",
+    "build>=1.2.0",
+]
+
+[tool.hatch.version]
+path = "src/mygo/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mygo"]
+
+[project.urls]
+Homepage = "https://github.com/AndreaFrederica/Python-Dream-It-s-MyGO"
+Repository = "https://github.com/AndreaFrederica/Python-Dream-It-s-MyGO.git"
+Issues = "https://github.com/AndreaFrederica/Python-Dream-It-s-MyGO/issues"
