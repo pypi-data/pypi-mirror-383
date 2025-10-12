@@ -1,0 +1,75 @@
+# Flask Cloudflare IP Filter
+
+A Flask extension to restrict access to your application, allowing requests **only** from official Cloudflare IP ranges. This prevents attackers from bypassing Cloudflare's security (like WAF and DDoS protection) by directly accessing your origin server's IP.
+
+---
+
+## Features
+
+-   **Blocks Unauthorized Access**: Rejects any request not originating from a Cloudflare IP with an HTTP 403 Forbidden error.
+-   **Automatic IP List Updates**: Fetches the latest IPv4 and IPv6 ranges from Cloudflare's API on startup and updates them periodically in the background (default: every 24 hours).
+-   **Robust & Safe**: If the initial IP list fetch fails, the application will refuse to start to prevent running in an insecure state.
+-   **Real IP Logging**: Logs the actual visitor IP address using the `CF-Connecting-IP` or `X-Forwarded-For` header.
+-   **Easy Integration**: Integrates with Flask using the familiar extension pattern.
+
+---
+
+## Why is this necessary?
+
+When you use Cloudflare, all legitimate traffic is proxied through their network. However, if an attacker discovers your server's direct IP address, they can send requests directly to it, bypassing all of Cloudflare's protections. This middleware ensures that your application layer only processes requests that have passed through the Cloudflare network.
+
+**Important:** For maximum security, this application-level protection should be combined with a network-level firewall (like `iptables`, `ufw`, or a cloud security group) that is also configured to only accept traffic from [Cloudflare's IP ranges](https://www.cloudflare.com/ips/).
+
+---
+
+## Requirements
+
+-   Python 3.7+
+-   Flask
+-   requests
+
+Install dependencies:
+
+```bash
+pip install Flask requests
+```
+
+## Usage
+
+1. Save the code as a file in your project, for example, your_project/cloudflare_filter.py.
+
+2. In your main application file, import and initialize the CloudflareFilter extension.
+
+```Python
+from flask import Flask
+from cloudflare_filter import CloudflareFilter
+
+app = Flask(__name__)
+
+# Initialize the filter and connect it to the app
+# This will automatically fetch IPs and register the before_request hook.
+cf_filter = CloudflareFilter(app)
+
+@app.route('/')
+def index():
+    # You can get the real visitor IP for your application logic
+    real_ip = cf_filter.get_real_ip()
+    return f"This page is protected. Your real IP is {real_ip}"
+
+if __name__ == '__main__':
+    app.run()
+```
+
+The filter is now active. All routes in your application will be protected automatically.
+
+### Example Log Output
+```
+[2025-10-11 19:30:00,123] [INFO] Cloudflare IP ranges loaded successfully. (15 IPv4, 13 IPv6 networks)
+[2025-10-11 19:30:00,124] [INFO] Cloudflare IP list will be updated every 86400 seconds.
+[2025-10-11 19:30:05,456] [INFO] ✅ Allowed access from Cloudflare proxy 172.68.54.45. Real IP: 203.0.113.199
+[2025-10-11 19:30:10,789] [WARNING] ❌ Blocked direct access from non-Cloudflare IP: 198.51.100.23
+```
+
+License
+
+MIT
