@@ -1,0 +1,138 @@
+Metadata-Version: 2.4
+Name: ctf-dl
+Version: 0.3.2
+Summary: Command-line tool to download CTF challenges
+Author-email: bjornmorten <bjornmdev@proton.me>
+License: MIT
+Project-URL: Homepage, https://github.com/bjornmorten/ctf-dl/
+Project-URL: Repository, https://github.com/bjornmorten/ctf-dl/
+Project-URL: Issues, https://github.com/bjornmorten/ctf-dl/issues
+Keywords: ctf,ctf-tools
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: ctfbridge>=0.8.3
+Requires-Dist: httpx>=0.28.0
+Requires-Dist: typer>=0.15.3
+Requires-Dist: rich>=14.0.0
+Requires-Dist: Jinja2>=3.1.6
+Requires-Dist: PyYAML>=6.0.0
+Requires-Dist: python-slugify[unidecode]>=8.0.4
+Requires-Dist: mdformat==0.7.22
+Requires-Dist: mdformat_tables==1.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.15.0; extra == "dev"
+Requires-Dist: ruff>=0.13.0; extra == "dev"
+Dynamic: license-file
+
+<h1 align="center">
+  ctf-dl
+</h1>
+
+<h4 align="center">Fast and flexible challenge downloader for all major CTF platforms</h4>
+
+<p align="center">
+  <a href="https://pypi.org/project/ctf-dl/"><img src="https://img.shields.io/pypi/v/ctf-dl" alt="PyPI"></a>
+  <img src="https://img.shields.io/github/license/bjornmorten/ctf-dl" alt="License">
+</p>
+
+<p align="center">
+  <a href="#-features">Features</a> •
+  <a href="#-installation">Install</a> •
+  <a href="#-quickstart">Quickstart</a> •
+  <a href="#-examples">Examples</a> •
+  <a href="#-license">License</a>
+</p>
+
+
+## 🔧 Features
+
+- 🔽 **Download all challenges** from supported CTFs  
+- 🗂️ **Organize challenges** with custom folder structures  
+- 🧩 **Format outputs** using Jinja2 templates (Markdown, JSON, etc.)  
+- 🎯 **Apply filters** by category, points, or solve status  
+- 🌐 **Integrations:** Works with CTFd, rCTF, GZCTF, HTB, EPT, Berg, CryptoHack, pwnable.tw, pwnable.kr and pwnable.xyz via [ctfbridge](https://github.com/bjornmorten/ctfbridge)
+
+
+## 📦 Installation
+
+Run directly with [uv](https://github.com/astral-sh/uv):
+
+```bash
+uvx ctf-dl
+```
+
+Or install permanently with pip:
+
+```bash
+pip install ctf-dl
+```
+
+## 🚀 Quickstart
+
+```bash
+ctf-dl https://demo.ctfd.io -u user -p password
+```
+
+## 💡 Examples
+
+If the CTF platform requires authentication, provide either:
+- `--token YOUR_TOKEN`, or  
+- `--username USERNAME --password PASSWORD`  
+
+```bash
+# Download all challenges
+ctf-dl https://ctf.example.com
+
+# Download to a custom directory
+ctf-dl https://ctf.example.com --output /tmp/ctf
+
+# Only download Web and Crypto challenges
+ctf-dl https://ctf.example.com --categories Web Crypto
+
+# Overwrite previously downloaded challenges
+ctf-dl https://ctf.example.com --update
+
+# Download and zip output
+ctf-dl https://ctf.example.com --zip
+
+# Save output as JSON
+ctf-dl https://ctf.example.com --output-format json
+
+# List available templates
+ctf-dl --list-templates
+
+```
+
+## 📁 Default Output Structure
+
+```
+challenges/
+├── README.md
+├── crypto/
+│   ├── rsa-beginner/
+│   │   ├── README.md
+│   │   └── files/
+│   │       ├── chal.py
+│   │       └── output.txt
+├── web/
+│   ├── sql-injection/
+│   │   ├── README.md
+│   │   └── files/
+│   │       └── app.py
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! See [ctfbridge](https://github.com/bjornmorten/ctfbridge) regarding platform support, or open an issue or pull request to improve **ctf-dl** itself.
+
+## 🪪 License
+
+MIT License © 2025 [bjornmorten](https://github.com/bjornmorten)
