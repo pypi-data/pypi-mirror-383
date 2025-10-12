@@ -1,0 +1,27 @@
+[project]
+name = "nenlib"
+version = "0.2.0"
+description = "Utilities and helpers for LLMOps with LiteLLM integration"
+authors = [{name = "Your Name", email = "your.email@example.com"}]
+license = {file = "LICENSE"}
+dependencies = [
+    "litellm[proxy]>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "ruff>=0.4.0",
+    "isort>=5.12.0",
+    "pyyaml>=6.0.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.0",
+]
+
