@@ -1,0 +1,79 @@
+Metadata-Version: 2.2
+Name: uproot-custom
+Version: 2.0.0
+Summary: uproot extension for reading custom classes
+Author-Email: Mingrun Li <mrli@ihep.ac.cn>
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Software Development
+Classifier: Topic :: Utilities
+Project-URL: Homepage, https://github.com/mrzimu/uproot-custom
+Requires-Python: <3.14,>=3.9
+Requires-Dist: uproot>=5.0
+Requires-Dist: numpy
+Requires-Dist: awkward
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-xdist; extra == "dev"
+Requires-Dist: dask[complete]; extra == "dev"
+Requires-Dist: dask-awkward; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=8.2; extra == "docs"
+Requires-Dist: sphinx-book-theme; extra == "docs"
+Requires-Dist: myst_parser; extra == "docs"
+Requires-Dist: sphinx-design; extra == "docs"
+Requires-Dist: sphinx-copybutton; extra == "docs"
+Requires-Dist: sphinxext-rediraffe; extra == "docs"
+Requires-Dist: sphinxext-opengraph; extra == "docs"
+Requires-Dist: sphinx-tippy; extra == "docs"
+Requires-Dist: sphinx-togglebutton; extra == "docs"
+Requires-Dist: sphinxcontrib-mermaid; extra == "docs"
+Requires-Dist: sphinx-autobuild; extra == "docs"
+Requires-Dist: sphinx-intl; extra == "docs"
+Description-Content-Type: text/markdown
+
+# Introduction
+
+`uproot-custom` is an extension of [`uproot`](https://uproot.readthedocs.io/en/latest/basic.html) that provides an enhanced way to read custom classes stored in `TTree`.
+
+## When to use `uproot-custom`
+
+`uproot-custom` aims to handle cases that classes are too complex for `uproot` to read, such as when their `Streamer` methods are overridden or some specific data members are not supported by `uproot`.
+
+## How `uproot-custom` works
+
+`uproot-custom` uses a `reader`/`factory` mechanism to read classes:
+
+- `reader` is a C++ class that implements the logic to read data from binary buffers.
+- `factory` is a Python class that creates, combines `reader`s, and post-processes the data read by `reader`s.
+
+This machanism is implemented as `uproot_custom.AsCustom` interpretation. `uproot-custom` wraps `uproot.interpretation.identify.interpretation_of` method to intercept the interpretation of specific branches. This makes `uproot-custom` well compatible with `uproot`.
+
+> [!TIP]
+> Users can implement their own `factory` and `reader`, register them to `uproot-custom`. An example of implementing a custom `factory`/`reader` can be found in [the repository](https://github.com/mrzimu/uproot-custom/tree/main/example).
+
+> [!NOTE]
+> `uproot-custom` does not provide a full reimplementation of `ROOT`'s I/O system. Users are expected to implement their own `factory`/`reader` for their custom classes that built-in factories cannot handle.
+
+## Documentation
+
+View the [documentation](https://mrzimu.github.io/uproot-custom/) for more details about customizing your own `reader`/`factory`, and the architecture of `uproot-custom`.
