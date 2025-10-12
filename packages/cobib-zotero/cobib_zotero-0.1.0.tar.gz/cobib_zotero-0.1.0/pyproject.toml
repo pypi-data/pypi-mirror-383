@@ -1,0 +1,189 @@
+[build-system]
+requires = [
+    "setuptools>=77",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cobib_zotero"
+authors = [
+    {name = "Max Rossmannek", email = "max@rossmannek.de"},
+]
+description = "A Zotero importer plugin for coBib"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE.txt"]
+keywords = [
+    "reference-manager", "citation-manager", "bibliography", "cli", "tui",
+    "command-line", "terminal", "console", "zotero"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: Unix",
+    "Environment :: Console",
+    "Typing :: Typed",
+]
+dependencies = [
+    "cobib>=6.0",
+    "pyzotero",
+]
+dynamic = ["readme", "version"]
+
+[project.entry-points."cobib.importers"]
+zotero = "cobib_zotero.importer:ZoteroImporter"
+
+[project.entry-points."cobib.man"]
+"cobib-zotero.7" = "cobib_zotero.man:I_importers"
+
+[project.optional-dependencies]
+# all optional _runtime_ dependencies
+all = [
+    "cobib_zotero",
+]
+# all optional _development_ dependencies
+dev = [
+    "cobib_zotero[coverage,docs,lint]",
+]
+basedev = [
+    "pytest~=8.4.1",
+]
+docs = [
+    "cobib_zotero[basedev]",
+    "pdoc~=15.0.4",
+]
+test = [
+    "cobib_zotero[basedev]",
+    "pytest-asyncio~=1.2.0",
+]
+coverage = [
+    "cobib_zotero[test]",
+    "coverage~=7.10.6",
+    "pytest-cov~=7.0.0",
+]
+lint = [
+    "cobib_zotero[basedev]",
+    "mypy~=1.18.1",
+    "ruff~=0.14.0",
+    "typos~=1.38.1",
+]
+
+[project.urls]
+Homepage = "https://gitlab.com/cobib/cobib-zotero"
+Documentation = "https://cobib.gitlab.io/cobib-zotero/cobib_zotero.html"
+Repository = "https://gitlab.com/cobib/cobib-zotero"
+Issues = "https://gitlab.com/cobib/cobib-zotero/-/issues"
+Changelog = "https://gitlab.com/cobib/cobib-zotero/-/blob/master/CHANGELOG.md"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md", "CHANGELOG.md"], content-type = "text/markdown"}
+version = {attr = "cobib_zotero.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src/"]
+
+[tool.setuptools.package-data]
+cobib_zotero = ["py.typed"]
+
+[tool.pytest.ini_options]
+log_level = "DEBUG"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["src/cobib_zotero/"]
+parallel = true
+patch = ["subprocess"]
+branch = true
+
+[tool.coverage.report]
+exclude_also = [
+    "if TYPE_CHECKING:",
+    "sys.exit\\(1\\)",
+]
+show_missing = true
+
+[tool.mypy]
+mypy_path = "src"
+exclude = [
+    "build",
+]
+namespace_packages = true
+explicit_package_bases = true
+strict = true
+python_version = "3.10"
+show_error_codes = true
+check_untyped_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+warn_no_return = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+enable_error_code = [
+    "ignore-without-code",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "pdoc",
+    "pyzotero.*",
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "I",   # isort
+    "E",   # pycodestyle
+    "W",   # pycodestyle
+    "D",   # pydocstyle
+    "F",   # pyflakes
+    "PL",  # pylint
+    "RUF", # ruff
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+# we explicitly rename imported modules in the __init__ files by design
+"__init__.py" = ["PLC0414"]
+"tests/*" = [
+    "PLR2004",  # allow magic values in the tests
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+ignore-decorators = ["typing.overload", "typing_extensions.override"]
+
+[tool.ruff.lint.pylint]
+max-args = 10
+max-branches = 20
+max-returns = 10
+max-statements = 100
+
+[tool.typos.default]
+extend-ignore-re = [
+    # This regex is a orkaround while typos does not support its own specific line exclusion
+    # (https://github.com/crate-ci/typos/issues/316). This comes from typos' own examples:
+    # https://github.com/crate-ci/typos/blob/master/docs/reference.md#example-configurations
+    "(?Rm)^.*(#|//)\\s*spellchecker:disable-line$",
+]
+
+[tool.typos.default.extend-words]
+
+[tool.typos.files]
+extend-exclude = ["**/*.css"]

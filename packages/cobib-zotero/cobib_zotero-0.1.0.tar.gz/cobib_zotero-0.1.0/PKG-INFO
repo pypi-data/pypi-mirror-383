@@ -1,0 +1,122 @@
+Metadata-Version: 2.4
+Name: cobib_zotero
+Version: 0.1.0
+Summary: A Zotero importer plugin for coBib
+Author-email: Max Rossmannek <max@rossmannek.de>
+License-Expression: MIT
+Project-URL: Homepage, https://gitlab.com/cobib/cobib-zotero
+Project-URL: Documentation, https://cobib.gitlab.io/cobib-zotero/cobib_zotero.html
+Project-URL: Repository, https://gitlab.com/cobib/cobib-zotero
+Project-URL: Issues, https://gitlab.com/cobib/cobib-zotero/-/issues
+Project-URL: Changelog, https://gitlab.com/cobib/cobib-zotero/-/blob/master/CHANGELOG.md
+Keywords: reference-manager,citation-manager,bibliography,cli,tui,command-line,terminal,console,zotero
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Operating System :: Unix
+Classifier: Environment :: Console
+Classifier: Typing :: Typed
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: cobib>=6.0
+Requires-Dist: pyzotero
+Provides-Extra: all
+Requires-Dist: cobib_zotero; extra == "all"
+Provides-Extra: dev
+Requires-Dist: cobib_zotero[coverage,docs,lint]; extra == "dev"
+Provides-Extra: basedev
+Requires-Dist: pytest~=8.4.1; extra == "basedev"
+Provides-Extra: docs
+Requires-Dist: cobib_zotero[basedev]; extra == "docs"
+Requires-Dist: pdoc~=15.0.4; extra == "docs"
+Provides-Extra: test
+Requires-Dist: cobib_zotero[basedev]; extra == "test"
+Requires-Dist: pytest-asyncio~=1.2.0; extra == "test"
+Provides-Extra: coverage
+Requires-Dist: cobib_zotero[test]; extra == "coverage"
+Requires-Dist: coverage~=7.10.6; extra == "coverage"
+Requires-Dist: pytest-cov~=7.0.0; extra == "coverage"
+Provides-Extra: lint
+Requires-Dist: cobib_zotero[basedev]; extra == "lint"
+Requires-Dist: mypy~=1.18.1; extra == "lint"
+Requires-Dist: ruff~=0.14.0; extra == "lint"
+Requires-Dist: typos~=1.38.1; extra == "lint"
+Dynamic: license-file
+
+# coBib Zotero
+
+[![pipeline](https://gitlab.com/cobib/cobib-zotero/badges/master/pipeline.svg)](https://gitlab.com/cobib/cobib-zotero/-/pipelines)
+[![coverage](https://gitlab.com/cobib/cobib-zotero/badges/master/coverage.svg)](https://gitlab.com/cobib/cobib-zotero/-/graphs/master/charts)
+[![Release](https://img.shields.io/gitlab/v/release/cobib/cobib-zotero?label=Release&logo=gitlab)](https://gitlab.com/cobib/cobib-zotero/-/releases/)
+[![AUR](https://img.shields.io/aur/version/cobib-zotero?label=AUR&logo=archlinux)](https://aur.archlinux.org/packages/cobib-zotero)
+[![PyPI](https://img.shields.io/pypi/v/cobib-zotero?label=PyPI&logo=pypi)](https://pypi.org/project/cobib-zotero/)
+[![Python](https://img.shields.io/python/required-version-toml?tomlFilePath=https://gitlab.com/cobib/cobib-zotero/-/raw/master/pyproject.toml?ref_type=heads?label=Python&label=Python&logo=python)](https://gitlab.com/cobib/cobib-zotero/-/blob/master/pyproject.toml)
+[![License](https://img.shields.io/gitlab/license/cobib/cobib-zotero?label=License)](https://gitlab.com/cobib/cobib-zotero/-/blob/master/LICENSE.txt)
+
+A coBib Zotero importer plugin.
+
+
+## Installation
+
+For all common purposes you can install coBib via `pip`:
+
+```
+pip install cobib-zotero
+```
+
+
+### Arch Linux
+
+This coBib plugin is packaged in the AUR.
+* [cobib-zotero](https://aur.archlinux.org/packages/cobib-zotero/)
+* [cobib-zotero-git](https://aur.archlinux.org/packages/cobib-zotero-git/)
+
+## Usage
+
+After installing this plugin, you can simply import a Zotero library via its `ID` and `type`, for example like so:
+```bash
+cobib import --zotero -- 8608002 "user"
+```
+When accessing a private library, you also need to specify an `--api-key`.
+
+
+## Documentation
+
+`cobib-zotero`'s documentation is hosted [here](https://cobib.gitlab.io/cobib-zotero/cobib_zotero.html).
+
+### Changelog
+
+You can find the detailed changes in [the Changelog](https://gitlab.com/cobib/cobib-zotero/-/blob/master/CHANGELOG.md).
+
+
+## License
+
+`cobib-zotero` is licensed under the [MIT License](https://gitlab.com/cobib/cobib-zotero/-/blob/master/LICENSE.txt).
+
+[//]: # ( vim: set ft=markdown tw=0: )
+
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+
+## [0.1.0] - 2025-10-11
+
+Pypi: https://pypi.org/project/cobib-zotero/0.1.0/
+
+### Prelude
+
+The initial release of this new plugin for cobib providing an improved
+implementation of the `--zotero` import backend.
+
+
+[Unreleased]: https://gitlab.com/cobib/cobib-zotero/-/compare/v0.1.0...master
+[0.1.0]: https://gitlab.com/cobib/cobib/-/tags/v0.1.0
