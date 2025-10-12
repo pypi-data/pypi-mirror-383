@@ -1,0 +1,73 @@
+# catchup-schedules
+A Persistent Python Scheduler that Remembers Missed Events and Maintains its Cycle.
+
+A robust scheduling module designed to catch up on periodic tasks that were skipped due to system pauses or downtime.   
+
+   
+   
+## Example   
+```py
+import catchup_schedules
+```
+Example 1
+```py
+import catchup_schedules
+import datetime
+time_example = [""] #or ["2025-10-08T19:15:17Z"]
+def test():
+    print("Hello World!")
+catchup_schedules.run(test,"1m 30s",False,time_example)
+```
+Example 2
+```py
+import catchup_schedules
+import datetime
+import configparser#test
+import os
+config = configparser.ConfigParser()
+config.read(os.path.join(os.path.dirname(os.path.abspath(__file__)),'resourcenospec','setting.ini'), encoding="UTF-8")
+daads = [config['setting']['time']]#방법1
+runbool=[True]
+asdf=0
+def test():
+    global asdf,runbool
+    config['setting']['time']=datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")#방법2
+    print("test",config['setting']['time'],datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"))
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'resourcenospec','setting.ini'), 'w', encoding='utf-8') as configfile:
+        config.write(configfile)
+    print(asdf)
+    if asdf==4:
+        runbool[0]=False
+    else:
+        asdf+=1
+catchup_schedules.run(test,"2s ",False,True,daads,running=runbool)
+print("end")
+```   
+## Install
+https://pypi.org/project/catchup-schedules/
+```console
+$ python -m pip install catchup-schedules
+```
+
+
+
+## Parameter
+catchup_schedules.run(**Parameter**) 
+| Parameter | Type | Description | Example |
+| :--- | :--- | :--- | :--- |
+| **`run_func`** | `callable` | The **function to be executed repeatedly**. | `test()` |
+| **`looptime`** | `str` | Sets the **repeat interval (period)**. You can specify multiple values and units (**w, d, h, m, s**) separated by spaces. | `1w`, `3d`, `2h`, `5s`, `10m 5s` |
+| **`cycle_type`** | `bool` | Determines the **method for handling missed cycles**. Sets when the next schedule should occur after code execution has been paused and resumed. | `True`, `False` |
+| | | - **`True` (Maintain Cycle)**: **Maintains the original period**. It calculates the time the function should have last run, updates `starttime` to that point, and the next execution is scheduled `looptime` after this updated time. | |
+| | | - **`False` (Start New Cycle)**: Updates `starttime` to the current time and **starts a new cycle from now**. | |
+| **`resume`** | `bool` | Determines whether to **immediately execute `run_func` once** upon starting the module if any schedules were missed while the code was paused. | `True`, `False` |
+| | | **Note**: This setting operates independently of the `cycle_type` setting. The function will execute when `resume` is `True` if any cycles were missed, regardless of the value of `cycle_type`. | |
+| **`starttime`** (Optional) | `list` | A **list used to store and remember the previous execution time**. <br> It must contain a string in the format of **`["YYYY-MM-DDTHH:MM:SSZ"]` or `[""]`**. <br> The default value is the current time if the variable is not passed, and it is also initialized to the current time if the variable's value is an empty string (`[""]`). | `["2025-10-08T19:15:17Z"]` |
+| **`running`** (Optional) | `list` | A **list used to control the execution state** of a function. <br> It is expected to contain a **single boolean value** (`True` or `False`). <br> When the value is `[True]`, the function continues execution. When it is `[False]`, the function terminates and exits. <br> The **default value is `[True]`**. | `[True]`, `[False]` |
+
+# Tip 
+The required datetime format is "%Y-%m-%dT%H:%M:%SZ".   
+```py
+#Example
+starttime[0] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")  
+```
