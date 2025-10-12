@@ -1,0 +1,125 @@
+[project]
+name = "satori-python-server"
+dynamic = []
+authors = [
+    { name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com" },
+]
+dependencies = [
+    "aiohttp>=3.9.3",
+    "launart>=0.8.2",
+    "graia-amnesia[uvicorn]<0.12.0,>=0.11.0",
+    "starlette[python-multipart]>=0.37.2",
+    "websockets>=15.0.1",
+    "python-multipart>=0.0.9",
+    "satori-python-core >= 0.17.0",
+]
+description = "Satori Protocol SDK for python, specify server part"
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+classifiers = [
+    "Typing :: Typed",
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+version = "0.17.5"
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+homepage = "https://github.com/RF-Tar-Railt/satori-python"
+repository = "https://github.com/RF-Tar-Railt/satori-python"
+
+[build-system]
+requires = [
+    "mina-build<0.6,>=0.5.1",
+    "pdm-backend<2.4.0",
+]
+build-backend = "mina.backend"
+
+[dependency-groups]
+dev = [
+    "isort>=5.13.2",
+    "black>=24.4.0",
+    "ruff>=0.4.1",
+    "pre-commit>=3.7.0",
+    "fix-future-annotations>=0.5.0",
+    "mina-build<0.6,>=0.5.1",
+    "pdm-mina>=0.3.2",
+    "nonechat<0.7.0,>=0.6.0",
+    "uvicorn[standard]>=0.35.0",
+]
+
+[tool.pdm.build]
+includes = [
+    "src/satori/server",
+    ".mina/server.toml",
+]
+excludes = [
+    "src/satori/adapters/*",
+]
+
+[tool.pdm.scripts.format]
+composite = [
+    "isort ./src/ ./example/",
+    "black ./src/ ./example/",
+    "ruff check",
+]
+
+[tool.pdm.version]
+source = "file"
+path = "src/satori/__init__.py"
+
+[tool.black]
+line-length = 120
+include = "\\.pyi?$"
+extend-exclude = ""
+
+[tool.isort]
+profile = "black"
+line_length = 120
+skip_gitignore = true
+extra_standard_library = [
+    "typing_extensions",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+exclude = [
+    "exam_qps.py",
+    "exam1.py",
+    "exam2.py",
+    "src/satori/_vendor/*",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "UP",
+    "C",
+    "T",
+    "Q",
+]
+ignore = [
+    "E402",
+    "F403",
+    "F405",
+    "C901",
+    "T201",
+]
+
+[tool.pyright]
+pythonPlatform = "All"
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+reportShadowedImports = false
+disableBytesTypePromotions = true
