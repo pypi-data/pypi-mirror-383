@@ -1,0 +1,26 @@
+Metadata-Version: 2.3
+Name: nasap-fit-py
+Version: 0.3.1
+Summary: Python implementation of the fitting procedure used in NASAP
+License: MIT
+Author: Keisuke Takeuchi
+Author-email: 142223934+takeuchi-sci@users.noreply.github.com
+Requires-Python: >=3.12,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: hypothesis (>=6.122.0,<7.0.0)
+Requires-Dist: lmfit (>=1.3.2,<2.0.0)
+Requires-Dist: matplotlib (>=3.9.2,<4.0.0)
+Requires-Dist: numdifftools (>=0.9.41,<0.10.0)
+Requires-Dist: numpy (>=2.1.3,<3.0.0)
+Requires-Dist: pandas (>=2.2.3,<3.0.0)
+Requires-Dist: pandas-stubs (>=2.2.3.241009,<3.0.0.0)
+Requires-Dist: pyyaml (>=6.0.3,<7.0.0)
+Requires-Dist: scipy (>=1.14.1,<2.0.0)
+Description-Content-Type: text/markdown
+
+# nasap-fit-py
+Python implementation of the fitting procedure used in NASAP
+
