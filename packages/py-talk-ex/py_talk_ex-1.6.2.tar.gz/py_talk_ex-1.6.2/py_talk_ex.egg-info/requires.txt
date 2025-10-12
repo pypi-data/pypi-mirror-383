@@ -1,0 +1,13 @@
+beautifulsoup4~=4.12
+patool~=3.0
+requests~=2.32
+typing-extensions~=4.12
+
+[:sys_platform == "linux"]
+uvloop
+
+[docs]
+sphinx-sitemap~=2.6
+sphinx~=8.1
+sphinxcontrib-napoleon~=0.7
+sphinxcontrib-trio~=1.1
