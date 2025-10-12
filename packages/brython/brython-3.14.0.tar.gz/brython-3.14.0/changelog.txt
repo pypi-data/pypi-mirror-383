@@ -1,0 +1,89 @@
+New features
+============
+This implements most of the changes in Python 3.14, notably Template Strings
+(PEP 750) and Deferred evaluation of annotations (PEP 649 and 749).
+
+Implementation
+==============
+- remove attribute __dict__ of tuple created by $B.fast_tuple()
+- add JS convenient function importPythonModule(by Florent Gallaire)
+- add annotationlib module
+- implement PEP 750 – Template Strings
+- improve error message for non hashable elements in sets
+- implement PEP 649 (annotations)
+- Union[int, str] is the same as int | str
+- in py_import.js:
+  1. remove `$B.imported[module.__name__] = module` in run_py (breaks if the
+     module itself sets sys.modules[__name__], as in decimal.py)
+  2. adapt code for "import _frozen_importlib_external' to new ImportFrom
+     translation to JS
+- rewrite implementation of getset_descriptor. Adapt $B.function.__dict__ and
+  _b_.type.__dict__
+- rewrite $B.search_in_mro using class __dict__. Adapt delattr.
+- rewrite object.__delattr__ using $B.search_in_mro
+- add getset_descriptor method __delete__
+- add deleter function for __annotations__ descriptor
+- change implementation of setting attribute __annotations__ to a class
+- add set_syntax_metadata (preparation for Python 3.14 error reporting for
+  typos in keywords)
+- improve error reporting (underlines with ^^^and ~~~) if an exception is
+  raised when iterating on object A in loop "for x in A: ..."
+- raise exception if a StringIO is initialized with something else than
+  None or a string
+- implement suggestions for typos in keywords (eg "whille True: ...")
+- improve error message when unpacking ("x, y = 1, 2, 3" gives the number
+  of expected *and* received values)
+- add method $B._PyPegen.concatenate_tstrings in action_helpers.js
+
+Internal tools
+==============
+- in modules in the scripts folder, use abspath() instead getcwd() (by
+  Florent Gallaire)
+- add module scripts/directories.py for use in the scripts in this folder
+- in adapt_grammar_actions.py, don't apply adaptations to the literal strings
+  (otherwise the word "Is" inside a string is transformed into "$B.ast.Is"...)
+
+Bug fixes
+=========
+- fix bug when from module import name as alias is called inside a function
+  and `alias` was declared global
+- bug in _tokenize.js
+
+Issues
+- #2567 : make_modules: correctly scan sub-packages in user modules (by
+  CookieMonster)
+- #2592 : does not handle negative slice of list correctly
+- #2593 : parser bug: custom type fail if not in first place of a | type union
+- #2594 : os.path.exists() and os.path.isfile() always return True
+- #2597 : 'os' module fail to load when 'curdir' is missing
+- #2606 : window.unbind("popstate", ...) not working
+- #2607 : browser.ajax post and put methods can't send binary data bytes
+
+Brython site
+============
+- add py_functions to console (by Cerber-Ursi)
+
+Github site
+===========
+
+
+Demos
+=====
+- in gallery index, fix address for Raphael and Highcharts demos
+
+Standard distribution
+=====================
+- add sys.flags.context_aware_warnings
+- in python_re.js, add escape \z (same as \Z)
+- add _ast_unparse.py
+- replace _strptime.js by _strptime.py
+- fix bugs in python_re.js:
+  1. error for re.sub(pattern, repl, s) when repl is r'\\\1'
+  2. the character '-' was not included in regexp like "[+-]x"
+- add itertools.batched
+- add package _pyrepl
+- update standard library from CPython 3.14.0rc3
+- move suggestions to a builtin module _suggestions
+
+Documentation
+=============
