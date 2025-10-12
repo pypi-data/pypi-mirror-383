@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "Weights-Calc"
+version = "1.0.1"
+description = "一个简单易用的Python加权计算库，提供多种加权算法"
+authors = ["qiufeng <appleidqiufeng@outlook.com>"]
+readme = "README.md"
+license = "MIT"
+keywords = ["Weights", "Weight"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+packages = [
+    { include = "Weights-Calc", from = "." }
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
