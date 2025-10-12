@@ -1,0 +1,30 @@
+name: Dependency Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - synchronize
+
+jobs:
+  dependency-analysis:
+    name: Dependency Analysis with Deptry
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6.6.1
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      # Job-specific step(s):
+      - name: Run Deptry
+        run: |
+          uv run deptry .

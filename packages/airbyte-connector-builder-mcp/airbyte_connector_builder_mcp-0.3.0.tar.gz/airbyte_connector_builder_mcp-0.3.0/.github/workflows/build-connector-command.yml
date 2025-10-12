@@ -1,0 +1,57 @@
+name: On-Demand Connector Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      comment-id:
+        description: "Optional comment-id of the slash command. Ignore if not applicable."
+        required: false
+      pr:
+        description: "PR Number"
+        required: false
+      connector:
+        description: |
+          Optional connector name to update (e.g. source-hubspot). If not provided, defaults to
+          'source-jsonplaceholder'.
+        required: false
+        default: "source-jsonplaceholder"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run-connector-build:
+    runs-on: ubuntu-latest
+    name: Build '${{ inputs.connector }}' Connector
+    steps:
+
+      # Some MCP Servers need npx/node, so set that up:
+      - name: Set up Node.js and npx
+        uses: actions/setup-node@v5.0.0
+        with:
+          node-version: '20'
+
+      - name: Checkout `connector-builder-mcp` repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Run Poe Slash Command Processor
+        uses: aaronsteers/poe-command-processor@v1
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GCP_GSM_CREDENTIALS: ${{ secrets.GCP_GSM_CREDENTIALS }}
+          PHOENIX_API_KEY: ${{ secrets.AIRBYTE_CI_TESTING_PHOENIX_API_KEY }}
+          PHOENIX_COLLECTOR_ENDPOINT: ${{ vars.AIRBYTE_CI_TESTING_PHOENIX_COLLECTOR_ENDPOINT }}
+        with:
+          pr: ${{ github.event.inputs.pr }}
+          comment-id: ${{ github.event.inputs.comment-id }}
+          start-message: "🛠️ Building connector..."
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          command: poe evals run --connector ${{ inputs.connector }}
+          no-commit: true
