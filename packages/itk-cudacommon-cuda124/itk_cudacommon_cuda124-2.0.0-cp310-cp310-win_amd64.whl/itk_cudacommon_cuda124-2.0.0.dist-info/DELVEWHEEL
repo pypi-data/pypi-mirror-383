@@ -1,0 +1,2 @@
+Version: 1.10.0
+Arguments: ['C:\\P\\IPP\\venv-310-x64\\Scripts\\delvewheel', 'repair', '--no-mangle-all', '--add-path', 'C:/P/IPP/oneTBB-prefix/bin;C:/Program\\ Files/NVIDIA\\ GPU\\ Computing\\ Toolkit/CUDA/v12.4/bin', '--no-dll', 'nvcuda.dll;cudart64_12.dll', '--ignore-in-wheel', '-w', 'C:\\runner\\_work\\im\\dist', 'C:\\runner\\_work\\im\\dist\\itk_cudacommon_cuda124-2.0.0-cp310-cp310-win_amd64.whl']
