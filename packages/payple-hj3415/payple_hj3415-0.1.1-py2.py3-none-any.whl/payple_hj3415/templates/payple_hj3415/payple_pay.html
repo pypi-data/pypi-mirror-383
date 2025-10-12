@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {% if payple_env == 'demo' %}
+    <script src="https://democpay.payple.kr/js/v1/payment.js"></script>
+    {% else %}
+    <script src="https://cpay.payple.kr/js/v1/payment.js"></script>
+    {% endif %}
+
+</head>
+<body>
+<!-- 주문서 내 결제하기 버튼 -->
+<button id="btnPayment" style="display:none">결제하기</button>
+<script>
+    (function() {
+        function startPay() {
+            var obj = {};
+            obj.clientKey = "{{ client_key }}";   //파트너 인증을 위한 클라이언트키입니다.
+            obj.PCD_PAY_TYPE = "card";            //결제수단(카드/계좌)을 선택합니다. 카드 : card / 계좌: transfer
+            obj.PCD_PAY_WORK = "CERT";            //승인 요청 방식이며 CERT 고정값으로 설정합니다.
+            obj.PCD_CARD_VER = "02";              //카드 결제수단 중 앱카드, 정기(빌링), 비밀번호 간편결제 방식을 선택합니다. 02:앱카드
+            obj.PCD_PAY_GOODS = "{{ goods }}";    //상품명입니다.
+            obj.PCD_PAY_TOTAL = {{ amount|default:0 }};     //총 결제금액입니다.(숫자)
+            obj.PCD_RST_URL = "{{ rst_url }}";    //결제 정보가 성공적으로 입력된 경우, 인증 결과가 POST 방식으로 전송됩니다.
+            obj.PCD_PAY_METHOD = "naverPay";      //특정 앱카드 또는 간편페이(네이버페이, 카카오페이) 수단만을 결제창에 단독으로 노출하고자 할 때 사용합니다.
+            obj.PCD_PAY_OID = "{{ oid }}";            // ★ 유니크 OID 전송
+            PaypleCpayAuthCheck(obj);
+        }
+
+        // 수동 트리거(백업)
+        $('#btnPayment').on('click', function (e) {
+            e.preventDefault();
+            startPay();
+        });
+
+        // 페이지 로드 시 자동 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            startPay();
+        });
+    })();
+</script>
+</body>
+</html>
