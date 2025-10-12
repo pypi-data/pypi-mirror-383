@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "easyaiogram"
+version = "0.1.0"
+authors = [
+  { name = "Bobojon", email = "pubgmbobojon@gmail.com" },
+]
+description = "The library based on making telegram bots and simple version of aigram."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://instagram.com/bbbv_vv11"
+Issues = "https://github.com/bobojonabdurahmonov"
