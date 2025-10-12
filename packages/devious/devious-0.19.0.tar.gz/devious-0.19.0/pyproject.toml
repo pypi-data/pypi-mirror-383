@@ -1,0 +1,34 @@
+[project]
+name = "devious"
+version = "0.19.0"
+description = "Generic development cli for various application types."
+authors = [{name = "Felix Trautwein <mail@felixtrautwein.de>"}]
+readme = "readme.md"
+homepage = "https://github.com/flxtrtwn/devious"
+license = "MIT"
+requires-python = ">=3.10"
+
+dependencies = [
+    "click>=8.1.7",
+    "regex>=2023.10.3",
+    "jstyleson>=0.0.2",
+    "ruamel.yaml>=0.18.5",
+    "python-dotenv>=1.1.0",
+    # Django Apps
+    "Django>=4.2.7",
+    "django-bootstrap-v5>=1.0.11",
+    "django-theme-soft-design>=1.0.10",
+    # Microservices
+    "fastapi>=0.104.1",
+    "uvicorn>=0.24.0.post1",
+    "gunicorn>=21.2.0",
+    # Wrappers
+    "paramiko>=3.3.1",
+]
+
+[project.scripts]
+devious = "devious.cli:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
