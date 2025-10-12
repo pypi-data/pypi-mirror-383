@@ -1,0 +1,116 @@
+Metadata-Version: 2.4
+Name: godot-event
+Version: 0.1.0
+Summary: Godot风格的事件系统工具库 - 支持Windows键盘所有按键、组合键和特殊键
+Author-email: Your Name <you@example.com>
+License: MIT License
+        
+        Copyright (c) 2025 FriskYan
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Keywords: godot,event,input,keyboard,game,utilities
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Games/Entertainment
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: pygame
+Requires-Dist: pygame>=2.0.0; extra == "pygame"
+Dynamic: license-file
+
+# godot-event
+
+GodotEvent utilities - Enhanced Godot-style input event system for Python.
+
+[中文文档](docs/README_CN.md) | English
+
+## 🚀 Features
+
+- **Multi-key binding**: Support binding multiple keys to the same event
+- **Combo key support**: Full combo key support (Ctrl+S, Shift+F12, etc.)
+- **Windows keyboard support**: All Windows keyboard keys supported
+- **Performance optimized**: Memory and performance optimizations
+- **Robust error handling**: Comprehensive error handling system
+- **Pygame integration**: Seamless integration with Pygame
+
+## 📦 Installation
+
+```bash
+# Basic installation
+pip install godot-event
+
+# With Pygame support
+pip install godot-event[pygame]
+```
+
+## 🚀 Quick Start
+
+```python
+from godot_event import CreateInputSystem
+
+# Create input system
+input_system = CreateInputSystem()
+
+# Create event and bind keys
+input_system.EventCreate("jump")
+input_system.EventBindKey("jump", "Space")
+input_system.EventBindKey("jump", "W")
+
+# Event listening
+@input_system.on("jump")
+def on_jump(event):
+    print("Jump event triggered!")
+
+# Check event state
+if input_system.IsEventPressed("jump"):
+    print("Jumping...")
+```
+
+## 📚 Documentation
+
+For complete documentation with detailed examples and API reference, see:
+- [中文文档](docs/README_CN.md) - Complete Chinese documentation
+- `examples/` directory - Practical usage examples
+
+## 🧪 Examples
+
+Check the `examples/` directory for complete working examples.
+
+## 🔧 Advanced Features
+
+- Performance monitoring and optimization
+- Comprehensive error handling
+- Memory optimization
+- Type hints and modular design
+
+## 📄 License
+
+MIT License - See LICENSE file for details.
