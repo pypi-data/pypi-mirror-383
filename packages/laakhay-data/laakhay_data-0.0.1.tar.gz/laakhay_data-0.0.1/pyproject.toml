@@ -1,0 +1,61 @@
+
+[build-system]
+requires = [
+    "setuptools>=65.0",
+    "wheel",
+    "setuptools-scm[toml]>=8.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "laakhay-data"
+dynamic = ["version"]
+description = "Data infrastructure built with ♥︎ by Laakhay"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Laakhay Corporation", email = "laakhay.corp@gmail.com"}
+]
+keywords = ["finance", "trading", "market-data"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business :: Financial",
+]
+
+# Runtime dependencies for library users
+dependencies = [
+    "pydantic>=2.0",
+    "aiohttp>=3.8",
+    "websockets>=10",
+]
+
+[project.urls]
+Homepage = "https://laakhay.com"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+include = ["laakhay*"]
+exclude = ["tests*", "*.pyc", "*.pyo", "*.pyd", "__pycache__", ".pytest_cache"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "ruff>=0.4",
+    "black>=23",
+    "build>=1.0",
+    "twine>=5.0",
+]
+
+[tool.setuptools_scm]
+# Default config will infer version from Git tags.
+# Tag format like v1.2.3 will yield version 1.2.3
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
