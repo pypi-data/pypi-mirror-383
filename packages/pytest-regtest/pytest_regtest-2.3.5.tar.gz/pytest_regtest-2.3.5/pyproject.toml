@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+
+
+[project]
+name = "pytest-regtest"
+version = "2.3.5"
+description = "pytest plugin for snapshot regression testing"
+readme = "README.md"
+authors = [
+  {name = "Uwe Schmitt", email = "uwe.schmitt@id.ethz.ch"}
+]
+
+license = "MIT"
+
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+  "pytest>7.2",
+]
+
+[project.urls]
+Source = "https://gitlab.com/uweschmitt/pytest-regtest"
+Documentation = "https://pytest-regtest.readthedocs.org"
+
+
+[project.entry-points.pytest11]
+regtest = "pytest_regtest"
+
+[tool.ruff]
+line-length = 88
+exclude = ["_regtest_output"]
+
+[tool.ruff.lint]
+ignore = ["E731", "E203"]
+
+[dependency-groups]
+dev = [
+    "pandas>=2.2.3",
+    "twine",
+    "build",
+    "hatchling",
+    "wheel",
+    "pre-commit",
+    "ruff",
+    "black",
+    "pytest-cov",
+    "numpy",
+    "pandas",
+    "mkdocs",
+    "mkdocs-material",
+    "mistletoe",
+    "mkdocs-awesome-pages-plugin",
+    "jinja2-cli",
+    "mkdocstrings[python]",
+    "numpy>=2",
+    "pandas>=2",
+    "polars>=1.9",
+    "md-transformer>=0.0.3",
+    "pdbp>=1.7.1",
+]
