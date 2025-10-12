@@ -1,0 +1,559 @@
+/**
+ * Claude-onTheGo Frontend Styles - Mobile First
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    /* Prevent zoom on iOS when focusing inputs */
+    -webkit-text-size-adjust: 100%;
+    /* Handle iPhone notch/safe areas */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    display: flex;
+    flex-direction: column;
+    /* Let terminal handle all scrolling */
+    overflow: hidden;
+    /* Prevent text selection on UI elements */
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#status-bar {
+    background-color: #252526;
+    border-bottom: 1px solid #3e3e42;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    min-height: 44px; /* iOS minimum touch target */
+    /* Handle notch on iPhone */
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+}
+
+#connection-status {
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+#connection-status.connecting {
+    background-color: #f59e0b;
+    color: #000;
+}
+
+#connection-status.connected {
+    background-color: #10b981;
+    color: #000;
+}
+
+#connection-status.disconnected,
+#connection-status.error {
+    background-color: #ef4444;
+    color: #fff;
+}
+
+#connection-status.reconnecting {
+    background-color: #f59e0b;
+    color: #000;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+#claude-status {
+    color: #858585;
+    font-size: 11px;
+    display: none; /* Hide on mobile to save space */
+}
+
+#terminal-container {
+    flex: 1;
+    min-height: 0; /* Critical for flexbox scrolling */
+    overflow: hidden;
+    background-color: #1e1e1e;
+    /* Allow text selection in terminal */
+    -webkit-user-select: text;
+    user-select: text;
+    /* Handle safe area at bottom (iPhone home indicator) */
+    padding-bottom: env(safe-area-inset-bottom);
+    position: relative;
+}
+
+/* Override xterm.js defaults for mobile */
+.xterm {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 8px;
+    margin: 0;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.xterm-screen {
+    /* Single source of truth for scrolling */
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: contain;
+    /* Hardware acceleration for smooth scrolling */
+    transform: translate3d(0, 0, 0);
+    will-change: scroll-position;
+}
+
+/* Fix xterm canvas sizing on mobile */
+.xterm canvas {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+/* Prevent any visual duplication/ghosting */
+.xterm .xterm-screen canvas {
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Let xterm.js handle canvas layering internally - don't override positioning */
+
+.xterm .xterm-viewport {
+    overflow-y: scroll !important;
+    scrollbar-width: thin;
+    scrollbar-color: #424242 #1e1e1e;
+    /* iOS momentum scrolling */
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: contain;
+    /* Hardware acceleration */
+    transform: translate3d(0, 0, 0);
+    will-change: scroll-position;
+    /* Prevent scroll snap */
+    scroll-behavior: smooth;
+    /* Touch optimization */
+    touch-action: pan-y;
+}
+
+/* Webkit scrollbar (Safari/Chrome) */
+.xterm .xterm-viewport::-webkit-scrollbar {
+    width: 6px;
+}
+
+.xterm .xterm-viewport::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.xterm .xterm-viewport::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.xterm .xterm-viewport::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Cursor visibility on mobile */
+.xterm-cursor-layer .xterm-cursor {
+    /* Make cursor more visible on mobile */
+    background-color: #b7a8ff !important;
+}
+
+/* Loading state */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 16px;
+    color: #858585;
+}
+
+/* Tablet optimization (landscape phones and small tablets) */
+@media (min-width: 568px) {
+    #status-bar {
+        padding: 10px 20px;
+    }
+
+    #terminal-container {
+        padding: 0 8px;
+    }
+
+    .xterm {
+        padding: 16px;
+    }
+
+    #claude-status {
+        display: inline; /* Show status on larger screens */
+    }
+}
+
+/* Desktop optimization */
+@media (min-width: 768px) {
+    body {
+        position: static;
+        height: 100vh;
+    }
+
+    #status-bar {
+        padding: 8px 16px;
+        font-size: 13px;
+        min-height: auto;
+    }
+
+    #connection-status {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    #terminal-container {
+        padding: 16px;
+    }
+
+    .xterm {
+        max-width: 1200px; /* Max width on desktop for readability */
+        padding: 20px;
+    }
+
+    .xterm .xterm-viewport::-webkit-scrollbar {
+        width: 8px;
+    }
+}
+
+/* Large desktop */
+@media (min-width: 1024px) {
+    #terminal-container {
+        padding: 24px;
+    }
+
+    .xterm {
+        max-width: 1400px;
+        padding: 24px;
+    }
+}
+
+/* iOS-specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Remove fixed positioning - let natural scroll work */
+    body {
+        position: static;
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    /* Terminal container adapts to keyboard */
+    #terminal-container {
+        flex: 1;
+        min-height: 0;
+        /* No fixed height - let it flex naturally */
+    }
+
+    /* Terminal handles keyboard resize smoothly */
+    .xterm {
+        padding: 8px 4px;
+    }
+
+    /* Ensure viewport is the ONLY scroll container */
+    .xterm-viewport {
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: scroll !important;
+        overscroll-behavior-y: contain;
+        /* Prevent any positioning conflicts */
+        position: relative !important;
+    }
+
+    /* Prevent textarea from interfering with scroll */
+    .xterm textarea {
+        touch-action: none;
+        pointer-events: auto;
+    }
+
+    /* Fix for visual viewport when keyboard shows */
+    @supports (height: 100dvh) {
+        #terminal-container {
+            height: auto;
+            max-height: calc(100dvh - 44px); /* Status bar height */
+        }
+    }
+}
+
+/* Dark mode support (if OS/browser has dark mode) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1e1e1e;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    #connection-status {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Toast notification for reconnection */
+.toast {
+    position: fixed;
+    top: 70px; /* Below status bar + safe area */
+    right: 16px;
+    background: #10b981; /* Green for success */
+    color: #000;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    font-size: 14px;
+    font-weight: 600;
+    max-width: calc(100vw - 32px);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.toast.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#reconnect-message {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Loading overlay for session restoration */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay p {
+    margin-top: 20px;
+    color: #d4d4d4;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Spinner animation */
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile optimizations for toast */
+@media (max-width: 568px) {
+    .toast {
+        top: 60px; /* Closer to status bar on mobile */
+        right: 12px;
+        left: 12px;
+        max-width: none;
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+}
+
+/* Handle iOS safe area for toast */
+@supports (-webkit-touch-callout: none) {
+    .toast {
+        top: calc(70px + env(safe-area-inset-top));
+        right: max(16px, env(safe-area-inset-right));
+    }
+
+    @media (max-width: 568px) {
+        .toast {
+            left: max(12px, env(safe-area-inset-left));
+            right: max(12px, env(safe-area-inset-right));
+        }
+    }
+}
+
+/* PWA Install Banner */
+.install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(30, 30, 30, 0.98), rgba(30, 30, 30, 0.95));
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.install-banner.hidden {
+    transform: translateY(100%);
+}
+
+.install-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.install-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.install-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.install-text strong {
+    display: block;
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.install-text p {
+    color: #a0a0a0;
+    font-size: 13px;
+    margin: 0;
+}
+
+.install-btn {
+    background: #b7a8ff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.install-btn:hover {
+    background: #c7b8ff;
+    transform: scale(1.05);
+}
+
+.install-btn:active {
+    transform: scale(0.95);
+}
+
+.dismiss-btn {
+    background: transparent;
+    color: #858585;
+    border: none;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dismiss-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+@media (max-width: 568px) {
+    .install-content {
+        gap: 8px;
+    }
+
+    .install-icon {
+        font-size: 24px;
+    }
+
+    .install-text strong {
+        font-size: 14px;
+    }
+
+    .install-text p {
+        font-size: 12px;
+    }
+
+    .install-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
