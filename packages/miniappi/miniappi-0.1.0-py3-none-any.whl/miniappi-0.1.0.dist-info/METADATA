@@ -1,0 +1,42 @@
+Metadata-Version: 2.3
+Name: miniappi
+Version: 0.1.0
+Summary: Miniappi app launcher library
+Requires-Dist: httpx-ws>=0.8.0
+Requires-Dist: pydantic>=2.11.7
+Requires-Dist: pydantic-settings>=2.10.1
+Requires-Dist: rich>=14.2.0
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+
+# Miniappi
+
+## What is it?
+
+This library is a Python client library for
+Miniappi app server. It handles requests
+
+
+## Installation
+
+```bash
+pip install miniappi
+```
+
+## Getting Started
+
+```python
+from miniappi import App, content
+
+app = App()
+
+@app.on_start()
+async def run_start():
+    print("App started")
+
+@app.on_open()
+async def run_user_open():
+    await content.v0.
+
+app.run()
+```
