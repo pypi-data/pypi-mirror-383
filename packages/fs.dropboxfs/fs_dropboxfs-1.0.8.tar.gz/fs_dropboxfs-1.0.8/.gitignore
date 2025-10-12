@@ -1,0 +1,18 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+uv.lock
+.venv
+
+# MacOS
+.DS_Store
+
+# testing
+.pytest_cache
+.env
+cred.json
+.vscode
