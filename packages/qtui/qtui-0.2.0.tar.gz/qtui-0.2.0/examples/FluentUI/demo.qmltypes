@@ -1,0 +1,165 @@
+import QtQuick.tooling 1.2
+
+Module {
+	Component {
+		file: "AppInfo.py"
+		name: "AppInfo"
+		accessSemantics: "reference"
+		prototype: "QObject"
+		exports: ["demo/AppInfo 1.0"]
+		isCreatable: false
+		isSingleton: true
+		exportMetaObjectRevisions: [256]
+		Property { name: "version"; type: "QString"; notify: "versionChanged"; index: 0 }
+		Signal { name: "versionChanged" }
+		Method { name: "checkUpdate" 
+			Parameter { name: "callback"; type: "QObject" }
+		}
+	}
+	Component {
+		file: "Callback.py"
+		name: "Callback"
+		accessSemantics: "reference"
+		prototype: "QObject"
+		exports: ["demo/Callback 1.0"]
+		isCreatable: true
+		isSingleton: false
+		exportMetaObjectRevisions: [256]
+		Signal { name: "start" }
+		Signal { name: "finish" }
+		Signal { name: "error" 
+			Parameter { name: "arg0"; type: "int" }
+			Parameter { name: "arg1"; type: "QString" }
+			Parameter { name: "arg2"; type: "QString" }
+		}
+		Signal { name: "success" 
+			Parameter { name: "arg0"; type: "QString" }
+		}
+	}
+	Component {
+		file: "CircularReveal.py"
+		name: "CircularReveal"
+		accessSemantics: "reference"
+		prototype: "QQuickPaintedItem"
+		exports: ["demo/CircularReveal 1.0"]
+		isCreatable: true
+		isSingleton: false
+		exportMetaObjectRevisions: [256]
+		Property { name: "radius"; type: "int"; notify: "radiusChanged"; index: 0 }
+		Property { name: "target"; type: "QVariant"; notify: "targetChanged"; index: 1 }
+		Signal { name: "radiusChanged" }
+		Signal { name: "imageChanged" }
+		Signal { name: "animationFinished" }
+		Signal { name: "targetChanged" }
+		Method { name: "handleGrabResult" }
+		Method { name: "start" 
+			Parameter { name: "w"; type: "int" }
+			Parameter { name: "h"; type: "int" }
+			Parameter { name: "center"; type: "QVariant" }
+			Parameter { name: "radius"; type: "int" }
+		}
+	}
+	Component {
+		file: "FileWatcher.py"
+		name: "FileWatcher"
+		accessSemantics: "reference"
+		prototype: "QObject"
+		exports: ["demo/FileWatcher 1.0"]
+		isCreatable: true
+		isSingleton: false
+		exportMetaObjectRevisions: [256]
+		Property { name: "path"; type: "QString"; notify: "pathChanged"; index: 0 }
+		Signal { name: "pathChanged" }
+		Signal { name: "fileChanged" }
+	}
+	Component {
+		file: "FpsItem.py"
+		name: "FpsItem"
+		accessSemantics: "reference"
+		prototype: "QQuickPaintedItem"
+		exports: ["demo/FpsItem 1.0"]
+		isCreatable: true
+		isSingleton: false
+		exportMetaObjectRevisions: [256]
+		Property { name: "fps"; type: "int"; notify: "fpsChanged"; index: 0 }
+		Signal { name: "fpsChanged" }
+	}
+	Component {
+		file: "OpenGLItem.py"
+		name: "OpenGLItem"
+		accessSemantics: "reference"
+		prototype: "QQuickFramebufferObject"
+		exports: ["demo/OpenGLItem 1.0"]
+		isCreatable: true
+		isSingleton: false
+		exportMetaObjectRevisions: [256]
+		Property { name: "t"; type: "double"; notify: "tChanged"; index: 0 }
+		Signal { name: "tChanged" }
+	}
+	Component {
+		file: "OpenGLItem.py"
+		name: "FBORenderer"
+		accessSemantics: "reference"
+		prototype: "QQuickFramebufferObject"
+		exports: ["demo/FBORenderer 1.0"]
+		isCreatable: true
+		isSingleton: false
+		exportMetaObjectRevisions: [256]
+	}
+	Component {
+		file: "InitializrHelper.py"
+		name: "InitializrHelper"
+		accessSemantics: "reference"
+		prototype: "QObject"
+		exports: ["demo/InitializrHelper 1.0"]
+		isCreatable: false
+		isSingleton: true
+		exportMetaObjectRevisions: [256]
+		Signal { name: "error" 
+			Parameter { name: "arg0"; type: "QString" }
+		}
+		Signal { name: "success" 
+			Parameter { name: "arg0"; type: "QString" }
+		}
+		Method { name: "generate" 
+			Parameter { name: "name"; type: "QString" }
+			Parameter { name: "path"; type: "QString" }
+		}
+	}
+	Component {
+		file: "SettingsHelper.py"
+		name: "SettingsHelper"
+		accessSemantics: "reference"
+		prototype: "QObject"
+		exports: ["demo/SettingsHelper 1.0"]
+		isCreatable: false
+		isSingleton: true
+		exportMetaObjectRevisions: [256]
+		Method { name: "getDarkMode"; type: "int" }
+		Method { name: "saveDarkMode" 
+			Parameter { name: "darkMode"; type: "int" }
+		}
+		Method { name: "getUseSystemAppBar"; type: "bool" }
+		Method { name: "saveUseSystemAppBar" 
+			Parameter { name: "useSystemAppBar"; type: "bool" }
+		}
+		Method { name: "getLanguage"; type: "QString" }
+		Method { name: "saveLanguage" 
+			Parameter { name: "language"; type: "QString" }
+		}
+	}
+	Component {
+		file: "TranslateHelper.py"
+		name: "TranslateHelper"
+		accessSemantics: "reference"
+		prototype: "QObject"
+		exports: ["demo/TranslateHelper 1.0"]
+		isCreatable: false
+		isSingleton: true
+		exportMetaObjectRevisions: [256]
+		Property { name: "current"; type: "QString"; notify: "currentChanged"; index: 0 }
+		Property { name: "languages"; type: "QVariantList"; notify: "languagesChanged"; index: 1 }
+		Signal { name: "currentChanged" }
+		Signal { name: "languagesChanged" }
+	}
+}

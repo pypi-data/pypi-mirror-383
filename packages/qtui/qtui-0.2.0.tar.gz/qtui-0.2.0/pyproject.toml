@@ -1,0 +1,48 @@
+[project]
+name = "qtui"
+version = "0.2.0"
+description = "A collection of UI libraries for pyside6"
+readme = "README.md"
+authors = [
+    { name = "moreih29", email = "moreih29@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pyside6>=6.7.0",
+    "pillow>=11.0.0",
+    "qrcode~=7.4.2",
+    "qasync>=0.27.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.1.0",
+    "pyright>=1.0",
+    "aiohttp>=3.11.18",  # for FluentUI demo
+    "pyopengl>=3.1.9",  # for FluentUI demo
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [".venv", "**/*_rc.py", "**/*_ui.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "B",    # flake8-bugbear
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "none"
+exclude = [".venv", "**/*_rc.py", "**/*_ui.py"]
