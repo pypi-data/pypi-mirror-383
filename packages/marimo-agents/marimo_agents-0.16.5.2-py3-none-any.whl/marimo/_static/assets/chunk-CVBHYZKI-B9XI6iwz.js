@@ -1,0 +1,1 @@
+import{n as l}from"./src-BYP9eq-z.js";var n=l(({flowchart:r})=>{var i,o;let t=((i=r==null?void 0:r.subGraphTitleMargin)==null?void 0:i.top)??0,a=((o=r==null?void 0:r.subGraphTitleMargin)==null?void 0:o.bottom)??0,p=t+a;return{subGraphTitleTopMargin:t,subGraphTitleBottomMargin:a,subGraphTitleTotalMargin:p}},"getSubGraphTitleMargins");export{n as t};
