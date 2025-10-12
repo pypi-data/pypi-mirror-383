@@ -1,0 +1,9 @@
+#!/bin/bash
+# print-project command wrapper
+# This script allows running print-project from anywhere
+
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# Run the Python script
+python "$SCRIPT_DIR/print_project.py" "$@"
