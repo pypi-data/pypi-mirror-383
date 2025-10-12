@@ -1,0 +1,63 @@
+version: 2
+
+shared: &shared
+  working_directory: ~/mogutda
+
+  steps:
+    - checkout
+
+    - run:
+        name: Installing Packages
+        command: |
+          pip install --upgrade --user pip
+          pip install --upgrade --user .
+          pip install --upgrade --user pytest
+
+    - run:
+        name: Run Unit Tests
+        command: |
+          pytest
+
+
+
+jobs:
+  py38:
+    <<: *shared
+    docker:
+      - image: cimg/python:3.8
+
+  py39:
+    <<: *shared
+    docker:
+      - image: cimg/python:3.9
+
+  py310:
+    <<: *shared
+    docker:
+      - image: cimg/python:3.10
+
+  py311:
+    <<: *shared
+    docker:
+      - image: cimg/python:3.11
+
+  py312:
+    <<: *shared
+    docker:
+      - image: cimg/python:3.12
+
+  py313:
+    <<: *shared
+    docker:
+      - image: cimg/python:3.13
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - py38
+      - py39
+      - py310
+      - py311
+      - py312
+      - py313
