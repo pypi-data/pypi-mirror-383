@@ -1,0 +1,99 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pip-deepfreeze"
+description = "A simple pip freeze workflow for Python application developers."
+readme = "README.md"
+authors = [{name = "Stéphane Bidoul", email = "stephane.bidoul@gmail.com"}]
+license = "MIT"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+requires-python = ">=3.10"
+dependencies=[
+    "httpx",
+    "packaging >=23",
+    "typer >=0.12.1",
+    "click >= 8.2",
+    # installers
+    "pip >=22.2",
+    # compat
+    "tomli ; python_version<'3.11'",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+"test" = ["pytest", "pytest-cov", "pytest-xdist", "virtualenv", "setuptools", "wheel"]
+"mypy" = ["mypy", "types-toml", "types-setuptools"]
+"uv" = ["uv >=0.4.10"]
+
+[project.scripts]
+pip-df = "pip_deepfreeze.__main__:main"
+pip-deepfreeze = "pip_deepfreeze.__main__:main"
+
+[project.urls]
+"Source" = "https://github.com/sbidoul/pip-deepfreeze/"
+"Bug Reports" = "https://github.com/sbidoul/pip-deepfreeze/issues"
+"Changelog" = "https://github.com/sbidoul/pip-deepfreeze/blob/master/CHANGELOG.md"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.towncrier]
+package = "pip_deepfreeze"
+package_dir = "src"
+filename = "CHANGELOG.md"
+directory = "news"
+underlines = ["", "", ""]
+issue_format = "[#{issue}](https://github.com/sbidoul/pip-deepfreeze/issues/{issue})"
+title_format = "## {version} ({project_date})"
+
+[tool.ruff]
+fix = true
+exclude = [
+    "src/pip_deepfreeze/pip-list-json.py",
+    "src/pip_deepfreeze/env-info-json.py",
+    "tests/test_pip_list_json.py",
+    "tests/test_env_info_json.py",
+]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W", "C90", "B", "I", "UP", "RUF"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__main__.py" = ["B008"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 13
+
+[tool.ruff.lint.isort]
+known-first-party = ["pip_deepfreeze"]
+combine-as-imports = true
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+exclude = [
+    # It's getting hard to have correct typing on scripts that must be
+    # compatible with Python 2, so ignore these.
+    "src/pip_deepfreeze/pip-list-json.py",
+    "src/pip_deepfreeze/env-info-json.py",
+]
