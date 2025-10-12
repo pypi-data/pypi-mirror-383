@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "axiomos"
+version = "0.1.3"
+description = "AXIR playground: run numerical kernels across CPU and OpenCL"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{ name = "Axiomos" }]
+keywords = ["opencl", "kernels", "gemm", "axir", "numpy"]
+dependencies = [
+  "numpy>=1.23",
+  "jsonschema>=4.21",
+  "tqdm>=4.0",
+]
+
+[project.optional-dependencies]
+opencl = ["pyopencl>=2022.3"]  # installable via: pip install "axiomos[opencl]"
+
+[project.urls]
+Homepage = "https://github.com/Aidenkuro10/axiomos"
+
+[tool.setuptools]
+packages = ["Backends", "cli", "scripts"]
+include-package-data = true
+
+[project.scripts]
+axiomos-verify = "cli.verify_axir:verify_main"
+axiomos-smoke  = "cli.smoke_axir:main"
+axiomos-doctor = "cli.axir_doctor:main"
+axiomos-demo   = "cli.quick_demo:main"
+axir-doctor    = "cli.axir_doctor:main"   # alias pratique
