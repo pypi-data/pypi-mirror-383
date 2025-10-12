@@ -1,0 +1,35 @@
+# File: pyproject.toml (nella root del progetto)
+
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moodle_xml_parser"  
+version = "0.3.0"
+description = "A robust Python library for parsing Moodle XML quiz questions format into structured data models."
+readme = "README.md"
+authors = [
+    {name = "Lorenzo Lo Brutto", email = "lorenzolobrutto@gmail.com"},
+]
+license = {file = "LICENSE"}
+keywords = ["moodle", "xml", "parser", "quiz", "cloze", "question", "questions", "multichoice"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/LorenzoLB97/moodle_xml_parser" 
+
+[tool.setuptools.packages.find]
+where = ["src"] # Indica a setuptools che i tuoi pacchetti sono in 'src'
