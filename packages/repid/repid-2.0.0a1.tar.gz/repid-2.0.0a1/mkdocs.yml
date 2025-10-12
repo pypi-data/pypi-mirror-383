@@ -1,0 +1,84 @@
+site_name: Repid
+site_description: 'Repid framework: simple to use, fast to run and extensible to adopt job scheduler'
+site_url: https://repid.aleksul.space
+
+repo_name: aleksul/repid
+repo_url: https://github.com/aleksul/repid
+
+nav:
+- Home: index.md
+- Quickstart Guide: quickstart_guide.md
+- Playground: playground.md
+- Features: features.md
+- Benchmarks: benchmarks.md
+- User Guide:
+  - Initial setup: user_guide/initial_setup.md
+  - Jobs, Actors and Workers: user_guide/jobs_actors_and_workers.md
+  - Deferred scheduling: user_guide/deferred_scheduling.md
+  - Arguments & Results: user_guide/arguments_and_results.md
+  - Dependency injection: user_guide/dependency_injection.md
+  - Message & Eager response: user_guide/message_and_eager_response.md
+  - Testing: user_guide/testing.md
+- Cookbook:
+  - Chaining jobs: cookbook/chaining_jobs.md
+  - Reschedule dead messages: cookbook/reschedule_dead_messages.md
+  - Use with FastAPI & Pydantic: cookbook/fastapi_and_pydantic.md
+- Advanced User Guide:
+  - Validating with Pydantic: advanced_user_guide/validating_with_pydantic.md
+  - Health checks: advanced_user_guide/health_checks.md
+  - Middlewares: advanced_user_guide/middlewares.md
+  - Your own brokers: advanced_user_guide/your_own_brokers.md
+  - Configuring overrides: advanced_user_guide/configuring_overrides.md
+  - Your own data models: advanced_user_guide/your_own_data_models.md
+  - Your own serializer: advanced_user_guide/your_own_serializer.md
+  - Your own converter: advanced_user_guide/your_own_converter.md
+- Contributing guide: contributing.md
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  logo: https://gist.github.com/aleksul/2e4686cf9a4f027909fe43dc33039f10/raw/56935b8183682d1e46d68af70fec52cf647ab756/repid_logo.svg
+  favicon: https://gist.github.com/aleksul/2e4686cf9a4f027909fe43dc33039f10/raw/56935b8183682d1e46d68af70fec52cf647ab756/repid_logo.svg
+  features:
+  - content.code.annotate
+  - content.tabs.link
+  palette:
+  - media: '(prefers-color-scheme: light)'
+    scheme: default
+    primary: deep orange
+    accent: amber
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to dark mode
+  - media: '(prefers-color-scheme: dark)'
+    scheme: slate
+    primary: deep orange
+    accent: amber
+    toggle:
+      icon: material/lightbulb
+      name: Switch to light mode
+
+markdown_extensions:
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.inlinehilite
+- pymdownx.superfences
+- pymdownx.snippets
+- admonition
+- pymdownx.details
+- pymdownx.keys
+- attr_list
+- pymdownx.emoji
+- pymdownx.tabbed:
+    alternate_style: true
+extra:
+  analytics:
+    provider: custom
+  generator: false
+  version:
+    provider: mike
+plugins:
+- search
+- glightbox
+extra_css:
+- https://pyscript.net/latest/pyscript.css

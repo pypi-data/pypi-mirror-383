@@ -1,0 +1,172 @@
+[build-system]
+build-backend = 'hatchling.build'
+requires = ['hatchling', 'hatch-vcs']
+
+[dependency-groups]
+docs = [
+  "mkdocs-material>=9.5.43",
+  "mike>=2.1.3",
+  "mkdocs-glightbox>=0.4.0",
+  "setuptools>=75.3.0"
+]
+lint = [
+  "mypy>=1.13.0",
+  "types-redis>=4.6.0.20241004",
+  "types-croniter>=4.0.0.20241030",
+  "ruff>=0.14.0"
+]
+pre-commit = [
+  "pre-commit>=3.5.0"
+]
+tests = [
+  "pytest>=8.3.3",
+  "pytest-asyncio==0.21.2",
+  "pytest-pretty>=1.2.0",
+  "pytest-clarity>=1.0.1",
+  "pytest-lazy-fixtures>=1.1.1",
+  "pytest-docker-tools>=3.1.3",
+  "pytest-timeout>=2.3.1",
+  "coverage[toml]>=7.6.1",
+  "hypothesis>=6.113.0",
+  "httpx>=0.27.2"
+]
+
+[project]
+authors = [{name = "aleksul", email = "me@aleksul.space"}]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Typing :: Typed"
+]
+dependencies = [
+  "typing-extensions>=4.3.0,<5.0.0; python_version < \"3.11\"",
+  "packaging>=22.0"
+]
+description = "Repid framework: simple to use, fast to run and extensible to adopt job scheduler"
+dynamic = ["version"]
+license = {text = "MIT"}
+name = "repid"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+amqp = ["aiormq<7.0.0,>=6.9.0"]
+pydantic = ["pydantic>=2.0.0,<3.0.0"]
+redis = ["redis<7.0.0,>=6.0.0"]
+
+[project.urls]
+documentation = "https://repid.aleksul.space"
+funding = "https://github.com/sponsors/aleksul"
+repository = "https://github.com/aleksul/repid"
+tracker = "https://github.com/aleksul/repid/issues"
+
+[tool.coverage]
+
+[tool.coverage.report]
+exclude_lines = [
+  '\.\.\.',
+  'if TYPE_CHECKING:',
+  'pragma: no cover'
+]
+fail_under = 100
+
+[tool.coverage.run]
+omit = ["repid/connections/rabbitmq/protocols.py"]
+source = ["repid"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["repid"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.markdownlint]
+MD046 = false  # Code block style
+
+[tool.markdownlint.MD013]
+code_block_line_length = 100  # Number of characters for code blocks
+code_blocks = true  # Include code blocks
+headers = true  # Include headers
+heading_line_length = 100  # Number of characters for headings
+headings = true  # Include headings
+line_length = 100  # Number of characters
+stern = false  # Stern length checking
+strict = false  # Strict length checking
+tables = true  # Include tables
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_unimported = true
+disallow_untyped_defs = true
+exclude = ["benchmarks"]
+no_implicit_optional = true
+show_error_codes = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+disallow_any_unimported = false
+module = "tests.*"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["pytest_docker_tools"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = ["integration: marker for integration tests (deselect with `-m 'not integration'`)"]
+timeout = 150
+verbosity_assertions = 2
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+ignore = ["E501", "N999", "PLR0913"]
+select = [
+  "F",
+  "E",
+  "W",
+  "C90",
+  "I",
+  "N",
+  "UP",
+  "YTT",
+  "S",
+  "BLE",
+  "FBT",
+  "B",
+  "A",
+  "COM",
+  "C4",
+  "T10",
+  "ISC",
+  "ICN",
+  "G",
+  "PIE",
+  "T20",
+  "PYI",
+  "PT",
+  "RET",
+  "SIM",
+  "TID",
+  "ARG",
+  "PTH",
+  "PGH",
+  "PL",
+  "RUF"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = ["PLC0414"]
+"benchmarks/*" = ["T201", "S603", "S607"]
+"repid/connections/__init__.py" = ["F401"]
+"repid/testing/__init__.py" = ["F401"]
+"tests/*" = ["S", "PLR2004", "FBT", "BLE", "S101"]
