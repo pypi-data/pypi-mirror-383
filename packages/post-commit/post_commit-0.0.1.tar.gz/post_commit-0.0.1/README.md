@@ -1,0 +1,1 @@
+Some interesting ideas for post-commit hook will be in this small project. Stay tuned!
