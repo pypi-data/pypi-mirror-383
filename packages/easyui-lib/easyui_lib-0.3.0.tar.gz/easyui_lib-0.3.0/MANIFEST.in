@@ -1,0 +1,82 @@
+# ============================================
+# Archivos de documentación y configuración
+# ============================================
+include README.md
+include LICENSE
+# include CHANGELOG.md  # desactivado hasta que exista
+# include py.typed      # no va en la raíz; usamos easyui/py.typed
+include pyproject.toml
+
+# ============================================
+# Archivos del paquete (incluidos en la distribución)
+# ============================================
+# Temas y estilos
+recursive-include easyui/themes *.yaml *.json
+
+# Recursos estáticos (fuentes, íconos, etc.)
+recursive-include easyui/resources *
+recursive-include easyui/resources/fonts *.ttf *.otf *.woff *.woff2
+recursive-include easyui/resources/icons *.svg *.png *.ico
+
+# Tipado estático
+include easyui/py.typed
+
+# ============================================
+# Archivos de desarrollo (excluidos de la distribución)
+# ============================================
+# Directorios completos a excluir
+prune tests
+prune examples
+prune .github
+prune docs
+prune .mypy_cache
+prune .pytest_cache
+
+# Archivos de configuración de desarrollo
+exclude .gitignore
+exclude .gitattributes
+exclude .editorconfig
+exclude .pre-commit-config.yaml
+exclude .flake8
+exclude .coveragerc
+
+# ============================================
+# Archivos del sistema y temporales
+# ============================================
+# Archivos de Python compilados
+global-exclude *.py[cod]
+global-exclude *.pyo
+global-exclude *.pyd
+
+# Cachés
+global-exclude __pycache__
+global-exclude .pytest_cache
+global-exclude .mypy_cache
+
+# Entornos virtuales
+global-exclude .venv
+global-exclude venv
+global-exclude env
+
+# Archivos de IDEs y editores
+global-exclude .vscode
+global-exclude .idea
+global-exclude *.sublime-*
+global-exclude *.sublime-workspace
+
+# Archivos temporales y del sistema
+global-exclude *.swp
+global-exclude *.swo
+global-exclude *~
+global-exclude .DS_Store
+global-exclude Thumbs.db
+global-exclude desktop.ini
+
+# Archivos de cobertura y testing
+global-exclude .coverage
+global-exclude htmlcov/
+
+# Archivos de construcción
+global-exclude build
+global-exclude dist
+global-exclude *.egg-info
