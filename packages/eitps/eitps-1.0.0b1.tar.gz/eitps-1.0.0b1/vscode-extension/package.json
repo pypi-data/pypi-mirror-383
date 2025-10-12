@@ -1,0 +1,196 @@
+{
+  "name": "powerscript",
+  "displayName": "PowerScript Language Support",
+  "description": "Full IDE support for PowerScript language with LSP, debugging, and syntax highlighting",
+  "version": "1.0.0",
+  "publisher": "powerscript-team",
+  "author": "Saleem Ahmad (Elite India Org Team) <team@eliteindia.org>",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers",
+    "Linters",
+    "Snippets"
+  ],
+  "keywords": [
+    "powerscript",
+    "javascript",
+    "typescript",
+    "python",
+    "transpiler"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "powerscript",
+        "aliases": [
+          "PowerScript",
+          "powerscript"
+        ],
+        "extensions": [
+          ".ps"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "powerscript",
+        "scopeName": "source.powerscript",
+        "path": "./syntaxes/powerscript.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "powerscript",
+        "path": "./snippets/powerscript.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "powerscript.compile",
+        "title": "Compile PowerScript File",
+        "category": "PowerScript"
+      },
+      {
+        "command": "powerscript.run",
+        "title": "Run PowerScript File",
+        "category": "PowerScript"
+      },
+      {
+        "command": "powerscript.createProject",
+        "title": "Create PowerScript Project",
+        "category": "PowerScript"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname == .ps",
+          "command": "powerscript.compile",
+          "group": "powerscript"
+        },
+        {
+          "when": "resourceExtname == .ps",
+          "command": "powerscript.run",
+          "group": "powerscript"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "PowerScript Configuration",
+      "properties": {
+        "powerscript.enableLSP": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable PowerScript Language Server Protocol support"
+        },
+        "powerscript.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable inline diagnostics for syntax and type errors"
+        },
+        "powerscript.compilerPath": {
+          "type": "string",
+          "default": "powerscriptc",
+          "description": "Path to PowerScript compiler"
+        },
+        "powerscript.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Path to Python interpreter for running compiled code"
+        }
+      }
+    },
+    "debuggers": [
+      {
+        "type": "powerscript",
+        "label": "PowerScript Debug",
+        "program": "./out/debugAdapter.js",
+        "runtime": "node",
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Absolute path to a PowerScript file.",
+                "default": "${workspaceFolder}/${command:AskForProgramName}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Automatically stop after launch.",
+                "default": true
+              },
+              "trace": {
+                "type": "boolean",
+                "description": "Enable logging of the Debug Adapter Protocol.",
+                "default": true
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "powerscript",
+            "request": "launch",
+            "name": "Debug PowerScript file",
+            "program": "${file}",
+            "stopOnEntry": true
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "PowerScript Debug: Launch",
+            "description": "A new configuration for 'debugging' a PowerScript file.",
+            "body": {
+              "type": "powerscript",
+              "request": "launch",
+              "name": "Debug PowerScript file",
+              "program": "^\"\\${file}\"",
+              "stopOnEntry": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:powerscript",
+    "onCommand:powerscript.compile",
+    "onCommand:powerscript.run",
+    "onCommand:powerscript.createProject"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "typescript": "^4.7.4",
+    "@vscode/test-electron": "^2.1.5",
+    "vsce": "^2.10.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^8.0.2",
+    "vscode-languageserver": "^8.0.2",
+    "vscode-languageserver-textdocument": "^1.0.5"
+  },
+  "type": "commonjs"
+}

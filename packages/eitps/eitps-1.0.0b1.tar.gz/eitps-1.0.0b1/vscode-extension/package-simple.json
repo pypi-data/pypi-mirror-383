@@ -1,0 +1,114 @@
+{
+    "name": "powerscript-vscode",
+    "displayName": "PowerScript Language Support",
+    "description": "Language support for PowerScript with IntelliSense, debugging, and syntax highlighting",
+    "version": "1.0.0",
+    "publisher": "powerscript",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Debuggers",
+        "Snippets"
+    ],
+    "keywords": [
+        "powerscript",
+        "language",
+        "syntax",
+        "highlighting",
+        "intellisense"
+    ],
+    "main": "./out/extension.js",
+    "activationEvents": [
+        "onLanguage:powerscript"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "powerscript",
+            "aliases": ["PowerScript", "powerscript"],
+            "extensions": [".ps"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "powerscript",
+            "scopeName": "source.powerscript",
+            "path": "./syntaxes/powerscript.tmLanguage.json"
+        }],
+        "snippets": [{
+            "language": "powerscript",
+            "path": "./snippets/powerscript.json"
+        }],
+        "commands": [
+            {
+                "command": "powerscript.compile",
+                "title": "Compile PowerScript File",
+                "category": "PowerScript"
+            },
+            {
+                "command": "powerscript.run",
+                "title": "Run PowerScript File",
+                "category": "PowerScript"
+            },
+            {
+                "command": "powerscript.createProject",
+                "title": "Create PowerScript Project",
+                "category": "PowerScript"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "powerscript.compile",
+                    "when": "resourceExtname == .ps",
+                    "group": "powerscript@1"
+                },
+                {
+                    "command": "powerscript.run",
+                    "when": "resourceExtname == .ps",
+                    "group": "powerscript@2"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "command": "powerscript.compile",
+                    "when": "resourceExtname == .ps",
+                    "group": "powerscript@1"
+                },
+                {
+                    "command": "powerscript.run",
+                    "when": "resourceExtname == .ps",
+                    "group": "powerscript@2"
+                }
+            ]
+        },
+        "keybindings": [
+            {
+                "command": "powerscript.compile",
+                "key": "ctrl+shift+b",
+                "mac": "cmd+shift+b",
+                "when": "resourceExtname == .ps"
+            },
+            {
+                "command": "powerscript.run",
+                "key": "ctrl+shift+r",
+                "mac": "cmd+shift+r",
+                "when": "resourceExtname == .ps"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.60.0",
+        "@types/node": "^16.x",
+        "typescript": "^4.4.4"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^7.0.0"
+    }
+}

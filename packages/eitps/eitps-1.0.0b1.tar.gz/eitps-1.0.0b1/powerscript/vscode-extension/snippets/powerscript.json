@@ -1,0 +1,212 @@
+{
+  "Class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\tconstructor(${2:parameters}) {",
+      "\t\t${3:// Constructor logic}",
+      "\t}",
+      "",
+      "\t${4:// Methods}",
+      "}"
+    ],
+    "description": "Create a new class"
+  },
+  "Function": {
+    "prefix": "function",
+    "body": [
+      "function ${1:functionName}(${2:parameters}): ${3:returnType} {",
+      "\t${4:// Function body}",
+      "\treturn ${5:value};",
+      "}"
+    ],
+    "description": "Create a new function"
+  },
+  "Async Function": {
+    "prefix": "asyncfunc",
+    "body": [
+      "async function ${1:functionName}(${2:parameters}): Promise<${3:returnType}> {",
+      "\t${4:// Async function body}",
+      "\treturn ${5:value};",
+      "}"
+    ],
+    "description": "Create a new async function"
+  },
+  "Constructor": {
+    "prefix": "constructor",
+    "body": [
+      "constructor(${1:parameters}) {",
+      "\t${2:// Constructor logic}",
+      "}"
+    ],
+    "description": "Create a constructor"
+  },
+  "Method": {
+    "prefix": "method",
+    "body": [
+      "${1:public} ${2:methodName}(${3:parameters}): ${4:returnType} {",
+      "\t${5:// Method body}",
+      "\treturn ${6:value};",
+      "}"
+    ],
+    "description": "Create a class method"
+  },
+  "Async Method": {
+    "prefix": "asyncmethod",
+    "body": [
+      "${1:public} async ${2:methodName}(${3:parameters}): Promise<${4:returnType}> {",
+      "\t${5:// Async method body}",
+      "\treturn ${6:value};",
+      "}"
+    ],
+    "description": "Create an async class method"
+  },
+  "Variable Declaration": {
+    "prefix": "let",
+    "body": [
+      "let ${1:variableName}: ${2:type} = ${3:value};"
+    ],
+    "description": "Declare a variable with let"
+  },
+  "Constant Declaration": {
+    "prefix": "const",
+    "body": [
+      "const ${1:constantName}: ${2:type} = ${3:value};"
+    ],
+    "description": "Declare a constant"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// If body}",
+      "}"
+    ],
+    "description": "Create an if statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// If body}",
+      "} else {",
+      "\t${3:// Else body}",
+      "}"
+    ],
+    "description": "Create an if-else statement"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:i} = 0; ${1:i} < ${2:length}; ${1:i}++) {",
+      "\t${3:// Loop body}",
+      "}"
+    ],
+    "description": "Create a for loop"
+  },
+  "For-In Loop": {
+    "prefix": "forin",
+    "body": [
+      "for (let ${1:item} in ${2:collection}) {",
+      "\t${3:// Loop body}",
+      "}"
+    ],
+    "description": "Create a for-in loop"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "\t${2:// Loop body}",
+      "}"
+    ],
+    "description": "Create a while loop"
+  },
+  "Try-Catch": {
+    "prefix": "trycatch",
+    "body": [
+      "try {",
+      "\t${1:// Try block}",
+      "} catch (${2:error}) {",
+      "\t${3:// Catch block}",
+      "}"
+    ],
+    "description": "Create a try-catch block"
+  },
+  "Import Statement": {
+    "prefix": "import",
+    "body": [
+      "import { ${1:exports} } from \"${2:module}\";"
+    ],
+    "description": "Create an import statement"
+  },
+  "Export Statement": {
+    "prefix": "export",
+    "body": [
+      "export { ${1:exports} };"
+    ],
+    "description": "Create an export statement"
+  },
+  "Generic Function": {
+    "prefix": "genericfunc",
+    "body": [
+      "function ${1:functionName}<${2:T}>(${3:parameter}: ${2:T}): ${2:T} {",
+      "\t${4:// Generic function body}",
+      "\treturn ${3:parameter};",
+      "}"
+    ],
+    "description": "Create a generic function"
+  },
+  "Interface": {
+    "prefix": "interface",
+    "body": [
+      "interface ${1:InterfaceName} {",
+      "\t${2:property}: ${3:type};",
+      "\t${4:method}(${5:parameters}): ${6:returnType};",
+      "}"
+    ],
+    "description": "Create an interface"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:EnumName} {",
+      "\t${2:VALUE1},",
+      "\t${3:VALUE2},",
+      "\t${4:VALUE3}",
+      "}"
+    ],
+    "description": "Create an enum"
+  },
+  "Null Coalescing": {
+    "prefix": "nullcoalesce",
+    "body": [
+      "${1:value} ?? ${2:defaultValue}"
+    ],
+    "description": "Null coalescing operator"
+  },
+  "Optional Chaining": {
+    "prefix": "optchain",
+    "body": [
+      "${1:object}?.${2:property}"
+    ],
+    "description": "Optional chaining operator"
+  },
+  "Promise": {
+    "prefix": "promise",
+    "body": [
+      "new Promise<${1:type}>((resolve, reject) => {",
+      "\t${2:// Promise body}",
+      "\tresolve(${3:value});",
+      "})"
+    ],
+    "description": "Create a Promise"
+  },
+  "Await": {
+    "prefix": "await",
+    "body": [
+      "const ${1:result} = await ${2:asyncFunction}();"
+    ],
+    "description": "Await an async function"
+  }
+}

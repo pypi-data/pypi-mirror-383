@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""
+MIT License
+
+Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)
+Email: team@eliteindia.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
+"""
+PowerScript Compiler CLI - powerscriptc
+Compiles PowerScript files to Python
+"""
+
+import sys
+import os
+import argparse
+from pathlib import Path
+
+# Add powerscript to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from powerscript.compiler.lexer import Lexer
+from powerscript.compiler.parser import Parser
+from powerscript.compiler.transpiler import Transpiler
+from powerscript.cli.commands import CompileCommand
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="PowerScript Compiler - Transpiles PowerScript to Python",
+        prog="powerscriptc"
+    )
+    
+    parser.add_argument(
+        "source",
+        help="Source directory or file to compile"
+    )
+    
+    parser.add_argument(
+        "-o", "--output",
+        required=True,
+        help="Output directory for compiled Python files"
+    )
+    
+    parser.add_argument(
+        "-w", "--watch",
+        action="store_true",
+        help="Watch mode - recompile on file changes"
+    )
+    
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Enable strict type checking"
+    )
+    
+    parser.add_argument(
+        "--no-runtime-checks",
+        action="store_true",
+        help="Disable runtime type validation"
+    )
+    
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Verbose output"
+    )
+    
+    args = parser.parse_args()
+    
+    # Initialize command
+    command = CompileCommand()
+    
+    try:
+        if args.watch:
+            print(f"👀 Watching {args.source} for changes...")
+            print(f"📁 Output directory: {args.output}")
+            print("Press Ctrl+C to stop")
+        else:
+            print(f"🔄 Compiling {args.source} → {args.output}")
+        
+        result = command.execute(args)
+        
+        if not args.watch:
+            if result:
+                print("✅ Compilation successful!")
+            else:
+                print("❌ Compilation failed!")
+                sys.exit(1)
+    
+    except KeyboardInterrupt:
+        print("\n👋 Compilation stopped by user")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

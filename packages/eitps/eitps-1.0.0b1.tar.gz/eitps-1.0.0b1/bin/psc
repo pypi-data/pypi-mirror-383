@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""
+MIT License
+
+Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)
+Email: team@eliteindia.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
+"""
+PowerScript Type Checker CLI - psc
+Runs static type checking on PowerScript files
+"""
+
+import sys
+import os
+import argparse
+from pathlib import Path
+
+# Add powerscript to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from powerscript.compiler.lexer import Lexer
+from powerscript.compiler.parser import Parser
+from powerscript.typechecker.type_checker import TypeChecker
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="PowerScript Type Checker - Static type analysis for PowerScript",
+        prog="psc"
+    )
+    
+    parser.add_argument(
+        "source",
+        help="Source directory or file to type check"
+    )
+    
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Enable strict type checking mode"
+    )
+    
+    parser.add_argument(
+        "--warnings-as-errors",
+        action="store_true",
+        help="Treat warnings as errors"
+    )
+    
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Verbose output"
+    )
+    
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Output results in JSON format"
+    )
+    
+    args = parser.parse_args()
+    
+    try:
+        # Find PowerScript files
+        source_path = Path(args.source)
+        
+        if source_path.is_file():
+            if not source_path.suffix == '.ps':
+                print(f"❌ File must have .ps extension: {source_path}")
+                sys.exit(1)
+            ps_files = [source_path]
+        elif source_path.is_dir():
+            ps_files = list(source_path.rglob("*.ps"))
+        else:
+            print(f"❌ Source not found: {source_path}")
+            sys.exit(1)
+        
+        if not ps_files:
+            print(f"❌ No PowerScript files found in: {source_path}")
+            sys.exit(1)
+        
+        if args.verbose:
+            print(f"🔍 Found {len(ps_files)} PowerScript files")
+        
+        type_checker = TypeChecker()
+        total_errors = 0
+        total_warnings = 0
+        results = []
+        
+        for ps_file in ps_files:
+            if args.verbose:
+                print(f"📄 Checking {ps_file}")
+            
+            try:
+                # Read and parse file
+                with open(ps_file, 'r') as f:
+                    source = f.read()
+                
+                lexer = Lexer(source, str(ps_file))
+                lexer.tokenize()
+                
+                parser_instance = Parser(lexer)
+                ast = parser_instance.parse()
+                
+                # Type check
+                result = type_checker.check(ast)
+                
+                file_result = {
+                    "file": str(ps_file),
+                    "errors": len(result.errors),
+                    "warnings": len(result.warnings),
+                    "success": result.success
+                }
+                
+                if not args.json:
+                    if result.errors:
+                        print(f"❌ {ps_file}: {len(result.errors)} error(s)")
+                        for error in result.errors:
+                            print(f"   Line {error.line}: {error.message}")
+                    
+                    if result.warnings:
+                        print(f"⚠️  {ps_file}: {len(result.warnings)} warning(s)")
+                        for warning in result.warnings:
+                            print(f"   Line {warning.line}: {warning.message}")
+                    
+                    if result.success and not result.warnings:
+                        print(f"✅ {ps_file}: OK")
+                
+                total_errors += len(result.errors)
+                total_warnings += len(result.warnings)
+                results.append(file_result)
+                
+            except Exception as e:
+                error_msg = f"Failed to process {ps_file}: {e}"
+                if args.json:
+                    results.append({
+                        "file": str(ps_file),
+                        "error": error_msg,
+                        "success": False
+                    })
+                else:
+                    print(f"❌ {error_msg}")
+                total_errors += 1
+        
+        # Output summary
+        if args.json:
+            import json
+            output = {
+                "files_checked": len(ps_files),
+                "total_errors": total_errors,
+                "total_warnings": total_warnings,
+                "results": results
+            }
+            print(json.dumps(output, indent=2))
+        else:
+            print(f"\n📊 Summary: {len(ps_files)} files checked")
+            print(f"   Errors: {total_errors}")
+            print(f"   Warnings: {total_warnings}")
+        
+        # Exit with appropriate code
+        if total_errors > 0:
+            sys.exit(1)
+        elif args.warnings_as_errors and total_warnings > 0:
+            sys.exit(1)
+        else:
+            sys.exit(0)
+    
+    except KeyboardInterrupt:
+        print("\n👋 Type checking stopped by user")
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
