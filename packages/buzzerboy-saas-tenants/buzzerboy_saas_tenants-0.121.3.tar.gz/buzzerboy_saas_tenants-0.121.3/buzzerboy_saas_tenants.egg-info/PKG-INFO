@@ -1,0 +1,181 @@
+Metadata-Version: 2.4
+Name: buzzerboy-saas-tenants
+Version: 0.121.3
+Summary: Buzzerboy SaaS Tenants components that predefines the tenant configuration across for apps
+Home-page: https://www.buzzerboy.com/
+Author: Buzzerboy Inc
+Author-email: Buzzerboy Inc <info@buzzerboy.com>
+License: Copyright (c) 2024 Buzzerboy Inc. Canada. All Rights Reserved.
+        
+        This product and associated files (the "Software") is only available for use
+        within projects developed by Buzzerboy Inc. Canada with subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://www.buzzerboy.com/
+Project-URL: Issues, https://dev.azure.com/buzzerboyinc/buzzerboy
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: django==4.2.9
+Requires-Dist: django-allauth==0.60.1
+Requires-Dist: PyJWT==2.8.0
+Requires-Dist: python-dotenv==1.0.1
+Requires-Dist: str2bool==1.1
+Requires-Dist: django-quill-editor==0.1.40
+Requires-Dist: django-ckeditor==6.7.1
+Requires-Dist: django-ckeditor-5==0.2.13
+Requires-Dist: jinja2
+Requires-Dist: django-htmx==1.19.0
+Requires-Dist: django-js-asset==2.2.0
+Requires-Dist: celery==5.3.4
+Requires-Dist: redis==5.0.1
+Requires-Dist: hiredis==2.2.3
+Requires-Dist: pillow>=10.0.1
+Requires-Dist: django-seed==0.3.1
+Requires-Dist: django-celery-results==2.5.1
+Requires-Dist: djangorestframework==3.14.0
+Requires-Dist: django-api-generator==1.0.17
+Requires-Dist: django-debug-toolbar==4.2.0
+Requires-Dist: drf-spectacular==0.26.5
+Requires-Dist: pyotp
+Requires-Dist: django-extensions==3.1.3
+Requires-Dist: whitenoise==6.5.0
+Requires-Dist: gunicorn==21.2.0
+Requires-Dist: cryptography==44.0.0
+Requires-Dist: psycopg2-binary
+Requires-Dist: python-decouple
+Requires-Dist: pandas
+Requires-Dist: boto3==1.35.91
+Requires-Dist: botocore==1.35.91
+Requires-Dist: pyOpenSSL==24.3.0
+Requires-Dist: asgiref==3.8.1
+Requires-Dist: Faker==28.0.0
+Requires-Dist: greenlet==3.0.3
+Requires-Dist: Jinja2==3.1.4
+Requires-Dist: MarkupSafe==2.1.5
+Requires-Dist: psycopg2-binary==2.9.9
+Requires-Dist: python-dateutil==2.9.0.post0
+Requires-Dist: python-decouple==3.8
+Requires-Dist: six==1.16.0
+Requires-Dist: sqlparse==0.5.1
+Requires-Dist: toposort==1.10
+Requires-Dist: python-gettext
+Requires-Dist: toml
+Requires-Dist: mysqlclient
+Requires-Dist: django-ckeditor-5
+Requires-Dist: django-storages
+Requires-Dist: django-translated-fields
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+
+# Buzzerboy SaaS Tenants
+
+Buzzerboy SaaS Tenants is a package that provides components for managing tenant configurations in a multi-tenant SaaS application. This package helps in defining and managing tenant-specific settings, data isolation, and other tenant-related functionalities across various applications.
+
+It implements Buzzerboy's Standard Features by default, and isolate the UI separately. Applications that are developed that will
+use Buzzerboy Standard Features can implement UI separately.
+
+More information:
+https://buzzerboy.atlassian.net/wiki/spaces/BC/pages/69369878/Standard+Features
+
+## Introduction
+
+The Buzzerboy SaaS Tenants package is designed to simplify the management of tenant configurations in a multi-tenant SaaS environment. It provides a set of tools and components that allow developers to easily define and manage tenant-specific settings, ensuring data isolation and customization for each tenant.
+
+## Features
+
+- Tenant configuration management
+- Data isolation for tenants
+- Tenant-specific settings and customization
+- Easy integration with existing applications
+
+## Reference
+The `buzzerboy-saas-tenants` package uses the following Buzzerboy guidances:
+- https://buzzerboy.atlassian.net/wiki/spaces/BC/pages/226820115/How+To+Build+an+app+as+a+reusable+component
+- https://buzzerboy.atlassian.net/wiki/spaces/BC/pages/123207703/Creating+and+Distributing+a+Modular+Reusable+Django+App
+
+## Getting Started
+
+Follow these steps to get started with the Buzzerboy SaaS Tenants package:
+
+### Installation
+
+To install the package, use the following command:
+
+```sh
+pip install buzzerboy-saas-tenants
+```
+
+###Software Dependencies
+Ensure you have the following dependencies installed:
+
+- Python >= 3.8
+- Django >= 3.2
+- djangorestframework >= 3.12
+
+
+### Usage
+To use `buzzerboy-saas-tenants` you must include it in your django app under the requirements.txt, and add each component as an installed app. 
+
+More details on Confluence:
+https://buzzerboy.atlassian.net/wiki/spaces/BC/pages/225968137/How+To+Use+buzzerboy-saas-tenants
+
+##Latest Releases
+Check the releases page for the latest updates and release notes.
+
+##API References
+Refer to the API documentation for detailed information on how to use the package.
+
+##Build and Test
+To build and test the package, follow these steps:
+
+###Prepare
+Before building, prepare the build by determining the build version and generating a CHANGELOG by analyzing commits
+```sh
+python prepare.py
+```
+
+##Building
+Use the following command to build the package:
+```sh
+python -m build
+```
+
+Testing
+Run the tests using the following command:
+```sh
+pytest
+```
+
+##Contribute
+All Buzzerboy Platform members (Staff, Contractors, Clients and Users) are welcome contributions from the community to make this package better. Here’s how you can contribute:
+
+1. Clone the repository
+2. Create a new branch (git checkout -b feature-branch)
+3. Make your changes
+4. Commit your changes (git commit -am 'Add new feature')
+5. Push to the branch (git push origin feature-branch)
+6. Create a new Pull Request
+7. For more details, refer to our contributing guidelines.
+
+###License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+###Acknowledgements
+- Django
+- Django REST framework
