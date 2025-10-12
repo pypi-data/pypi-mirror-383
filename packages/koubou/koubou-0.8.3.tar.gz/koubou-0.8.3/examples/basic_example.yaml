@@ -1,0 +1,46 @@
+# 🎯 Koubou Basic Example
+# This configuration generates simple screenshots with backgrounds and text overlays
+
+project:
+  name: "My Beautiful App"
+  output_dir: "output"
+
+devices:
+  - "iPhone 16 Pro - Black Titanium - Portrait"
+
+defaults:
+  background:
+    type: "linear"
+    colors: ["#667eea", "#764ba2"]
+    direction: 45
+
+screenshots:
+  app_launch:
+    content:
+      - type: "image"
+        asset: "screenshots/home.png"
+        position: ["50%", "50%"]
+        scale: 0.6
+        frame: true
+        rotation: -5  # Rotate image 5 degrees counter-clockwise
+
+      - type: "text"
+        content: "Beautiful App"
+        position: ["50%", "15%"]
+        size: 48
+        color: "#ffffff"
+        weight: "bold"
+
+      - type: "text"
+        content: "Experience the future of mobile apps"
+        position: ["50%", "25%"]
+        size: 24
+        color: "#ffffff"
+        alignment: "center"
+
+      - type: "text"
+        content: "Rotated Badge"
+        position: ["80%", "30%"]
+        size: 18
+        color: "#ffff00"
+        rotation: 15  # Rotate text 15 degrees clockwise
