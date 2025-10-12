@@ -1,0 +1,28 @@
+# Include important files in the package distribution
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+
+# Include documentation
+recursive-include docs *
+prune docs/_build
+
+# Include tests
+recursive-include tests *
+
+# Include examples
+recursive-include examples *
+
+# Exclude development and build files
+exclude .gitignore
+exclude .pre-commit-config.yaml
+exclude tox.ini
+exclude Makefile
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *.orig
+recursive-exclude * *.rej
+recursive-exclude * .DS_Store
+recursive-exclude * .coverage
+recursive-exclude * .pytest_cache
