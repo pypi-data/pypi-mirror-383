@@ -1,0 +1,131 @@
+[project]
+name = "odsgenerator"
+version = "1.12.0"
+description = "Generate an OpenDocument Format .ods file from json or yaml file"
+license = "MIT"
+readme = "README.md"
+authors = [{ name = "Jérôme Dumonteil", email = "jerome.dumonteil@gmail.com" }]
+keywords = ["openDocument", "ODF", "ods", "json", "spreadsheet", "generator"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.10, <4"
+dependencies = ["odfdo>=3.7.7", "pyyaml>=6.0.3"]
+
+[project.urls]
+Homepage = "https://github.com/jdum/odsgenerator"
+Repository = "https://github.com/jdum/odsgenerator"
+
+[project.scripts]
+odsgenerator = "odsgenerator.cli:main"
+
+[dependency-groups]
+doc = ["sphinx>=7.0", "myst-parser>=4.0.1"]
+dev = [
+    "pytest>=8.4.0",
+    "pytest-cov>=6.2.1",
+    "coverage>=7.10.7",
+    "mypy>=1.18.2",
+    "mypy-extensions>=1.1.0",
+    "typing-extensions>=4.15.0",
+    "tox>=4.31.0",
+    "tox-gh-actions>=3.3.0",
+    "ruff>=0.14.0",
+    "isort>=7.0.0",
+    "types-pyyaml>=6.0.12.20250915",
+]
+
+[tool.uv]
+default-groups = ["doc", "dev"]
+
+[build-system]
+requires = ["uv_build>=0.9.0,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+target-version = "py314"
+exclude = [".venv"]
+# Same as Black.
+line-length = 88
+indent-width = 4
+fix = false
+lint.select = [
+    # flake8-2020
+    "YTT",
+    # flake8-bandit
+    "S",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-comprehensions
+    "C4",
+    # flake8-debugger
+    "T10",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # mccabe
+    "C90",
+    # pycodestyle
+    "E",
+    "W",
+    # pyflakes
+    "F",
+    # pygrep-hooks
+    "PGH",
+    # pyupgrade
+    "UP",
+    # ruff
+    "RUF",
+    # tryceratops
+    "TRY",
+]
+lint.ignore = [
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_*" = ["S101", "S603"]
+
+[tool.mypy]
+files = ["src/odsgenerator"]
+disallow_untyped_defs = true
+disallow_any_unimported = false
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "odfdo"
+ignore_missing_imports = true
+
+[tool.coverage.report]
+skip_empty = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["odsgenerator"]
