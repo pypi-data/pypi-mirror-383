@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+title: PyDelica
+message: Please cite this software using these metadata.
+type: software
+authors:
+  - given-names: Kristian
+    family-names: Zarebski
+    orcid: 'https://orcid.org/0000-0002-6773-1049'
+  - given-names: Alexander
+    family-names: Petrov
+    orcid: 'https://orcid.org/0000-0003-4820-5227'
+repository-code: 'https://gitlab.com/krizar/pydelica'
+abstract: >-
+  PyDelica is an API providing a quick and easy to
+  use interface to compile, customise and run
+  OpenModelica models in Python
+keywords:
+  - modelica
+  - openmodelica
+  - simulation
+license: MIT
+commit: b542dbc9ecaa55d2f1c15d5b87ae595b803bbd1b 
+version: v0.6.3
+date-released: '2025-10-12'
+references:
+  - title: OpenModelica
+    repository-code: https://github.com/OpenModelica/OpenModelica
+    type: software
+    url: https://openmodelica.org

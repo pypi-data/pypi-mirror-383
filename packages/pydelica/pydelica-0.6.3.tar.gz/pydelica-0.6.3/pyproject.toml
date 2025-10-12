@@ -1,0 +1,73 @@
+[project]
+name = "pydelica"
+version = "0.6.3"
+description = "Light-weight serverless API for OpenModelica"
+authors = [
+{name = "Kristian Zarebski", email = "krizar312@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+license = { file = "LICENSE" }
+dependencies = [
+    "defusedxml>=0.7.1",
+    "pandas>=2.2.3",
+    "pydantic>=2.11.4",
+]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Operating System :: Unix",
+  "Operating System :: Microsoft :: Windows",
+  "Topic :: Scientific/Engineering",
+  "Natural Language :: English",
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+
+[project.urls]
+repository = "https://gitlab.com/krizar/pydelica"
+
+[tool.interrogate]
+ignore-init-method = true
+fail-under = 95
+verbose = 1
+exclude = ["docs", "tests"]
+
+
+[tool.ruff]
+lint.extend-select = ["C901"]
+lint.mccabe.max-complexity = 11
+
+[tool.pytest.ini_options]
+addopts = "-p no:warnings --cov=pydelica"
+testpaths = [
+    "tests"
+]
+markers = [
+    "compilation: test relating to compilation of models",
+    "session: tests relating to the session class"
+]
+
+[tool.bandit]
+skips = ['B603', 'B404']
+
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "interrogate>=1.7.0",
+    "pylint>=3.3.7",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "pytest-sugar>=1.0.0",
+    "ruff>=0.11.9",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

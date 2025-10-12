@@ -1,0 +1,75 @@
+stages:
+  - Testing
+  - Quality
+  - Publish
+  - Pages
+
+.setup_template: &test_setup
+  image: openmodelica/openmodelica:v1.25.4-ompython
+  before_script:
+    - pip install uv
+    - echo "installPackage(Modelica, \"3.2.3\", exactMatch=true);" >> install.mos
+    - echo "installPackage(Modelica, \"4.0.0\", exactMatch=true);" >> install.mos
+    - omc install.mos
+
+Unit Tests (3.13):
+  stage: Testing
+  <<: *test_setup
+  coverage: '/TOTAL.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  script:
+    - uv python install 3.14
+    - uv run -p 3.14 pytest --cov-report=term --cov-report=xml --cov-report=html
+  artifacts:
+    paths:
+      - htmlcov
+      - coverage.xml
+
+Unit Tests (3.10):
+  stage: Testing
+  <<: *test_setup
+  script:
+    - uv python install 3.10
+    - uv run -p 3.10 pytest --cov-report=term --cov-report=xml --cov-report=html
+  artifacts:
+    paths:
+      - htmlcov
+      - coverage.xml
+
+Bandit:
+  stage: Quality
+  <<: *test_setup
+  script:
+    - uv run pip install "bandit[toml]"
+    - uv run bandit -r pydelica -c pyproject.toml
+
+Pylint:
+  stage: Quality
+  <<: *test_setup
+  script:
+    - uv run pylint --exit-zero pydelica
+
+PyPi:
+  stage: Publish
+  environment:
+    name: PyPi Deploy
+    url: https://pypi.org/project/pydelica/
+  <<: *test_setup
+  only:
+    - tags
+    - /^v\d+\.\d+\.\d+$/
+  script:
+      - uv build
+      - uv publish -u "__token__" -p $PYPI_TOKEN
+
+pages:
+  stage: Pages
+  script:
+    - mkdir -p public/coverage
+    - mv htmlcov/* public/coverage/
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - public
