@@ -1,0 +1,86 @@
+<!-- 부트스트랩 모달창 열어주는 코드, 타이틀과 푸터를 변경한다. -->
+{% load static %}
+
+{% if calendar %}
+<style>
+.modal-title {
+  text-decoration: none;
+  color: #777777;
+  transition: 0.3s;
+  line-height: 1;
+}
+
+.modal .modal-dialog .modal-footer .popup-check {
+  text-decoration: none;
+  color: #777777;
+  transition: 0.3s;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 0;
+}
+</style>
+
+
+<!-- Modal -->
+<div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-labelledby="{{ modal_id }}Label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calendarModalLabel">{{ calendar.modal_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% include 'fullcalendar_hj3415/calendar.html' %}
+      </div>
+      <div class="modal-footer justify-content-start">
+        <div class="popup-check">
+          <input type="checkbox" id="epopup_suppress" />
+          <label for="epopup_suppress" data-id="checkbox_text">
+            {{ dont_show_again }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 창이 열리자마자 모달을 뜨게하고 쿠키를 통해 다시 열기 방지 체크 및 창 오픈시 모달창 실행 스크립트 -->
+<!-- Bootstrap 5: bundle(=Popper 포함) 로드 필요 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 다시보지 않기가 체크되어 있으면 제거
+    const storageKey = "ecacher-modal_{{ modal_id }}";
+    if (localStorage.getItem(storageKey) === 'true') {
+      const el = document.getElementById('{{ modal_id }}');
+      if (el) el.remove();
+      return;
+    }
+
+    // auto_open 옵션 처리
+    {% if auto_open %}
+    const modalEl = document.getElementById('{{ modal_id }}');
+    if (modalEl) {
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+
+      // 체크박스 핸들링
+      const checkbox = modalEl.querySelector('#epopup_suppress');
+      if (checkbox) {
+        checkbox.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            localStorage.setItem("ecacher-modal_{{ modal_id }}", 'true');
+            modal.hide();
+          } else {
+            localStorage.removeItem("ecacher-modal_{{ modal_id }}");
+          }
+        });
+      }
+    }
+    {% endif %}
+  });
+</script>
+{% endif %}
