@@ -1,0 +1,56 @@
+Metadata-Version: 2.4
+Name: boring-math-recursive-functions
+Version: 1.0.0
+Summary: Recursive Functions Package
+Keywords: ackermann,fibonacci,recursive,recursive functions
+Author-email: "Geoffrey R. Scheller" <geoffrey@scheller.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/x-rst
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: Pytest
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+License-File: LICENSE
+Requires-Dist: pythonic-fp-iterables>=5.1.2
+Requires-Dist: pytest>=8.4.1 ; extra == "test"
+Project-URL: Changelog, https://github.com/grscheller/boring-math-recursive-functions/blob/main/CHANGELOG.md
+Project-URL: Documentation, https://grscheller.github.io/boring-math/recursive-functions/development/build/html
+Project-URL: Homepage, https://grscheller.github.io/boring-math/homepage/build/html
+Project-URL: Source, https://github.com/grscheller/boring-math-recursive-functions
+Provides-Extra: test
+
+Boring Math - Recursive Functions
+=================================
+
+PyPI project
+`boring-math-recursive-functions
+<https://pypi.org/project/boring-math-recursive-functions>`_.
+
+The purpose of this project is to explore different ways to efficiently
+implement recursion in Python.
+
+Computable recursive functions can be defined with previously defined or even
+not yet defined values. Functions defined using previously well defined values
+having "base cases" are called "primitively recursive functions." Not all
+computable functions are primitively recursive.
+
+This pypi project is part of the
+`boring math
+<https://grscheller.github.io/boring-math>`_ projects.
+
+Documentation
+-------------
+
+Documentation for this project is hosted on
+`GitHub Pages
+<https://grscheller.github.io/boring-math/recursive-functions/development/build/html>`_.
+
+Copyright and License
+---------------------
+
+Copyright (c) 2023-2025 Geoffrey R. Scheller. Licensed under the Apache
+License, Version 2.0. See the LICENSE file for details.
+
