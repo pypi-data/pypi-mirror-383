@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: plato-learn
+Version: 1.1
+Summary: Plato: a research framework for federated learning
+Project-URL: Homepage, https://github.com/TL-System/plato
+Project-URL: Repository, https://github.com/TL-System/plato
+Project-URL: Documentation, https://platodocs.netlify.app/
+License-Expression: Apache-2.0
+License-File: LICENSE
+Requires-Python: >=3.13
+Requires-Dist: aiohttp
+Requires-Dist: boto3
+Requires-Dist: datasets
+Requires-Dist: evaluate
+Requires-Dist: gym
+Requires-Dist: lightly
+Requires-Dist: numpy
+Requires-Dist: opacus
+Requires-Dist: python-socketio
+Requires-Dist: pyyaml
+Requires-Dist: requests
+Requires-Dist: tenseal
+Requires-Dist: timm
+Requires-Dist: torch
+Requires-Dist: torch-optimizer
+Requires-Dist: torchvision
+Requires-Dist: transformers
+Requires-Dist: zstd
+Provides-Extra: dev
+Requires-Dist: pytest; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# Plato: A New Framework for Scalable Federated Learning Research
+
+Welcome to *Plato*, a software framework to facilitate scalable, reproducible, and extensible federated learning research. Please refer to the documentation website, available in `/documentation`, for more details on installing, running and deploying Plato.
