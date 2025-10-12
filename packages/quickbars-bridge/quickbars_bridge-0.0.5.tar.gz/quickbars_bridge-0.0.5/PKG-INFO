@@ -1,0 +1,134 @@
+Metadata-Version: 2.4
+Name: quickbars-bridge
+Version: 0.0.5
+Summary: Async client for QuickBars TV app
+Project-URL: Homepage, https://github.com/trooped/quickbars-bridge
+Project-URL: Issues, https://github.com/trooped/quickbars-bridge/issues
+License: MIT
+License-File: LICENSE
+Requires-Python: >=3.11
+Requires-Dist: aiohttp>=3.9.0
+Description-Content-Type: text/markdown
+
+# quickbars-bridge
+
+Async client for the **QuickBars for Home Assistant** app used by the Home Assistant QuickBars integration.
+
+This library wraps all **outbound HTTP** calls made from Home Assistant to a QuickBars TV device:
+- Request a pairing code
+- Confirm pairing
+- Send Home Assistant URL + long‑lived token
+- (Optional) Fetch / apply snapshot via HTTP
+
+It is designed to satisfy Home Assistant Core’s guideline: *“All communication to external devices or services must be wrapped in an external Python library hosted on PyPI.”*
+
+---
+
+## Installation
+
+```bash
+pip install quickbars-bridge
+```
+
+> Import path uses underscore: `quickbars_bridge`
+
+Supported Python: **3.11+** (matches modern Home Assistant requirements).
+
+---
+
+## Usage
+
+```python
+import asyncio
+from quickbars_bridge import QuickBarsClient
+
+async def main():
+    client = QuickBarsClient(host="192.168.1.50", port=9123, timeout=15.0)
+
+    # 1) Request pairing code
+    code_info = await client.get_pair_code()
+    print("Pair SID:", code_info.get("sid"))
+
+    # 2) Confirm pairing (values shown are examples)
+    confirm = await client.confirm_pair(
+        code="123456",
+        sid=code_info["sid"],
+        ha_instance="192.168.1.10",
+        ha_name="Home Assistant",
+        ha_url="http://homeassistant.local:8123",
+    )
+    print("Device ID:", confirm.get("id"))
+
+    # 3) Send HA URL + token to the TV
+    result = await client.set_credentials(
+        url="http://homeassistant.local:8123",
+        token="<LONG_LIVED_TOKEN>"
+    )
+    print("Creds result:", result)
+
+    # 4) (Optional) Snapshot via HTTP
+    snap = await client.get_snapshot()
+    await client.post_snapshot(snap)
+
+asyncio.run(main())
+```
+
+All methods raise `aiohttp.ClientResponseError` for non‑2xx responses and typical network exceptions
+(`asyncio.TimeoutError`, `aiohttp.ClientConnectorError`, etc.). Handle these in your integration tests.
+
+---
+
+## API
+
+```py
+class QuickBarsClient:
+    def __init__(self, host: str, port: int, *, timeout: float = 15.0) -> None: ...
+    async def get_pair_code(self) -> dict: ...
+    async def confirm_pair(self, code: str, sid: str, *, ha_instance: str | None = None,
+                           ha_name: str | None = None, ha_url: str | None = None) -> dict: ...
+    async def set_credentials(self, url: str, token: str) -> dict: ...
+    async def get_snapshot(self) -> dict: ...
+    async def post_snapshot(self, snapshot: dict) -> dict: ...
+```
+
+---
+
+## Development
+
+```bash
+# inside the library repo
+python -m venv .venv && source .venv/bin/activate
+pip install -U pip build twine ruff
+ruff format
+python -m build  # creates sdist + wheel in ./dist
+```
+
+### Test install from TestPyPI
+
+```bash
+twine upload --repository testpypi dist/*
+python -m venv /tmp/qbtest && source /tmp/qbtest/bin/activate
+pip install -i https://test.pypi.org/simple/ quickbars-bridge --extra-index-url https://pypi.org/simple
+python -c "from quickbars_bridge import QuickBarsClient; print(QuickBarsClient)"
+```
+
+### Release to PyPI
+
+```bash
+twine upload dist/*
+```
+
+> If you re‑upload, bump the version in `pyproject.toml` first.
+
+---
+
+## Versioning
+
+Use semantic versioning. The Home Assistant integration pins an exact version in `manifest.json` under
+`"requirements": ["quickbars-bridge==X.Y.Z"]`.
+
+---
+
+## License
+
+MIT – see [LICENSE](./LICENSE).
