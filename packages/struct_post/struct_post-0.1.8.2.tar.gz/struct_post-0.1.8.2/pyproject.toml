@@ -1,0 +1,27 @@
+[project]
+name = "struct_post"
+version = "0.1.8.2"
+description = "A module designed to analyse common structural test results."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ipympl>=0.9.8",
+    "matplotlib>=3.10.6",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.2",
+    "requests>=2.32.5",
+]
+
+[project.optional-dependencies]
+doc = [
+    "sphinx>=8.0",
+    "myst-parser>=4.0.1",
+    "nbsphinx>=0.9.7",
+    "pydata-sphinx-theme>=0.16.1",
+    "ipykernel>=6.30.1"
+]
+
+[project.urls]
+Homepage = "https://github.com/TimberEng/struct_post"
+Documentation = "https://struct-post.readthedocs.io/en/latest/"
+Source = "https://github.com/TimberEng/struct_post"
