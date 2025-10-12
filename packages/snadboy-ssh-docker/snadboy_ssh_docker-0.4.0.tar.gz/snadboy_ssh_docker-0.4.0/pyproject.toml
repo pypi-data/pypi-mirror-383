@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snadboy-ssh-docker"
+version = "0.4.0"
+description = "A Python library for managing Docker containers across multiple remote hosts using Tailscale SSH"
+readme = "src/snadboy_ssh_docker/README.md"
+requires-python = ">=3.8"
+license = "MIT"
+authors = [
+    {name = "snadboy", email = "snadboy@example.com"},
+]
+keywords = ["docker", "ssh", "containers", "remote", "management"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Systems Administration",
+]
+dependencies = [
+    "paramiko>=2.7.0",
+    "pyyaml>=5.4.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-asyncio",
+    "pytest-mock",
+    "pytest-cov",
+    "testcontainers",
+    "docker",
+    "black",
+    "isort",
+    "flake8",
+    "mypy",
+]
+
+[project.urls]
+Homepage = "https://github.com/snadboy/snadboy-ssh-docker"
+Repository = "https://github.com/snadboy/snadboy-ssh-docker"
+Issues = "https://github.com/snadboy/snadboy-ssh-docker/issues"
+
+[project.scripts]
+snadboy-ssh-docker = "snadboy_ssh_docker.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["snadboy_ssh_docker*"]
+
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers --cov=src/snadboy_ssh_docker --cov-report=term-missing --cov-report=html"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+markers = [
+    "unit: marks tests as unit tests",
+    "integration: marks tests as integration tests",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
