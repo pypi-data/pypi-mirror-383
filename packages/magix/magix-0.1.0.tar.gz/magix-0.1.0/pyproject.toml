@@ -1,0 +1,19 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "magix"
+version = "0.1.0"
+description = "Graph database object mapper."
+readme = "README.md"
+authors = ["Jakob Kristensen <jakob@jakobk.dk>"]
+license = "MIT"
+packages = [{include = "magix", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+
