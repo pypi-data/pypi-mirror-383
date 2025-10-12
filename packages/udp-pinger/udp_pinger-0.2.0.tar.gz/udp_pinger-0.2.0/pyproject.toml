@@ -1,0 +1,20 @@
+[build-system]
+requires = ["maturin>=1.9,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "udp_pinger"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dynamic = ["version"]
+
+[tool.maturin]
+features = ["py", "pyo3/extension-module"]
+bindings = "abi3-py310"
+python-source = "py_src"
+module-name = "udp_pinger._udp_pinger_core"
+profile = "python"

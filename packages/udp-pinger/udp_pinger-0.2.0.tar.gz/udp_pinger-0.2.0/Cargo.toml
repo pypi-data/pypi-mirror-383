@@ -1,0 +1,68 @@
+[package]
+name = "udp_pinger"
+version = "0.2.0"
+edition = "2024"
+license = "Apache-2.0"
+authors = ["Bowan Foryt <bowan@valstad.com>"]
+description = "A library for pinging devices using unprivileged UDP packets."
+repository = "https://github.com/valstad-shipworks/udp_pinger"
+keywords = ["ping", "udp", "networking", "rust", "python"]
+categories = ["network-programming"]
+readme = "README.md"
+
+[[test]]
+name = "ping"
+path = "tests/ping.rs"
+harness = false
+required-features = []
+
+[[test]]
+name = "ping_async"
+path = "tests/ping_async.rs"
+harness = false
+required-features = ["async"]
+
+[[test]]
+name = "ping_py"
+path = "tests/ping_py.rs"
+harness = false
+required-features = ["py"]
+
+[[test]]
+name = "timesync"
+path = "tests/timesync.rs"
+harness = false
+required-features = []
+
+[[test]]
+name = "timesync_py"
+path = "tests/timesync_py.rs"
+harness = false
+required-features = ["py"]
+
+
+[dependencies]
+thiserror = "2.0.17"
+circular-buffer = { version = "1.2.0", features = ["use_std"]}
+pyo3 = { version = "0.26.0", optional = true, features = ["abi3-py310"] }
+event-listener = "5.4.1"
+futures = { version = "0.3.31" , optional = true }
+async-net = { version = "2.0.0", optional = true}
+async-io = { version = "2.6.0", optional = true}
+
+[dev-dependencies]
+smol = "2.0.2"
+pyo3 = { version = "0.26.0", features = ["auto-initialize"] }
+
+[features]
+default=[]
+py=["pyo3"]
+alternate_port=[]
+async=["futures", "async-net", "async-io"]
+
+[profile.release]
+lto = true
+
+[profile.python]
+inherits = "release"
+debug = 1

@@ -1,0 +1,80 @@
+name: Cargo Publish
+
+on:
+  workflow_run:
+    workflows: ["Rust CI"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: true
+
+jobs:
+  precheck:
+    name: Detect release tag & verify
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - name: Checkout tested commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Find semver tag on this commit
+        id: tag
+        shell: bash
+        run: |
+          TAG="$(git tag --points-at "${{ github.event.workflow_run.head_sha }}" | head -n1 || true)"
+          if [[ -z "$TAG" ]]; then
+            echo "No tag points at this commit; skipping publish."
+            echo "tag=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Tag '$TAG' is not semver vX.Y.Z; skipping publish."
+            echo "tag=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+  publish:
+    name: Publish to crates.io
+    needs: precheck
+    if: ${{ needs.precheck.outputs.tag != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: crates-io
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Verify tag matches Cargo version
+        shell: bash
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          CRATE_VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')
+          TAG="${{ needs.precheck.outputs.tag }}"
+          if [[ "v${CRATE_VERSION}" != "${TAG}" ]]; then
+            echo "::error::Tag ($TAG) does not match crate version (v${CRATE_VERSION})."
+            exit 1
+          fi
+
+      - name: Dry-run packaging
+        run: cargo publish --dry-run
+
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish --token "${{ secrets.CARGO_REGISTRY_TOKEN }}"
