@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=45,<70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "print-project"
+version = "1.0.1"
+description = "Directory Content Analysis Tool - Extract and analyze source code files across project structures"
+readme = "README.md"
+requires-python = ">=3.6"
+authors = [
+    {name = "smaxiso", email = "smaxiso@users.noreply.github.com"}
+]
+
+keywords = ["code-analysis", "directory-scanner", "documentation", "source-code", "project-analysis"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Filesystems",
+    "Topic :: Utilities"
+]
+dependencies = [
+    "chardet>=3.0.4"
+]
+
+[project.urls]
+Homepage = "https://github.com/smaxiso/print-project"
+Repository = "https://github.com/smaxiso/print-project"
+Issues = "https://github.com/smaxiso/print-project/issues"
+Changelog = "https://github.com/smaxiso/print-project/blob/master/CHANGELOG.md"
+
+[project.scripts]
+print-project = "print_project:main"
+analyze-project = "print_project:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.800"
+]
+
+[tool.setuptools]
+py-modules = ["print_project"]
+
+[tool.setuptools.package-data]
+"*" = ["config.ini"]

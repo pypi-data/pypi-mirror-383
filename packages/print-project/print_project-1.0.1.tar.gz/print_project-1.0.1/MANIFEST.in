@@ -1,0 +1,30 @@
+# Include important documentation files
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+include INSTALL.md
+include VERSION
+include config.ini
+include requirements.txt
+
+# Include installation scripts
+include install.sh
+include install.ps1
+include install.py
+include print-project
+include print-project.bat
+
+# Include archive directory
+recursive-include archive *
+
+# Exclude development and build files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+global-exclude *.so
+exclude .gitignore
+recursive-exclude .git *
+recursive-exclude .vscode *
+recursive-exclude output *
+recursive-exclude print_project.egg-info *
