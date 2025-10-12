@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "datasage-dev": {
+      "disabled": false,
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.p6plab_datasage.server", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage",
+      "env": {
+        "DATASAGE_PATHS": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage/examples/mock-data"
+      }
+    },
+    "datasage-local": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["--from", "./dist/p6plab_datasage-1.0.0-py3-none-any.whl", "p6plab-datasage", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage"
+    },
+    "datasage-test": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["--index", "https://test.pypi.org/simple/", "--index-strategy", "unsafe-best-match", "p6plab-datasage", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage"
+    },
+    "datasage": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["p6plab-datasage", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage"
+    }
+  }
+}
