@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: neco
+Version: 0.0.0.post12
+Summary: Add your description here
+License-File: LICENSE
+Requires-Python: >=3.12
+Requires-Dist: loguru==0.7.3
+Requires-Dist: psycopg2-binary==2.9.9
+Requires-Dist: setuptools>=68
+Provides-Extra: all
+Requires-Dist: agno==2.1.4; extra == 'all'
+Requires-Dist: baidusearch==1.0.3; extra == 'all'
+Requires-Dist: boto3==1.38.41; extra == 'all'
+Requires-Dist: hyperopt==0.2.7; extra == 'all'
+Requires-Dist: langchain-huggingface==0.1.2; extra == 'all'
+Requires-Dist: langchain-openai==0.3.28; extra == 'all'
+Requires-Dist: mlflow==3.1.0; extra == 'all'
+Requires-Dist: pycountry==24.6.1; extra == 'all'
+Requires-Dist: scikit-learn==1.6.1; extra == 'all'
+Requires-Dist: tsfresh==0.21.1; extra == 'all'
+Provides-Extra: llm
+Requires-Dist: agno==2.1.4; extra == 'llm'
+Requires-Dist: baidusearch==1.0.3; extra == 'llm'
+Requires-Dist: langchain-huggingface==0.1.2; extra == 'llm'
+Requires-Dist: langchain-openai==0.3.28; extra == 'llm'
+Requires-Dist: pycountry==24.6.1; extra == 'llm'
+Provides-Extra: mlops
+Requires-Dist: boto3==1.38.41; extra == 'mlops'
+Requires-Dist: hyperopt==0.2.7; extra == 'mlops'
+Requires-Dist: mlflow==3.1.0; extra == 'mlops'
+Requires-Dist: scikit-learn==1.6.1; extra == 'mlops'
+Requires-Dist: tsfresh==0.21.1; extra == 'mlops'
