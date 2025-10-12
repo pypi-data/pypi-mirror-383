@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project]
+name = "tacocompression"
+version = "0.9.6"
+authors = [
+  { name="André Bauer", email="abauer7@illinoistech.edu" },
+  { name="Michael Stenger", email="michael.stenger@uni-wuerzburg.de" },
+]
+description = "Implementation of TACO: A Lightweight Tree-Based Approximate Compression Method for Time Series"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy >= 1.23.1"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/ms2017/taco-compression"
+Issues = "https://github.com/ms2017/taco-compression/issues"

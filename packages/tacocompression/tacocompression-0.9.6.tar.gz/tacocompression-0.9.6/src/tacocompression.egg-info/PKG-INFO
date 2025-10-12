@@ -1,0 +1,83 @@
+Metadata-Version: 2.4
+Name: tacocompression
+Version: 0.9.6
+Summary: Implementation of TACO: A Lightweight Tree-Based Approximate Compression Method for Time Series
+Author-email: André Bauer <abauer7@illinoistech.edu>, Michael Stenger <michael.stenger@uni-wuerzburg.de>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/ms2017/taco-compression
+Project-URL: Issues, https://github.com/ms2017/taco-compression/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.23.1
+Dynamic: license-file
+
+# taco-compression
+This is the official implementation of the TACO compression algorithm for time series [1]. 
+
+# Installation
+
+Please install via pip:
+```shell
+pip install tacocompression
+```
+
+# Usage
+There are two usage modes, one as a command line tool operating on files, the other as callables from within python.
+
+## Command Line
+
+Please use `python -m tacocompression` to (de)compress your time series from the command line interface. This
+application takes 4 named keyword arguments and at least one additional argument specifying the input(s). These inputs
+are the paths to the files/directory of the (compressed) time series. You can either specify a directory from which all 
+csv files are read...
+
+```shell
+python -m tacocompression -o=compressed time_series
+```
+
+... or by passing the paths to the files directly.
+
+```shell
+python -m tacocompression -o=. data/time_series_1.csv data/time_series_2.csv
+```
+
+Each file must contain a single column interpreted as a univariate time series. We assume row 0 is the header. The
+compressed data is saved in csv files as well.
+
+The keyword arguments are
+- mode (short: m) Use `c` to compress and `d` to decompress. Defaults to `c`.
+- output (short: o) Provide a directory to save the outputs to.
+- pairing_function (short: p) One of "rosenberg", "szudzik", and "cantor". Defaults to "rosenberg".
+- decimals (short: d) Precision of the reconstruction, i.e., number of decimals recoverable during decompression. Only used in compression. Defaults to `1`.
+- header. Whether the input file(s) contain a header. Only used in compression. Set only if true.
+
+To decompress the above time series, use
+
+```shell
+python -m tacocompression -m=d -o=time_series compressed
+```
+
+respectively
+
+```shell
+python -m tacocompression -m=d -o=data compressed_time_series_1.csv compressed_time_series_2.csv
+```
+
+## As a Callable
+```python
+from tacocompression import compress, decompress
+
+# 2 univariate time series, length 10 and 8:
+time_series = [[0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9], [8.8, 7.7, 6.6, 5.5, 4.4, 3.3, 2.2, 1.1]]
+
+compressed = compress(time_series, "szudzik", 1)
+reconstructed = decompress(compressed, "szudzik")
+
+assert time_series == reconstructed
+```
+
+[1] Bauer, André. TACO: A Lightweight Tree-Based Approximate Compression Method for Time Series. In: Proceedings of the 
+    14th International Conference on Data Science, Technology and Applications (DATA 2025), pages 182-190. 2025.
