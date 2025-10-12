@@ -1,0 +1,44 @@
+[project]
+name = "holonet-py"
+version = "1.0.0"
+description = "Infraestructura experimental para la simulación de redes muónicas holográficas"
+readme = "README.md"
+authors = [
+    { name = "Equipo Holonet", email = "equipo@example.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "fastapi",
+    "httpx",
+    "uvicorn[standard]",
+    "websockets",
+    "pyzmq",
+    "rpyc",
+    "torch",
+    "pydantic",
+    "PyYAML"
+]
+
+[project.urls]
+Homepage = "https://github.com/holonet-labs/holonet-py"
+Repository = "https://github.com/holonet-labs/holonet-py"
+Documentation = "https://holonet-labs.github.io/holonet-py"
+
+[project.optional-dependencies]
+docs = ["mkdocs", "mkdocs-material", "matplotlib", "mkdocs-htmlproofer-plugin"]
+tests = ["pytest", "httpx"]
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra"
+python_files = "test_*.py"
+
+[tool.coverage.run]
+source = ["holonet"]
+

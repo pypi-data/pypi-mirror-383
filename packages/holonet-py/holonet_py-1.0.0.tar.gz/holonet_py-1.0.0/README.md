@@ -1,0 +1,125 @@
+# Holonet Muónica
+
+Proyecto experimental basado en la hoja de ruta muónica. Este repositorio implementa la infraestructura necesaria para simular la red holográfica y preparar integraciones posteriores con hardware y servicios externos. La versión **1.0.0** marca el primer hito público disponible tanto en GitHub como en PyPI.
+
+## Instalación desde PyPI
+
+```bash
+pip install holonet-py
+```
+
+La distribución publica el paquete `holonet` y expone todas las abstracciones descritas en la documentación. Para verificar la versión instalada se puede ejecutar:
+
+```python
+import holonet
+
+print(holonet.__version__)
+```
+
+Si el comando imprime `1.0.0`, la instalación coincide con la versión liberada.
+
+## Estructura inicial
+
+```
+src/holonet/
+├── core/
+├── modulation/
+├── transmission/
+├── decoding/
+├── network/
+├── interface/
+├── simulation/
+├── hardware/
+└── security/
+```
+
+## Plan de tareas
+
+El desarrollo se organiza según las fases propuestas:
+
+1. **Inicialización**: configuración de empaquetado, documentación y estructura base.
+2. **Abstracciones núcleo**: definición de paquetes, señales y nodos.
+3. **Simulación**: motor muónico inicial, transporte y decodificación.
+4. **Modulación**: patrones leptónicos reutilizables.
+5. **Red**: topologías y coordinación de nodos.
+6. **Interfaces**: API web y puente WebSocket.
+7. **Hardware simulado**: drivers mock y seguridad básica.
+8. **Inteligencia adaptativa**: algoritmos de optimización y topología dinámica.
+9. **Empaquetado y CI/CD**: documentación extendida y flujos de despliegue.
+
+Cada tarea se implementa con módulos y pruebas específicas para facilitar la colaboración futura.
+
+## Uso
+
+1. Instalar dependencias para desarrollo local (incluye pruebas y documentación):
+   ```bash
+   pip install -e .[tests,docs]
+   ```
+   > **Nota**: el extra `tests` instala `httpx`, necesario para ejecutar las
+   > pruebas que dependen de `fastapi.testclient`.
+2. Ejecutar pruebas con cobertura:
+   ```bash
+   coverage run -m pytest
+   ```
+3. Generar reportes de cobertura:
+   ```bash
+   coverage xml
+   coverage report
+   ```
+   El archivo `coverage.xml` se puede abrir con herramientas compatibles (por ejemplo, VS Code o Codecov) y el comando `coverage report` mostrará un resumen en la terminal.
+4. Generar documentación:
+   ```bash
+   mkdocs serve
+   ```
+5. Validar la documentación generada y los enlaces externos:
+   ```bash
+   mkdocs build --strict
+   HTMLPROOFER_VALIDATE_RENDERED=true mkdocs build --strict
+   ```
+   El primer comando ejecuta una compilación estricta que activa el plugin `mkdocs-htmlproofer-plugin` sobre el contenido en Markdown. El segundo vuelve a ejecutar la verificación analizando el HTML final renderizado; así se detectan posibles problemas introducidos por plantillas o extensiones.
+
+## Despliegue automático de la documentación
+
+El repositorio cuenta con un flujo de trabajo de GitHub Actions que instala las dependencias de documentación y ejecuta `mkdocs gh-deploy` cada vez que se hace `push` sobre la rama `main`. La acción utiliza el `GITHUB_TOKEN` integrado del repositorio con permisos de escritura sobre el historial para publicar el sitio en la rama `gh-pages`.
+
+Para completar la configuración es necesario habilitar GitHub Pages desde **Settings → Pages** y seleccionar **GitHub Actions** como fuente de despliegue. Tras guardar los cambios, cada actualización en `main` generará y publicará automáticamente la última versión de la documentación.
+
+### Configuración de `LeptonicGuard`
+
+- De forma predeterminada utiliza `InMemoryTokenStore`, un almacén en memoria que no requiere configuración adicional.
+- Los tokens emitidos caducan automáticamente (TTL configurable, 5 minutos por
+  defecto) y se registran eventos de auditoría accesibles mediante
+  `POST /audit/events`.
+- Para reutilizar tokens entre procesos se puede instalar la dependencia opcional `redis` e inicializar el guardián con `RedisTokenStore`:
+  ```python
+  from redis import Redis
+  from holonet.security.leptonic_guard import LeptonicGuard
+  from holonet.security.token_store import RedisTokenStore
+
+  guard = LeptonicGuard(store=RedisTokenStore(Redis.from_url("redis://localhost:6379/0")))
+  ```
+- En entornos de pruebas se recomienda inyectar un stub que implemente `TokenStoreProtocol` para verificar la emisión y validación de tokens.
+- La API REST incorpora `POST /nodes/register` para asociar un secreto
+  compartido a cada nodo antes de solicitar tokens con `POST /token`.
+
+## Repositorio de ejemplos
+
+El directorio [`examples/`](examples/README.md) agrupa proyectos listos para clonar o copiar dentro de otros repositorios:
+
+- **Flask**: microservicio que utiliza `MTQBridge` para exponer un endpoint REST con resultados de túneles cuánticos simulados.
+- **FastAPI**: API asíncrona con streaming de eventos MTQ y validación mediante `pydantic`.
+- **Sockets MTQ**: servidor y cliente que intercambian marcos ópticos encapsulados a través de sockets TCP convencionales, demostrando la capa túnel clásica.
+
+Cada ejemplo incluye instrucciones de ejecución y comandos de prueba rápidos. Se puede utilizar como base de un repositorio externo dedicado a demostraciones.
+
+## Contenedor Docker experimental
+
+El directorio [`docker/`](docker/README.md) contiene un `Dockerfile` listo para construir un contenedor con la red tunelada simulada. La imagen instala `holonet-py`, expone scripts para activar una topología MTQ mínima y configura `tmux` para observar los túneles generados. Ejemplo rápido de construcción y ejecución:
+
+```bash
+docker build -t holonet-sandbox docker/
+docker run --rm -it -p 8000:8000 holonet-sandbox
+```
+
+El contenedor inicia un `uvicorn` con el demo de FastAPI y mantiene disponible una sesión interactiva para ejecutar los demás ejemplos.
+
