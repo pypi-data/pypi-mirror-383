@@ -1,0 +1,15 @@
+---
+alwaysApply: true
+glob: "**/*.py"
+---
+
+# Scope Rules
+
+- As an agent, ONLY add the code that is explicitly required
+- Do not add any code that is not explicitly asked for
+- You can ask for permission to add code that is not explicitly requested
+- Keep implementations minimal and focused
+- Avoid adding unnecessary imports or dependencies
+- Follow the principle of least surprise
+- If unsure about adding something, ask for clarification first
+- Prioritize clarity and simplicity over cleverness

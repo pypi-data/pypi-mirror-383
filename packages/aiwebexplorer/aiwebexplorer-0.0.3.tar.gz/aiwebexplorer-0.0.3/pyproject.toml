@@ -1,0 +1,56 @@
+[build-system]
+requires = [
+    "setuptools",
+    "wheel",
+    "build",
+    "setuptools_scm[toml]",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiwebexplorer"
+description = "An agent for agents to explore the web"
+authors = [{ name = "Francesco Vertemati", email = "verte.fra@gmail.com" }]
+readme = "README.md"
+requires-python = ">= 3.12"
+dynamic = ["version"]
+dependencies = [
+    "agno>=2.0.3",
+    "aiohttp>=3.12.15",
+    "bs4>=0.0.2",
+    "cachetools>=6.2.0",
+    "openai>=1.107.1",
+    "playwright>=1.55.0",
+    "playwright-stealth>=2.0.0",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "structlog>=25.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.13.0",
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.10.0",
+    "pytest-cov>=4.0.0",
+    "pydantic-evals>=1.0.5",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+write_to = "src/aiwebexplorer/_version.py"
+
+
+[tool.ruff]
+# Use Ruff's default recommended rules, plus modern typing & formatting best-practices
+target-version = "py312"
+line-length = 120
+preview = true
+exclude = ["src/aiwebexplorer/_version.py"]
+
+[tool.ruff.lint]
+select = ["F", "E", "I", "B", "UP"]  # <-- Add rules like import-sorting, unused imports etc
+ignore = []
