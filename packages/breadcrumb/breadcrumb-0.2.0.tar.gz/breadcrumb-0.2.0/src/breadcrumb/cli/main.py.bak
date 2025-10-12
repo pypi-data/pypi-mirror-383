@@ -1,0 +1,332 @@
+"""
+Breadcrumb CLI - Command-line interface for AI-native Python execution tracer.
+
+Provides commands for querying traces, analyzing performance, finding exceptions,
+and serving the MCP server.
+"""
+
+import sys
+from typing import Optional
+from pathlib import Path
+
+import typer
+from typing_extensions import Annotated
+
+from breadcrumb import __version__
+
+
+# Exit codes
+EXIT_SUCCESS = 0
+EXIT_ERROR = 1
+EXIT_NO_RESULTS = 2
+
+
+# Create main Typer app
+app = typer.Typer(
+    name="breadcrumb",
+    help="AI-native Python execution tracer with MCP integration",
+    add_completion=False,
+    no_args_is_help=True,
+)
+
+
+# Global options state (using callback to capture before command execution)
+class GlobalState:
+    """Global state for CLI options."""
+    format: str = "json"
+    db_path: Optional[str] = None
+    verbose: bool = False
+
+
+state = GlobalState()
+
+
+def version_callback(value: bool):
+    """Callback for --version flag."""
+    if value:
+        typer.echo(f"breadcrumb {__version__}")
+        raise typer.Exit(0)
+
+
+@app.callback()
+def main(
+    ctx: typer.Context,
+    format: Annotated[
+        str,
+        typer.Option(
+            "--format",
+            "-f",
+            help="Output format: json (default, for AI agents) or table (for humans)",
+        ),
+    ] = "json",
+    db_path: Annotated[
+        Optional[str],
+        typer.Option(
+            "--db-path",
+            help="Path to traces.duckdb database (auto-discovered if not specified)",
+        ),
+    ] = None,
+    verbose: Annotated[
+        bool,
+        typer.Option(
+            "--verbose",
+            "-v",
+            help="Enable verbose output with debug information",
+        ),
+    ] = False,
+    version: Annotated[
+        Optional[bool],
+        typer.Option(
+            "--version",
+            callback=version_callback,
+            is_eager=True,
+            help="Show version and exit",
+        ),
+    ] = None,
+):
+    """
+    Breadcrumb - AI-native Python execution tracer.
+
+    Query traces, analyze performance, find exceptions, and more.
+    Optimized for AI agents (JSON output by default) with human-friendly options.
+    """
+    # Validate format
+    if format not in ["json", "table"]:
+        typer.echo(f"Error: Invalid format '{format}'. Must be 'json' or 'table'.", err=True)
+        raise typer.Exit(EXIT_ERROR)
+
+    # Store global options in state
+    state.format = format
+    state.db_path = db_path
+    state.verbose = verbose
+
+    if verbose:
+        typer.echo(f"Breadcrumb CLI v{__version__}", err=True)
+        typer.echo(f"Format: {format}", err=True)
+        if db_path:
+            typer.echo(f"Database: {db_path}", err=True)
+        else:
+            typer.echo("Database: auto-discover", err=True)
+
+
+@app.command()
+def query(
+    sql: Annotated[
+        str,
+        typer.Argument(help="SQL SELECT query to execute"),
+    ],
+):
+    """
+    Execute SQL query against trace database.
+
+    Only SELECT queries allowed for safety. Query traces, events, and exceptions.
+
+    \b
+    Examples:
+        breadcrumb query "SELECT * FROM traces LIMIT 10"
+        breadcrumb query "SELECT * FROM exceptions WHERE exception_type='ValueError'"
+        breadcrumb query "SELECT function_name, COUNT(*) FROM trace_events GROUP BY function_name"
+    """
+    from breadcrumb.cli.commands.query import execute_query
+
+    exit_code = execute_query(
+        sql=sql,
+        format=state.format,
+        db_path=state.db_path,
+        verbose=state.verbose
+    )
+    raise typer.Exit(exit_code)
+
+
+@app.command()
+def list(
+    limit: Annotated[
+        int,
+        typer.Option(
+            "--limit",
+            "-n",
+            help="Number of traces to show",
+        ),
+    ] = 10,
+):
+    """
+    List recent traces.
+
+    Shows the most recent traces with basic metadata (ID, status, timestamp).
+
+    \b
+    Examples:
+        breadcrumb list
+        breadcrumb list --limit 20
+        breadcrumb list --format table
+    """
+    from breadcrumb.cli.commands.list import execute_list
+
+    exit_code = execute_list(
+        limit=limit,
+        format=state.format,
+        db_path=state.db_path,
+        verbose=state.verbose
+    )
+    raise typer.Exit(exit_code)
+
+
+@app.command()
+def get(
+    trace_id: Annotated[
+        str,
+        typer.Argument(help="Trace UUID to retrieve"),
+    ],
+):
+    """
+    Get detailed trace by ID.
+
+    Retrieves complete trace with all events, variables, and exceptions.
+
+    \b
+    Examples:
+        breadcrumb get 123e4567-e89b-12d3-a456-426614174000
+        breadcrumb get 123e4567-e89b-12d3-a456-426614174000 --format table
+    """
+    from breadcrumb.cli.commands.get import execute_get
+
+    exit_code = execute_get(
+        trace_id=trace_id,
+        format=state.format,
+        db_path=state.db_path,
+        verbose=state.verbose
+    )
+    raise typer.Exit(exit_code)
+
+
+@app.command()
+def exceptions(
+    since: Annotated[
+        str,
+        typer.Option(
+            "--since",
+            "-s",
+            help="Time range: relative (30m, 2h, 1d) or absolute (2025-01-10)",
+        ),
+    ] = "1h",
+    limit: Annotated[
+        int,
+        typer.Option(
+            "--limit",
+            "-n",
+            help="Maximum number of exceptions to show",
+        ),
+    ] = 10,
+):
+    """
+    Find recent exceptions.
+
+    Search for exceptions within a time range. Useful for debugging failures.
+
+    \b
+    Examples:
+        breadcrumb exceptions
+        breadcrumb exceptions --since 30m --limit 5
+        breadcrumb exceptions --since 2025-01-10
+    """
+    from breadcrumb.cli.commands.exceptions import execute_exceptions
+
+    exit_code = execute_exceptions(
+        since=since,
+        limit=limit,
+        format=state.format,
+        db_path=state.db_path,
+        verbose=state.verbose
+    )
+    raise typer.Exit(exit_code)
+
+
+@app.command()
+def performance(
+    function: Annotated[
+        str,
+        typer.Argument(help="Function name to analyze"),
+    ],
+    limit: Annotated[
+        int,
+        typer.Option(
+            "--limit",
+            "-n",
+            help="Number of slowest traces to show",
+        ),
+    ] = 10,
+):
+    """
+    Analyze performance statistics for a function.
+
+    Shows avg/min/max execution time and slowest traces.
+
+    \b
+    Examples:
+        breadcrumb performance fetch_data
+        breadcrumb performance process_payment --limit 5
+        breadcrumb performance my_function --format table
+    """
+    # TODO: Implement in Task 4.6
+    typer.echo("TODO: Implement performance command (Task 4.6)", err=True)
+    typer.echo(f"Function: {function}", err=True)
+    typer.echo(f"Limit: {limit}", err=True)
+    typer.echo(f"Format: {state.format}", err=True)
+    raise typer.Exit(EXIT_ERROR)
+
+
+@app.command()
+def serve_mcp(
+    db_path: Annotated[
+        Optional[str],
+        typer.Option(
+            "--db-path",
+            help="Path to traces.duckdb database (overrides global --db-path)",
+        ),
+    ] = None,
+    port: Annotated[
+        Optional[int],
+        typer.Option(
+            "--port",
+            help="Port for TCP transport (future feature, currently stdio only)",
+        ),
+    ] = None,
+):
+    """
+    Start MCP server for AI agents.
+
+    Launches the Model Context Protocol server on stdio transport.
+    Use this with Claude Desktop or other MCP clients.
+
+    \b
+    Examples:
+        breadcrumb serve-mcp
+        breadcrumb serve-mcp --db-path /path/to/traces.duckdb
+    """
+    from breadcrumb.cli.commands.serve_mcp import execute_serve_mcp
+
+    # Use command-specific db_path if provided, otherwise fall back to global
+    effective_db_path = db_path or state.db_path
+
+    exit_code = execute_serve_mcp(
+        db_path=effective_db_path,
+        port=port,
+        verbose=state.verbose
+    )
+    raise typer.Exit(exit_code)
+
+
+def cli():
+    """Entry point for the CLI."""
+    try:
+        app()
+    except Exception as e:
+        typer.echo(f"Error: {e}", err=True)
+        if state.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(EXIT_ERROR)
+
+
+if __name__ == "__main__":
+    cli()
