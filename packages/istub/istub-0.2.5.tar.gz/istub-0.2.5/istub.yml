@@ -1,0 +1,12 @@
+packages:
+  - name: istub
+    path: ../istub
+  - name: s3transfer
+    checks:
+      stubtest: true
+    pip_install:
+      - s3transfer
+      - types-s3transfer
+      - botocore-stubs
+      - types-awscrt
+      - awscrt
