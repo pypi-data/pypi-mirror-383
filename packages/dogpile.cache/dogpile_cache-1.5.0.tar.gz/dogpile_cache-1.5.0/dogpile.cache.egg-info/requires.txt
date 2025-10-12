@@ -1,0 +1,26 @@
+decorator>=4.0.0
+stevedore>=3.0.0
+
+[:python_version < "3.11"]
+typing_extensions>=4.0.1
+
+[bmemcached]
+python-binary-memcached
+
+[memcached]
+python-memcached
+
+[pifpaf]
+pifpaf>=3.3.0
+
+[pylibmc]
+pylibmc
+
+[pymemcache]
+pymemcache
+
+[redis]
+redis
+
+[valkey]
+valkey

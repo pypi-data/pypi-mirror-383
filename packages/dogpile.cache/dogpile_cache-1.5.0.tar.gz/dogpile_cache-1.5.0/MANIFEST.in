@@ -1,0 +1,9 @@
+recursive-include docs *.html *.css *.txt *.js *.jpg *.png *.py Makefile *.rst *.sty
+recursive-include tests *.py *.dat *.crt *.pem *.key *.sh
+recursive-include tools *.py
+
+include README* LICENSE tox.ini noxfile.py
+
+prune docs/build/output
+
+

@@ -1,0 +1,1366 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; dogpile.cache 1.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/changelog.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="_static/site_custom_css.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=40912020"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dogpile.cache 1.5.0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="front.html">Front Matter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_usage.html">dogpile Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#Symbols"><strong>Symbols</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="Symbols">Symbols</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.util.NameRegistry.get.params.**kw">**kw (dogpile.util.NameRegistry.get parameter)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock">AbstractFileLock (class in dogpile.cache.backends.file)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheMutex.acquire">acquire() (dogpile.cache.api.CacheMutex method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.acquire">(dogpile.cache.backends.file.AbstractFileLock method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.acquire_read_lock">acquire_read_lock() (dogpile.cache.backends.file.AbstractFileLock method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.util.ReadWriteMutex.acquire_read_lock">(dogpile.util.ReadWriteMutex method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.acquire_write_lock">acquire_write_lock() (dogpile.cache.backends.file.AbstractFileLock method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.util.ReadWriteMutex.acquire_write_lock">(dogpile.util.ReadWriteMutex method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.actual_backend">actual_backend (dogpile.cache.region.CacheRegion property)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CachedValue.age">age (dogpile.cache.api.CachedValue property)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure.params.arguments">arguments (dogpile.cache.region.CacheRegion.configure parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.configure.params.arguments">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments.params.asdict">asdict (dogpile.cache.region.CacheRegion.cache_multi_on_arguments parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.params.async_creation_runner">async_creation_runner (dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.async_creation_runner">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.Lock.params.async_creator">async_creator (dogpile.Lock parameter)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure.params.backend">backend (dogpile.cache.region.CacheRegion.configure parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.configure.params.backend">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.BackendFormatted">BackendFormatted (in module dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.BackendSetType">BackendSetType (in module dogpile.cache.api)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PylibmcBackend.params.behaviors">behaviors (dogpile.cache.backends.memcached.PylibmcBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PylibmcBackend.params.binary">binary (dogpile.cache.backends.memcached.PylibmcBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.BMemcachedBackend">BMemcachedBackend (class in dogpile.cache.backends.memcached)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend">BytesBackend (class in dogpile.cache.api)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments">cache_multi_on_arguments() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_on_arguments">cache_on_arguments() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend">CacheBackend (class in dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CachedValue.cached_time">cached_time (dogpile.cache.api.CachedValue property)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CachedValue">CachedValue (class in dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheMutex">CacheMutex (class in dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion">CacheRegion (class in dogpile.cache.region)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheReturnType">CacheReturnType (in module dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CantDeserializeException">CantDeserializeException</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.GenericMemcachedBackend.client">client (dogpile.cache.backends.memcached.GenericMemcachedBackend property)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure">configure() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure_from_config">configure_from_config() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.connection_kwargs">connection_kwargs (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.connection_kwargs">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.connection_kwargs">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.connection_kwargs">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.connection_kwargs">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.connection_kwargs">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.connection_pool">connection_pool (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.connection_pool">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create.params.creator">creator (dogpile.cache.region.CacheRegion.get_or_create parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get_or_create.params.creator">[1]</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create_multi.params.creator">(dogpile.cache.region.CacheRegion.get_or_create_multi parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.Lock.params.creator">(dogpile.Lock parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.util.NameRegistry.params.creator">(dogpile.util.NameRegistry parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create.params.creator_args">creator_args (dogpile.cache.region.CacheRegion.get_or_create parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get_or_create.params.creator_args">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.db">db (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.db">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.db">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.db">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.db">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.db">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.DBMBackend">DBMBackend (class in dogpile.cache.backends.file)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.MemcachedBackend.params.dead_retry">dead_retry (dogpile.cache.backends.memcached.MemcachedBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.dead_timeout">dead_timeout (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.default_noreply">default_noreply (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.delete">delete() (dogpile.cache.api.CacheBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.delete">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.delete_multi">delete_multi() (dogpile.cache.api.CacheBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.memcached.BMemcachedBackend.delete_multi">(dogpile.cache.backends.memcached.BMemcachedBackend method)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.delete_multi">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.deserializer">deserializer (dogpile.cache.api.CacheBackend attribute)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.params.deserializer">(dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.deserializer">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.GenericMemcachedBackend.params.distributed_lock">distributed_lock (dogpile.cache.backends.memcached.GenericMemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.distributed_lock">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.distributed_lock">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.distributed_lock">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.distributed_lock">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.distributed_lock">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.distributed_lock">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.do_not_retry_for">do_not_retry_for (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li>
+    dogpile.cache.api
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.api">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.backends.file
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.backends.file">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.backends.memcached
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.backends.memcached">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.backends.memory
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.backends.memory">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.backends.null
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.backends.null">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.backends.redis
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.backends.redis">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.backends.valkey
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.backends.valkey">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.exception
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.exception">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.plugins.mako_cache
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.plugins.mako_cache">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.proxy
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.proxy">module</a>
+</li>
+      </ul></li>
+      <li>
+    dogpile.cache.region
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.region">module</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.DBMBackend.params.dogpile_lockfile">dogpile_lockfile (dogpile.cache.backends.file.DBMBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.exception.DogpileCacheException">DogpileCacheException</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.enable_retry_client">enable_retry_client (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments.params.expiration_time">expiration_time (dogpile.cache.region.CacheRegion.cache_multi_on_arguments parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.expiration_time">(dogpile.cache.region.CacheRegion.cache_on_arguments parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.expiration_time">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.configure.params.expiration_time">(dogpile.cache.region.CacheRegion.configure parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.configure.params.expiration_time">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get.params.expiration_time">(dogpile.cache.region.CacheRegion.get parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get.params.expiration_time">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create.params.expiration_time">(dogpile.cache.region.CacheRegion.get_or_create parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get_or_create.params.expiration_time">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create_multi.params.expiration_time">(dogpile.cache.region.CacheRegion.get_or_create_multi parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.Lock.params.expiretime">expiretime (dogpile.Lock parameter)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.file.FileLock">FileLock (class in dogpile.cache.backends.file)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.file.DBMBackend.params.filename">filename (dogpile.cache.backends.file.DBMBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.params.function_key_generator">function_key_generator (dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.function_key_generator">[1]</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.function_key_generator">(dogpile.cache.region.CacheRegion.cache_on_arguments parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.function_key_generator">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.util.function_key_generator">function_key_generator() (in module dogpile.cache.util)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.params.function_multi_key_generator">function_multi_key_generator (dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.function_multi_key_generator">[1]</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments.params.function_multi_key_generator">(dogpile.cache.region.CacheRegion.cache_multi_on_arguments parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.GenericMemcachedBackend">GenericMemcachedBackend (class in dogpile.cache.backends.memcached)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.get">get() (dogpile.cache.api.CacheBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+        <li><a href="api.html#dogpile.util.NameRegistry.get">(dogpile.util.NameRegistry method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.get_multi">get_multi() (dogpile.cache.api.CacheBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_multi">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.get_mutex">get_mutex() (dogpile.cache.api.CacheBackend method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create">get_or_create() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create_multi">get_or_create_multi() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.get_serialized">get_serialized() (dogpile.cache.api.BytesBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.get_serialized">(dogpile.cache.api.CacheBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.get_serialized_multi">get_serialized_multi() (dogpile.cache.api.BytesBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.get_serialized_multi">(dogpile.cache.api.CacheBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.get_value_metadata">get_value_metadata() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.invalidate.params.hard">hard (dogpile.cache.region.CacheRegion.invalidate parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.hashclient_retry_attempts">hashclient_retry_attempts (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.hashclient_retry_timeout">hashclient_retry_timeout (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.host">host (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.host">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.util.NameRegistry.get.params.identifier">identifier (dogpile.util.NameRegistry.get parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.get.params.ignore_expiration">ignore_expiration (dogpile.cache.region.CacheRegion.get parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get.params.ignore_expiration">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.invalidate">invalidate() (dogpile.cache.region.CacheRegion method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy.invalidate">(dogpile.cache.region.RegionInvalidationStrategy method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.is_configured">is_configured (dogpile.cache.region.CacheRegion property)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy.is_hard_invalidated">is_hard_invalidated() (dogpile.cache.region.RegionInvalidationStrategy method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy.is_invalidated">is_invalidated() (dogpile.cache.region.RegionInvalidationStrategy method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.is_open">is_open (dogpile.cache.backends.file.AbstractFileLock property)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy.is_soft_invalidated">is_soft_invalidated() (dogpile.cache.region.RegionInvalidationStrategy method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.get_serialized.params.key">key (dogpile.cache.api.BytesBackend.get_serialized parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.BytesBackend.set_serialized.params.key">(dogpile.cache.api.BytesBackend.set_serialized parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.delete.params.key">(dogpile.cache.api.CacheBackend.delete parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.get.params.key">(dogpile.cache.api.CacheBackend.get parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.get_serialized.params.key">(dogpile.cache.api.CacheBackend.get_serialized parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set.params.key">(dogpile.cache.api.CacheBackend.set parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set_serialized.params.key">(dogpile.cache.api.CacheBackend.set_serialized parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get.params.key">(dogpile.cache.region.CacheRegion.get parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get.params.key">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create.params.key">(dogpile.cache.region.CacheRegion.get_or_create parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get_or_create.params.key">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.key_is_locked">key_is_locked() (dogpile.cache.region.CacheRegion method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.key_mangler">key_mangler (dogpile.cache.api.CacheBackend attribute)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.params.key_mangler">(dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.key_mangler">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.get_serialized_multi.params.keys">keys (dogpile.cache.api.BytesBackend.get_serialized_multi parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.delete_multi.params.keys">(dogpile.cache.api.CacheBackend.delete_multi parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.get_multi.params.keys">(dogpile.cache.api.CacheBackend.get_multi parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.get_serialized_multi.params.keys">(dogpile.cache.api.CacheBackend.get_serialized_multi parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create_multi.params.keys">(dogpile.cache.region.CacheRegion.get_or_create_multi parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.KeyType">KeyType (in module dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.util.kwarg_function_key_generator">kwarg_function_key_generator() (in module dogpile.cache.util)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.util.length_conditional_mangler">length_conditional_mangler() (in module dogpile.cache.util)</a>
+</li>
+      <li><a href="api.html#dogpile.Lock">Lock (class in dogpile)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.lock_blocking">lock_blocking (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.lock_blocking">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.lock_blocking_timeout">lock_blocking_timeout (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.lock_blocking_timeout">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.DBMBackend.params.lock_factory">lock_factory (dogpile.cache.backends.file.DBMBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.lock_prefix">lock_prefix (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.lock_prefix">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.lock_sleep">lock_sleep (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.lock_sleep">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.lock_sleep">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.lock_sleep">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.lock_sleep">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.lock_sleep">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.GenericMemcachedBackend.params.lock_timeout">lock_timeout (dogpile.cache.backends.memcached.GenericMemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.lock_timeout">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.lock_timeout">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.lock_timeout">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.lock_timeout">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.lock_timeout">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.lock_timeout">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CacheMutex.locked">locked() (dogpile.cache.api.CacheMutex method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.make_region">make_region() (in module dogpile.cache.region)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.plugins.mako_cache.MakoPlugin">MakoPlugin (class in dogpile.cache.plugins.mako_cache)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.set_serialized_multi.params.mapping">mapping (dogpile.cache.api.BytesBackend.set_serialized_multi parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set_multi.params.mapping">(dogpile.cache.api.CacheBackend.set_multi parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set_serialized_multi.params.mapping">(dogpile.cache.api.CacheBackend.set_serialized_multi parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.memcached_expire_time">memcached_expire_time (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.MemcachedBackend">MemcachedBackend (class in dogpile.cache.backends.memcached)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.MemcachedLock">MemcachedLock (class in dogpile.cache.backends.memcached)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memory.MemoryBackend">MemoryBackend (class in dogpile.cache.backends.memory)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memory.MemoryPickleBackend">MemoryPickleBackend (class in dogpile.cache.backends.memory)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CachedValue.metadata">metadata (dogpile.cache.api.CachedValue attribute)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PylibmcBackend.params.min_compress_len">min_compress_len (dogpile.cache.backends.memcached.PylibmcBackend parameter)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api.html#module-dogpile.cache.api">dogpile.cache.api</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.backends.file">dogpile.cache.backends.file</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.backends.memcached">dogpile.cache.backends.memcached</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.backends.memory">dogpile.cache.backends.memory</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.backends.null">dogpile.cache.backends.null</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.backends.redis">dogpile.cache.backends.redis</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.backends.valkey">dogpile.cache.backends.valkey</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.exception">dogpile.cache.exception</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.plugins.mako_cache">dogpile.cache.plugins.mako_cache</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.proxy">dogpile.cache.proxy</a>
+</li>
+        <li><a href="api.html#module-dogpile.cache.region">dogpile.cache.region</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.Lock.params.mutex">mutex (dogpile.Lock parameter)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.params.name">name (dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.name">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.util.NameRegistry">NameRegistry (class in dogpile.util)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments.params.namespace">namespace (dogpile.cache.region.CacheRegion.cache_multi_on_arguments parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.namespace">(dogpile.cache.region.CacheRegion.cache_on_arguments parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.namespace">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.NeedRegenerationException">NeedRegenerationException (class in dogpile)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.NO_VALUE">NO_VALUE (in module dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.NoValue">NoValue (class in dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.null.NullBackend">NullBackend (class in dogpile.cache.backends.null)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.BMemcachedBackend.params.password">password (dogpile.cache.backends.memcached.BMemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.password">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.password">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.password">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.password">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CachedValue.payload">payload (dogpile.cache.api.CachedValue attribute)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.exception.PluginNotFound">PluginNotFound</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.port">port (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.port">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.proxy.ProxyBackend">ProxyBackend (class in dogpile.cache.proxy)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PylibmcBackend">PylibmcBackend (class in dogpile.cache.backends.memcached)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend">PyMemcacheBackend (class in dogpile.cache.backends.memcached)</a>
+</li>
+      <li>
+    Python Enhancement Proposals
+
+      <ul>
+        <li><a href="changelog.html#index-2">PEP 625</a>
+</li>
+        <li><a href="changelog.html#index-0">PEP 639</a>, <a href="changelog.html#index-1">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.read">read() (dogpile.cache.backends.file.AbstractFileLock method)</a>
+</li>
+      <li><a href="api.html#dogpile.util.ReadWriteMutex">ReadWriteMutex (class in dogpile.util)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.redis_expiration_time">redis_expiration_time (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.redis_expiration_time">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.redis_expiration_time">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend">RedisBackend (class in dogpile.cache.backends.redis)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend">RedisClusterBackend (class in dogpile.cache.backends.redis)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend">RedisSentinelBackend (class in dogpile.cache.backends.redis)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure.params.region_invalidator">region_invalidator (dogpile.cache.region.CacheRegion.configure parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.configure.params.region_invalidator">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.cache.exception.RegionAlreadyConfigured">RegionAlreadyConfigured</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy">RegionInvalidationStrategy (class in dogpile.cache.region)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.exception.RegionNotConfigured">RegionNotConfigured</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheMutex.release">release() (dogpile.cache.api.CacheMutex method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.release">(dogpile.cache.backends.file.AbstractFileLock method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.release_read_lock">release_read_lock() (dogpile.cache.backends.file.AbstractFileLock method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.util.ReadWriteMutex.release_read_lock">(dogpile.util.ReadWriteMutex method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.release_write_lock">release_write_lock() (dogpile.cache.backends.file.AbstractFileLock method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.util.ReadWriteMutex.release_write_lock">(dogpile.util.ReadWriteMutex method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure.params.replace_existing_backend">replace_existing_backend (dogpile.cache.region.CacheRegion.configure parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.configure.params.replace_existing_backend">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.retry_attempts">retry_attempts (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.retry_delay">retry_delay (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.retry_for">retry_for (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.file.DBMBackend.params.rw_lockfile">rw_lockfile (dogpile.cache.backends.file.DBMBackend parameter)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.sentinel_kwargs">sentinel_kwargs (dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.sentinel_kwargs">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.sentinels">sentinels (dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.sentinels">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.serde">serde (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.SerializedReturnType">SerializedReturnType (in module dogpile.cache.api)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.serializer">serializer (dogpile.cache.api.CacheBackend attribute)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.params.serializer">(dogpile.cache.region.CacheRegion parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.params.serializer">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.service_name">service_name (dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.service_name">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.set">set() (dogpile.cache.api.CacheBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.set">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.GenericMemcachedBackend.set_arguments">set_arguments (dogpile.cache.backends.memcached.GenericMemcachedBackend attribute)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.CacheBackend.set_multi">set_multi() (dogpile.cache.api.CacheBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.set_multi">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.set_serialized">set_serialized() (dogpile.cache.api.BytesBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set_serialized">(dogpile.cache.api.CacheBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.set_serialized_multi">set_serialized_multi() (dogpile.cache.api.BytesBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set_serialized_multi">(dogpile.cache.api.CacheBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.util.sha1_mangle_key">sha1_mangle_key() (in module dogpile.cache.util)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments.params.should_cache_fn">should_cache_fn (dogpile.cache.region.CacheRegion.cache_multi_on_arguments parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.should_cache_fn">(dogpile.cache.region.CacheRegion.cache_on_arguments parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.should_cache_fn">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create.params.should_cache_fn">(dogpile.cache.region.CacheRegion.get_or_create parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.get_or_create.params.should_cache_fn">[1]</a>
+</li>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.get_or_create_multi.params.should_cache_fn">(dogpile.cache.region.CacheRegion.get_or_create_multi parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.socket_connect_timeout">socket_connect_timeout (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.socket_connect_timeout">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.socket_connect_timeout">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.socket_connect_timeout">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.socket_connect_timeout">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.socket_connect_timeout">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.socket_keepalive">socket_keepalive (dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.socket_keepalive">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.socket_keepalive">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.socket_keepalive">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.socket_keepalive">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.socket_keepalive">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.socket_keepalive">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.socket_keepalive_options">socket_keepalive_options (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.socket_keepalive_options">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.socket_keepalive_options">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.socket_keepalive_options">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.memcached.MemcachedBackend.params.socket_timeout">socket_timeout (dogpile.cache.backends.memcached.MemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.socket_timeout">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.socket_timeout">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.socket_timeout">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.socket_timeout">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.socket_timeout">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.socket_timeout">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.ssl">ssl (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.ssl">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.startup_nodes">startup_nodes (dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.startup_nodes">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.thread_local_lock">thread_local_lock (dogpile.cache.backends.redis.RedisBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.thread_local_lock">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.thread_local_lock">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.thread_local_lock">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.thread_local_lock">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.thread_local_lock">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.BMemcachedBackend.params.tls_context">tls_context (dogpile.cache.backends.memcached.BMemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.memcached.PyMemcacheBackend.params.tls_context">(dogpile.cache.backends.memcached.PyMemcacheBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_multi_on_arguments.params.to_str">to_str (dogpile.cache.region.CacheRegion.cache_multi_on_arguments parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.to_str">(dogpile.cache.region.CacheRegion.cache_on_arguments parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.cache_on_arguments.params.to_str">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.GenericMemcachedBackend.params.url">url (dogpile.cache.backends.memcached.GenericMemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.url">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisClusterBackend.params.url">(dogpile.cache.backends.redis.RedisClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.url">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.url">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.memcached.BMemcachedBackend.params.username">username (dogpile.cache.backends.memcached.BMemcachedBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisBackend.params.username">(dogpile.cache.backends.redis.RedisBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.redis.RedisSentinelBackend.params.username">(dogpile.cache.backends.redis.RedisSentinelBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.username">(dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.username">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.exception.ValidationError">ValidationError</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend.params.valkey_expiration_time">valkey_expiration_time (dogpile.cache.backends.valkey.ValkeyBackend parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend.params.valkey_expiration_time">(dogpile.cache.backends.valkey.ValkeyClusterBackend parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend.params.valkey_expiration_time">(dogpile.cache.backends.valkey.ValkeySentinelBackend parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyBackend">ValkeyBackend (class in dogpile.cache.backends.valkey)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.backends.valkey.ValkeyClusterBackend">ValkeyClusterBackend (class in dogpile.cache.backends.valkey)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.backends.valkey.ValkeySentinelBackend">ValkeySentinelBackend (class in dogpile.cache.backends.valkey)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.BytesBackend.set_serialized.params.value">value (dogpile.cache.api.BytesBackend.set_serialized parameter)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set.params.value">(dogpile.cache.api.CacheBackend.set parameter)</a>
+</li>
+        <li><a href="api.html#dogpile.cache.api.CacheBackend.set_serialized.params.value">(dogpile.cache.api.CacheBackend.set_serialized parameter)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.Lock.params.value_and_created_fn">value_and_created_fn (dogpile.Lock parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.value_version">value_version (in module dogpile.cache.region)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.api.ValuePayload">ValuePayload (in module dogpile.cache.api)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.api.CacheMutex.acquire.params.wait">wait (dogpile.cache.api.CacheMutex.acquire parameter)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy.was_hard_invalidated">was_hard_invalidated() (dogpile.cache.region.RegionInvalidationStrategy method)</a>
+</li>
+      <li><a href="api.html#dogpile.cache.region.RegionInvalidationStrategy.was_soft_invalidated">was_soft_invalidated() (dogpile.cache.region.RegionInvalidationStrategy method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#dogpile.cache.region.CacheRegion.configure.params.wrap">wrap (dogpile.cache.region.CacheRegion.configure parameter)</a>, <a href="usage.html#dogpile.cache.region.CacheRegion.configure.params.wrap">[1]</a>
+</li>
+      <li><a href="api.html#dogpile.cache.proxy.ProxyBackend.wrap">wrap() (dogpile.cache.proxy.ProxyBackend method)</a>
+
+      <ul>
+        <li><a href="api.html#dogpile.cache.region.CacheRegion.wrap">(dogpile.cache.region.CacheRegion method)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#dogpile.cache.backends.file.AbstractFileLock.write">write() (dogpile.cache.backends.file.AbstractFileLock method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Author name not set
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2011-2025 Mike Bayer.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
