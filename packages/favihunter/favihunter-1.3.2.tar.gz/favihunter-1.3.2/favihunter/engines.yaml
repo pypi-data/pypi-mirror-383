@@ -1,0 +1,43 @@
+VT:
+  key:
+  name: VirusTotal
+censys:
+  hash: MD5
+  name: Censys
+  url: https://search.censys.io/search?resource=hosts&q=services.http.response.favicons.md5_hash="{}"
+criminalip:
+  hash: MMH3-HEX
+  name: Criminal IP
+  url: https://www.criminalip.io/asset/search?query=favicon%3A+{}
+fofa:
+  hash: MMH3
+  name: FOFA
+  url: https://en.fofa.info/result?qbase64={}
+hunterhow:
+  hash: MD5
+  name: Hunter-How
+  url: https://hunter.how/list?searchValue=favicon_hash%3D%22{}%22
+netlas:
+  hash: SHA256
+  name: Netlas
+  url: https://app.netlas.io/responses/?q=http.favicon.hash_sha256%3A{}
+odin:
+  hash: MD5
+  name: ODIN
+  url: https://search.odin.io/hosts?query=services.modules.http.favicon.md5_hash%3A%22{}%22
+shodan:
+  hash: MMH3
+  name: Shodan
+  url: https://www.shodan.io/search?query=http.favicon.hash%3A{}
+silent:
+  hash: MMH3
+  name: Silent Push
+  url: https://explore.silentpush.com/web-scanner?query=favicon2_murmur3%20%3D%20{}&sorting=scan_date%2Fdesc
+validin:
+  hash: MD5
+  name: Validin
+  url: https://app.validin.com/detail?find={}
+zoomeye:
+  hash: MMH3
+  name: Zoomeye
+  url: https://www.zoomeye.org/searchResult?q=iconhash%3A%22{}%22
