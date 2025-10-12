@@ -1,0 +1,140 @@
+Metadata-Version: 2.4
+Name: oven-compiler
+Version: 0.1.6
+Summary: Python-to-PTX GPU Kernel Compiler with MLIR optimization
+Author-email: Sinjin Jeong <sjjeong94@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/sjjeong94/oven-compiler
+Project-URL: Documentation, https://github.com/sjjeong94/oven-compiler#readme
+Project-URL: Repository, https://github.com/sjjeong94/oven-compiler.git
+Project-URL: Bug Tracker, https://github.com/sjjeong94/oven-compiler/issues
+Project-URL: Source Code, https://github.com/sjjeong94/oven-compiler
+Project-URL: Download, https://pypi.org/project/oven-compiler/
+Keywords: mlir,gpu,cuda,compiler,optimization,kernel,ptx,python,llvm,nvptx
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: C++
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Compilers
+Classifier: Topic :: Software Development :: Code Generators
+Classifier: Topic :: System :: Hardware
+Classifier: Topic :: System :: Hardware :: Symmetric Multi-processing
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: oven-language>=0.1.3
+Provides-Extra: python-compilation
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black>=22.0; extra == "dev"
+Requires-Dist: isort>=5.10; extra == "dev"
+Requires-Dist: flake8>=4.0; extra == "dev"
+Requires-Dist: mypy>=0.950; extra == "dev"
+Requires-Dist: pre-commit>=2.15; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=4.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=1.0; extra == "docs"
+Requires-Dist: myst-parser>=0.17; extra == "docs"
+Provides-Extra: test
+Requires-Dist: pytest>=6.0; extra == "test"
+Requires-Dist: pytest-cov>=3.0; extra == "test"
+Requires-Dist: pytest-xdist>=2.0; extra == "test"
+Provides-Extra: build
+Requires-Dist: build>=0.8; extra == "build"
+Requires-Dist: twine>=4.0; extra == "build"
+Requires-Dist: wheel>=0.37; extra == "build"
+Dynamic: license-file
+
+# Oven Compiler
+
+> **A Python-to-PTX GPU Kernel Compiler**
+
+Transform Python functions into optimized NVIDIA PTX assembly using MLIR infrastructure.
+
+## Overview
+
+Oven Compiler provides a complete compilation pipeline from Python source code to GPU-ready PTX assembly. Built on MLIR (Multi-Level Intermediate Representation), it offers powerful optimization passes specifically designed for GPU kernels.
+
+**Pipeline**: Python → MLIR → LLVM IR → PTX Assembly
+
+## Installation
+
+```bash
+pip install oven-compiler
+```
+
+## Quick Start
+
+### Command Line
+
+```bash
+# Compile Python to PTX
+oven-compiler --python kernel.py -o output.ptx
+
+# From Python string
+oven-compiler --python-string "def add(a, b): return a + b" -o add.ptx
+
+# With debug information
+oven-compiler --python kernel.py --intermediate --verbose
+```
+
+### Python API
+
+```python
+import oven_compiler
+
+# Basic compilation
+python_code = "def multiply(x, y): return x * y"
+ptx_code = oven_compiler.compile_python_string_to_ptx(python_code)
+
+# Advanced usage with intermediate files
+compiler = oven_compiler.PythonToPTXCompiler()
+result = compiler.compile_with_intermediate_files(
+    python_code, 
+    output_dir="./debug"
+)
+```
+
+## Features
+
+- **Direct Python → PTX**: Compile Python functions to GPU assembly
+- **MLIR Optimization**: Advanced GPU-specific optimization passes
+- **Debugging Support**: Save intermediate MLIR and LLVM IR files
+- **CLI & API**: Both command-line and programmatic interfaces
+- **GPU Optimized**: Efficient PTX generation for CUDA kernels
+
+## API Reference
+
+### Core Classes
+- `PythonToPTXCompiler` - Main compiler for Python → PTX
+- `OvenOptimizer` - MLIR optimization utilities
+- `OvenCompiler` - Low-level MLIR interface
+
+### Key Functions
+- `compile_python_string_to_ptx(code)` - Compile Python string
+- `compile_python_file_to_ptx(file)` - Compile Python file
+- `optimize_string(mlir)` - Optimize MLIR code
+- `to_ptx(mlir)` - Convert MLIR to PTX
+
+## Requirements
+
+- Python 3.8+
+- NVIDIA GPU (for execution)
+- CUDA Toolkit (recommended)
+
+## License
+
+MIT License
