@@ -1,0 +1,207 @@
+{
+  "name": "powerscript",
+  "displayName": "PowerScript",
+  "description": "PowerScript language support for VS Code",
+  "version": "0.1.0",
+  "publisher": "powerscript-team",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Debuggers"
+  ],
+  "keywords": [
+    "powerscript",
+    "python",
+    "transpiler",
+    "ai",
+    "machine learning"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "powerscript",
+        "aliases": ["PowerScript", "ps"],
+        "extensions": [".ps"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "powerscript",
+        "scopeName": "source.powerscript",
+        "path": "./syntaxes/powerscript.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "powerscript",
+        "path": "./snippets/powerscript.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "powerscript.transpile",
+        "title": "Transpile to Python",
+        "category": "PowerScript"
+      },
+      {
+        "command": "powerscript.run",
+        "title": "Run PowerScript File",
+        "category": "PowerScript"
+      },
+      {
+        "command": "powerscript.typeCheck",
+        "title": "Check Types",
+        "category": "PowerScript"
+      },
+      {
+        "command": "powerscript.createProject",
+        "title": "Create New Project",
+        "category": "PowerScript"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .ps",
+          "command": "powerscript.transpile",
+          "group": "powerscript"
+        },
+        {
+          "when": "resourceExtname == .ps",
+          "command": "powerscript.run",
+          "group": "powerscript"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceExtname == .ps",
+          "command": "powerscript.transpile",
+          "group": "powerscript"
+        },
+        {
+          "when": "resourceExtname == .ps",
+          "command": "powerscript.typeCheck",
+          "group": "powerscript"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "powerscript.transpile",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t",
+        "when": "resourceExtname == .ps"
+      },
+      {
+        "command": "powerscript.run",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "resourceExtname == .ps"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "PowerScript",
+      "properties": {
+        "powerscript.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Path to Python interpreter"
+        },
+        "powerscript.outputDirectory": {
+          "type": "string",
+          "default": "build",
+          "description": "Output directory for transpiled files"
+        },
+        "powerscript.strictTyping": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable strict type checking"
+        },
+        "powerscript.runtimeChecks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable runtime type validation"
+        },
+        "powerscript.lsp.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable PowerScript Language Server"
+        },
+        "powerscript.lsp.host": {
+          "type": "string",
+          "default": "localhost",
+          "description": "LSP server host"
+        },
+        "powerscript.lsp.port": {
+          "type": "number",
+          "default": 8080,
+          "description": "LSP server port"
+        }
+      }
+    },
+    "problemMatchers": [
+      {
+        "name": "powerscript",
+        "owner": "powerscript",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "powerscript",
+        "required": ["file"],
+        "properties": {
+          "file": {
+            "type": "string",
+            "description": "The PowerScript file to process"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["transpile", "run", "typecheck"],
+            "description": "Action to perform"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^8.0.0"
+  },
+  "activationEvents": [
+    "onLanguage:powerscript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SaleemLww/Python-PowerScript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SaleemLww/Python-PowerScript/issues"
+  },
+  "homepage": "https://github.com/SaleemLww/Python-PowerScript#readme",
+  "license": "MIT"
+}
