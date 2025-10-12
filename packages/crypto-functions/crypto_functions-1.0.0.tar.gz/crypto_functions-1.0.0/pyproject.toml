@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crypto-functions"
+version = "1.0.0"
+description = "A simple and secure Python module for hashing and encrypting data and files."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+  { name = "Anish Sethi", email = "sethi.dynasty123@gmail.com" }
+]
+requires-python = ">=3.8"
+
+dependencies = [
+  "cryptography>=42.0.0",
+  "argon2-cffi>=23.1.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/Anish-Sethi-12122/Crypto-Tools"
+Repository = "https://github.com/Anish-Sethi-12122/Crypto-Tools"
