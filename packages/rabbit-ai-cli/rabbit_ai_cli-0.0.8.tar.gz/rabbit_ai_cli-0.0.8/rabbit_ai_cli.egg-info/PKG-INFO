@@ -1,0 +1,389 @@
+Metadata-Version: 2.4
+Name: rabbit-ai-cli
+Version: 0.0.8
+Summary: A tiny, extensible AI CLI for terminal workflows
+Author-email: zeecaniago <zeecaniago@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/zeecaniago/rabbit
+Project-URL: Repository, https://github.com/zeecaniago/rabbit
+Project-URL: Issues, https://github.com/zeecaniago/rabbit/issues
+Project-URL: Packages, https://github.com/zeecaniago/rabbit/packages
+Keywords: ai,cli,chat,openai,anthropic,ollama
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Communications :: Chat
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: python-dotenv>=0.19.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.10.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: flake8>=4.0.0; extra == "dev"
+Dynamic: license-file
+
+# Rabbit 🐰
+
+A tiny, extensible AI CLI for terminal workflows. Follow your curiosity with multi-provider AI chat, persistent sessions, and streaming responses.
+
+## Features
+
+- **Multi-Provider Support**: OpenAI, Anthropic, and Ollama (local models)
+- **Persistent Sessions**: Keep conversation history across interactions
+- **Streaming Output**: Real-time token streaming with `--stream`
+- **System Prompts**: Customize AI behavior with `--system`
+- **JSON Export**: Machine-readable output format
+- **STDIN Support**: Pipe input for automation
+- **Modular Design**: Clean, testable architecture
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.7+
+- API keys for your chosen provider(s)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd rabbit
+```
+
+2. Set up Python environment:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt  # If you have one, or install dependencies manually
+```
+
+3. Set up API keys:
+
+**Option A: Using environment file (recommended)**
+```bash
+# Copy the example file and edit it with your keys
+cp .env.example .env
+# Edit .env with your favorite editor and add your API keys
+```
+
+**Option B: Using environment variables**
+```bash
+# For OpenAI
+export OPENAI_API_KEY="your-openai-api-key"
+
+# For Anthropic
+export ANTHROPIC_API_KEY="your-anthropic-api-key"
+
+# For Ollama (optional, defaults to localhost:11434)
+export OLLAMA_HOST="http://localhost:11434"
+```
+
+Note: The CLI will first check for keys in a `.env` file, then fall back to environment variables.
+
+### Usage
+
+#### Direct CLI Usage
+
+```bash
+# Simple question
+python3 core/rabbit.py -q "What is Python?"
+
+# With specific provider and model
+python3 core/rabbit.py -q "Explain async/await" -p anthropic -m claude-3-sonnet-20240229
+
+# Stream response
+python3 core/rabbit.py -q "Write a Python function" --stream
+
+# Use system prompt
+python3 core/rabbit.py -q "Hello" --system "You are a helpful coding assistant"
+
+# Start a persistent session
+python3 core/rabbit.py -q "Let's discuss Python" -s python-chat
+
+# Continue the session
+python3 core/rabbit.py -q "Tell me about decorators" -s python-chat
+
+# Show session history
+python3 core/rabbit.py --show -s python-chat --limit 10
+
+# JSON output for automation
+python3 core/rabbit.py -q "Hello" --json
+
+# Pipe input
+echo "Explain this code: print('hello')" | python3 core/rabbit.py
+```
+
+#### Using the Wrapper Script
+
+The `bin/rabbit` script provides a more convenient interface:
+
+```bash
+# Make it executable
+chmod +x bin/rabbit
+
+# Simple question
+./bin/rabbit ask "What is Docker?"
+
+# With additional flags
+./bin/rabbit ask "Explain Kubernetes" -- -p openai -m gpt-4 --stream
+
+# Show session history
+./bin/rabbit show -s devops --limit 12
+```
+
+## Configuration
+
+### Environment File
+
+Rabbit supports loading API keys from a `.env` file for convenience and security. This is the recommended approach as it keeps your keys out of your shell history and makes it easy to manage different configurations.
+
+Create a `.env` file in the project root:
+
+```bash
+# OpenAI Configuration
+OPENAI_API_KEY=sk-your-actual-openai-key-here
+
+# Anthropic Configuration  
+ANTHROPIC_API_KEY=sk-ant-your-actual-anthropic-key-here
+
+# Ollama Configuration (optional)
+OLLAMA_HOST=http://localhost:11434
+```
+
+**Priority Order:**
+1. `.env` file in the current directory
+2. Environment variables
+3. Default values (where applicable)
+
+**Security Note:** Always add `.env` to your `.gitignore` to avoid committing API keys to version control.
+
+### Providers
+
+| Provider | Environment Variable | Default Model |
+|----------|---------------------|---------------|
+| OpenAI | `OPENAI_API_KEY` | `gpt-4o-mini` |
+| Anthropic | `ANTHROPIC_API_KEY` | `claude-3-5-sonnet-latest` |
+| Ollama | `OLLAMA_HOST` (optional) | `llama3` |
+
+### Session Storage
+
+Sessions are stored in `~/.config/aibot/sessions/` (or `$XDG_CONFIG_HOME/aibot/sessions/`).
+
+### Command Line Options
+
+```
+-q, --query QUERY       Your question/prompt
+-s, --session NAME      Session name for persistent conversation
+-p, --provider PROVIDER Provider: openai, anthropic, ollama
+-m, --model MODEL       Model name (provider-specific)
+--system PROMPT         System prompt to set behavior
+--stream                Stream tokens as they arrive
+--json                  Output JSON envelope
+--show                  Show session history
+--limit N               Number of messages to show (with --show)
+```
+
+## Development
+
+### Project Structure
+
+```
+rabbit/
+├── bin/
+│   └── rabbit              # Convenience wrapper script
+├── core/
+│   ├── __init__.py         # Package marker
+│   ├── rabbit.py           # Main CLI entry point
+│   ├── config.py           # Configuration paths
+│   ├── io_utils.py         # Terminal I/O utilities
+│   ├── messages.py         # Message construction
+│   ├── sessions.py         # Session persistence
+│   └── providers/
+│       └── __init__.py     # Provider adapters
+└── tests/
+    └── test_rabbit.py      # Unit tests
+```
+
+### Running Tests
+
+```bash
+# Install test dependencies
+pip install pytest
+
+# Run all tests
+python -m pytest tests/ -v
+
+# Run specific test file
+python -m pytest tests/test_rabbit.py -v
+
+# Run with coverage (if pytest-cov installed)
+python -m pytest tests/ --cov=core --cov-report=html
+```
+
+### Adding New Providers
+
+1. Add your provider function to `core/providers/__init__.py`:
+```python
+def call_your_provider(messages: List[Message], model: str, stream: bool) -> str:
+    # Your implementation here
+    pass
+```
+
+2. Register it in the provider dictionaries:
+```python
+PROVIDER_DEFAULTS["your_provider"] = "default-model"
+PROVIDERS["your_provider"] = call_your_provider
+```
+
+3. Add tests in `tests/test_rabbit.py`
+
+## Examples
+
+### Basic Q&A
+```bash
+python3 core/rabbit.py -q "What's the difference between list and tuple in Python?"
+```
+
+### Code Review Session
+```bash
+# Start a code review session
+python3 core/rabbit.py -q "I need help reviewing some Python code" -s code-review
+
+# Continue in the same session
+python3 core/rabbit.py -q "Here's the function: def calculate_total(items): ..." -s code-review
+
+# Check what we discussed
+python3 core/rabbit.py --show -s code-review
+```
+
+### Automated Processing
+```bash
+# Process multiple files
+for file in *.py; do
+    echo "# Reviewing $file" 
+    cat "$file" | python3 core/rabbit.py --system "You are a code reviewer" --json
+done
+```
+
+### Local AI with Ollama
+```bash
+# Make sure Ollama is running locally with a model
+ollama pull llama3
+
+# Use local model
+python3 core/rabbit.py -q "Hello" -p ollama -m llama3
+```
+
+## Installation from PyPI
+
+Once published, you can install rabbit directly from PyPI:
+
+```bash
+pip install rabbit-ai-cli
+```
+
+Then use it directly:
+```bash
+rabbit -q "Hello world" -p openai
+```
+
+## Development & Publishing
+
+### Local Development
+
+1. Clone and set up the development environment:
+```bash
+git clone https://github.com/zeecaniago/rabbit.git
+cd rabbit
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+2. Test your changes:
+```bash
+python -m pytest tests/
+```
+
+3. Test package building:
+```bash
+./test_build.sh
+```
+
+### Publishing Process
+
+This project uses automated publishing to PyPI:
+
+1. **Automatic Tagging**: Every commit to `main` automatically creates a new version tag (managed by `.github/workflows/auto-tag.yml`)
+
+2. **Automatic Publishing**: When a new tag is created, the publish workflow (`.github/workflows/publish.yml`) automatically:
+   - Builds the package
+   - Updates the version to match the git tag
+   - Runs tests
+   - Publishes to PyPI
+   - Creates a GitHub release
+
+### Setting up PyPI Publishing
+
+To enable automatic publishing, you need to:
+
+1. **Create a PyPI account** at https://pypi.org
+2. **Set up Trusted Publishing** (recommended):
+   - Go to https://pypi.org/manage/account/publishing/
+   - Add a new "pending publisher" with:
+     - PyPI project name: `rabbit-ai-cli`
+     - Owner: `zeecaniago`
+     - Repository name: `rabbit`
+     - Workflow name: `publish.yml`
+     - Environment name: (leave empty)
+
+3. **Alternative: Use API tokens**:
+   - Generate an API token at https://pypi.org/manage/account/token/
+   - Add it as `PYPI_API_TOKEN` in your repository secrets
+
+The workflow will automatically handle version management based on your git tags.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new functionality
+4. Ensure all tests pass
+5. Submit a pull request
+
+## License
+
+[Your chosen license]
+
+## Troubleshooting
+
+### Common Issues
+
+**"Import could not be resolved" errors**: These are lint warnings for optional dependencies (openai, anthropic, requests). The code handles missing imports gracefully.
+
+**"Command not found: pytest"**: Install pytest with `pip install pytest`
+
+**API key errors**: Make sure your API keys are set in environment variables and are valid.
+
+**Ollama connection errors**: Ensure Ollama is running locally and the model is available.
+
+### Getting Help
+
+- Check existing issues in the repository
+- Run with `-h` for help: `python3 core/rabbit.py -h`
+- Use `--show` to debug session issues
+- Check API key configuration with your provider's documentation
