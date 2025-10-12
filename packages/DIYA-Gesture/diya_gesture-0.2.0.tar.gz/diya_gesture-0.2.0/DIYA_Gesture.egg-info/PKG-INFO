@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: DIYA-Gesture
+Version: 0.2.0
+Summary: Control ESP32 robots using hand gestures (DIYA Robotics Edition)
+Home-page: https://github.com/diyarobotics/DIYA_Gesture
+Author: DIYA Robotics
+Author-email: learn@diyaedulabs.com
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Education
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: opencv-python
+Requires-Dist: mediapipe
+Requires-Dist: pyserial
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# DIYA_Gesture
+
+Control your **ESP32 wheel robot** using hand gestures detected by a webcam.  
+Designed for students and educators to learn how AI (MediaPipe) and IoT (ESP32) work together.
+
+## Features
+- Gesture control using **MediaPipe + OpenCV**
+- Simple serial communication with **ESP32**
+- Finger-count mapping:
+  - 1 → FORWARD (F)
+  - 2 → BACKWARD (B)
+  - 3 → RIGHT (R)
+  - 4 → LEFT (L)
+  - 5 → STOP (S)
+- Gesture must be **held for 2 seconds** to send command (reduces flicker)
+- Safety: if no hand detected, robot receives **STOP**
+
+## Installation
+```bash
+pip install DIYA-Gesture
