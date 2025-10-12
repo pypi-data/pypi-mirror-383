@@ -1,0 +1,219 @@
+---
+
+ci:
+  autoupdate_schedule: quarterly
+
+repos:
+- repo: https://github.com/asottile/add-trailing-comma.git
+  rev: v3.2.0
+  hooks:
+  - id: add-trailing-comma
+
+- repo: https://github.com/PyCQA/isort.git
+  rev: 6.0.1
+  hooks:
+  - id: isort
+    args:
+    - --honor-noqa
+    files: >-
+      ^.*\.p(xd|y|yx)$
+    types: [file]
+
+- repo: https://github.com/Lucas-C/pre-commit-hooks.git
+  rev: v1.5.5
+  hooks:
+  - id: remove-tabs
+
+- repo: https://github.com/python-jsonschema/check-jsonschema.git
+  rev: 0.33.2
+  hooks:
+  - id: check-github-workflows
+    files: ^\.github/workflows/[^/]+$
+    types:
+    - yaml
+  - id: check-jsonschema
+    name: Check GitHub Workflows set timeout-minutes
+    args:
+    - --builtin-schema
+    - github-workflows-require-timeout
+    files: ^\.github/workflows/[^/]+$
+    types:
+    - yaml
+  - id: check-readthedocs
+
+- repo: https://github.com/pre-commit/pygrep-hooks.git
+  rev: v1.10.0
+  hooks:
+  - id: python-check-blanket-noqa
+  - id: python-check-mock-methods
+  - id: python-no-eval
+  - id: python-no-log-warn
+  - id: rst-backticks
+
+- repo: https://github.com/pre-commit/pre-commit-hooks.git
+  rev: v5.0.0
+  hooks:
+  # Side-effects:
+  - id: trailing-whitespace
+  - id: check-merge-conflict
+  - id: double-quote-string-fixer
+  - id: end-of-file-fixer
+  - id: requirements-txt-fixer
+    exclude: >-
+      ^(docs/requirements|requirements-build)\.txt$
+
+  # Non-modifying checks:
+  - id: name-tests-test
+    files: >-
+      ^tests/[^_].*\.py$
+  - id: check-added-large-files
+  - id: check-byte-order-marker
+  - id: check-case-conflict
+  # disabled due to pre-commit/pre-commit-hooks#159
+  # - id: check-docstring-first
+  - id: check-json
+  - id: check-symlinks
+  - id: check-yaml
+  - id: detect-private-key
+
+  # Heavy checks:
+  - id: check-ast
+    exclude: >-
+      ^docs/_samples/.*\.py$
+  - id: debug-statements
+    exclude: >-
+      ^docs/_samples/.*\.py$
+
+- repo: https://github.com/PyCQA/pydocstyle.git
+  rev: 6.3.0
+  hooks:
+  - id: pydocstyle
+    exclude: >-
+      ^docs/_samples/.*\.py$
+
+- repo: https://github.com/adrienverge/yamllint.git
+  rev: v1.37.1
+  hooks:
+  - id: yamllint
+    files: \.(yaml|yml)$
+    types: [file, yaml]
+    args:
+    - --strict
+
+- repo: https://github.com/PyCQA/flake8.git
+  rev: 7.3.0
+  hooks:
+  - id: flake8
+    alias: flake8-no-wps
+    name: flake8 WPS-excluded
+    additional_dependencies:
+    - flake8-2020 ~= 1.7.0
+    - flake8-length ~= 0.3.0
+    - flake8-logging-format ~= 0.7.5
+    - flake8-pytest-style ~= 1.6.0
+    exclude: >-
+      ^docs/_samples/.*\.py$
+    files: >-
+      ^.*\.p(xd|y|yx)$
+    language_version: python3
+    types:
+    - file
+
+- repo: https://github.com/PyCQA/flake8.git
+  rev: 7.3.0
+  hooks:
+  - id: flake8
+    alias: flake8-only-wps
+    name: flake8 WPS-only
+    args:
+    # https://wemake-python-stylegui.de/en/latest/pages/usage/formatter.html
+    - --format
+    - wemake
+    - --select
+    - WPS
+    additional_dependencies:
+    - wemake-python-styleguide ~= 0.19.2
+    exclude: >-
+      ^docs/_samples/.*\.py$
+    files: >-
+      ^.*\.p(xd|y|yx)$
+    language_version: python3.11  # flake8-commas doesn't work w/ Python 3.12
+    types:
+    - file
+
+- repo: https://github.com/MarcoGorelli/cython-lint.git
+  rev: v0.16.7
+  hooks:
+  - id: cython-lint
+    # NOTE: This linter does not have a config file so it's set up below.
+    args:
+    - --max-line-length
+    - '160'  # matches a similar value in the .flake8 config
+
+- repo: https://github.com/Lucas-C/pre-commit-hooks-markup.git
+  rev: v1.0.1
+  hooks:
+  - id: rst-linter
+    files: >-
+      ^README\.rst$
+
+- repo: local
+  hooks:
+  - id: changelogs-rst
+    name: changelog filenames
+    language: fail
+    entry: >-
+      Changelog files must be named
+      ####.(
+      bugfix
+      | feature
+      | deprecation
+      | breaking
+      | doc
+      | packaging
+      | contrib
+      | misc
+      )(.#)?(.rst)?
+    exclude: >-
+      (?x)
+      ^
+        docs/changelog-fragments/(
+          \.gitignore
+          |(\d+|[0-9a-f]{8}|[0-9a-f]{7}|[0-9a-f]{40})\.(
+            bugfix
+            |feature
+            |deprecation
+            |breaking
+            |doc
+            |packaging
+            |contrib
+            |misc
+          )(\.\d+)?(\.rst)?
+          |README\.rst
+          |template\.j2
+        )
+      $
+    files: ^docs/changelog-fragments/
+    types: []
+    types_or:
+    - file
+    - symlink
+  - id: changelogs-user-role
+    name: Changelog files should use a non-broken :user:`name` role
+    language: pygrep
+    entry: :user:([^`]+`?|`[^`]+[\s,])
+    pass_filenames: true
+    types:
+    - file
+    - rst
+
+# - repo: local
+#   hooks:
+#   - id: pylint
+#     language: system
+#     name: PyLint
+#     files: \.py$
+#     entry: python -m pylint
+#     args: []
+
+...
