@@ -1,0 +1,63 @@
+[project]
+name = "py-talk-ex"
+version = "1.6.1"
+description = "a simple but powerful pythonic library for making bots for the TeamTalk5 Conferencing System"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "BlindMaster24", email = "jessica.tegner@outlook.com"}]
+keywords = ["teamtalk", "teamtalk5", "teamtalk sdk", "conferencing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: AsyncIO",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+dependencies = [
+    "beautifulsoup4>=4.12",
+    "patool>=3.0",
+    "requests>=2.32",
+    "typing-extensions>=4.12",
+]
+
+[project.urls]
+"Issue Tracker" = "https://github.com/BlindMaster24/pytalk/issues"
+
+[project.optional-dependencies]
+docs = [
+    "sphinx-sitemap>=2.6",
+    "sphinx>=8.1",
+    "sphinxcontrib-napoleon>=0.7",
+    "sphinxcontrib-trio>=1.1",
+]
+
+[tool.black]
+line-length = 125
+skip-string-normalization = true
+
+[tool.flake8]
+ignore = ["E203", "E731", "W503", "D401", "DAR402", "DAR103"]
+exclude = [
+    "docs/*",
+    "tests/*",
+    "pytalk/tools/*",
+    "__pycache__",
+    "pytalk/implementation/*",
+    "pytalk/__init__.py",
+    "pytalk/implementation/__init__.py",
+    "example.py",
+]
+max-line-length = 125
+count = true
+statistics = true
+max-complexity = 20
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.1",
+]
