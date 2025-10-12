@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# rabbit: subcommand wrapper around your existing rabbit scaffold
+set -euo pipefail
+
+# locate rabbit (adjust if installed elsewhere)
+RABBIT="${RABBIT_PATH:-$(dirname "$0")/../core/rabbit.py}"
+
+# config & personas (adjust paths as you like)
+RCONF="${XDG_CONFIG_HOME:-$HOME/.config}/rabbit"
+RPER="$RCONF/personas"
+mkdir -p "$RCONF/sessions" "$RPER" "$RCONF/plugins" >/dev/null 2>&1 || true
+
+# helpers
+die() { echo "rabbit: $*" >&2; exit 1; }
+need() { command -v "$1" >/dev/null 2>&1 || die "missing dependency: $1"; }
+
+# pass-through args collector
+EXTRA=()
+SESSION=""
+SYSTEM=""
+STREAM=""
+LIMIT=""
+
+subcmd="${1:-}"; shift || true
+
+case "$subcmd" in
+  ask|"")
+    # usage: rabbit ask "question" [-- flags...]
+    if [[ "${1:-}" == "--" ]]; then shift; fi
+    if [[ "${1:-}" == "" ]]; then die "usage: rabbit ask \"question\" [-- extra rabbit flags]"; fi
+    QUESTION="$1"; shift
+    exec python3 "$RABBIT" -q "$QUESTION" "$@"
+    ;;
+
+  show)
+    # usage: rabbit show -s <session> [--limit N]
+    [[ "${1:-}" != "" ]] || die "usage: rabbit show -s <session> [--limit N]"
+    exec python3 "$RABBIT" --show "$@"
+    ;;
+
+  *)
+    cat <<EOF
+rabbit – follow curiosity.
+
+Usage:
+  rabbit ask "question" [-- extra rabbit flags]
+  rabbit show           -s session   [--limit N]
+
+Pass-through flags include those from rabbit:
+  -p/--provider {openai,anthropic,ollama}
+  -m/--model <name>
+  --json, --stream, --system "<text>", etc.
+
+Examples:
+  rabbit ask "what is kubectl for listing all pods?" -- -p openai -m gpt-4o-mini
+  rabbit show -s devops --limit 12
+EOF
+    exit 1
+    ;;
+esac
