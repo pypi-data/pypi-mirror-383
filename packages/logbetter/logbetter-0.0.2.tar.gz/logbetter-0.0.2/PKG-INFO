@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: logbetter
+Version: 0.0.2
+Summary: Improved logging wrapper with colored output and timestamps.
+Project-URL: Homepage, https://github.com/pp5253397/logbetter
+Project-URL: Issues, https://github.com/pp5253397/logbetter/issues
+Author-email: Parth Patel <pp5253397@gmail.com>
+License-Expression: MIT
+License-File: LICENSE
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# logbetter
+
+A simple, colorful logging utility for Python.
+
+## Example
+```python
+from logbetter import logbetter
+
+logbetter.info("This is an info message.")
+logbetter.success("Operation completed!")
+```
