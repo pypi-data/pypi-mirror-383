@@ -1,0 +1,31 @@
+Metadata-Version: 2.4
+Name: oniondctw
+Version: 1.1.1
+Summary: 洋蔥工具包 🧅 簡單、有趣、強大！
+Home-page: https://github.com/dc2023tw/onion
+Author: 2023_tw
+Author-email: skull@tw-yichen.net
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: discord.py
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# 🧅 洋蔥 (Onion)
+
+一個可愛又實用的 Python 套件。
+
+## 安裝
+
+```bash
+pip install onion_dctw
