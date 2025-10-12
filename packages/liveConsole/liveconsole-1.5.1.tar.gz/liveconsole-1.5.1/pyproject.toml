@@ -1,0 +1,17 @@
+[project]
+name = "liveConsole"
+version = "1.5.1"
+description = "An IDLE-like debugger to allow for real-time command injection for debugging and testing python code"
+authors = [{ name="Tzur Soffer", email="tzur.soffer@gmail.com" }]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = ["customtkinter", "pygments"]
+
+[project.scripts]
+liveconsole = "liveConsole:main"
+pysole = "pysole:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
