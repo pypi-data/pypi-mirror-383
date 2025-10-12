@@ -1,0 +1,15 @@
+[project]
+name = "ventrun"
+version = "1.0"
+description = "A Python script that bootstraps your application and emits a Main event to ModuVent."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "loguru>=0.7.3",
+    "moduvent>=5.1",
+]
+
+[dependency-groups]
+dev = [
+    "setuptools>=80.9.0",
+]

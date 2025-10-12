@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: ventrun
+Version: 1.0
+Summary: A Python script that bootstraps your application and emits a Main event to ModuVent.
+Home-page: https://github.com/Joxos/ventrun
+Author: Joxos
+Author-email: xujunhao61@163.com
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: loguru>=0.7.3
+Requires-Dist: moduvent>=5.1
+Dynamic: author
+Dynamic: author-email
+Dynamic: home-page
+Dynamic: requires-python
