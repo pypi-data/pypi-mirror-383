@@ -1,0 +1,72 @@
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "flake8-digit-separator"
+version = "1.0.2"
+description = "Correct placement of separators"
+authors = [
+    "Timur Valiev <cptchunk@yandex.ru>",
+]
+license = "MIT"
+readme = "README.md"
+
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Framework :: Flake8",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+
+homepage = "https://github.com/imtoopunkforyou/flake8-digit-separator"
+
+keywords = [
+  "flake8",
+  "linter",
+  "PEP515",
+  "separator",
+  "code-style",
+  "python-linter",
+  "linting",
+  "code-standards",
+  "code-quality",
+  "flake8-plugin",
+  "flake8-formatter",
+  "code-checker",
+  "numbers",
+  "digits",
+  "FDS",
+  "Underscores",
+  "Numeric Literals",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+flake8 = "^7.1"
+
+
+[tool.poetry.group.lint.dependencies]
+wemake-python-styleguide = "^1.1.0"
+mypy = "^1.15.0"
+darglint = "^1.8.1"
+ruff = ">=0.12.4,<0.15.0"
+types-flake8 = "^7.3.0.20250622"
+
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^8.3.5"
+pytest-cov = ">=6.1.1,<8.0.0"
+
+[tool.poetry.plugins."flake8.extension"]
+FDS = "flake8_digit_separator.checker:Checker"
