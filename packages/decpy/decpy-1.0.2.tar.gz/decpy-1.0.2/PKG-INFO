@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: decpy
+Version: 1.0.2
+Summary: Declarative Programming Tools
+Home-page: https://github.com/pauldobriak/DecPy
+Author: Paul Dobryak
+Author-email: goodsoul@mail.ru
+Project-URL: GitHub, https://github.com/pauldobriak/DecPy
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: project-url
+Dynamic: summary
+
+The DecPy library integrates lazy evaluation and three types of declarative programming into the Python:
+1. tuple calculus (analog of the SQL)
+2. domain calculus (analog of QBE)
+3. first-order predicate calculus (analog of Prolog, logic programming).
+
+DecPy allows you to work with collections in Python as with databases or expert systems (including writing recursive queries and even proving theorems).
+
+For the latest version and documentation, see
+https://github.com/pauldobriak/DecPy
