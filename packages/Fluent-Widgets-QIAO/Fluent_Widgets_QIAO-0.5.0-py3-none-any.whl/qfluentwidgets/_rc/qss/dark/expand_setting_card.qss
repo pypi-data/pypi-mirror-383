@@ -1,0 +1,80 @@
+ExpandSettingCard {
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background-color: transparent;
+}
+
+#view {
+    background: rgba(255, 255, 255, 0.051);
+    border: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#scrollWidget {
+    border: none;
+    background-color: transparent;
+}
+
+
+QLabel#titleLabel {
+    font-family: --FontFamily;
+    font-size: 14px;
+    color: white;
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+QLabel#contentLabel {
+    font-family: --FontFamily;
+    font-size: 11px;
+    color: rgb(208, 208, 208);
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+QLabel#titleLabel:disabled,
+QLabel#contentLabel:disabled {
+    color: rgba(255, 255, 255, 0.36);
+}
+
+FolderItem>QLabel {
+    font-family: --FontFamily;
+    font-size: 14px;
+}
+
+
+QPushButton {
+    background: rgba(255, 255, 255, 0.0605);
+    border: 1px solid rgba(255, 255, 255, 0.053);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 5px;
+    padding: 5px 36px 5px 36px;
+    font-family: --FontFamily;
+    font-size: 14px;
+    color: white;
+    outline: none;
+}
+
+QPushButton:hover {
+    background: rgba(255, 255, 255, 0.0837);
+}
+
+QPushButton:pressed {
+    color: rgba(255, 255, 255, 0.786);
+    background: rgba(255, 255, 255, 0.0326);
+    border-top: 1px solid rgba(255, 255, 255, 0.053);
+}
+
+QPushButton:disabled {
+    color: rgba(255, 255, 255, 0.3628);
+    background: rgba(255, 255, 255, 0.0419);
+    border: 1px solid rgba(255, 255, 255, 0.053);
+    border-top: 1px solid rgba(255, 255, 255, 0.053);
+}
+
+#chooseColorButton {
+    padding: 5px 17px 5px 17px;
+}
