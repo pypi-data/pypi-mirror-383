@@ -1,0 +1,21 @@
+include README.md
+include cli_requirements.txt
+include CHANGELOG.md
+include RELEASE_NOTES_v1.8.0.md
+include RELEASE_SUMMARY_v1.8.0.md
+include CLI_FEATURE_SUMMARY.md
+include DYNAMIC_MONITORING_GUIDE.md
+include QUICK_START_GUIDE.md
+
+# Exclude all environment files from distribution
+exclude .env
+exclude */.env
+global-exclude *.env
+
+# Include Scripts module and models
+recursive-include Scripts *.py
+recursive-include Scripts/models *
+recursive-include Scripts *.md
+
+# Include documentation
+recursive-include *.md
