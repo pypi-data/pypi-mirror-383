@@ -1,0 +1,10 @@
+[project]
+name = "pypasl"
+version = "0.1.1"
+description = "PASL (Python As a Scripting Language) is a project dedicated to allowing easier use of Python as a scripting language, mainly with the goal of replacing .sh or .ps1."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "keyboard>=0.13.5",
+    "windows-curses ; sys_platform == 'win32'",
+]
