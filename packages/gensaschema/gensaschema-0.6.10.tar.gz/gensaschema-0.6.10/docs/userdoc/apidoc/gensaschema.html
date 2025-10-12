@@ -1,0 +1,1440 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="search" title="Search" href="../search.html"><link rel="next" title="gensaschema._column module" href="gensaschema._column.html"><link rel="prev" title="gensaschema" href="index.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>gensaschema package - GenSASchema 0.6.10 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/ci.css?v=9221f92a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">GenSASchema 0.6.10 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">GenSASchema 0.6.10 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">gensaschema</a><input aria-label="Toggle navigation of gensaschema" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">gensaschema package</a><input aria-label="Toggle navigation of gensaschema package" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html">gensaschema._column module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html">gensaschema._config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html">gensaschema._constraint module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html">gensaschema._exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html">gensaschema._meta module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html">gensaschema._schema module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html">gensaschema._symbols module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html">gensaschema._table module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html">gensaschema._template module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html">gensaschema._type module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._util.html">gensaschema._util module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema.constraints.html">gensaschema.constraints module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="gensaschema-package">
+<h1>gensaschema package<a class="headerlink" href="#gensaschema-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._column.html">gensaschema._column module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._column.html#column-inspection-and-representation">Column inspection and representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column"><code class="docutils literal notranslate"><span class="pre">Column</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._name"><code class="docutils literal notranslate"><span class="pre">Column._name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._ctype"><code class="docutils literal notranslate"><span class="pre">Column._ctype</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._nullable"><code class="docutils literal notranslate"><span class="pre">Column._nullable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._primary_key"><code class="docutils literal notranslate"><span class="pre">Column._primary_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._autoincrement"><code class="docutils literal notranslate"><span class="pre">Column._autoincrement</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._server_default"><code class="docutils literal notranslate"><span class="pre">Column._server_default</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column._symbols"><code class="docutils literal notranslate"><span class="pre">Column._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__dict__"><code class="docutils literal notranslate"><span class="pre">Column.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Column.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__init__"><code class="docutils literal notranslate"><span class="pre">Column.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__module__"><code class="docutils literal notranslate"><span class="pre">Column.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__repr__"><code class="docutils literal notranslate"><span class="pre">Column.__repr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Column.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.__weakref__"><code class="docutils literal notranslate"><span class="pre">Column.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.Column.from_sa"><code class="docutils literal notranslate"><span class="pre">Column.from_sa()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault"><code class="docutils literal notranslate"><span class="pre">ServerDefault</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault._default"><code class="docutils literal notranslate"><span class="pre">ServerDefault._default</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault._symbols"><code class="docutils literal notranslate"><span class="pre">ServerDefault._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__dict__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__init__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__module__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__repr__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__repr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._column.html#gensaschema._column.ServerDefault.__weakref__"><code class="docutils literal notranslate"><span class="pre">ServerDefault.__weakref__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._config.html">gensaschema._config module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._config.html#schema-config-management">Schema config management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.tables"><code class="docutils literal notranslate"><span class="pre">Config.tables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.schemas"><code class="docutils literal notranslate"><span class="pre">Config.schemas</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config._lines"><code class="docutils literal notranslate"><span class="pre">Config._lines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config._CONFIG_TPL"><code class="docutils literal notranslate"><span class="pre">Config._CONFIG_TPL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__annotations__"><code class="docutils literal notranslate"><span class="pre">Config.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__dict__"><code class="docutils literal notranslate"><span class="pre">Config.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Config.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__init__"><code class="docutils literal notranslate"><span class="pre">Config.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__module__"><code class="docutils literal notranslate"><span class="pre">Config.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Config.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.__weakref__"><code class="docutils literal notranslate"><span class="pre">Config.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.dump"><code class="docutils literal notranslate"><span class="pre">Config.dump()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.from_file"><code class="docutils literal notranslate"><span class="pre">Config.from_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.from_lines"><code class="docutils literal notranslate"><span class="pre">Config.from_lines()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._config.html#gensaschema._config.Config.from_parser"><code class="docutils literal notranslate"><span class="pre">Config.from_parser()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._constraint.html">gensaschema._constraint module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._constraint.html#constraint-inspection-and-representation">Constraint inspection and representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint"><code class="docutils literal notranslate"><span class="pre">Constraint</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.constraint"><code class="docutils literal notranslate"><span class="pre">Constraint.constraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint._IMPORT"><code class="docutils literal notranslate"><span class="pre">Constraint._IMPORT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint._SYMBOL"><code class="docutils literal notranslate"><span class="pre">Constraint._SYMBOL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__cmp__"><code class="docutils literal notranslate"><span class="pre">Constraint.__cmp__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__dict__"><code class="docutils literal notranslate"><span class="pre">Constraint.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Constraint.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__init__"><code class="docutils literal notranslate"><span class="pre">Constraint.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__lt__"><code class="docutils literal notranslate"><span class="pre">Constraint.__lt__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__module__"><code class="docutils literal notranslate"><span class="pre">Constraint.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__new__"><code class="docutils literal notranslate"><span class="pre">Constraint.__new__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Constraint.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.__weakref__"><code class="docutils literal notranslate"><span class="pre">Constraint.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.copy"><code class="docutils literal notranslate"><span class="pre">Constraint.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.Constraint.repr"><code class="docutils literal notranslate"><span class="pre">Constraint.repr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint._IMPORT"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint._IMPORT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint._SYMBOL"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint._SYMBOL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint.__annotations__"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint.__module__"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint.__repr__"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint.__repr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.ForeignKeyConstraint.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint.__static_attributes__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint._IMPORT"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint._IMPORT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint._SYMBOL"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint._SYMBOL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint.__annotations__"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint.__module__"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.PrimaryKeyConstraint.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint.__static_attributes__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint._IMPORT"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint._IMPORT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint._SYMBOL"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint._SYMBOL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint.__annotations__"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint.__module__"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint.__repr__"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint.__repr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.UniqueConstraint.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint.__static_attributes__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._constraint.html#gensaschema._constraint.access_col"><code class="docutils literal notranslate"><span class="pre">access_col()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._exceptions.html">gensaschema._exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema-exceptions">GenSASchema Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Error"><code class="docutils literal notranslate"><span class="pre">Error</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Error.__annotations__"><code class="docutils literal notranslate"><span class="pre">Error.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Error.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Error.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Error.__module__"><code class="docutils literal notranslate"><span class="pre">Error.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Error.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Error.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Error.__weakref__"><code class="docutils literal notranslate"><span class="pre">Error.__weakref__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning"><code class="docutils literal notranslate"><span class="pre">Warning</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning.__annotations__"><code class="docutils literal notranslate"><span class="pre">Warning.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Warning.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning.__module__"><code class="docutils literal notranslate"><span class="pre">Warning.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Warning.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning.__weakref__"><code class="docutils literal notranslate"><span class="pre">Warning.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._exceptions.html#gensaschema._exceptions.Warning.emit"><code class="docutils literal notranslate"><span class="pre">Warning.emit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._meta.html">gensaschema._meta module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._meta.html#metadata">Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData"><code class="docutils literal notranslate"><span class="pre">BoundMetaData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__dict__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__getattr__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__getattr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__init__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__module__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._meta.html#gensaschema._meta.BoundMetaData.__weakref__"><code class="docutils literal notranslate"><span class="pre">BoundMetaData.__weakref__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._schema.html">gensaschema._schema module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._schema.html#schema-module-generation">Schema module generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema"><code class="docutils literal notranslate"><span class="pre">Schema</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema._dialect"><code class="docutils literal notranslate"><span class="pre">Schema._dialect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema._tables"><code class="docutils literal notranslate"><span class="pre">Schema._tables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema._schemas"><code class="docutils literal notranslate"><span class="pre">Schema._schemas</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema._symbols"><code class="docutils literal notranslate"><span class="pre">Schema._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema._dbname"><code class="docutils literal notranslate"><span class="pre">Schema._dbname</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema._MODULE_TPL"><code class="docutils literal notranslate"><span class="pre">Schema._MODULE_TPL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__annotations__"><code class="docutils literal notranslate"><span class="pre">Schema.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__dict__"><code class="docutils literal notranslate"><span class="pre">Schema.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Schema.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__init__"><code class="docutils literal notranslate"><span class="pre">Schema.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__module__"><code class="docutils literal notranslate"><span class="pre">Schema.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Schema.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.__weakref__"><code class="docutils literal notranslate"><span class="pre">Schema.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._schema.html#gensaschema._schema.Schema.dump"><code class="docutils literal notranslate"><span class="pre">Schema.dump()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._symbols.html">gensaschema._symbols module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._symbols.html#symbol-management">Symbol management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.SymbolException"><code class="docutils literal notranslate"><span class="pre">SymbolException</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.SymbolException.__annotations__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.SymbolException.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.SymbolException.__module__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.SymbolException.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__static_attributes__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols"><code class="docutils literal notranslate"><span class="pre">Symbols</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols._symbols"><code class="docutils literal notranslate"><span class="pre">Symbols._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.imports"><code class="docutils literal notranslate"><span class="pre">Symbols.imports</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.types"><code class="docutils literal notranslate"><span class="pre">Symbols.types</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__annotations__"><code class="docutils literal notranslate"><span class="pre">Symbols.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__contains__"><code class="docutils literal notranslate"><span class="pre">Symbols.__contains__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__delitem__"><code class="docutils literal notranslate"><span class="pre">Symbols.__delitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__dict__"><code class="docutils literal notranslate"><span class="pre">Symbols.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Symbols.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__getitem__"><code class="docutils literal notranslate"><span class="pre">Symbols.__getitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__init__"><code class="docutils literal notranslate"><span class="pre">Symbols.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__iter__"><code class="docutils literal notranslate"><span class="pre">Symbols.__iter__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__module__"><code class="docutils literal notranslate"><span class="pre">Symbols.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__setitem__"><code class="docutils literal notranslate"><span class="pre">Symbols.__setitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Symbols.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols.Symbols.__weakref__"><code class="docutils literal notranslate"><span class="pre">Symbols.__weakref__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports"><code class="docutils literal notranslate"><span class="pre">_Imports</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports._imports"><code class="docutils literal notranslate"><span class="pre">_Imports._imports</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__contains__"><code class="docutils literal notranslate"><span class="pre">_Imports.__contains__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__dict__"><code class="docutils literal notranslate"><span class="pre">_Imports.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">_Imports.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__init__"><code class="docutils literal notranslate"><span class="pre">_Imports.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__iter__"><code class="docutils literal notranslate"><span class="pre">_Imports.__iter__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__module__"><code class="docutils literal notranslate"><span class="pre">_Imports.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__setitem__"><code class="docutils literal notranslate"><span class="pre">_Imports.__setitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">_Imports.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Imports.__weakref__"><code class="docutils literal notranslate"><span class="pre">_Imports.__weakref__</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types"><code class="docutils literal notranslate"><span class="pre">_Types</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types._types"><code class="docutils literal notranslate"><span class="pre">_Types._types</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types._symbols"><code class="docutils literal notranslate"><span class="pre">_Types._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__dict__"><code class="docutils literal notranslate"><span class="pre">_Types.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">_Types.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__init__"><code class="docutils literal notranslate"><span class="pre">_Types.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__module__"><code class="docutils literal notranslate"><span class="pre">_Types.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__setitem__"><code class="docutils literal notranslate"><span class="pre">_Types.__setitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">_Types.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.__weakref__"><code class="docutils literal notranslate"><span class="pre">_Types.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._Types.resolve"><code class="docutils literal notranslate"><span class="pre">_Types.resolve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._symbols.html#gensaschema._symbols._load_dotted"><code class="docutils literal notranslate"><span class="pre">_load_dotted()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._table.html">gensaschema._table module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._table.html#table-inspection-and-representation">Table inspection and representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table"><code class="docutils literal notranslate"><span class="pre">Table</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.varname"><code class="docutils literal notranslate"><span class="pre">Table.varname</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.sa_table"><code class="docutils literal notranslate"><span class="pre">Table.sa_table</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.constraints"><code class="docutils literal notranslate"><span class="pre">Table.constraints</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table._symbols"><code class="docutils literal notranslate"><span class="pre">Table._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__dict__"><code class="docutils literal notranslate"><span class="pre">Table.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Table.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__init__"><code class="docutils literal notranslate"><span class="pre">Table.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__module__"><code class="docutils literal notranslate"><span class="pre">Table.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__new__"><code class="docutils literal notranslate"><span class="pre">Table.__new__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__repr__"><code class="docutils literal notranslate"><span class="pre">Table.__repr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Table.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.__weakref__"><code class="docutils literal notranslate"><span class="pre">Table.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.by_name"><code class="docutils literal notranslate"><span class="pre">Table.by_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.Table.is_reference"><code class="docutils literal notranslate"><span class="pre">Table.is_reference</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableCollection"><code class="docutils literal notranslate"><span class="pre">TableCollection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableCollection.__dict__"><code class="docutils literal notranslate"><span class="pre">TableCollection.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableCollection.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">TableCollection.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableCollection.__module__"><code class="docutils literal notranslate"><span class="pre">TableCollection.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableCollection.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">TableCollection.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableCollection.by_names"><code class="docutils literal notranslate"><span class="pre">TableCollection.by_names()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference"><code class="docutils literal notranslate"><span class="pre">TableReference</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.varname"><code class="docutils literal notranslate"><span class="pre">TableReference.varname</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.sa_table"><code class="docutils literal notranslate"><span class="pre">TableReference.sa_table</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.constraints"><code class="docutils literal notranslate"><span class="pre">TableReference.constraints</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.__dict__"><code class="docutils literal notranslate"><span class="pre">TableReference.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">TableReference.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.__init__"><code class="docutils literal notranslate"><span class="pre">TableReference.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.__module__"><code class="docutils literal notranslate"><span class="pre">TableReference.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">TableReference.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.__weakref__"><code class="docutils literal notranslate"><span class="pre">TableReference.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._table.html#gensaschema._table.TableReference.is_reference"><code class="docutils literal notranslate"><span class="pre">TableReference.is_reference</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._table.html#gensaschema._table._break_cycles"><code class="docutils literal notranslate"><span class="pre">_break_cycles()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._template.html">gensaschema._template module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._template.html#simple-template-abstraction">Simple template abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template"><code class="docutils literal notranslate"><span class="pre">Template</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template._template"><code class="docutils literal notranslate"><span class="pre">Template._template</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.__dict__"><code class="docutils literal notranslate"><span class="pre">Template.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Template.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.__init__"><code class="docutils literal notranslate"><span class="pre">Template.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.__module__"><code class="docutils literal notranslate"><span class="pre">Template.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Template.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.__weakref__"><code class="docutils literal notranslate"><span class="pre">Template.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._template.html#gensaschema._template.Template.expand"><code class="docutils literal notranslate"><span class="pre">Template.expand()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._type.html">gensaschema._type module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._type.html#type-inspection-and-representation">Type inspection and representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type"><code class="docutils literal notranslate"><span class="pre">Type</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type._ctype"><code class="docutils literal notranslate"><span class="pre">Type._ctype</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type._dialect"><code class="docutils literal notranslate"><span class="pre">Type._dialect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type._symbols"><code class="docutils literal notranslate"><span class="pre">Type._symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__annotations__"><code class="docutils literal notranslate"><span class="pre">Type.__annotations__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__dict__"><code class="docutils literal notranslate"><span class="pre">Type.__dict__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Type.__firstlineno__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__init__"><code class="docutils literal notranslate"><span class="pre">Type.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__module__"><code class="docutils literal notranslate"><span class="pre">Type.__module__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__repr__"><code class="docutils literal notranslate"><span class="pre">Type.__repr__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Type.__static_attributes__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.__weakref__"><code class="docutils literal notranslate"><span class="pre">Type.__weakref__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gensaschema._type.html#gensaschema._type.Type.by_column"><code class="docutils literal notranslate"><span class="pre">Type.by_column()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._type.html#gensaschema._type._add_postgres_enum"><code class="docutils literal notranslate"><span class="pre">_add_postgres_enum()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._type.html#gensaschema._type._finalize_type"><code class="docutils literal notranslate"><span class="pre">_finalize_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._type.html#gensaschema._type._find_class"><code class="docutils literal notranslate"><span class="pre">_find_class()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema._util.html">gensaschema._util module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._util.html#misc-utilities">Misc Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._util.html#gensaschema._util.cmp"><code class="docutils literal notranslate"><span class="pre">cmp()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema._util.html#gensaschema._util.find_public"><code class="docutils literal notranslate"><span class="pre">find_public()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gensaschema.constraints.html">gensaschema.constraints module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema.constraints.html#constraint-declarators">Constraint Declarators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema.constraints.html#gensaschema.constraints.ForeignKey"><code class="docutils literal notranslate"><span class="pre">ForeignKey()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema.constraints.html#gensaschema.constraints.PrimaryKey"><code class="docutils literal notranslate"><span class="pre">PrimaryKey()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gensaschema.constraints.html#gensaschema.constraints.Unique"><code class="docutils literal notranslate"><span class="pre">Unique()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-gensaschema">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gensaschema" title="Link to this heading">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">Copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Copyright 2010 - 2025
+André Malo or his licensors, as applicable</p>
+</dd>
+<dt class="field-even">License<span class="colon">:</span></dt>
+<dd class="field-even"><p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</dd>
+</dl>
+<section id="gensaschema-static-sqlalchemy-schema-generator">
+<h3>GenSASchema - Static SQLAlchemy Schema Generator<a class="headerlink" href="#gensaschema-static-sqlalchemy-schema-generator" title="Link to this heading">¶</a></h3>
+<p>GenSASchema generates static schema definitions using SQLAlchemy’s
+inspection capabilities.</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="gensaschema.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schemas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Config" title="Link to this definition">¶</a></dt>
+<dd><p>Schema config container</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.tables">
+<span class="sig-name descname"><span class="pre">tables</span></span><a class="headerlink" href="#gensaschema.Config.tables" title="Link to this definition">¶</a></dt>
+<dd><p>Table list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.schemas">
+<span class="sig-name descname"><span class="pre">schemas</span></span><a class="headerlink" href="#gensaschema.Config.schemas" title="Link to this definition">¶</a></dt>
+<dd><p>Alien schema mapping</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config._lines">
+<span class="sig-name descname"><span class="pre">_lines</span></span><a class="headerlink" href="#gensaschema.Config._lines" title="Link to this definition">¶</a></dt>
+<dd><p>Original config lines (or <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config._CONFIG_TPL">
+<span class="sig-name descname"><span class="pre">_CONFIG_TPL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;gensaschema._template.Template</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#gensaschema.Config._CONFIG_TPL" title="Link to this definition">¶</a></dt>
+<dd><p>Template for empty config file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>Template</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'gensaschema._config',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">46,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nSchema</span> <span class="pre">config</span> <span class="pre">container\n\nAttributes:\n</span>&#160; <span class="pre">tables</span> <span class="pre">(list):\n</span>&#160;&#160;&#160; <span class="pre">Table</span> <span class="pre">list\n\n</span>&#160; <span class="pre">schemas</span> <span class="pre">(dict):\n</span>&#160;&#160;&#160; <span class="pre">Alien</span> <span class="pre">schema</span> <span class="pre">mapping\n\n</span>&#160; <span class="pre">_lines</span> <span class="pre">(list):\n</span>&#160;&#160;&#160; <span class="pre">Original</span> <span class="pre">config</span> <span class="pre">lines</span> <span class="pre">(or</span> <span class="pre">``None``)\n',</span> <span class="pre">'_CONFIG_TPL':</span> <span class="pre">&lt;gensaschema._template.Template</span> <span class="pre">object&gt;,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Config.__init__&gt;,</span> <span class="pre">'from_file':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Config.from_file&gt;)&gt;,</span> <span class="pre">'from_lines':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Config.from_lines&gt;)&gt;,</span> <span class="pre">'from_parser':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Config.from_parser&gt;)&gt;,</span> <span class="pre">'dump':</span> <span class="pre">&lt;function</span> <span class="pre">Config.dump&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('_lines',</span> <span class="pre">'schemas',</span> <span class="pre">'tables'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Config'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Config'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#gensaschema.Config.__dict__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">46</span></em><a class="headerlink" href="#gensaschema.Config.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Config.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schemas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_config.html#Config.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Config.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tables</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – Table list</p></li>
+<li><p><strong>schemas</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – (Alien) Schema mapping</p></li>
+<li><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">iterable</span></code>) – Original config lines. If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the config lines
+are not available.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._config'</span></em><a class="headerlink" href="#gensaschema.Config.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('_lines',</span> <span class="pre">'schemas',</span> <span class="pre">'tables')</span></em><a class="headerlink" href="#gensaschema.Config.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Config.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#gensaschema.Config.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Config.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_config.html#Config.dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Config.dump" title="Link to this definition">¶</a></dt>
+<dd><p>Dump config to a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fp</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">file</span></code>) – Stream to dump to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Config.from_file">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_config.html#Config.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Config.from_file" title="Link to this definition">¶</a></dt>
+<dd><p>Construct from config file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name_or_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">file</span></code>) – Config filename or file pointer</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Config instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gensaschema.Config" title="gensaschema.Config">Config</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IOError</strong> – Error reading the file (except for ENOENT, which
+    treats the file as empty)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Config.from_lines">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_config.html#Config.from_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Config.from_lines" title="Link to this definition">¶</a></dt>
+<dd><p>Create from config lines</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">iterable</span></code>) – List of config lines</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Config instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gensaschema.Config" title="gensaschema.Config">Config</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Config.from_parser">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_config.html#Config.from_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Config.from_parser" title="Link to this definition">¶</a></dt>
+<dd><p>Construct from config parser</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser.RawConfigParser</span></code>) – Configparser instance</p></li>
+<li><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">iterable</span></code>) – Original config lines</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Config instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gensaschema.Config" title="gensaschema.Config">Config</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="gensaschema.Error">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="reference internal" href="../_modules/gensaschema/_exceptions.html#Error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Error" title="Link to this definition">¶</a></dt>
+<dd><p>Base exception for this package</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Error.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">34</span></em><a class="headerlink" href="#gensaschema.Error.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Error.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._exceptions'</span></em><a class="headerlink" href="#gensaschema.Error.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Error.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#gensaschema.Error.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Error.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#gensaschema.Error.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gensaschema.Schema">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">Schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schemas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dbname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_schema.html#Schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Schema" title="Link to this definition">¶</a></dt>
+<dd><p>Schema container</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema._dialect">
+<span class="sig-name descname"><span class="pre">_dialect</span></span><a class="headerlink" href="#gensaschema.Schema._dialect" title="Link to this definition">¶</a></dt>
+<dd><p>Dialect name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema._tables">
+<span class="sig-name descname"><span class="pre">_tables</span></span><a class="headerlink" href="#gensaschema.Schema._tables" title="Link to this definition">¶</a></dt>
+<dd><p>Table collection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TableCollection</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema._schemas">
+<span class="sig-name descname"><span class="pre">_schemas</span></span><a class="headerlink" href="#gensaschema.Schema._schemas" title="Link to this definition">¶</a></dt>
+<dd><p>Schema -&gt; module mapping</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema._symbols">
+<span class="sig-name descname"><span class="pre">_symbols</span></span><a class="headerlink" href="#gensaschema.Schema._symbols" title="Link to this definition">¶</a></dt>
+<dd><p>Symbol table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gensaschema.Symbols" title="gensaschema.Symbols"><code class="xref py py-class docutils literal notranslate"><span class="pre">gensaschema.Symbols</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema._dbname">
+<span class="sig-name descname"><span class="pre">_dbname</span></span><a class="headerlink" href="#gensaschema.Schema._dbname" title="Link to this definition">¶</a></dt>
+<dd><p>DB identifier</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema._MODULE_TPL">
+<span class="sig-name descname"><span class="pre">_MODULE_TPL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;gensaschema._template.Template</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#gensaschema.Schema._MODULE_TPL" title="Link to this definition">¶</a></dt>
+<dd><p>Template for the module</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'gensaschema._schema',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">36,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nSchema</span> <span class="pre">container\n\nAttributes:\n</span>&#160; <span class="pre">_dialect</span> <span class="pre">(str):\n</span>&#160;&#160;&#160; <span class="pre">Dialect</span> <span class="pre">name\n\n</span>&#160; <span class="pre">_tables</span> <span class="pre">(TableCollection):\n</span>&#160;&#160;&#160; <span class="pre">Table</span> <span class="pre">collection\n\n</span>&#160; <span class="pre">_schemas</span> <span class="pre">(dict):\n</span>&#160;&#160;&#160; <span class="pre">Schema</span> <span class="pre">-&gt;</span> <span class="pre">module</span> <span class="pre">mapping\n\n</span>&#160; <span class="pre">_symbols</span> <span class="pre">(Symbols):\n</span>&#160;&#160;&#160; <span class="pre">Symbol</span> <span class="pre">table\n\n</span>&#160; <span class="pre">_dbname</span> <span class="pre">(str</span> <span class="pre">or</span> <span class="pre">None):\n</span>&#160;&#160;&#160; <span class="pre">DB</span> <span class="pre">identifier\n',</span> <span class="pre">'_MODULE_TPL':</span> <span class="pre">&lt;gensaschema._template.Template</span> <span class="pre">object&gt;,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Schema.__init__&gt;,</span> <span class="pre">'dump':</span> <span class="pre">&lt;function</span> <span class="pre">Schema.dump&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('_dbname',</span> <span class="pre">'_dialect',</span> <span class="pre">'_schemas',</span> <span class="pre">'_symbols',</span> <span class="pre">'_tables'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Schema'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Schema'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#gensaschema.Schema.__dict__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">36</span></em><a class="headerlink" href="#gensaschema.Schema.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Schema.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schemas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dbname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_schema.html#Schema.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Schema.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conn</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code>) – SQLAlchemy connection or engine</p></li>
+<li><p><strong>tables</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – List of tables to reflect, (local name, table name) pairs</p></li>
+<li><p><strong>schemas</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – schema -&gt; module mapping</p></li>
+<li><p><strong>symbols</strong> (<a class="reference internal" href="#gensaschema.Symbols" title="gensaschema.Symbols"><code class="xref py py-class docutils literal notranslate"><span class="pre">gensaschema.Symbols</span></code></a>) – Symbol table</p></li>
+<li><p><strong>dbname</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Optional db identifier. Used for informational purposes. If
+omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the information just won’t be emitted.</p></li>
+<li><p><strong>types</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">callable</span></code>) – Extra type loader. If the type reflection fails, because
+SQLAlchemy cannot resolve it, the type loader will be called with
+the type name, (bound) metadata and the symbol table. It is
+responsible for modifying the symbols and imports <em>and</em> the
+dialect’s <code class="docutils literal notranslate"><span class="pre">ischema_names</span></code>. If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the reflector
+will always fail on unknown types.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._schema'</span></em><a class="headerlink" href="#gensaschema.Schema.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('_dbname',</span> <span class="pre">'_dialect',</span> <span class="pre">'_schemas',</span> <span class="pre">'_symbols',</span> <span class="pre">'_tables')</span></em><a class="headerlink" href="#gensaschema.Schema.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Schema.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#gensaschema.Schema.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Schema.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_schema.html#Schema.dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Schema.dump" title="Link to this definition">¶</a></dt>
+<dd><p>Dump schema module to fp</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fp</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">file</span></code>) – File to write to</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="gensaschema.SymbolException">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">SymbolException</span></span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#SymbolException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.SymbolException" title="Link to this definition">¶</a></dt>
+<dd><p>Symbol error</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.SymbolException.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#gensaschema.SymbolException.__annotations__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.SymbolException.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">39</span></em><a class="headerlink" href="#gensaschema.SymbolException.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.SymbolException.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._symbols'</span></em><a class="headerlink" href="#gensaschema.SymbolException.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.SymbolException.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#gensaschema.SymbolException.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gensaschema.Symbols">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">Symbols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols" title="Link to this definition">¶</a></dt>
+<dd><p>Symbol table</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols._symbols">
+<span class="sig-name descname"><span class="pre">_symbols</span></span><a class="headerlink" href="#gensaschema.Symbols._symbols" title="Link to this definition">¶</a></dt>
+<dd><p>Symbols</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.imports">
+<span class="sig-name descname"><span class="pre">imports</span></span><a class="headerlink" href="#gensaschema.Symbols.imports" title="Link to this definition">¶</a></dt>
+<dd><p>Import container</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_Imports</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.types">
+<span class="sig-name descname"><span class="pre">types</span></span><a class="headerlink" href="#gensaschema.Symbols.types" title="Link to this definition">¶</a></dt>
+<dd><p>Type container</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_Types</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols.__contains__" title="Link to this definition">¶</a></dt>
+<dd><p>Check symbol table entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Symbol identifier</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Does the symbol entry exist?</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__delitem__">
+<span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols.__delitem__" title="Link to this definition">¶</a></dt>
+<dd><p>Remove symbol entry if available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Symbol identifier</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'gensaschema._symbols',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">43,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nSymbol</span> <span class="pre">table\n\nAttributes:\n</span>&#160; <span class="pre">_symbols</span> <span class="pre">(dict):\n</span>&#160;&#160;&#160; <span class="pre">Symbols\n\n</span>&#160; <span class="pre">imports</span> <span class="pre">(_Imports):\n</span>&#160;&#160;&#160; <span class="pre">Import</span> <span class="pre">container\n\n</span>&#160; <span class="pre">types</span> <span class="pre">(_Types):\n</span>&#160;&#160;&#160; <span class="pre">Type</span> <span class="pre">container\n',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Symbols.__init__&gt;,</span> <span class="pre">'__delitem__':</span> <span class="pre">&lt;function</span> <span class="pre">Symbols.__delitem__&gt;,</span> <span class="pre">'__setitem__':</span> <span class="pre">&lt;function</span> <span class="pre">Symbols.__setitem__&gt;,</span> <span class="pre">'__getitem__':</span> <span class="pre">&lt;function</span> <span class="pre">Symbols.__getitem__&gt;,</span> <span class="pre">'__contains__':</span> <span class="pre">&lt;function</span> <span class="pre">Symbols.__contains__&gt;,</span> <span class="pre">'__iter__':</span> <span class="pre">&lt;function</span> <span class="pre">Symbols.__iter__&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('_symbols',</span> <span class="pre">'imports',</span> <span class="pre">'types'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Symbols'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Symbols'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#gensaschema.Symbols.__dict__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">43</span></em><a class="headerlink" href="#gensaschema.Symbols.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols.__getitem__" title="Link to this definition">¶</a></dt>
+<dd><p>Get symbol table entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Symbol identifier</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The symbol</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – Symbol not found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>) – Initial symbols</p></li>
+<li><p><strong>imports</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">iterable</span></code>) – List of initial (id, import statement) tuples. If omitted or
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, it’s empty.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols.__iter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols.__iter__" title="Link to this definition">¶</a></dt>
+<dd><p>Make item iterator (id, value)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The iterator</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>iterable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._symbols'</span></em><a class="headerlink" href="#gensaschema.Symbols.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_symbols.html#Symbols.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Symbols.__setitem__" title="Link to this definition">¶</a></dt>
+<dd><p>Set symbol table entry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Symbol identifier</p></li>
+<li><p><strong>symbol</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Symbol</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#gensaschema.SymbolException" title="gensaschema.SymbolException"><strong>SymbolException</strong></a> – Symbol could not be set because of some conflict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('_symbols',</span> <span class="pre">'imports',</span> <span class="pre">'types')</span></em><a class="headerlink" href="#gensaschema.Symbols.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Symbols.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#gensaschema.Symbols.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gensaschema.Type">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">Type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_type.html#Type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Type" title="Link to this definition">¶</a></dt>
+<dd><p>Type container</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type._ctype">
+<span class="sig-name descname"><span class="pre">_ctype</span></span><a class="headerlink" href="#gensaschema.Type._ctype" title="Link to this definition">¶</a></dt>
+<dd><p>Column type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SA</span> <span class="pre">type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type._dialect">
+<span class="sig-name descname"><span class="pre">_dialect</span></span><a class="headerlink" href="#gensaschema.Type._dialect" title="Link to this definition">¶</a></dt>
+<dd><p>Dialect name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type._symbols">
+<span class="sig-name descname"><span class="pre">_symbols</span></span><a class="headerlink" href="#gensaschema.Type._symbols" title="Link to this definition">¶</a></dt>
+<dd><p>Symbol table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gensaschema.Symbols" title="gensaschema.Symbols"><code class="xref py py-class docutils literal notranslate"><span class="pre">gensaschema.Symbols</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'gensaschema._type',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">38,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nType</span> <span class="pre">container\n\nAttributes:\n</span>&#160; <span class="pre">_ctype</span> <span class="pre">(SA</span> <span class="pre">type):\n</span>&#160;&#160;&#160; <span class="pre">Column</span> <span class="pre">type\n\n</span>&#160; <span class="pre">_dialect</span> <span class="pre">(str):\n</span>&#160;&#160;&#160; <span class="pre">Dialect</span> <span class="pre">name\n\n</span>&#160; <span class="pre">_symbols</span> <span class="pre">(Symbols):\n</span>&#160;&#160;&#160; <span class="pre">Symbol</span> <span class="pre">table\n',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Type.__init__&gt;,</span> <span class="pre">'by_column':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Type.by_column&gt;)&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Type.__repr__&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('_ctype',</span> <span class="pre">'_dialect',</span> <span class="pre">'_symbols'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Type'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Type'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#gensaschema.Type.__dict__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">38</span></em><a class="headerlink" href="#gensaschema.Type.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Type.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_type.html#Type.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Type.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctype</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">SA</span> <span class="pre">type</span></code>) – Column type</p></li>
+<li><p><strong>dialect_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Dialect name</p></li>
+<li><p><strong>symbols</strong> (<a class="reference internal" href="#gensaschema.Symbols" title="gensaschema.Symbols"><code class="xref py py-class docutils literal notranslate"><span class="pre">gensaschema.Symbols</span></code></a>) – Symbol table</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._type'</span></em><a class="headerlink" href="#gensaschema.Type.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Type.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_type.html#Type.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Type.__repr__" title="Link to this definition">¶</a></dt>
+<dd><p>Make string representation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The string representation</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('_ctype',</span> <span class="pre">'_dialect',</span> <span class="pre">'_symbols')</span></em><a class="headerlink" href="#gensaschema.Type.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Type.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#gensaschema.Type.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Type.by_column">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_type.html#Type.by_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Type.by_column" title="Link to this definition">¶</a></dt>
+<dd><p>Construct by SA column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>column</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">SA</span> <span class="pre">column</span></code>) – SA column</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Type instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#gensaschema.Type" title="gensaschema.Type">Type</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="gensaschema.Warning">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gensaschema.</span></span><span class="sig-name descname"><span class="pre">Warning</span></span><a class="reference internal" href="../_modules/gensaschema/_exceptions.html#Warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Warning" title="Link to this definition">¶</a></dt>
+<dd><p>Base warning for this package</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">_warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">record</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">_warnings</span><span class="o">.</span><span class="n">resetwarnings</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="ne">Warning</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;my message&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+<span class="go">&#39;my message&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="ne">Warning</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;lalala&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">Warning</span>: <span class="n">lalala</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Warning.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">38</span></em><a class="headerlink" href="#gensaschema.Warning.__firstlineno__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Warning.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gensaschema._exceptions'</span></em><a class="headerlink" href="#gensaschema.Warning.__module__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Warning.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#gensaschema.Warning.__static_attributes__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gensaschema.Warning.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#gensaschema.Warning.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gensaschema.Warning.emit">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stacklevel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gensaschema/_exceptions.html#Warning.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gensaschema.Warning.emit" title="Link to this definition">¶</a></dt>
+<dd><p>Emit a warning of this very category</p>
+<p>This method is pure convenience. It saves you the unfriendly
+<code class="docutils literal notranslate"><span class="pre">warnings.warn</span></code> syntax (and the <code class="docutils literal notranslate"><span class="pre">warnings</span></code> import).</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><cite>message</cite><span class="classifier">any</span></dt><dd><p>The warning message</p>
+</dd>
+<dt><cite>stacklevel</cite><span class="classifier"><code class="docutils literal notranslate"><span class="pre">int</span></code></span></dt><dd><p>Number of stackframes to go up in order to place the warning
+source. This is useful for generic warning-emitting helper
+functions. The stacklevel of <em>this</em> helper function is already
+taken into account.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="gensaschema._column.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">gensaschema._column module</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">gensaschema</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2010 - 2025 André Malo
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">gensaschema package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-gensaschema">Module contents</a><ul>
+<li><a class="reference internal" href="#gensaschema-static-sqlalchemy-schema-generator">GenSASchema - Static SQLAlchemy Schema Generator</a></li>
+<li><a class="reference internal" href="#gensaschema.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.Config.tables"><code class="docutils literal notranslate"><span class="pre">Config.tables</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.schemas"><code class="docutils literal notranslate"><span class="pre">Config.schemas</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config._lines"><code class="docutils literal notranslate"><span class="pre">Config._lines</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config._CONFIG_TPL"><code class="docutils literal notranslate"><span class="pre">Config._CONFIG_TPL</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.__dict__"><code class="docutils literal notranslate"><span class="pre">Config.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Config.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.__init__"><code class="docutils literal notranslate"><span class="pre">Config.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.__module__"><code class="docutils literal notranslate"><span class="pre">Config.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Config.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.__weakref__"><code class="docutils literal notranslate"><span class="pre">Config.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.dump"><code class="docutils literal notranslate"><span class="pre">Config.dump()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.from_file"><code class="docutils literal notranslate"><span class="pre">Config.from_file()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.from_lines"><code class="docutils literal notranslate"><span class="pre">Config.from_lines()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Config.from_parser"><code class="docutils literal notranslate"><span class="pre">Config.from_parser()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gensaschema.Error"><code class="docutils literal notranslate"><span class="pre">Error</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.Error.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Error.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Error.__module__"><code class="docutils literal notranslate"><span class="pre">Error.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Error.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Error.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Error.__weakref__"><code class="docutils literal notranslate"><span class="pre">Error.__weakref__</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gensaschema.Schema"><code class="docutils literal notranslate"><span class="pre">Schema</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.Schema._dialect"><code class="docutils literal notranslate"><span class="pre">Schema._dialect</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema._tables"><code class="docutils literal notranslate"><span class="pre">Schema._tables</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema._schemas"><code class="docutils literal notranslate"><span class="pre">Schema._schemas</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema._symbols"><code class="docutils literal notranslate"><span class="pre">Schema._symbols</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema._dbname"><code class="docutils literal notranslate"><span class="pre">Schema._dbname</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema._MODULE_TPL"><code class="docutils literal notranslate"><span class="pre">Schema._MODULE_TPL</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.__dict__"><code class="docutils literal notranslate"><span class="pre">Schema.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Schema.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.__init__"><code class="docutils literal notranslate"><span class="pre">Schema.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.__module__"><code class="docutils literal notranslate"><span class="pre">Schema.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Schema.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.__weakref__"><code class="docutils literal notranslate"><span class="pre">Schema.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Schema.dump"><code class="docutils literal notranslate"><span class="pre">Schema.dump()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gensaschema.SymbolException"><code class="docutils literal notranslate"><span class="pre">SymbolException</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.SymbolException.__annotations__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__annotations__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.SymbolException.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.SymbolException.__module__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.SymbolException.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">SymbolException.__static_attributes__</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gensaschema.Symbols"><code class="docutils literal notranslate"><span class="pre">Symbols</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.Symbols._symbols"><code class="docutils literal notranslate"><span class="pre">Symbols._symbols</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.imports"><code class="docutils literal notranslate"><span class="pre">Symbols.imports</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.types"><code class="docutils literal notranslate"><span class="pre">Symbols.types</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__contains__"><code class="docutils literal notranslate"><span class="pre">Symbols.__contains__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__delitem__"><code class="docutils literal notranslate"><span class="pre">Symbols.__delitem__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__dict__"><code class="docutils literal notranslate"><span class="pre">Symbols.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Symbols.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__getitem__"><code class="docutils literal notranslate"><span class="pre">Symbols.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__init__"><code class="docutils literal notranslate"><span class="pre">Symbols.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__iter__"><code class="docutils literal notranslate"><span class="pre">Symbols.__iter__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__module__"><code class="docutils literal notranslate"><span class="pre">Symbols.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__setitem__"><code class="docutils literal notranslate"><span class="pre">Symbols.__setitem__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Symbols.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Symbols.__weakref__"><code class="docutils literal notranslate"><span class="pre">Symbols.__weakref__</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gensaschema.Type"><code class="docutils literal notranslate"><span class="pre">Type</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.Type._ctype"><code class="docutils literal notranslate"><span class="pre">Type._ctype</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type._dialect"><code class="docutils literal notranslate"><span class="pre">Type._dialect</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type._symbols"><code class="docutils literal notranslate"><span class="pre">Type._symbols</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__dict__"><code class="docutils literal notranslate"><span class="pre">Type.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Type.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__init__"><code class="docutils literal notranslate"><span class="pre">Type.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__module__"><code class="docutils literal notranslate"><span class="pre">Type.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__repr__"><code class="docutils literal notranslate"><span class="pre">Type.__repr__()</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Type.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.__weakref__"><code class="docutils literal notranslate"><span class="pre">Type.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Type.by_column"><code class="docutils literal notranslate"><span class="pre">Type.by_column()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gensaschema.Warning"><code class="docutils literal notranslate"><span class="pre">Warning</span></code></a><ul>
+<li><a class="reference internal" href="#gensaschema.Warning.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Warning.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Warning.__module__"><code class="docutils literal notranslate"><span class="pre">Warning.__module__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Warning.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Warning.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Warning.__weakref__"><code class="docutils literal notranslate"><span class="pre">Warning.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#gensaschema.Warning.emit"><code class="docutils literal notranslate"><span class="pre">Warning.emit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=c6a86a76"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
