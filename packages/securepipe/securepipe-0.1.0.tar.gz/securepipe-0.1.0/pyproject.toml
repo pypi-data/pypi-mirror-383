@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "securepipe"
+version = "0.1.0"
+description = "A lightweight encryption library using HS256 with additional custom security layers. eg UUID and 2 layers of encryption"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "Joseph Wathome", email = "wathomejosephgathithi@gmail.com" }
+]
+dependencies = [
+  "cryptography>=41.0.0",
+  "PyJWT>=2.8.0"
+]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Security :: Cryptography"
+]
+
+# Optional dev dependencies
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "pluggy>=1.6.0",
+  "tomli>=2.3.0",
+  "iniconfig>=2.1.0",
+  "Pygments>=2.19.0"
+]
+
+# URLs for PyPI
+[project.urls]
+Homepage = "https://github.com/Josewathome/securepipe"
+Issues = "https://github.com/Josewathome/securepipe/issues"
+
+# Package discovery
+[tool.setuptools.packages.find]
+where = ["src"]
