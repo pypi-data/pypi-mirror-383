@@ -1,0 +1,5 @@
+import os
+
+ENV_WORKING_DIRECTORY = 'EMCP_WORKING_DIRECTORY'
+
+wd = os.getenv(ENV_WORKING_DIRECTORY) or os.getcwd()
