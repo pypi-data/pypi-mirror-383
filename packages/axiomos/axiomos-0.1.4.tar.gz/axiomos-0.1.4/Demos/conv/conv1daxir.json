@@ -1,0 +1,22 @@
+{
+  "version": "0.1",
+  "types": {
+    "buffers": {
+      "hA":{"dtype":"f32"}, "hK":{"dtype":"f32"}, "hOut":{"dtype":"f32"},
+      "dA":{"dtype":"f32"}, "dK":{"dtype":"f32"}, "dOut":{"dtype":"f32"}
+    }
+  },
+  "ops": [
+    {"op":"DeviceMalloc","dst":"&dA","bytes":"8*4"},
+    {"op":"DeviceMalloc","dst":"&dK","bytes":"3*4"},
+    {"op":"DeviceMalloc","dst":"&dOut","bytes":"6*4"},
+
+    {"op":"Memcpy","dst":"&dA","src":"&hA","bytes":"8*4","kind":"H2D"},
+    {"op":"Memcpy","dst":"&dK","src":"&hK","bytes":"3*4","kind":"H2D"},
+
+    {"op":"KernelLaunch","kernel":"conv1d",
+     "grid":["1","1","1"],"block":["1","1","1"], "args":["dA","dK","dOut"]},
+
+    {"op":"Memcpy","dst":"&hOut","src":"&dOut","bytes":"6*4","kind":"D2H"}
+  ]
+}
