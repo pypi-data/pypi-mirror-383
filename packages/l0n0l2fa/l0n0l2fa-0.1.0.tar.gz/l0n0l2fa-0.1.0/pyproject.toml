@@ -1,0 +1,9 @@
+[project]
+name = "l0n0l2fa"
+version = "0.1.0"
+description = "TOTP 2FA"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = ['aiohttp', 'pyotp', 'qrcode']
+[project.scripts]
+l0n0l2fa = "main:main"
