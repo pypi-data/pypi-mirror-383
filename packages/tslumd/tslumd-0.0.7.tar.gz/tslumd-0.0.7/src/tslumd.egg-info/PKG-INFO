@@ -1,0 +1,75 @@
+Metadata-Version: 2.4
+Name: tslumd
+Version: 0.0.7
+Summary: Client and Server for TSLUMD Tally Protocols
+Home-page: https://github.com/nocarryr/tslumd
+Author: Matthew Reid
+Author-email: matt@nomadic-recording.com
+License: MIT
+Platform: any
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Framework :: AsyncIO
+Classifier: Topic :: Multimedia :: Video
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: python-dispatch
+Requires-Dist: importlib_metadata; python_version < "3.8"
+Dynamic: license-file
+
+tslumd
+======
+
+.. image:: https://badge.fury.io/py/tslumd.svg
+    :target: https://badge.fury.io/py/tslumd
+.. image:: https://img.shields.io/github/workflow/status/nocarryr/tslumd/Python%20package
+    :alt: GitHub Workflow Status
+.. image:: https://img.shields.io/coveralls/github/nocarryr/tslumd
+    :alt: Coveralls
+
+Client and Server for TSLUMD Tally Protocols
+
+Description
+-----------
+
+This project is intended to serve only as a library for other applications
+wishing to send or receive tally information using the
+`UMDv5.0 Protocol`_ by `TSL Products`_.  It is written in pure Python and
+utilizes `asyncio <https://docs.python.org/3.8/library/asyncio.html>`_ for
+communication.
+
+Links
+-----
+
+.. list-table::
+
+    * - Project Home
+      - https://github.com/nocarryr/tslumd
+    * - Documentation
+      - https://tslumd.readthedocs.io
+    * - PyPI
+      - https://pypi.org/project/tslumd
+
+
+License
+-------
+
+Copyright (c) 2021 Matthew Reid <matt@nomadic-recording.com>
+
+tslumd is licensed under the MIT license, please see LICENSE file for details.
+
+
+.. _UMDv5.0 Protocol: https://tslproducts.com/media/1959/tsl-umd-protocol.pdf
+.. _TSL Products: https://tslproducts.com
