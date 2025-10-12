@@ -1,0 +1,37 @@
+[project]
+name = "who-installed"
+dynamic = ["version"]
+description = "Find out who installed your cli tools"
+readme = "README.md"
+authors = [
+    { name = "Tamir Bahar" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "attrs>=25.4.0",
+    "more-itertools>=10.8.0",
+    "rich>=14.2.0",
+    "typer>=0.19.2",
+]
+
+classifiers = [
+"Programming Language :: Python :: 3",
+"Operating System :: Microsoft :: Windows",
+]
+
+
+[project.scripts]
+who-installed = "who_installed.main:app"
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.0",
+    "ty>=0.0.1a22",
+]
