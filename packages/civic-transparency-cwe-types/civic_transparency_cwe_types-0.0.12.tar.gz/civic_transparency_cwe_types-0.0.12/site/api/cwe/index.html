@@ -1,0 +1,7877 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Immutable datatype library for Common Weakness Enumeration (CWE) analysis and validation workflows">
+      
+      
+        <meta name="author" content="Civic Interconnect">
+      
+      
+        <link rel="canonical" href="https://civic-interconnect.github.io/civic-transparency-py-cwe-types/api/cwe/">
+      
+      
+        <link rel="prev" href="../base/">
+      
+      
+        <link rel="next" href="../cwe_schema/">
+      
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>CWE - Civic Transparency CWE Types</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2a3383ac.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cwe-domain" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Civic Transparency CWE Types" class="md-header__button md-logo" aria-label="Civic Transparency CWE Types" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Civic Transparency CWE Types
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CWE
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/civic-interconnect/civic-transparency-py-cwe-types" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../base/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Types
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Civic Transparency CWE Types" class="md-nav__button md-logo" aria-label="Civic Transparency CWE Types" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Civic Transparency CWE Types
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/civic-interconnect/civic-transparency-py-cwe-types" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Types
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    CWE
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    CWE
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      CWE Results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results" class="md-nav__link">
+    <span class="md-ellipsis">
+      results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.__all__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __all__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweDataDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweDataDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipLike" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipLike
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ErrorSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ErrorSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      LoadingSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipDepthsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipDepthsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipMapDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipMapDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipStatisticsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipStatisticsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipType" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipType
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipTypesDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipTypesDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.SeverityCountsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      SeverityCountsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationDetailsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationDetailsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationResultsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationResultsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      CategoryCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CategoryCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection.category_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      category_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection.most_common_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      most_common_category
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="most_common_category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection.most_common_category--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweItemDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweItemDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweLoadingResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CweLoadingResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.cwe_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      cwe_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.loaded_cwe_ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      loaded_cwe_ids
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.get_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.get_cwes_by_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwes_by_category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.has_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.search_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      search_cwes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CweRelationshipResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.circular_dependency_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      circular_dependency_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.has_circular_dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_circular_dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.max_relationship_depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      max_relationship_depth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.find_relationship_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_relationship_path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_related_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_related_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationship_depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationship_depth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationship_statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationship_statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationships
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweValidationResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CweValidationResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.field_error_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      field_error_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.has_field_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_field_errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.validated_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      validated_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.validation_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      validation_rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.add_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.add_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.add_warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_error_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_error_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_failed_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_failed_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_most_common_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_most_common_errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_passed_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_passed_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_validation_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_validation_errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      DuplicateCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DuplicateCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection.duplicate_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      duplicate_count
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="duplicate_count">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection.duplicate_count--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection.has_duplicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_duplicates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      FileCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FileCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.failed_file_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      failed_file_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.processed_file_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      processed_file_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.skipped_file_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      skipped_file_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.total_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      LoadingCounts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LoadingCounts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts.success_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      success_rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts.total_attempted" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_attempted
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      MessageCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MessageCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.error_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      error_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.has_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.has_warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_warnings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.info_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      info_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.total_messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_messages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.warning_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      warning_count
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReferenceCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReferenceCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.has_invalid_references" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_invalid_references
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.has_orphaned_items" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_orphaned_items
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.invalid_reference_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid_reference_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.orphaned_item_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      orphaned_item_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.total_references_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_references_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_invalid_reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_invalid_reference
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_orphaned_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_orphaned_item
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationCounts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ValidationCounts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts.pass_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      pass_rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts.total_validated" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_validated
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_duplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_duplicate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_failed_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_failed_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_message" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_processed_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_processed_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_skipped_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_skipped_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._build_relationship_map" class="md-nav__link">
+    <span class="md-ellipsis">
+      _build_relationship_map
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._calculate_relationship_depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      _calculate_relationship_depth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._detect_circular_dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      _detect_circular_dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._find_shortest_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      _find_shortest_path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._increment_loading_counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      _increment_loading_counts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._increment_validation_counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      _increment_validation_counts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._is_valid_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      _is_valid_category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._is_valid_cwe_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      _is_valid_cwe_id
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._max_severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      _max_severity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._process_relationship_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      _process_relationship_item
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._raise_severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      _raise_severity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._severity_order" class="md-nav__link">
+    <span class="md-ellipsis">
+      _severity_order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._validate_optional_fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      _validate_optional_fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._validate_relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      _validate_relationships
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._validate_required_fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      _validate_required_fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.add_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.analyze_relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      analyze_relationships
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.batch_validate_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      batch_validate_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.get_cwe_loading_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwe_loading_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.get_cwe_validation_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwe_validation_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.get_relationship_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationship_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.track_invalid_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      track_invalid_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.track_skipped_cwe_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      track_skipped_cwe_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.validate_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      validate_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.validate_cwe_field" class="md-nav__link">
+    <span class="md-ellipsis">
+      validate_cwe_field
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.with_message_methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      with_message_methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      CWE Errors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors--output-field-validation-failed-item-cwe-79-field-relationships0id-rule-required_field-file-cwe-79yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output: "Field validation failed | Item: CWE-79 | Field: relationships[0].id | Rule: required_field | File: cwe-79.yaml"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.__all__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __all__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.BaseTransparencyError" class="md-nav__link">
+    <span class="md-ellipsis">
+      BaseTransparencyError
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseTransparencyError">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.BaseTransparencyError.get_context_parts" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_context_parts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweCircularRelationshipError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweCircularRelationshipError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweConfigurationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweConfigurationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweConstraintViolationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweConstraintViolationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweDuplicateError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweDuplicateError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweFieldValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweFieldValidationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweFileNotFoundError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweFileNotFoundError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweIntegrityError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweIntegrityError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweInvalidFormatError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweInvalidFormatError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweInvalidReferenceError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweInvalidReferenceError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweLoadingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweLoadingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweMissingFieldError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweMissingFieldError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweOrphanedError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweOrphanedError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweParsingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweParsingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweProcessingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweProcessingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweRelationshipError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweSchemaValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweSchemaValidationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweValidationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.FileError" class="md-nav__link">
+    <span class="md-ellipsis">
+      FileError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.LoadingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      LoadingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.OperationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      OperationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.ParsingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      ParsingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.ValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationError
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cwe_schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CWE Schema
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Schema
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schema_evolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Schema Evolution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../standards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Standards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      CWE Results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results" class="md-nav__link">
+    <span class="md-ellipsis">
+      results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.__all__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __all__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweDataDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweDataDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipLike" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipLike
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ErrorSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ErrorSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      LoadingSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipDepthsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipDepthsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipMapDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipMapDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipStatisticsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipStatisticsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipType" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipType
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.RelationshipTypesDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      RelationshipTypesDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.SeverityCountsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      SeverityCountsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationDetailsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationDetailsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationResultsDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationResultsDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationSummaryDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationSummaryDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      CategoryCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CategoryCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection.category_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      category_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection.most_common_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      most_common_category
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="most_common_category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CategoryCollection.most_common_category--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweItemDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweItemDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweLoadingResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CweLoadingResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.cwe_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      cwe_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.loaded_cwe_ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      loaded_cwe_ids
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.get_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.get_cwes_by_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwes_by_category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.has_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweLoadingResult.search_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      search_cwes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipDict" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipDict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CweRelationshipResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.circular_dependency_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      circular_dependency_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.has_circular_dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_circular_dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.max_relationship_depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      max_relationship_depth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.find_relationship_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_relationship_path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_related_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_related_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationship_depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationship_depth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationship_statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationship_statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationships
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweValidationResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CweValidationResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.field_error_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      field_error_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.has_field_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_field_errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.validated_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      validated_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.validation_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      validation_rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.add_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.add_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.add_warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_error_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_error_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_failed_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_failed_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_most_common_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_most_common_errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_passed_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_passed_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.CweValidationResult.get_validation_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_validation_errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      DuplicateCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DuplicateCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection.duplicate_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      duplicate_count
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="duplicate_count">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection.duplicate_count--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.DuplicateCollection.has_duplicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_duplicates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      FileCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FileCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.failed_file_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      failed_file_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.processed_file_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      processed_file_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.skipped_file_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      skipped_file_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.FileCollection.total_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      LoadingCounts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LoadingCounts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts.success_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      success_rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.LoadingCounts.total_attempted" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_attempted
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      MessageCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MessageCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.error_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      error_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.has_errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.has_warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_warnings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.info_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      info_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.total_messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_messages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.MessageCollection.warning_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      warning_count
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReferenceCollection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReferenceCollection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.has_invalid_references" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_invalid_references
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.has_orphaned_items" class="md-nav__link">
+    <span class="md-ellipsis">
+      has_orphaned_items
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.invalid_reference_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid_reference_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.orphaned_item_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      orphaned_item_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.total_references_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_references_count
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_invalid_reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_invalid_reference
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_orphaned_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_orphaned_item
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationCounts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ValidationCounts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts.is_successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      is_successful
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts.pass_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      pass_rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.ValidationCounts.total_validated" class="md-nav__link">
+    <span class="md-ellipsis">
+      total_validated
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_duplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_duplicate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_failed_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_failed_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_message" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_processed_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_processed_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._add_skipped_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      _add_skipped_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._build_relationship_map" class="md-nav__link">
+    <span class="md-ellipsis">
+      _build_relationship_map
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._calculate_relationship_depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      _calculate_relationship_depth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._detect_circular_dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      _detect_circular_dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._find_shortest_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      _find_shortest_path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._increment_loading_counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      _increment_loading_counts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._increment_validation_counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      _increment_validation_counts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._is_valid_category" class="md-nav__link">
+    <span class="md-ellipsis">
+      _is_valid_category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._is_valid_cwe_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      _is_valid_cwe_id
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._max_severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      _max_severity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._process_relationship_item" class="md-nav__link">
+    <span class="md-ellipsis">
+      _process_relationship_item
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._raise_severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      _raise_severity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._severity_order" class="md-nav__link">
+    <span class="md-ellipsis">
+      _severity_order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._validate_optional_fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      _validate_optional_fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._validate_relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      _validate_relationships
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results._validate_required_fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      _validate_required_fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.add_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.analyze_relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      analyze_relationships
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.batch_validate_cwes" class="md-nav__link">
+    <span class="md-ellipsis">
+      batch_validate_cwes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.get_cwe_loading_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwe_loading_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.get_cwe_validation_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_cwe_validation_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.get_relationship_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_relationship_summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.track_invalid_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      track_invalid_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.track_skipped_cwe_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      track_skipped_cwe_file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.validate_cwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      validate_cwe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.validate_cwe_field" class="md-nav__link">
+    <span class="md-ellipsis">
+      validate_cwe_field
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.results.with_message_methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      with_message_methods
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cwe-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      CWE Errors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors--output-field-validation-failed-item-cwe-79-field-relationships0id-rule-required_field-file-cwe-79yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output: "Field validation failed | Item: CWE-79 | Field: relationships[0].id | Rule: required_field | File: cwe-79.yaml"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.__all__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __all__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.BaseTransparencyError" class="md-nav__link">
+    <span class="md-ellipsis">
+      BaseTransparencyError
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseTransparencyError">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.BaseTransparencyError.get_context_parts" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_context_parts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweCircularRelationshipError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweCircularRelationshipError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweConfigurationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweConfigurationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweConstraintViolationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweConstraintViolationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweDuplicateError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweDuplicateError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweFieldValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweFieldValidationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweFileNotFoundError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweFileNotFoundError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweIntegrityError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweIntegrityError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweInvalidFormatError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweInvalidFormatError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweInvalidReferenceError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweInvalidReferenceError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweLoadingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweLoadingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweMissingFieldError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweMissingFieldError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweOrphanedError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweOrphanedError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweParsingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweParsingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweProcessingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweProcessingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweRelationshipError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweRelationshipError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweSchemaValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweSchemaValidationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.CweValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      CweValidationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.FileError" class="md-nav__link">
+    <span class="md-ellipsis">
+      FileError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.LoadingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      LoadingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.OperationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      OperationError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.ParsingError" class="md-nav__link">
+    <span class="md-ellipsis">
+      ParsingError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci.transparency.cwe.types.cwe.errors.ValidationError" class="md-nav__link">
+    <span class="md-ellipsis">
+      ValidationError
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cwe-domain">CWE Domain</h1>
+<p>Types and operations for CWE (Common Weakness Enumeration) analysis, validation, and relationship tracking.</p>
+<h2 id="cwe-results">CWE Results</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="ci.transparency.cwe.types.cwe.results" class="doc doc-heading">
+            <code>ci.transparency.cwe.types.cwe.results</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>CWE domain result types and operations using composition.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.__all__" class="doc doc-heading">
+            <code class=" language-python"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CweLoadingResult&#39;</span><span class="p">,</span> <span class="s1">&#39;CweValidationResult&#39;</span><span class="p">,</span> <span class="s1">&#39;CweRelationshipResult&#39;</span><span class="p">,</span> <span class="s1">&#39;CweRelationshipDict&#39;</span><span class="p">,</span> <span class="s1">&#39;CweRelationshipLike&#39;</span><span class="p">,</span> <span class="s1">&#39;CweDataDict&#39;</span><span class="p">,</span> <span class="s1">&#39;CweItemDict&#39;</span><span class="p">,</span> <span class="s1">&#39;ValidationResultsDict&#39;</span><span class="p">,</span> <span class="s1">&#39;ValidationDetailsDict&#39;</span><span class="p">,</span> <span class="s1">&#39;SeverityCountsDict&#39;</span><span class="p">,</span> <span class="s1">&#39;ErrorSummaryDict&#39;</span><span class="p">,</span> <span class="s1">&#39;LoadingSummaryDict&#39;</span><span class="p">,</span> <span class="s1">&#39;ValidationSummaryDict&#39;</span><span class="p">,</span> <span class="s1">&#39;RelationshipStatisticsDict&#39;</span><span class="p">,</span> <span class="s1">&#39;RelationshipSummaryDict&#39;</span><span class="p">,</span> <span class="s1">&#39;RelationshipType&#39;</span><span class="p">,</span> <span class="s1">&#39;add_cwe&#39;</span><span class="p">,</span> <span class="s1">&#39;track_invalid_file&#39;</span><span class="p">,</span> <span class="s1">&#39;track_skipped_cwe_file&#39;</span><span class="p">,</span> <span class="s1">&#39;validate_cwe&#39;</span><span class="p">,</span> <span class="s1">&#39;validate_cwe_field&#39;</span><span class="p">,</span> <span class="s1">&#39;batch_validate_cwes&#39;</span><span class="p">,</span> <span class="s1">&#39;analyze_relationships&#39;</span><span class="p">,</span> <span class="s1">&#39;get_cwe_loading_summary&#39;</span><span class="p">,</span> <span class="s1">&#39;get_cwe_validation_summary&#39;</span><span class="p">,</span> <span class="s1">&#39;get_relationship_summary&#39;</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweDataDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">CweDataDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CweItemDict</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweRelationshipLike" class="doc doc-heading">
+            <code class=" language-python"><span class="n">CweRelationshipLike</span> <span class="o">=</span> <span class="n">CweRelationshipDict</span> <span class="o">|</span> <span class="nb">str</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.ErrorSummaryDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">ErrorSummaryDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.LoadingSummaryDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">LoadingSummaryDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.RelationshipDepthsDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">RelationshipDepthsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.RelationshipMapDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">RelationshipMapDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.RelationshipStatisticsDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">RelationshipStatisticsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.RelationshipSummaryDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">RelationshipSummaryDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.RelationshipType" class="doc doc-heading">
+            <code class=" language-python"><span class="n">RelationshipType</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;related&#39;</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="s1">&#39;variant&#39;</span><span class="p">,</span> <span class="s1">&#39;requires&#39;</span><span class="p">,</span> <span class="s1">&#39;causes&#39;</span><span class="p">,</span> <span class="s1">&#39;consequence&#39;</span><span class="p">,</span> <span class="s1">&#39;unknown&#39;</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.RelationshipTypesDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">RelationshipTypesDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.SeverityCountsDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">SeverityCountsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.ValidationDetailsDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">ValidationDetailsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.ValidationResultsDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">ValidationResultsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-type_alias">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.ValidationSummaryDict" class="doc doc-heading">
+            <code class=" language-python"><span class="n">ValidationSummaryDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CategoryCollection" class="doc doc-heading">
+            <code>CategoryCollection</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Tracks statistics for categories.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.CategoryCollection--attributes">Attributes</h5>
+<p>category_stats : dict[str, int]
+    Dictionary mapping category names to their counts.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CategoryCollection.category_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">category_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of categories tracked in the collection.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CategoryCollection.most_common_category" class="doc doc-heading">
+            <code class=" language-python"><span class="n">most_common_category</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the most common category based on the highest count.</p>
+<h6 id="ci.transparency.cwe.types.cwe.results.CategoryCollection.most_common_category--returns">Returns</h6>
+<p>str or None
+    The category with the highest count, or None if there are no categories.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweItemDict" class="doc doc-heading">
+            <code>CweItemDict</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="typing.TypedDict">TypedDict</span></code></p>
+
+
+        <p>Minimal shape of a single CWE record (extend as needed).</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult" class="doc doc-heading">
+            <code>CweLoadingResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Represents the result of loading CWE data using composition.</p>
+<p>Composes base building blocks for clean separation of concerns.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult--attributes">Attributes</h5>
+<p>cwes : CweDataDict
+    Dictionary of loaded CWE data.
+loading : LoadingCounts
+    Statistics about loading success and failures.
+messages : MessageCollection
+    Collection of error, warning, and info messages.
+files : FileCollection
+    Tracking of processed, failed, and skipped files.
+categories : CategoryCollection
+    Statistics for categories encountered.
+duplicates : DuplicateCollection
+    Tracking of duplicate IDs and their associated files.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.cwe_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">cwe_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of CWEs loaded.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.is_successful" class="doc doc-heading">
+            <code class=" language-python"><span class="n">is_successful</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if loading is successful and there are no error messages.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.loaded_cwe_ids" class="doc doc-heading">
+            <code class=" language-python"><span class="n">loaded_cwe_ids</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>All loaded CWE IDs (sorted for stable output).</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_error" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add error message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_info" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add info message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.add_warning" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add warning message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.get_cwe" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_cwe</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get CWE data by ID.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.get_cwes_by_category" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_cwes_by_category</span><span class="p">(</span><span class="n">category</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get CWEs filtered by category.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.has_cwe" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_cwe</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Check if a CWE ID was loaded.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweLoadingResult.search_cwes" class="doc doc-heading">
+            <code class=" language-python"><span class="n">search_cwes</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Search CWEs by name or description.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweRelationshipDict" class="doc doc-heading">
+            <code>CweRelationshipDict</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="typing.TypedDict">TypedDict</span></code></p>
+
+
+        <p>Typed structure for CWE relationship data.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult" class="doc doc-heading">
+            <code>CweRelationshipResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Result from CWE relationship validation and analysis using composition.</p>
+<p>Tracks CWE relationship consistency, circular dependency detection,
+and relationship graph analysis.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult--attributes">Attributes</h5>
+<p>validation : ValidationCounts
+    Statistics about relationship validation.
+messages : MessageCollection
+    Collection of error, warning, and info messages.
+references : ReferenceCollection
+    Tracking of references between CWEs.
+relationship_depths : RelationshipDepthsDict
+    Depth of each CWE in the relationship graph.
+relationship_types : RelationshipTypesDict
+    Count of relationship types.
+circular_dependencies : list[str]
+    CWEs involved in circular dependencies.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.circular_dependency_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">circular_dependency_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Number of circular dependencies detected.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.has_circular_dependencies" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_circular_dependencies</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>True if circular dependencies were detected.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.is_successful" class="doc doc-heading">
+            <code class=" language-python"><span class="n">is_successful</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if relationship analysis is successful.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.max_relationship_depth" class="doc doc-heading">
+            <code class=" language-python"><span class="n">max_relationship_depth</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Maximum relationship depth in the graph.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_error" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add error message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_info" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add info message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.add_warning" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add warning message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.find_relationship_path" class="doc doc-heading">
+            <code class=" language-python"><span class="n">find_relationship_path</span><span class="p">(</span><span class="n">from_cwe</span><span class="p">,</span> <span class="n">to_cwe</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Find shortest path between two CWEs.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_related_cwes" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_related_cwes</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get all CWEs related to a given CWE up to max_depth.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationship_depth" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_relationship_depth</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get relationship depth for a specific CWE.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationship_statistics" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_relationship_statistics</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get comprehensive relationship statistics.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweRelationshipResult.get_relationships" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_relationships</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get all relationships for a specific CWE.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.CweValidationResult" class="doc doc-heading">
+            <code>CweValidationResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Represents the result of validating CWE data using composition.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.CweValidationResult--attributes">Attributes</h5>
+<p>validation_results : ValidationResultsDict
+    Dictionary of validation results for each CWE item.
+validation : ValidationCounts
+    Statistics about validation success and failures.
+messages : MessageCollection
+    Collection of error, warning, and info messages.
+field_errors : list[str]
+    Field-level validation errors.
+validation_details : ValidationDetailsDict
+    Detailed validation errors per CWE.
+severity_counts : SeverityCountsDict
+    Count of issues by severity level.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.field_error_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">field_error_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Number of field-level validation errors.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.has_field_errors" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_field_errors</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>True if any field-level validation errors occurred.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.is_successful" class="doc doc-heading">
+            <code class=" language-python"><span class="n">is_successful</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if validation is successful and there are no error messages.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.validated_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">validated_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of items that have been validated.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.validation_rate" class="doc doc-heading">
+            <code class=" language-python"><span class="n">validation_rate</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validation success rate (0.0 to 1.0).</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.add_error" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add error message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.add_info" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add info message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.add_warning" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add warning message (added by decorator).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.get_error_summary" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_error_summary</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get comprehensive error summary.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.get_failed_cwes" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_failed_cwes</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get list of CWE IDs that failed validation.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.get_most_common_errors" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_most_common_errors</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get most common validation errors.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.get_passed_cwes" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_passed_cwes</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get list of CWE IDs that passed validation.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.CweValidationResult.get_validation_errors" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_validation_errors</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get validation errors for a specific CWE.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.DuplicateCollection" class="doc doc-heading">
+            <code>DuplicateCollection</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Tracks duplicate IDs and their associated file paths.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.DuplicateCollection--attributes">Attributes</h5>
+<p>duplicate_ids : dict[str, list[Path]]
+    Dictionary mapping duplicate IDs to lists of file paths where duplicates were found.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.DuplicateCollection.duplicate_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">duplicate_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of duplicate IDs tracked in the collection.</p>
+<h6 id="ci.transparency.cwe.types.cwe.results.DuplicateCollection.duplicate_count--returns">Returns</h6>
+<p>int
+    The number of duplicate IDs.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.DuplicateCollection.has_duplicates" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_duplicates</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if there are any duplicate IDs, otherwise False.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.FileCollection" class="doc doc-heading">
+            <code>FileCollection</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Tracks processed, failed, and skipped files.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.FileCollection--attributes">Attributes</h5>
+<p>processed_files : list[Path]
+    list of files that have been processed.
+failed_files : list[Path]
+    list of files that failed to process.
+skipped_files : list[Path]
+    list of files that were skipped.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.FileCollection.failed_file_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">failed_file_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of failed files.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.FileCollection.processed_file_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">processed_file_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of processed files.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.FileCollection.skipped_file_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">skipped_file_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of skipped files.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.FileCollection.total_files" class="doc doc-heading">
+            <code class=" language-python"><span class="n">total_files</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the total number of files (processed, failed, skipped).</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.LoadingCounts" class="doc doc-heading">
+            <code>LoadingCounts</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Tracks the number of successfully loaded and failed items.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.LoadingCounts--attributes">Attributes</h5>
+<p>loaded_count : int
+    Number of items successfully loaded.
+failed_count : int
+    Number of items that failed to load.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.LoadingCounts.is_successful" class="doc doc-heading">
+            <code class=" language-python"><span class="n">is_successful</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if there are no failed validations, otherwise False.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.LoadingCounts.success_rate" class="doc doc-heading">
+            <code class=" language-python"><span class="n">success_rate</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the rate of successful loads as a float between 0 and 1.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.LoadingCounts.total_attempted" class="doc doc-heading">
+            <code class=" language-python"><span class="n">total_attempted</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the total number of attempted loads (successful + failed).</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.MessageCollection" class="doc doc-heading">
+            <code>MessageCollection</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Collects error, warning, and info messages.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.MessageCollection--attributes">Attributes</h5>
+<p>errors : list[str]
+    list of error messages.
+warnings : list[str]
+    list of warning messages.
+infos : list[str]
+    list of informational messages.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.MessageCollection.error_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">error_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of error messages.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.MessageCollection.has_errors" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_errors</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if there are any error messages, otherwise False.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.MessageCollection.has_warnings" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_warnings</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if there are any warning messages, otherwise False.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.MessageCollection.info_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">info_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of informational messages.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.MessageCollection.total_messages" class="doc doc-heading">
+            <code class=" language-python"><span class="n">total_messages</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the total number of messages (errors, warnings, infos).</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.MessageCollection.warning_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">warning_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the number of warning messages.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection" class="doc doc-heading">
+            <code>ReferenceCollection</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Tracks references between items and their validity.</p>
+<p>Could be reused for any domain that has inter-item references.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.has_invalid_references" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_invalid_references</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>True if there are invalid references.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.has_orphaned_items" class="doc doc-heading">
+            <code class=" language-python"><span class="n">has_orphaned_items</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>True if there are orphaned items.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.invalid_reference_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">invalid_reference_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Number of invalid references.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.orphaned_item_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">orphaned_item_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Number of items with no references.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.total_references_count" class="doc doc-heading">
+            <code class=" language-python"><span class="n">total_references_count</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Total number of references tracked.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_invalid_reference" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_invalid_reference</span><span class="p">(</span><span class="n">reference_desc</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add an invalid reference.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_orphaned_item" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_orphaned_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add an orphaned item.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ReferenceCollection.add_reference" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_reference</span><span class="p">(</span><span class="n">from_item</span><span class="p">,</span> <span class="n">to_item</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a reference between items.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.ValidationCounts" class="doc doc-heading">
+            <code>ValidationCounts</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Tracks the number of passed and failed validations.</p>
+<h5 id="ci.transparency.cwe.types.cwe.results.ValidationCounts--attributes">Attributes</h5>
+<p>passed_count : int
+    Number of items that passed validation.
+failed_count : int
+    Number of items that failed validation.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ValidationCounts.is_successful" class="doc doc-heading">
+            <code class=" language-python"><span class="n">is_successful</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return True if there are no failed validations, otherwise False.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ValidationCounts.pass_rate" class="doc doc-heading">
+            <code class=" language-python"><span class="n">pass_rate</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the rate of passed validations as a float between 0 and 1.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="ci.transparency.cwe.types.cwe.results.ValidationCounts.total_validated" class="doc doc-heading">
+            <code class=" language-python"><span class="n">total_validated</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the total number of validated items (passed + failed).</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._add_category" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_add_category</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add or increment a category count.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._add_duplicate" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_add_duplicate</span><span class="p">(</span><span class="n">duplicates</span><span class="p">,</span> <span class="n">item_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a duplicate ID with its file path.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._add_failed_file" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_add_failed_file</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a failed file.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._add_message" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_add_message</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a message to the message collection.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._add_processed_file" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_add_processed_file</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a processed file.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._add_skipped_file" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_add_skipped_file</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a skipped file.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._build_relationship_map" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_build_relationship_map</span><span class="p">(</span><span class="n">cwe_dict</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Build relationship map and identify invalid references and orphaned items.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._calculate_relationship_depth" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_calculate_relationship_depth</span><span class="p">(</span><span class="n">relationship_map</span><span class="p">,</span> <span class="n">cwe_id</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate relationship depth recursively with cycle detection.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._detect_circular_dependencies" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_detect_circular_dependencies</span><span class="p">(</span><span class="n">relationship_map</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Detect circular dependencies in relationship map using DFS.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._find_shortest_path" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_find_shortest_path</span><span class="p">(</span><span class="n">relationship_map</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Find shortest path between two CWEs using BFS.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._increment_loading_counts" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_increment_loading_counts</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">succeeded</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">failed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Increment loading counts.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._increment_validation_counts" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_increment_validation_counts</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">passed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">failed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Increment validation counts.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._is_valid_category" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_is_valid_category</span><span class="p">(</span><span class="n">category</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate CWE category.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._is_valid_cwe_id" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_is_valid_cwe_id</span><span class="p">(</span><span class="n">cwe_id</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate CWE ID format.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._max_severity" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_max_severity</span><span class="p">(</span><span class="o">*</span><span class="n">labels</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the highest-severity label among the provided ones.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._process_relationship_item" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_process_relationship_item</span><span class="p">(</span><span class="n">relationship</span><span class="p">,</span> <span class="n">_relationship_types</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._raise_severity" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_raise_severity</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the higher-severity label according to _severity_order().</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._severity_order" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_severity_order</span><span class="p">(</span><span class="n">severity</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get severity order for comparison.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._validate_optional_fields" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_validate_optional_fields</span><span class="p">(</span><span class="n">cwe_data</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate optional-but-constrained fields: category.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._validate_relationships" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_validate_relationships</span><span class="p">(</span><span class="n">cwe_data</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate relationships: presence of cwe_id and its format.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results._validate_required_fields" class="doc doc-heading">
+            <code class=" language-python"><span class="n">_validate_required_fields</span><span class="p">(</span><span class="n">cwe_data</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate required CWE fields: id, name, description (recommended).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.add_cwe" class="doc doc-heading">
+            <code class=" language-python"><span class="n">add_cwe</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cwe_id</span><span class="p">,</span> <span class="n">cwe_data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add successfully loaded CWE to the result.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.analyze_relationships" class="doc doc-heading">
+            <code class=" language-python"><span class="n">analyze_relationships</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cwe_dict</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Analyze CWE relationships for consistency and detect issues.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.batch_validate_cwes" class="doc doc-heading">
+            <code class=" language-python"><span class="n">batch_validate_cwes</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cwe_dict</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate multiple CWEs in batch.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.get_cwe_loading_summary" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_cwe_loading_summary</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate CWE loading summary.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.get_cwe_validation_summary" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_cwe_validation_summary</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate CWE validation summary.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.get_relationship_summary" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_relationship_summary</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate CWE relationship summary.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.track_invalid_file" class="doc doc-heading">
+            <code class=" language-python"><span class="n">track_invalid_file</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Track an invalid CWE file.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.track_skipped_cwe_file" class="doc doc-heading">
+            <code class=" language-python"><span class="n">track_skipped_cwe_file</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Track a skipped CWE file.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.validate_cwe" class="doc doc-heading">
+            <code class=" language-python"><span class="n">validate_cwe</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cwe_id</span><span class="p">,</span> <span class="n">cwe_data</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate a CWE definition with comprehensive field validation.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.validate_cwe_field" class="doc doc-heading">
+            <code class=" language-python"><span class="n">validate_cwe_field</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cwe_id</span><span class="p">,</span> <span class="n">field_path</span><span class="p">,</span> <span class="n">field_value</span><span class="p">,</span> <span class="n">validation_rule</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validate a specific CWE field.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ci.transparency.cwe.types.cwe.results.with_message_methods" class="doc doc-heading">
+            <code class=" language-python"><span class="n">with_message_methods</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add message methods to result classes.</p>
+<p>Decorator that adds add_error(), add_warning(), and add_info() methods
+to any result class with a MessageCollection field.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><p>options:
+show<em>source: false
+show_signature: true
+group_by_category: true
+filters: - "!^</em>"</p>
+<h2 id="cwe-errors">CWE Errors</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="ci.transparency.cwe.types.cwe.errors" class="doc doc-heading">
+            <code>ci.transparency.cwe.types.cwe.errors</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>CWE domain error types using enhanced base classes.</p>
+<p>Domain-specific error hierarchy for CWE operations. Each error inherits from
+exactly one enhanced base error class and leverages the flexible context system
+for CWE-specific information.</p>
+
+
+<details class="design-principles" open>
+  <summary>Design principles</summary>
+  <ul>
+<li>Single inheritance: each error extends exactly one base error class</li>
+<li>Context-rich: uses the flexible context system for CWE details</li>
+<li>Consistent: maintains uniform error formatting across all errors</li>
+<li>Minimal: leverages base class functionality rather than duplicating code</li>
+</ul>
+</details>
+
+<details class="usage-patterns" open>
+  <summary>Usage patterns</summary>
+  <ul>
+<li>File operations → FileError, LoadingError, ParsingError</li>
+<li>Validation operations → ValidationError</li>
+<li>Processing operations → OperationError</li>
+<li>General operations → BaseTransparencyError</li>
+</ul>
+</details>
+
+<details class="typical-usage" open>
+  <summary>Typical usage</summary>
+  <p>from ci.transparency.cwe.types.cwe import CweValidationError</p>
+<p>raise CweValidationError(
+    "Field validation failed",
+    item_id="CWE-79",
+    field_path="relationships[0].id",
+    validation_rule="required_field",
+    file_path="cwe-79.yaml"
+)</p>
+<h3 id="ci.transparency.cwe.types.cwe.errors--output-field-validation-failed-item-cwe-79-field-relationships0id-rule-required_field-file-cwe-79yaml">Output: "Field validation failed | Item: CWE-79 | Field: relationships[0].id | Rule: required_field | File: cwe-79.yaml"</h3>
+</details>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.__all__" class="doc doc-heading">
+            <code class=" language-python"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CweCircularRelationshipError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweConfigurationError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweConstraintViolationError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweDuplicateError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweFieldValidationError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweFileNotFoundError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweIntegrityError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweInvalidFormatError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweInvalidReferenceError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweLoadingError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweMissingFieldError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweOrphanedError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweParsingError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweProcessingError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweRelationshipError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweSchemaValidationError&#39;</span><span class="p">,</span> <span class="s1">&#39;CweValidationError&#39;</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.BaseTransparencyError" class="doc doc-heading">
+            <code>BaseTransparencyError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="Exception">Exception</span></code></p>
+
+
+        <p>Enhanced base exception for all transparency operations.</p>
+<p>Provides flexible context tracking for common error patterns without
+requiring all errors to specify every possible context field.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ci.transparency.cwe.types.cwe.errors.BaseTransparencyError.get_context_parts" class="doc doc-heading">
+            <code class=" language-python"><span class="n">get_context_parts</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get contextual information parts for error formatting.</p>
+<p>Returns context in order of importance:
+1. Operation identification (phase, operation, stage)
+2. Progress information (processed/total counts)
+3. Resource information (timeouts, limits)
+4. File/item context
+5. Validation context
+6. Error flow context (abort reason, error code)</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="list">list</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of context strings (e.g., ["Phase: validation", "Progress: 150/500"])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweCircularRelationshipError" class="doc doc-heading">
+            <code>CweCircularRelationshipError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>Circular CWE relationship detected.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweConfigurationError" class="doc doc-heading">
+            <code>CweConfigurationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="BaseTransparencyError (ci.transparency.cwe.types.base.errors.BaseTransparencyError)" href="../base/#ci.transparency.cwe.types.base.errors.BaseTransparencyError">BaseTransparencyError</a></code></p>
+
+
+        <p>CWE configuration error.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweConstraintViolationError" class="doc doc-heading">
+            <code>CweConstraintViolationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE constraint validation failed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweDuplicateError" class="doc doc-heading">
+            <code>CweDuplicateError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="LoadingError (ci.transparency.cwe.types.base.errors.LoadingError)" href="../base/#ci.transparency.cwe.types.base.errors.LoadingError">LoadingError</a></code></p>
+
+
+        <p>Duplicate CWE ID detected during loading.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweFieldValidationError" class="doc doc-heading">
+            <code>CweFieldValidationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE field-level validation failed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweFileNotFoundError" class="doc doc-heading">
+            <code>CweFileNotFoundError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="LoadingError (ci.transparency.cwe.types.base.errors.LoadingError)" href="../base/#ci.transparency.cwe.types.base.errors.LoadingError">LoadingError</a></code></p>
+
+
+        <p>CWE definition file could not be found.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweIntegrityError" class="doc doc-heading">
+            <code>CweIntegrityError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE data integrity violation.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweInvalidFormatError" class="doc doc-heading">
+            <code>CweInvalidFormatError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="FileError (ci.transparency.cwe.types.base.errors.FileError)" href="../base/#ci.transparency.cwe.types.base.errors.FileError">FileError</a></code></p>
+
+
+        <p>CWE definition format is invalid or unsupported.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweInvalidReferenceError" class="doc doc-heading">
+            <code>CweInvalidReferenceError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE relationship references unknown CWE ID.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweLoadingError" class="doc doc-heading">
+            <code>CweLoadingError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="LoadingError (ci.transparency.cwe.types.base.errors.LoadingError)" href="../base/#ci.transparency.cwe.types.base.errors.LoadingError">LoadingError</a></code></p>
+
+
+        <p>Base CWE loading error.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweMissingFieldError" class="doc doc-heading">
+            <code>CweMissingFieldError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="LoadingError (ci.transparency.cwe.types.base.errors.LoadingError)" href="../base/#ci.transparency.cwe.types.base.errors.LoadingError">LoadingError</a></code></p>
+
+
+        <p>Required CWE field is missing from definition.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweOrphanedError" class="doc doc-heading">
+            <code>CweOrphanedError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE has no valid relationships.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweParsingError" class="doc doc-heading">
+            <code>CweParsingError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ParsingError (ci.transparency.cwe.types.base.errors.ParsingError)" href="../base/#ci.transparency.cwe.types.base.errors.ParsingError">ParsingError</a></code></p>
+
+
+        <p>CWE definition file could not be parsed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweProcessingError" class="doc doc-heading">
+            <code>CweProcessingError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="OperationError (ci.transparency.cwe.types.base.errors.OperationError)" href="../base/#ci.transparency.cwe.types.base.errors.OperationError">OperationError</a></code></p>
+
+
+        <p>CWE processing operation failed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweRelationshipError" class="doc doc-heading">
+            <code>CweRelationshipError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE relationship validation failed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweSchemaValidationError" class="doc doc-heading">
+            <code>CweSchemaValidationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>CWE schema validation failed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.CweValidationError" class="doc doc-heading">
+            <code>CweValidationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="ValidationError (ci.transparency.cwe.types.base.errors.ValidationError)" href="../base/#ci.transparency.cwe.types.base.errors.ValidationError">ValidationError</a></code></p>
+
+
+        <p>Base CWE validation error.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.FileError" class="doc doc-heading">
+            <code>FileError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="BaseTransparencyError (ci.transparency.cwe.types.base.errors.BaseTransparencyError)" href="../base/#ci.transparency.cwe.types.base.errors.BaseTransparencyError">BaseTransparencyError</a></code></p>
+
+
+        <p>Base exception for file-based operations.</p>
+<p>Convenient base for file loading, parsing, and other
+file-related errors.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.LoadingError" class="doc doc-heading">
+            <code>LoadingError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="FileError (ci.transparency.cwe.types.base.errors.FileError)" href="../base/#ci.transparency.cwe.types.base.errors.FileError">FileError</a></code></p>
+
+
+        <p>File could not be loaded.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.OperationError" class="doc doc-heading">
+            <code>OperationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="BaseTransparencyError (ci.transparency.cwe.types.base.errors.BaseTransparencyError)" href="../base/#ci.transparency.cwe.types.base.errors.BaseTransparencyError">BaseTransparencyError</a></code></p>
+
+
+        <p>Base exception for operations with progress tracking.</p>
+<p>Convenient base for batch processing, phase validation, and other
+operations that process multiple items with progress tracking.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.ParsingError" class="doc doc-heading">
+            <code>ParsingError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="FileError (ci.transparency.cwe.types.base.errors.FileError)" href="../base/#ci.transparency.cwe.types.base.errors.FileError">FileError</a></code></p>
+
+
+        <p>File could not be parsed.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ci.transparency.cwe.types.cwe.errors.ValidationError" class="doc doc-heading">
+            <code>ValidationError</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="BaseTransparencyError (ci.transparency.cwe.types.base.errors.BaseTransparencyError)" href="../base/#ci.transparency.cwe.types.base.errors.BaseTransparencyError">BaseTransparencyError</a></code></p>
+
+
+        <p>Base exception for validation operations.</p>
+<p>Convenient base for schema validation, rule checking, and other
+validation-related errors.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div><p>options:
+show<em>source: false
+show_signature: true
+group_by_category: true
+filters: - "!^</em>"</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 29, 2025 03:09:22 UTC">2025-09-29</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.footer", "navigation.tabs", "navigation.top", "navigation.expand", "navigation.sections", "navigation.indexes", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
