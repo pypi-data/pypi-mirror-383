@@ -1,0 +1,29 @@
+platformdirs>=2.6.0
+PySide6_Essentials>=6.7.0
+ijson>=3.2.0
+Pint>=0.22
+delegateto==1.5
+PyHamcrest>=2
+truststore
+
+[:python_version >= "3.12"]
+ijson>=3.2.1
+
+[dev]
+pytest>=6.0
+pytest-cov
+pytest-timeout
+pytest-qt>=4.5
+tox>=4.0
+
+[dev:platform_system == "Windows"]
+pillow
+
+[package]
+build
+
+[package:platform_python_implementation == "CPython"]
+cx_Freeze>=7.2
+
+[package:platform_system == "Windows"]
+pillow
