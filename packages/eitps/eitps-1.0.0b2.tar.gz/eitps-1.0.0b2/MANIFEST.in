@@ -1,0 +1,37 @@
+include README.md
+include LICENSE.txt
+include requirements.txt
+include powerscript.toml
+include pyproject.toml
+
+# Documentation
+recursive-include powerscript/docs *
+recursive-include docs *
+
+# Examples
+recursive-include powerscript/examples *.ps
+recursive-include powerscript/examples *.py
+recursive-include powerscript/examples *.md
+
+# VS Code Extension
+recursive-include powerscript/vscode-extension *
+recursive-include vscode-extension *
+
+# CLI binaries
+recursive-include bin *
+
+# Configuration files
+include *.toml
+include *.cfg
+include *.ini
+
+# Exclude build artifacts
+prune build/
+prune test_build/
+prune ps_tests/
+prune powerscript.egg-info/
+prune __pycache__/
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude .DS_Store

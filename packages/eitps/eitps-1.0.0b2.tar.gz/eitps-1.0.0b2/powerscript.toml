@@ -1,0 +1,30 @@
+[project]
+name = "eitps"
+version = "1.0.0"
+main = "src/main.ps"
+description = "Typed PowerScript (TPS) - A fully structured development language that transpiles to Python"
+author = "Saleem Ahmad (Elite India)"
+
+[compiler]
+output_dir = "build"
+strict_typing = true
+runtime_checks = true
+target_python_version = "3.8"
+generate_stubs = true
+
+[runtime]
+async_enabled = true
+access_modifiers = true
+type_validation = "strict"
+
+[lsp]
+enabled = true
+port = 8080
+diagnostics = true
+auto_complete = true
+
+[vscode]
+syntax_highlighting = true
+snippets = true
+intellisense = true
+debugging = true

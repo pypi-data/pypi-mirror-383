@@ -1,0 +1,134 @@
+{
+  "_license": "MIT License - Copyright (c) 2025 Saleem Ahmad (Elite India Org Team) <team@eliteindia.org>",
+  "PowerScript Class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "    constructor(${2:parameters}) {",
+      "        ${3:// Constructor body}",
+      "    }",
+      "",
+      "    ${4:methodName}(${5:parameters}): ${6:returnType} {",
+      "        ${7:// Method body}",
+      "        return ${8:value};",
+      "    }",
+      "}"
+    ],
+    "description": "Create a PowerScript class"
+  },
+  "PowerScript Function": {
+    "prefix": "function",
+    "body": [
+      "function ${1:functionName}(${2:parameters}): ${3:returnType} {",
+      "    ${4:// Function body}",
+      "    return ${5:value};",
+      "}"
+    ],
+    "description": "Create a PowerScript function"
+  },
+  "PowerScript Async Function": {
+    "prefix": "async",
+    "body": [
+      "async function ${1:functionName}(${2:parameters}): Promise<${3:returnType}> {",
+      "    ${4:// Async function body}",
+      "    return ${5:value};",
+      "}"
+    ],
+    "description": "Create a PowerScript async function"
+  },
+  "PowerScript Arrow Function": {
+    "prefix": "arrow",
+    "body": [
+      "const ${1:functionName} = (${2:parameters}): ${3:returnType} => {",
+      "    ${4:// Arrow function body}",
+      "    return ${5:value};",
+      "};"
+    ],
+    "description": "Create a PowerScript arrow function"
+  },
+  "PowerScript Constructor": {
+    "prefix": "constructor",
+    "body": [
+      "constructor(${1:parameters}) {",
+      "    ${2:// Constructor body}",
+      "}"
+    ],
+    "description": "Create a PowerScript constructor"
+  },
+  "PowerScript For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:i} = 0; ${1:i} < ${2:length}; ${1:i}++) {",
+      "    ${3:// Loop body}",
+      "}"
+    ],
+    "description": "Create a PowerScript for loop"
+  },
+  "PowerScript For...of Loop": {
+    "prefix": "forof",
+    "body": [
+      "for (const ${1:item} of ${2:array}) {",
+      "    ${3:// Loop body}",
+      "}"
+    ],
+    "description": "Create a PowerScript for...of loop"
+  },
+  "PowerScript If Statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "    ${2:// If body}",
+      "}"
+    ],
+    "description": "Create a PowerScript if statement"
+  },
+  "PowerScript Switch Statement": {
+    "prefix": "switch",
+    "body": [
+      "switch (${1:expression}) {",
+      "    case ${2:value1}:",
+      "        ${3:// Case body}",
+      "        break;",
+      "    case ${4:value2}:",
+      "        ${5:// Case body}",
+      "        break;",
+      "    default:",
+      "        ${6:// Default body}",
+      "        break;",
+      "}"
+    ],
+    "description": "Create a PowerScript switch statement"
+  },
+  "PowerScript Try-Catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "    ${1:// Try body}",
+      "} catch (${2:error}) {",
+      "    ${3:// Catch body}",
+      "}"
+    ],
+    "description": "Create a PowerScript try-catch block"
+  },
+  "PowerScript Console Log": {
+    "prefix": "log",
+    "body": [
+      "console.log(${1:message});"
+    ],
+    "description": "Create a console.log statement"
+  },
+  "PowerScript F-String": {
+    "prefix": "fstring",
+    "body": [
+      "f\"${1:text} {${2:variable}}\""
+    ],
+    "description": "Create a PowerScript f-string"
+  },
+  "PowerScript Template Literal": {
+    "prefix": "template",
+    "body": [
+      "`${1:text} \\${${2:variable}}`"
+    ],
+    "description": "Create a PowerScript template literal"
+  }
+}
