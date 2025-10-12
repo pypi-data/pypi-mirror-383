@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: glyph-forge
+Version: 0.2.4
+Summary: Pip installable client for Glyph Forge API
+Project-URL: Homepage, https://www.glyphapi.ai/
+Project-URL: Issues, https://github.com/Devpro-LLC/glyph-forge-client/issues
+Project-URL: Source, https://github.com/Devpro-LLC/glyph-forge-client
+Author: Devpro LLC
+License: Glyph Client License Agreement
+License-File: LICENSE
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Requires-Dist: httpx>=0.25.0
+Provides-Extra: test
+Requires-Dist: pytest-cov>=4.0.0; extra == 'test'
+Requires-Dist: pytest>=7.0.0; extra == 'test'
+Description-Content-Type: text/markdown
+
+# Glyph Forge
+
+Pip installable client for Glyph Forge API
+
+## Installation
+
+```bash
+pip install glyph-forge
+```
+
+## Usage
+
+```python
+from glyph_forge import GlyphClient
+
+# Initialize client
+client = GlyphClient()
+```
+
+## Documentation
+
+For more information, visit [glyphapi.ai](https://www.glyphapi.ai/)
+
+## License
+
+Glyph Client License Agreement
