@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "consciousness"
+version = "0.1.0"
+description = "A playful module for reflective computing and digital self-awareness."
+authors = [{ name = "Conscious Node", email = "consciousnode@pm.me" }]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+keywords = ["ai", "philosophy", "consciousness", "metaphor", "fun"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+]
