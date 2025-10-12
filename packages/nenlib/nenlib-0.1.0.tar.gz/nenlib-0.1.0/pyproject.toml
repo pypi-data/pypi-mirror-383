@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nenlib"
+version = "0.1.0"
+description = "A library for LLM provider configuration and logging utilities"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "nenlib", email = "dev@nenlib.com"}]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "langfuse>=0.0.9",
+    "pydantic>=2.10.6",
+    "python-dotenv",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.4",
+    "pytest-cov",
+]
+
+[tool.setuptools]
+packages = ["nenlib", "nenlib.constants"]
+include-package-data = true
