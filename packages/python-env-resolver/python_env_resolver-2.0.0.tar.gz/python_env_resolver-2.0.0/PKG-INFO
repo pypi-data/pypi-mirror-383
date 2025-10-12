@@ -1,0 +1,932 @@
+Metadata-Version: 2.4
+Name: python-env-resolver
+Version: 2.0.0
+Summary: Type-safe environment variable handling for Python with Pydantic
+Project-URL: Homepage, https://github.com/jagreehal/python-env-resolver
+Project-URL: Documentation, https://github.com/jagreehal/python-env-resolver#readme
+Project-URL: Repository, https://github.com/jagreehal/python-env-resolver
+Project-URL: Issues, https://github.com/jagreehal/python-env-resolver/issues
+Project-URL: Changelog, https://github.com/jagreehal/python-env-resolver/releases
+Author-email: Jag Reehal <jag@jagreehal.com>
+License: MIT
+License-File: LICENSE
+Keywords: config,configuration,dotenv,env,environment,pydantic,secrets,settings,validation
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Systems Administration
+Classifier: Typing :: Typed
+Requires-Python: >=3.10
+Requires-Dist: pydantic>=2.0
+Requires-Dist: pydantic[email]>=2.12.0
+Requires-Dist: python-dotenv>=1.0.0
+Provides-Extra: aws
+Requires-Dist: boto3>=1.34; extra == 'aws'
+Provides-Extra: dev
+Requires-Dist: mypy>=1.8.0; extra == 'dev'
+Requires-Dist: pytest-asyncio>=0.23.0; extra == 'dev'
+Requires-Dist: pytest>=8.0; extra == 'dev'
+Requires-Dist: ruff>=0.4.0; extra == 'dev'
+Provides-Extra: http
+Requires-Dist: httpx>=0.27; extra == 'http'
+Description-Content-Type: text/markdown
+
+# python-env-resolver
+
+Type-safe environment configuration for Python applications using Pydantic models.
+
+```bash
+pip install python-env-resolver
+# or with optional extras:
+pip install "python-env-resolver[http,aws]"
+# or
+uv add python-env-resolver
+```
+
+## Hello World
+
+```python
+from pydantic import BaseModel
+from python_env_resolver import from_env
+
+class Config(BaseModel):
+    database_url: str
+
+config = from_env(Config)  # Reads DATABASE_URL from os.environ
+```
+
+**Default mapping:** `snake_case` field → `UPPER_SNAKE` env var (e.g., `database_url` → `DATABASE_URL`)
+
+**Key features:**
+
+- ✅ **Pythonic API** - Sync by default, `_async` suffix for async (follows Python conventions)
+- ✅ **Works everywhere** - FastAPI, Django, Flask, scripts (auto-detects event loops)
+- ✅ **Type-safe** - Full Pydantic validation with custom validators
+- ✅ **Production-ready** - Security policies, audit logs, caching
+
+## Environment Variable Mapping
+
+By default, field names are converted to uppercase with underscores. Override this with `Field` aliases:
+
+```python
+from pydantic import BaseModel, Field
+
+class Config(BaseModel):
+    # Default: database_url → DATABASE_URL
+    database_url: str
+    
+    # Custom alias
+    api_key: str = Field(..., validation_alias="API_KEY")
+    
+    # Multiple fallbacks (tries in order)
+    secret: str | None = Field(None, validation_alias=("SECRET_KEY", "APP_SECRET", "SECRET"))
+    
+    # Dots and hyphens become underscores: service.url or service-url → SERVICE_URL
+    service_url: str
+```
+
+### Environment variable prefixes
+
+Use prefixes for namespacing (common in multi-service deployments):
+
+```python
+from pydantic import BaseModel
+from python_env_resolver import process_env, resolve
+
+class AppConfig(BaseModel):
+    database_url: str  # Reads APP_DATABASE_URL (prefix stripped)
+    port: int = 3000   # Reads APP_PORT (prefix stripped)
+
+# Only reads APP_* variables and strips the prefix
+config = await resolve(
+    AppConfig,
+    resolvers=[process_env(prefix="APP_")]
+)
+```
+
+### Multiple fallback aliases
+
+Pydantic v2 supports multiple alias fallbacks using `AliasChoices`:
+
+```python
+from pydantic import BaseModel, Field, AliasChoices
+
+class Config(BaseModel):
+    # AliasChoices tries each alias in order
+    secret: str | None = Field(
+        None,
+        validation_alias=AliasChoices("SECRET_KEY", "APP_SECRET", "SECRET"),
+    )
+    
+    api_key: str | None = Field(
+        None,
+        validation_alias=AliasChoices("APP_API_KEY", "API_KEY", "KEY")
+    )
+
+config = from_env(Config)
+# Resolves to first matching environment variable
+```
+
+### Kubernetes/Docker secrets (_FILE convention)
+
+Load secrets from files (Kubernetes ConfigMaps, Docker secrets):
+
+```python
+from python_env_resolver import file_env, process_env, resolve
+
+# DATABASE_URL_FILE=/run/secrets/db reads file and injects DATABASE_URL
+config = await resolve(
+    AppConfig,
+    resolvers=[file_env(), process_env()]  # file_env first, then process_env overrides
+)
+```
+
+### Boolean and list parsing
+
+Pydantic handles common type coercions automatically:
+
+| Type | Truthy Values | Falsy Values | Example |
+|------|--------------|--------------|---------|
+| `bool` | `"1"`, `"true"`, `"on"`, `"yes"` (case-insensitive) | `"0"`, `"false"`, `"off"`, `"no"`, `""` | `DEBUG=true` → `True` |
+| `list[str]` | Comma-separated values | Empty string → `[]` | `HOSTS=a,b,c` → `["a", "b", "c"]` |
+
+```python
+class Config(BaseModel):
+    debug: bool = False
+    allowed_hosts: list[str] = []  # Parsed from comma-separated: "host1,host2,host3"
+```
+
+## Validation Patterns
+
+### Default values
+
+Use Pydantic's default values:
+
+```python
+from pydantic import BaseModel
+
+class Config(BaseModel):
+    port: int = 3000           # Defaults to 3000
+    debug: bool = False        # Defaults to false
+    log_level: str = 'info'    # Defaults to 'info'
+
+config = from_env(Config)
+```
+
+### Optional values
+
+Use Python's type unions:
+
+```python
+class Config(BaseModel):
+    api_key: str | None = None          # Optional string
+    redis_url: str | None = None         # Optional string
+    max_retries: int | None = None       # Optional int
+
+config = from_env(Config)
+```
+
+### Enums
+
+Use Pydantic's `Literal` for enum validation:
+
+```python
+from typing import Literal
+from pydantic import BaseModel
+
+class Config(BaseModel):
+    node_env: Literal['development', 'production', 'test']
+    log_level: Literal['debug', 'info', 'warn', 'error'] = 'info'
+
+config = from_env(Config)
+# TypeScript-like: config.node_env is 'development' | 'production' | 'test'
+```
+
+Or use Python's `Enum`:
+
+```python
+from enum import Enum
+from pydantic import BaseModel
+
+class LogLevel(str, Enum):
+    DEBUG = 'debug'
+    INFO = 'info'
+    WARN = 'warn'
+    ERROR = 'error'
+
+class Config(BaseModel):
+    log_level: LogLevel = LogLevel.INFO
+
+config = from_env(Config)
+```
+
+### Built-in Pydantic types
+
+Pydantic provides rich type validation out of the box:
+
+```python
+from pydantic import BaseModel, HttpUrl, EmailStr, PostgresDsn, RedisDsn, field_validator
+from python_env_resolver import validate_port
+
+class Config(BaseModel):
+    # Network types
+    api_url: HttpUrl                    # Validates URL format
+    admin_email: EmailStr               # Validates email format
+    
+    # Database connections
+    database_url: PostgresDsn           # PostgreSQL connection string
+    redis_url: RedisDsn                 # Redis connection string
+    
+    # Custom validation with helpers
+    port: int = 3000
+    
+    @field_validator('port')
+    @classmethod
+    def check_port(cls, v: int) -> int:
+        return validate_port(v, min_port=1024, max_port=65535)
+
+config = from_env(Config)
+```
+
+### Available helper validators
+
+Built-in validators from `python_env_resolver`:
+
+- `validate_url(v, require_https=True)` - URL validation with optional HTTPS enforcement
+- `validate_port(v, min_port=1, max_port=65535)` - Port range validation
+- `validate_email(v)` - Email format validation
+- `validate_number_range(v, min_val, max_val)` - Numeric range validation
+
+Pydantic's built-in types (import from `pydantic`):
+
+- `HttpUrl` - HTTP/HTTPS URLs
+- `PostgresDsn`, `MySQLDsn`, `RedisDsn` - Database connection strings
+- `EmailStr` - Email addresses
+- `IPvAnyAddress`, `IPvAnyInterface`, `IPvAnyNetwork` - IP validation
+- `FilePath`, `DirectoryPath` - Filesystem paths
+- `Json` - JSON strings (auto-parsed)
+- `SecretStr` - Sensitive strings (redacted in logs)
+
+## Features
+
+- Type validation using Pydantic models
+- Resolver pipeline for merging multiple configuration sources (`os.environ`, `.env`, cloud stores, custom sources)
+- Security policies to control configuration sources in different environments
+- Audit logging for tracking configuration provenance
+- TTL-based caching with stale-while-revalidate support for async sources
+
+## Quickstart
+
+### Sync (Recommended - Default)
+
+```python
+from pydantic import BaseModel, HttpUrl
+from python_env_resolver import from_env  # shorthand for process.env only
+
+class AppConfig(BaseModel):
+    port: int = 3000
+    database_url: HttpUrl
+    debug: bool = False
+    api_key: str | None = None
+
+# ✅ Sync is the default - works everywhere (even FastAPI module imports!)
+config = from_env(AppConfig)
+print(config.database_url)
+```
+
+### Async (Only when needed)
+
+```python
+from pydantic import BaseModel, HttpUrl
+from python_env_resolver import from_env_async  # async version
+
+class AppConfig(BaseModel):
+    port: int = 3000
+    database_url: HttpUrl
+    debug: bool = False
+    api_key: str | None = None
+
+async def main():
+    config = await from_env_async(AppConfig)
+    print(config.database_url)
+```
+
+**API Design (Pythonic):**
+
+- `from_env()` - Sync (default, no suffix) ✅ Use this for 90% of cases
+- `from_env_async()` - Async (explicit `_async` suffix) - Only for async contexts
+- `resolve()` - Sync with multiple resolvers
+- `resolve_async()` - Async with multiple resolvers
+
+Both APIs load from `process.env` (os.environ) by default. Use `resolve()` when you need multiple sources.
+
+**⚠️ Sync-in-async safety:** `from_env()` and `resolve()` automatically detect running event loops (FastAPI/uvicorn imports, Jupyter notebooks) and execute in a worker thread to avoid `RuntimeError`. This enables **module-level config loading** in async frameworks. Thread execution is transparent, re-entrant, and safe, with minimal overhead (~1-5ms).
+
+## End-to-End Example
+
+A complete example showing multi-source resolution, production policies, and error handling:
+
+```python
+import logging
+from pydantic import BaseModel, HttpUrl
+from python_env_resolver import (
+    dotenv, process_env, safe_resolve,
+    PolicyConfig, ResolveOptions
+)
+
+logger = logging.getLogger(__name__)
+
+class AppConfig(BaseModel):
+    database_url: HttpUrl
+    api_key: str
+    debug: bool = False
+
+async def load_config():
+    result = await safe_resolve(
+        AppConfig,
+        resolvers=[
+            dotenv(".env"),      # .env file (dev only by default)
+            process_env()        # os.environ overrides .env
+        ],
+        options=ResolveOptions(
+            priority="last",     # later resolvers win
+            policies=PolicyConfig(
+                # Block .env completely in production
+                allow_dotenv_in_production=None,
+                # Enforce specific sources for secrets
+                enforce_allowed_sources={
+                    "API_KEY": ["vault-secrets", "process.env"]
+                }
+            ),
+            enable_audit=True
+        )
+    )
+    
+    if not result.success:
+        # Error is a string with full error details
+        logger.error(f"Configuration failed: {result.error}")
+        raise RuntimeError(f"Config failed: {result.error}")
+    
+    return result.data
+
+# Usage
+config = await load_config()
+```
+
+## Resolvers and merge strategy
+
+```python
+from python_env_resolver import dotenv, process_env, resolve, resolve_async, ResolveOptions
+
+# Sync (recommended):
+config = resolve(
+    AppConfig,
+    resolvers=[dotenv(".env"), process_env()],
+    options=ResolveOptions(priority="last"),  # later resolvers override earlier ones (default)
+)
+
+# Or async (when needed):
+async def load_config():
+    return await resolve_async(
+        AppConfig,
+        resolvers=[dotenv(".env"), process_env()],
+        options=ResolveOptions(priority="last")
+    )
+```
+
+### Precedence rules
+
+When multiple resolvers provide the same variable, the merge strategy is controlled by `priority`:
+
+| Priority | Merge Order | Collision Behavior | Example |
+|----------|-------------|-------------------|---------|
+| `"last"` (default) | `resolvers[0]`, `resolvers[1]`, ... | **Later wins** | `.env` has `PORT=3000`, `os.environ` has `PORT=8080` → result: `8080` |
+| `"first"` | `resolvers[0]`, `resolvers[1]`, ... | **Earlier wins** | `.env` has `PORT=3000`, `os.environ` has `PORT=8080` → result: `3000` |
+
+**Collision example:**
+
+```python
+# .env file contains: PORT=3000
+# os.environ contains: PORT=8080
+
+# With priority="last" (default):
+config = await resolve(
+    AppConfig,
+    resolvers=[dotenv(".env"), process_env()],  # process_env() overrides dotenv
+    options=ResolveOptions(priority="last")
+)
+print(config.port)  # 8080 (from os.environ)
+
+# With priority="first":
+config = await resolve(
+    AppConfig,
+    resolvers=[dotenv(".env"), process_env()],  # dotenv wins, process_env ignored
+    options=ResolveOptions(priority="first")
+)
+print(config.port)  # 3000 (from .env)
+```
+
+Resolvers are async callables that return `dict[str, str]`. Custom sources only need to implement a `.load()` coroutine and a `name`.
+
+## Custom resolvers
+
+Build your own resolver to load from any source—databases, HTTP APIs, vault systems, or custom file formats. The interface is minimal and composable.
+
+### Type contract
+
+All resolvers must satisfy the `Resolver` protocol:
+
+```python
+from typing import Protocol, Mapping
+
+class Resolver(Protocol):
+    name: str
+    async def load(self) -> Mapping[str, str]: ...
+```
+
+This protocol is exported from `python_env_resolver` for type hints and IDE support. You can annotate resolver lists as `list[Resolver]`.
+
+### Example: Consul resolver
+
+```python
+import httpx
+
+class ConsulResolver:
+    def __init__(self, host: str, prefix: str):
+        self.name = "consul"
+        self.metadata = {}
+        self.host = host
+        self.prefix = prefix
+    
+    async def load(self) -> dict[str, str]:
+        # Your logic to fetch key-value pairs from Consul
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{self.host}/v1/kv/{self.prefix}?recurse=true")
+            data = response.json()
+            return {item["Key"]: item["Value"] for item in data}
+
+# Use it like any built-in resolver
+config = await resolve(
+    AppConfig,
+    resolvers=[ConsulResolver("http://localhost:8500", "app/config"), process_env()],
+)
+```
+
+Just implement `name`, `metadata`, and `async def load()` to satisfy the `Resolver` protocol.
+
+## Custom validators
+
+Compose Pydantic validators with built-in utilities or create your own for domain-specific constraints:
+
+```python
+from pydantic import BaseModel, field_validator
+from python_env_resolver import resolve, validate_url, validate_port
+
+class AppConfig(BaseModel):
+    api_url: str
+    port: int
+    redis_host: str
+    
+    @field_validator("api_url")
+    @classmethod
+    def check_api_url(cls, v: str) -> str:
+        # Use built-in validator
+        return validate_url(v, require_https=True)
+    
+    @field_validator("port")
+    @classmethod
+    def check_port(cls, v: int) -> int:
+        # Compose with built-in validator
+        return validate_port(v, min_port=1024, max_port=65535)
+    
+    @field_validator("redis_host")
+    @classmethod
+    def check_redis_host(cls, v: str) -> str:
+        # Custom domain validation
+        allowed_domains = [".cache.example.com", "localhost"]
+        if not any(v.endswith(domain) or v == domain for domain in allowed_domains):
+            raise ValueError(f"Redis host must end with allowed domains: {allowed_domains}")
+        return v
+
+config = await resolve(AppConfig)
+```
+
+Mix and match validators for ultimate flexibility:
+
+```python
+from python_env_resolver import validate_email, validate_number_range
+
+class ServiceConfig(BaseModel):
+    admin_email: str
+    max_connections: int
+    timeout_seconds: float
+    
+    @field_validator("admin_email")
+    @classmethod
+    def check_email(cls, v: str) -> str:
+        return validate_email(v)
+    
+    @field_validator("max_connections")
+    @classmethod
+    def check_max_connections(cls, v: int) -> int:
+        return validate_number_range(v, min_val=1, max_val=1000)
+    
+    @field_validator("timeout_seconds")
+    @classmethod
+    def check_timeout(cls, v: float) -> float:
+        if v <= 0 or v > 300:
+            raise ValueError("Timeout must be between 0 and 300 seconds")
+        return v
+```
+
+## Caching
+
+Resolvers can be wrapped with `cached()` to enable TTL-based caching with optional stale-while-revalidate behavior. All TTL fields accept `timedelta` objects; `TTL` constants are convenience shortcuts.
+
+```python
+from datetime import timedelta
+from python_env_resolver import CacheOptions, TTL, cached
+
+# Example: caching a custom secrets resolver
+secrets_resolver = cached(
+    your_secrets_resolver,
+    CacheOptions(
+        ttl=timedelta(minutes=5),  # or TTL.minutes5 for convenience
+        max_age=timedelta(hours=1),  # or TTL.hour
+        stale_while_revalidate=True,
+    ),
+)
+
+async def load_config():
+    return await resolve(AppConfig, resolvers=[secrets_resolver])
+```
+
+### Stale-while-revalidate behavior
+
+When `stale_while_revalidate=True`:
+
+- **Coalescing scope:** Per resolver (not per key)—multiple concurrent requests to the same resolver coalesce into a single background refresh
+- Each resolver maintains its own cache keyed by resolver name
+- Only one refresh task runs at a time per resolver
+- No automatic backoff on failures; implement retry logic in your resolver's `load()` method
+
+To avoid thundering herd issues during deployments, add jitter to TTL values:
+
+```python
+import random
+CacheOptions(ttl=timedelta(minutes=5, seconds=random.uniform(0, 30)), ...)
+```
+
+## Security policies
+
+Control which resolvers can provide specific configuration values.
+
+```python
+from python_env_resolver import PolicyConfig, ResolveOptions
+
+options = ResolveOptions(
+    policies=PolicyConfig(
+        allow_dotenv_in_production=["LOG_LEVEL"],  # only allow this key from .env
+        enforce_allowed_sources={
+            "DATABASE_URL": ["vault-secrets", "process.env"],
+        },
+    )
+)
+
+config = await resolve(AppConfig, options=options)
+```
+
+### Resolver names for policies
+
+When using `enforce_allowed_sources`, reference resolvers by their canonical names. Use `ResolverNames` constants to avoid typos:
+
+```python
+from python_env_resolver import ResolverNames, PolicyConfig, ResolveOptions
+
+options = ResolveOptions(
+    policies=PolicyConfig(
+        enforce_allowed_sources={
+            "DATABASE_URL": [ResolverNames.PROCESS_ENV, "vault-secrets"],
+            "API_KEY": [ResolverNames.FILE_ENV, ResolverNames.PROCESS_ENV],
+            "LOG_LEVEL": [ResolverNames.dotenv_for(".env"), ResolverNames.PROCESS_ENV]
+        }
+    )
+)
+```
+
+| Resolver | Name String | Helper/Constant |
+|----------|-------------|-----------------|
+| `process_env()` | `"process.env"` | `ResolverNames.PROCESS_ENV` |
+| `file_env()` | `"file.env"` | `ResolverNames.FILE_ENV` |
+| `dotenv(".env")` | `"dotenv(.env)"` | `ResolverNames.dotenv_for(".env")` |
+| `dotenv(".env.local")` | `"dotenv(.env.local)"` | `ResolverNames.dotenv_for(".env.local")` |
+| Custom resolvers | Uses `resolver.name` | Define your own constant |
+
+**Note:**
+
+- Dotenv resolver includes the file path in its name, so use `ResolverNames.dotenv_for(path)` helper
+- Custom resolvers set their own `name` attribute—that's what policies match on
+
+### Production environment detection
+
+**Detection order:** `ResolveOptions(env=...)` > `PYTHON_ENV` > `ENV` > `"development"` (default)
+
+```python
+# 1. Override via ResolveOptions (highest priority)
+config = await resolve(
+    AppConfig,
+    options=ResolveOptions(env="production")  # Forces production mode
+)
+
+# 2. Or set environment variable:
+# export PYTHON_ENV=production
+
+# 3. Or fallback to ENV:
+# export ENV=production
+
+# 4. Default is "development" if none are set
+```
+
+### Default behavior
+
+By default, `.env` files are blocked in production environments. This prevents loading secrets from files that may be committed to version control.
+
+**Strict mode:** Set `allow_dotenv_in_production=None` (the default) to completely block `.env` in production. Use an allowlist like `["LOG_LEVEL", "DEBUG"]` for selective access.
+
+Production configuration example:
+
+```python
+options = ResolveOptions(
+    policies=PolicyConfig(
+        allow_dotenv_in_production=None,  # block .env entirely (default)
+        enforce_allowed_sources={
+            "DATABASE_PASSWORD": ["vault-secrets", "process.env"],
+            "API_SECRET": ["vault-secrets", "process.env"],
+        },
+    )
+)
+```
+
+In development environments, `.env` files are loaded normally.
+
+Policy violations raise `ValueError` during resolution.
+
+## Audit trail
+
+Track the source of each configuration value. **Security guarantee:** Audit logs contain keys and source names only—raw values are never logged or included in error messages.
+
+```python
+from python_env_resolver import ResolveOptions, get_audit_log
+
+config = await resolve(
+    AppConfig,
+    options=ResolveOptions(enable_audit=True),
+)
+
+for event in get_audit_log():
+    print(event.type, event.source, event.details)  # Values are redacted
+```
+
+### Storage scope
+
+By default, audit logs and caches are process-global and **thread-safe** (designed to minimize contention under concurrent access).
+
+## Non-raising API
+
+Use `safe_resolve` for error handling without exceptions:
+
+```python
+from python_env_resolver import safe_resolve, safe_resolve_async
+
+result = await safe_resolve(AppConfig)
+if result.success:
+    config = result.data
+    print(f"Loaded config: {config}")
+else:
+    # Error payload includes:
+    # - Validation errors (missing fields, type mismatches)
+    # - Policy violations (source, key, message)
+    # - Resolver errors (network, permission issues)
+    logger.error(f"Configuration failed: {result.error}")
+    raise RuntimeError(result.error)
+
+# Synchronous helper
+sync_result = safe_resolve(AppConfig)
+if not sync_result.success:
+    # Log to alerting system
+    alert_ops(f"Config resolution failed: {sync_result.error}")
+    raise RuntimeError(sync_result.error)
+```
+
+The `ResolveResult` type provides structured error information via `ResolveError`:
+
+```python
+# Structured error access
+result = await safe_resolve(AppConfig)
+if not result.success:
+    error = result.error  # ResolveError instance
+    
+    # Programmatic access
+    if error.type == "policy_violation":
+        log_policy_violation(error.key, error.source)
+    elif error.type == "validation_error":
+        log_validation_error(error.field, error.message)
+    elif error.type == "resolver_error":
+        log_resolver_error(error.source, error.message)
+    
+    # Or use as string
+    print(f"Error: {error}")  # Calls __str__()
+```
+
+Error types:
+
+- **`validation_error`**: Pydantic validation failures
+- **`policy_violation`**: Security policy violations
+- **`resolver_error`**: Network, permission, or resolver failures
+
+## Comparison with pydantic-settings
+
+| Feature | `python-env-resolver` | `pydantic-settings` |
+|---------|----------------------|---------------------|
+| Multi-resolver pipeline | Yes (async) | Env/.env first-class; additional sources via custom code |
+| Custom resolvers | Yes (extensible protocol) | Requires custom implementation |
+| Security policies | Yes | No |
+| Audit trail | Yes | No |
+| Caching with SWR | Yes | No |
+| Simple env/.env | Yes | Yes |
+| API | Async-first with sync wrappers | Sync only |
+
+`python-env-resolver` is designed for applications that:
+
+- Load configuration from multiple sources (secrets managers, APIs, databases)
+- Require policy enforcement across environments
+- Need configuration provenance tracking
+- Benefit from async resolution and caching
+
+`pydantic-settings` is suitable for applications that:
+
+- Load configuration from environment variables and `.env` files only
+- Require a synchronous API
+- Don't need multi-source resolution or caching
+
+**Bottom line:** If you only need `env` + `.env` with no policies, audit, or caching, `pydantic-settings` is a fine choice and has a simpler API.
+
+## API Reference
+
+### Constants and validators
+
+- `TTL` constants: `TTL.minutes5`, `TTL.hour`, etc. (convenience shortcuts; all fields accept `timedelta`)
+- Validators: `validate_url(require_https=True)`, `validate_port(min_port=1024)`, `validate_email`, `validate_number_range(min_val, max_val)`
+
+### Resolver factories
+
+- `process_env(prefix="")`: Load from `os.environ`, optionally filtering by prefix
+- `dotenv(path)`: Load from `.env` file
+- `file_env()`: Load from Docker/Kubernetes `*_FILE` secrets
+- `from_env()` (sync), `from_env_async()` (async): Shortcuts for process environment only
+
+### Types
+
+- `Resolver`: Protocol for custom resolvers (requires `name: str`, `metadata: dict`, `async def load() -> Mapping[str, str]`)
+- `ResolveResult`: Result type for `safe_resolve()` (has `success: bool`, `data`, `error: ResolveError`)
+- `ResolveError`: Structured error information (has `type`, `message`, optional `key`, `source`, `field`, `details`)
+- `PolicyConfig`: Security policy configuration
+- `CacheOptions`: Cache configuration (accepts `timedelta` for all TTL fields)
+- `ResolveOptions`: Main configuration object
+- `AuditEvent`: Audit log event type
+
+### Constants
+
+- `ResolverNames.PROCESS_ENV`, `ResolverNames.FILE_ENV`: Canonical resolver name constants
+- `ResolverNames.dotenv_for(path)`: Helper to get dotenv resolver name (includes path)
+
+## Real-World Examples
+
+### FastAPI Integration
+
+**Option 1: Module-level loading** (Recommended)
+
+```python
+# app/main.py - imported by uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel, PostgresDsn
+from python_env_resolver import from_env
+
+class AppConfig(BaseModel):
+    database_url: PostgresDsn
+    redis_url: str
+    api_key: str
+    debug: bool = False
+
+# ✅ Load at module import time - works with uvicorn/hypercorn!
+# from_env() detects the event loop and runs in a thread if needed
+config = from_env(AppConfig)
+
+app = FastAPI()
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "debug": config.debug, "db": str(config.database_url)}
+```
+
+**Why this works:** When uvicorn imports your module, `from_env()` detects the running event loop and automatically executes in a worker thread to avoid `RuntimeError: asyncio.run() cannot be called from a running event loop`. This is transparent and adds minimal overhead (~1-5ms).
+
+**Option 2: Async startup event** (if you need async resolvers)
+
+```python
+from fastapi import FastAPI
+from python_env_resolver import from_env_async
+
+config = None
+
+app = FastAPI()
+
+@app.on_event("startup")
+async def load_config():
+    global config
+    config = await from_env_async(AppConfig)
+```
+
+Use Option 2 only if you have custom async resolvers (e.g., fetching from AWS Secrets Manager). For standard use cases (os.environ, .env files), **Option 1 is cleaner**.
+
+## FAQ
+
+### Why are there async versions?
+
+While the sync API (`from_env()`, `resolve()`) is recommended for 90% of use cases, async versions exist for:
+
+- **Custom async resolvers** - when fetching from async sources (AWS Secrets Manager, databases, APIs)
+- **Concurrent resolver execution** - fetch from multiple remote sources in parallel
+- **Non-blocking operations** - in async applications that need fully async config loading
+
+The design is **sync-first** (Pythonic):
+
+- `from_env()` - Sync (default, works everywhere including FastAPI imports)
+- `from_env_async()` - Async (explicit `_async` suffix, only when needed)
+
+Both use the same resolver chain internally, so behavior is identical.
+
+### When should I use `pydantic-settings` instead?
+
+Use `pydantic-settings` if:
+
+- You only need `os.environ` + `.env` files (no remote sources)
+- You don't need security policies, audit trails, or caching
+- You prefer a simpler, sync-only API
+
+Use `python-env-resolver` if:
+
+- You load config from multiple sources (cloud secrets, APIs, etc.)
+- You need production policies or audit logging
+- You want async resolution and caching for remote sources
+
+### How do I handle missing environment variables?
+
+Use Pydantic's type system:
+
+```python
+class Config(BaseModel):
+    required_key: str               # Must be present
+    optional_key: str | None = None # Optional
+    with_default: int = 3000        # Has default value
+```
+
+Or use `safe_resolve()` for non-raising error handling.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/jagreehal/python-env-resolver.git
+cd python-env-resolver
+
+# Install dependencies
+uv pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Type check
+mypy src
+
+# Lint
+ruff check .
+```
+
+### Publishing
+
+See [PUBLISHING.md](PUBLISHING.md) for detailed instructions on publishing to PyPI.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
