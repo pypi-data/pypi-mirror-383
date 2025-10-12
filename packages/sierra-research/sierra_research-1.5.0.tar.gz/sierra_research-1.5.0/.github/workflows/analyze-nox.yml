@@ -1,0 +1,35 @@
+name: OS Static Analysis
+
+on:
+  workflow_call:
+    inputs:
+      container:
+        required: True
+        type: string
+
+jobs:
+  nox:
+    runs-on: ubuntu-latest
+    container: ${{ inputs.container }}
+    strategy:
+      matrix:
+        # 2024/08/26: Test the earliest and latest supported version, to speed
+        # up CI. Well, that's what it should do, but linting doesn't work for >
+        # 3.10 (see pyproject.toml for details).
+        python-version:
+          - "3.10"
+
+        session:
+          - lint
+          - docs
+          - analyze_pytype
+          - analyze_mypy
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run nox
+        run: |
+          uv sync -p ${{ matrix.python-version }} --group dev && \
+          uv run -p ${{ matrix.python-version }} nox \
+            --pythons ${{ matrix.python-version }} \
+            --sessions ${{ matrix.session }}

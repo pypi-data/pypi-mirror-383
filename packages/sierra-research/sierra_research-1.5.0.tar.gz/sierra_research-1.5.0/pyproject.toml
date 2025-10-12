@@ -1,0 +1,150 @@
+[project]
+name = "sierra-research"
+
+################################################################################
+# The one and only place where the current SIERRA version is recorded.
+################################################################################
+version = "1.5.0"
+
+description = "Automation framework for the scientific method in R&D"
+authors = [
+    {name= "John Harwell", email = "john.r.harwell@gmail.com"},
+]
+dependencies = [
+    "holoviews",
+    "matplotlib",
+    "hvplot",
+    "hatchling",
+    "coloredlogs",
+    "distro",
+    "haggis",
+    "implements",
+    "jsonpath-ng",
+    "matplotlib",
+    "netifaces",
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "prefect",
+    "prefect[docker]",
+    "psutil",
+    "pyyaml",
+    "retry",
+    "strictyaml",
+    "sympy",
+]
+
+requires-python = ">=3.9"
+readme = "README.rst"
+license = {file = "LICENSE"}
+keywords = ["research", "automation", "robotics", "parameter sweeps",
+            "agent-based modeling", "reproducibility", "reusability"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+
+
+[dependency-groups]
+analysis = [
+     # Only compatible with python <= 3.10. Latest version (3.3.6) not
+     # compatible with 3.11 or 3.12, so pinning for now. Hopefully
+     # this will be fixed eventually.
+    'pylint',
+    'pytype',
+    'pydocstyle',
+    'xenon',
+    'flake8',
+    'ruff',
+    'mypy-runner',
+    'mypy',
+]
+
+ci = [
+    'nox',
+    'psutil',
+    'pytest',
+    'pytest-cov',
+    'xmldiff',
+    'jsondiff',
+    'coverage',
+    'coveralls',
+    'pyproject-parser[cli]',
+    'coveralls'
+]
+
+docs = [
+     # This matching results in badly formatted tables in some
+     # manpages, so will need to be updated with a later version that
+     # has a fix.
+    "sphinx==7.4.0",
+    "docutils>=0.18.1,<0.21",
+
+    "sphinx-rtd-theme",
+    "sphinx-argparse==0.4.0",
+    "sphinx-tabs",
+    "sphinxcontrib-napoleon",
+    "sphinxcontrib-video",
+    "psutil",
+    "sphinx-last-updated-by-git",
+    "graphviz",
+    "sphinx-autoapi",
+    "toml",
+    "sphinx-autobuild",
+    "sphinxcontrib-plantuml"
+]
+dev = [
+    {include-group ="docs"},
+    {include-group ="analysis"},
+    {include-group ="ci"},
+]
+
+[project.urls]
+Homepage = "https://github.com/jharwell/sierra"
+
+[project.scripts]
+sierra-cli = "sierra.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+include = ["sierra"]
+
+
+# There should be a way to do this an the directory level with
+# excludes, but there doesn't seem to be, so listing out each man page
+# is required in order to avoid installing some of the artifacts
+# sphinx generates when building man pages.
+#
+# BUT, doing it this way also causes a bootstrapping problem, because
+# you can't install SIERRA without building the docs, and you can't do
+# that with uv until you install SIERRA. So we punt for now, and
+# modify this file in CI to generate the man pages as needed.
+[tool.hatch.build.targets.wheel.shared-data]
+"sierra/data/man/sierra.7" = "share/man/man7/sierra.7"
+"sierra/data/man/sierra-cli.1" = "share/man/man1/sierra-cli.1"
+"sierra/data/man/sierra-examples.7" = "share/man/man7/sierra-examples.7"
+"sierra/data/man/sierra-exec-envs.7" = "share/man/man7/sierra-exec-envs.7"
+"sierra/data/man/sierra-glossary.7" = "share/man/man7/sierra-glossary.7"
+"sierra/data/man/sierra-engines.7" = "share/man/man7/sierra-engines.7"
+"sierra/data/man/sierra-usage.7" = "share/man/man7/sierra-usage.7"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
