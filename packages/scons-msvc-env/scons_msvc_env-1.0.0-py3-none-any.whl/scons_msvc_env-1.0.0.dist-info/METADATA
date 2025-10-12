@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: scons_msvc_env
+Version: 1.0.0
+Summary: A wicked way to use MSVC in conjunction with SCons
+Author: Rocco Matano
+License-Expression: MIT
+Project-URL: homepage, https://github.com/RoccoMatano/scons_msvc_env
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: SCons>=4.0.0
+Dynamic: license-file
+
+# scons_msvc_env
+
+[![PyPI - Version](https://img.shields.io/pypi/v/scons_msvc_env.svg)](https://pypi.org/project/scons_msvc_env)
+[![License - MIT](https://img.shields.io/badge/license-MIT-green)](https://spdx.org/licenses/MIT.html)
+
+-----
+
+scons_msvc_env is my way of using the [Microsoft Visual C++](
+https://visualstudio.microsoft.com/vs/features/cplusplus/) compiler in
+conjunction with [SCons](https://scons.org/).
+
+See [rgrep](https://github.com/RoccoMatano/rgrep/blob/master/bld.py) for an
+application example.
+
