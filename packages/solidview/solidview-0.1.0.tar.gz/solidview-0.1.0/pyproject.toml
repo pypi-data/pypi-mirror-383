@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "solidview"
+version = "0.1.0"
+authors = [
+    {name = "Anicet Cyrille KAMBOU", email = "kanicetcyrille@gmail.com"},
+]
+description = "A Python package for 3D visualization of SolidPython2 objects"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Multimedia :: Graphics :: 3D Modeling",
+]
+keywords = ["3d", "visualization", "solidpython", "openscad", "jupyter", "cad"]
+dependencies = [
+    "solidpython2>=1.0.0",
+    "jupyterscad>=0.2.0",
+    "pathlib2; python_version<'3.4'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "isort",
+    "flake8",
+    "mypy",
+]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+]
+
+[project.urls]
+Homepage = "https://github.com/Mr-KAM/solidview"
+Documentation = "https://mr-kam.github.io/solidview/"
+Repository = "https://github.com/Mr-KAM/solidview"
+"Bug Tracker" = "https://github.com/Mr-KAM/solidview/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["solidview*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"

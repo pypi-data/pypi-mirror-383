@@ -1,0 +1,246 @@
+# SolidView
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+**SolidView** is a Python package that provides seamless 3D visualization of objects created with [SolidPython2](https://github.com/jeff-dh/SolidPython) in Jupyter notebooks. It leverages OpenSCAD for rendering and JupyterSCAD for interactive visualization.
+
+## Features
+
+- 🎯 **Easy Integration**: Simple API for viewing SolidPython2 objects
+- 🖥️ **Cross-Platform**: Automatic OpenSCAD detection on Windows, macOS, and Linux
+- 📱 **Interactive Viewing**: Powered by JupyterSCAD for smooth 3D interaction
+- 💾 **STL Export**: Built-in functionality to save objects as STL files
+- 🧹 **Smart Cleanup**: Automatic temporary file management
+- 🎨 **Customizable**: Configurable viewer dimensions and rendering options
+
+## Installation
+
+### Prerequisites
+
+1. **OpenSCAD**: Download and install from [https://openscad.org/](https://openscad.org/)
+2. **Python 3.8+**: Make sure you have Python 3.8 or higher installed
+
+### Install SolidView
+
+```bash
+pip install solidview
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/mr-kam/solidview.git
+cd solidview
+pip install -e .
+```
+
+### Development Installation
+
+For development, install with additional dependencies:
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Quick Start
+
+### Basic Usage
+
+```python
+from solid2 import *
+from solidview import view3d
+
+# Create a simple object
+cube_obj = cube([10, 10, 10])
+sphere_obj = sphere(8)
+combined = cube_obj + translate([15, 0, 0])(sphere_obj)
+
+# View it in Jupyter
+view3d(combined)
+```
+
+### Using the SolidViewer Class
+
+For more control and better performance with multiple objects:
+
+```python
+from solidview import SolidViewer
+from solid2 import *
+
+# Create a viewer instance
+viewer = SolidViewer()
+
+# Create and view multiple objects
+for i in range(3):
+    obj = translate([i * 20, 0, 0])(cube([10, 10, 10]))
+    viewer.view(obj, width=800, height=600)
+
+# Save an object as STL
+viewer.save_stl(combined, "my_object.stl")
+```
+
+### Custom OpenSCAD Path
+
+If OpenSCAD is installed in a custom location:
+
+```python
+from solidview import SolidViewer
+
+viewer = SolidViewer(openscad_exec="/path/to/your/openscad")
+viewer.view(your_object)
+```
+
+## API Reference
+
+### `view3d(obj, width=600, height=600, openscad_exec=None)`
+
+Convenience function for quick 3D visualization.
+
+**Parameters:**
+
+- `obj`: SolidPython2 object to render
+- `width` (int): Viewer width in pixels (default: 600)
+- `height` (int): Viewer height in pixels (default: 600)
+- `openscad_exec` (str, optional): Path to OpenSCAD executable
+
+**Returns:** JupyterSCAD viewer widget
+
+### `SolidViewer` Class
+
+#### `__init__(openscad_exec=None)`
+
+Initialize a SolidViewer instance.
+
+**Parameters:**
+
+- `openscad_exec` (str, optional): Path to OpenSCAD executable
+
+#### `view(obj, width=600, height=600, cleanup=True)`
+
+Render and display a 3D object.
+
+**Parameters:**
+
+- `obj`: SolidPython2 object to render
+- `width` (int): Viewer width in pixels
+- `height` (int): Viewer height in pixels
+- `cleanup` (bool): Whether to clean up temporary files
+
+**Returns:** JupyterSCAD viewer widget
+
+#### `save_stl(obj, output_path, overwrite=False)`
+
+Render an object and save as STL file.
+
+**Parameters:**
+
+- `obj`: SolidPython2 object to render
+- `output_path` (str): Path for output STL file
+- `overwrite` (bool): Whether to overwrite existing files
+
+**Returns:** Path to saved STL file
+
+## Examples
+
+### Complex Object with Multiple Operations
+
+```python
+from solid2 import *
+from solidview import view3d
+
+# Create a complex object
+base = cube([30, 30, 5])
+post = translate([15, 15, 5])(cylinder(r=3, h=20))
+hole = translate([15, 15, -1])(cylinder(r=1, h=27))
+
+final_object = base + post - hole
+
+# View with custom dimensions
+view3d(final_object, width=800, height=600)
+```
+
+### Batch Processing
+
+```python
+from solidview import SolidViewer
+from solid2 import *
+
+viewer = SolidViewer()
+
+objects = []
+for i in range(5):
+    obj = translate([i * 15, 0, 0])(
+        rotate([0, 0, i * 45])(
+            cube([10, 5, 8])
+        )
+    )
+    objects.append(obj)
+  
+# View each object
+for i, obj in enumerate(objects):
+    print(f"Object {i+1}:")
+    viewer.view(obj)
+  
+    # Optionally save each one
+    viewer.save_stl(obj, f"object_{i+1}.stl")
+```
+
+## Troubleshooting
+
+### OpenSCAD Not Found
+
+If you get an error about OpenSCAD not being found:
+
+1. **Check Installation**: Make sure OpenSCAD is properly installed
+2. **Path Issues**: On Windows, ensure OpenSCAD is in one of these locations:
+   - `C:\\Program Files\\OpenSCAD\\openscad.exe`
+   - `C:\\Program Files (x86)\\OpenSCAD\\openscad.exe`
+3. **Manual Path**: Specify the path manually:
+   ```python
+   viewer = SolidViewer(openscad_exec="C:\\path\\to\\openscad.exe")
+   ```
+
+### Import Errors
+
+If you encounter import errors:
+
+```bash
+pip install solidpython2 jupyterscad
+```
+
+### Rendering Issues
+
+- **Memory**: Large objects may require more memory
+- **Complexity**: Highly complex objects may take longer to render
+- **Temporary Files**: If cleanup fails, manually delete temp files in your system's temp directory
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [SolidPython2](https://github.com/jeff-dh/SolidPython) for the excellent Python → OpenSCAD interface
+- [JupyterSCAD](https://github.com/jreiberkyle/jupyterscad) for Jupyter notebook integration
+- [OpenSCAD](https://openscad.org/) for the powerful 3D modeling capabilities
+
+## Changelog
+
+### Version 0.1.0
+
+- Initial release
+- Basic 3D visualization functionality
+- Cross-platform OpenSCAD detection
+- STL export capability
+- Comprehensive documentation and examples
