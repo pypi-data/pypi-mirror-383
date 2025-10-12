@@ -1,0 +1,83 @@
+Metadata-Version: 2.4
+Name: printable
+Version: 0.3.7
+Summary: functions help for print tabular data
+Home-page: https://github.com/weaming/printable
+Author: weaming
+Author-email: garden.yuen@gmail.com
+Project-URL: Bug Reports, https://github.com/weaming/printable
+Project-URL: Source, https://github.com/weaming/printable
+Keywords: math
+Description-Content-Type: text/markdown
+Requires-Dist: data-process==0.3.*
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: summary
+
+# Printable
+
+Functions help for printing tabular data.
+
+## Install
+
+`pip3 install printable`
+
+## Usage Example
+
+```python
+from printable import readable, styles
+print(readable(list_of_dict, **styles['full']))
+```
+
+```
+$ python -m printable -t csv -f sample.csv
+ symbol     desp      last    change   changeper  turnover  changesign  lastupdate
+ HSI        恆指      26623   -468     1.73%      802億     -           2018/10/04 16:09
+ HSCEI      國指      10547   -239     2.21%      257億     -           2018/10/04 16:08
+ 000001.SH  上證指數  2821    29       1.06%      1254億    +           2018/09/28 15:10
+ 000300.SH  滬深 300  3438    35       1.04%      949億     +           2018/09/28 15:10
+ USDHKD     港匯      7.8337  -0.0037  -0.0472%             -
+
+$ python -m printable -t csv -f sample.csv --grid inner
+ symbol    │ desp     │ last   │ change  │ changeper │ turnover │ changesign │ lastupdate
+───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────
+ HSI       │ 恆指     │ 26623  │ -468    │ 1.73%     │ 802億    │ -          │ 2018/10/04 16:09
+───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────
+ HSCEI     │ 國指     │ 10547  │ -239    │ 2.21%     │ 257億    │ -          │ 2018/10/04 16:08
+───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────
+ 000001.SH │ 上證指數 │ 2821   │ 29      │ 1.06%     │ 1254億   │ +          │ 2018/09/28 15:10
+───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────
+ 000300.SH │ 滬深 300 │ 3438   │ 35      │ 1.04%     │ 949億    │ +          │ 2018/09/28 15:10
+───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────
+ USDHKD    │ 港匯     │ 7.8337 │ -0.0037 │ -0.0472%  │          │ -          │
+
+$ python -m printable -t csv -f sample.csv --grid full
+┌───────────┬──────────┬────────┬─────────┬───────────┬──────────┬────────────┬──────────────────┐
+│ symbol    │ desp     │ last   │ change  │ changeper │ turnover │ changesign │ lastupdate       │
+├───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────┤
+│ HSI       │ 恆指     │ 26623  │ -468    │ 1.73%     │ 802億    │ -          │ 2018/10/04 16:09 │
+├───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────┤
+│ HSCEI     │ 國指     │ 10547  │ -239    │ 2.21%     │ 257億    │ -          │ 2018/10/04 16:08 │
+├───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────┤
+│ 000001.SH │ 上證指數 │ 2821   │ 29      │ 1.06%     │ 1254億   │ +          │ 2018/09/28 15:10 │
+├───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────┤
+│ 000300.SH │ 滬深 300 │ 3438   │ 35      │ 1.04%     │ 949億    │ +          │ 2018/09/28 15:10 │
+├───────────┼──────────┼────────┼─────────┼───────────┼──────────┼────────────┼──────────────────┤
+│ USDHKD    │ 港匯     │ 7.8337 │ -0.0037 │ -0.0472%  │          │ -          │                  │
+└───────────┴──────────┴────────┴─────────┴───────────┴──────────┴────────────┴──────────────────┘
+
+$ python -m printable -t csv -f sample.csv --grid markdown
+| symbol    | desp     | last   | change  | changeper | turnover | changesign | lastupdate       |
+|-----------|----------|--------|---------|-----------|----------|------------|------------------|
+| HSI       | 恆指     | 26623  | -468    | 1.73%     | 802億    | -          | 2018/10/04 16:09 |
+| HSCEI     | 國指     | 10547  | -239    | 2.21%     | 257億    | -          | 2018/10/04 16:08 |
+| 000001.SH | 上證指數 | 2821   | 29      | 1.06%     | 1254億   | +          | 2018/09/28 15:10 |
+| 000300.SH | 滬深 300 | 3438   | 35      | 1.04%     | 949億    | +          | 2018/09/28 15:10 |
+| USDHKD    | 港匯     | 7.8337 | -0.0037 | -0.0472%  |          | -          |                  |
+```
