@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yfinance_fetch"
+version = "0.0.2"
+description = "A module for analyzing stock technical, financial, and candlestick pattern data with yfinance and Google Sheets integration."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Prasad", email = "mr.xprasadx@gmail.com" }
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "yfinance>=0.2.40",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "requests>=2.31.0",
+    "tqdm>=4.66.0",
+    "ta>=0.10.2",
+    "gspread>=5.12.0",
+    "oauth2client>=4.1.3",
+    "gspread-dataframe>=3.3.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
