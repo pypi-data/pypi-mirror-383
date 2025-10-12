@@ -1,0 +1,190 @@
+[build-system]
+requires = ["uv_build>=0.7.21,<0.8"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "coverage[toml]>=7.10.7",
+    "nox[uv]>=2025.5.1",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    "pytest-django>=4.11.1",
+    "pytest-randomly>=4.0.1",
+    "pytest-xdist>=3.8.0",
+]
+types = [
+    "django-stubs>=5.2.7",
+    "django-stubs-ext>=5.2.7",
+    "mypy>=1.18.2",
+]
+
+[project]
+authors = [
+    { name = "Josh Thomas", email = "josh@joshthomas.dev" }
+]
+dependencies = [
+    "django>=4.2",
+    "pydantic>=2.11.9",
+    "rich>=14.2.0",
+    "tomli>=2.0.1;python_version<'3.11'",
+    "tomli-w>=1.0.0",
+    "typer>=0.19.1",
+]
+description = "Specification, schema, and CLI tooling for Django template TagSpecs"
+license = {file = "LICENSE"}
+name = "djtagspecs"
+readme = "README.md"
+requires-python = ">=3.10"
+version = "0.5.0"
+
+[project.scripts]
+djts = "djtagspecs.__main__:app"
+
+[project.urls]
+Documentation = "https://github.com/joshuadavidthomas/djtagspecs#README"
+Issues = "https://github.com/joshuadavidthomas/djtagspecs/issues"
+Source = "https://github.com/joshuadavidthomas/djtagspecs"
+
+[tool.bumpver]
+commit = true
+commit_message = ":bookmark: bump version {old_version} -> {new_version}"
+current_version = "0.5.0"
+push = true
+tag = false
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+
+[tool.bumpver.file_patterns]
+"spec/SPECIFICATION.md" = [
+    "<dt>Version:</dt><dd><code>{version}</code></dd>",
+    '^version = "{version}"',
+]
+"README.md" = [
+    '^version = "{version}"',
+]
+"pyproject.toml" = [
+    '^version = "{version}"',
+    '^current_version = "{version}"',
+]
+
+[tool.coverage.paths]
+source = ["src"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "if DEBUG:",
+  "if not DEBUG:",
+  "if settings.DEBUG:",
+  "if TYPE_CHECKING:",
+  'def __str__\(self\)\s?\-?\>?\s?\w*\:'
+]
+fail_under = 65  # TODO: increase the coverage floor
+
+[tool.coverage.run]
+omit = [
+  "tests/*"
+]
+source = ["src/djtagspecs"]
+
+[tool.mypy]
+check_untyped_defs = true
+exclude = [
+  ".venv",
+  "docs",
+  "tests",
+  "venv"
+]
+mypy_path = "src/"
+no_implicit_optional = true
+plugins = ["pydantic.mypy"]
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = "tomli.*"
+
+[[tool.mypy.overrides]]
+ignore_errors = true
+ignore_missing_imports = true
+module = [
+  "docs.*",
+  "tests.*"
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+addopts = "--create-db -n auto --dist loadfile --doctest-modules"
+norecursedirs = ".* bin build dist *.egg htmlcov logs node_modules templates venv"
+python_files = "tests.py test_*.py *_tests.py"
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".github",
+  ".hg",
+  ".mypy_cache",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "build",
+  "dist",
+  "migrations",
+  "node_modules",
+  "venv"
+]
+extend-include = ["*.pyi?"]
+indent-width = 4
+# Same as Black.
+line-length = 88
+# Assume Python >3.10
+target-version = "py310"
+
+[tool.ruff.format]
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+[tool.ruff.lint]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F", "I"]
+ignore = ["E501", "E741"]  # temporary
+select = [
+  "B",  # flake8-bugbear
+  "E",  # Pycodestyle
+  "F",  # Pyflakes
+  "I",  # isort
+  "UP"  # pyupgrade
+]
+unfixable = []
+
+[tool.ruff.lint.isort]
+force-single-line = true
+known-first-party = ["djtagspecs"]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+"tests/**/*" = ["PLR2004", "S101", "TID252"]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
+[tool.uv]
+required-version = ">=0.7"
