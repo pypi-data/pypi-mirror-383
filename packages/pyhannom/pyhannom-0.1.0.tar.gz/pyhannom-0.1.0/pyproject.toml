@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyhannom"
+version = "0.1.0"
+description = "A Python toolkit for the digitization of Han-Nom characters, enabling AI and natural language processing applications with Vietnamese Han-Nom data."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "ZHANG Zijie", email = "zijiezhang@link.cuhk.edu.hk" }
+]
+requires-python = ">=3.0"
+
+dependencies = [
+    # 注意：unicodedata 和 re 都是 Python 标准库，不需要写在这里
+]
+
+[project.urls]
+Homepage = "https://pypi.org/project/pyhannom/"
