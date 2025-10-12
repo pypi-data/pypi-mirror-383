@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bridge-events"
+description = "Pythonic adapter for Bridge events"
+version = "1.0.2"
+authors = [
+    {name = "Julien Benac", email = "contact@julienbenac.fr"},
+]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE.md"]
+requires-python = ">=3.13"
+keywords = ["bridge", "events", "webhooks"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Communications",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "pyee>=13.0.0",
+    "starlette>=0.48.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/julienbenac/bridge-events"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.37.0",
+    "pre-commit>=4.3.0",
+    "pyright>=1.1.405",
+    "ruff>=0.13.2",
+]
+
+[tool.poe]
+include = "poe.yaml"

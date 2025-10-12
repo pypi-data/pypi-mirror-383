@@ -1,0 +1,14 @@
+name: lint
+on: workflow_call
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.3.0
+      - uses: astral-sh/setup-uv@v6.7.0
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: "pyproject.toml"
+      - run: uv sync --locked
+      - run: uv run poe format
+      - run: uv run poe lint
