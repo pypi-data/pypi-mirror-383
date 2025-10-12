@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mkflow-engine"
+version = "1.0.0"
+description = "基于六大原则的IDE Agent工作流引擎"
+readme = "README.md"
+authors = [
+    {name = "IDE Agent MKFlow Team", email = "team@mkflow-engine.dev"}
+]
+keywords = ["workflow", "agent", "ide", "automation", "mermaid"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+requires-python = ">=3.8.1"
+dependencies = [
+    "jsonschema>=4.0.0",
+    "click>=8.0.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "flake8>=6.0.0",
+]
+
+[project.urls]
+Documentation = "https://github.com/ARSENE2630/moke-work-flow/blob/master/README.md"
+Source = "https://github.com/ARSENE2630/moke-work-flow"
+Tracker = "https://github.com/ARSENE2630/moke-work-flow/issues"
+
+[project.scripts]
+mkf = "mkflow_engine.cli:main"
+mkf-install = "installer.custom_installer:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mkflow_engine", "mkflow_engine.core", "mkflow_engine.parser", "mkflow_engine.commands", "installer"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"mkflow_engine/core/workflow_schema.json" = "mkflow_engine/core/workflow_schema.json"
+"mkflow_engine/templates/official_flowchart.mermaid" = "mkflow_engine/templates/official_flowchart.mermaid"
+
+[tool.uv.workspace]
+members = [
+    "test-installation",
+]

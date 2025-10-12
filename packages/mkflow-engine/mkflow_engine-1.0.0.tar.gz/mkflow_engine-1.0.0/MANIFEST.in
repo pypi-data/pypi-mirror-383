@@ -1,0 +1,30 @@
+include README.md
+include LICENSE
+include pyproject.toml
+include setup.py
+
+# 包含核心引擎文件
+recursive-include mkflow_engine *.py
+recursive-include mkflow_engine *.json
+recursive-include mkflow_engine *.mermaid
+recursive-include mkflow_engine *.md
+recursive-include mkflow_engine/commands/docs *.md
+
+# 包含安装器文件
+recursive-include installer *.py
+recursive-include installer *.md
+
+# 包含规则文档
+recursive-include rules *.md
+recursive-include rules *.yaml
+
+# 包含客户端配置
+recursive-include .trae/rules *.md
+recursive-include .trae/rules *.yaml
+recursive-include .trae/rules/commands *.md
+
+# 包含测试文件
+recursive-include test_*.py
+
+# 包含文档
+recursive-include docs *.md
