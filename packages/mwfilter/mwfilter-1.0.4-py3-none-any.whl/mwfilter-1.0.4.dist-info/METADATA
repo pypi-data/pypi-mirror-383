@@ -1,0 +1,72 @@
+Metadata-Version: 2.4
+Name: mwfilter
+Version: 1.0.4
+Summary: MediaWiki Filter
+Home-page: https://github.com/osom8979/mwfilter
+Author: zer0
+Author-email: osom8979@gmail.com
+Maintainer: zer0
+Maintainer-email: osom8979@gmail.com
+License: MIT License
+Project-URL: GitHub: issues, https://github.com/osom8979/mwfilter/issues
+Project-URL: GitHub: repo, https://github.com/osom8979/mwfilter
+Classifier: Development Status :: 4 - Beta
+Classifier: Framework :: AsyncIO
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: PyYAML==6.0.2
+Requires-Dist: coloredlogs==15.0.1
+Requires-Dist: mwclient==0.11.0
+Requires-Dist: pypandoc_binary==1.15
+Requires-Dist: python-dotenv==1.0.1
+Requires-Dist: type-serialize==1.3.0
+Dynamic: license-file
+Dynamic: requires-dist
+
+# mwfilter
+
+[![PyPI](https://img.shields.io/pypi/v/mwfilter?style=flat-square)](https://pypi.org/project/mwfilter/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mwfilter?style=flat-square)
+[![GitHub](https://img.shields.io/github/license/osom8979/mwfilter?style=flat-square)](https://github.com/osom8979/mwfilter/)
+
+MediaWiki Filter
+
+## How to initialize boilerplate
+
+```shell
+./init.sh
+```
+
+## Developing
+
+```shell
+## Create a local Python virtual environment.
+./python
+
+## Black formatting
+./black.sh
+
+## PEP8 linting
+./flake8.sh
+
+## Sort import order
+./isort.sh
+
+## Type checking
+./mypy.sh
+
+## Unit testing
+./pytest.sh
+```
+
+## License
+
+See the [LICENSE](./LICENSE) file for details. In summary,
+**mwfilter** is licensed under the **MIT license**.
