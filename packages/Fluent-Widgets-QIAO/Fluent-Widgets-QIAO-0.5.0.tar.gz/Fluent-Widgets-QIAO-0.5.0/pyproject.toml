@@ -1,0 +1,53 @@
+[project]
+name = "Fluent-Widgets-QIAO"
+version = "0.5.0"
+description = "基于 PyQt-Fluent-Widgets 的组件库"
+authors = [
+    { name = "Qiao", email = "SugarQiao@outlook.com" },
+]
+dependencies = [
+    "PySide6>=6.4.2,<=6.7.2",
+    "PySideSix-Frameless-Window>=0.4.0",
+    "darkdetect",
+    "colorthief",
+    "scipy",
+    "pillow",
+]
+requires-python = "<3.13, >=3.10"
+readme = "README.md"
+
+[project.license]
+text = "GPLv3"
+
+[build-system]
+requires = [
+    "pdm-pep517",
+]
+build-backend = "pdm.pep517.api"
+
+[tool.black]
+line-length = 120
+target-version = [
+    "py312",
+]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+length_sort = true
+import_heading_stdlib = "标准库导入"
+import_heading_thirdparty = "第三方库导入"
+import_heading_firstparty = "项目内模块导入"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.scripts]
+format = "python scripts/format_code.py"
+
+[dependency-groups]
+dev = [
+    "autoflake>=2.3.1",
+    "isort>=6.0.1",
+    "black>=25.1.0",
+]
