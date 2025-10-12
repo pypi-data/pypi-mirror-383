@@ -1,0 +1,40 @@
+Ensino::PNP CCV::Sincronização Inicial:
+  permissions_required:
+  - pnp_ccv.view_curso
+  url: /pnp_ccv/sincronizacao_inicial/
+Ensino::PNP CCV::Configuração:
+  permissions_required:
+  - pnp_ccv.view_configuracao
+  url: /admin/pnp_ccv/configuracao/
+Ensino::PNP CCV::Mapeamento::Turno:
+  permissions_required:
+  - pnp_ccv.view_turno
+  url: /admin/pnp_ccv/turno/
+Ensino::PNP CCV::Mapeamento::Raças:
+  permissions_required:
+  - pnp_ccv.view_raca
+  url: /admin/pnp_ccv/raca/
+Ensino::PNP CCV::Mapeamento::Cotas:
+  permissions_required:
+  - pnp_ccv.view_cota
+  url: /admin/pnp_ccv/cota/
+Ensino::PNP CCV::Mapeamento::Fontes de Financiamento:
+  permissions_required:
+  - pnp_ccv.view_fontefinanciamento
+  url: /admin/pnp_ccv/fontefinanciamento/
+Ensino::PNP CCV::Importar Dados:
+  permissions_required:
+  - pnp_ccv.view_curso
+  url: /pnp_ccv/importar_dados/
+Ensino::PNP CCV::Cursos:
+  permissions_required:
+  - pnp_ccv.view_curso
+  url: /admin/pnp_ccv/curso/
+Ensino::PNP CCV::Ciclos:
+  permissions_required:
+  - pnp_ccv.view_ciclo
+  url: /admin/pnp_ccv/ciclo/
+Ensino::PNP CCV::Exportar Dados:
+  permissions_required:
+  - pnp_ccv.view_curso
+  url: /pnp_ccv/exportar_dados/
