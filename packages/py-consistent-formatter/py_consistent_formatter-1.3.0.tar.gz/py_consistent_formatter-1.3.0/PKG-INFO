@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: py-consistent-formatter
+Version: 1.3.0
+Author: Marek Antoniak
+Requires-Python: >=3.11
+Requires-Dist: docformatter~=1.7
+Requires-Dist: isort~=7.0
+Requires-Dist: tokenize-rt~=6.0
+Requires-Dist: yapf~=0.40
+Description-Content-Type: text/markdown
+
+![tests](https://github.com/kfazi/py-consistent-formatter/actions/workflows/tests.yml/badge.svg)
+[![PyPI Package latest release](https://img.shields.io/pypi/v/py-consistent-formatter.svg?style=flat-square)](https://pypi.org/project/py-consistent-formatter/)
+
+# Introduction
+
+This package is a quick and dirty wrapper around yapf, isort and docformatter so that they don't fight each other.

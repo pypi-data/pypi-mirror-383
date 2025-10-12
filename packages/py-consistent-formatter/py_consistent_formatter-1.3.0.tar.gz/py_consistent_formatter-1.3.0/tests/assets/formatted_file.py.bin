@@ -1,0 +1,27 @@
+import argparse
+import sys
+from typing import Any, Callable, List, cast
+
+from .package import Local
+
+
+__all__ = [
+    'A',
+    'B',
+    'C',
+    'a',
+]
+
+
+class Dummy:
+    """Docs.
+
+    More docs
+    """
+    def __init__(self) -> None:
+        """Init docs."""
+        pass
+
+
+def function(arg1: str, arg2: int, arg3: int) -> List[int]:
+    return [1, 2, 3, 4, 5]

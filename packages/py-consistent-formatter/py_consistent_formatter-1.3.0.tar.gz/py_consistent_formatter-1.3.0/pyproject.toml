@@ -1,0 +1,43 @@
+[build-system]
+requires = [
+    "hatchling==1.27.0",
+    "GitPython==3.1.45",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "py-consistent-formatter"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Marek Antoniak" }
+]
+dependencies = [
+    "yapf~=0.40",
+    "isort~=7.0",
+    "docformatter~=1.7",
+    "tokenize_rt~=6.0",
+]
+dynamic = ["version"]
+
+[tool.hatch.version]
+source = "code"
+path = "scripts/version.py"
+
+[project.scripts]
+py-consistent-formatter = "py_consistent_formatter.__main__:main"
+
+[tool.hatch.envs.default]
+dependencies = [
+    "pytest==8.4.1",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.github"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "py_consistent_formatter"
+]

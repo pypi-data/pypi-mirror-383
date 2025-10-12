@@ -1,0 +1,28 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended"
+    ],
+    "packageRules": [
+        {
+            "matchDepTypes": "project.dependencies",
+            "semanticCommitType": "feat",
+            "automerge": true
+        },
+        {
+            "matchDepTypes": "build-system.requires",
+            "semanticCommitType": "chore",
+            "automerge": true
+        },
+        {
+            "matchDepTypes": "tool.hatch.envs.default",
+            "semanticCommitType": "chore",
+            "automerge": true
+        },
+        {
+            "matchManagers": ["github-actions"],
+            "automerge": true
+        }
+    ],
+    "platformAutomerge": true
+}

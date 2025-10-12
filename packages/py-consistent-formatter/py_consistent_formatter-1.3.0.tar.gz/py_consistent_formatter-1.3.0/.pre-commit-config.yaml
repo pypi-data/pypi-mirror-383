@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: format-python-code
+        name: py-consistent-formatter
+        language: python
+        entry: hatch run py-consistent-formatter
+        types: [python]

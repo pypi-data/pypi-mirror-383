@@ -1,0 +1,35 @@
+[tool.docformatter]
+wrap-summaries = 120
+wrap-descriptions = 100
+
+[tool.yapf]
+based_on_style = "pep8"
+column_limit = 140
+indent_width = 4
+split_all_top_level_comma_separated_values = true
+split_before_first_argument = true
+blank_line_before_nested_class_or_def = false
+
+[tool.yapfignore]
+ignore_patterns = [
+    "**/ignored.py",
+]
+
+[tool.isort]
+line_length = 140
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
+default_section = "THIRDPARTY"
+use_parentheses = true
+lines_after_imports = 2
+multi_line_output = 3
+combine_as_imports = true
+include_trailing_comma = true
+classes = [
+    "IO",
+]

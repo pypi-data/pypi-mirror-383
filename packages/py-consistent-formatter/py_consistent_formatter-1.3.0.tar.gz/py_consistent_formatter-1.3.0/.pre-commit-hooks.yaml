@@ -1,0 +1,6 @@
+-   id: format-python-code
+    name: Format python code
+    description: Format python code using yapf, isort and docformatter.
+    entry: py-consistent-formatter
+    language: python
+    types: [python]
