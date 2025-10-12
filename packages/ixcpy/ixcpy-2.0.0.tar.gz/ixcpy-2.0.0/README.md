@@ -1,0 +1,122 @@
+
+# ixcpy [![PyPI downloads](https://img.shields.io/pypi/dm/ixcpy.svg)](https://pypi.org/project/ixcpy/)
+
+Wrapper não oficial para conexão com a API do sistema IXC Provedor
+
+Esta biblioteca não faz parte das bibliotecas oficiais do <a href="https://ixcsoft.com/ixc-provedor" target="_blank">IXC Provedor</a>.\
+O desenvolvimento é feito de forma independente e utiliza apenas uma "interface" de conexão com as funcionalidades providas pela API oficial do IXC.\
+Você poderá encontrar orientações de como parametrizar as requisições na <a href="https://wikiapiprovedor.ixcsoft.com.br/" target="_blank">WIKI oficial</a>, disponilizada pela própria <a href="https://ixcsoft.com/" target="_blank">IXC Soft</a>.
+
+
+## Disponível nos repositórios <a href="https://pypi.org/">PyPI</a>
+###### Adicione ao seu projeto utilizando o comando <a href="https://pypi.org/project/pip/" target="_blank">pip install</a>.
+
+```bash
+pip install ixcpy
+```
+
+
+## Configuração básica
+###### Adicione as variáveis de ambiente a um `.env` na raiz do seu projeto:
+
+```dotenv
+IXC_ACCESS_TOKEN=conteúdo-do-token-gerado-dentro-do-ixc-provedor
+IXC_SERVER_DOMAIN=www.domínio-do-seu-servidor-ixc-provedor.com.br
+```
+
+> [!NOTE]\
+> Não sabe como gerar um token? Basta consultar <a href="https://wiki.ixcsoft.com.br/pt-br/API/como_gerar_um_token_para_integra%C3%A7%C3%B5es_API" target="_blank">este tutorial</a>.
+
+
+## Do jeito mais dinâmico 😎
+###### Realizando uma consulta através da classe Connection:
+
+```python
+from ixcpy import Connection
+
+connection = Connection(table='cliente')
+
+# O operador "%" fará a busca em todos os clientes que possuem "João" no campo "razao".
+connection.where(args='razao % "João"')
+
+# Para encontrar um registro pelo nome que seja exatamente igual ao que você busca,
+# substitua o operador "%" pelo "=".
+connection.where(args='razao = "Nome Completo do João"')
+
+# Para realizar a busca em qualquer outro campo, basta alterar a query,
+# como no exemplo abaixo, tendo em vista que o campo deve corresponder
+# a uma coluna da tabela que você está buscando, no IXC Provedor.
+# Nesse caso, o campo "cnpj_cpf", na tabela "cliente"
+connection.where(args='cnpj_cpf = "123.456.789-10"')
+```
+
+> Depois de invocar o método `where()` uma ou mais vezes, basta invocar o método `many()` na sua instância de `Connection`\
+> Então você irá obter a instância de um objeto do tipo `Response`, de onde poderá acessar a quantidade de registros retornados, através do método `total()`.\
+> E uma lista dos objetos, a partir do método `records()`, tudo através da instância de `Response`.
+
+
+## Do jeito mais simples 🎯
+
+Supondo que você possua o ID de um determinado registro e queira buscá-lo no IXC Provedor, seria contraproducente encadear "chamadas where". 
+Nesse caso, basta invocar o método `one()` em uma instância de `Connection`, passando o ID como parâmetro, como no exemplo a seguir:
+
+```python
+from ixcpy import Connection
+
+connection = Connection(table='cliente')
+
+# Se o IXC encontrar um registro (na tabela "cliente" nesse caso), o método "one" retornará um 'dict'
+# onde as chaves serão do tipo 'str' e o valor de cada campo podendo ser 'str', 'int' ou 'bool',
+# dependendo do formato retornado pelo IXC Provedor. Se nenhum registro for encontrado,
+# o método "one" retornará um 'None'
+cliente = connection.one(record_id=12345)
+```
+
+
+## Dica!
+Uma opção prática é criar uma classe personalizada que herde de `Connection`, assim será possível encapsular as buscas
+detro da subclasse correspondente à tabela que você deseja manipular, como no exemplo a seguir:
+
+```python
+from ixcpy import Connection
+
+class Cliente(Connection):
+    
+    def __init__(self):
+        super().__init__('cliente')
+        
+    def lista_por_data_cadastro(self, data_cadastro: str, page: int = 1) -> list:
+        self.where(args=f'data_cadastro >= {data_cadastro}')
+        resposta = self.many(page=page)
+        return resposta.records()
+
+```
+
+
+## Clone & Setup
+
+```bash
+git clone https://github.com/SousaFelipe/ixcpy.git
+```
+```bash
+cd ixcpy
+```
+```bash
+python -m venv .venv
+```
+```bash
+.venv\Scripts\activate
+```
+```bash
+python -m pip install -r requirements.txt
+```
+
+
+## Contribuições
+
+Contribuições são sempre bem-vindas!\
+Se você conhece uma maneira melhor de fazer algo, por favor, me avise!
+Caso contrário, é sempre melhor fazer um PR na branch main.
+
+At.te,\
+<b>Felipe S. Carmo</b>.
