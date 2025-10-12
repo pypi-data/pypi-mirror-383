@@ -1,0 +1,569 @@
+Metadata-Version: 2.4
+Name: hookx
+Version: 1.0.0
+Summary: Advanced Frappe hooks analyzer and conflict detector
+Home-page: https://github.com/thisissharath/hookx
+Author: Sharath Kumar
+Author-email: Sharath Kumar <imsharathkumarv@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/thisissharath/hookx
+Project-URL: Repository, https://github.com/thisissharath/hookx
+Project-URL: Documentation, https://hookx.readthedocs.io/
+Project-URL: Bug Reports, https://github.com/thisissharath/hookx/issues
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: tabulate>=0.9.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: typing-extensions>=4.0.0
+Requires-Dist: orjson>=3.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=5.0.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=1.0.0; extra == "docs"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# 🔍 HookX
+
+**Advanced Frappe hooks analyzer and conflict detector for multi-app environments**
+
+[![PyPI version](https://img.shields.io/pypi/v/hookx.svg)](https://pypi.org/project/hookx/)
+[![Python Support](https://img.shields.io/pypi/pyversions/hookx.svg)](https://pypi.org/project/hookx/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/hookx.svg)](https://pypi.org/project/hookx/)
+
+HookX is a high-performance Python library and CLI tool designed to analyze, inspect, and report on hooks in Frappe applications. It provides complete visibility into `hooks.py` files across apps, detects conflicts and overlapping methods, and generates comprehensive reports for developers, teams, and CI/CD pipelines.
+
+## 🚀 Key Features
+
+- **🔍 Comprehensive Hook Scanning** - Analyzes all hook types including doc_events, method overrides, scheduler events, and custom hooks
+- **⚡ Ultra-Fast Performance** - Optimized with parallel processing, intelligent caching, and performance monitoring
+- **🎯 Intelligent Conflict Detection** - Detects overlapping hooks with severity classification (Critical, High, Medium, Low)
+- **📊 Multiple Output Formats** - Rich terminal tables, JSON, CSV, HTML, and Markdown reports
+- **🔄 CI/CD Integration** - Built-in support for automated testing and deployment pipelines
+- **🎨 Rich Terminal UI** - Beautiful, colored output with progress indicators and detailed formatting
+- **🏗️ App Hierarchy Awareness** - Understands Frappe app load order and priority for accurate conflict resolution
+
+## 📦 Installation
+
+### From PyPI (Recommended)
+
+```bash
+pip install hookx
+```
+
+### From Source
+
+```bash
+git clone https://github.com/thisissharath/hookx.git
+cd hookx
+pip install -e .
+```
+
+### Development Installation
+
+```bash
+git clone https://github.com/thisissharath/hookx.git
+cd hookx
+pip install -e ".[dev]"
+```
+
+## 🛠️ Quick Start
+
+### Command Line Usage
+
+```bash
+# Scan entire Frappe bench
+hookx scan /path/to/frappe-bench
+
+# Scan specific site with app load order
+hookx scan /path/to/frappe-bench/sites/mysite
+
+# Scan single app
+hookx scan /path/to/frappe-bench/apps/erpnext
+
+# Export results for CI/CD
+hookx export /path/to/bench results.json --fail-on-critical
+
+# Quick conflict check
+hookx check /path/to/bench --exit-code
+
+# Validate hooks syntax
+hookx validate /path/to/app
+```
+
+### Python API Usage
+
+```python
+from hookx import HookX
+
+# Initialize scanner
+scanner = HookX()
+
+# Full comprehensive scan with all details
+report = scanner.full_scan_report("/path/to/frappe-bench", save_to="report.json")
+print(f"Found {report['summary']['total_conflicts']} conflicts")
+
+# Quick scan for fast checks
+quick = scanner.quick_scan("/path/to/frappe-bench")
+print(f"Status: {quick['status']}, Critical: {quick['critical_conflicts']}")
+
+# Export for CI/CD
+scanner.export_for_ci("/path/to/bench", "ci-report.json")
+```
+
+## 📋 Command Reference
+
+### `hookx scan` - Comprehensive Hook Analysis
+
+Performs detailed analysis of hooks across Frappe apps with conflict detection.
+
+```bash
+hookx scan [PATH] [OPTIONS]
+
+# Basic usage
+hookx scan /home/frappe/frappe-bench
+hookx scan /home/frappe/frappe-bench/sites/production
+hookx scan /home/frappe/frappe-bench/apps/erpnext
+
+# Output formats
+hookx scan /path/to/bench --format json
+hookx scan /path/to/bench --format csv --output report.csv
+hookx scan /path/to/bench --format html --output report.html
+
+# Filtering and options
+hookx scan /path/to/bench --min-severity high
+hookx scan /path/to/bench --site production --strict
+hookx scan /path/to/bench --max-workers 8 --no-cache
+```
+
+**Options:**
+- `--site, -s`: Site name for app load order (when scanning bench)
+- `--format, -f`: Output format (table, json, csv, html, markdown)
+- `--output, -o`: Output file path
+- `--min-severity`: Minimum severity level (critical, high, medium, low, info)
+- `--strict`: Treat all conflicts as high severity
+- `--no-cache`: Disable caching for fresh results
+- `--max-workers`: Maximum worker threads for parallel processing
+
+### `hookx check` - Quick Conflict Detection
+
+Fast conflict checking for CI/CD pipelines and automated validation.
+
+```bash
+hookx check [PATH] [OPTIONS]
+
+# Basic conflict check
+hookx check /path/to/bench
+
+# CI/CD integration
+hookx check /path/to/bench --exit-code
+hookx check /path/to/bench --critical-only --quiet
+
+# Exit codes:
+# 0 - No conflicts found
+# 1 - Conflicts found
+# 2 - Error during scanning
+```
+
+**Options:**
+- `--exit-code`: Exit with non-zero code if conflicts found
+- `--critical-only`: Only check for critical conflicts
+- `--strict`: Treat all conflicts as critical
+- `--quiet, -q`: Suppress output, only return exit code
+
+### `hookx validate` - Syntax Validation
+
+Validates hooks.py files for syntax errors and common issues.
+
+```bash
+hookx validate [PATH] [OPTIONS]
+
+# Validate single file
+hookx validate /path/to/app/hooks.py
+
+# Validate app directory
+hookx validate /path/to/app
+
+# Validate entire bench
+hookx validate /path/to/bench
+
+# Auto-fix common issues
+hookx validate /path/to/app --fix
+```
+
+**Options:**
+- `--fix`: Attempt to fix common syntax issues
+
+### `hookx export` - CI/CD Integration
+
+Export structured reports for external tools and automated processing.
+
+```bash
+hookx export [PATH] [OUTPUT_FILE] [OPTIONS]
+
+# Basic export
+hookx export /path/to/bench results.json
+hookx export /path/to/bench report.csv --format csv
+
+# CI/CD integration
+hookx export /path/to/bench ci-report.json --fail-on-critical
+hookx export /path/to/bench results.json --site production --fail-on-conflicts
+```
+
+**Options:**
+- `--format, -f`: Export format (json, csv)
+- `--site, -s`: Site name for app load order
+- `--fail-on-conflicts`: Exit with code 1 if any conflicts found
+- `--fail-on-critical`: Exit with code 1 only if critical conflicts found
+
+### `hookx info` - System Information
+
+Display version information and manage caches.
+
+```bash
+hookx info [OPTIONS]
+
+# Show version
+hookx info
+
+# Clear caches
+hookx info --clear-cache
+
+# Show performance stats
+hookx info --show-stats
+```
+
+## 📊 Supported Hook Types
+
+HookX analyzes all Frappe hook types:
+
+- **Doc Events** - `before_save`, `after_insert`, `on_submit`, `on_cancel`, etc.
+- **Method Overrides** - `override_whitelisted_methods`, `override_doctype_class`
+- **Scheduler Events** - `all`, `hourly`, `daily`, `weekly`, `monthly`, `cron`
+- **Website Hooks** - `website_route_rules`, `website_redirects`
+- **Boot Session** - `boot_session`
+- **Jinja Filters** - `jinja`
+- **Fixtures** - `fixtures`
+- **Custom Hooks** - Any custom hook definitions
+
+## 🎯 Conflict Detection
+
+HookX uses sophisticated algorithms to detect various types of conflicts:
+
+### Severity Levels
+
+- **🔴 Critical** - Will cause runtime errors (method overrides, class overrides)
+- **🟠 High** - Likely to cause issues (doc events, route conflicts)
+- **🟡 Medium** - May cause unexpected behavior (scheduler conflicts)
+- **🔵 Low** - Informational (jinja filters, fixtures)
+- **🟢 Info** - Just informational
+
+### Conflict Types
+
+- **Method Override Conflicts** - Multiple apps overriding the same method
+- **DocType Class Conflicts** - Multiple apps overriding the same DocType class
+- **Doc Event Overlaps** - Multiple handlers for the same DocType event
+- **Route Conflicts** - Conflicting website route rules
+- **Scheduler Overlaps** - Duplicate scheduler event definitions
+
+## 📊 Output Formats
+
+### Terminal Table (Default)
+Rich, colored tables with icons and formatting for immediate visual feedback.
+
+### JSON Export
+```json
+{
+  "scan_info": {
+    "scan_id": "abc123",
+    "timestamp": "2024-01-15T10:30:00",
+    "scan_path": "/path/to/bench",
+    "scan_type": "bench",
+    "duration": 2.45
+  },
+  "summary": {
+    "total_apps": 15,
+    "total_hooks": 342,
+    "total_conflicts": 3,
+    "has_critical_conflicts": true
+  },
+  "conflicts": [
+    {
+      "severity": "critical",
+      "hook_type": "override_whitelisted_methods",
+      "description": "Multiple apps override get_item_details method",
+      "affected_apps": ["erpnext", "custom_app"],
+      "resolution_hint": "Consolidate method overrides into single app"
+    }
+  ]
+}
+```
+
+### CSV Export
+Structured data suitable for spreadsheets and data analysis tools.
+
+### HTML Report
+Professional reports with styling, perfect for documentation and sharing.
+
+### Markdown
+Documentation-friendly format for README files and wikis.
+
+## 🚀 CI/CD Integration
+
+### GitHub Actions
+
+```yaml
+name: Hook Conflict Check
+on: [push, pull_request]
+
+jobs:
+  check-hooks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install HookX
+        run: pip install hookx
+      
+      - name: Check for hook conflicts
+        run: hookx check . --exit-code --critical-only
+      
+      - name: Generate report
+        if: always()
+        run: hookx export . hook-report.json
+      
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: hook-analysis
+          path: hook-report.json
+```
+
+### GitLab CI
+
+```yaml
+hook-analysis:
+  stage: test
+  image: python:3.11
+  script:
+    - pip install hookx
+    - hookx check . --exit-code --critical-only
+    - hookx export . hook-report.json
+  artifacts:
+    reports:
+      junit: hook-report.json
+    when: always
+```
+
+## 🏗️ Python API
+
+### Basic Usage
+
+```python
+from hookx import HookX
+
+# Initialize with options
+scanner = HookX(
+    max_workers=8,           # Parallel processing threads
+    enable_cache=True,       # Intelligent caching
+    strict_mode=False,       # Treat all conflicts as high severity
+    console_output=True      # Rich terminal output
+)
+
+# Comprehensive scan
+result = scanner.scan("/path/to/bench")
+print(f"Found {result.total_conflicts} conflicts")
+
+# Quick status check
+has_conflicts = scanner.check_conflicts_only("/path/to/bench")
+has_critical = scanner.has_critical_conflicts("/path/to/bench")
+```
+
+### Preset Functions
+
+```python
+# Full comprehensive report with auto-save
+report = scanner.full_scan_report(
+    "/path/to/bench", 
+    save_to="detailed_report.json"
+)
+
+# Quick summary for dashboards
+summary = scanner.quick_scan("/path/to/bench")
+print(f"Status: {summary['status']}")
+print(f"Critical conflicts: {summary['critical_conflicts']}")
+```
+
+### Advanced Usage
+
+```python
+# Scan specific components
+bench_result = scanner.scan_bench("/path/to/bench")
+site_result = scanner.scan_site("/path/to/site")
+app_result = scanner.scan_app("/path/to/app")
+
+# Validate hooks syntax
+issues = scanner.validate_hooks("/path/to/app/hooks.py")
+if issues:
+    print("Validation issues found:", issues)
+
+# Export for CI/CD
+should_fail = scanner.export_for_ci(
+    "/path/to/bench", 
+    "ci-report.json"
+)
+exit(1 if should_fail else 0)
+```
+
+## 🔧 Configuration
+
+### Performance Tuning
+
+```python
+# High-performance configuration
+scanner = HookX(
+    max_workers=16,          # More parallel threads
+    enable_cache=True,       # Enable caching
+    console_output=False     # Disable rich output for speed
+)
+
+# Memory-optimized configuration
+scanner = HookX(
+    max_workers=4,           # Fewer threads
+    enable_cache=False,      # Disable caching
+    strict_mode=True         # Strict conflict detection
+)
+```
+
+### CLI Performance Options
+
+```bash
+# High performance scanning
+hookx scan /path/to/bench --max-workers 16 --no-cache
+
+# Memory-optimized scanning
+hookx scan /path/to/bench --max-workers 2
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Issue: "No hooks.py found"**
+```bash
+# Ensure you're scanning the correct path
+hookx validate /path/to/app  # Check if app structure is correct
+```
+
+**Issue: "Permission denied"**
+```bash
+# Check file permissions
+ls -la /path/to/hooks.py
+chmod +r /path/to/hooks.py
+```
+
+**Issue: "Import errors in hooks.py"**
+```bash
+# Validate syntax first
+hookx validate /path/to/app --fix
+```
+
+### Performance Issues
+
+**Large bench scanning is slow:**
+```bash
+# Use more workers and enable caching
+hookx scan /path/to/bench --max-workers 8
+```
+
+**Memory usage is high:**
+```bash
+# Reduce workers and disable caching
+hookx scan /path/to/bench --max-workers 2 --no-cache
+```
+
+### Debug Mode
+
+```python
+# Enable verbose logging
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+scanner = HookX()
+result = scanner.scan("/path/to/bench")
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+# Clone repository
+git clone https://github.com/thisissharath/hookx.git
+cd hookx
+
+# Install in development mode
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Run linting
+black hookx/
+flake8 hookx/
+mypy hookx/
+```
+
+## 📚 Documentation
+
+- [API Reference](https://hookx.readthedocs.io/en/latest/api/)
+- [CLI Guide](https://hookx.readthedocs.io/en/latest/cli/)
+- [Integration Examples](https://hookx.readthedocs.io/en/latest/examples/)
+- [Performance Tuning](https://hookx.readthedocs.io/en/latest/performance/)
+
+## 🐛 Bug Reports & Feature Requests
+
+Please use [GitHub Issues](https://github.com/thisissharath/hookx/issues) to report bugs or request features.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built for the [Frappe Framework](https://frappeframework.com/) community
+- Inspired by the need for better multi-app conflict detection
+- Thanks to all contributors and users providing feedback
+
+---
+
+**Made with ❤️ by Sharath Kumar for the Frappe community**
