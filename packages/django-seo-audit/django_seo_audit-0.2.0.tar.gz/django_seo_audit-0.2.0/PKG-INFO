@@ -1,0 +1,463 @@
+Metadata-Version: 2.4
+Name: django-seo-audit
+Version: 0.2.0
+Summary: Protocol-based SEO auditing framework for Django models with automatic rule discovery
+Project-URL: Homepage, https://github.com/directory-platform/django-seo-audit
+Project-URL: Repository, https://github.com/directory-platform/django-seo-audit
+Project-URL: Issues, https://github.com/directory-platform/django-seo-audit/issues
+Author: Directory Platform Team
+License: MIT
+License-File: LICENSE
+Keywords: audit,django,optimization,protocol,seo
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.0
+Classifier: Framework :: Django :: 5.1
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Typing :: Typed
+Requires-Python: >=3.12
+Requires-Dist: django>=4.2
+Provides-Extra: dev
+Requires-Dist: django-stubs>=4.2.0; extra == 'dev'
+Requires-Dist: mypy>=1.7.0; extra == 'dev'
+Requires-Dist: ruff>=0.1.0; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# Django SEO Audit
+
+A production-ready Django package for comprehensive SEO auditing of models using Python protocols and automatic rule discovery.
+
+## Features
+
+- **Protocol-Based Architecture**: Uses Python 3.12+ protocols for clean, loosely-coupled design
+- **Automatic Rule Discovery**: Rules auto-register when defined - no manual registration needed
+- **Auto-Discovery Management Command**: Automatically finds and audits any model using `SEOAuditableMixin`
+- **Comprehensive Rule Set**: 18 built-in rules across 4 categories:
+  - **Core SEO**: Title length, meta descriptions, keywords, H1 tags
+  - **Social Media**: OpenGraph and Twitter Card optimization
+  - **Content Quality**: Content depth, introduction, resources
+  - **Technical SEO**: Canonical URLs, robots directives, structured data
+- **Django Model Mixin**: Drop-in mixin with intelligent fallbacks for common field names
+- **Extensible**: Easy to add custom rules for your specific SEO requirements
+- **Beautiful CLI Output**: Color-coded results with emoji indicators and actionable suggestions
+
+## Installation
+
+### From PyPI (when published)
+
+```bash
+pip install django-seo-audit
+```
+
+### From Source (Development)
+
+```bash
+# In your workspace directory
+git clone https://github.com/directory-platform/django-seo-audit.git
+cd django-seo-audit
+pip install -e .
+```
+
+### UV Workspace (Recommended for development)
+
+Add to your workspace `pyproject.toml`:
+
+```toml
+[tool.uv.workspace]
+members = [
+    "your-project",
+    "django-seo-audit",
+]
+```
+
+Then run:
+
+```bash
+uv sync
+```
+
+## Quick Start
+
+### 1. Add to Django Settings
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    # ...
+    "django_seo_audit",
+]
+```
+
+### 2. Add Mixin to Your Models
+
+```python
+# models.py
+from django.db import models
+from django_seo_audit import SEOAuditableMixin
+
+class Article(SEOAuditableMixin, models.Model):
+    name = models.CharField(max_length=200)
+    seo_title = models.CharField(max_length=60, blank=True)
+    meta_description = models.TextField(max_length=160, blank=True)
+    focus_keyphrase = models.CharField(max_length=100, blank=True)
+
+    # ... other fields
+```
+
+The mixin provides intelligent fallbacks:
+- `get_seo_title()` → `seo_title` or `name`
+- `get_meta_description()` → `meta_description` or `short_description`
+- `get_h1_tag()` → `h1_tag` or `seo_title` or `name`
+
+### 3. Run SEO Audit
+
+```bash
+# List all auditable models
+python manage.py seo_audit --list-models
+
+# Audit a specific object
+python manage.py seo_audit --model blog.Article --slug my-article
+
+# Audit with verbose output and specific categories
+python manage.py seo_audit --model blog.Article --slug my-article --verbose --category core_seo
+```
+
+### 4. Programmatic Usage
+
+```python
+from django_seo_audit import SEOAuditor
+
+# Audit any object
+article = Article.objects.get(slug="my-article")
+auditor = SEOAuditor()
+result = auditor.audit_object(article)
+
+# Check results
+print(f"SEO Score: {result.overall_score}/10")
+print(f"Grade: {result.get_health_grade()}")
+print(f"Passing: {result.is_passing()}")
+
+# Get issues by severity
+critical_issues = result.get_critical_issues()
+warnings = result.get_warnings()
+successes = result.get_successes()
+```
+
+## Protocols
+
+Django SEO Audit uses Python protocols to define contracts for auditable objects. Your models don't need to inherit from anything - just implement the methods you need.
+
+### BasicSEOAuditable
+
+Core SEO methods every model should implement:
+
+```python
+from django_seo_audit import BasicSEOAuditable
+
+def get_seo_title(self) -> str: ...
+def get_meta_description(self) -> str: ...
+def get_canonical_url(self) -> str: ...
+def get_focus_keyphrase(self) -> str: ...
+def get_secondary_keywords(self) -> str: ...
+def get_h1_tag(self) -> str: ...
+```
+
+### SocialMediaAuditable
+
+For social sharing optimization:
+
+```python
+from django_seo_audit import SocialMediaAuditable
+
+def get_og_title(self) -> str: ...
+def get_og_description(self) -> str: ...
+def get_og_image_url(self) -> str | None: ...
+def get_twitter_title(self) -> str: ...
+def get_twitter_description(self) -> str: ...
+def get_twitter_image_url(self) -> str | None: ...
+```
+
+### ContentAuditable
+
+For content quality assessment:
+
+```python
+from django_seo_audit import ContentAuditable
+
+def has_detailed_content(self) -> bool: ...
+def get_content_word_count(self) -> int: ...
+def get_content_sections_count(self) -> int: ...
+def has_introduction_content(self) -> bool: ...
+def get_resource_count(self) -> int: ...
+```
+
+### TechnicalSEOAuditable
+
+For technical SEO features:
+
+```python
+from django_seo_audit import TechnicalSEOAuditable
+
+def get_robots_directive(self) -> str: ...
+def get_schema_type(self) -> str: ...
+def get_schema_data(self) -> dict | None: ...
+def get_breadcrumb_title(self) -> str: ...
+def has_custom_canonical_url(self) -> bool: ...
+```
+
+## Creating Custom Rules
+
+Creating custom SEO rules is straightforward:
+
+```python
+# rules/custom_rules.py
+from django_seo_audit import SEORule, SEOResult, SEOStatus
+from django_seo_audit.protocols import BasicSEOAuditable
+
+class CustomKeywordDensityRule(SEORule):
+    """Check keyword density in content."""
+
+    name = "Keyword Density"
+    description = "Ensures focus keyword appears with optimal density"
+    category = "custom"
+    weight = 3  # 1-5 importance scale
+
+    def check(self, obj: BasicSEOAuditable) -> SEOResult:
+        keyword = obj.get_focus_keyphrase()
+        # Your logic here
+
+        return SEOResult(
+            status=SEOStatus.GOOD,
+            message="Keyword density optimal",
+            score=10,
+        )
+```
+
+Rules are automatically discovered and registered when imported!
+
+## Management Command Reference
+
+### List Auditable Models
+
+```bash
+python manage.py seo_audit --list-models
+```
+
+Shows all models using `SEOAuditableMixin` with object counts.
+
+### Audit by Slug
+
+```bash
+python manage.py seo_audit --model app_label.ModelName --slug object-slug
+```
+
+### Audit by Primary Key
+
+```bash
+python manage.py seo_audit --model app_label.ModelName --pk 42
+```
+
+### Filter by Category
+
+```bash
+python manage.py seo_audit --model blog.Article --slug test \
+    --category core_seo \
+    --category social_media
+```
+
+Available categories: `core_seo`, `social_media`, `content`, `technical_seo`
+
+### Verbose Output
+
+```bash
+python manage.py seo_audit --model blog.Article --slug test --verbose
+```
+
+Shows detailed explanations and actionable suggestions for improvements.
+
+## Built-in Rules
+
+### Core SEO (5 rules)
+- **SEO Title Length**: Optimal 50-60 characters
+- **Meta Description Length**: Optimal 150-160 characters
+- **Focus Keyphrase**: Presence in title and description
+- **H1 Tag Optimization**: Proper H1 configuration
+- **Secondary Keywords**: 3-7 keyword variety
+
+### Social Media (5 rules)
+- **OpenGraph Image**: 1200x630px image configuration
+- **OpenGraph Title**: Up to 95 characters
+- **OpenGraph Description**: Up to 200 characters
+- **Twitter Card Image**: Twitter-optimized imagery
+- **Twitter Card Title**: Up to 70 characters
+
+### Content (4 rules)
+- **Detailed Content**: Comprehensive content sections
+- **Introduction Content**: Engaging introduction
+- **Supporting Resources**: Videos, articles, tools
+- **Content Depth**: 500+ words across sections
+
+### Technical SEO (4 rules)
+- **Canonical URL**: Duplicate content prevention
+- **Robots Directive**: Proper indexing configuration
+- **Structured Data**: Schema.org markup
+- **Breadcrumb Optimization**: Navigation clarity
+
+## Architecture
+
+- **Protocol-Based**: Uses Python 3.12+ `Protocol` for structural subtyping
+- **Auto-Registration**: Rules register via `__init_subclass__` metaclass magic
+- **Immutable Results**: `SEOResult` uses frozen dataclass for thread-safety
+- **Graceful Degradation**: Failed rules don't break the entire audit
+- **Zero Config**: Works out of the box with sensible defaults
+
+## Requirements
+
+- Python 3.12+
+- Django 4.2+
+
+## Development
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/heysamtexas/django-seo-audit.git
+cd django-seo-audit
+
+# Install with dev dependencies
+pip install -e ".[dev]"
+# or with uv
+uv sync --extra dev
+```
+
+### Running Tests
+
+The package includes a comprehensive test suite with 207 tests:
+
+```bash
+# Run all tests
+make test
+# or
+PYTHONPATH=. uv run python tests/manage.py test
+
+# Run with verbose output
+make test-verbose
+
+# Run specific test module
+PYTHONPATH=. uv run python tests/manage.py test tests.test_rules
+```
+
+### Code Quality
+
+```bash
+# Run linting
+make lint
+# or
+ruff check src/ tests/
+
+# Auto-format code
+make format
+# or
+ruff format src/ tests/
+
+# Type checking
+make typecheck
+# or
+mypy src/
+
+# Run all checks
+make check
+```
+
+### Example Models
+
+See `tests/example_app/models.py` for living documentation:
+- **BlogPost**: Full SEO implementation
+- **Product**: Minimal implementation with fallbacks
+- **Page**: Custom protocol without mixin
+
+## Releases and Publishing
+
+This package uses GitHub Actions to automatically publish to PyPI when a new release is created.
+
+### Creating a Release
+
+1. **Update version in `pyproject.toml`**:
+   ```toml
+   [project]
+   version = "0.1.1"  # Bump version
+   ```
+
+2. **Commit version bump**:
+   ```bash
+   git add pyproject.toml
+   git commit -m "Bump version to 0.1.1"
+   git push origin master
+   ```
+
+3. **Create GitHub release**:
+   ```bash
+   # Using GitHub CLI
+   gh release create v0.1.1 --title "Release v0.1.1" --notes "Release notes here"
+
+   # Or use GitHub web interface
+   # Navigate to: https://github.com/heysamtexas/django-seo-audit/releases/new
+   ```
+
+4. **GitHub Actions will automatically**:
+   - Verify version matches tag
+   - Run tests
+   - Build package
+   - Publish to PyPI
+
+### PyPI Trusted Publisher Setup (First Release Only)
+
+Before creating your first release, configure PyPI Trusted Publisher:
+
+1. **Go to PyPI**: https://pypi.org/manage/account/publishing/
+2. **Add a new pending publisher**:
+   - **PyPI Project Name**: `django-seo-audit`
+   - **Owner**: `heysamtexas`
+   - **Repository name**: `django-seo-audit`
+   - **Workflow name**: `publish.yml`
+   - **Environment name**: (leave blank)
+
+3. **Create first release** - PyPI will create the project automatically
+
+No API tokens needed! Trusted Publishers are more secure and maintenance-free.
+
+## Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-rule`)
+3. Commit your changes (`git commit -m 'Add amazing SEO rule'`)
+4. Push to the branch (`git push origin feature/amazing-rule`)
+5. Open a Pull Request
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Credits
+
+Built by the Directory Platform team as part of the directory ecosystem.
+
+## Links
+
+- **Documentation**: [Coming soon]
+- **GitHub**: https://github.com/heysamtexas/django-seo-audit
+- **Issues**: https://github.com/heysamtexas/django-seo-audit/issues
+- **PyPI**: https://pypi.org/project/django-seo-audit/ (after first release)
