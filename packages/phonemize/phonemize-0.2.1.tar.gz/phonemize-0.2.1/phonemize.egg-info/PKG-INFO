@@ -1,0 +1,43 @@
+Metadata-Version: 2.4
+Name: phonemize
+Version: 0.2.1
+Summary: A lightweight and pure Python library for converting text into phonemes, based on a pre-trained model.
+Author-email: Arcosoph <arcosoph.ai@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/arcosoph/phonemize
+Project-URL: Bug Tracker, https://github.com/arcosoph/phonemize/issues
+Keywords: phonemizer,phoneme,tts,text-to-speech,text-processing,pytorch,dp
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: torch
+Requires-Dist: numpy
+
+
+[![PyPI](https://badge.fury.io/py/phonemize.svg)](https://badge.fury.io/py/phonemize)
+[![Python](https://img.shields.io/pypi/pyversions/phonemize.svg)](https://pypi.org/project/phonemize/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/arcosoph/phonemize/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/phonemize?label=downloads&color=green)](https://pypi.org/project/phonemize/)
+[![Last Commit](https://img.shields.io/github/last-commit/arcosoph/phonemize)](https://github.com/arcosoph/phonemize/commits/main)
+
+**This is an unofficial, community-maintained version of the original 'dp' library, created by `dongyx`**. This version has been packaged for easier installation with modern Python environments and is released under the MIT license. All credit for the core algorithm and code goes to the original author.
+
+If you have any problem installing `dp` library then you can use `phonemize`.
+
+### Installation
+
+```bash
+pip install phonemize
+
+```
