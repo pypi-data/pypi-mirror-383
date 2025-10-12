@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: t2string
+Version: 0.1.0
+Summary: Converts new template string (t-string)(in python 3.14) to normal string
+Author-email: Yuvneil <yuvneiledu44@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/mypackage
+Requires-Python: >=3.14
+Description-Content-Type: text/markdown
+
+# 🧩 t2string
+
+Convert **Python 3.14’s `t` strings** (translatable strings) into **normal strings** — quickly and easily.
+
+---
+
+## ✨ Overview
+
+Starting with **Python 3.14**, a new string literal prefix `t` was introduced for *translatable strings*, such as:
+
+```python
+msg = t"Hello, world!"
