@@ -1,0 +1,29 @@
+[project]
+name = "mcts-gen"
+version = "0.0.1"
+description = "A generic MCTS framework driven by an external AI agent."
+requires-python = ">=3.8"
+dependencies = [
+    "fastmcp",
+    "mcts",
+    "mcts-solver"
+]
+authors = [
+	{name = "Akihiro Kuroiwa", email = "akuroiwa@env-reform.com"},
+	{name = "Gemini"},
+	{name = "Perplexity"},
+	{name = "ChatGPT"},
+]
+readme = "README.md"
+license = "GPL-3.0-or-later"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "sphinx",
+    "sphinx-intl",
+    "sphinx_rtd_theme"
+]
+shogi = [
+    "python-shogi"
+]
