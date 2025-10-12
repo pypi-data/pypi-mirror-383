@@ -1,0 +1,147 @@
+Metadata-Version: 2.4
+Name: pyrogrammod
+Version: 2.2.4
+Summary: Modified version of the Pyrogram Telegram MTProto API framework in Python for users and bots.
+Project-URL: Homepage, https://github.com/PyrogramMod/PyrogramMod
+Project-URL: Tracker, https://github.com/PyrogramMod/PyrogramMod/issues
+Project-URL: Community, https://t.me/pyrogramodchat
+Project-URL: Source, https://github.com/PyrogramMod/PyrogramMod
+Project-URL: Documentation, https://pyrogrammod.readthedocs.io
+Author: Dan (original author), PyrogramMod (Fork Maintainer)
+License-File: COPYING
+License-File: COPYING.lesser
+License-File: NOTICE
+Keywords: api,chat,client,library,messenger,mtproto,python,telegram
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: Implementation
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Communications
+Classifier: Topic :: Communications :: Chat
+Classifier: Topic :: Internet
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: aiofiles>=24.1.0
+Requires-Dist: pyaes==1.6.1
+Requires-Dist: pysocks==1.7.1
+Requires-Dist: tgcrypto>=1.2.5
+Provides-Extra: dev
+Requires-Dist: pytest-asyncio>=1.2.0; extra == 'dev'
+Requires-Dist: pytest-cov>=7.0.0; extra == 'dev'
+Requires-Dist: pytest>=7.0.0; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: furo>=2024.8.6; extra == 'docs'
+Requires-Dist: pygments>=2.19.1; extra == 'docs'
+Requires-Dist: sphinx-autobuild>=2024.10.3; extra == 'docs'
+Requires-Dist: sphinx-copybutton>=0.5.2; extra == 'docs'
+Requires-Dist: sphinx<8.0.0; extra == 'docs'
+Provides-Extra: py-tgcalls
+Requires-Dist: py-tgcalls>=2.2.5; extra == 'py-tgcalls'
+Description-Content-Type: text/markdown
+
+<p align="center">
+    <a href="https://github.com/pyrogrammod/pyrogrammod">
+        <img src="https://pyrogrammod.readthedocs.io/en/latest/_static/pyrogram.png" alt="Pyrogram" width="128">
+    </a>
+    <br>
+    <b>Telegram MTProto API Framework for Python</b> (Fork of <a href="https://github.com/pyrogram/pyrogram">Pyrogram</a>)
+    <br>
+    <a href="https://pyrogrammod.readthedocs.io/en/latest/">
+        Homepage
+    </a>
+    •
+    <a href="https://pyrogrammod.readthedocs.io/en/latest/">
+        Documentation
+    </a>
+    •
+    <a href="https://t.me/pyrogrammodnews">
+        News
+    </a>
+</p>
+
+# PyrogramMod <br>[![PyPI](https://img.shields.io/pypi/v/pyrogrammod.svg?logo=python&logoColor=%23959DA5&label=pypi&labelColor=%23282f37)](https://pypi.org/project/pyrogrammod/) [![Downloads](https://pepy.tech/badge/pyrogrammod)](https://pepy.tech/project/pyrogrammod)
+
+> Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots
+
+``` python
+from pyrogram import Client, filters
+
+app = Client("my_account")
+
+
+@app.on_message(filters.private)
+async def hello(client, message):
+    await message.reply("Hello from Pyrogram!")
+
+
+app.run()
+```
+
+**Pyrogram** is a modern, elegant and asynchronous [MTProto API](https://docs.pyrogram.org/topics/mtproto-vs-botapi)
+framework. It enables you to easily interact with the main Telegram API through a user account (custom client) or a bot
+identity (bot API alternative) using Python.
+
+### Support
+
+If you'd like to support Pyrogram, you can consider:
+
+- [Become a GitHub sponsor](https://github.com/sponsors/delivrance).
+- [Become a LiberaPay patron](https://liberapay.com/delivrance).
+- [Become an OpenCollective backer](https://opencollective.com/pyrogram).
+
+### Key Features
+
+- **Ready**: Install Pyrogram with pip and start building your applications right away.
+- **Easy**: Makes the Telegram API simple and intuitive, while still allowing advanced usages.
+- **Elegant**: Low-level details are abstracted and re-presented in a more convenient way.
+- **Fast**: Boosted up by [TgCrypto](https://github.com/pyrogram/tgcrypto), a high-performance cryptography library written in C.  
+- **Type-hinted**: Types and methods are all type-hinted, enabling excellent editor support.
+- **Async**: Fully asynchronous (also usable synchronously if wanted, for convenience).
+- **Powerful**: Full access to Telegram's API to execute any official client action and more.
+
+### Installing
+
+``` bash
+pip3 install https://github.com/PyrogramMod/PyrogramMod/archive/refs/heads/main.zip
+```
+
+### Resources
+
+- The docs contain lots of resources to help you get started with Pyrogram: https://docs.pyrogram.org.
+- Seeking extra help? Come join and ask our community: https://t.me/pyrogrammodchat.
+- For other kind of inquiries, you can send a [message](https://t.me/haskell) or an [e-mail](mailto:dan@pyrogram.org).
+
+### Copyright & License
+
+- Copyright (C) 2017-2022 Dan <<https://github.com/delivrance>>
+- Licensed under the terms of the [GNU Lesser General Public License v3 or later (LGPLv3+)](COPYING.lesser)
+
+### INFO
+
+- 📕 Official Repo: https://github.com/pyrogram/pyrogram
+- 🗞 News: https://t.me/pyrogram
+- 💭 Support Group: https://t.me/pyrogramchat
+- 📚 Docs: https://docs.pyrogram.org
+------------------------------------------------------------
+- 📕 Un-Official Repo: https://github.com/PyrogramMod/PyrogramMod/
+- 🗞 News: https://t.me/PyroGramModNews
+- 💭 Support Group: https://t.me/pyrogramodchat
+- 📚 Docs: https://pyrogrammod.readthedocs.io/en/latest/
+------------------------------------------------------------
+
+- Check out the docs at https://docs.pyrogram.org to learn more about Pyrogram, get started right
+away and discover more in-depth material for building your client applications.
+- Join the official channel at https://t.me/PyroGramModNews and stay tuned for news, updates and announcements.
