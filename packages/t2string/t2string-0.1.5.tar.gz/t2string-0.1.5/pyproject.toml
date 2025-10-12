@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "t2string"  # Must be unique on PyPI
+version = "0.1.5"
+description = "Converts new template string (t-string)(in python 3.14) to normal string"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    { name = "Yuvneil", email = "yuvneiledu44@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/yourusername/mypackage"
