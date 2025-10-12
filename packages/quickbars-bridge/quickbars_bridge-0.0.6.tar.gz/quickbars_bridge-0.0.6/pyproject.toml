@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quickbars-bridge"
+version = "0.0.6"
+description = "Async client for QuickBars TV app"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+dependencies = ["aiohttp>=3.9.0"]
+
+[project.urls]
+Homepage = "https://github.com/trooped/quickbars-bridge"
+Issues = "https://github.com/trooped/quickbars-bridge/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/quickbars_bridge"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/quickbars_bridge",
+  "README.md",
+  "LICENSE",
+]
