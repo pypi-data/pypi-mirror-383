@@ -1,0 +1,32 @@
+[project]
+name = "audipart"
+version = "0.0.1"
+authors = [
+  { name="Hepheir", email="hepheir@gmail.com" },
+]
+description = "Extract and separate audio signals by pitch from `.mp3` or `.wav` files."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/hepheir/audio-pitch-separation"
+Issues = "https://github.com/hepheir/audio-pitch-separation/issues"
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "audipart/*.py",
+]
+exclude = [
+  "*.wav",
+  "*.mp3",
+]
