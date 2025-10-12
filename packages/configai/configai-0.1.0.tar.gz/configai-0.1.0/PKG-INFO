@@ -1,0 +1,336 @@
+Metadata-Version: 2.4
+Name: configai
+Version: 0.1.0
+Summary: PyTorch to HLS deployment compiler powered by Stream-HLS
+Home-page: https://github.com/ayushkumar1808/Stream-HLS
+Author: Ayush Kumar
+Author-email: Ayush Kumar <ayush@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/ayushkumar1808/Stream-HLS
+Project-URL: Repository, https://github.com/ayushkumar1808/Stream-HLS
+Keywords: pytorch,hls,fpga,compiler,mlir,configai
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Compilers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=2.0.0
+Requires-Dist: numpy>=1.20.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: flake8>=4.0.0; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# StreamHLS Compiler
+
+[![PyPI version](https://badge.fury.io/py/streamhls-compiler.svg)](https://badge.fury.io/py/streamhls-compiler)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+**Compile PyTorch models to HLS deployment packages with one line of code.**
+
+StreamHLS Compiler is a Python package that automatically converts PyTorch neural network models into optimized HLS (High-Level Synthesis) C++ code for FPGA deployment, using the Stream-HLS compilation framework.
+
+## Features
+
+✨ **One-Line Compilation** - Convert any PyTorch model to HLS with a single function call
+
+🚀 **Automatic Optimization** - Built-in optimization levels (0-5) for performance tuning
+
+📦 **MNIST_deployment Format** - Outputs ready-to-synthesize deployment packages
+
+🎯 **Compile-Only Mode** - Skip Vitis HLS synthesis for faster iteration
+
+🔧 **Weight Embedding** - Automatically embeds trained weights into generated code
+
+## Installation
+
+### Prerequisites
+
+1. **Stream-HLS Repository** must be installed:
+```bash
+git clone https://github.com/ayushkumar1808/Stream-HLS.git
+export STREAMHLS_REPO=/path/to/Stream-HLS
+```
+
+2. **Python 3.8+** with PyTorch
+
+### Install from PyPI
+
+```bash
+pip install streamhls-compiler
+```
+
+### Install from Source
+
+```bash
+git clone https://github.com/ayushkumar1808/streamhls-compiler.git
+cd streamhls-compiler
+pip install -e .
+```
+
+## Quick Start
+
+### Basic Usage
+
+```python
+import torch
+import torch.nn as nn
+from streamhls import compile_model
+
+# Define your PyTorch model
+class MyModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 128)
+        self.fc2 = nn.Linear(128, 10)
+    
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        return self.fc2(x)
+
+# Create and compile
+model = MyModel()
+
+report = compile_model(
+    model=model,
+    input_shape=(1, 784),
+    output_dir="./MyModel_deployment",
+    model_name="MyModel",
+    opt_level=0
+)
+
+print(f"✅ Deployment package created at: {report['output_dir']}")
+```
+
+### Using the StreamHLSModel Base Class
+
+```python
+from streamhls import StreamHLSModel
+
+class MyModel(StreamHLSModel):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3)
+        self.conv2 = nn.Conv2d(32, 64, 3)
+        self.fc = nn.Linear(64 * 6 * 6, 10)
+    
+    def forward(self, x):
+        x = torch.relu(self.conv1(x))
+        x = torch.relu(self.conv2(x))
+        x = x.view(-1, 64 * 6 * 6)
+        return self.fc(x)
+
+# Compile directly from model
+model = MyModel()
+model.compile_to_hls(
+    input_shape=(1, 3, 32, 32),
+    output_dir="./MyModel_deployment",
+    opt_level=0
+)
+```
+
+## API Reference
+
+### `compile_model()`
+
+Main compilation function.
+
+```python
+compile_model(
+    model: torch.nn.Module,
+    input_shape: Tuple[int, ...],
+    output_dir: str,
+    model_name: str = "Model",
+    opt_level: int = 0,
+    dsps: int = 7680,
+    weights_path: Optional[str] = None,
+    verbose: bool = True
+) -> dict
+```
+
+**Parameters:**
+
+- `model` (torch.nn.Module): PyTorch model to compile
+- `input_shape` (Tuple[int, ...]): Input tensor shape, e.g., `(1, 784)` or `(1, 3, 32, 32)`
+- `output_dir` (str): Output directory for deployment package
+- `model_name` (str): Name of the model (default: "Model")
+- `opt_level` (int): Optimization level 0-5 (default: 0)
+  - `0`: No optimization (fastest compilation)
+  - `3`: Parallelization optimization (recommended)
+  - `5`: Full optimization (slowest, best performance)
+- `dsps` (int): Number of DSPs available (default: 7680)
+- `weights_path` (str, optional): Path to pretrained weights `.pth` file
+- `verbose` (bool): Print compilation progress (default: True)
+
+**Returns:**
+
+Dictionary with compilation report:
+```python
+{
+    "model_name": str,
+    "input_shape": tuple,
+    "opt_level": int,
+    "output_dir": str,
+    "hls_src": str,       # Path to HLS C++ source
+    "mlir_files": str,    # Path to MLIR intermediates
+    "success": bool
+}
+```
+
+## Output Structure
+
+The compilation creates a deployment package in **MNIST_deployment format**:
+
+```
+MyModel_deployment/
+├── hls/
+│   ├── src/              # HLS C++ source code
+│   │   ├── kernel.cpp
+│   │   ├── kernel.h
+│   │   └── run.tcl       # Vitis HLS script
+│   └── data/             # Golden output data
+│       └── output.dat
+├── mlir/                 # MLIR intermediate files
+│   ├── kernel/
+│   ├── host/
+│   └── graphs/
+├── metadata.json         # Compilation metadata
+└── README.md             # Deployment guide
+```
+
+## Optimization Levels
+
+| Level | Description | Use Case |
+|-------|-------------|----------|
+| 0 | No optimization | Fast iteration, debugging |
+| 1 | Basic optimizations | Testing |
+| 2 | Permutation optimization | Moderate performance |
+| 3 | Parallelization | **Recommended for most cases** |
+| 4 | Permutation + Parallelization | High performance |
+| 5 | Full optimization | Maximum performance |
+
+## Examples
+
+### Convolutional Neural Network
+
+```python
+from streamhls import compile_model
+import torch.nn as nn
+
+class SimpleCNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 16, kernel_size=3)
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=3)
+        self.fc = nn.Linear(32 * 6 * 6, 10)
+    
+    def forward(self, x):
+        x = torch.relu(self.conv1(x))
+        x = torch.relu(self.conv2(x))
+        x = x.view(x.size(0), -1)
+        return self.fc(x)
+
+model = SimpleCNN()
+compile_model(
+    model=model,
+    input_shape=(1, 3, 32, 32),
+    output_dir="./CNN_deployment",
+    model_name="SimpleCNN",
+    opt_level=3  # Use parallelization
+)
+```
+
+### With Pretrained Weights
+
+```python
+# Train your model
+model = MyModel()
+# ... training code ...
+torch.save(model.state_dict(), "trained_weights.pth")
+
+# Compile with trained weights
+compile_model(
+    model=model,
+    input_shape=(1, 784),
+    output_dir="./MyModel_deployment",
+    model_name="MyModel",
+    weights_path="trained_weights.pth",
+    opt_level=3
+)
+```
+
+## Environment Variables
+
+- `STREAMHLS_REPO`: Path to Stream-HLS repository (required)
+
+```bash
+export STREAMHLS_REPO=/path/to/Stream-HLS
+```
+
+## Troubleshooting
+
+### "Stream-HLS repository not found"
+
+Set the `STREAMHLS_REPO` environment variable:
+
+```bash
+export STREAMHLS_REPO=/path/to/Stream-HLS
+```
+
+### Compilation Fails
+
+1. Check that Stream-HLS is properly installed
+2. Ensure your model is compatible (no unsupported operations)
+3. Try with `opt_level=0` first for debugging
+4. Set `verbose=True` to see detailed output
+
+## Limitations
+
+- Currently supports compile-only mode (no Vitis HLS synthesis via Python API)
+- Some PyTorch operations may not be supported
+- Model forward pass must be traceable
+
+## Roadmap
+
+- [ ] Automatic model code generation from torch.jit.script
+- [ ] Support for more PyTorch operations
+- [ ] CLI interface
+- [ ] Batch compilation
+- [ ] Vitis HLS synthesis integration
+- [ ] Performance profiling tools
+
+## Contributing
+
+Contributions welcome! Please open an issue or submit a PR.
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Citation
+
+If you use StreamHLS Compiler in your research, please cite:
+
+```bibtex
+@software{streamhls_compiler,
+  author = {Kumar, Ayush},
+  title = {StreamHLS Compiler: PyTorch to HLS Deployment},
+  year = {2025},
+  url = {https://github.com/ayushkumar1808/streamhls-compiler}
+}
+```
+
+## Acknowledgments
+
+Built on top of the [Stream-HLS](https://github.com/ayushkumar1808/Stream-HLS) compilation framework.
+
+---
+
+**Made with ❤️ by Ayush Kumar**
