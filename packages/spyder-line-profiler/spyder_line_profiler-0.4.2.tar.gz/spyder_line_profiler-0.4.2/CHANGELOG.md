@@ -1,0 +1,156 @@
+# History of changes
+
+## Version 0.4.2 (2025/10/11)
+
+This version fixes a bug and makes the plugin compatible with Spyder 6.1.
+
+### Bug fix
+
+* Fix shortcut to run profiler ([PR 100](https://github.com/spyder-ide/spyder-line-profiler/pull/100) by [@rear1019](https://github.com/rear1019))
+
+### Maintenance
+
+* Define run configuration options to make plugin compatible with Spyder 6.1 ([Issue 101](https://github.com/spyder-ide/spyder-line-profiler/issues/101), [Issue 104](https://github.com/spyder-ide/spyder-line-profiler/issues/104), ([PR 105](https://github.com/spyder-ide/spyder-line-profiler/pull/105))
+* Drop Python 3.8 and Python 3.9 ([PR 102](https://github.com/spyder-ide/spyder-line-profiler/pull/102))
+
+
+## Version 0.4.1 (2025/03/10)
+
+This release contains some bug fixes. Thanks to [@rear1019](https://github.com/rear1019) who contributed all the changes except for the last PR.
+
+### Bug fixes
+
+* Fix go-to-line when clicking entries ([PR 94](https://github.com/spyder-ide/spyder-line-profiler/pull/94))
+* Fix setting of working directory ([Issue 85](https://github.com/spyder-ide/spyder-line-profiler/issues/85), [PR 96](https://github.com/spyder-ide/spyder-line-profiler/pull/96))
+* Consistently use UTF-8 encoding even if the system default is different ([PR 99](https://github.com/spyder-ide/spyder-line-profiler/pull/99))
+* Fix runtime dependency check ([PR 95](https://github.com/spyder-ide/spyder-line-profiler/pull/95))
+
+### Maintenance
+
+* Remove QTextCodec for better compatibility with Qt 6 ([Issue 98](https://github.com/spyder-ide/spyder-line-profiler/issues/98), [PR 99](https://github.com/spyder-ide/spyder-line-profiler/pull/99))
+* Fix GitHub automatic testing ([PR 97](https://github.com/spyder-ide/spyder-line-profiler/pull/97))
+
+
+## Version 0.4.0 (2024/09/03)
+
+This release updates the plugin to be used with Spyder 6 and fixes a bug.
+
+### Bug fix
+
+* Allow Python code to have non-ASCII characters ([Issue 90](https://github.com/spyder-ide/spyder-line-profiler/issues/90), [PR 92](https://github.com/spyder-ide/spyder-line-profiler/pull/92))
+
+### Maintenance
+
+* Make plugin compatible with Spyder 6 ([Issue 86](https://github.com/spyder-ide/spyder-line-profiler/issues/86), [Issue 91](https://github.com/spyder-ide/spyder-line-profiler/issues/91), [PR 87](https://github.com/spyder-ide/spyder-line-profiler/pull/87), [PR 93](https://github.com/spyder-ide/spyder-line-profiler/pull/93))
+  * Thanks to [Reinert Huseby Karlsen](https://github.com/rhkarls) and [Simon Kern](https://github.com/skjerns) for help with this!
+
+
+## Version 0.3.2 (2023/06/24)
+
+This version contains some bug fixes and is compatible with Spyder 5.4.
+
+### Bug fixes
+
+* Use Python interpreter/environment from Preferences ([Issue 67](https://github.com/spyder-ide/spyder-line-profiler/issues/67), [Issue 5](https://github.com/spyder-ide/spyder-line-profiler/issues/5), [PR 78](https://github.com/spyder-ide/spyder-line-profiler/pull/78))
+* Adapt colors to Spyder's palette ([Issue 50](https://github.com/spyder-ide/spyder-line-profiler/issues/50), [PR 82](https://github.com/spyder-ide/spyder-line-profiler/pull/82))
+* Update LICENSE.txt to match individual file copyright statements ([Issue 74](https://github.com/spyder-ide/spyder-line-profiler/issues/74), [PR 79](https://github.com/spyder-ide/spyder-line-profiler/pull/79))
+* Update description on PyPI ([Issue 73](https://github.com/spyder-ide/spyder-line-profiler/issues/73), [PR 83](https://github.com/spyder-ide/spyder-line-profiler/pull/83))
+
+### Maintenance
+
+* Updates for Spyder 5.4 ([Issue 80](https://github.com/spyder-ide/spyder-line-profiler/issues/80), [Issue 72](https://github.com/spyder-ide/spyder-line-profiler/issues/72), [PR 77](https://github.com/spyder-ide/spyder-line-profiler/pull/77), [PR 84](https://github.com/spyder-ide/spyder-line-profiler/pull/84))
+* Remove last bits of Python 2 support ([PR 68](https://github.com/spyder-ide/spyder-line-profiler/pull/68))
+* Update test for line_profiler 4.x ([Issue 75](https://github.com/spyder-ide/spyder-line-profiler/issues/75), [PR 68](https://github.com/spyder-ide/spyder-line-profiler/pull/68))
+* Update GitHub test action ([PR 76](https://github.com/spyder-ide/spyder-line-profiler/pull/76))
+
+
+## Version 0.3.1 (2022/08/07)
+
+This version fixes a compatibility issue with Spyder 5.3.2 ([Issue 65](https://github.com/spyder-ide/spyder-line-profiler/issues/65), [PR 66](https://github.com/spyder-ide/spyder-line-profiler/pull/66)).
+
+
+## Version 0.3.0 (2022/06/03)
+
+This version is compatible with Spyder 5.2 and 5.3.
+
+### Issues Closed
+
+* [Issue 54](https://github.com/spyder-ide/spyder-line-profiler/issues/54) - How to proceed with spyder 5 compatibility ([PR 56](https://github.com/spyder-ide/spyder-line-profiler/pull/56) by [@skjerns](https://github.com/skjerns))
+* [Issue 52](https://github.com/spyder-ide/spyder-line-profiler/issues/52) - Spyder 5 compatibility ([PR 56](https://github.com/spyder-ide/spyder-line-profiler/pull/56) by [@skjerns](https://github.com/skjerns))
+* [Issue 48](https://github.com/spyder-ide/spyder-line-profiler/issues/48) - Correctly register shortcuts
+* [Issue 27](https://github.com/spyder-ide/spyder-line-profiler/issues/27) - saving profiling results
+* [Issue 25](https://github.com/spyder-ide/spyder-line-profiler/issues/25) - Text box for file to be profiled accept directories
+
+In this release 5 issues were closed.
+
+### Pull Requests Merged
+
+* [PR 62](https://github.com/spyder-ide/spyder-line-profiler/pull/62) - PR: Update `README.md`, `CONTRIBUTING.md`, screenshot and add `RELEASE.md`, by [@dalthviz](https://github.com/dalthviz)
+* [PR 61](https://github.com/spyder-ide/spyder-line-profiler/pull/61) - PR: Add default config and change plugin icon, by [@dalthviz](https://github.com/dalthviz)
+* [PR 60](https://github.com/spyder-ide/spyder-line-profiler/pull/60) - PR: Remove outdated `conda.recipe` directory, by [@dalthviz](https://github.com/dalthviz)
+* [PR 56](https://github.com/spyder-ide/spyder-line-profiler/pull/56) - PR: Switch to new API for Spyder 5, by [@skjerns](https://github.com/skjerns) ([54](https://github.com/spyder-ide/spyder-line-profiler/issues/54), [53](https://github.com/spyder-ide/spyder-line-profiler/issues/53), [52](https://github.com/spyder-ide/spyder-line-profiler/issues/52))
+
+In this release 4 pull requests were closed.
+
+
+## Version 0.2.1 (2020/04/28)
+
+This release fixes some compatibility issues with Spyder 4.1 and some other bugs.
+
+### Issues Closed
+
+* [Issue 44](https://github.com/spyder-ide/spyder-line-profiler/issues/44) - TextEditor initializer receives unexpected argument size ([PR 46](https://github.com/spyder-ide/spyder-line-profiler/pull/46))
+* [Issue 41](https://github.com/spyder-ide/spyder-line-profiler/issues/41) - Move CI to github actions ([PR 45](https://github.com/spyder-ide/spyder-line-profiler/pull/45))
+* [Issue 39](https://github.com/spyder-ide/spyder-line-profiler/issues/39) - Crash from opening options ([PR 40](https://github.com/spyder-ide/spyder-line-profiler/pull/40))
+* [Issue 35](https://github.com/spyder-ide/spyder-line-profiler/issues/35) - Opening editor from line profiler output is broken ([PR 47](https://github.com/spyder-ide/spyder-line-profiler/pull/47))
+
+In this release 4 issues were closed.
+
+### Pull Requests Merged
+
+* [PR 47](https://github.com/spyder-ide/spyder-line-profiler/pull/47) - PR: Fix opening editor from profiler widget ([35](https://github.com/spyder-ide/spyder-line-profiler/issues/35))
+* [PR 46](https://github.com/spyder-ide/spyder-line-profiler/pull/46) - PR: Fix initialization of TextEditor ([44](https://github.com/spyder-ide/spyder-line-profiler/issues/44))
+* [PR 45](https://github.com/spyder-ide/spyder-line-profiler/pull/45) - PR: Move CI to GitHub Actions ([41](https://github.com/spyder-ide/spyder-line-profiler/issues/41))
+* [PR 43](https://github.com/spyder-ide/spyder-line-profiler/pull/43) - PR: Fix invalid escape sequence in regex string
+* [PR 40](https://github.com/spyder-ide/spyder-line-profiler/pull/40) - PR: Add CONF_DEFAULTS ([39](https://github.com/spyder-ide/spyder-line-profiler/issues/39))
+
+In this release 5 pull requests were closed.
+
+
+## Version 0.2.0 (2019/12/18)
+
+This release updates the plugin to be used with Spyder 4 and fixes some bugs.
+
+### Issues Closed
+
+* [Issue 33](https://github.com/spyder-ide/spyder-line-profiler/issues/33) - Sorting by time / % not working correctly ([PR 38](https://github.com/spyder-ide/spyder-line-profiler/pull/38))
+* [Issue 26](https://github.com/spyder-ide/spyder-line-profiler/issues/26) - Update plugin to Spyder v4 ([PR 36](https://github.com/spyder-ide/spyder-line-profiler/pull/36))
+
+In this release 2 issues were closed.
+
+### Pull Requests Merged
+
+* [PR 38](https://github.com/spyder-ide/spyder-line-profiler/pull/38) - PR: Add natural sort for columns ([33](https://github.com/spyder-ide/spyder-line-profiler/issues/33))
+* [PR 36](https://github.com/spyder-ide/spyder-line-profiler/pull/36) - PR: Compatibility changes for Spyder 4 ([26](https://github.com/spyder-ide/spyder-line-profiler/issues/26))
+* [PR 31](https://github.com/spyder-ide/spyder-line-profiler/pull/31) - PR: Fix continuous integration services
+* [PR 30](https://github.com/spyder-ide/spyder-line-profiler/pull/30) - PR: "Profile by line" Button Behavior
+* [PR 24](https://github.com/spyder-ide/spyder-line-profiler/pull/24) - Update readme: Plugin can now be installed using conda or pip
+* [PR 23](https://github.com/spyder-ide/spyder-line-profiler/pull/23) - Add conda recipe ([15](https://github.com/spyder-ide/spyder-line-profiler/issues/15))
+
+In this release 6 pull requests were closed.
+
+
+## Version 0.1.1 (2017/03/26)
+
+This version improves the packaging. The code itself was not changed.
+
+### Pull Requests Merged
+
+* [PR 22](https://github.com/spyder-ide/spyder-line-profiler/pull/22) - Install tests alongside package
+
+In this release 1 pull request was closed.
+
+
+## Version 0.1.0 (2017/03/22)
+
+Initial release.
