@@ -1,0 +1,98 @@
+[build-system]
+requires = ["maturin>=1.9.6,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "rebop"
+authors = [
+  { name = "Virgile Andreani", email = "virgile.andreani@proton.me" },
+]
+requires-python = ">=3.12"
+dynamic = ["version"]
+dependencies = ["xarray >= 2023.10"]
+description = "A fast stochastic simulator for chemical reaction networks"
+readme = "README.md"
+keywords = ["gillespie-algorithm", "systems-biology", "stochastic", "scientific-computing"]
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.4,<9",
+  "maturin>=1.9.6,<2",
+  "pip>=24.3.1,<25",
+  "pre-commit>=4.0.1,<5",
+]
+
+doc = [
+  "mkdocs>=1.6.1,<2",
+  "mkdocs-material>=9.5.49,<10",
+  "mkdocstrings[python]>=0.27.0,<0.28",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name = "rebop._lib"
+features = ["pyo3/extension-module"]
+
+[tool.ruff]
+extend-exclude = ["benches/*"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "COM812",  # Incompatible with ruff-format
+  "ISC001",  # Incompatible with ruff-format
+  "RET504",  # Unnecessary asignment before return
+  "PYI021",  # Docstrings should not be included in stubs
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_*.py" = ["D", "S101", "PLR2004", "ANN201"]
+"examples/*" = ["INP001"]
+"examples/*.py" = ["T201"]
+"python/rebop/__init__.py" = ["D104"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.pytest.ini_options]
+minversion = "7"
+testpaths = ["tests"]
+log_cli_level = "INFO"
+xfail_strict = true
+addopts = ["-ra", "--strict-config", "--strict-markers"]
+filterwarnings = ["error"]
+
+[tool.mypy]
+strict = true
+warn_unreachable = true
+disallow_untyped_decorators = false
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+rebop = { path = ".", editable = true }
+
+[tool.pixi.feature.dev.tasks]
+build = "maturin develop --extras dev"
+
+[tool.pixi.environments]
+dev = { features = ["dev"] }
+doc = { features = ["doc"] }
