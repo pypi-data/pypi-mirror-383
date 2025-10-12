@@ -1,0 +1,80 @@
+[project]
+name = "boring-math-probability-distributions"
+version = "0.8.1"
+readme = "README.rst"
+requires-python = ">=3.13"
+license = { file = "LICENSE" }
+authors = [{ name = "Geoffrey R. Scheller", email = "geoffrey@scheller.com" }]
+keywords = [
+  "distribution",
+  "probability distributions",
+  "sample data",
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Framework :: Pytest",
+  "Intended Audience :: Education",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = [
+  "matplotlib >= 3.10.1",
+  "pythonic-fp.fptools >= 5.1.1",
+]
+dynamic = ["description"]
+
+[project.urls]
+Changelog = "https://github.com/grscheller/boring-math-probability-distributions/blob/main/CHANGELOG.rst"
+Documentation = "https://grscheller.github.io/boring-math/probability-distributions/development/build/html/"
+Homepage = "https://grscheller.github.io/boring-math/homepage/build/html/"
+Source = "https://github.com/grscheller/boring-math-probability-distributions"
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.4.1",
+]
+
+[build-system]
+requires = ["flit_core>=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "boring_math.probability_distributions"
+
+[tool.mypy]
+enable_incomplete_feature = "NewGenericSyntax"
+explicit_package_bases = true
+implicit_reexport = false
+local_partial_types = true
+namespace_packages = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pylsp-mypy]
+enabled = true
+live-mode = true
+dmypy = false
+strict = true
+report_progress = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+consider_namespace_packages = true
+testpaths = ["tests/"]
+
+[tool.ruff]
+target-version = "py313"
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["C901"]
+"**/*.py" = ["E741"]
+
+[tool.ruff.format]
+quote-style = "single"
+docstring-code-line-length = 72

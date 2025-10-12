@@ -1,0 +1,60 @@
+Metadata-Version: 2.4
+Name: boring-math-probability-distributions
+Version: 0.8.1
+Summary: Visualize probability distributions
+Keywords: distribution,probability distributions,sample data
+Author-email: "Geoffrey R. Scheller" <geoffrey@scheller.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/x-rst
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Framework :: Pytest
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+License-File: LICENSE
+Requires-Dist: matplotlib >= 3.10.1
+Requires-Dist: pythonic-fp.fptools >= 5.1.1
+Requires-Dist: pytest>=8.4.1 ; extra == "test"
+Project-URL: Changelog, https://github.com/grscheller/boring-math-probability-distributions/blob/main/CHANGELOG.rst
+Project-URL: Documentation, https://grscheller.github.io/boring-math/probability-distributions/development/build/html/
+Project-URL: Homepage, https://grscheller.github.io/boring-math/homepage/build/html/
+Project-URL: Source, https://github.com/grscheller/boring-math-probability-distributions
+Provides-Extra: test
+
+Boring Math - Probability Distributions
+=======================================
+
+PyPI project
+`boring-math-probability-distributions
+<https://pypi.org/project/boring-math-probability-distributions>`_.
+
+Package to generate and visualize probability distributions.
+
+- continuous distributions:
+
+  - Normal: ``boring_math.probability_distributions.normal``
+  - Uniform: ``boring_math.probability_distributions.uniform``
+
+- discrete distributions:
+
+  - Binomial: ``boring_math.probability_distributions.binomial``
+
+This pypi project is part of the
+`boring math
+<https://grscheller.github.io/boring-math>`_ projects.
+
+Documentation
+-------------
+
+Documentation for this project is hosted on
+`GitHub Pages
+<https://grscheller.github.io/boring-math/probability-distributions/development/build/html/>`_.
+
+Copyright and License
+---------------------
+
+Copyright (c) 2023-2025 Geoffrey R. Scheller. Licensed under the Apache
+License, Version 2.0. See the LICENSE file for details.
+
