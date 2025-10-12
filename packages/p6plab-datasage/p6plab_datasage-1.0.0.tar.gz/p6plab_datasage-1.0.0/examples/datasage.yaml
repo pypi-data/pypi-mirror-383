@@ -1,0 +1,40 @@
+# DataSage MCP Server Configuration
+
+server:
+  name: "DataSage"
+  description: "Local file server for AI assistants with governance practice documentation"
+
+# Paths to serve files from
+paths:
+  - path: "./mock-data"
+    description: "Governance practice documentation and examples"
+
+settings:
+  max_depth: 10
+  max_file_size: 10485760  # 10MB in bytes
+  text_detection: "auto"  # "auto", "extension", "content"
+  excluded_extensions:
+    - ".exe"
+    - ".bin"
+    - ".jpg"
+    - ".png"
+    - ".pdf"
+    - ".zip"
+    - ".tar"
+    - ".gz"
+
+tools:
+  search:
+    description: "Search governance documentation by content or filename"
+    max_results: 50
+  get_page:
+    description: "Retrieve governance document content"
+  get_page_children:
+    description: "List governance practice directories and documents"
+
+search:
+  fuzzy_threshold: 0.8
+  enable_regex: true
+  index_content: true
+  enable_semantic: true  # Enable semantic search for governance documents
+  semantic_model: "paraphrase-MiniLM-L3-v2"  # Ultra-lightweight model (~17MB)

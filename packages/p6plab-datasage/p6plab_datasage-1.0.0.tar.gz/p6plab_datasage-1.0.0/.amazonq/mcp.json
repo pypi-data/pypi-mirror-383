@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "datasage": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.p6plab_datasage.server", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage"
+    }
+  }
+}
