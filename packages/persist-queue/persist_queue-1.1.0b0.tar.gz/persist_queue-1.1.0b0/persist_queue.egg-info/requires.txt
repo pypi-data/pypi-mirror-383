@@ -1,0 +1,10 @@
+
+[async]
+aiofiles>=0.8.0
+aiosqlite>=0.17.0
+
+[extra]
+msgpack>=0.5.6
+cbor2>=5.2.0
+PyMySQL
+DBUtils<3.0.0
