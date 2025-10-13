@@ -1,0 +1,95 @@
+[project]
+name = "listdiff"
+version = "1.0.5"
+description = "Diff 2 python lists using a given key"
+maintainers = [
+	{ name = "Rehan Khwaja", email = "rehan@khwaja.name" }
+]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"Intended Audience :: Developers",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+	"Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "typing-extensions>=4.13.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/rkhwaja/pylistdiff"
+
+[tool.poe.tasks]
+lint = "ruff check src tests"
+ty = "ty check src tests"
+test = "pytest"
+
+[tool.poe.tasks.test-with-coverage]
+shell = """
+pytest --cov=src/listdiff || exit 1
+coverage xml
+"""
+
+[tool.ruff]
+line-length = 200
+lint.ignore = [
+	"ANN001", # missing-type-function-argument
+	"ANN202", # missing-return-type-private-function
+	"ANN401", # any-type
+	"D100",   # undocumented-public-module
+	"D101",   # missing docstring in public class
+	"D105",	  # missing docstring in magic method
+	"D203",   # one-blank-line-before-class
+	"D205",   # blank-line-after-summary
+	"D206",   # indent-with-spaces
+	"D211",   # blank-line-before-class
+	"D212",   # multi-line-summary-first-line
+	"D400",   # ends-in-period
+	"D401",   # non-imperative-mood
+	"D403",   # first-line-capitalized
+	"D415",   # ends-in-punctuation
+	"N802",   # invalid-function-name
+	"I",      # isort checks
+	"N803",   # invalid-argument-name
+	"N806",   # non-lowercase-variable-in-function
+	"PT013",  # requires `import pytest`
+	"S101",   # Disallows use of assert
+	"TC003", # Requires use of TYPE_CHECKING
+	"W191",   # Checks for indentation that uses tabs
+	]
+lint.select = ["ALL"]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/*" = [
+	"ANN201", # Checks that public functions and methods have return type annotations
+	"D103",   # Checks for undocumented public function definitions
+	"INP001", # Checks for packages that are missing an __init__.py file
+	]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "single"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=7.1",
+    "pytest-cov>=2.9.0",
+    "poethepoet>=0.16.4",
+    "ruff>=0.9.6",
+    "ty>=0.0.1a9",
+]

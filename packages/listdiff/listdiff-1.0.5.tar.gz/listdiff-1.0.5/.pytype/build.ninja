@@ -1,0 +1,15 @@
+rule infer
+  command = /Users/rehan/.virtualenvs/pylistdiff/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --fix-module-collisions --no-report-errors --nofail --quick $in
+  description = infer $module
+rule check
+  command = /Users/rehan/.virtualenvs/pylistdiff/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --analyze-annotated --fix-module-collisions --nofail --quick $in
+  description = check $module
+build /Users/rehan/src/pylistdiff/.pytype/pyi/listdiff/__init__.pyi: check /Users/rehan/src/pylistdiff/listdiff/__init__.py
+  imports = /Users/rehan/src/pylistdiff/.pytype/imports/listdiff.__init__.imports
+  module = listdiff.__init__
+build /Users/rehan/src/pylistdiff/.pytype/pyi/tests/__init__.pyi: check /Users/rehan/src/pylistdiff/tests/__init__.py
+  imports = /Users/rehan/src/pylistdiff/.pytype/imports/tests.__init__.imports
+  module = tests.__init__
+build /Users/rehan/src/pylistdiff/.pytype/pyi/tests/test_all.pyi: check /Users/rehan/src/pylistdiff/tests/test_all.py | /Users/rehan/src/pylistdiff/.pytype/pyi/listdiff/__init__.pyi
+  imports = /Users/rehan/src/pylistdiff/.pytype/imports/tests.test_all.imports
+  module = tests.test_all
