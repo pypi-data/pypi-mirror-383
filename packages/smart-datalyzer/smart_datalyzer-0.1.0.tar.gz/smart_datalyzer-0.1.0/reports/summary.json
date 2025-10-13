@@ -1,0 +1,123 @@
+{
+    "timestamp": "2025-10-13 00:07:50",
+    "ml_readiness_score": 100,
+    "readiness_suggestions": [],
+    "outliers": {
+        "Stress (MPa)": {
+            "count": 0,
+            "examples": []
+        },
+        "Build orientation": {
+            "count": 0,
+            "examples": []
+        },
+        "Defect depth (um)": {
+            "count": 1,
+            "examples": [
+                128
+            ]
+        },
+        "Defect size (um)": {
+            "count": 0,
+            "examples": []
+        },
+        "Distance to surface (um)": {
+            "count": 0,
+            "examples": []
+        },
+        "Nf (cycle)": {
+            "count": 0,
+            "examples": []
+        }
+    },
+    "leakage": {
+        "Defect size (um)": 0.8030020812196622,
+        "Distance to surface (um)": 0.7613634847554287,
+        "Nf (cycle)": 0.9950043162211253
+    },
+    "imbalance": {
+        "27": 0.09090909090909091,
+        "36": 0.09090909090909091,
+        "23": 0.09090909090909091,
+        "57": 0.045454545454545456,
+        "44": 0.045454545454545456,
+        "83": 0.045454545454545456,
+        "53": 0.045454545454545456,
+        "29": 0.045454545454545456,
+        "70": 0.045454545454545456,
+        "65": 0.045454545454545456,
+        "74": 0.045454545454545456,
+        "61": 0.045454545454545456,
+        "50": 0.045454545454545456,
+        "128": 0.045454545454545456,
+        "30": 0.045454545454545456,
+        "49": 0.045454545454545456,
+        "56": 0.045454545454545456,
+        "33": 0.045454545454545456,
+        "85": 0.045454545454545456
+    },
+    "normality": [
+        {
+            "feature": "Stress (MPa)",
+            "skew": 0.389,
+            "kurtosis": -0.847,
+            "Shapiro_p": 0.2391,
+            "DAgostino_p": 0.4743,
+            "KS_p": 0.6619,
+            "p_value": 0.4584,
+            "is_normal": true
+        },
+        {
+            "feature": "Build orientation",
+            "skew": 0.0,
+            "kurtosis": -1.429,
+            "Shapiro_p": 0.0006,
+            "DAgostino_p": 0.0141,
+            "KS_p": 0.2597,
+            "p_value": 0.0915,
+            "is_normal": false
+        },
+        {
+            "feature": "Defect depth (um)",
+            "skew": 1.199,
+            "kurtosis": 1.515,
+            "Shapiro_p": 0.0215,
+            "DAgostino_p": 0.0077,
+            "KS_p": 0.7324,
+            "p_value": 0.2539,
+            "is_normal": false
+        },
+        {
+            "feature": "Defect size (um)",
+            "skew": 0.549,
+            "kurtosis": -0.67,
+            "Shapiro_p": 0.2097,
+            "DAgostino_p": 0.4173,
+            "KS_p": 0.9125,
+            "p_value": 0.5131,
+            "is_normal": true
+        },
+        {
+            "feature": "Distance to surface (um)",
+            "skew": 0.909,
+            "kurtosis": -0.314,
+            "Shapiro_p": 0.0134,
+            "DAgostino_p": 0.1443,
+            "KS_p": 0.1872,
+            "p_value": 0.115,
+            "is_normal": false
+        },
+        {
+            "feature": "Nf (cycle)",
+            "skew": 1.659,
+            "kurtosis": 1.568,
+            "Shapiro_p": 0.0,
+            "DAgostino_p": 0.001,
+            "KS_p": 0.0634,
+            "p_value": 0.0215,
+            "is_normal": false
+        }
+    ],
+    "rows": 22,
+    "columns": 6
+}

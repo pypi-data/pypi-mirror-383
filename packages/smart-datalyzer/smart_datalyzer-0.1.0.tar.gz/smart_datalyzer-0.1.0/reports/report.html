@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Smart Dataset Analyzer Interactive Report</title>
+    <style>
+      /* ========== GLOBAL STYLE ========== */
+      body {
+        font-family: "Times New Roman", serif;
+        background-color: #f8f9fa;
+        margin: 20px;
+        color: #222;
+      }
+
+      h1 {
+        color: #1b5e20;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        color: #2c3e50;
+        border-left: 6px solid #1b5e20;
+        padding-left: 10px;
+        margin-top: 40px;
+        background-color: #ecf0f1;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+
+      h3 {
+        color: #333;
+      }
+
+      /* ========== CONTAINERS ========== */
+      .card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 25px;
+      }
+
+      .readiness {
+        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        text-align: center;
+      }
+
+      .readiness h2 {
+        color: #1b5e20;
+        border-left: none;
+        background: none;
+        margin: 0;
+      }
+
+      .readiness ul {
+        list-style: disc;
+        text-align: left;
+        display: inline-block;
+      }
+
+      /* ========== TABLES ========== */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+        font-size: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #e0f2f1;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f8e9;
+      }
+
+      /* ========== TOOLTIP ========== */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        color: #00796b;
+        font-weight: bold;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 240px;
+        background-color: #333;
+        color: #fff;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -120px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* ========== IMAGE GRID ========== */
+      .plot-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .plot-gallery img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .plot-gallery img:hover {
+        transform: scale(1.03);
+      }
+
+      /* ========== FOOTER ========== */
+      footer {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 14px;
+        color: #777;
+      }
+
+      /* ========== NORMALITY COLORS ========== */
+      .non-normal {
+        color: red;
+      }
+      .normal {
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Smart Dataset Analyzer Interactive Report</h1>
+
+    <!-- Readiness Summary -->
+    <div class="readiness">
+      <h2>ML Readiness Score: 100/100</h2>
+      
+      <p>
+        <strong>No critical issues detected.</strong> Dataset is ready for ML
+        modeling.
+      </p>
+      
+    </div>
+
+    <!-- Feature Stats -->
+    <div class="card">
+      <h2>Feature Statistics</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>missing_values</th>
+      <th>missing_pct</th>
+      <th>unique_values</th>
+      <th>variance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Stress (MPa)</th>
+      <td>22.0</td>
+      <td>3.188636e+02</td>
+      <td>8.724530e+01</td>
+      <td>200.0</td>
+      <td>250.00</td>
+      <td>310.0</td>
+      <td>387.5</td>
+      <td>500.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>9</td>
+      <td>7.611742e+03</td>
+    </tr>
+    <tr>
+      <th>Build orientation</th>
+      <td>22.0</td>
+      <td>4.500000e+01</td>
+      <td>3.674235e+01</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>45.0</td>
+      <td>90.0</td>
+      <td>90.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>3</td>
+      <td>1.350000e+03</td>
+    </tr>
+    <tr>
+      <th>Defect depth (um)</th>
+      <td>22.0</td>
+      <td>5.177273e+01</td>
+      <td>2.565324e+01</td>
+      <td>23.0</td>
+      <td>30.75</td>
+      <td>49.5</td>
+      <td>64.0</td>
+      <td>128.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>19</td>
+      <td>6.580887e+02</td>
+    </tr>
+    <tr>
+      <th>Defect size (um)</th>
+      <td>22.0</td>
+      <td>6.154545e+01</td>
+      <td>2.585072e+01</td>
+      <td>28.0</td>
+      <td>39.75</td>
+      <td>59.0</td>
+      <td>78.0</td>
+      <td>115.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>20</td>
+      <td>6.682597e+02</td>
+    </tr>
+    <tr>
+      <th>Distance to surface (um)</th>
+      <td>22.0</td>
+      <td>5.015909e+02</td>
+      <td>3.391858e+02</td>
+      <td>85.0</td>
+      <td>279.00</td>
+      <td>343.5</td>
+      <td>720.0</td>
+      <td>1303.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>22</td>
+      <td>1.150470e+05</td>
+    </tr>
+    <tr>
+      <th>Nf (cycle)</th>
+      <td>22.0</td>
+      <td>1.074523e+08</td>
+      <td>1.628159e+08</td>
+      <td>110000.0</td>
+      <td>4315000.00</td>
+      <td>24450000.0</td>
+      <td>132250000.0</td>
+      <td>535000000.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>22</td>
+      <td>2.650901e+16</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+    <!-- Outlier Analysis -->
+    <div class="card">
+      <h2>Outlier Analysis</h2>
+      <table>
+        <tr>
+          <th>Column</th>
+          <th>Outlier Count</th>
+          <th>Example Values</th>
+          <th>Outlier %</th>
+        </tr>
+        
+        <tr>
+          <td>Stress (MPa)</td>
+          <td>0</td>
+          <td>
+            <span class="tooltip"
+              >View<span class="tooltiptext"
+                ></span
+              ></span
+            >
+          </td>
+          <td>%</td>
+        </tr>
+        
+        <tr>
+          <td>Build orientation</td>
+          <td>0</td>
+          <td>
+            <span class="tooltip"
+              >View<span class="tooltiptext"
+                ></span
+              ></span
+            >
+          </td>
+          <td>%</td>
+        </tr>
+        
+        <tr>
+          <td>Defect depth (um)</td>
+          <td>1</td>
+          <td>
+            <span class="tooltip"
+              >View<span class="tooltiptext"
+                >128</span
+              ></span
+            >
+          </td>
+          <td>%</td>
+        </tr>
+        
+        <tr>
+          <td>Defect size (um)</td>
+          <td>0</td>
+          <td>
+            <span class="tooltip"
+              >View<span class="tooltiptext"
+                ></span
+              ></span
+            >
+          </td>
+          <td>%</td>
+        </tr>
+        
+        <tr>
+          <td>Distance to surface (um)</td>
+          <td>0</td>
+          <td>
+            <span class="tooltip"
+              >View<span class="tooltiptext"
+                ></span
+              ></span
+            >
+          </td>
+          <td>%</td>
+        </tr>
+        
+        <tr>
+          <td>Nf (cycle)</td>
+          <td>0</td>
+          <td>
+            <span class="tooltip"
+              >View<span class="tooltiptext"
+                ></span
+              ></span
+            >
+          </td>
+          <td>%</td>
+        </tr>
+        
+      </table>
+    </div>
+
+    <!-- Normality Analysis -->
+    <div class="card">
+      <h2>Normality Test Results</h2>
+      
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>Skew</th>
+          <th>Kurtosis</th>
+          <th>Shapiro p</th>
+          <th>D’Agostino p</th>
+          <th>KS p</th>
+          <th>Status</th>
+        </tr>
+
+        
+        <table>
+          <tr>
+            <th>Feature</th>
+            <th>Skew</th>
+            <th>Kurtosis</th>
+            <th>Shapiro p</th>
+            <th>D’Agostino p</th>
+            <th>KS p</th>
+            <th>Status</th>
+          </tr>
+
+           
+          <tr
+            class="normal"
+          >
+            <td>Stress (MPa)</td>
+            <td>0.389</td>
+            <td>-0.847</td>
+            <td>0.2391</td>
+            <td>0.4743</td>
+            <td>0.6619</td>
+            <td>
+              ✅ Normal
+            </td>
+          </tr>
+            
+          <tr
+            class="non-normal"
+          >
+            <td>Build orientation</td>
+            <td>0.000</td>
+            <td>-1.429</td>
+            <td>0.0006</td>
+            <td>0.0141</td>
+            <td>0.2597</td>
+            <td>
+              ❌ Non-Normal
+            </td>
+          </tr>
+            
+          <tr
+            class="non-normal"
+          >
+            <td>Defect depth (um)</td>
+            <td>1.199</td>
+            <td>1.515</td>
+            <td>0.0215</td>
+            <td>0.0077</td>
+            <td>0.7324</td>
+            <td>
+              ❌ Non-Normal
+            </td>
+          </tr>
+            
+          <tr
+            class="normal"
+          >
+            <td>Defect size (um)</td>
+            <td>0.549</td>
+            <td>-0.670</td>
+            <td>0.2097</td>
+            <td>0.4173</td>
+            <td>0.9125</td>
+            <td>
+              ✅ Normal
+            </td>
+          </tr>
+            
+          <tr
+            class="non-normal"
+          >
+            <td>Distance to surface (um)</td>
+            <td>0.909</td>
+            <td>-0.314</td>
+            <td>0.0134</td>
+            <td>0.1443</td>
+            <td>0.1872</td>
+            <td>
+              ❌ Non-Normal
+            </td>
+          </tr>
+            
+          <tr
+            class="non-normal"
+          >
+            <td>Nf (cycle)</td>
+            <td>1.659</td>
+            <td>1.568</td>
+            <td>0.0000</td>
+            <td>0.0010</td>
+            <td>0.0634</td>
+            <td>
+              ❌ Non-Normal
+            </td>
+          </tr>
+           
+        </table>
+        
+      </table>
+      
+    </div>
+
+    <!-- Leakage -->
+    <div class="card">
+      <h2>Target Leakage Detection</h2>
+      
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>Accuracy</th>
+        </tr>
+        
+        <tr class="normal">
+          <td>Defect size (um)</td>
+          <td>0.80</td>
+        </tr>
+        
+        <tr class="normal">
+          <td>Distance to surface (um)</td>
+          <td>0.76</td>
+        </tr>
+        
+        <tr class="non-normal">
+          <td>Nf (cycle)</td>
+          <td>1.00</td>
+        </tr>
+        
+      </table>
+      
+    </div>
+
+    <!-- Imbalance -->
+    <div class="card">
+      <h2>Class Imbalance Check</h2>
+      
+      <table>
+        <tr>
+          <th>Class</th>
+          <th>Percentage</th>
+        </tr>
+        
+        <tr style="color: red">
+          <td>27</td>
+          <td>9.09%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>36</td>
+          <td>9.09%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>23</td>
+          <td>9.09%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>57</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>44</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>83</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>53</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>29</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>70</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>65</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>74</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>61</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>50</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>128</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>30</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>49</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>56</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>33</td>
+          <td>4.55%</td>
+        </tr>
+        
+        <tr style="color: red">
+          <td>85</td>
+          <td>4.55%</td>
+        </tr>
+        
+      </table>
+      
+    </div>
+
+    <!-- Sectioned Visualizations -->
+     
+    <div class="card">
+      <h2>Distribution Plots</h2>
+      <div class="plot-gallery">
+        
+        <img src="plots\Build orientation_distribution.png" alt="Distribution Plots" width="400" />
+        
+        <img src="plots\Defect depth (um)_distribution.png" alt="Distribution Plots" width="400" />
+        
+        <img src="plots\Defect size (um)_distribution.png" alt="Distribution Plots" width="400" />
+        
+        <img src="plots\Distance to surface (um)_distribution.png" alt="Distribution Plots" width="400" />
+        
+        <img src="plots\Nf (cycle)_distribution.png" alt="Distribution Plots" width="400" />
+        
+        <img src="plots\Stress (MPa)_distribution.png" alt="Distribution Plots" width="400" />
+        
+      </div>
+    </div>
+      
+    <div class="card">
+      <h2>Boxplots</h2>
+      <div class="plot-gallery">
+        
+        <img src="plots\Build orientation_boxplot.png" alt="Boxplots" width="400" />
+        
+        <img src="plots\Defect depth (um)_boxplot.png" alt="Boxplots" width="400" />
+        
+        <img src="plots\Defect size (um)_boxplot.png" alt="Boxplots" width="400" />
+        
+        <img src="plots\Distance to surface (um)_boxplot.png" alt="Boxplots" width="400" />
+        
+        <img src="plots\Nf (cycle)_boxplot.png" alt="Boxplots" width="400" />
+        
+        <img src="plots\Stress (MPa)_boxplot.png" alt="Boxplots" width="400" />
+        
+      </div>
+    </div>
+      
+    <div class="card">
+      <h2>Violin Plots</h2>
+      <div class="plot-gallery">
+        
+        <img src="plots\Build orientation_violinplot.png" alt="Violin Plots" width="400" />
+        
+        <img src="plots\Defect depth (um)_violinplot.png" alt="Violin Plots" width="400" />
+        
+        <img src="plots\Defect size (um)_violinplot.png" alt="Violin Plots" width="400" />
+        
+        <img src="plots\Distance to surface (um)_violinplot.png" alt="Violin Plots" width="400" />
+        
+        <img src="plots\Nf (cycle)_violinplot.png" alt="Violin Plots" width="400" />
+        
+        <img src="plots\Stress (MPa)_violinplot.png" alt="Violin Plots" width="400" />
+        
+      </div>
+    </div>
+      
+    <div class="card">
+      <h2>Swarm Plots</h2>
+      <div class="plot-gallery">
+        
+        <img src="plots\Build orientation_swarmplot.png" alt="Swarm Plots" width="400" />
+        
+        <img src="plots\Defect depth (um)_swarmplot.png" alt="Swarm Plots" width="400" />
+        
+        <img src="plots\Defect size (um)_swarmplot.png" alt="Swarm Plots" width="400" />
+        
+        <img src="plots\Distance to surface (um)_swarmplot.png" alt="Swarm Plots" width="400" />
+        
+        <img src="plots\Nf (cycle)_swarmplot.png" alt="Swarm Plots" width="400" />
+        
+        <img src="plots\Stress (MPa)_swarmplot.png" alt="Swarm Plots" width="400" />
+        
+      </div>
+    </div>
+      
+    <div class="card">
+      <h2>Correlation</h2>
+      <div class="plot-gallery">
+        
+        <img src="plots\correlation_pearson.png" alt="Correlation" width="400" />
+        
+        <img src="plots\correlation_spearman.png" alt="Correlation" width="400" />
+        
+        <img src="plots\correlation_kendall.png" alt="Correlation" width="400" />
+        
+        <img src="plots\correlation_pearson_upper.png" alt="Correlation" width="400" />
+        
+      </div>
+    </div>
+      
+    <div class="card">
+      <h2>QQ Plots</h2>
+      <div class="plot-gallery">
+        
+        <img src="plots\qqplot_Build orientation.png" alt="QQ Plots" width="400" />
+        
+        <img src="plots\qqplot_Defect depth (um).png" alt="QQ Plots" width="400" />
+        
+        <img src="plots\qqplot_Defect size (um).png" alt="QQ Plots" width="400" />
+        
+        <img src="plots\qqplot_Distance to surface (um).png" alt="QQ Plots" width="400" />
+        
+        <img src="plots\qqplot_Nf (cycle).png" alt="QQ Plots" width="400" />
+        
+        <img src="plots\qqplot_Stress (MPa).png" alt="QQ Plots" width="400" />
+        
+      </div>
+    </div>
+            
+    <div class="card">
+      <h2>Feature Importance</h2>
+      <div class="plot-gallery">
+        <img
+          src="plots\feature_importance.png"
+          alt="Feature Importance"
+          style="max-width: 500px; height: auto"
+        />
+      </div>
+    </div>
+     
+    <div class="card">
+      <h2>PCA Plot</h2>
+      <div class="plot-gallery">
+        
+        <img
+          src="plots\pca_variance.png"
+          alt="PCA Plot"
+          style="max-width: 500px; height: auto"
+        />
+        
+      </div>
+    </div>
+     
+    <div class="card">
+      <h2>t-SNE Plot</h2>
+      <div class="plot-gallery">
+        
+        <img
+          src="plots\tsne_scatter.png"
+          alt="t-SNE Plot"
+          style="max-width: 500px; height: auto"
+        />
+        
+      </div>
+    </div>
+    
+
+    <footer>
+      <p>Generated on 2025-10-13 00:07:50 | Enhanced Smart Dataset Analyzer v2</p>
+    </footer>
+  </body>
+</html>
