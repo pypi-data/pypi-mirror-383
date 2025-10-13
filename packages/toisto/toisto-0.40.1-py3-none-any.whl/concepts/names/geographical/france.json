@@ -1,0 +1,97 @@
+{
+    "concepts": {
+        "france": {
+            "hypernym": "country"
+        },
+        "french (nationality)": {
+            "hypernym": "nationality",
+            "involves": "france"
+        },
+        "I am from France": {
+            "involves": "france"
+        },
+        "I am French": {
+            "involves": "french (nationality)"
+        }
+    },
+    "labels": {
+        "en": [
+            {
+                "concept": "france",
+                "label": "France"
+            },
+            {
+                "concept": "french (nationality)",
+                "label": "French",
+                "roots": "France"
+            },
+            {
+                "concept": "I am from France",
+                "label": "I am from France.",
+                "roots": [
+                    "I am",
+                    "France"
+                ]
+            },
+            {
+                "concept": "I am French",
+                "label": "I am French.",
+                "roots": [
+                    "I am",
+                    "French"
+                ]
+            }
+        ],
+        "fi": [
+            {
+                "concept": "france",
+                "label": "Ranska"
+            },
+            {
+                "concept": "french (nationality)",
+                "label": "ranskalainen",
+                "roots": "Ranska"
+            },
+            {
+                "concept": "I am from France",
+                "label": "Minä olen kotoisin Ranskasta.",
+                "roots": "Ranska"
+            },
+            {
+                "concept": "I am French",
+                "label": "Minä olen ranskalainen.",
+                "roots": [
+                    "minä olen",
+                    "Ranska"
+                ]
+            }
+        ],
+        "nl": [
+            {
+                "concept": "france",
+                "label": "Frankrijk"
+            },
+            {
+                "concept": "french (nationality)",
+                "label": "Frans",
+                "roots": "Frankrijk"
+            },
+            {
+                "concept": "I am from France",
+                "label": "Ik kom uit Frankrijk.",
+                "roots": [
+                    "ik kom",
+                    "Frankrijk"
+                ]
+            },
+            {
+                "concept": "I am French",
+                "label": "Ik ben Frans.",
+                "roots": [
+                    "ik ben",
+                    "Frans"
+                ]
+            }
+        ]
+    }
+}

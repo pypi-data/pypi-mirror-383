@@ -1,0 +1,68 @@
+{
+    "concepts": {
+        "basketball": {
+            "example": "I play basketball",
+            "hypernym": "team sport"
+        },
+        "I play basketball": {}
+    },
+    "labels": {
+        "en": [
+            {
+                "concept": "basketball",
+                "label": "basketball",
+                "roots": "ball"
+            },
+            {
+                "concept": "I play basketball",
+                "label": "I play basketball.",
+                "roots": [
+                    "I play",
+                    "basketball"
+                ]
+            }
+        ],
+        "fi": [
+            {
+                "concept": "basketball",
+                "label": "koripallo",
+                "roots": "pallo"
+            },
+            {
+                "concept": "basketball",
+                "label": "koris",
+                "colloquial": true
+            },
+            {
+                "concept": "I play basketball",
+                "label": "Minä pelaan koripalloa.",
+                "cloze": "Minä pelaan (koripallo).",
+                "roots": [
+                    "minä pelaan",
+                    "koripallo"
+                ]
+            },
+            {
+                "concept": "I play basketball",
+                "label": "Mä pelaan korista.",
+                "colloquial": true,
+                "roots": "koris"
+            }
+        ],
+        "nl": [
+            {
+                "concept": "basketball",
+                "label": "het basketbal",
+                "roots": "de bal"
+            },
+            {
+                "concept": "I play basketball",
+                "label": "Ik speel basketbal.",
+                "roots": [
+                    "ik speel",
+                    "het basketbal"
+                ]
+            }
+        ]
+    }
+}
