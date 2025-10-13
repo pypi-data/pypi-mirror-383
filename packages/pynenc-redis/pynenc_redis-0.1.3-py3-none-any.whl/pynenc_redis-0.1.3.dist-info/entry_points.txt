@@ -1,0 +1,7 @@
+[pynenc.plugins]
+redis_arg_cache = pynenc_redis.arg_cache.redis_arg_cache
+redis_broker = pynenc_redis.broker.redis_broker
+redis_builder = pynenc_redis.builder:RedisBuilderPlugin
+redis_orchestrator = pynenc_redis.orchestrator.redis_orchestrator
+redis_state_backend = pynenc_redis.state_backend.redis_state_backend
+redis_trigger = pynenc_redis.trigger.redis_trigger
