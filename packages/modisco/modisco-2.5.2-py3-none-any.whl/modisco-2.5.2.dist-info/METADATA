@@ -1,0 +1,31 @@
+Metadata-Version: 2.4
+Name: modisco
+Version: 2.5.2
+Summary: Transcription Factor MOtif Discovery from Importance SCOres
+Home-page: https://github.com/kundajelab/tfmodisco
+Author: Jacob Schreiber
+Author-email: jmschreiber91@gmail.com
+License: LICENSE.txt
+Requires-Python: >=3.7
+License-File: LICENSE
+Requires-Dist: numpy>=1.21.5
+Requires-Dist: scipy>=1.6.2
+Requires-Dist: numba>=0.53.1
+Requires-Dist: scikit-learn>=1.0.2
+Requires-Dist: leidenalg>=0.8.10
+Requires-Dist: igraph>=0.9.11
+Requires-Dist: tqdm>=4.38.0
+Requires-Dist: pandas>=1.4.3
+Requires-Dist: logomaker>=0.8
+Requires-Dist: h5py>=3.7.0
+Requires-Dist: hdf5plugin
+Requires-Dist: memelite
+Requires-Dist: jinja2
+Dynamic: author
+Dynamic: author-email
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
