@@ -1,0 +1,7 @@
+from modchem.experiment.experimental import Experiment
+
+class TestExperiment(Experiment):
+
+    def init(self):
+        """Required method. Deleted it return exception"""
+        return super().init()
