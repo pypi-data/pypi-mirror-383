@@ -1,0 +1,7 @@
+# Include all template files including dotfiles
+recursive-include nextpy/templates *
+recursive-include nextpy/templates .*
+
+# Include package data
+include README.md
+include LICENSE
