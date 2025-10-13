@@ -1,0 +1,164 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "labreportpy"
+dynamic = ["version"]
+description = "Small collection of tools for lab reports in physics."
+readme = "README.md"
+authors = [
+  { name = "Anno Knierim" },
+]
+maintainers = [
+  { name = "Anno Knierim", email = "anno.knierim@tu-dortmund.de" },
+]
+license = { text = "MIT" }
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Development Status :: 4 - Beta",
+]
+
+requires-python = ">=3.12"
+
+dependencies = [
+  "click",
+  "matplotlib",
+  "numpy",
+  "pandas",
+  "scipy",
+  "rich",
+]
+
+[dependency-groups]
+tests = [
+  "coverage",
+  "h5py",
+  "pytest",
+  "pytest-cov",
+  "pytest-order",
+  "pytest-xdist",
+  "restructuredtext-lint",
+]
+
+docs = [
+  "graphviz",
+  "ipython",
+  "jupyter",
+  "linkify-it-py",
+  "matplotlib",
+  "myst-parser",
+  "nbsphinx",
+  "notebook",
+  "numpydoc",
+  "pydata-sphinx-theme",
+  "sphinx-autobuild",
+  "sphinx-automodapi",
+  "sphinx-changelog",
+  "sphinx-copybutton",
+  "sphinx-design",
+  "sphinx-gallery",
+  "sphinx-tippy",
+  "sphinx-togglebutton",
+  "sphinx",
+  "sphinxcontrib-bibtex",
+]
+
+dev = [
+  "ipython",
+  "jupyter",
+  "pre-commit",
+  {include-group = "tests"},
+  {include-group = "docs"},
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/labreportpy/_version.py"
+
+[tool.hatch.build.targets.wheel]
+include = ["src/labreportpy"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src/labreportpy" = "labreportpy"
+
+[tool.coverage.run]
+omit = [
+  "src/labreportpy/version.py",
+  "src/labreportpy/_version.py",
+  "docs/*",
+]
+
+[tool.towncrier]
+    package = "labreportpy"
+    directory = "docs/changes"
+    filename = "CHANGES.rst"
+    template = "docs/changes/template.rst"
+    # let towncrier create proper links to the merged PR
+    issue_format = "`#{issue} <https://github.com/aknierim/labreportpy/pull/{issue}>`__"
+
+    [tool.towncrier.fragment.feature]
+        name = "New Features"
+        showcontent = true
+
+    [tool.towncrier.fragment.bugfix]
+        name = "Bug Fixes"
+        showcontent = true
+
+    [tool.towncrier.fragment.api]
+        name = "API Changes"
+        showcontent = true
+
+    [tool.towncrier.fragment.datamodel]
+        name = "Data Model Changes"
+        showcontent = true
+
+    [tool.towncrier.fragment.optimization]
+        name = "Refactoring and Optimization"
+        showcontent = true
+
+    [tool.towncrier.fragment.maintenance]
+        name = "Maintenance"
+        showcontent = true
+
+    [[tool.towncrier.section]]
+        name = ""
+        path = ""
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+extend-exclude = ["tests", "examples"]
+
+[tool.ruff.lint]
+extend-select = [
+  "I",  # isort
+  "E", # pycodestyle
+  "F", # Pyflakes
+  "UP", # pyupgrade
+  "B", # flake8-bugbear
+  "SIM", # flake8-simplify
+]
+ignore = ["B905"]
+
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.per-file-ignores]
+"examples/**" = ["I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+known-first-party = ["labreportpy"]
