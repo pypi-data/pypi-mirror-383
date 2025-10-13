@@ -1,0 +1,164 @@
+Metadata-Version: 2.4
+Name: dv2s
+Version: 0.9.0
+Summary: DNA Variance to Structure
+Author-email: Ping Wu <wpwupingwp@outlook.com>, Linchuan Deng <linchuan.deng@outlook.com>
+License: AGPL-3.0
+License-File: LICENSE
+Requires-Python: >=3.12
+Requires-Dist: biopython>=1.85
+Requires-Dist: loguru>=0.7.3
+Requires-Dist: matplotlib>=3.10.5
+Requires-Dist: requests>=2.32.4
+Description-Content-Type: text/markdown
+
+# DV2S: DNA Variant to Structure
+
+[![PyPI version](https://badge.fury.io/py/dv2s.svg)](https://badge.fury.io/py/dv2s)
+[![License](https://img.shields.io/badge/license-AGPL-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
+
+A computational tool that maps DNA sequence variations to protein structures, 
+enabling structural interpretation of genetic variants.
+
+## Features
+
+- **DNA to Protein Mapping**: Translate DNA sequences and map variants to protein structures
+- **Multiple Structure Input**: Support for PDB and mmCIF formats
+- **Flexible Operation Modes**: 
+  - `consensus`: Generate consensus sequence for structure prediction
+  - `map`: Map alignment to existing protein structure
+  - `skip`: Skip structure processing
+- **Advanced Structure Prediction**: Integration with ESM, Boltz-2, and AlphaFold2
+- **Quality Control**: pLDDT score filtering for predicted structures
+
+## Installation
+
+```bash
+# install for all user
+pip install dv2s
+# install for current user
+pip install dv2s --user
+```
+
+## Quick Start
+
+```bash
+python3 -m dv2s -dna sequences.fasta -nvidia_key key_file -output result
+```
+
+## Usage
+
+```bash
+# use consensus sequence of alignment to predict protein structure and analyze
+python3 -m dv2s -dna dna_seq.fasta -output analysis_results
+# use nvidia's API to predict protein structure via Boltz-2 model
+python3 -m dv2s -dna dna_seq.fasta -output analysis_results -nvidia_key key_file -predict boltz-2
+# map DNA alignment to given protein structure's sequence
+python3 dv2s.py -dna sequences.fasta -pdb structure.pdb -mode map
+# only preprocess and align the input sequence, skip protein strucutre prediction and analyze
+python3 dv2s.py -dna sequences.fasta -mode skip
+# use previous protein alignment to skip the align step
+python3 dv2s.py -dna sequences.fasta -protein_aln sequence.protein.aln -nvidia_key key_file -predict esm-long
+```
+
+## Command Line Options
+
+### Sequence Input
+- `-dna` **Required**: DNA sequences in FASTA format
+- `-protein_aln`: Aligned protein sequences in FASTA format
+- `-table_id`: Translation table ID (default: 1, standard genetic code)
+
+### Structure Input
+- `-mode`: Operation mode (`consensus`, `map`, `skip`), default: `consensus`
+  - `consensus`: use alignment to generate consensus sequence and generate structure prediction
+  - `map`: map alignment to given protein structure
+  - `skip`: skip structure prediction and analysis
+  - 
+- `-pdb`: Protein structure in PDB format
+- `-mmcif`: Protein structure in mmCIF format
+- `-predict`: Structure prediction method (`auto`, `esm`, `esm-long`, `boltz-2`, `alphafold2`)
+  - `auto`: Try all methods
+  - `esm`: Use ESMFold server, only suitable for protein sequence shorter than 400 aa
+  - `esm-long`: Use nvidia's ESMFold API, allow longer input (shorter than 1024 aa)
+  - `boltz-2`: Use nvidia's Boltz-2 API, allow the longest input (shorter than 4096 aa)
+  - `alphafold2`: Use nvidia's AlphaFold2 API, allow the longest input (shorter than 4096 aa) but slower
+- `-nvidia_key`: nvidia API key file for prediction. Text file that contains only one line for the API key
+
+### Options
+- `-mask_low_plddt`: Mask low pLDDT score residues in predicted structures. Set the residues' B-factor to 0
+- `-min_plddt`: Minimum pLDDT value threshold (default: 0.3)
+- `-n_thread`: Number of threads (default: -1, use all CPU cores)
+- `-output`: Output directory for results
+- `-gene`: Gene name, for retrieve protein structure from Uniprot
+- `-organism`: Organism name (e.g., "Oryza sativa"), for Uniprot. Currently, Uniprot may return unwanted result.
+
+## Output
+DV2S use input filename's prefix as output's prefix.
+DV2S generates comprehensive outputs including:
+
+### Summary
+- `.csv`: CSV-format result of the analysis
+
+### Sequence
+- `.dna.fasta`: A copy of input DNA sequences
+- `.protein.fasta`: Translated protein sequences
+- `.dna_cons.fasta`: Consensus sequence generated from the DNA alignment without gaps
+- `.protein_cons.fasta`: Consensus sequence generated from the protein alignment without gaps
+ 
+### Alignment
+- `.dna.aln`: DNA alignment, generated from input DNA sequences and protein alignment
+- `.protein.aln`: Protein alignment
+- `.clean_dna.aln`: DNA alignment that exclude invalid protein-coding sequences
+- `.clean_protein.aln`: Protein alignment that exclude invalid protein-coding sequences
+ 
+### Subalign
+- `.helix_DNA.aln`: A subset of sites in DNA alignment which correspond to protein helix structure. 
+    The secondary structure is defined by the consensus sequence's protein structure
+- `.strand_DNA.aln`: A subset of sites in DNA alignment which correspond to protein strand structure
+- `.coil_DNA.aln`: A subset of sites in DNA alignment which correspond to protein coil structure
+- `.helix_protein.aln`: A subset of sites in protein alignment which correspond to protein helix structure
+- `.strand_protein.aln`: A subset of sites in protein alignment which correspond to protein strand structure
+- `.coil_protein.aln`: A subset of sites in protein alignment which correspond to protein coil structure
+
+### Protein structure
+- `.predict.pdb`: Protein structure prediction result
+- `.Consensus_ratio.mmcif`: MMCIF-format protein structure file, the B-factor column contains
+  normalized consensus ratio of the DNA alignment
+- `.DNA_entropy.mmcif`: MMCIF-format protein structure file, the B-factor column contains
+  normalized DNA entropy of the DNA alignment
+- `.DNA_Pi.mmcif`: MMCIF-format protein structure file, the B-factor column contains
+  normalized nucleotide diversity (Pi) of the DNA alignment
+- `.DNA_Pi_omega.mmcif`: MMCIF-format protein structure file, the B-factor column contains
+  normalized Pi-omega (nonsynonymously variance rate/synonymous variance rate) of the DNA alignment. 
+  `Inf` and `NaN` are normalized to 0 or 5 * max value for visualization
+- `.protein_entropy.mmcif`: MMCIF-format protein structure file, the B-factor column contains
+  normalized protein entropy of the DNA alignment
+- `.protein_Pi.mmcif`: MMCIF-format protein structure file, the B-factor column contains
+  normalized nucleotide diversity (Pi) of the protein alignment
+ 
+### Others
+- `.log`: DV2S log file
+- `.dssp.log`: DSSP log file
+- `.mafft.log`: MAFFT log file
+
+## Dependencies
+
+- Python 3.12+
+- Structure prediction tools or APIs (ESM, AlphaFold2, etc.)
+
+## Citation
+
+If you use DV2S in your research, please cite:
+
+```bibtex
+[Citation information to be added]
+```
+
+## License
+
+This project is licensed under the APL-3 License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For questions and support, please open an issue on GitHub.
