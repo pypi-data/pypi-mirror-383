@@ -1,0 +1,220 @@
+Metadata-Version: 2.4
+Name: pygmrt
+Version: 0.1.0
+Summary: A minimal Python package for downloading bathymetry and topography tiles from GMRT
+Author-email: Leonard Seydoux <leonard.seydoux@gmail.com>
+Maintainer-email: Leonard Seydoux <leonard.seydoux@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2024 Leonard Seydoux
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://github.com/leonard-seydoux/pygmrt
+Project-URL: Documentation, https://leonard-seydoux.github.io/pygmrt
+Project-URL: Repository, https://github.com/leonard-seydoux/pygmrt.git
+Project-URL: Bug Tracker, https://github.com/leonard-seydoux/pygmrt/issues
+Keywords: bathymetry,topography,gmrt,geospatial,oceanography
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: GIS
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.32.0
+Requires-Dist: rasterio>=1.4.3
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=8.2.3; extra == "docs"
+Requires-Dist: pydata-sphinx-theme>=0.15.0; extra == "docs"
+Requires-Dist: myst-parser>=4.0.0; extra == "docs"
+Requires-Dist: nbsphinx>=0.9.0; extra == "docs"
+Requires-Dist: sphinx-gallery>=0.18.0; extra == "docs"
+Requires-Dist: matplotlib>=3.9.0; extra == "docs"
+Requires-Dist: numpy>=1.24.0; extra == "docs"
+Requires-Dist: ipykernel>=6.30.1; extra == "docs"
+Dynamic: license-file
+
+# PyGMRT
+
+A minimal Python package for downloading bathymetry and topography tiles from the [Global Multi-Resolution Topography (GMRT) Synthesis](https://www.gmrt.org/).
+
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+## Features
+
+- **Simple API**: Single function to download GMRT tiles
+- **Multiple resolutions**: High (1 arc-second), medium (4 arc-second), low (16 arc-second)
+- **GeoTIFF format**: Direct integration with rasterio and other geospatial tools
+- **Antimeridian support**: Handles bounding boxes that cross the 180° longitude
+- **No API key required**: Direct access to GMRT GridServer
+
+## Installation
+
+### Using UV (recommended)
+
+If you don't have UV installed, follow the instructions at [uv](https://uv.readthedocs.io/en/latest/). Then install PyGMRT from PyPI:
+
+```bash
+uv add pygmrt
+```
+
+Or install from source
+
+```bash
+git clone https://github.com/leonard-seydoux/pygmrt.git
+cd pygmrt
+uv sync
+```
+
+
+### Using pip
+
+Similarly, you can either install from PyPI:
+
+```bash
+pip install pygmrt
+```
+
+Or install from source:
+
+```bash
+# Or install from source
+git clone https://github.com/leonard-seydoux/pygmrt.git
+cd pygmrt
+pip install -e .
+```
+
+
+
+
+
+## Quick Start
+
+```python
+from rasterio.plot import show
+from pygmrt.tiles import download_tiles
+
+# Get tiles
+tiles = download_tiles(bbox=[55.05, -21.5, 55.95, -20.7], resolution="low")
+
+# Show with minimal processing
+show(tiles)
+```
+
+![](notebooks/01_quickstart.png)
+
+## Other examples
+
+The playground notebook [02_playground.ipynb](notebooks/02_playground.ipynb) contains more advanced examples, including shaded relief visualizations with `matplotlib` and `cartopy`. The following figures were generated with that notebook.
+
+![](notebooks/reunion.svg)
+
+![](notebooks/piton.svg)
+
+## API reference
+
+The main function of the package is `pygmrt.tiles.download_tiles`, with the signature given below.
+
+```python
+def download_tiles(
+    bbox, 
+    save_directory="./geotiff/",
+    resolution="medium",
+    overwrite=False,
+):
+    """
+    Download tiles and return the rasterio dataset.
+
+    Parameters
+    ----------
+    bbox : sequence of float
+        Bounding box in WGS84 degrees as ``[west, south, east, north]``.
+    save_directory : str or pathlib.Path
+        Destination directory path where files will be written. Created if
+        needed.
+    resolution : {"low", "medium", "high"}, default "medium"
+        Named resolution level; mapped internally to provider-specific datasets.
+    overwrite : bool, default False
+        If ``False``, reuse existing files. If ``True``, force re-download.
+
+    Returns
+    -------
+    rasterio.DatasetReader
+        Opened rasterio dataset for the downloaded GeoTIFF. The caller is
+        responsible for closing the dataset.
+
+    Raises
+    ------
+    ValueError
+        If invalid argument combinations or bbox values are provided.
+    PermissionError
+        If the destination directory is not writable.
+    RuntimeError
+        If download attempts ultimately fail.
+"""
+```
+
+## Development
+
+### Setting up development environment
+
+```bash
+git clone https://github.com/leonard-seydoux/pygmrt.git
+cd pygmrt
+
+# Install in development mode with UV
+uv sync --all-extras
+
+# Or with pip
+pip install -e ".[dev,docs]"
+```
+
+### Running tests
+
+```bash
+# With UV
+uv run pytest
+
+# With pip
+pytest
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [GMRT Synthesis](https://www.gmrt.org/) for providing open access to global bathymetry data
+- [Lamont-Doherty Earth Observatory](https://www.ldeo.columbia.edu/) for maintaining the GMRT database
