@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rewarduq"
+version = "0.0.0"
+description = "Coming soon"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Lena Libon", email = "llibon@ethz.ch" },
+    { name = "Florian Redhardt", email = "fredhardt@ethz.ch" },
+    { name = "Samuel Stante", email = "sstante@ethz.ch" },
+    { name = "Daniel Yang", email = "daniel.yang@inf.ethz.ch" },
+]
+dependencies = []
