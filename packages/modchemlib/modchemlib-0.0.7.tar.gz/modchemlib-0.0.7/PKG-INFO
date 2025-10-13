@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: modchemlib
+Version: 0.0.7
+Summary: Library for registration chemistry experiment
+Author-email: Modestra <kirillkarachev04@gmail.com>
+Keywords: science,chem,chemistry
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10.0
+Description-Content-Type: text/markdown
+Requires-Dist: Events>=0.5
+Requires-Dist: requests>=2.32.5
+
+Modchem
+
+Library for Chemistry experiment
+
+Load a project:
+```python
+pip install modchemlib
+
+chem-init <project_name>
+```
