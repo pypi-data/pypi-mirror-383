@@ -1,0 +1,1 @@
+ALTER TABLE evaluate ADD COLUMN finish_time DATETIME;
