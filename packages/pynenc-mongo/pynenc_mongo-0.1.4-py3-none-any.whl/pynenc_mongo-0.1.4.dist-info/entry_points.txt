@@ -1,0 +1,7 @@
+[pynenc.plugins]
+mongo_arg_cache = pynenc_mongo.arg_cache.mongo_arg_cache
+mongo_broker = pynenc_mongo.broker.mongo_broker
+mongo_builder = pynenc_mongo.builder:MongoBuilderPlugin
+mongo_orchestrator = pynenc_mongo.orchestrator.mongo_orchestrator
+mongo_state_backend = pynenc_mongo.state_backend.mongo_state_backend
+mongo_trigger = pynenc_mongo.trigger.mongo_trigger
