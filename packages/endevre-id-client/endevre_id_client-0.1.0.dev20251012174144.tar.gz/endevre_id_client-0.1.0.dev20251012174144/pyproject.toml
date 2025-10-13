@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "endevre-id-client"
+version = "0.1.0.dev20251012174144"
+description = "Python client for Endevre ID authentication flows"
+readme = "README.md"
+authors = [
+  { name = "Endevre", email = "dev@endevre.com" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+  "requests>=2.31,<3",
+  "pyjwt>=2.8,<3"
+]
+keywords = ["endevre", "authentication", "sso", "oauth", "jwt"]
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://github.com/endevre/id-client-auth"
+Repository = "https://github.com/endevre/id-client-auth"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<9",
+  "pytest-httpserver>=1.0.8"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"endevre_id_client" = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
