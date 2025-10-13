@@ -1,0 +1,119 @@
+{
+  "dist_name": "path-link",
+  "import_name": "project_paths",
+  "version": "0.2.0",
+  "factories": [
+    "ProjectPaths.from_pyproject",
+    "ProjectPaths.from_config"
+  ],
+  "cli_commands": [
+    {
+      "command": "ptool print",
+      "description": "Print all configured paths as JSON",
+      "options": ["--source {pyproject,config}", "--config PATH"]
+    },
+    {
+      "command": "ptool validate",
+      "description": "Validate project structure",
+      "options": ["--source {pyproject,config}", "--config PATH", "--strict", "--raise"]
+    },
+    {
+      "command": "ptool gen-static",
+      "description": "Generate static dataclass model",
+      "options": ["--out PATH"]
+    }
+  ],
+  "validators": [
+    {
+      "name": "StrictPathValidator",
+      "module": "path_link.builtin_validators.strict",
+      "description": "Ensures paths exist and match expected types (file/directory)"
+    },
+    {
+      "name": "SandboxPathValidator",
+      "module": "path_link.builtin_validators.sandbox",
+      "description": "Prevents path traversal attacks and enforces base directory sandbox"
+    },
+    {
+      "name": "CompositeValidator",
+      "module": "path_link.validation",
+      "description": "Combines multiple validators into a single validation pipeline"
+    }
+  ],
+  "public_api": [
+    "ProjectPaths",
+    "write_dataclass_file",
+    "Severity",
+    "Finding",
+    "ValidationResult",
+    "PathValidator",
+    "PathValidationError",
+    "validate_or_raise",
+    "CompositeValidator",
+    "StrictPathValidator",
+    "SandboxPathValidator",
+    "get_ai_guidelines",
+    "get_developer_guide",
+    "get_metadata"
+  ],
+  "invariants": [
+    "No direct constructor calls (raises NotImplementedError)",
+    "Key=value .paths (no sections, dotenv format)",
+    "All paths are pathlib.Path objects",
+    "Static model must be regenerated after pyproject.toml changes"
+  ],
+  "test_status": {
+    "passing": 53,
+    "coverage": "60%",
+    "target_coverage": "90%",
+    "last_verified": "2025-10-10"
+  },
+  "critical_commands": {
+    "smoke_test": "uv run python -c \"from path_link import ProjectPaths; p = ProjectPaths.from_pyproject(); print('✅ OK:', len(p.to_dict()), 'paths loaded')\"",
+    "run_tests": "uv run pytest",
+    "check_coverage": "uv run pytest --cov=src --cov-report=term-missing:skip-covered",
+    "regenerate_static": "uv run python -c \"from path_link import write_dataclass_file; write_dataclass_file()\"",
+    "verify_static_sync": "just check-regen"
+  },
+  "known_issues": {
+    "resolved": [
+      "main.py direct constructor call - FIXED 2025-10-10",
+      "Static model base_dir hardcoding - FIXED 2025-10-10",
+      "SandboxPathValidator not exported - FIXED 2025-10-10"
+    ],
+    "active": []
+  },
+  "architecture_notes": {
+    "pattern": "Dynamic Pydantic model creation via create_model()",
+    "validation": "Protocol-based with ValidationResult/Finding pattern",
+    "key_files": [
+      "src/project_paths/model.py - Factory methods and _ProjectPathsBase",
+      "src/project_paths/builder.py - Config loading and field definitions",
+      "src/project_paths/validation.py - Validation framework",
+      "src/project_paths/builtin_validators/strict.py - StrictPathValidator",
+      "src/project_paths/builtin_validators/sandbox.py - SandboxPathValidator",
+      "src/project_paths/get_paths.py - Static model generation"
+    ]
+  },
+  "policy_compliance": {
+    "code_quality_standard": "CODE_QUALITY.json (SOLID, KISS, YAGNI)",
+    "reasoning_framework": "CHAIN_OF_THOUGHT_GOLDEN_ALL_IN_ONE.json",
+    "violations": 0,
+    "last_audit": "2025-10-10"
+  },
+  "documentation": {
+    "user_guide": "README.md",
+    "dev_guide": "CLAUDE.md",
+    "refactor_plan": "REFACTOR_PLAN_1.md",
+    "refactor_status": "REFACTOR_STATUS.md",
+    "context": "assistant_context.md",
+    "bundled_in_package": true,
+    "access_functions": {
+      "get_ai_guidelines": "Returns assistant_context.md content (AI usage patterns)",
+      "get_developer_guide": "Returns CLAUDE.md content (architecture & dev setup)",
+      "get_metadata": "Returns this file as JSON (machine-readable metadata)"
+    },
+    "package_location": "src/project_paths/docs/",
+    "offline_accessible": true
+  }
+}
