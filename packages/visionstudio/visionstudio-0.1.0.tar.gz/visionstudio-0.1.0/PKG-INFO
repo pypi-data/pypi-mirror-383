@@ -1,0 +1,57 @@
+Metadata-Version: 2.4
+Name: visionstudio
+Version: 0.1.0
+Summary: A starter package to build Agents
+Home-page: https://github.com/datamarkin/agents
+Author: Emrah NAZIF
+Author-email: Emrah NAZIF <emrah@datamarkin.com>
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# VisionStudio
+
+A Python package for building intelligent agents with a user-friendly interface.
+
+## Installation
+
+```bash
+pip install visionstudio
+```
+
+## Usage
+
+```python
+from visionstudio import hello
+
+# Test the package
+hello()
+```
+
+### CLI Usage
+
+After installation, you can use the `visionstudio` command:
+
+```bash
+visionstudio
+```
+
+## Development
+
+To install for development:
+
+```bash
+pip install -e .
+```
+
+## License
+
+MIT License - see LICENSE file for details.
