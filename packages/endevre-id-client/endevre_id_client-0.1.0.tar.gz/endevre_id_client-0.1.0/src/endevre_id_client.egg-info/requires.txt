@@ -1,0 +1,6 @@
+requests<3,>=2.31
+pyjwt[crypto]<3,>=2.8
+
+[dev]
+pytest<9,>=8
+pytest-httpserver>=1.0.8
