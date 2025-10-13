@@ -1,0 +1,146 @@
+{
+  "$schema": ".lang.schema.json",
+  "entari_cli": {
+    "commands": {
+      "init": {
+        "description": "新建一个虚拟环境并安装 Entari",
+        "options": {
+          "develop": "是否安装开发依赖项",
+          "python": "指定 Python 解释器版本/路径",
+          "install_args": "传递给包管理器的安装指令的额外参数"
+        },
+        "messages": {
+          "success": "Entari 环境初始化成功。",
+          "initialized": "Entari 环境已初始化。"
+        }
+      },
+      "add": {
+        "description": "添加一个 Entari 插件到配置文件中",
+        "options": {
+          "disabled": "是否插件初始禁用",
+          "optional": "是否仅存储插件配置而不加载插件",
+          "priority": "插件加载优先级"
+        },
+        "prompts": {
+          "name": "请指定插件名称：",
+          "failed": "{name} 未找到。您应该安装它，或运行 {cmd}",
+          "success": "插件 {name} 已成功添加到配置文件中。"
+        }
+      },
+      "new": {
+        "description": "新建一个 Entari 插件",
+        "options": {
+          "static": "是否为静态插件",
+          "application": "是否为应用插件",
+          "file": "是否为单文件插件",
+          "disabled": "是否插件初始禁用",
+          "optional": "是否仅存储插件配置而不加载插件",
+          "priority": "插件加载优先级",
+          "python": "指定 Python 解释器版本/路径",
+          "install_args": "传递给包管理器的安装指令的额外参数"
+        },
+        "prompts": {
+          "is_plugin_project": "这是一个插件项目吗？",
+          "plugin_name": "插件名称",
+          "plugin_version": "插件版本",
+          "plugin_description": "插件描述",
+          "plugin_author_name": "插件作者姓名",
+          "plugin_author_email": "插件作者电子邮件",
+          "python_requires": "Python 版本 ('*' 表示任意版本)",
+          "license": "许可证 (SPDX 名称)",
+          "is_single_file": "这是一个单文件插件吗？",
+          "is_disposable": "这是可重载的插件吗？"
+        },
+        "messages": {
+          "invalid": "插件名称无效：{name}",
+          "corrected": "插件名将自动更正为 'entari-plugin-{name}'。",
+          "keep": "如果您想保留名称，请使用选项 {opt}。",
+          "installed": "'{name}' 已安装，请使用其他名称。",
+          "exists": "插件 {name} 已存在于配置文件中。",
+          "created": "插件将创建于 {path}。",
+          "proj_exists": "您已经在项目目录中，请改为创建应用插件。",
+          "in_venv": "无法在现有项目内创建新的插件项目。"
+        }
+      },
+      "remove": {
+        "description": "从配置文件中移除一个 Entari 插件",
+        "prompts": {
+          "name": "请指定插件名称：",
+          "success": "插件 {name} 已成功从配置文件中移除。"
+        }
+      },
+      "run": {
+        "description": "运行 Entari",
+        "options": {
+          "python": "自定义 Python 解释器路径"
+        }
+      },
+      "generate": {
+        "description": "生成一个 Entari 主程序文件",
+        "messages": {
+          "generated": "主程序文件已生成在 {file}"
+        }
+      },
+      "version": {
+        "description": "显示 CLI 版本并退出"
+      },
+      "config_path": "指定配置文件路径",
+      "setting": {
+        "description": "显示 entari-cli 设定(配置)",
+        "key": "配置键",
+        "value": "配置值",
+        "options": {
+          "local": "使用本地的设定(配置)文件，一般为项目目录下的 .entari_cli.yaml",
+          "delete": "重置某一配置项",
+          "edit": "在编辑器中打开配置文件（由 EDITOR 环境变量或 CLI 设置定义）"
+        },
+        "edit": {
+          "failed_key": "给定 '--edit' 时无法指定参数",
+          "failed_delete": "当给出 '--edit' 时，'--delete' 不起作用",
+          "success": "设定(配置)文件编辑成功。",
+          "failed": "编辑器 {editor} 异常退出"
+        },
+        "delete": {
+          "missing": "请指定要取消设置的配置键",
+          "not_exist": "设定(配置)文件还未创建",
+          "success": "配置键 '{key}' 成功取消设置。"
+        },
+        "set": {
+          "missing": "请指定要设置的配置键",
+          "success": "配置键 '{key}' 已设置为 '{value}'。"
+        },
+        "get_failed": "没有配置键与 '{query}' 匹配",
+        "list": {
+          "title": "默认设置",
+          "global": "全局设定(配置)文件",
+          "local": "本地设定(配置)文件"
+        }
+      }
+    },
+    "errors": {
+      "python_not_found": "找不到有效的 Python 解释器。",
+      "invalid_project_name": "项目名称无效：{name}"
+    },
+    "project": {
+      "select_python": "请输入要使用的 Python 解释器路径",
+      "select_pm": "请输入要使用的包管理器",
+      "please_select": "请选择",
+      "install_failed": "无法使用 {pm} 安装 {deps}，请检查输出。",
+      "no_python_found": "未找到 Python 解释器。",
+      "invalid_selection": "选择无效。",
+      "fallback_pip": "{pm} 未找到，将回退到使用 pip。"
+    },
+    "config": {
+      "ext_failed": "无法加载配置扩展 '{ext_mod}'： {e}",
+      "ask_format": "请选择配置文件格式：",
+      "exists": "{path} 已经存在",
+      "created": "配置文件已创建在 {path}",
+      "not_supported": "不支持的配置文件扩展名：{suffix}"
+    },
+    "venv": {
+      "use": "使用虚拟环境中的 Python：{venv_python}",
+      "create": "虚拟环境将创建在 {venv_python}",
+      "ask_create": "是否创建新的虚拟环境？"
+    }
+  }
+}

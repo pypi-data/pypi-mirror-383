@@ -1,0 +1,664 @@
+{
+  "title": "Lang Schema",
+  "description": "Schema for lang file",
+  "type": "object",
+  "properties": {
+    "entari_cli": {
+      "title": "Entari_cli",
+      "description": "Scope 'entari_cli' of lang item",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "commands": {
+          "title": "Commands",
+          "description": "Scope 'commands' of lang item",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "init": {
+              "title": "Init",
+              "description": "Scope 'init' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "options": {
+                  "title": "Options",
+                  "description": "Scope 'options' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "develop": {
+                      "title": "develop",
+                      "description": "value of lang item type 'develop'",
+                      "type": "string"
+                    },
+                    "python": {
+                      "title": "python",
+                      "description": "value of lang item type 'python'",
+                      "type": "string"
+                    },
+                    "install_args": {
+                      "title": "install_args",
+                      "description": "value of lang item type 'install_args'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "messages": {
+                  "title": "Messages",
+                  "description": "Scope 'messages' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "success": {
+                      "title": "success",
+                      "description": "value of lang item type 'success'",
+                      "type": "string"
+                    },
+                    "initialized": {
+                      "title": "initialized",
+                      "description": "value of lang item type 'initialized'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "add": {
+              "title": "Add",
+              "description": "Scope 'add' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "options": {
+                  "title": "Options",
+                  "description": "Scope 'options' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "disabled": {
+                      "title": "disabled",
+                      "description": "value of lang item type 'disabled'",
+                      "type": "string"
+                    },
+                    "optional": {
+                      "title": "optional",
+                      "description": "value of lang item type 'optional'",
+                      "type": "string"
+                    },
+                    "priority": {
+                      "title": "priority",
+                      "description": "value of lang item type 'priority'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "prompts": {
+                  "title": "Prompts",
+                  "description": "Scope 'prompts' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "title": "name",
+                      "description": "value of lang item type 'name'",
+                      "type": "string"
+                    },
+                    "failed": {
+                      "title": "failed",
+                      "description": "value of lang item type 'failed'",
+                      "type": "string"
+                    },
+                    "success": {
+                      "title": "success",
+                      "description": "value of lang item type 'success'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "new": {
+              "title": "New",
+              "description": "Scope 'new' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "options": {
+                  "title": "Options",
+                  "description": "Scope 'options' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "static": {
+                      "title": "static",
+                      "description": "value of lang item type 'static'",
+                      "type": "string"
+                    },
+                    "application": {
+                      "title": "application",
+                      "description": "value of lang item type 'application'",
+                      "type": "string"
+                    },
+                    "file": {
+                      "title": "file",
+                      "description": "value of lang item type 'file'",
+                      "type": "string"
+                    },
+                    "disabled": {
+                      "title": "disabled",
+                      "description": "value of lang item type 'disabled'",
+                      "type": "string"
+                    },
+                    "optional": {
+                      "title": "optional",
+                      "description": "value of lang item type 'optional'",
+                      "type": "string"
+                    },
+                    "priority": {
+                      "title": "priority",
+                      "description": "value of lang item type 'priority'",
+                      "type": "string"
+                    },
+                    "python": {
+                      "title": "python",
+                      "description": "value of lang item type 'python'",
+                      "type": "string"
+                    },
+                    "install_args": {
+                      "title": "install_args",
+                      "description": "value of lang item type 'install_args'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "prompts": {
+                  "title": "Prompts",
+                  "description": "Scope 'prompts' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "is_plugin_project": {
+                      "title": "is_plugin_project",
+                      "description": "value of lang item type 'is_plugin_project'",
+                      "type": "string"
+                    },
+                    "plugin_name": {
+                      "title": "plugin_name",
+                      "description": "value of lang item type 'plugin_name'",
+                      "type": "string"
+                    },
+                    "plugin_version": {
+                      "title": "plugin_version",
+                      "description": "value of lang item type 'plugin_version'",
+                      "type": "string"
+                    },
+                    "plugin_description": {
+                      "title": "plugin_description",
+                      "description": "value of lang item type 'plugin_description'",
+                      "type": "string"
+                    },
+                    "plugin_author_name": {
+                      "title": "plugin_author_name",
+                      "description": "value of lang item type 'plugin_author_name'",
+                      "type": "string"
+                    },
+                    "plugin_author_email": {
+                      "title": "plugin_author_email",
+                      "description": "value of lang item type 'plugin_author_email'",
+                      "type": "string"
+                    },
+                    "python_requires": {
+                      "title": "python_requires",
+                      "description": "value of lang item type 'python_requires'",
+                      "type": "string"
+                    },
+                    "license": {
+                      "title": "license",
+                      "description": "value of lang item type 'license'",
+                      "type": "string"
+                    },
+                    "is_single_file": {
+                      "title": "is_single_file",
+                      "description": "value of lang item type 'is_single_file'",
+                      "type": "string"
+                    },
+                    "is_disposable": {
+                      "title": "is_disposable",
+                      "description": "value of lang item type 'is_disposable'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "messages": {
+                  "title": "Messages",
+                  "description": "Scope 'messages' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "invalid": {
+                      "title": "invalid",
+                      "description": "value of lang item type 'invalid'",
+                      "type": "string"
+                    },
+                    "corrected": {
+                      "title": "corrected",
+                      "description": "value of lang item type 'corrected'",
+                      "type": "string"
+                    },
+                    "keep": {
+                      "title": "keep",
+                      "description": "value of lang item type 'keep'",
+                      "type": "string"
+                    },
+                    "installed": {
+                      "title": "installed",
+                      "description": "value of lang item type 'installed'",
+                      "type": "string"
+                    },
+                    "exists": {
+                      "title": "exists",
+                      "description": "value of lang item type 'exists'",
+                      "type": "string"
+                    },
+                    "created": {
+                      "title": "created",
+                      "description": "value of lang item type 'created'",
+                      "type": "string"
+                    },
+                    "proj_exists": {
+                      "title": "proj_exists",
+                      "description": "value of lang item type 'proj_exists'",
+                      "type": "string"
+                    },
+                    "in_venv": {
+                      "title": "in_venv",
+                      "description": "value of lang item type 'in_venv'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "remove": {
+              "title": "Remove",
+              "description": "Scope 'remove' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "prompts": {
+                  "title": "Prompts",
+                  "description": "Scope 'prompts' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "title": "name",
+                      "description": "value of lang item type 'name'",
+                      "type": "string"
+                    },
+                    "success": {
+                      "title": "success",
+                      "description": "value of lang item type 'success'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "run": {
+              "title": "Run",
+              "description": "Scope 'run' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "options": {
+                  "title": "Options",
+                  "description": "Scope 'options' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "python": {
+                      "title": "python",
+                      "description": "value of lang item type 'python'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "generate": {
+              "title": "Generate",
+              "description": "Scope 'generate' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "messages": {
+                  "title": "Messages",
+                  "description": "Scope 'messages' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "generated": {
+                      "title": "generated",
+                      "description": "value of lang item type 'generated'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "version": {
+              "title": "Version",
+              "description": "Scope 'version' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                }
+              }
+            },
+            "config_path": {
+              "title": "config_path",
+              "description": "value of lang item type 'config_path'",
+              "type": "string"
+            },
+            "setting": {
+              "title": "Setting",
+              "description": "Scope 'setting' of lang item",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "title": "description",
+                  "description": "value of lang item type 'description'",
+                  "type": "string"
+                },
+                "key": {
+                  "title": "key",
+                  "description": "value of lang item type 'key'",
+                  "type": "string"
+                },
+                "value": {
+                  "title": "value",
+                  "description": "value of lang item type 'value'",
+                  "type": "string"
+                },
+                "options": {
+                  "title": "Options",
+                  "description": "Scope 'options' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "local": {
+                      "title": "local",
+                      "description": "value of lang item type 'local'",
+                      "type": "string"
+                    },
+                    "delete": {
+                      "title": "delete",
+                      "description": "value of lang item type 'delete'",
+                      "type": "string"
+                    },
+                    "edit": {
+                      "title": "edit",
+                      "description": "value of lang item type 'edit'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "edit": {
+                  "title": "Edit",
+                  "description": "Scope 'edit' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "failed_key": {
+                      "title": "failed_key",
+                      "description": "value of lang item type 'failed_key'",
+                      "type": "string"
+                    },
+                    "failed_delete": {
+                      "title": "failed_delete",
+                      "description": "value of lang item type 'failed_delete'",
+                      "type": "string"
+                    },
+                    "success": {
+                      "title": "success",
+                      "description": "value of lang item type 'success'",
+                      "type": "string"
+                    },
+                    "failed": {
+                      "title": "failed",
+                      "description": "value of lang item type 'failed'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "delete": {
+                  "title": "Delete",
+                  "description": "Scope 'delete' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "missing": {
+                      "title": "missing",
+                      "description": "value of lang item type 'missing'",
+                      "type": "string"
+                    },
+                    "not_exist": {
+                      "title": "not_exist",
+                      "description": "value of lang item type 'not_exist'",
+                      "type": "string"
+                    },
+                    "success": {
+                      "title": "success",
+                      "description": "value of lang item type 'success'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "set": {
+                  "title": "Set",
+                  "description": "Scope 'set' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "missing": {
+                      "title": "missing",
+                      "description": "value of lang item type 'missing'",
+                      "type": "string"
+                    },
+                    "success": {
+                      "title": "success",
+                      "description": "value of lang item type 'success'",
+                      "type": "string"
+                    }
+                  }
+                },
+                "get_failed": {
+                  "title": "get_failed",
+                  "description": "value of lang item type 'get_failed'",
+                  "type": "string"
+                },
+                "list": {
+                  "title": "List",
+                  "description": "Scope 'list' of lang item",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "title": {
+                      "title": "title",
+                      "description": "value of lang item type 'title'",
+                      "type": "string"
+                    },
+                    "global": {
+                      "title": "global",
+                      "description": "value of lang item type 'global'",
+                      "type": "string"
+                    },
+                    "local": {
+                      "title": "local",
+                      "description": "value of lang item type 'local'",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "errors": {
+          "title": "Errors",
+          "description": "Scope 'errors' of lang item",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "python_not_found": {
+              "title": "python_not_found",
+              "description": "value of lang item type 'python_not_found'",
+              "type": "string"
+            },
+            "invalid_project_name": {
+              "title": "invalid_project_name",
+              "description": "value of lang item type 'invalid_project_name'",
+              "type": "string"
+            }
+          }
+        },
+        "config": {
+          "title": "Config",
+          "description": "Scope 'config' of lang item",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ext_failed": {
+              "title": "ext_failed",
+              "description": "value of lang item type 'ext_failed'",
+              "type": "string"
+            },
+            "ask_format": {
+              "title": "ask_format",
+              "description": "value of lang item type 'ask_format'",
+              "type": "string"
+            },
+            "not_supported": {
+              "title": "not_supported",
+              "description": "value of lang item type 'not_supported'",
+              "type": "string"
+            },
+            "exists": {
+              "title": "exists",
+              "description": "value of lang item type 'exists'",
+              "type": "string"
+            },
+            "created": {
+              "title": "created",
+              "description": "value of lang item type 'created'",
+              "type": "string"
+            }
+          }
+        },
+        "project": {
+          "title": "Project",
+          "description": "Scope 'project' of lang item",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "select_python": {
+              "title": "select_python",
+              "description": "value of lang item type 'select_python'",
+              "type": "string"
+            },
+            "select_pm": {
+              "title": "select_pm",
+              "description": "value of lang item type 'select_pm'",
+              "type": "string"
+            },
+            "please_select": {
+              "title": "please_select",
+              "description": "value of lang item type 'please_select'",
+              "type": "string"
+            },
+            "install_failed": {
+              "title": "install_failed",
+              "description": "value of lang item type 'install_failed'",
+              "type": "string"
+            },
+            "no_python_found": {
+              "title": "no_python_found",
+              "description": "value of lang item type 'no_python_found'",
+              "type": "string"
+            },
+            "invalid_selection": {
+              "title": "invalid_selection",
+              "description": "value of lang item type 'invalid_selection'",
+              "type": "string"
+            },
+            "fallback_pip": {
+              "title": "fallback_pip",
+              "description": "value of lang item type 'fallback_pip'",
+              "type": "string"
+            }
+          }
+        },
+        "venv": {
+          "title": "Venv",
+          "description": "Scope 'venv' of lang item",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "use": {
+              "title": "use",
+              "description": "value of lang item type 'use'",
+              "type": "string"
+            },
+            "create": {
+              "title": "create",
+              "description": "value of lang item type 'create'",
+              "type": "string"
+            },
+            "ask_create": {
+              "title": "ask_create",
+              "description": "value of lang item type 'ask_create'",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
