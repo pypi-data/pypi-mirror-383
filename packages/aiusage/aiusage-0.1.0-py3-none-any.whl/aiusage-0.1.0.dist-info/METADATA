@@ -1,0 +1,200 @@
+Metadata-Version: 2.3
+Name: aiusage
+Version: 0.1.0
+Summary: A smart command-line tool for tracking AI credit consumption across billing cycles
+Keywords: ai,credits,usage,tracking,cursor,copilot
+Author: Michael Kennedy
+Author-email: Michael Kennedy <mikeckennedy@gmail.com>
+License: MIT
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Utilities
+Requires-Dist: platformdirs>=4.0.0
+Requires-Dist: cyclopts>=3.0.0
+Requires-Dist: pytest>=8.0.0 ; extra == 'dev'
+Requires-Dist: pytest-cov>=6.0.0 ; extra == 'dev'
+Requires-Dist: pytest-clarity>=1.0.0 ; extra == 'dev'
+Requires-Dist: ruff>=0.14.0 ; extra == 'dev'
+Requires-Dist: mypy>=1.0.0 ; extra == 'dev'
+Requires-Dist: pyrefly>=0.1.0 ; extra == 'dev'
+Requires-Python: >=3.13
+Project-URL: Homepage, https://github.com/mikeckennedy/aiusage
+Project-URL: Repository, https://github.com/mikeckennedy/aiusage
+Provides-Extra: dev
+Description-Content-Type: text/markdown
+
+# AI Usage 💳
+
+A smart command-line tool for tracking AI credit consumption across billing cycles. Designed for AI-powered development tools like Cursor, GitHub Copilot, and other subscription-based AI services.
+
+## 🎯 Why This Matters
+
+Managing AI credits effectively can save you money and frustration:
+
+- **Avoid overages**: Get warned before you hit pay-as-you-go pricing
+- **Optimize usage**: Know when you have credits to spare for big projects
+- **Track trends**: See if you're conserving or burning through credits
+- **Plan ahead**: Project your usage through the end of the billing cycle
+
+## But my AI already shows percentage used
+
+![](./readme_resources/cursor-progress.webp)
+
+Yes it might! But that's only half the story. At your current rate, will you still have creates to spare at the end of the period? How much? Are you going over? 
+
+If you have a bunch extra, you can switch to a smarter model or tackle a huge upcoming feature / project sooner rather than later. And visa versa if you're going to be over.
+
+This is a simple CLI tool. But I find knowing the answers with clear numbers for those questions very useful.
+
+## ✨ Features
+
+- 📊 **Real-time Usage Analysis**: Compares your credit usage against time elapsed in billing cycle
+- 🎨 **Color-Coded Feedback**: Green for conserving, red for warning, instant visual feedback
+- 🔮 **Smart Projections**: Predicts remaining credits at renewal based on current usage rate
+- 📅 **Flexible Billing Cycles**: Works with any renewal day of the month
+- ⚡ **Zero Dependencies**: Pure Python with no external packages required
+- 🧮 **Accurate Calculations**: Handles month boundaries and varying cycle lengths
+- 🔒 **Privacy First**: No web services, no logins, no data collection—runs entirely offline
+
+## 📸 Example Output
+
+When you're conserving credits (good):
+```
+💳 Credit Usage Analysis
+==================================================
+Current Date: 2025-10-12
+Billing Cycle: Day 12 of 31
+Renewal Day: 1st of the month
+
+🎯 Analysis:
+  Credits Used: 25.0%
+  Difference: -13.7%
+  Status: CONSERVING WELL
+
+🔮 Projection (at current rate):
+  Expected usage by renewal: 64.6%
+  Expected surplus: 35.4%
+
+✅ Great! You're conserving credits - using 13.7% slower than time
+   You'll have ~35.4% credits remaining at renewal.
+```
+
+When you're using too fast (warning):
+```
+💳 Credit Usage Analysis
+==================================================
+Current Date: 2025-10-12
+Billing Cycle: Day 12 of 31
+Renewal Day: 1st of the month
+
+🎯 Analysis:
+  Credits Used: 75.0%
+  Difference: +36.3%
+  Status: USING TOO FAST
+
+🔮 Projection (at current rate):
+  Expected usage by renewal: 193.8%
+  Expected surplus: -93.8%
+
+⚠️  WARNING: You're using credits 36.3% faster than time!
+   💥 You'll exceed 100% usage by 93.8% before renewal!
+```
+
+## 🚀 Installation
+
+### From PyPI (when published)
+
+```bash
+uv pip install aiusage
+```
+
+### From Source
+
+```bash
+git clone https://github.com/mikeckennedy/aiusage.git
+cd aiusage
+uv pip install -e .
+```
+
+## 📖 Usage
+
+### Basic Usage
+
+```bash
+aiusage 15 45  # Renewal on 15th, 45% used
+aiusage 25     # Default renewal day (1st), 25% used
+```
+
+### Finding Your Current Usage
+
+**For Cursor:**
+1. Open Cursor Settings
+2. Navigate to your subscription/usage page
+3. Look for "Usage this billing period" or similar
+4. Use the percentage shown
+
+**For GitHub Copilot:**
+- Check your GitHub billing page for usage metrics
+
+## 🔧 How It Works
+
+The tool performs three key calculations:
+
+1. **Time Progress**: Calculates how far through your billing cycle you are
+   - Example: Day 18 of 31 = 58.1% through cycle
+
+2. **Usage Ratio**: Compares credit usage to time progress
+   - Ratio > 1.0 = Using too fast ⚠️
+   - Ratio < 1.0 = Conserving well ✅
+   - Ratio = 1.0 = On track 📊
+
+3. **Projection**: Estimates final usage based on current rate
+   - Daily rate = Current % ÷ Days elapsed
+   - Projected = Daily rate × Total cycle days
+
+## 📋 Requirements
+
+- Python 3.13+ (uses modern type hints)
+- No external dependencies
+- Works on macOS, Linux, and Windows
+
+## 💡 Use Cases
+
+### Scenario 1: Pre-Project Planning
+You're at 30% usage with 40% of your cycle remaining. You have credits to spare—perfect time to tackle that AI-intensive refactoring project!
+
+### Scenario 2: Usage Warning
+You're at 80% usage with 50% of your cycle remaining. Time to be more selective with AI requests or risk hitting overages.
+
+### Scenario 3: End-of-Cycle Push
+You're at 60% usage with only 5 days left. Use those remaining credits before they reset!
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest features
+- Submit pull requests
+
+## 📄 License
+
+MIT License - feel free to use this tool in your own projects!
+
+## 🙏 Acknowledgments
+
+Built for developers who want to maximize their AI tool subscriptions without breaking the bank.
+
+---
+
+**Pro Tip**: The package installs a `aiusage` command globally:
+```bash
+# If your renewal day is the 15th of the month, and usage is 45%
+aiusage 15 45
+
+# Or use the default renewal day (1st)
+aiusage 25
+``` 
