@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nott"
+version = "0.1.0"
+description = "The offline authenticated note-taking app for the terminal."
+readme = "README.md"
+license = "MIT"
+authors = [
+  { name = "Umiko", email = "ping@umiko.io" }
+]
+keywords = ["cli", "notes", "encryption", "offline", "encrypted", "rich", "cryptography", "typer"]
+requires-python = ">=3.9"
+dependencies = [
+  "typer>=0.12.0",
+  "rich>=13.0.0",
+  "cryptography>=42.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/umikoio/nott"
+Repository = "https://github.com/umikoio/nott"
+Issues = "https://github.com/umikoio/nott/issues"
+
+[project.scripts]
+nott = "nott:app"

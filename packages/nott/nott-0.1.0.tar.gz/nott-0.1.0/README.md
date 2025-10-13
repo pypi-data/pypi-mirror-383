@@ -1,0 +1,197 @@
+<div align="center">
+  <img width="45%" src="assets/logo.png" />
+  <h1>Nott</h1>
+  <p>The offline authenticated <b>N</b><b>O</b>te-<b>T</b>aking app for the <b>T</b>erminal.</p>
+</div>
+
+Since Nott is completely offline, you can securely store your data locally with no possible interception. Even if the database is directly accessed, it shows only encrypted body content. Things such as title, tags, and datetime values are all stored in plaintext.
+
+# Installation
+
+Nott is available from PyPI:
+
+```bash
+pip install nott
+```
+
+## Commands
+
+> [!NOTE]
+> The following commands and examples are a quick overview of everything, but there is also a `--help` argument that lists everything for you when using the application.
+
+| Command             | Description                                                  | Quick Link
+| ------------------- | ------------------------------------------------------------ | --------------------------------------- | 
+| `nott init`         | Initialize the environment for Nott                          | [nott init](#nott-init)                 |
+| `nott login`        | Create a local cached session key                            | [nott login](#nott-login)               |
+| `nott logout`       | Remove local session key                                     | [nott logout](#nott-logout)             |
+| `nott add`          | Add a new note to the local database                         | [nott add](#nott-add)                   |
+| `nott list`         | List all available notes based on title and/or tag           | [nott list](#nott-list)                 |
+| `nott show`         | Show the contents of the note, if authenticated              | [nott show](#nott-show)                 |
+| `nott edit`         | Edit the note in your default $EDITOR                        | [nott edit](#nott-edit)                 |
+| `nott update-title` | Update the title of the note after creation                  | [nott update-title](#nott-update-title) |
+| `nott set-tags`     | Update the tags associated with the note after creation      | [nott set-tags](#nott-set-tags)         |
+| `nott search`       | Search the contents of the file (does not show the contents) | [nott search](#nott-search)             |
+| `nott rm`           | Delete the note permanently                                  | [nott rm](#nott-rm)                     |
+| `nott change-pass`  | Change the stored password in the database and config        | [nott change-pass](#nott-change-pass)   |
+| `nott export`       | Export all notes in Markdown to a designated directory       | [nott export](#nott-export)             |
+
+
+### nott init
+
+#### Usage
+
+```bash
+nott init
+```
+
+### nott login
+
+#### Usage
+
+```bash
+nott login
+```
+
+### nott logout
+
+#### Usage
+
+```bash
+nott logout
+```
+
+### nott add
+
+| Argument | Description                       |
+| -------- | --------------------------------- |
+| `title`  | The title of the note being added |
+| `--tags` | Comma-separated tags for the note |
+| `--body` | The contents of the note          |
+
+#### Usage
+
+```bash
+nott add "Title" --tags "tag1,tag2,tag3" --body "Encrypted body content stored within the note"
+```
+
+
+### nott list
+
+| Argument  | Description                   |
+| --------- | ----------------------------- |
+| `--tag`   | Filter by a specific tag      |
+| `--query` | Filter the title by substring |
+| `--limit` | The number of notes to query  |
+
+#### Usage
+
+```bash
+nott list --tag "tag1" --query "Title" --limit 10
+```
+
+### nott show
+
+| Argument  | Description                           |
+| --------- | ------------------------------------- |
+| `id`      | The ID of the note you want to access |
+
+#### Usage
+
+NOTE: This is just an example ID. Use `nott list` to see your local notes or `nott add` to create one.
+
+```bash
+nott show "b27cfd56-c3b4-4343-ac90-87ecd806d31c"
+```
+
+### nott edit
+
+| Argument  | Description                           |
+| --------- | ------------------------------------- |
+| `id`      | The ID of the note you want to access |
+
+#### Usage
+
+NOTE: This is just an example ID. Use `nott list` to see your local notes or `nott add` to create one.
+
+```bash
+nott edit "b27cfd56-c3b4-4343-ac90-87ecd806d31c"
+```
+
+### nott update-title
+
+| Argument  | Description                           |
+| --------- | ------------------------------------- |
+| `id`      | The ID of the note you want to access |
+| `--title` | The new title for the note            |
+
+#### Usage
+
+NOTE: This is just an example ID. Use `nott list` to see your local notes or `nott add` to create one.
+
+```bash
+nott update-title "b27cfd56-c3b4-4343-ac90-87ecd806d31c" --title "New Title"
+```
+
+### nott set-tags
+
+| Argument  | Description                           |
+| --------- | ------------------------------------- |
+| `id`      | The ID of the note you want to access |
+| `--tags`  | Comma-separated tags for the note     |
+
+#### Usage
+
+NOTE: This is just an example ID. Use `nott list` to see your local notes or `nott add` to create one.
+
+```bash
+nott set-tags "b27cfd56-c3b4-4343-ac90-87ecd806d31c" --tags "Tag1, Tag2, Tag3"
+```
+
+### nott search
+
+| Argument  | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+| `term`    | Searches the bodies of all notes (does not show the contents, decrypts-on-the-fly) |
+
+#### Usage
+
+NOTE: This is very similar to how `grep` operates if you're familiar with it.
+
+```bash
+nott search "Secret value within body"
+```
+
+### nott rm
+
+| Argument  | Description                           |
+| --------- | ------------------------------------- |
+| `id`      | The ID of the note you want to access |
+| `--yes`   | Skip the confirmation                 |
+
+#### Usage
+
+NOTE: This is just an example ID. Use `nott list` to see your local notes or `nott add` to create one.
+
+```bash
+nott rm "b27cfd56-c3b4-4343-ac90-87ecd806d31c"
+```
+
+### nott change-pass
+
+#### Usage
+
+```bash
+nott change-pass
+```
+
+### nott export
+
+| Argument  | Description                               |
+| --------- | ----------------------------------------- |
+| `--path`  | The directory to export Markdown files to |
+
+#### Usage
+
+```bash
+nott export --path "export_dir"
+```
