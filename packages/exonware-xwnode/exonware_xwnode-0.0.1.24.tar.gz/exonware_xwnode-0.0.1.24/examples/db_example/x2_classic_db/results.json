@@ -1,0 +1,962 @@
+{
+  "1000": {
+    "Read-Optimized": {
+      "database": "Read-Optimized",
+      "node_mode": "HASH_MAP",
+      "edge_mode": "None",
+      "total_entities": 1000,
+      "scale": "1x",
+      "total_time_ms": 12.309799902141094,
+      "peak_memory_mb": 207.04296875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 8.301699999719858,
+          "min_time_ms": 8.301699999719858,
+          "max_time_ms": 8.301699999719858,
+          "avg_time_ms": 8.301699999719858,
+          "peak_memory_mb": 207.0390625
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.08070003241300583,
+          "min_time_ms": 0.08070003241300583,
+          "max_time_ms": 0.08070003241300583,
+          "avg_time_ms": 0.08070003241300583,
+          "peak_memory_mb": 207.04296875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.08529983460903168,
+          "min_time_ms": 0.08529983460903168,
+          "max_time_ms": 0.08529983460903168,
+          "avg_time_ms": 0.08529983460903168,
+          "peak_memory_mb": 207.04296875
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 3.8421000353991985,
+          "min_time_ms": 3.8421000353991985,
+          "max_time_ms": 3.8421000353991985,
+          "avg_time_ms": 3.8421000353991985,
+          "peak_memory_mb": 207.04296875
+        }
+      },
+      "stats": {
+        "name": "Read-Optimized",
+        "node_mode": "HASH_MAP",
+        "edge_mode": "None",
+        "graph_optimization": "OFF",
+        "total_users": 500,
+        "total_posts": 300,
+        "total_comments": 200,
+        "total_relationships": 1000
+      }
+    },
+    "Write-Optimized": {
+      "database": "Write-Optimized",
+      "node_mode": "LSM_TREE",
+      "edge_mode": "DYNAMIC_ADJ_LIST",
+      "total_entities": 1000,
+      "scale": "1x",
+      "total_time_ms": 14.40150011330843,
+      "peak_memory_mb": 208.12890625,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 10.321599896997213,
+          "min_time_ms": 10.321599896997213,
+          "max_time_ms": 10.321599896997213,
+          "avg_time_ms": 10.321599896997213,
+          "peak_memory_mb": 208.12890625
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.18030032515525818,
+          "min_time_ms": 0.18030032515525818,
+          "max_time_ms": 0.18030032515525818,
+          "avg_time_ms": 0.18030032515525818,
+          "peak_memory_mb": 208.12890625
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.12289965525269508,
+          "min_time_ms": 0.12289965525269508,
+          "max_time_ms": 0.12289965525269508,
+          "avg_time_ms": 0.12289965525269508,
+          "peak_memory_mb": 208.12890625
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 3.776700235903263,
+          "min_time_ms": 3.776700235903263,
+          "max_time_ms": 3.776700235903263,
+          "avg_time_ms": 3.776700235903263,
+          "peak_memory_mb": 208.12890625
+        }
+      },
+      "stats": {
+        "name": "Write-Optimized",
+        "node_mode": "LSM_TREE",
+        "edge_mode": "DYNAMIC_ADJ_LIST",
+        "graph_optimization": "OFF",
+        "total_users": 500,
+        "total_posts": 300,
+        "total_comments": 200,
+        "total_relationships": 999
+      }
+    },
+    "Memory-Efficient": {
+      "database": "Memory-Efficient",
+      "node_mode": "B_TREE",
+      "edge_mode": "CSR",
+      "total_entities": 1000,
+      "scale": "1x",
+      "total_time_ms": 13.426900375634432,
+      "peak_memory_mb": 209.10546875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 9.238600265234709,
+          "min_time_ms": 9.238600265234709,
+          "max_time_ms": 9.238600265234709,
+          "avg_time_ms": 9.238600265234709,
+          "peak_memory_mb": 209.10546875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.14800019562244415,
+          "min_time_ms": 0.14800019562244415,
+          "max_time_ms": 0.14800019562244415,
+          "avg_time_ms": 0.14800019562244415,
+          "peak_memory_mb": 209.10546875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.18239999189972878,
+          "min_time_ms": 0.18239999189972878,
+          "max_time_ms": 0.18239999189972878,
+          "avg_time_ms": 0.18239999189972878,
+          "peak_memory_mb": 209.10546875
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 3.85789992287755,
+          "min_time_ms": 3.85789992287755,
+          "max_time_ms": 3.85789992287755,
+          "avg_time_ms": 3.85789992287755,
+          "peak_memory_mb": 209.10546875
+        }
+      },
+      "stats": {
+        "name": "Memory-Efficient",
+        "node_mode": "B_TREE",
+        "edge_mode": "CSR",
+        "graph_optimization": "OFF",
+        "total_users": 500,
+        "total_posts": 300,
+        "total_comments": 200,
+        "total_relationships": 997
+      }
+    },
+    "Query-Optimized": {
+      "database": "Query-Optimized",
+      "node_mode": "TREE_GRAPH_HYBRID",
+      "edge_mode": "WEIGHTED_GRAPH",
+      "total_entities": 1000,
+      "scale": "1x",
+      "total_time_ms": 14.847299549728632,
+      "peak_memory_mb": 210.04296875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 10.06829971447587,
+          "min_time_ms": 10.06829971447587,
+          "max_time_ms": 10.06829971447587,
+          "avg_time_ms": 10.06829971447587,
+          "peak_memory_mb": 210.04296875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.1881001517176628,
+          "min_time_ms": 0.1881001517176628,
+          "max_time_ms": 0.1881001517176628,
+          "avg_time_ms": 0.1881001517176628,
+          "peak_memory_mb": 210.04296875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.12649968266487122,
+          "min_time_ms": 0.12649968266487122,
+          "max_time_ms": 0.12649968266487122,
+          "avg_time_ms": 0.12649968266487122,
+          "peak_memory_mb": 210.04296875
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 4.464400000870228,
+          "min_time_ms": 4.464400000870228,
+          "max_time_ms": 4.464400000870228,
+          "avg_time_ms": 4.464400000870228,
+          "peak_memory_mb": 210.04296875
+        }
+      },
+      "stats": {
+        "name": "Query-Optimized",
+        "node_mode": "TREE_GRAPH_HYBRID",
+        "edge_mode": "WEIGHTED_GRAPH",
+        "graph_optimization": "OFF",
+        "total_users": 500,
+        "total_posts": 300,
+        "total_comments": 200,
+        "total_relationships": 997
+      }
+    },
+    "Persistence-Optimized": {
+      "database": "Persistence-Optimized",
+      "node_mode": "B_PLUS_TREE",
+      "edge_mode": "EDGE_PROPERTY_STORE",
+      "total_entities": 1000,
+      "scale": "1x",
+      "total_time_ms": 14.768199995160103,
+      "peak_memory_mb": 211.07421875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 10.50279987975955,
+          "min_time_ms": 10.50279987975955,
+          "max_time_ms": 10.50279987975955,
+          "avg_time_ms": 10.50279987975955,
+          "peak_memory_mb": 211.07421875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.10740011930465698,
+          "min_time_ms": 0.10740011930465698,
+          "max_time_ms": 0.10740011930465698,
+          "avg_time_ms": 0.10740011930465698,
+          "peak_memory_mb": 211.07421875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.14430005103349686,
+          "min_time_ms": 0.14430005103349686,
+          "max_time_ms": 0.14430005103349686,
+          "avg_time_ms": 0.14430005103349686,
+          "peak_memory_mb": 211.07421875
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 4.013699945062399,
+          "min_time_ms": 4.013699945062399,
+          "max_time_ms": 4.013699945062399,
+          "avg_time_ms": 4.013699945062399,
+          "peak_memory_mb": 211.07421875
+        }
+      },
+      "stats": {
+        "name": "Persistence-Optimized",
+        "node_mode": "B_PLUS_TREE",
+        "edge_mode": "EDGE_PROPERTY_STORE",
+        "graph_optimization": "OFF",
+        "total_users": 500,
+        "total_posts": 300,
+        "total_comments": 200,
+        "total_relationships": 996
+      }
+    },
+    "XWData-Optimized": {
+      "database": "XWData-Optimized",
+      "node_mode": "DATA_INTERCHANGE_OPTIMIZED",
+      "edge_mode": "None",
+      "total_entities": 1000,
+      "scale": "1x",
+      "total_time_ms": 14.323399867862463,
+      "peak_memory_mb": 212.140625,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 10.00649994239211,
+          "min_time_ms": 10.00649994239211,
+          "max_time_ms": 10.00649994239211,
+          "avg_time_ms": 10.00649994239211,
+          "peak_memory_mb": 212.140625
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.12010009959340096,
+          "min_time_ms": 0.12010009959340096,
+          "max_time_ms": 0.12010009959340096,
+          "avg_time_ms": 0.12010009959340096,
+          "peak_memory_mb": 212.140625
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.11299969628453255,
+          "min_time_ms": 0.11299969628453255,
+          "max_time_ms": 0.11299969628453255,
+          "avg_time_ms": 0.11299969628453255,
+          "peak_memory_mb": 212.140625
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 4.083800129592419,
+          "min_time_ms": 4.083800129592419,
+          "max_time_ms": 4.083800129592419,
+          "avg_time_ms": 4.083800129592419,
+          "peak_memory_mb": 212.140625
+        }
+      },
+      "stats": {
+        "name": "XWData-Optimized",
+        "node_mode": "DATA_INTERCHANGE_OPTIMIZED",
+        "edge_mode": "None",
+        "graph_optimization": "OFF",
+        "total_users": 500,
+        "total_posts": 300,
+        "total_comments": 200,
+        "total_relationships": 997
+      }
+    }
+  },
+  "10000": {
+    "Read-Optimized": {
+      "database": "Read-Optimized",
+      "node_mode": "HASH_MAP",
+      "edge_mode": "None",
+      "total_entities": 10000,
+      "scale": "10x",
+      "total_time_ms": 294.8900000192225,
+      "peak_memory_mb": 216.94921875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 90.32039996236563,
+          "min_time_ms": 90.32039996236563,
+          "max_time_ms": 90.32039996236563,
+          "avg_time_ms": 90.32039996236563,
+          "peak_memory_mb": 216.91015625
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.5175000987946987,
+          "min_time_ms": 0.5175000987946987,
+          "max_time_ms": 0.5175000987946987,
+          "avg_time_ms": 0.5175000987946987,
+          "peak_memory_mb": 216.91015625
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.8769999258220196,
+          "min_time_ms": 0.8769999258220196,
+          "max_time_ms": 0.8769999258220196,
+          "avg_time_ms": 0.8769999258220196,
+          "peak_memory_mb": 216.94921875
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 203.17510003224015,
+          "min_time_ms": 203.17510003224015,
+          "max_time_ms": 203.17510003224015,
+          "avg_time_ms": 203.17510003224015,
+          "peak_memory_mb": 216.94921875
+        }
+      },
+      "stats": {
+        "name": "Read-Optimized",
+        "node_mode": "HASH_MAP",
+        "edge_mode": "None",
+        "graph_optimization": "OFF",
+        "total_users": 5000,
+        "total_posts": 3000,
+        "total_comments": 2000,
+        "total_relationships": 9998
+      }
+    },
+    "Write-Optimized": {
+      "database": "Write-Optimized",
+      "node_mode": "LSM_TREE",
+      "edge_mode": "DYNAMIC_ADJ_LIST",
+      "total_entities": 10000,
+      "scale": "10x",
+      "total_time_ms": 294.02990033850074,
+      "peak_memory_mb": 226.92578125,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 86.58040035516024,
+          "min_time_ms": 86.58040035516024,
+          "max_time_ms": 86.58040035516024,
+          "avg_time_ms": 86.58040035516024,
+          "peak_memory_mb": 226.8828125
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.4469999112188816,
+          "min_time_ms": 0.4469999112188816,
+          "max_time_ms": 0.4469999112188816,
+          "avg_time_ms": 0.4469999112188816,
+          "peak_memory_mb": 226.88671875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.8875997737050056,
+          "min_time_ms": 0.8875997737050056,
+          "max_time_ms": 0.8875997737050056,
+          "avg_time_ms": 0.8875997737050056,
+          "peak_memory_mb": 226.92578125
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 206.11490029841661,
+          "min_time_ms": 206.11490029841661,
+          "max_time_ms": 206.11490029841661,
+          "avg_time_ms": 206.11490029841661,
+          "peak_memory_mb": 226.92578125
+        }
+      },
+      "stats": {
+        "name": "Write-Optimized",
+        "node_mode": "LSM_TREE",
+        "edge_mode": "DYNAMIC_ADJ_LIST",
+        "graph_optimization": "OFF",
+        "total_users": 5000,
+        "total_posts": 3000,
+        "total_comments": 2000,
+        "total_relationships": 9998
+      }
+    },
+    "Memory-Efficient": {
+      "database": "Memory-Efficient",
+      "node_mode": "B_TREE",
+      "edge_mode": "CSR",
+      "total_entities": 10000,
+      "scale": "10x",
+      "total_time_ms": 288.66130067035556,
+      "peak_memory_mb": 235.11328125,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 85.72140010073781,
+          "min_time_ms": 85.72140010073781,
+          "max_time_ms": 85.72140010073781,
+          "avg_time_ms": 85.72140010073781,
+          "peak_memory_mb": 235.07421875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.4523000679910183,
+          "min_time_ms": 0.4523000679910183,
+          "max_time_ms": 0.4523000679910183,
+          "avg_time_ms": 0.4523000679910183,
+          "peak_memory_mb": 235.07421875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.8678003214299679,
+          "min_time_ms": 0.8678003214299679,
+          "max_time_ms": 0.8678003214299679,
+          "avg_time_ms": 0.8678003214299679,
+          "peak_memory_mb": 235.11328125
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 201.61980018019676,
+          "min_time_ms": 201.61980018019676,
+          "max_time_ms": 201.61980018019676,
+          "avg_time_ms": 201.61980018019676,
+          "peak_memory_mb": 235.11328125
+        }
+      },
+      "stats": {
+        "name": "Memory-Efficient",
+        "node_mode": "B_TREE",
+        "edge_mode": "CSR",
+        "graph_optimization": "OFF",
+        "total_users": 5000,
+        "total_posts": 3000,
+        "total_comments": 2000,
+        "total_relationships": 9999
+      }
+    },
+    "Query-Optimized": {
+      "database": "Query-Optimized",
+      "node_mode": "TREE_GRAPH_HYBRID",
+      "edge_mode": "WEIGHTED_GRAPH",
+      "total_entities": 10000,
+      "scale": "10x",
+      "total_time_ms": 297.95429948717356,
+      "peak_memory_mb": 245.2109375,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 87.18749973922968,
+          "min_time_ms": 87.18749973922968,
+          "max_time_ms": 87.18749973922968,
+          "avg_time_ms": 87.18749973922968,
+          "peak_memory_mb": 245.171875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.605700071901083,
+          "min_time_ms": 0.605700071901083,
+          "max_time_ms": 0.605700071901083,
+          "avg_time_ms": 0.605700071901083,
+          "peak_memory_mb": 245.171875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.8895997889339924,
+          "min_time_ms": 0.8895997889339924,
+          "max_time_ms": 0.8895997889339924,
+          "avg_time_ms": 0.8895997889339924,
+          "peak_memory_mb": 245.2109375
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 209.2714998871088,
+          "min_time_ms": 209.2714998871088,
+          "max_time_ms": 209.2714998871088,
+          "avg_time_ms": 209.2714998871088,
+          "peak_memory_mb": 245.2109375
+        }
+      },
+      "stats": {
+        "name": "Query-Optimized",
+        "node_mode": "TREE_GRAPH_HYBRID",
+        "edge_mode": "WEIGHTED_GRAPH",
+        "graph_optimization": "OFF",
+        "total_users": 5000,
+        "total_posts": 3000,
+        "total_comments": 2000,
+        "total_relationships": 9999
+      }
+    },
+    "Persistence-Optimized": {
+      "database": "Persistence-Optimized",
+      "node_mode": "B_PLUS_TREE",
+      "edge_mode": "EDGE_PROPERTY_STORE",
+      "total_entities": 10000,
+      "scale": "10x",
+      "total_time_ms": 294.8482003994286,
+      "peak_memory_mb": 255.1875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 88.2765999995172,
+          "min_time_ms": 88.2765999995172,
+          "max_time_ms": 88.2765999995172,
+          "avg_time_ms": 88.2765999995172,
+          "peak_memory_mb": 255.14453125
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.5029002204537392,
+          "min_time_ms": 0.5029002204537392,
+          "max_time_ms": 0.5029002204537392,
+          "avg_time_ms": 0.5029002204537392,
+          "peak_memory_mb": 255.14453125
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.9371000342071056,
+          "min_time_ms": 0.9371000342071056,
+          "max_time_ms": 0.9371000342071056,
+          "avg_time_ms": 0.9371000342071056,
+          "peak_memory_mb": 255.18359375
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 205.13160014525056,
+          "min_time_ms": 205.13160014525056,
+          "max_time_ms": 205.13160014525056,
+          "avg_time_ms": 205.13160014525056,
+          "peak_memory_mb": 255.1875
+        }
+      },
+      "stats": {
+        "name": "Persistence-Optimized",
+        "node_mode": "B_PLUS_TREE",
+        "edge_mode": "EDGE_PROPERTY_STORE",
+        "graph_optimization": "OFF",
+        "total_users": 5000,
+        "total_posts": 3000,
+        "total_comments": 2000,
+        "total_relationships": 9998
+      }
+    },
+    "XWData-Optimized": {
+      "database": "XWData-Optimized",
+      "node_mode": "DATA_INTERCHANGE_OPTIMIZED",
+      "edge_mode": "None",
+      "total_entities": 10000,
+      "scale": "10x",
+      "total_time_ms": 293.81920024752617,
+      "peak_memory_mb": 265.375,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 87.22590003162622,
+          "min_time_ms": 87.22590003162622,
+          "max_time_ms": 87.22590003162622,
+          "avg_time_ms": 87.22590003162622,
+          "peak_memory_mb": 265.3359375
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 0.5141003057360649,
+          "min_time_ms": 0.5141003057360649,
+          "max_time_ms": 0.5141003057360649,
+          "avg_time_ms": 0.5141003057360649,
+          "peak_memory_mb": 265.33984375
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 0.9453999809920788,
+          "min_time_ms": 0.9453999809920788,
+          "max_time_ms": 0.9453999809920788,
+          "avg_time_ms": 0.9453999809920788,
+          "peak_memory_mb": 265.375
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 205.1337999291718,
+          "min_time_ms": 205.1337999291718,
+          "max_time_ms": 205.1337999291718,
+          "avg_time_ms": 205.1337999291718,
+          "peak_memory_mb": 264.078125
+        }
+      },
+      "stats": {
+        "name": "XWData-Optimized",
+        "node_mode": "DATA_INTERCHANGE_OPTIMIZED",
+        "edge_mode": "None",
+        "graph_optimization": "OFF",
+        "total_users": 5000,
+        "total_posts": 3000,
+        "total_comments": 2000,
+        "total_relationships": 9999
+      }
+    }
+  },
+  "100000": {
+    "Read-Optimized": {
+      "database": "Read-Optimized",
+      "node_mode": "HASH_MAP",
+      "edge_mode": "None",
+      "total_entities": 100000,
+      "scale": "100x",
+      "total_time_ms": 62889.39190004021,
+      "peak_memory_mb": 314.078125,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 908.4013998508453,
+          "min_time_ms": 908.4013998508453,
+          "max_time_ms": 908.4013998508453,
+          "avg_time_ms": 908.4013998508453,
+          "peak_memory_mb": 313.58203125
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 7.828900124877691,
+          "min_time_ms": 7.828900124877691,
+          "max_time_ms": 7.828900124877691,
+          "avg_time_ms": 7.828900124877691,
+          "peak_memory_mb": 313.58203125
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 9.066199883818626,
+          "min_time_ms": 9.066199883818626,
+          "max_time_ms": 9.066199883818626,
+          "avg_time_ms": 9.066199883818626,
+          "peak_memory_mb": 314.078125
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 61964.09540018067,
+          "min_time_ms": 61964.09540018067,
+          "max_time_ms": 61964.09540018067,
+          "avg_time_ms": 61964.09540018067,
+          "peak_memory_mb": 308.1875
+        }
+      },
+      "stats": {
+        "name": "Read-Optimized",
+        "node_mode": "HASH_MAP",
+        "edge_mode": "None",
+        "graph_optimization": "OFF",
+        "total_users": 50000,
+        "total_posts": 30000,
+        "total_comments": 20000,
+        "total_relationships": 99997
+      }
+    },
+    "Write-Optimized": {
+      "database": "Write-Optimized",
+      "node_mode": "LSM_TREE",
+      "edge_mode": "DYNAMIC_ADJ_LIST",
+      "total_entities": 100000,
+      "scale": "100x",
+      "total_time_ms": 90140.78370016068,
+      "peak_memory_mb": 413.23046875,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 2612.360999919474,
+          "min_time_ms": 2612.360999919474,
+          "max_time_ms": 2612.360999919474,
+          "avg_time_ms": 2612.360999919474,
+          "peak_memory_mb": 412.7421875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 14.881700277328491,
+          "min_time_ms": 14.881700277328491,
+          "max_time_ms": 14.881700277328491,
+          "avg_time_ms": 14.881700277328491,
+          "peak_memory_mb": 412.7421875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 23.439900018274784,
+          "min_time_ms": 23.439900018274784,
+          "max_time_ms": 23.439900018274784,
+          "avg_time_ms": 23.439900018274784,
+          "peak_memory_mb": 413.23046875
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 87490.1010999456,
+          "min_time_ms": 87490.1010999456,
+          "max_time_ms": 87490.1010999456,
+          "avg_time_ms": 87490.1010999456,
+          "peak_memory_mb": 411.26953125
+        }
+      },
+      "stats": {
+        "name": "Write-Optimized",
+        "node_mode": "LSM_TREE",
+        "edge_mode": "DYNAMIC_ADJ_LIST",
+        "graph_optimization": "OFF",
+        "total_users": 50000,
+        "total_posts": 30000,
+        "total_comments": 20000,
+        "total_relationships": 99999
+      }
+    },
+    "Memory-Efficient": {
+      "database": "Memory-Efficient",
+      "node_mode": "B_TREE",
+      "edge_mode": "CSR",
+      "total_entities": 100000,
+      "scale": "100x",
+      "total_time_ms": 60731.94169998169,
+      "peak_memory_mb": 517.2578125,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 3109.3256999738514,
+          "min_time_ms": 3109.3256999738514,
+          "max_time_ms": 3109.3256999738514,
+          "avg_time_ms": 3109.3256999738514,
+          "peak_memory_mb": 516.75390625
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 14.684900175780058,
+          "min_time_ms": 14.684900175780058,
+          "max_time_ms": 14.684900175780058,
+          "avg_time_ms": 14.684900175780058,
+          "peak_memory_mb": 516.75390625
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 21.158399991691113,
+          "min_time_ms": 21.158399991691113,
+          "max_time_ms": 21.158399991691113,
+          "avg_time_ms": 21.158399991691113,
+          "peak_memory_mb": 517.2578125
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 57586.77269984037,
+          "min_time_ms": 57586.77269984037,
+          "max_time_ms": 57586.77269984037,
+          "avg_time_ms": 57586.77269984037,
+          "peak_memory_mb": 514.50390625
+        }
+      },
+      "stats": {
+        "name": "Memory-Efficient",
+        "node_mode": "B_TREE",
+        "edge_mode": "CSR",
+        "graph_optimization": "OFF",
+        "total_users": 50000,
+        "total_posts": 30000,
+        "total_comments": 20000,
+        "total_relationships": 99995
+      }
+    },
+    "Query-Optimized": {
+      "database": "Query-Optimized",
+      "node_mode": "TREE_GRAPH_HYBRID",
+      "edge_mode": "WEIGHTED_GRAPH",
+      "total_entities": 100000,
+      "scale": "100x",
+      "total_time_ms": 29802.565399557352,
+      "peak_memory_mb": 622.80078125,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 895.9526997059584,
+          "min_time_ms": 895.9526997059584,
+          "max_time_ms": 895.9526997059584,
+          "avg_time_ms": 895.9526997059584,
+          "peak_memory_mb": 622.35546875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 7.397700101137161,
+          "min_time_ms": 7.397700101137161,
+          "max_time_ms": 7.397700101137161,
+          "avg_time_ms": 7.397700101137161,
+          "peak_memory_mb": 622.35546875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 9.634099900722504,
+          "min_time_ms": 9.634099900722504,
+          "max_time_ms": 9.634099900722504,
+          "avg_time_ms": 9.634099900722504,
+          "peak_memory_mb": 622.80078125
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 28889.580899849534,
+          "min_time_ms": 28889.580899849534,
+          "max_time_ms": 28889.580899849534,
+          "avg_time_ms": 28889.580899849534,
+          "peak_memory_mb": 617.63671875
+        }
+      },
+      "stats": {
+        "name": "Query-Optimized",
+        "node_mode": "TREE_GRAPH_HYBRID",
+        "edge_mode": "WEIGHTED_GRAPH",
+        "graph_optimization": "OFF",
+        "total_users": 50000,
+        "total_posts": 30000,
+        "total_comments": 20000,
+        "total_relationships": 99997
+      }
+    },
+    "Persistence-Optimized": {
+      "database": "Persistence-Optimized",
+      "node_mode": "B_PLUS_TREE",
+      "edge_mode": "EDGE_PROPERTY_STORE",
+      "total_entities": 100000,
+      "scale": "100x",
+      "total_time_ms": 52542.60449996218,
+      "peak_memory_mb": 720.8203125,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 1054.9380998127162,
+          "min_time_ms": 1054.9380998127162,
+          "max_time_ms": 1054.9380998127162,
+          "avg_time_ms": 1054.9380998127162,
+          "peak_memory_mb": 720.3515625
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 7.786800153553486,
+          "min_time_ms": 7.786800153553486,
+          "max_time_ms": 7.786800153553486,
+          "avg_time_ms": 7.786800153553486,
+          "peak_memory_mb": 720.3515625
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 9.78820025920868,
+          "min_time_ms": 9.78820025920868,
+          "max_time_ms": 9.78820025920868,
+          "avg_time_ms": 9.78820025920868,
+          "peak_memory_mb": 720.8203125
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 51470.0913997367,
+          "min_time_ms": 51470.0913997367,
+          "max_time_ms": 51470.0913997367,
+          "avg_time_ms": 51470.0913997367,
+          "peak_memory_mb": 720.71484375
+        }
+      },
+      "stats": {
+        "name": "Persistence-Optimized",
+        "node_mode": "B_PLUS_TREE",
+        "edge_mode": "EDGE_PROPERTY_STORE",
+        "graph_optimization": "OFF",
+        "total_users": 50000,
+        "total_posts": 30000,
+        "total_comments": 20000,
+        "total_relationships": 99999
+      }
+    },
+    "XWData-Optimized": {
+      "database": "XWData-Optimized",
+      "node_mode": "DATA_INTERCHANGE_OPTIMIZED",
+      "edge_mode": "None",
+      "total_entities": 100000,
+      "scale": "100x",
+      "total_time_ms": 88130.13409962878,
+      "peak_memory_mb": 826.015625,
+      "metrics": {
+        "insert": {
+          "count": 1,
+          "total_time_ms": 2807.108599692583,
+          "min_time_ms": 2807.108599692583,
+          "max_time_ms": 2807.108599692583,
+          "avg_time_ms": 2807.108599692583,
+          "peak_memory_mb": 825.54296875
+        },
+        "read": {
+          "count": 1,
+          "total_time_ms": 7.637199945747852,
+          "min_time_ms": 7.637199945747852,
+          "max_time_ms": 7.637199945747852,
+          "avg_time_ms": 7.637199945747852,
+          "peak_memory_mb": 825.54296875
+        },
+        "update": {
+          "count": 1,
+          "total_time_ms": 16.161299776285887,
+          "min_time_ms": 16.161299776285887,
+          "max_time_ms": 16.161299776285887,
+          "avg_time_ms": 16.161299776285887,
+          "peak_memory_mb": 826.015625
+        },
+        "relationships": {
+          "count": 1,
+          "total_time_ms": 85299.22700021416,
+          "min_time_ms": 85299.22700021416,
+          "max_time_ms": 85299.22700021416,
+          "avg_time_ms": 85299.22700021416,
+          "peak_memory_mb": 824.15625
+        }
+      },
+      "stats": {
+        "name": "XWData-Optimized",
+        "node_mode": "DATA_INTERCHANGE_OPTIMIZED",
+        "edge_mode": "None",
+        "graph_optimization": "OFF",
+        "total_users": 50000,
+        "total_posts": 30000,
+        "total_comments": 20000,
+        "total_relationships": 99997
+      }
+    }
+  }
+}
