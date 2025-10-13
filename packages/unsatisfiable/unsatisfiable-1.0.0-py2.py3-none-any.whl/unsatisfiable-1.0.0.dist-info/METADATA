@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: unsatisfiable
+Version: 1.0.0
+Summary: An unsatisfiable dependency to support flagging unsupported environments.
+Author-email: John Sirois <john.sirois@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/jsirois/unsatisfiable
+Keywords: dependencies,fail,error,impossible
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: Utilities
+Requires-Python: >6.28
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# unsatisfiable 
+
+A project that can be used as a purposefully unsatisfiable dependency to force installation failure
+for certain environments.
+
+Generally you'll want to depend on this project via an environment marker. For example, if you
+publish a Python library that does not support Windows you could add
+`unsatisfiable; platform_system == "Windows"` to its dependencies.
+
