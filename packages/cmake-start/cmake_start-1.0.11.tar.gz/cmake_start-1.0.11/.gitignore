@@ -1,0 +1,42 @@
+# Legacy
+proj/
+cmake-init.pyz
+tmp/
+# UV and Python
+.venv/
+.python-version
+uv.lock
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+# Only ignore root-level cmake_init_lib
+/cmake_init_lib/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# PyPI and Release
+.pypirc
+*.whl
+
+# Build artifacts
+*.zip
+*.tar.gz

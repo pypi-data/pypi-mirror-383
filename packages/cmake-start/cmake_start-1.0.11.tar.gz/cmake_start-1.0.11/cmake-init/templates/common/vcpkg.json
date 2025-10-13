@@ -1,0 +1,30 @@
+{
+  "name": "{= name =}",
+  "version-semver": "{= version =}",
+  "dependencies": [
+    {
+      "name": "{% if c %}json-c{% else %}fmt{% end %}",
+      "version>=": "{% if c %}2023-08-12{% else %}11.0.2#1{% end %}"
+    }{% if c and exe %},
+    {
+      "name": "hedley",
+      "version>=": "15"
+    }{% end %}
+  ],
+  "default-features": [],
+  "features": {
+    "test": {
+      "description": "Dependencies for testing",
+      "dependencies": [
+        {% if catch3 %}{
+          "name": "catch2",
+          "version>=": "3.7.1"
+        }{% else %}"catch2"{% end %}
+      ]
+    }
+  },{% if not catch3 %}
+  "overrides": [
+    { "name": "catch2", "version": "2.13.9#1" }
+  ],{% end %}
+  "builtin-baseline": "{= vcpkg_baseline =}"
+}
