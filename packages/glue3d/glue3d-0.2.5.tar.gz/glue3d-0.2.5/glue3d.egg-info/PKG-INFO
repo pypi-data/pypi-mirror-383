@@ -1,0 +1,47 @@
+Metadata-Version: 2.4
+Name: glue3d
+Version: 0.2.5
+Summary: Official project for GLUE3D.
+Author: Alessandro Raganato, Simone Melzi, Gabriella Pasi
+Author-email: Giorgio Mariani <giorgiomariani94@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/giorgio-mariani/GLUE3D
+Project-URL: Repository, https://github.com/giorgio-mariani/GLUE3D
+Project-URL: Issues, https://github.com/giorgio-mariani/GLUE3D/issues
+Keywords: benchmark,point cloud,multimodal,three-dimensional,3d
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: transformers
+Requires-Dist: huggingface_hub
+Requires-Dist: pandas
+Requires-Dist: datasets
+Requires-Dist: sentence-transformers
+Requires-Dist: nltk
+Requires-Dist: scipy
+Requires-Dist: click
+Requires-Dist: rouge
+Requires-Dist: llama-cpp-python
+Requires-Dist: OpenEXR
+Provides-Extra: blender
+Requires-Dist: bpy==4.4.0; extra == "blender"
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: pytest>=6.0.0; extra == "dev"
+Dynamic: license-file
+
+## GLUE3D: General Language Understanding Evaluation for 3D Point Clouds
+
+Official PyPI package for [**GLUE3D: General Language Understanding Evaluation for 3D Point Clouds**](https://github.com/giorgio-mariani/GLUE3D).
+
+GLUE3D is a Q&A benchmark for evaluation of 3D-LLMs object understanding capabilities. It is built around 128 richly textured surfaces spanning creatures, objects, architecture and transport. Each surface is provided as a 50 k-point RGB point cloud, a 8K-point RGB point cloud, a 512 × 512 RGB rendering, and five RGB-D multiviews.
+
+The package can be easily installed with the command:
+
+```bash
+pip install glue3d
+```
+
+A more in-detail description of the GLUE3D Q&A evaluation tasks, together with usage examples, are available on the project [repository](https://github.com/giorgio-mariani/GLUE3D).
