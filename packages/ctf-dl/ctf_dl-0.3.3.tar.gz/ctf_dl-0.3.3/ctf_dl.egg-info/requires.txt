@@ -1,0 +1,14 @@
+ctfbridge>=0.8.3
+httpx>=0.28.0
+typer>=0.15.3
+rich>=14.0.0
+Jinja2>=3.1.6
+PyYAML>=6.0.0
+python-slugify[unidecode]>=8.0.4
+mdformat==0.7.22
+mdformat_tables==1.0.0
+
+[dev]
+pytest>=8.0.0
+pytest-mock>=3.15.0
+ruff>=0.13.0
