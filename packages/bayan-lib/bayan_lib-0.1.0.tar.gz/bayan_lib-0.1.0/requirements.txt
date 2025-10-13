@@ -1,0 +1,15 @@
+# Core dependencies
+PyMuPDF>=1.23.0  # PDF parsing
+pdfminer.six>=20221105  # Alternative PDF parsing
+
+# Optional data analysis dependencies (install as needed)
+# pandas>=1.5.0  # For DataFrame support
+# matplotlib>=3.5.0  # For figure plotting
+# Pillow>=9.0.0  # For image handling
+
+# Optional LLM dependencies (install as needed)
+# openai>=1.0.0  # For OpenAI integration
+# anthropic>=0.7.0  # For Claude integration
+# transformers>=4.30.0  # For HuggingFace models
+# torch>=2.0.0  # For HuggingFace models
+# requests>=2.31.0  # For local/custom API integration
