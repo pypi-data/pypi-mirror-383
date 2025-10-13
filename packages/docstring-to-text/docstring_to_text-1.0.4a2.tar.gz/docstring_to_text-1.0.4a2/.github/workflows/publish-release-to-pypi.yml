@@ -1,0 +1,212 @@
+# Prerequisites:
+#
+# - In GitHub repo - create the publishing environment (here, `pypi` / `testpypi`)
+#   https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments
+#
+# - Create a "Trusted Publisher" in the project settings on (test)PyPI
+#   https://docs.pypi.org/trusted-publishers/adding-a-publisher/
+#   https://pypi.org/manage/project/docstring-to-text/settings/publishing/
+
+# Tutorials:
+# https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
+# https://www.youtube.com/watch?v=NMQwzI9hprg
+# https://github.com/ArjanCodes/moneysnake/blob/main/.github/workflows/release.yaml
+
+name: Publish Python 🐍 distribution 📦 to PyPI
+
+# ======= TRIGGERS =======
+
+#on:
+#  push:
+#    tags:
+#      # Trigger on tags with '[v]<int>.<int>whatever' pattern: 'v1.0.0', 'v2.1.4', etc
+#      # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#filter-pattern-cheat-sheet
+#      # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onpushbranchestagsbranches-ignoretags-ignore
+#      - 'v[0-9]+.[0-9]**'
+#      - '[0-9]+.[0-9]**'
+
+on:
+  workflow_dispatch:  # Allow starting manually
+  push:
+    branches:
+      - main
+    paths:
+      - "src/docstring_to_text/___package_meta.py"
+
+# ====== CONCURRENCY ======
+
+# Prevent multiple simultaneous builds for the same version:
+concurrency:
+  group: pypi-publish
+  # To group by version:
+  #group: pypi-publish-${{ github.ref }}-${{ hashFiles('src/docstring_to_text/___package_meta.py') }}
+  cancel-in-progress: false  # the second pending run is put into a queue, the third one is cancelled (GitHub limitation)
+
+# ======= ENV VARS =======
+
+env:
+  # The name on PyPI:
+  PACKAGE_NAME: 'docstring-to-text'
+  VERSION_FILE: 'src/docstring_to_text/___package_meta.py'
+  VERSION_MODULE: 'src.docstring_to_text.___package_meta'
+  VERSION_VARIABLE: 'VERSION'
+
+# ========= JOBS =========
+
+jobs:
+  test:
+    name: Run Tests 🔬
+    # Just to be nice - let's check the GitHub user and prevent unwanted auto-runs on forks made solely for a PR.
+    # A single condition (only in this job) is enough: all the other jobs depend on this one, and will be skipped.
+    # However, to prevent the workflow run entirely, *ALL* the jobs need to have the same condition.
+    if: github.repository_owner == 'Lex-DRL'
+    # Alternatively - ${{}} syntax (expression evaluation).
+    # Not needed here, but might be useful inside a script - GitHub would "pre-process" it
+    # and substitute with the actual value, like macros work in C:
+    # if: ${{ github.repository_owner == 'Lex-DRL' }}
+    uses: ./.github/workflows/test.yml
+
+  # --------------------------------------------------------
+
+  detect-version:
+    name: Detect version 🔢
+    needs: test
+    uses: ./.github/workflows/version-parse.yml
+
+  # --------------------------------------------------------
+
+  build:
+    name: Build distribution 📦
+    needs: [test, detect-version]  # No need to even try, if we failed the essential steps
+    # Extra condition: only run on tag pushes...
+    # It was in the template from official tutorial, but it got redundant with our deep version parsing and verification
+    # Kept here just as a condition example:
+    # if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+        cache: 'pip'  # Enable built-in pip caching
+        cache-dependency-path: 'pyproject.toml'
+
+    - name: Install pypa/build
+      run: >-
+        python3 -m
+        pip install
+        build
+        --user
+
+    - name: Build a binary wheel and a source tarball
+      run: python3 -m build
+
+    - name: Store the distribution packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+  # --------------------------------------------------------
+
+  publish-to-pypi:
+    name: >-
+      Publish Python 🐍 distribution 📦 to PyPI ⬆️
+    needs:
+     - build  # Requires the previous 'build' job to succeed
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/${{ env.PACKAGE_NAME }}
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+
+  # --------------------------------------------------------
+
+#  publish-to-testpypi:
+#    name: Publish Python 🐍 distribution 📦 to TestPyPI ❗
+#    needs:
+#    - build  # Requires the previous 'build' job to succeed
+#    runs-on: ubuntu-latest
+#
+#    environment:
+#      #name: testpypi
+#      # Yes, it's "not cool" to use the same environment for testing and publishing,
+#      # but in this particular repo I only use the TestPyPI for initial debugging of the workflow
+#      name: pypi
+#      url: https://test.pypi.org/p/${{ env.PACKAGE_NAME }}
+#    permissions:
+#      id-token: write  # IMPORTANT: mandatory for trusted publishing
+#
+#    steps:
+#    - name: Download all the dists
+#      uses: actions/download-artifact@v4
+#      with:
+#        name: python-package-distributions
+#        path: dist/
+#
+#    - name: Publish distribution 📦 to TestPyPI
+#      uses: pypa/gh-action-pypi-publish@release/v1
+#      with:
+#        repository-url: https://test.pypi.org/legacy/
+
+  # --------------------------------------------------------
+
+  github_release:
+    name: GitHub Tag 🏷️ + Release 🔄
+    needs: [detect-version, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch full history to avoid issues with tags and branches
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Create tag 🏷️ from version
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${process.env.TAG}`,
+              sha: context.sha
+            })
+        env:
+          TAG: ${{ needs.detect-version.outputs.tag_name }}
+
+      - name: Create GitHub Release 🔄
+        id: create_release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create
+          ${{ needs.detect-version.outputs.tag_name }}
+          dist/*
+          --title ${{ needs.detect-version.outputs.tag_name }}
+          --generate-notes
