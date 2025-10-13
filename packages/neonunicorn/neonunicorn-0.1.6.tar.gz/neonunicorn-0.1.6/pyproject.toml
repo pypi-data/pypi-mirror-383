@@ -1,0 +1,32 @@
+[project]
+name = "neonunicorn"
+version = "0.1.6"
+description = "both package distribution and matrix"
+readme = "README.md"
+authors = [
+    { name = "neonunicorngh", email = "fm0032@uah.edu" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "matplotlib>=3.9.4",
+    "numpy>=2.0.2",
+    "polars>=1.34.0",
+    "scikit-learn>=1.6.1",
+    "torch>=2.8.0",
+    "twine>=6.1.0",
+]
+
+[tool.maturin]
+module-name = "neonunicorn._core"
+python-packages = ["neonunicorn"]
+python-source = "src"
+
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.1",
+    "jupyter>=1.1.1",
+]
