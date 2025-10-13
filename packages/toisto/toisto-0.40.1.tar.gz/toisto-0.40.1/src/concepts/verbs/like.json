@@ -1,0 +1,114 @@
+{
+    "concepts": {
+        "to like": {
+            "example": "I like ice cream"
+        },
+        "I like ice cream": {}
+    },
+    "labels": {
+        "en": [
+            {
+                "concept": "to like",
+                "label": {
+                    "infinitive": "to like",
+                    "singular": {
+                        "first person": "I like",
+                        "second person": "you like",
+                        "third person": {
+                            "feminine": "she likes",
+                            "masculine": "he likes"
+                        }
+                    },
+                    "plural": {
+                        "first person": "we like",
+                        "second person": "you like",
+                        "third person": "they like"
+                    }
+                }
+            },
+            {
+                "concept": "I like ice cream",
+                "label": "I like ice cream.",
+                "roots": [
+                    "I like",
+                    "ice cream"
+                ]
+            }
+        ],
+        "fi": [
+            {
+                "concept": "to like",
+                "label": {
+                    "infinitive": "pitää",
+                    "singular": {
+                        "first person": "minä pidän",
+                        "second person": "sinä pidät",
+                        "third person": "hän pitää"
+                    },
+                    "plural": {
+                        "first person": "me pidämme",
+                        "second person": "te pidätte",
+                        "third person": "he pitävät"
+                    }
+                }
+            },
+            {
+                "concept": "to like",
+                "label": {
+                    "infinitive": "tykätä",
+                    "singular": {
+                        "first person": "minä tykkään",
+                        "second person": "sinä tykkäät",
+                        "third person": "hän tykkää"
+                    },
+                    "plural": {
+                        "first person": "me tykkäämme",
+                        "second person": "te tykkäätte",
+                        "third person": "he tykkäävät"
+                    }
+                }
+            },
+            {
+                "concept": "I like ice cream",
+                "label": "Minä pidän jäätelöstä.",
+                "cloze": "Minä pidän (jäätelö).",
+                "roots": [
+                    "minä pidän",
+                    "jäätelö"
+                ]
+            }
+        ],
+        "nl": [
+            {
+                "concept": "to like",
+                "label": {
+                    "infinitive": "leuk vinden",
+                    "singular": {
+                        "first person": "ik vind leuk",
+                        "second person": "jij vindt leuk",
+                        "third person": {
+                            "feminine": "zij vindt leuk",
+                            "masculine": "hij vindt leuk"
+                        }
+                    },
+                    "plural": {
+                        "first person": "wij vinden leuk",
+                        "second person": "jullie vinden leuk",
+                        "third person": "zij vinden leuk"
+                    }
+                }
+            },
+            {
+                "concept": "I like ice cream",
+                "label": [
+                    "Ik hou van ijs.",
+                    "Ik houd van ijs."
+                ],
+                "roots": [
+                    "ik houd van",
+                    "het ijs"
+                ]
+            }
+        ]
+    }
+}
