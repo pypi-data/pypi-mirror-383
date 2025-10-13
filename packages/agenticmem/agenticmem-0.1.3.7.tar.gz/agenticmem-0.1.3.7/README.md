@@ -1,0 +1,221 @@
+# AgenticMem Python Client
+
+A Python client library for interacting with the AgenticMem API. This client provides easy-to-use interfaces for managing user interactions, profiles, configuration, and agent feedback.
+
+## Installation
+
+```bash
+pip install agenticmem
+```
+
+## Quick Start
+
+```python
+import agenticmem
+from agenticmem import (
+    InteractionRequest,
+    SearchUserProfileRequest,
+    SearchInteractionRequest,
+    UserActionType
+)
+from datetime import datetime
+
+# Initialize the client
+client = agenticmem.AgenticMemClient(url_endpoint="http://127.0.0.1:8081/")
+
+# Login with email/password (async)
+token = await client.login("user@example.com", "password")
+client.api_key = token.api_key
+
+# Publish a user interaction (async)
+response = await client.publish_interaction(
+    request_id="your_request_id",
+    user_id="your_user_id",
+    interaction_requests=[
+        InteractionRequest(
+            role="User",
+            content="Hey, this is John. How can I help you today?",
+            user_action=UserActionType.NONE,
+            user_action_description="",
+            interacted_image_url=""
+        )
+    ],
+    source="conversation"
+)
+print(f"Published interaction: {response.success} - {response.message}")
+
+# Search user profiles (async)
+profiles = await client.search_profiles(
+    request=SearchUserProfileRequest(
+        user_id="your_user_id",
+        query="john",
+        threshold=0.7
+    )
+)
+for profile in profiles.user_profiles:
+    print(f"Profile {profile.profile_id}: {profile.profile_content}")
+
+# Search interactions (async)
+interactions = await client.search_interactions(
+    request=SearchInteractionRequest(
+        user_id="your_user_id",
+        query="name is john"
+    )
+)
+for interaction in interactions.interactions:
+    print(f"Interaction {interaction.interaction_id}: {interaction.content}")
+
+# Get all interactions (async)
+all_interactions = await client.get_interactions(
+    request={"user_id": "your_user_id", "top_k": 10}
+)
+for interaction in all_interactions.interactions:
+    print(f"Interaction: {interaction.content}")
+
+# Get all profiles (async)
+all_profiles = await client.get_profiles(
+    request={"user_id": "your_user_id", "top_k": 10}
+)
+for profile in all_profiles.user_profiles:
+    print(f"Profile: {profile.profile_content}")
+
+# Get profile change log (async)
+change_log = await client.get_profile_change_log()
+print(f"Profile changes: {len(change_log.profile_change_logs)} logs")
+```
+
+## Features
+
+### Authentication
+- Email/password login (async)
+- API key authentication
+- Custom endpoint configuration
+
+### User Interaction Management
+- Publish user interactions (text, images, actions)
+- Search interactions with semantic queries
+- Get direct list of interactions
+- Delete specific interactions
+- Support for various interaction types (text, visual, click events)
+
+### User Profile Management
+- Search user profiles with semantic queries
+- Get direct list of user profiles
+- Delete specific profiles or profiles matching search queries
+- View profile change log history
+- Filter by source and custom features
+
+### Configuration Management
+- Get and set AgenticMem configuration
+- Configure profile extractors
+- Configure agent feedback systems
+- Storage configuration (Supabase, S3, Local)
+
+### Agent Feedback System
+- Get raw feedbacks from user interactions
+- Get aggregated feedbacks
+- Automatic feedback generation based on conversations
+- Configurable feedback thresholds
+
+## API Response Types
+
+All API methods return strongly-typed responses:
+
+### Authentication
+- `login()` returns `Token`
+
+### Interaction Management
+- `publish_interaction()` returns `PublishUserInteractionResponse`
+- `search_interactions()` returns `SearchInteractionResponse`
+- `get_interactions()` returns `GetInteractionsResponse`
+- `delete_interaction()` returns `DeleteUserInteractionResponse`
+
+### Profile Management
+- `search_profiles()` returns `SearchUserProfileResponse`
+- `get_profiles()` returns `GetUserProfilesResponse`
+- `delete_profile()` returns `DeleteUserProfileResponse`
+- `get_profile_change_log()` returns `ProfileChangeLogResponse`
+
+### Configuration Management
+- `get_config()` returns `Config`
+- `set_config()` returns `dict`
+
+### Feedback Management
+- `get_raw_feedbacks()` returns `GetRawFeedbacksResponse`
+- `get_feedbacks()` returns `GetFeedbacksResponse`
+
+## Advanced Usage Examples
+
+### Visual Interactions with Images
+
+```python
+import base64
+
+# Function to encode the image
+def encode_image(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode("utf-8")
+
+# Publish image interaction
+base64_image = encode_image("./path/to/image.png")
+await client.publish_interaction(
+    request_id="your_request_id",
+    user_id="your_user_id",
+    interaction_requests=[
+        InteractionRequest(
+            content="I like this",
+            image_encoding=base64_image,
+        )
+    ]
+)
+```
+
+### Configuration Management
+
+```python
+from agenticmem import ProfileExtractorConfig, AgentFeedbackConfig, FeedbackAggregatorConfig
+
+# Get current configuration
+config = await client.get_config()
+print(f"Current config: {config}")
+
+# Update configuration
+feedback_config = AgentFeedbackConfig(
+    feedback_name="sales_feedback",
+    feedback_definition_prompt="Extract actionable feedback for sales representatives",
+    feedback_aggregator_config=FeedbackAggregatorConfig()
+)
+
+config.agent_feedback_configs = [feedback_config]
+await client.set_config(config)
+```
+
+### Feedback Management
+
+```python
+# Get raw feedbacks
+raw_feedbacks = await client.get_raw_feedbacks()
+for feedback in raw_feedbacks.raw_feedbacks:
+    print(f"Feedback: {feedback.feedback_content}")
+
+# Get aggregated feedbacks
+feedbacks = await client.get_feedbacks()
+for feedback in feedbacks.feedbacks:
+    print(f"Aggregated feedback: {feedback}")
+```
+
+## Documentation
+
+For detailed documentation, please visit the `docs/` directory in this repository.
+
+## Important Notes
+
+- All client methods are **async** and require `await`
+- Image interactions support base64 encoded images
+- The client supports flexible request types (dict or typed objects)
+- Configuration changes affect the entire organization
+- Feedback generation is automatic based on configured prompts
+
+## License
+
+MIT License
