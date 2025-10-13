@@ -1,0 +1,12 @@
+numpy
+scipy
+matplotlib
+sounddevice
+pandas
+levenshtein
+
+[music-notation]
+abjad
+
+[music-notation:sys_platform != "darwin" or platform_machine != "arm64"]
+lilypond
