@@ -1,0 +1,85 @@
+Metadata-Version: 2.4
+Name: smart-datalyzer
+Version: 0.1.0
+Summary: Data analysis and reporting toolkit
+Home-page: https://github.com/mehmoodulhaq570/datalyzer
+Author: Mehmood Ul Haq
+Author-email: Mehmood Ul Haq <mehmoodulhaq1040@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/mehmoodulhaq570/datalyzer
+Project-URL: BugTracker, https://github.com/mehmoodulhaq570/datalyzer/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: statsmodels
+Requires-Dist: scikit-learn
+Requires-Dist: matplotlib
+Requires-Dist: seaborn
+Requires-Dist: rich
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
+# Datalyzer
+
+Datalyzer is a toolkit for data analysis, visualization, and automated reporting.
+
+## Features
+
+- Statistical diagnostics
+- Outlier detection
+- Feature importance
+- Correlation analysis
+- QQ plots, boxplots, violin plots, swarm plots
+- Automated report generation
+
+## Installation
+
+Recommended (modern):
+
+```bash
+pip install build
+python -m build
+pip install dist/datalyzer-0.1.0-py3-none-any.whl
+```
+
+Or legacy:
+
+```bash
+pip install .
+```
+
+## Author
+
+Mehmood Ul Haq (<mehmoodulhaq1040@gmail.com>)
+
+## License
+
+MIT License (see LICENSE)
+
+## Code of Conduct
+
+See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
+## Security
+
+See [SECURITY.md](SECURITY.md)
+
+## Usage
+
+```bash
+python -m datalyzer.cli <input_file> <target_column>
+```
+
+## Requirements
+
+See `requirements.txt` for dependencies.
+
+## License
+
+MIT
