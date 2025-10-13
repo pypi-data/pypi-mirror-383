@@ -1,0 +1,570 @@
+# Project Vectorizer
+
+A CLI tool that vectorizes codebases, stores them in a database, tracks changes, and serves them via MCP (Model Context Protocol) for AI agents like Claude, Codex, and others.
+
+## Features
+
+- **Code Vectorization**: Parse and vectorize code files using sentence-transformers or OpenAI embeddings
+- **Multi-Level Chunking**: Intelligently chunk code by functions, classes, logical blocks, plus micro and word-level chunks for precision
+- **Enhanced Single-Word Search**: Optimized search for single keywords with high precision and relevance scoring
+- **Change Tracking**: Git-integrated change detection for incremental updates
+- **Multiple Languages**: Support for Python, JavaScript, TypeScript, Go, Rust, Java, and more
+- **MCP Server**: Expose vectorized codebase to AI agents via Model Context Protocol
+- **File Watching**: Real-time monitoring and indexing of file changes
+- **Semantic + Exact Search**: Combines semantic similarity with exact word matching for better results
+- **Adaptive Thresholds**: Automatically adjusts search thresholds for optimal single-word query results
+- **ChromaDB Backend**: High-performance vector database for scalable semantic search
+
+## Installation
+
+### From PyPI (Recommended)
+
+```bash
+# Install from PyPI
+pip install project-vectorizer
+
+# Verify installation
+pv --version
+```
+
+### From Source
+
+#### Quick Install with Setup Script
+
+```bash
+# Clone the repository
+git clone https://github.com/starkbaknet/project-vectorizer.git
+cd project-vectorizer
+
+# Run the installation script (sets up dependencies and .env)
+./install_and_setup.sh
+```
+
+#### Manual Install
+
+```bash
+# Clone the repository
+git clone https://github.com/starkbaknet/project-vectorizer.git
+cd project-vectorizer
+
+# Install dependencies
+pip install -e .
+
+# Setup environment variables
+cp .env.example .env
+# Edit .env with your preferences
+```
+
+### Development Install
+
+```bash
+# Clone the repository
+git clone https://github.com/starkbaknet/project-vectorizer.git
+cd project-vectorizer
+
+# Install with dev dependencies
+pip install -e ".[dev]"
+```
+
+## Quick Start
+
+### 1. Initialize a Project
+
+```bash
+# Initialize project with default settings
+pv init /path/to/your/project
+
+# Initialize with custom settings
+pv init /path/to/your/project \
+  --name "My Project" \
+  --embedding-model "all-MiniLM-L6-v2" \
+  --chunk-size 512
+```
+
+### 2. Index Your Codebase
+
+```bash
+# Full indexing (first time)
+pv index /path/to/your/project
+
+# Incremental indexing (only changed files) - now uses smart mode by default
+pv index /path/to/your/project --incremental
+
+# Smart incremental indexing (explicit) - prioritizes new → modified → deleted files
+pv index /path/to/your/project --smart
+
+# Git-aware indexing - only index files changed in recent commits
+pv index-git /path/to/your/project --since HEAD~1    # Last commit
+pv index-git /path/to/your/project --since HEAD~5    # Last 5 commits
+pv index-git /path/to/your/project --since main      # Since main branch
+
+# Force re-indexing of all files
+pv index /path/to/your/project --force
+```
+
+### 3. Search Your Code
+
+```bash
+# Search for relevant code with natural language
+pv search /path/to/your/project "authentication logic"
+
+# Single-word searches work excellently with high thresholds
+pv search /path/to/your/project "async" --limit 5 --threshold 0.9
+
+# Search with custom parameters
+pv search /path/to/your/project "user login" --limit 5 --threshold 0.7
+
+# Find specific programming constructs
+pv search /path/to/your/project "def" --threshold 0.8
+pv search /path/to/your/project "class" --threshold 0.9
+```
+
+### 4. Start MCP Server
+
+```bash
+# Start MCP server (default: localhost:8000)
+pv serve /path/to/your/project
+
+# Start on custom host/port
+pv serve /path/to/your/project --host 0.0.0.0 --port 8080
+```
+
+### 5. Monitor Changes
+
+```bash
+# Watch for file changes and auto-index (default 2s debounce)
+pv sync /path/to/your/project --watch
+
+# Watch with custom debounce delay
+pv sync /path/to/your/project --watch --debounce 5.0    # Wait 5 seconds before indexing
+pv sync /path/to/your/project --watch --debounce 0.5    # Fast 0.5 second debounce
+
+# One-time sync of changes (now uses smart incremental by default)
+pv sync /path/to/your/project
+```
+
+## Configuration
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and customize as needed:
+
+```bash
+cp .env.example .env
+```
+
+Key environment variables:
+
+- `OPENAI_API_KEY`: Required for OpenAI embeddings
+- `EMBEDDING_PROVIDER`: Choose between "sentence-transformers" or "openai"
+- `EMBEDDING_MODEL`: Model to use for embeddings
+- `CHUNK_SIZE`: Token size for chunks (128-256 recommended)
+- `DEFAULT_SEARCH_THRESHOLD`: Default similarity threshold
+
+For a complete list of environment variables, see [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md).
+
+### Project Configuration
+
+The tool uses a configuration file stored at `<project>/.vectorizer/config.json`:
+
+```json
+{
+  "chromadb_path": "/optional/custom/path/to/chromadb",
+  "embedding_model": "all-MiniLM-L6-v2",
+  "embedding_provider": "sentence-transformers",
+  "chunk_size": 256,
+  "chunk_overlap": 32,
+  "included_extensions": [
+    ".py",
+    ".js",
+    ".ts",
+    ".go",
+    ".rs",
+    ".java",
+    ".cpp",
+    ".c",
+    ".md"
+  ],
+  "excluded_patterns": ["node_modules/**", ".git/**", "__pycache__/**", "*.pyc"]
+}
+```
+
+### Embedding Providers
+
+#### Sentence Transformers (Default)
+
+```bash
+pv init /path/to/project --embedding-model "all-MiniLM-L6-v2"
+```
+
+#### OpenAI Embeddings
+
+```bash
+export OPENAI_API_KEY="your-api-key"
+pv init /path/to/project \
+  --embedding-model "text-embedding-ada-002" \
+  --embedding-provider "openai"
+```
+
+## MCP Server API
+
+When running the MCP server, the following tools are available to AI agents:
+
+### Tools
+
+- **search_code**: Search through the vectorized codebase
+- **get_file_content**: Get the full content of a specific file
+- **list_files**: List all files in the project
+- **get_project_stats**: Get project statistics and indexing status
+
+### HTTP Fallback API
+
+If MCP is not available, a fallback HTTP server is started with these endpoints:
+
+- `GET /search?q=<query>&limit=<n>&threshold=<t>` - Search code
+- `GET /file/<path>` - Get file content
+- `GET /files?type=<filter>` - List files
+- `GET /stats` - Get project statistics
+- `GET /health` - Health check
+
+Example:
+
+```bash
+curl "http://localhost:8000/search?q=authentication&limit=5"
+```
+
+## Enhanced Search Features
+
+### Single-Word Search Optimization
+
+The vectorizer now provides exceptional performance for single-word queries:
+
+```bash
+# These work with high thresholds (0.8-0.9+)
+pv search /path/to/project "async" --threshold 0.9
+pv search /path/to/project "test" --threshold 0.8
+pv search /path/to/project "function" --threshold 0.95
+```
+
+**Features:**
+
+- **Exact Word Matching**: Prioritizes exact word boundary matches with huge relevance boosts
+- **Programming Keyword Detection**: Special handling for keywords like `def`, `class`, `async`, `import`
+- **Adaptive Thresholds**: Automatically lowers thresholds for single-word queries when needed
+- **Multi-Level Indexing**: Creates micro-chunks and word-level chunks for precise matching
+
+### Search Result Prioritization
+
+For single-word queries, results are ranked by:
+
+1. **Exact word matches** (highest priority)
+2. **Partial matches** within larger words
+3. **Semantic similarity** from embeddings
+4. **Content type** (micro/word chunks get priority boosts)
+
+### Recommended Thresholds
+
+- **Single words**: `0.7-0.9` (works reliably)
+- **Multi-word phrases**: `0.3-0.7` (semantic matching)
+- **Complex queries**: `0.1-0.5` (broader semantic search)
+
+## Use Cases
+
+### 1. AI-Powered Code Review
+
+Set up the vectorizer on your codebase and use it with AI agents for:
+
+- Finding similar code patterns
+- Identifying potential security issues
+- Suggesting refactoring opportunities
+- Locating specific functions or classes instantly
+
+### 2. Documentation Generation
+
+Use the semantic search to find relevant code examples for documentation.
+
+### 3. Rapid Code Navigation
+
+Quickly find functions, classes, or code patterns using natural language queries:
+
+- Search for `"async"` to find all async functions
+- Search for `"test"` to locate test files and functions
+- Search for `"import"` to see dependency usage
+
+### 4. Onboarding New Developers
+
+Help new team members understand the codebase by searching for specific functionality.
+
+### 5. Code Maintenance & Debugging
+
+Efficiently locate code for maintenance tasks:
+
+- Find all error handling with `"except"` or `"catch"`
+- Locate configuration with `"config"` or `"settings"`
+- Search for specific patterns or anti-patterns
+
+## Advanced Usage
+
+### Advanced Syncing & Indexing
+
+#### Smart Incremental Indexing
+
+Smart incremental indexing categorizes file changes and processes them efficiently:
+
+```bash
+# Explicit smart mode
+pv index --smart /path/to/your/project
+
+# Output shows categorization:
+# New files: 3
+# Modified files: 5
+# Deleted files: 2
+```
+
+**Features**:
+
+- **Priority-based processing**: New files → Modified files → Deleted files
+- **Partial reindexing**: Only updates changed chunks (60-70% faster)
+- **Automatic detection**: Compares file content hashes to detect real changes
+- **Smart categorization**: Distinguishes between new, modified, and deleted files
+
+**When to use**:
+
+- Large codebases with frequent changes
+- After making targeted edits to specific files
+- When you want detailed statistics about what changed
+
+#### Git-Aware Indexing
+
+Index only files that changed in git commits (80-90% faster):
+
+```bash
+# Index changes since last commit
+pv index-git . --since HEAD~1
+
+# Index changes since main branch (useful after merges)
+pv index-git . --since main
+
+# Index changes since specific commit
+pv index-git . --since abc123def
+
+# Index changes in last 10 commits
+pv index-git . --since HEAD~10
+```
+
+**Benefits**:
+
+- **Extremely fast**: Only processes files that actually changed in git
+- **Perfect for CI/CD**: Index only PR changes
+- **Branch-aware**: Compare against any branch or commit
+- **Automatic fallback**: Uses standard indexing if not a git repo
+
+**Use cases**:
+
+- After pulling changes from remote
+- Before code review (index only PR changes)
+- In CI/CD pipelines (index only new commits)
+- After switching branches
+
+#### Watch Mode with Debouncing
+
+Real-time indexing with configurable delays to prevent excessive re-indexing:
+
+```bash
+# Default 2-second debounce (balanced)
+pv sync --watch .
+
+# Longer debounce for slower systems (5 seconds)
+pv sync --watch --debounce 5.0 .
+
+# Short debounce for fast feedback (0.5 seconds)
+pv sync --watch --debounce 0.5 .
+```
+
+**Debounce explained**:
+
+- Waits specified seconds after last file change before indexing
+- Batches multiple rapid changes together
+- Prevents redundant indexing when saving files multiple times
+- Reduces CPU usage during active development
+
+**Recommended debounce values**:
+
+- **0.5-1.0s**: Fast machines, instant feedback needed
+- **2.0s** (default): Balanced performance
+- **5.0-10.0s**: Slower machines, large codebases
+
+### Custom File Filters
+
+Edit the configuration to include/exclude specific file types:
+
+```json
+{
+  "included_extensions": [".py", ".js", ".custom"],
+  "excluded_patterns": ["tests/**", "*.generated.js", "vendor/**"]
+}
+```
+
+### Database Architecture
+
+Project Vectorizer uses **ChromaDB** as the single database for all storage needs:
+
+#### ChromaDB for Everything
+
+High-performance vector database handling all data:
+
+- **Vector embeddings** for semantic search
+- **Metadata** (projects, files, change logs)
+- **Fast HNSW indexing** for similarity search
+
+```bash
+# Optional: Custom ChromaDB path
+export CHROMADB_PATH=/custom/path/to/chromadb
+
+# Or in config.json
+{
+  "chromadb_path": "/optional/custom/path"
+}
+```
+
+**Benefits:**
+
+- Single unified database - no external dependencies
+- Fast vector similarity search with ChromaDB's HNSW index
+- Scalable to 500K+ chunks
+- Lower memory footprint
+- Production-ready performance
+- Simple setup and maintenance
+
+### Chunk Size Optimization
+
+Adjust chunk sizes based on your use case:
+
+- **Very small chunks (128-256)**: Optimal for single-word and precise searches (recommended)
+- **Small chunks (256-512)**: Good balance for most use cases
+- **Medium chunks (512-1024)**: Better for context understanding
+- **Large chunks (1024-2048)**: Best for comprehensive semantic search
+
+**Note**: The vectorizer automatically creates multiple chunk types:
+
+- **Function/Class chunks**: Based on code structure
+- **Micro chunks**: 3-line contexts around important statements
+- **Word chunks**: Focused on programming keywords and significant terms
+
+## Development
+
+### Setup Development Environment
+
+```bash
+git clone <repository-url>
+cd project-vectorizer
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\\Scripts\\activate
+
+# Install in development mode
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Format code
+black .
+isort .
+```
+
+### Architecture
+
+```
+project-vectorizer/
+├── project_vectorizer/
+│   ├── cli.py                 # CLI interface
+│   ├── core/
+│   │   ├── config.py          # Configuration management
+│   │   └── project.py         # Project management
+│   ├── db/
+│   │   ├── models.py          # Database models
+│   │   └── database.py        # Database operations
+│   ├── vectorizer/
+│   │   └── engine.py          # Vectorization engine
+│   ├── parsers/
+│   │   └── code_parser.py     # Code parsing
+│   ├── utils/
+│   │   └── text_utils.py      # Text processing utilities
+│   └── mcp/
+│       └── server.py          # MCP server
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and add tests
+4. Commit your changes: `git commit -m 'Add amazing feature'`
+5. Push to the branch: `git push origin feature/amazing-feature`
+6. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Performance
+
+### Search Performance
+
+The enhanced search engine provides excellent performance:
+
+- **Single-word queries**: Nearly instant results with perfect relevance (1.000 similarity scores)
+- **High thresholds**: Reliable results even with thresholds of 0.8-0.9+
+- **Multi-level indexing**: Combines semantic search with exact matching for optimal results
+
+### Indexing Performance
+
+- **Small chunks**: Faster indexing with 128-256 token chunks
+- **Incremental updates**: Only re-indexes changed files
+- **Multi-threading**: Parallel processing of embeddings
+
+### Memory Usage
+
+- **Optimized chunk sizes**: Smaller chunks reduce memory footprint
+- **Lazy loading**: Embeddings loaded on-demand during search
+- **Efficient storage**: ChromaDB database with optimized schemas
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Tree-sitter not available**: The tool falls back to regex-based parsing
+2. **MCP not available**: Falls back to HTTP server mode
+3. **Large files**: Adjust `max_file_size_mb` in configuration
+4. **Memory usage**: Reduce `chunk_size` or `batch_size` for large projects
+5. **Single-word search returns no results**: Try lowering threshold to 0.3-0.5
+6. **Search results not relevant**: Use smaller chunk sizes (128-256) for better precision
+7. **Missing recent code**: Run `pv index --incremental` to update the index
+
+### Debugging
+
+Enable verbose logging:
+
+```bash
+pv --verbose <command>
+```
+
+Check project status:
+
+```bash
+pv status /path/to/your/project
+```
+
+## Changelog
+
+### v0.1.1
+
+- **Enhanced Single-Word Search**: Optimized search for single keywords with high precision
+- **Multi-Level Chunking**: Added micro-chunks and word-level chunks for better granularity
+- **Adaptive Search Thresholds**: Automatically adjusts thresholds for optimal results
+- **Improved Word Matching**: Enhanced exact word boundary matching with relevance boosting
+- **Programming Keyword Detection**: Special handling for common programming terms
+- **Search Result Prioritization**: Better ranking for single-word queries
+- **Smaller Default Chunk Size**: Reduced to 256 tokens for better precision
