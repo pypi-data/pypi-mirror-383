@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: stkweight
+Version: 0.1.4
+Summary: Add your description here
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: aiomysql>=0.2.0
+Requires-Dist: anyio>=4.10.0
+Requires-Dist: dash>=3.2.0
+Requires-Dist: dash-core-components>=2.0.0
+Requires-Dist: dash-html-components>=2.0.0
+Requires-Dist: dash-table>=5.0.0
+Requires-Dist: fastapi>=0.116.1
+Requires-Dist: fastapi-users>=14.0.1
+Requires-Dist: kaleido>=1.0.0
+Requires-Dist: pandas>=2.3.2
+Requires-Dist: passlib>=1.7.4
+Requires-Dist: plotly>=6.3.0
+Requires-Dist: pytest>=8.4.2
+Requires-Dist: pytest-asyncio>=1.1.0
+Requires-Dist: pytest-tornasync>=0.6.0.post2
+Requires-Dist: python-multipart>=0.0.20
+Requires-Dist: sqlalchemy>=2.0.43
+Requires-Dist: toml>=0.10.2
+Requires-Dist: uvicorn>=0.35.0
