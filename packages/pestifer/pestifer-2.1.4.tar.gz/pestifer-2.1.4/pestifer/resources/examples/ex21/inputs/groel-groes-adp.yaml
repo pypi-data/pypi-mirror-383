@@ -1,0 +1,51 @@
+# Author: Cameron F. Abrams, <cfa22@drexel.edu>
+title: Asymmetric GroEL/GroES Chaperonin Complex
+tasks:
+- fetch:
+    sourceID: 1aon
+- psfgen:
+    source:
+      biological_assembly: 1
+- validate:
+    tests:
+    - residue_test:
+        name: ADPs are present
+        selection: resname ADP
+        measure: residue_count
+        value: 7
+- md:
+    ensemble: minimize
+- solvate:
+    salt_con: 0.15
+- md:
+    ensemble: minimize
+- md:
+    ensemble: NVT
+- md:
+    ensemble: NPT
+    nsteps: 200
+- md:
+    ensemble: NPT
+    nsteps: 400
+- md:
+    ensemble: NPT
+    nsteps: 800
+- md:
+    ensemble: NPT
+    nsteps: 1600
+- md:
+    ensemble: NPT
+    nsteps: 13200
+- mdplot:
+    basename: solvated
+    grid: true
+    timeseries:
+    - density
+- terminate:
+    basename: my_1aon
+    archive_dir: arc
+    package:
+      basename: my_1aon
+      state_dir: r2r
+      md:
+        ensemble: NPT
