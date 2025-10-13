@@ -1,0 +1,45 @@
+/**
+ * @file {{snake_case}}_base.h
+ * @brief Auto-generated code: Do not edit!
+ */
+
+#ifndef TELECOMMANDS_{{uppercase_name}}_BASE_H_
+#define TELECOMMANDS_{{uppercase_name}}_BASE_H_
+
+#include "telecommand_arguments_interface.h"
+
+{% if enums %}
+{% for enumName, values in enums.items() %}
+typedef enum {{camel_case}}{{enumName}} {
+  {% for value in values %}
+  {{value}},
+  {% endfor %}
+} {{camel_case}}{{enumName}}_t;
+{% endfor %}
+
+{% endif %}
+typedef struct __attribute__((packed)) {{camel_case}}InputArguments {
+{% if arguments %}
+{% for argument in arguments %}
+  {{argument.type}} {{argument.name}};
+{% endfor %}
+{% endif %}
+} {{camel_case}}InputArguments_t;
+
+typedef struct __attribute__((packed)) {{camel_case}}OutputArguments {
+{% if returns %}
+  {{returns}}
+{% endif %}
+} {{camel_case}}OutputArguments_t;
+
+typedef struct {{camel_case}}Base {
+  TelecommandArgumentsInterface argumentsInterfaceView;
+  {{camel_case}}InputArguments_t inputArguments;
+  {{camel_case}}OutputArguments_t outputArguments;
+} {{camel_case}}Base;
+
+void {{camel_case}}Base_create({{camel_case}}Base *self);
+
+TelecommandArgumentsInterface *{{camel_case}}Base_viewAsTelecommandArgumentsInterface({{camel_case}}Base *self);
+
+#endif  // TELECOMMANDS_{{uppercase_name}}_BASE_H_
