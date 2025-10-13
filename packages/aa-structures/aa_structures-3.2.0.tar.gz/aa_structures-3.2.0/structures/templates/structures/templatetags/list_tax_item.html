@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<li class="list-group-item">
+    <div class="d-flex w-100 justify-content-between">
+        {{ title }}
+        <span>
+            {% widthratio value 1 100 %} %
+            {% if has_access is False %}
+                <i class="fas fa-ban text-danger" title="{% translate 'No Access' %}"></i>
+            {% elif has_access is True %}
+                <i class="fas fa-check text-success" title="{% translate 'Has Access' %}"></i>
+            {% endif %}
+        </span>
+    </div>
+</li>

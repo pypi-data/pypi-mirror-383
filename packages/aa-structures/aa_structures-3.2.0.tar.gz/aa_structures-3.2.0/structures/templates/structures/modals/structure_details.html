@@ -1,0 +1,82 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load structures %}
+
+<div class="modal-header">
+    <h5 class="modal-title">{{structure.eve_solar_system.name}} - {{structure.name}}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    {% include "structures/modals/fitting_gfx.html" %}
+    <br>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-pills" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-target="#tab-structure-general" aria-controls="modules" role="tab" data-bs-toggle="tab">
+                {% translate "General" %}
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#tab-structure-services" aria-controls="fuel" role="tab" data-bs-toggle="tab">
+                {% translate "Services" %} <small>({{ services_count|default:"-"|intcomma }})</small>
+            </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#tab-structure-fuel" aria-controls="fuel" role="tab" data-bs-toggle="tab">
+                {% translate "Fuel" %} <small>({{ fuel_blocks_total|default:"-"|intcomma }})</small>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#tab-structure-ammo" aria-controls="ammo" role="tab" data-bs-toggle="tab">
+                {% translate "Ammo" %} <small>({{ ammo_total|default:"-"|intcomma }})</small>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#tab-structure-modules" aria-controls="modules" role="tab" data-bs-toggle="tab">
+                {% translate "Modules" %} <small>({{ modules_count }})</small>
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane show active" id="tab-structure-general">
+            {% include "structures/modals/tab_general_detail.html" %}
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="tab-structure-services">
+            {% include "structures/modals/tab_services_detail.html" %}
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="tab-structure-fuel">
+            <ul class="list-group">
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Fuel Bay") asset_list=assets_grouped.fuel_bay %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Fuel Usage") asset_list=assets_grouped.fuel_usage %}
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="tab-structure-ammo">
+            <ul class="list-group">
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Ammo Hold") asset_list=assets_grouped.ammo_hold %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Fighter Bay") asset_list=assets_grouped.fighter_bay %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Fighter Tubes") asset_list=slot_assets.fighter_tubes %}
+            </ul>
+            <p class="text-muted">Quantities for fighters in tubes are estimated.</p>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="tab-structure-modules">
+            <ul class="list-group">
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("High Slots") asset_list=slot_assets.high_slots %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Medium Slots") asset_list=slot_assets.med_slots %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Low Slots") asset_list=slot_assets.low_slots %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Rig Slots") asset_list=slot_assets.rig_slots %}
+                {% include "structures/modals/fitting_assets.html" with slot_name=_("Service Slots") asset_list=slot_assets.service_slots %}
+            </ul>
+        </div>
+
+    <p class="text-muted">Last updated {{ last_updated|naturaltime|default:"?" }}</p>
+</div>

@@ -1,0 +1,3104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Николай Постников, 2023
+# - -, 2023
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-01 17:30+0100\n"
+"PO-Revision-Date: 2020-03-09 19:25+0000\n"
+"Last-Translator: - -, 2023\n"
+"Language-Team: Russian (https://app.transifex.com/kalkoken-apps/teams/107978/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: admin.py:64 admin.py:920 models/notifications.py:147 models/owners.py:219
+#: models/owners.py:1307 models/structures_1.py:320
+msgid "owner"
+msgstr "Владелец"
+
+#: admin.py:97
+msgid "Discord"
+msgstr "Discord"
+
+#: admin.py:98 templates/structures/modals/poco_details.html:19
+#: templates/structures/modals/starbase_detail.html:19
+#: templates/structures/modals/structure_details.html:21
+msgid "General"
+msgstr "Главное"
+
+#: admin.py:101 models/notifications.py:523 models/structures_1.py:210
+#: models/structures_1.py:808
+msgid "id"
+msgstr "id"
+
+#: admin.py:105 models/notifications.py:722
+msgid "color"
+msgstr "цвет"
+
+#: admin.py:114
+msgid "Sent fuel notifications for selected configuration"
+msgstr "Отправить уведомление о топливе по выбранной конфигурации"
+
+#: admin.py:123
+#, python-format
+msgid "Started sending fuel notifications for %d configurations"
+msgstr "Началось отправление оповещений о топливе по %d конфигурациям"
+
+#: admin.py:137
+msgid "Timing"
+msgstr "Тайминг"
+
+#: admin.py:140
+msgid ""
+"Timing configuration for sending fuel notifications. Note that the first "
+"notification will be sent at the exact start hour, and the last notification"
+" will be sent one repeat before the end hour."
+msgstr ""
+"Конфигурация времени для отправки уведомлений о топливе. Обратите внимание, "
+"что первое уведомление будет отправлено точно в час начала, а последнее "
+"уведомление будет отправлено за один раз до часа окончания."
+
+#: admin.py:161 models/notifications.py:853
+msgid "threshold"
+msgstr "порог"
+
+#: admin.py:167
+msgid "can be send"
+msgstr "может быть отправлено"
+
+#: admin.py:172 admin.py:763 core/serializers.py:517
+msgid "yes"
+msgstr "да"
+
+#: admin.py:173 admin.py:764 core/serializers.py:509
+msgid "no"
+msgstr "нет"
+
+#: admin.py:231
+msgid "notification ID"
+msgstr "ID оповещения"
+
+#: admin.py:235 admin.py:515 admin.py:950 models/notifications.py:114
+#: models/owners.py:212 models/structures_1.py:397
+msgid "webhooks"
+msgstr "вебхуки"
+
+#: admin.py:238 models/structures_1.py:168
+msgid "N/A"
+msgstr "N/A"
+
+#: admin.py:253
+msgid "Not configured"
+msgstr "Не настроено"
+
+#: admin.py:257 models/notifications.py:152 models/structures_1.py:410
+msgid "structures"
+msgstr "структуры"
+
+#: admin.py:264 models/notifications.py:128
+msgid "is sent"
+msgstr "отправлено"
+
+#: admin.py:269 models/notifications.py:134
+msgid "is timer added"
+msgstr "таймер добавлен"
+
+#: admin.py:274
+msgid "Mark selected notifications as sent"
+msgstr "Пометить как отправленное"
+
+#: admin.py:278
+#, python-format
+msgid "%d notifications marked as sent"
+msgstr "Оповещение %d отмечено как отправленное"
+
+#: admin.py:280
+msgid "Mark selected notifications as unsent"
+msgstr "Пометить как неотправленное"
+
+#: admin.py:284
+#, python-format
+msgid "%d notifications marked as unsent"
+msgstr "Оповещение %d отмечено как неотправленное"
+
+#: admin.py:286
+msgid "Send selected notifications to configured webhooks"
+msgstr "Отправить выбранное по настроенным вебхукам"
+
+#: admin.py:302
+#, python-format
+msgid "Sent %(sent_count)d/%(selected_count)d generated messages."
+msgstr ""
+"Отправлено %(sent_count)d/%(selected_count)d автоматических сообщений."
+
+#: admin.py:306
+msgid "Process selected notifications for timerboard"
+msgstr "Преобразовать выбранное в таймер"
+
+#: admin.py:317
+#, python-format
+msgid "Added timers from %d notifications to timerboard."
+msgstr "По %d оповещениям добавлены таймера."
+
+#: admin.py:320
+#, python-format
+msgid "Ignored %d notification(s), which has no relation to timers."
+msgstr "Проигнорировано %d оповещений, у которых нет связи с таймерами."
+
+#: admin.py:400
+msgid "Sync Status"
+msgstr "Sync Status"
+
+#: admin.py:488
+msgid "characters"
+msgstr "персонажи"
+
+#: admin.py:492
+msgid "default pings"
+msgstr "общие пинги"
+
+#: admin.py:496 admin.py:1066 models/notifications.py:107 models/owners.py:197
+msgid "ping groups"
+msgstr "пинг групп"
+
+#: admin.py:502 models/owners.py:117
+msgid "corporation"
+msgstr "корпорация"
+
+#: admin.py:508
+msgid "alliance"
+msgstr "альянс"
+
+#: admin.py:524
+msgid ""
+"Notifications can not be sent, because there is no webhook configured for "
+"this owner."
+msgstr ""
+"Оповещение не может быть отправлено из-за того, что вебхук не настроен для "
+"этого владельца."
+
+#: admin.py:529
+msgid "active"
+msgstr "активный"
+
+#: admin.py:533
+msgid "alliance main"
+msgstr "основной альянсовый"
+
+#: admin.py:538
+msgid "services up"
+msgstr "модули включены"
+
+#: admin.py:542
+msgid "Activate selected owners"
+msgstr "Активировать выбранных владельцев"
+
+#: admin.py:545
+#, python-format
+msgid "Activated %d owners"
+msgstr "Активировано %d владельцев"
+
+#: admin.py:547
+msgid "Deactivate selected owner"
+msgstr "Выключить выбранных владельцев"
+
+#: admin.py:550
+#, python-format
+msgid "Deactivated %d owners"
+msgstr "Деактивировано %d владельцев"
+
+#: admin.py:552
+msgid "Update all from EVE server for selected owners"
+msgstr "Обновить всё с серверов EVE для выбранных владельцев"
+
+#: admin.py:559
+#, python-format
+msgid "Started updating structures and notifications for %s."
+msgstr "Началось обновление стурктур и оповещений для %s."
+
+#: admin.py:560 admin.py:573 admin.py:586 admin.py:1102
+msgid "You will receive a notification once it is completed."
+msgstr "Вы получите оповещение как только оно завершится."
+
+#: admin.py:565
+msgid "Update structures from EVE server for selected owners"
+msgstr "Обновить структуры с сервера EVE для выбранных владельцев"
+
+#: admin.py:572
+#, python-format
+msgid "Started updating structures for %s."
+msgstr "Началось обновление структур для %s."
+
+#: admin.py:578
+msgid "Fetch notifications from EVE server for selected owners"
+msgstr "Получить оповещения с сервера Eve для выбранных владельцев"
+
+#: admin.py:585
+#, python-format
+msgid "Started fetching notifications for %s."
+msgstr "Начался сбор оповещений для %s."
+
+#: admin.py:590
+msgid "all syncs OK"
+msgstr "синхронизация ОК"
+
+#: admin.py:594
+msgid "avg. turnaround time"
+msgstr "avg. turnaround time"
+
+#: admin.py:618
+msgid "structures update fresh"
+msgstr "structures update fresh"
+
+#: admin.py:622
+msgid "notifications update fresh"
+msgstr "notifications update fresh"
+
+#: admin.py:626
+msgid "forwarding update fresh"
+msgstr "forwarding update fresh"
+
+#: admin.py:630
+msgid "assets update fresh"
+msgstr "assets update fresh"
+
+#: admin.py:634
+msgid "structures Count"
+msgstr "количество структур"
+
+#: admin.py:714
+msgid "owner corporation"
+msgstr "владелец корпорации"
+
+#: admin.py:736
+msgid "owner alliance"
+msgstr "владелец альянса"
+
+#: admin.py:758
+msgid "has webhooks"
+msgstr "есть вебхук"
+
+#: admin.py:844
+msgid "Status"
+msgstr "Status"
+
+#: admin.py:862 templates/structures/modals/tab_general_detail.html:54
+msgid "Reinforcement"
+msgstr "Укрепление"
+
+#: admin.py:872
+msgid "Position"
+msgstr "Позиция"
+
+#: admin.py:913 models/structures_1.py:64 models/structures_1.py:292
+#: models/structures_2.py:50 webhooks/models.py:41
+msgid "name"
+msgstr "имя"
+
+#: admin.py:930
+msgid "location"
+msgstr "локация"
+
+#: admin.py:938 models/notifications.py:141 models/structures_1.py:250
+#: models/structures_1.py:822
+msgid "type"
+msgstr "тип"
+
+#: admin.py:942
+msgid "power mode"
+msgstr "режим работы"
+
+#: admin.py:946 models/structures_1.py:382
+msgid "tags"
+msgstr "теги"
+
+#: admin.py:955
+msgid "Add default tags to selected structures"
+msgstr "Добавить общие теги для выбранных структур"
+
+#: admin.py:966
+#, python-format
+msgid "Added %(tags_count)d default tags to %(structure_count)d structures"
+msgstr "%(structure_count)d структурам добавлено %(tags_count)d общих тегов"
+
+#: admin.py:970
+msgid "Remove user tags for selected structures"
+msgstr "Удалить пользовательские теги у выбранных структур"
+
+#: admin.py:978
+#, python-format
+msgid "Removed all user tags from %d structures"
+msgstr "Удалены все пользовательские теги для %d структур"
+
+#: admin.py:981
+msgid "Update generated tags for selected structures"
+msgstr "Обновить автоматические теги у выбранных структур"
+
+#: admin.py:988
+#, python-format
+msgid "Updated all generated tags for %d structures"
+msgstr "Обновлены все автоматические теги для %d структур"
+
+#: admin.py:1029
+msgid "Advanced Options"
+msgstr "Дополнительные опции"
+
+#: admin.py:1071
+msgid "enabled for owners or structures"
+msgstr "влючено для владельцев или структур"
+
+#: admin.py:1080
+msgid "Please add this webhook to an owner or structure to enable it."
+msgstr ""
+"Пожалуйста добавьте этот вебхук владельцу или структуре чтобы включить его."
+
+#: admin.py:1084 models/notifications.py:89 models/structures_1.py:94
+msgid "is default"
+msgstr "по умолчанию"
+
+#: admin.py:1089
+msgid "messages in queue"
+msgstr "сообщения в очереди"
+
+#: admin.py:1093
+msgid "Send test notification to selected webhook"
+msgstr "Отправить пробное сообщение по выбранному вебхуку"
+
+#: admin.py:1101
+#, python-format
+msgid "Initiated sending test notification to webhook %s."
+msgstr "Инициирована отправка тестового оповещения по вебхуку %s."
+
+#: admin.py:1106
+msgid "Activate selected webhook"
+msgstr "Включить выбранных вебхук"
+
+#: admin.py:1111
+#, python-format
+msgid "You have activated webhook %s"
+msgstr "Вы активировали вебхук %s"
+
+#: admin.py:1113
+msgid "Deactivate selected webhook"
+msgstr "Выключить выбранных вебхук"
+
+#: admin.py:1118
+#, python-format
+msgid "You have de-activated webhook %s"
+msgstr "Вы деактивировали вебхук %s"
+
+#: admin.py:1120
+msgid "Purge queued messages from selected webhooks"
+msgstr "Удалить сообщения в очереди выбранных вебхуков"
+
+#: admin.py:1130
+#, python-format
+msgid ""
+"Purged queued messages for %(actions_count)s webhooks, deleting a total of "
+"%(killmails_deleted)s messages."
+msgstr ""
+"Удалены сообщения в очереди для %(actions_count)s вебхуков, удаление "
+"%(killmails_deleted)s сообщений. "
+
+#: admin.py:1136
+msgid "Send queued messages from selected webhooks"
+msgstr "Отправить сообщения в очереди выбранных вебхуков"
+
+#: admin.py:1144
+#, python-format
+msgid "Started sending queued messages for %d webhooks."
+msgstr "Началось отправление сообщений в очереди для %d вебхуков."
+
+#: core/notification_embeds/billing_embeds.py:29
+msgid "Unknown Bill"
+msgstr "Неизвестный счёт"
+
+#: core/notification_embeds/billing_embeds.py:30
+msgid "Infrastructure Hub Bill"
+msgstr "Счёт центра инфраструктуры"
+
+#: core/notification_embeds/billing_embeds.py:47
+msgid "Insufficient Funds for Bill"
+msgstr "Недостаточно средств для оплаты счёта"
+
+#: core/notification_embeds/billing_embeds.py:49
+#, python-format
+msgid ""
+"The selected corporation wallet division for automatic payments does not "
+"have enough current funds available to pay the %(bill_type)s due to be paid "
+"by %(due_date)s. Transfer additional funds to the selected wallet division "
+"in order to meet your pending automatic bills."
+msgstr ""
+"У корпоративного счёта для автоматической оплаты не хватает стредств для "
+"оплаты %(bill_type)s, который требуется оплатить до %(due_date)s. Переведите"
+" дополнительные стредства на корпоративный счёт для закрытия открытых "
+"автоматических счетов."
+
+#: core/notification_embeds/billing_embeds.py:66
+msgid "IHub Bill About to Expire"
+msgstr "У IHub счёт кончается срок действия"
+
+#: core/notification_embeds/billing_embeds.py:68
+#, python-format
+msgid ""
+"Maintenance bill for Infrastructure Hub in %(solar_system)s expires at "
+"%(due_date)s, if not paid in time this Infrastructure Hub will self-"
+"destruct."
+msgstr ""
+"Срок действия счёта обслуживания центра инфраструктуры %(solar_system)s "
+"оканчивается %(due_date)s. Если вы не заплатите вовремя, центр "
+"инфраструктуры самоуничтожится."
+
+#: core/notification_embeds/billing_embeds.py:88
+#, python-format
+msgid "%s has self-destructed due to unpaid maintenance bills"
+msgstr "%s самоуничтожился ввиду неуплаты счетов обслуживания"
+
+#: core/notification_embeds/billing_embeds.py:92
+#, python-format
+msgid ""
+"%(structure_type)s in %(solar_system)s has self-destructed, as the standard "
+"maintenance bills where not paid."
+msgstr ""
+"%(structure_type)s в %(solar_system)s самоуничтожился ввиду неуплаты счетов "
+"обслуживания."
+
+#: core/notification_embeds/billing_embeds.py:111
+msgid "Bill issued"
+msgstr ""
+
+#: core/notification_embeds/billing_embeds.py:113
+#, python-format
+msgid ""
+"A bill of %(amount)s ISK, due %(due_date)s owed by %(debtor)s to "
+"%(creditor)s was issued %(current_date)s. This bill is for %(bill_type)s."
+msgstr ""
+
+#: core/notification_embeds/corporate_embeds.py:36
+#, python-format
+msgid "New application from %(character_name)s"
+msgstr "Новая заявка от %(character_name)s"
+
+#: core/notification_embeds/corporate_embeds.py:40
+#, python-format
+msgid ""
+"New application from %(character_name)s to join %(corporation_name)s:\n"
+"> %(application_text)s"
+msgstr ""
+"Новая заявка по вступлению в %(corporation_name)s от%(character_name)s:\n"
+"> %(application_text)s"
+
+#: core/notification_embeds/corporate_embeds.py:54
+#, python-format
+msgid "%(character_name)s has been invited"
+msgstr "%(character_name)s был приглашен"
+
+#: core/notification_embeds/corporate_embeds.py:61
+#, python-format
+msgid ""
+"%(character_name)s has been invited to join %(corporation_name)s by %(inviting_character)s.\n"
+"Application:\n"
+"> %(application_text)s"
+msgstr ""
+"%(character_name)s был приглашен%(inviting_character)s в %(corporation_name)s.\n"
+"Заявка:\n"
+"> %(application_text)s"
+
+#: core/notification_embeds/corporate_embeds.py:78
+#, python-format
+msgid "%(character_name)s rejects invitation"
+msgstr ""
+
+#: core/notification_embeds/corporate_embeds.py:82
+#, python-format
+msgid ""
+"Application from %(character_name)s to join %(corporation_name)s has been "
+"rejected."
+msgstr ""
+
+#: core/notification_embeds/corporate_embeds.py:94
+#, python-format
+msgid "Rejected application from %(character_name)s"
+msgstr "Заявка %(character_name)s была отклонена"
+
+#: core/notification_embeds/corporate_embeds.py:98
+#, python-format
+msgid ""
+"Application from %(character_name)s to join %(corporation_name)s:\n"
+"> %(application_text)s\n"
+"Has been rejected:\n"
+"> %(customMessage)s"
+msgstr ""
+"Заявка по вступлению в %(corporation_name)s от %(character_name)s:\n"
+"> %(application_text)s\n"
+"Была отклонена:\n"
+"> %(customMessage)s"
+
+#: core/notification_embeds/corporate_embeds.py:114
+#, python-format
+msgid "%(character_name)s withdrew his/her application"
+msgstr "%(character_name)s отозвал свою заявку"
+
+#: core/notification_embeds/corporate_embeds.py:118
+#, python-format
+msgid ""
+"%(character_name)s withdrew his/her application to join %(corporation_name)s:\n"
+"> %(application_text)s"
+msgstr ""
+"%(character_name)s отозвал свою заявку по вступлению в %(corporation_name)s:\n"
+"> %(application_text)s"
+
+#: core/notification_embeds/corporate_embeds.py:133
+#, python-format
+msgid "%(character_name)s joins %(corporation_name)s"
+msgstr "%(character_name)s присоединяется в%(corporation_name)s"
+
+#: core/notification_embeds/corporate_embeds.py:138
+#, python-format
+msgid "%(character_name)s is now a member of %(corporation_name)s."
+msgstr "%(character_name)s новый член %(corporation_name)s."
+
+#: core/notification_embeds/corporate_embeds.py:149
+#, python-format
+msgid "%(character_name)s has left %(corporation_name)s"
+msgstr "%(character_name)s покинул %(corporation_name)s"
+
+#: core/notification_embeds/corporate_embeds.py:154
+#, python-format
+msgid "%(character_name)s is no longer a member of %(corporation_name)s."
+msgstr "%(character_name)s больше не член %(corporation_name)s."
+
+#: core/notification_embeds/main.py:62
+msgid "shield"
+msgstr "щит"
+
+#: core/notification_embeds/main.py:63
+msgid "armor"
+msgstr "броня"
+
+#: core/notification_embeds/main.py:64
+msgid "hull"
+msgstr "корпус"
+
+#: core/notification_embeds/moonmining_embeds.py:40
+#, python-format
+msgid "Estimated ore composition: %s"
+msgstr "Ожидаемое количество руды: %s"
+
+#: core/notification_embeds/moonmining_embeds.py:69
+#: core/notification_types.py:66
+msgid "Moon mining extraction started"
+msgstr "Добыча лунной руды началась"
+
+#: core/notification_embeds/moonmining_embeds.py:71
+#, python-format
+msgid ""
+"A moon mining extraction has been started for %(structure_name)s at %(moon)s in %(solar_system)s belonging to %(owner_link)s. Extraction was started by %(character)s.\n"
+"The chunk will be ready on location at %(ready_time)s, and will fracture automatically on %(auto_time)s.\n"
+"\n"
+"%(ore_text)s"
+msgstr ""
+"Извлечение лунной руды начато %(structure_name)s, принадлежащая %(owner_link)s, на %(moon)s в %(solar_system)s. Извлечение начато %(character)s.\n"
+"Создание астероидного поля будет возможно %(ready_time)s, и автоматическое создание будет %(auto_time)s.\n"
+"%(ore_text)s "
+
+#: core/notification_embeds/moonmining_embeds.py:95
+msgid "Extraction finished"
+msgstr "Извлечение завершено"
+
+#: core/notification_embeds/moonmining_embeds.py:97
+#, python-format
+msgid ""
+"The extraction for %(structure_name)s at %(moon)s in %(solar_system)s belonging to %(owner_link)s is finished and the chunk is ready to be shot at.\n"
+"The chunk will automatically fracture on %(auto_time)s.\n"
+"\n"
+"%(ore_text)s"
+msgstr ""
+"Извлечение %(structure_name)s, принадлежащая %(owner_link)s, на %(moon)s в %(solar_system)s завершено и стало возможным создание астероидного поля.\n"
+"Астероидное поле будет автоматически создано %(auto_time)s.\n"
+"%(ore_text)s"
+
+#: core/notification_embeds/moonmining_embeds.py:117
+msgid "Automatic Fracture"
+msgstr "Автоматическое раздробление"
+
+#: core/notification_embeds/moonmining_embeds.py:119
+#, python-format
+msgid ""
+"The moon drill fitted to %(structure_name)s at %(moon)s in %(solar_system)s belonging to %(owner_link)s has automatically been fired and the moon products are ready to be harvested.\n"
+"\n"
+"%(ore_text)s"
+msgstr ""
+"Лунный бур, установленный в %(structure_name)s, принадлежащая %(owner_link)s, на %(moon)s в %(solar_system)s, автоматически выстрелил и лунная руда готова к сбору.\n"
+"%(ore_text)s"
+
+#: core/notification_embeds/moonmining_embeds.py:140
+#: core/notification_embeds/structures_embeds.py:37
+#: core/notification_embeds/structures_embeds.py:181
+#: core/notification_embeds/structures_embeds.py:289
+#: core/notification_embeds/tower_embeds.py:147
+msgid "(unknown)"
+msgstr "(неизвестно)"
+
+#: core/notification_embeds/moonmining_embeds.py:141
+msgid "Extraction cancelled"
+msgstr "Извлечение завершено"
+
+#: core/notification_embeds/moonmining_embeds.py:143
+#, python-format
+msgid ""
+"An ongoing extraction for %(structure_name)s at %(moon)s in %(solar_system)s"
+" belonging to %(owner_link)s has been cancelled by %(character)s."
+msgstr ""
+"Начатое извлечение %(structure_name)s, принадлежащее %(owner_link)s, "
+"на%(moon)s в %(solar_system)s было отменено %(character)s."
+
+#: core/notification_embeds/moonmining_embeds.py:160
+msgid "Moon drill fired"
+msgstr "Лунный бур выстрелил"
+
+#: core/notification_embeds/moonmining_embeds.py:162
+#, python-format
+msgid ""
+"The moon drill fitted to %(structure_name)s at %(moon)s in %(solar_system)s belonging to %(owner_link)s has been fired by %(character)s and the moon products are ready to be harvested.\n"
+"\n"
+"%(ore_text)s"
+msgstr ""
+"Лунный бур, установленный в %(structure_name)s, принадлежащий %(owner_link)s, на %(moon)s в %(solar_system)s, выстрелил по приказу %(character)s и лунная руда готова к сбору.\n"
+"%(ore_text)s"
+
+#: core/notification_embeds/orbital_embeds.py:43
+msgid "Orbital under attack"
+msgstr "Звездная база под атакой"
+
+#: core/notification_embeds/orbital_embeds.py:45
+#, python-format
+msgid ""
+"The %(structure_type)s at %(planet)s in %(solar_system)s belonging to "
+"%(owner_link)s is under attack by %(aggressor)s."
+msgstr ""
+"%(structure_type)s, принадлежащая %(owner_link)s, на %(planet)s в "
+"%(solar_system)s под атакой %(aggressor)s."
+
+#: core/notification_embeds/orbital_embeds.py:62
+msgid "Orbital reinforced"
+msgstr "Звездная база укреплена"
+
+#: core/notification_embeds/orbital_embeds.py:64
+#, python-format
+msgid ""
+"The %(structure_type)s at %(planet)s in %(solar_system)s belonging to "
+"%(owner_link)s has been reinforced by %(aggressor)s and will come out at: "
+"%(date)s."
+msgstr ""
+"%(structure_type)s, принадлежащая %(owner_link)s, на %(planet)s в "
+"%(solar_system)s была укреплена при нападении %(aggressor)s и выйдет из "
+"укрепления: %(date)s."
+
+#: core/notification_embeds/sov_embeds.py:60
+#, python-format
+msgid "%(structure_type)s in %(solar_system)s is being captured"
+msgstr "%(structure_type)s в %(solar_system)s захватывается"
+
+#: core/notification_embeds/sov_embeds.py:65
+#, python-format
+msgid ""
+"A capsuleer has started to influence the %(type)s in %(solar_system)s "
+"belonging to %(owner)s with an Entosis Link."
+msgstr ""
+"Капсулёр начал оказывать влияние Энтозом на %(type)s, принадлежащая "
+"%(owner)s, в %(solar_system)s."
+
+#: core/notification_embeds/sov_embeds.py:80
+#, python-format
+msgid ""
+"Command nodes for %(structure_type)s in %(solar_system)s have begun to "
+"decloak"
+msgstr ""
+"Командные узлы для %(structure_type)s в %(solar_system)s начали выходить из "
+"маскировки"
+
+#: core/notification_embeds/sov_embeds.py:87
+#, python-format
+msgid ""
+"Command nodes for %(structure_type)s in %(solar_system)s belonging to "
+"%(owner)s can now be found throughout the %(constellation)s constellation"
+msgstr ""
+"Командные узлы для %(structure_type)s, принадлежащая %(owner)s, в "
+"%(solar_system)s могут быть найдены по всему созвездию %(constellation)s"
+
+#: core/notification_embeds/sov_embeds.py:105
+#, python-format
+msgid "DED Sovereignty claim acknowledgment: %s"
+msgstr "Подтверждение претензии на сувернитет DED: %s"
+
+#: core/notification_embeds/sov_embeds.py:108
+#, python-format
+msgid ""
+"DED now officially acknowledges that your member corporation %(corporation)s"
+" has claimed sovereignty on behalf of %(alliance)s in %(solar_system)s."
+msgstr ""
+"DED официально признают, что ваш член-корпорация %(corporation)s заявил о "
+"сувернитете в %(solar_system)s от имени %(alliance)s"
+
+#: core/notification_embeds/sov_embeds.py:124
+#, python-format
+msgid "Lost sovereignty in: %s"
+msgstr "Потеря сувернитета: %s"
+
+#: core/notification_embeds/sov_embeds.py:126
+#, python-format
+msgid ""
+"DED acknowledges that member corporation %(corporation)s has lost its claim "
+"to sovereignty on behalf of %(alliance)s in %(solar_system)s."
+msgstr ""
+"DED признает, что член-корпорация %(corporation)s потерял претензии на "
+"сувернитет в %(solar_system)s от имени %(alliance)s."
+
+#: core/notification_embeds/sov_embeds.py:141
+#, python-format
+msgid "%(structure_type)s in %(solar_system)s has entered reinforced mode"
+msgstr "%(structure_type)s в %(solar_system)s перешло в укрепленный режим "
+
+#: core/notification_embeds/sov_embeds.py:147
+#, python-format
+msgid ""
+"The %(structure_type)s in %(solar_system)s belonging to %(owner)s has been "
+"reinforced by hostile forces and command nodes will begin decloaking at "
+"%(date)s"
+msgstr ""
+"%(structure_type)s, принадлежащая %(owner)s, в %(solar_system)s укреплен(а) "
+"вражескими силами и командные центры выйдут из маскировки %(date)s."
+
+#: core/notification_embeds/sov_embeds.py:163
+#, python-format
+msgid "%(structure_type)s in %(solar_system)s has been destroyed"
+msgstr "%(structure_type)s в %(solar_system)s был(а) уничтожена"
+
+#: core/notification_embeds/sov_embeds.py:168
+#, python-format
+msgid ""
+"The command nodes for %(structure_type)s in %(solar_system)s belonging to "
+"%(owner)s have been destroyed by hostile forces."
+msgstr ""
+"Командные узлы %(structure_type)s, принадлежащая %(owner)s, в "
+"%(solar_system)s были уничтожены вражескими силами."
+
+#: core/notification_embeds/sov_embeds.py:195
+#, python-format
+msgid " near **%s**"
+msgstr "около **%s**"
+
+#: core/notification_embeds/sov_embeds.py:198
+#, python-format
+msgid "%(structure_type)s anchored in %(solar_system)s"
+msgstr "%(structure_type)s встало на якорь в %(solar_system)s "
+
+#: core/notification_embeds/sov_embeds.py:203
+#, python-format
+msgid ""
+"A %(structure_type)s from %(structure_owner)s has anchored in "
+"%(solar_system)s%(location_text)s."
+msgstr ""
+"%(structure_type)s %(structure_owner)s встало на якорь в "
+"%(solar_system)s%(location_text)s."
+
+#. Translators: Context is a location, e.g. a moon
+#: core/notification_embeds/structures_embeds.py:50
+#, python-format
+msgid " at %s "
+msgstr "на %s"
+
+#: core/notification_embeds/structures_embeds.py:55
+#, python-format
+msgid ""
+"The %(structure_type)s %(structure_name)s%(location)s in %(solar_system)s "
+"belonging to %(owner_link)s"
+msgstr ""
+"%(structure_type)s %(structure_name)s %(location)s в %(solar_system)s "
+"принадлежит %(owner_link)s"
+
+#: core/notification_embeds/structures_embeds.py:75
+msgid "Structure online"
+msgstr "Структура онлайн"
+
+#: core/notification_embeds/structures_embeds.py:76
+msgid "is now online."
+msgstr "онлайн."
+
+#: core/notification_embeds/structures_embeds.py:87
+msgid "Structure fuel alert"
+msgstr "Оповещение о топливе структуры"
+
+#: core/notification_embeds/structures_embeds.py:88
+#: core/notification_embeds/tower_embeds.py:90
+#, python-format
+msgid "is running out of fuel in %s."
+msgstr "кончается топливо через%s."
+
+#: core/notification_embeds/structures_embeds.py:98
+msgid "Jump gate low on Liquid Ozone"
+msgstr "В прыжковых воротах осталось мало Жидкого Озона"
+
+#: core/notification_embeds/structures_embeds.py:102
+#, python-format
+msgid ""
+"is below %(threshold)s units on Liquid Ozone.\n"
+"Remaining units: %(remaining)s."
+msgstr ""
+"Жидкого Озона меньше %(threshold)s.\n"
+"Осталось: %(remaining)s."
+
+#: core/notification_embeds/structures_embeds.py:115
+msgid "Structure refueled"
+msgstr "Структура заправлена"
+
+#: core/notification_embeds/structures_embeds.py:117
+#: core/notification_embeds/tower_embeds.py:102
+#, python-format
+msgid "has been refueled. Fuel will last until %s."
+msgstr "заправлен(а). Топлива осталось до %s."
+
+#: core/notification_embeds/structures_embeds.py:125
+msgid "Structure services off-line"
+msgstr "Служебные модули офлайн"
+
+#: core/notification_embeds/structures_embeds.py:126
+msgid "has all services off-lined."
+msgstr "все модули офлайн."
+
+#: core/notification_embeds/structures_embeds.py:137
+msgid "Structure low power"
+msgstr "Структура на малой мощности"
+
+#: core/notification_embeds/structures_embeds.py:138
+msgid "went to low power mode."
+msgstr "перешла в режим малой мощности."
+
+#: core/notification_embeds/structures_embeds.py:145
+msgid "Structure full power"
+msgstr "Структуро на полной мощности"
+
+#: core/notification_embeds/structures_embeds.py:146
+msgid "went to full power mode."
+msgstr "перешла в режим полной мощности."
+
+#: core/notification_embeds/structures_embeds.py:153
+msgid "Structure un-anchoring"
+msgstr "Структура снимается с якоря"
+
+#: core/notification_embeds/structures_embeds.py:158
+#, python-format
+msgid "has started un-anchoring. It will be fully un-anchored at: %s"
+msgstr ""
+"начал(а) сниматься с якоря. Структура полностью снимется с якоря в: %s"
+
+#: core/notification_embeds/structures_embeds.py:166
+msgid "Structure under attack"
+msgstr "Структура атакована"
+
+#: core/notification_embeds/structures_embeds.py:167
+#, python-format
+msgid ""
+"is under attack by %(attacker)s.\n"
+"%(damage_text)s"
+msgstr ""
+"под атакой %(attacker)s.\n"
+"%(damage_text)s"
+
+#: core/notification_embeds/structures_embeds.py:187
+msgid "Structure lost shield"
+msgstr "Структура потеряла щит"
+
+#: core/notification_embeds/structures_embeds.py:192
+#, python-format
+msgid "has lost its shields. Armor timer end at: %s"
+msgstr "потерял(а) щит. Таймер брони: %s"
+
+#: core/notification_embeds/structures_embeds.py:200
+msgid "Structure lost armor"
+msgstr "Структура потеряла броню"
+
+#: core/notification_embeds/structures_embeds.py:205
+#, python-format
+msgid "has lost its armor. Hull timer end at: %s"
+msgstr "потерял(а) броню. Таймер корпуса: %s"
+
+#: core/notification_embeds/structures_embeds.py:213
+msgid "Structure destroyed"
+msgstr "Структура уничтожена"
+
+#: core/notification_embeds/structures_embeds.py:214
+msgid "has been destroyed."
+msgstr "уничтожен(а)."
+
+#: core/notification_embeds/structures_embeds.py:223
+#, python-format
+msgid "The %(structure_type)s %(structure_name)s in %(solar_system)s "
+msgstr "%(structure_type)s%(structure_name)s в %(solar_system)s"
+
+#: core/notification_embeds/structures_embeds.py:235
+#, python-format
+msgid ""
+"has been transferred from %(from_corporation)s to %(to_corporation)s by "
+"%(character)s."
+msgstr ""
+"была передана от %(from_corporation)s к %(to_corporation)s персонажем "
+"%(character)s."
+
+#: core/notification_embeds/structures_embeds.py:242
+msgid "Ownership transferred"
+msgstr "Правовладение передано"
+
+#: core/notification_embeds/structures_embeds.py:256
+#, python-format
+msgid ""
+"A %(structure_type)s belonging to %(owner_link)s has started anchoring in "
+"%(solar_system)s. "
+msgstr ""
+"%(structure_type)s, принадлежащая %(owner_link)s, начала вставать на якорь в"
+" %(solar_system)s."
+
+#: core/notification_embeds/structures_embeds.py:263
+msgid "Structure anchoring"
+msgstr "Структура встаёт на якорь"
+
+#: core/notification_embeds/structures_embeds.py:302
+msgid "Structure reinforcement time changed"
+msgstr "Время укрепления структуры изменено"
+
+#: core/notification_embeds/structures_embeds.py:305
+#, python-format
+msgid ""
+"Reinforcement hour has been changed to %s for the following structures:\n"
+msgstr "Для следующих структур было изменено время укрепление на%s:\n"
+
+#: core/notification_embeds/structures_embeds.py:314
+#, python-format
+msgid ""
+"- %(structure_type)s %(structure_name)s in %(solar_system)s belonging to "
+"%(owner_link)s"
+msgstr ""
+"- %(structure_type)s %(structure_name)s, принадлежащая %(owner_link)s, в "
+"%(solar_system)s"
+
+#: core/notification_embeds/structures_embeds.py:324
+#, python-format
+msgid ""
+"\n"
+"\n"
+"Change becomes effective at %s."
+msgstr ""
+"\n"
+"\n"
+"Изменение вступит в силу в %s."
+
+#: core/notification_embeds/tower_embeds.py:41
+#, python-format
+msgid ""
+"The starbase %(structure_name)s at %(moon)s in %(solar_system)s belonging to"
+" %(owner_link)s"
+msgstr ""
+"Орбитальная станция %(structure_name)s, принадлежащая %(owner_link)s, на "
+"%(moon)s в %(solar_system)s  "
+
+#: core/notification_embeds/tower_embeds.py:61
+msgid "Starbase under attack"
+msgstr "Орбитальная станция под атакой"
+
+#: core/notification_embeds/tower_embeds.py:62
+#, python-format
+msgid ""
+"is under attack by %(aggressor)s.\n"
+"%(damage_text)s"
+msgstr ""
+"под атакой %(aggressor)s.\n"
+"%(damage_text)s"
+
+#: core/notification_embeds/tower_embeds.py:89 core/notification_types.py:51
+msgid "Starbase fuel alert"
+msgstr "Оповещение о топливе орбитальной станции"
+
+#: core/notification_embeds/tower_embeds.py:100
+msgid "Starbase refueled"
+msgstr "Орбитальная станция заправлена"
+
+#: core/notification_embeds/tower_embeds.py:128
+#, python-format
+msgid ""
+"The starbase %(structure_name)s at %(moon)s in %(solar_system)s belonging to"
+" %(owner_link)s "
+msgstr ""
+"Орбитальная станция %(structure_name)s, принадлежащая %(owner_link)s, на "
+"%(moon)s в %(solar_system)s  "
+
+#: core/notification_embeds/tower_embeds.py:141
+msgid "Starbase reinforced"
+msgstr "Орбитальная станция укреплена"
+
+#: core/notification_embeds/tower_embeds.py:150
+#, python-format
+msgid "has been reinforced and will come out at: %s."
+msgstr "укреплен(а) и выйдет в: %s."
+
+#: core/notification_embeds/war_embeds.py:24
+msgid "Accepted Ally"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:31
+#, python-format
+msgid ""
+"%(ally)s has been accepted in a war against %(enemy)s. The offer was "
+"accepted at %(time)s by %(character)s for %(isk_value)s ISK."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:49
+msgid "Corporation you are at war with is joining an alliance"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:53
+#, python-format
+msgid ""
+"%(corporation)s is joining %(alliance)s alliance. Since you are at war with "
+"%(corporation)s, in 24 hours you will also be at war with %(alliance)s."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:69
+msgid "Ally Has Joined a War"
+msgstr "Союзник присоединился к войне"
+
+#: core/notification_embeds/war_embeds.py:75
+#, python-format
+msgid ""
+"%(ally)s has joined %(defender)s in a war against %(aggressor)s. Their "
+"participation in the war will start at %(start_time)s."
+msgstr ""
+"%(ally)s присоединился к %(defender)s в войне против %(aggressor)s. Их "
+"участие в войне начнётся %(start_time)s."
+
+#: core/notification_embeds/war_embeds.py:94
+#, python-format
+msgid "%(entity)s Declares War Against %(defender)s"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:99
+#, python-format
+msgid ""
+"%(entity)s has declared war on %(defender)s. Within 24 hours fighting can "
+"legally occur between those involved."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:119
+#, python-format
+msgid "%s has offered its services in one of your wars"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:122
+#, python-format
+msgid ""
+"%(mercenary)s has offered %(defender)s it's services in it's war against "
+"%(aggressor)s for %(isk_value)s. "
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:138
+msgid "Mercenary offered services"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:143
+#, python-format
+msgid ""
+"%(mercenary)s has retracted it's offer to support %(defender)s in a war "
+"against %(aggressor)s."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:162
+#, python-format
+msgid "You have offered to ally with %s "
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:164
+#, python-format
+msgid ""
+"%(character)s has offered to ally to %(defender)s in their war against "
+"%(aggressor)s. The offer asked for %(isk_value)s ISK as payment."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:185
+#, python-format
+msgid "%s offered to surrender"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:187
+#, python-format
+msgid ""
+"%(character)s has offered to surrender to %(offered)s, offering "
+"%(isk_value)s ISK. If accepted, the war will end in 24 hours and neither "
+"organization will be able to declare new wars against the other for the next"
+" 2 weeks."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:203
+msgid "Corporation or alliance is now eligible for formal war declarations"
+msgstr "Корпорация или альянс теперь имеет право для объявление войны"
+
+#: core/notification_embeds/war_embeds.py:206
+msgid ""
+"Your corporation or alliance is **now eligible** to participate in formal "
+"war declarations. This could be because your corporation and/or one of the "
+"corporations in your alliance owns a structure deployed in space."
+msgstr ""
+"Ваша корпорация или альянс теперь **имеют право** участвовать в объявлении "
+"войны. Это могло произойти из-за того, что ваша корпораци и/или одна из "
+"корпораций вашего альянса имеет структуру в космосе."
+
+#: core/notification_embeds/war_embeds.py:218
+msgid ""
+"Corporation or alliance is no longer eligible for formal war declarations"
+msgstr "Корпорация или альянс более не имеет право для объявление войны"
+
+#: core/notification_embeds/war_embeds.py:221
+msgid ""
+"Your corporation or alliance is **no longer eligible** to participate in formal war declarations.\n"
+"Neither your corporation nor any of the corporations in your alliance own a structure deployed in space at this time. If your corporation or alliance is currently involved in a formal war, that war will end in 24 hours."
+msgstr ""
+"Ваша корпорация или альянс более **не имеет прав** на участие в объявлении войны.\n"
+"Ни ваша корпорация, ни одна из корпорация вашего альянса на данный момент не имеет структур в космосе. Если ваша корпорация или альянс вовлечены в война, она окончится в течении 24 часов "
+
+#: core/notification_embeds/war_embeds.py:237
+#, python-format
+msgid "%s has offered a surrender"
+msgstr "%s предложил(а) капитуляцию"
+
+#: core/notification_embeds/war_embeds.py:239
+#, python-format
+msgid ""
+"%(owner_1)s has offered to end the war with %(owner_2)s in the exchange for "
+"%(isk_value)s ISK. If accepted, the war will end in 24 hours and your "
+"organizations will be unable to declare new wars against each other for the "
+"next 2 weeks."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:269
+#, python-format
+msgid "%s has surrendered"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:271
+#, python-format
+msgid "%(declared_by)s has surrendered in the war against  %(against)s."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:282
+msgid "One party has surrendered"
+msgstr "Сторона капитулировала"
+
+#: core/notification_embeds/war_embeds.py:284
+#, python-format
+msgid ""
+"The war between %(against)s and %(declared_by)s is coming to an end as one "
+"party has surrendered. The war will be declared as being over after "
+"approximately 24 hours."
+msgstr ""
+"Война между %(against)s и %(declared_by)s подходит к концу ввиду капитуляции"
+" одной из сторон. Война будет считаться оконченной приблизительно через 24 "
+"часа."
+
+#: core/notification_embeds/war_embeds.py:299
+#, python-format
+msgid "WarHQ %s lost"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:301
+#, python-format
+msgid ""
+"The war HQ %(war_hq)s is no more. As a consequence, the war declared by "
+"%(declared_by)s against %(against)s on %(time_declared)s has been declared "
+"invalid by CONCORD and has entered its cooldown period."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:318
+#, python-format
+msgid "War update: %(against)s has left %(alliance)s"
+msgstr "Обновление войны: %(against)s покинул %(alliance)s"
+
+#: core/notification_embeds/war_embeds.py:323
+#, python-format
+msgid ""
+"There has been a development in the war between %(declared_by)s and %(alliance)s.\n"
+"%(against)s is no longer a member of %(alliance)s, and therefore a new war between %(declared_by)s and %(against)s has begun."
+msgstr ""
+"В войне между %(declared_by)s и %(alliance)s произошло развитие событий.\n"
+"%(against)s более не член %(alliance)s и следовательно началась новая война между %(declared_by)s и %(against)s."
+
+#: core/notification_embeds/war_embeds.py:338
+#, python-format
+msgid "%(declared_by)s Declares War Against %(against)s"
+msgstr "%(declared_by)s объявляет войну против %(against)s"
+
+#: core/notification_embeds/war_embeds.py:343
+#, python-format
+msgid ""
+"%(declared_by)s has declared war on %(against)s with %(war_hq)s as the designated war headquarters.\n"
+"Within %(delay_hours)s hours fighting can legally occur between those involved."
+msgstr ""
+"%(declared_by)s объявил(а) войну против %(against)s, %(war_hq)s выбран(а) военной штаб-квартирой.\n"
+"В течении %(delay_hours)s часов военные действия между вовлеченными будут легальны."
+
+#: core/notification_embeds/war_embeds.py:362
+#, python-format
+msgid "%(alliance)s inherits war against %(opponent)s"
+msgstr "%(alliance)s вступает в войну против %(opponent)s"
+
+#: core/notification_embeds/war_embeds.py:367
+#, python-format
+msgid ""
+"%(alliance)s has inherited the war between %(declared_by)s and %(against)s "
+"from newly joined %(quitter)s. Within **24** hours fighting can legally "
+"occur with %(alliance)s."
+msgstr ""
+"%(alliance)s вступает в войну между %(declared_by)s и %(against)s ввиду "
+"вступившей %(quitter)s. В пределах **24** часов станет возможна война с "
+"%(alliance)s."
+
+#: core/notification_embeds/war_embeds.py:383
+msgid "CONCORD invalidates war"
+msgstr "Конкорд аннулирует войну"
+
+#: core/notification_embeds/war_embeds.py:385
+#, python-format
+msgid ""
+"The war between %(declared_by)s and %(against)s has been retracted by "
+"CONCORD, because at least one of the involved parties has become ineligible "
+"for war declarations.Fighting must cease on %(end_date)s."
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:401
+msgid "CONCORD retracts war"
+msgstr ""
+
+#: core/notification_embeds/war_embeds.py:404
+#, python-format
+msgid ""
+"The war between %(declared_by)s and %(against)s has been retracted by CONCORD.\n"
+"After %(end_date)s CONCORD will again respond to any hostilities between those involved with full force."
+msgstr ""
+"Война между %(declared_by)s и %(against)s была прекращена Конкордом.\n"
+"Спустя %(end_date)s Конкорд будет реагировать на любые враждебные действия между вовлеченными в полной мере."
+
+#: core/notification_timers.py:89
+msgid "Armor timer"
+msgstr "Таймер брони"
+
+#: core/notification_timers.py:90 core/notification_timers.py:195
+#: core/notification_timers.py:366
+msgid "Final timer"
+msgstr "Финальный таймер"
+
+#: core/notification_timers.py:147
+msgid "Sov timer"
+msgstr "Таймер сувернитета"
+
+#: core/notification_timers.py:249
+msgid "Extraction ready"
+msgstr "Извлечение завершено"
+
+#: core/notification_types.py:16
+msgid "Upwell structure ownership transferred"
+msgstr "Правовладение структурой Апвелл передано"
+
+#: core/notification_types.py:18
+msgid "Upwell structure anchoring"
+msgstr "Постановка на якорь стуктуры Апвелл"
+
+#: core/notification_types.py:19
+msgid "Upwell structure destroyed"
+msgstr "Структура Апвелл уничтожена"
+
+#: core/notification_types.py:20
+msgid "Upwell structure fuel alert"
+msgstr "Оповещение о топливе структур Апвелл"
+
+#: core/notification_types.py:22
+msgid "Upwell structure jump fuel alert"
+msgstr "Оповещение о топливе навигационных структур Апвелл"
+
+#: core/notification_types.py:24
+msgid "Upwell structure lost armor"
+msgstr "Структура Апвелл потеряла броню"
+
+#: core/notification_types.py:25
+msgid "Upwell structure lost shields"
+msgstr "Структура Апвелл потеряла щиты"
+
+#: core/notification_types.py:26
+msgid "Upwell structure went online"
+msgstr "Структура Апвелл онлайн"
+
+#: core/notification_types.py:27
+msgid "Upwell structure refueled"
+msgstr "Структура Апвелл заправлена"
+
+#: core/notification_types.py:29
+msgid "Upwell structure reinforcement time changed"
+msgstr "Время укрепления структуры Апвелл изменено"
+
+#: core/notification_types.py:32
+msgid "Upwell structure services went offline"
+msgstr "Служебные модули структуры Апвелл офлайн"
+
+#: core/notification_types.py:34
+msgid "Upwell structure unanchoring"
+msgstr "Структура Апвелл снимается с якоря"
+
+#: core/notification_types.py:36
+msgid "Upwell structure is under attack"
+msgstr "Структура Апвелл под атакой"
+
+#: core/notification_types.py:39
+msgid "Upwell structure went high power"
+msgstr "Структура Апвелл на полной мощности"
+
+#: core/notification_types.py:42
+msgid "Upwell structure went low power"
+msgstr "Структура Апвелл на малой мощности"
+
+#: core/notification_types.py:46
+msgid "Customs office attacked"
+msgstr "Таможня атакована"
+
+#: core/notification_types.py:47
+msgid "Customs office reinforced"
+msgstr "Таможня укреплена"
+
+#: core/notification_types.py:50
+msgid "Starbase attacked"
+msgstr "Орбитальная станция атакована"
+
+#: core/notification_types.py:52
+msgid "Starbase refueled (BETA)"
+msgstr "Орбитальная станция заправлена (БЕТА)"
+
+#: core/notification_types.py:53
+msgid "Starbase reinforced (BETA)"
+msgstr "Орбитальная станция укреплена (БЕТА)"
+
+#: core/notification_types.py:57
+msgid "Moon mining automatic fracture triggered"
+msgstr "Лунная руда автоматически раздробилась"
+
+#: core/notification_types.py:60
+msgid "Moon mining extraction cancelled"
+msgstr "Извлечение лунной руды отменено"
+
+#: core/notification_types.py:63
+msgid "Moon mining extraction finished"
+msgstr "Извлечение лунной руды завершено"
+
+#: core/notification_types.py:68
+msgid "Moonmining laser fired"
+msgstr "Лунодобывающий лазер выстрелил"
+
+#: core/notification_types.py:72
+msgid "Sovereignty claim acknowledgment"
+msgstr "Сувернитет получил признание"
+
+#: core/notification_types.py:74
+msgid "Sovereignty lost"
+msgstr "Потеря сувернитета"
+
+#: core/notification_types.py:76
+msgid "Structure anchoring in alliance space"
+msgstr "Структура ставится на якорь на территории альянса"
+
+#: core/notification_types.py:79
+msgid "Sovereignty entosis capture started"
+msgstr "Энтоз-захват сувернитетета начался"
+
+#: core/notification_types.py:82
+msgid "Sovereignty structure destroyed"
+msgstr "Структура сувернитета уничтожена"
+
+#: core/notification_types.py:85
+msgid "Sovereignty structure reinforced"
+msgstr "Структура сувернитета укреплена"
+
+#: core/notification_types.py:88
+msgid "Sovereignty command node event started"
+msgstr "Ивент командных узлов сувернитета начался"
+
+#: core/notification_types.py:92
+msgid "War accepted ally"
+msgstr ""
+
+#: core/notification_types.py:94
+msgid "Alliance war corporation joined alliance message"
+msgstr ""
+
+#: core/notification_types.py:97
+msgid "Alliance war surrender message"
+msgstr ""
+
+#: core/notification_types.py:100
+msgid "War ally joined aggressor"
+msgstr "Военный союзник присоединился к агрессору"
+
+#: core/notification_types.py:102
+msgid "War ally joined ally"
+msgstr "Военный союзник присоединился к союзникам"
+
+#: core/notification_types.py:104
+msgid "War ally joined defender"
+msgstr "Военный союзник присоединился к стороне защиты"
+
+#: core/notification_types.py:106
+msgid "War party surrendered"
+msgstr "Военная компания капитулировала"
+
+#: core/notification_types.py:108
+msgid "War corporation became eligible"
+msgstr "Корпорация получила право на войну"
+
+#: core/notification_types.py:111
+msgid "War corporation no longer eligible"
+msgstr "Корпорация больше не имеет прав на войну"
+
+#: core/notification_types.py:113 core/notification_types.py:125
+msgid "War declared"
+msgstr "Война объявлена"
+
+#: core/notification_types.py:114
+msgid "War HQ removed from space"
+msgstr ""
+
+#: core/notification_types.py:115
+msgid "War invalid"
+msgstr ""
+
+#: core/notification_types.py:117
+msgid "War mercenary offered negotiation message"
+msgstr ""
+
+#: core/notification_types.py:120
+msgid "War mercenary offer retracted message"
+msgstr ""
+
+#: core/notification_types.py:122
+msgid "War offered surrender"
+msgstr ""
+
+#: core/notification_types.py:123
+msgid "War offered to become ally"
+msgstr ""
+
+#: core/notification_types.py:124
+msgid "War adopted"
+msgstr "Война принята"
+
+#: core/notification_types.py:126
+msgid "War inherited"
+msgstr "Война передана"
+
+#: core/notification_types.py:128
+msgid "War retracted by Concord"
+msgstr "Война отменена Конкордом"
+
+#: core/notification_types.py:130
+msgid "War surrender offered"
+msgstr "Предлагается капитуляция в войне"
+
+#: core/notification_types.py:133
+msgid "Character joins corporation"
+msgstr "Персонаж вступает в корпорацию"
+
+#: core/notification_types.py:135
+msgid "Character invited to join corporation"
+msgstr "Персонажу предложено вступить в корпорацию"
+
+#: core/notification_types.py:137
+msgid "Character submitted application"
+msgstr "Поданная заявка персонажа"
+
+#: core/notification_types.py:138
+msgid "Corp application rejected message"
+msgstr ""
+
+#: core/notification_types.py:140
+msgid "Corp application rejected custom message"
+msgstr ""
+
+#: core/notification_types.py:142
+msgid "Character withdrew application"
+msgstr "Персонаж отозвал заявку"
+
+#: core/notification_types.py:143
+msgid "Character leaves corporation"
+msgstr "Персонаж покидает корпорацию"
+
+#: core/notification_types.py:146
+msgid "Corp alliance billing message"
+msgstr ""
+
+#: core/notification_types.py:147
+msgid "Bill out of money"
+msgstr "Закончились деньги"
+
+#: core/notification_types.py:150
+msgid "I-HUB bill about to expire"
+msgstr "Срок счёта центра инфраструктуры подходит к концу"
+
+#: core/notification_types.py:154
+msgid "I_HUB destroyed by bill failure"
+msgstr "Центр инфраструктуры уничтожен ввиду неуплаты"
+
+#: core/serializers.py:495
+msgid "Unknown if character has access"
+msgstr "Неизвестно, есть ли у персонажа доступ"
+
+#: core/serializers.py:500
+msgid ""
+"Access and tax for characters, which are not a member of the owner "
+"corporation or it's alliance may not be accurate."
+msgstr ""
+"Доступ и налог для персонажей, которые не являются членами корпорации-"
+"владельца или ее альянса, могут быть неточными."
+
+#: core/serializers.py:507
+msgid "No access"
+msgstr "Нет доступа"
+
+#: core/serializers.py:515
+msgid "Has access"
+msgstr "Есть доступ"
+
+#: core/serializers.py:525
+msgid "yes(?)"
+msgstr "да(?)"
+
+#: models/eveuniverse.py:57 models/structures_1.py:206
+msgid "Unknown"
+msgstr "Неизвестный"
+
+#: models/eveuniverse.py:58
+msgid "Highsec"
+msgstr "Хайсек"
+
+#: models/eveuniverse.py:59
+msgid "Lowsec"
+msgstr "Лоусек"
+
+#: models/eveuniverse.py:60
+msgid "Nullsec"
+msgstr "Нульсек"
+
+#: models/eveuniverse.py:61
+msgid "W-Space"
+msgstr "W-Пространство"
+
+#: models/notifications.py:51
+msgid "English"
+msgstr "Английский"
+
+#: models/notifications.py:52
+msgid "German"
+msgstr "Немецкий"
+
+#: models/notifications.py:53
+msgid "Spanish"
+msgstr "Испанский"
+
+#: models/notifications.py:54
+msgid "Chinese Simplified"
+msgstr "Китайский (упрощенный)"
+
+#: models/notifications.py:55
+msgid "Russian"
+msgstr "Русский"
+
+#: models/notifications.py:56
+msgid "Korean"
+msgstr "Корейский"
+
+#: models/notifications.py:73
+msgid "notification types"
+msgstr "типы оповещений"
+
+#: models/notifications.py:75
+msgid "Select which type of notifications should be forwarded to this webhook"
+msgstr "Выберите какой тип оповещений будет отсылаться по этому вебхуку"
+
+#: models/notifications.py:84
+msgid "language"
+msgstr "язык"
+
+#: models/notifications.py:85
+msgid "Language of notifications send to this webhook"
+msgstr "Язык оповещения, отправляемого по этому вебхуку"
+
+#: models/notifications.py:91
+msgid "Whether owners have this webhook automatically pre-set when created"
+msgstr "Получают ли при создании владельцы этот вебхук автоматически"
+
+#: models/notifications.py:96 models/owners.py:151
+msgid "has default pings enabled"
+msgstr "включены базовые пинги"
+
+#: models/notifications.py:108
+msgid "Groups to be pinged for each notification - "
+msgstr "Группы будет пропингованы по каждому оповещению - "
+
+#: models/notifications.py:113
+msgid "webhook"
+msgstr "вебхук"
+
+#: models/notifications.py:129
+msgid "True when this notification has been forwarded to Discord"
+msgstr "Галочка, если это оповещение было отправлено в Дискорд"
+
+#: models/notifications.py:135
+msgid "True when a timer has been added for this notification"
+msgstr "Галочка, если был добавлен таймер по этому оповещению"
+
+#: models/notifications.py:142
+msgid "Type of this notification"
+msgstr "Тип оповещения"
+
+#: models/notifications.py:148
+msgid "Corporation that owns this notification"
+msgstr "Корпорация, которой принадлежит это уведомление"
+
+#: models/notifications.py:153
+msgid "Structures this notification is about (if any)"
+msgstr "Структуры, о которых идёт речь (если есть)"
+
+#: models/notifications.py:527
+msgid "created"
+msgstr "создано"
+
+#: models/notifications.py:528
+msgid "Date when this notification was first received from ESI"
+msgstr "Дата, когда это оповещение было получено от ESI в первый раз"
+
+#: models/notifications.py:533
+msgid "is read"
+msgstr "прочитано"
+
+#: models/notifications.py:534
+msgid "True when this notification has read in the eve client"
+msgstr "Галочка, если это оповещение было прочтено в клиенте Eve"
+
+#: models/notifications.py:537
+msgid "last updated"
+msgstr "последний раз обновлено"
+
+#: models/notifications.py:538
+msgid "Date when this notification has last been updated from ESI"
+msgstr "Дата, когда это оповещение было обновлено ESI в последний раз "
+
+#: models/notifications.py:545
+msgid "sender"
+msgstr "отправитель"
+
+#: models/notifications.py:552
+msgid "text"
+msgstr "текст"
+
+#: models/notifications.py:553
+msgid "Notification details in YAML"
+msgstr "Детали оповещения в YAML"
+
+#: models/notifications.py:555 models/notifications.py:674
+msgid "timestamp"
+msgstr "временная метка"
+
+#: models/notifications.py:560
+msgid "eve notification"
+msgstr "оповещение eve"
+
+#: models/notifications.py:561
+msgid "eve notifications"
+msgstr "оповещения eve"
+
+#: models/notifications.py:672
+msgid "details"
+msgstr "детали"
+
+#: models/notifications.py:673
+msgid "last_updated"
+msgstr "last_updated"
+
+#: models/notifications.py:679
+msgid "generated notification"
+msgstr "автоматическое оповещение"
+
+#: models/notifications.py:680
+msgid "generated  notifications"
+msgstr "автоматические оповещения"
+
+#: models/notifications.py:710
+msgid "channel pings"
+msgstr "канал пингов"
+
+#: models/notifications.py:712
+msgid ""
+"Option to ping every member of the channel. This setting can be overruled by"
+" the respective owner or webhook configuration"
+msgstr ""
+"Возможность пинговать каждого участника канала. Этот параметр может быть "
+"отменен соответствующим владельцем или конфигурацией вебхука"
+
+#: models/notifications.py:723
+msgid "Context color of these notification on Discord"
+msgstr "Цвет контекста уведомлений в Дискорде"
+
+#: models/notifications.py:727
+msgid "is_enabled"
+msgstr "is_enabled"
+
+#: models/notifications.py:728
+msgid "Disabled configurations will not create any new alerts."
+msgstr "Выключеные конфигурации не будут создавать новые уведомления."
+
+#: models/notifications.py:751
+msgid "end"
+msgstr "конец"
+
+#: models/notifications.py:751
+msgid "End of alerts in hours before fuel expires"
+msgstr "Конец оповещений перед окончание топлива, в часах"
+
+#: models/notifications.py:754
+msgid "repeat"
+msgstr "повтор"
+
+#: models/notifications.py:756
+msgid "Notifications will be repeated every x hours. Set to 0 for no repeats"
+msgstr ""
+"Оповещения будут повторяться каждые x часов. Установите 0 чтобы не было "
+"повторов"
+
+#: models/notifications.py:760
+msgid "start"
+msgstr "начало"
+
+#: models/notifications.py:761
+msgid "Start of alerts in hours before fuel expires"
+msgstr "Начало оповещений перед окончанием топлива, в часах"
+
+#: models/notifications.py:765
+msgid "structure fuel alert config"
+msgstr "конфиг оповещений о топливе структуры"
+
+#: models/notifications.py:766
+msgid "structure fuel alert configs"
+msgstr "конфиги оповещений о топливе структуры"
+
+#: models/notifications.py:773
+msgid "Start must be before end, i.e. have a larger value."
+msgstr "Начало должно быть до конца, то есть должно иметь выше значение."
+
+#: models/notifications.py:777
+msgid "Repeat can not be larger that the interval size."
+msgstr "Число повторов не может быть больше интервала."
+
+#: models/notifications.py:786
+msgid "This configuration may not overlap with an existing configuration."
+msgstr "Эта конфигурация не может пересекаться с существующей конфигурацией."
+
+#: models/notifications.py:855
+msgid ""
+"Notifications will be sent once fuel level in units reaches this threshold"
+msgstr "Оповещение будет отправлено, когда количество топлива пересечёт порог"
+
+#: models/notifications.py:860
+msgid "jump fuel alert config"
+msgstr "конфиг оповещений о топливе навигационных структур"
+
+#: models/notifications.py:861
+msgid "jump fuel alert configs"
+msgstr "конфиги оповещений о топливе навигационных структур"
+
+#: models/notifications.py:913 models/notifications.py:963
+#: models/structures_1.py:409 models/structures_1.py:814
+#: models/structures_2.py:46
+msgid "structure"
+msgstr "структура"
+
+#: models/notifications.py:919 models/notifications.py:969
+msgid "configuration"
+msgstr "конфигурация"
+
+#: models/notifications.py:923
+msgid "hours"
+msgstr "часы"
+
+#: models/notifications.py:924
+msgid "Number of hours before fuel expiration this alert was sent"
+msgstr ""
+"Будет отправлено, когда останется x часов до опустошения топливного отсека"
+
+#: models/notifications.py:928
+msgid "structure fuel alert"
+msgstr "оповещение о топливе структуры"
+
+#: models/notifications.py:929
+msgid "structure fuel alerts"
+msgstr "оповещения о топливе структуры"
+
+#: models/notifications.py:973
+msgid "jump fuel alert"
+msgstr "оповещение о топливе навигационной структуры"
+
+#: models/notifications.py:974
+msgid "jump fuel alerts"
+msgstr "оповещения о топливе навигационной структуры"
+
+#: models/owners.py:118
+msgid "Corporation owning structures"
+msgstr "Корпорация, владеющая структурами"
+
+#: models/owners.py:123
+msgid "are pocos public"
+msgstr "ПОСы публичны"
+
+#: models/owners.py:124
+msgid "whether pocos of this owner are shown on public POCO page"
+msgstr "отображаются ли ПОСы этого владельца на общедоступной странице ПОСов"
+
+#: models/owners.py:130
+msgid "assets last update at"
+msgstr "последнее обновления имущества в"
+
+#: models/owners.py:131
+msgid "when the last successful update happened"
+msgstr "когда последнее успешное обновление произошло"
+
+#: models/owners.py:146
+msgid "forwarding last update at"
+msgstr "пересылка последнего обновления на"
+
+#: models/owners.py:147 models/owners.py:190 models/owners.py:205
+msgid "When the last successful update happened"
+msgstr "Когда последний раз было успешное обновление"
+
+#: models/owners.py:153
+msgid ""
+"To enable or disable pinging of notifications for this owner e.g. with "
+"@everyone and @here"
+msgstr ""
+"Для влючения или выключение пингов оповещений для этого владельца, например "
+"@everyone и @here"
+
+#: models/owners.py:159 webhooks/models.py:69
+msgid "is active"
+msgstr "включено"
+
+#: models/owners.py:160
+msgid "Whether this owner is currently included in the sync process"
+msgstr "Включен ли этот владелец в процесс синхронизации"
+
+#: models/owners.py:164
+msgid "is alliance main"
+msgstr "альянсовый"
+
+#: models/owners.py:166
+msgid ""
+"Whether alliance wide notifications are forwarded for this owner (e.g. sov "
+"notifications)"
+msgstr ""
+"Получает ли владелец альянсовые уведомления (например оповещения "
+"сувернитета)"
+
+#: models/owners.py:172
+msgid "is included in service status"
+msgstr "включает в себя состояние служебных модулей"
+
+#: models/owners.py:174
+msgid ""
+"Whether the sync status of this owner is included in the overall status of "
+"this services"
+msgstr ""
+"Включен ли статус синхронизации этого владельца в общий статус этих модулей"
+
+#: models/owners.py:182
+msgid "is up"
+msgstr "включен"
+
+#: models/owners.py:183
+msgid "Whether all services for this owner are currently up"
+msgstr "Работают ли в настоящее время все модули у этого владельца"
+
+#: models/owners.py:189
+msgid "notifications last update at"
+msgstr "последнее обновление оповещений в"
+
+#: models/owners.py:198
+msgid "Groups to be pinged for each notification. "
+msgstr "Группы получат пинг о каждом оповещении."
+
+#: models/owners.py:204
+msgid "structures last update at"
+msgstr "последнее обновление структур в"
+
+#: models/owners.py:213
+msgid "Notifications are sent to these webhooks."
+msgstr "Оповещение, отправленные по этому вебхуку."
+
+#: models/owners.py:220
+msgid "owners"
+msgstr "Владельцы"
+
+#: models/owners.py:1162
+#, python-format
+msgid ""
+"Syncing of %(topic)s for %(owner)s %(result)s.\n"
+" %(message_details)s"
+msgstr ""
+"Синхронизация %(topic)s %(owner)s %(result)s.\n"
+"%(message_details)s"
+
+#: models/owners.py:1166
+msgid "completed successfully"
+msgstr "успешно завершено"
+
+#: models/owners.py:1171
+#, python-format
+msgid "%(title)s: %(topic)s updated for %(owner)s: %(result)s"
+msgstr "%(title)s: %(topic)s обновлено для %(owner)s: %(result)s "
+
+#: models/owners.py:1176
+msgid "OK"
+msgstr "ОК"
+
+#: models/owners.py:1313
+msgid "character_ownership"
+msgstr "character_ownership"
+
+#: models/owners.py:1321
+msgid "structures last used at"
+msgstr "структурой последний раз пользовались в"
+
+#: models/owners.py:1322
+msgid "When this character was last used for syncing structures"
+msgstr ""
+"Когда этот персонаж был использован последний раз для синхронизации структур"
+
+#: models/owners.py:1329
+msgid "notifications last used at"
+msgstr "оповещением последний раз пользовались в"
+
+#: models/owners.py:1330
+msgid "When this character was last used for syncing notifications"
+msgstr ""
+"Когда этот персонаж был использован последний раз для синхронизации "
+"оповещений"
+
+#: models/owners.py:1335
+msgid "error count"
+msgstr "количество ошибок"
+
+#: models/owners.py:1341
+msgid "owner character"
+msgstr "владелец персонажа"
+
+#: models/owners.py:1342
+msgid "owner characters"
+msgstr "владелец персонажей"
+
+#: models/structures_1.py:38
+msgid "sov"
+msgstr "сувернитет"
+
+#: models/structures_1.py:39
+msgid "highsec"
+msgstr "хай-сек"
+
+#: models/structures_1.py:40
+msgid "lowsec"
+msgstr "лоу-сек"
+
+#: models/structures_1.py:41
+msgid "nullsec"
+msgstr "нуль-сек"
+
+#: models/structures_1.py:42
+msgid "w-space"
+msgstr "w-пространство"
+
+#: models/structures_1.py:47
+msgid "grey"
+msgstr "серый"
+
+#: models/structures_1.py:48
+msgid "dark blue"
+msgstr "тёмно-синий"
+
+#: models/structures_1.py:49
+msgid "green"
+msgstr "зелёный"
+
+#: models/structures_1.py:50
+msgid "light blue"
+msgstr "светло-синий"
+
+#: models/structures_1.py:51
+msgid "orange"
+msgstr "оранжевый"
+
+#: models/structures_1.py:52
+msgid "red"
+msgstr "красный"
+
+#: models/structures_1.py:65
+msgid "Name of the tag, which must be unique"
+msgstr "Имя тега должно быть уникально"
+
+#: models/structures_1.py:71
+msgid "description"
+msgstr "описание"
+
+#: models/structures_1.py:72
+msgid "Description for this tag"
+msgstr "Описание тега"
+
+#: models/structures_1.py:79
+msgid "style"
+msgstr "стиль"
+
+#: models/structures_1.py:80
+msgid "Color style of tag"
+msgstr "Цветовой стиль тега"
+
+#: models/structures_1.py:86
+msgid "order"
+msgstr "ордер"
+
+#: models/structures_1.py:88
+msgid ""
+"Number defining the order tags are shown. custom tags can not have an order "
+"below 100"
+msgstr ""
+"Номера, определяющие порядок тега, показываются. Порядок пользовательского "
+"тега не может быть ниже 100"
+
+#: models/structures_1.py:96
+msgid ""
+"When enabled this custom tag will automatically be added to new structures"
+msgstr "Если включено, тег будет автоматически добавляться новым структурам"
+
+#: models/structures_1.py:101
+msgid "is user managed"
+msgstr "управляется пользователем"
+
+#: models/structures_1.py:103
+msgid ""
+"When disabled this tag is created and managed by the system and can not be "
+"modified by users"
+msgstr ""
+"Если выключено, тег создается и используется системой и не может быть "
+"изменён пользователем"
+
+#: models/structures_1.py:111
+msgid "structure tag"
+msgstr "тег структуры"
+
+#: models/structures_1.py:112
+msgid "structure tags"
+msgstr "теги структуры"
+
+#: models/structures_1.py:149
+msgid "anchor vulnerable"
+msgstr "якорь уязвим"
+
+#: models/structures_1.py:150
+msgid "anchoring"
+msgstr "постановка на якорь"
+
+#: models/structures_1.py:151
+msgid "armor reinforce"
+msgstr "броня укреплена"
+
+#: models/structures_1.py:152
+msgid "armor vulnerable"
+msgstr "броня уязвима"
+
+#: models/structures_1.py:153
+msgid "deploy vulnerable"
+msgstr "развёртывается уязвимо"
+
+#: models/structures_1.py:154
+msgid "fitting invulnerable"
+msgstr "неуязвимый"
+
+#: models/structures_1.py:155
+msgid "hull reinforce"
+msgstr "корпус укреплён"
+
+#: models/structures_1.py:156
+msgid "hull vulnerable"
+msgstr "корпус уязвим"
+
+#: models/structures_1.py:157
+msgid "online deprecated"
+msgstr "онлайн устарел"
+
+#: models/structures_1.py:158
+msgid "onlining vulnerable"
+msgstr "включается уязвимо"
+
+#: models/structures_1.py:159
+msgid "shield vulnerable"
+msgstr "щит уязвим"
+
+#: models/structures_1.py:160
+msgid "unanchored"
+msgstr "снято с якоря"
+
+#: models/structures_1.py:162 models/structures_2.py:29
+msgid "offline"
+msgstr "выключено"
+
+#: models/structures_1.py:163 models/structures_2.py:30
+msgid "online"
+msgstr "включено"
+
+#: models/structures_1.py:164
+msgid "onlining"
+msgstr "включается"
+
+#: models/structures_1.py:165
+msgid "reinforced"
+msgstr "укреплено"
+
+#: models/structures_1.py:166
+msgid "unanchoring "
+msgstr "снимается с якоря"
+
+#: models/structures_1.py:169
+msgid "unknown"
+msgstr "неизвестно"
+
+#: models/structures_1.py:202
+msgid "Full Power"
+msgstr "Полная Мощность"
+
+#: models/structures_1.py:203
+msgid "Low Power"
+msgstr "Малая Мощность"
+
+#: models/structures_1.py:204
+msgid "Abandoned"
+msgstr "Заброшенный"
+
+#: models/structures_1.py:205
+msgid "Abandoned?"
+msgstr "Заброшенный?"
+
+#: models/structures_1.py:211
+msgid "The Item ID of the structure"
+msgstr "Item ID структуры"
+
+#: models/structures_1.py:216
+msgid "created at"
+msgstr "создано в"
+
+#: models/structures_1.py:217
+msgid "Date this structure was received from ESI for the first time"
+msgstr "Дата, когда структура была получена от ESI"
+
+#: models/structures_1.py:226
+msgid "moon"
+msgstr "луна"
+
+#: models/structures_1.py:227
+msgid "Moon next to this structure - if any"
+msgstr "Луна рядом с этим сооружением – если есть"
+
+#: models/structures_1.py:236
+msgid "planet"
+msgstr "планета"
+
+#: models/structures_1.py:237
+msgid "Planet next to this structure - if any"
+msgstr "Планета рядом с этим сооружением – если есть"
+
+#: models/structures_1.py:243
+msgid "solar system"
+msgstr "солнечная система"
+
+#: models/structures_1.py:244
+msgid "Solar System the structure is located"
+msgstr "Солнечная Система в которой находится структура"
+
+#: models/structures_1.py:251
+msgid "Type of the structure"
+msgstr "Тип структуры"
+
+#: models/structures_1.py:257
+msgid "fuel expires at"
+msgstr "топливо кончается в"
+
+#: models/structures_1.py:258
+msgid "Date on which the structure will run out of fuel"
+msgstr "Дата, когда у структуры кончается топливо"
+
+#: models/structures_1.py:265
+msgid "has fitting"
+msgstr "имеет фит"
+
+#: models/structures_1.py:273
+msgid "has core"
+msgstr "имеет ядро"
+
+#: models/structures_1.py:280
+msgid "last online at"
+msgstr "последний раз был онлайн в"
+
+#: models/structures_1.py:281
+msgid "Date this structure had any of it's services online"
+msgstr "Дата, когда у структуры были активны служебные модули"
+
+#: models/structures_1.py:287 models/structures_1.py:827
+msgid "last updated at"
+msgstr "последний раз обновлено в"
+
+#: models/structures_1.py:288
+msgid "Date this structure was last updated from the EVE server"
+msgstr "Дата, когда структура была обновлена последний раз"
+
+#: models/structures_1.py:293
+msgid "The full name of the structure"
+msgstr "Полное имя структуры"
+
+#: models/structures_1.py:300
+msgid "next reinforce hour"
+msgstr "следующее время укрепления"
+
+#: models/structures_1.py:302 models/structures_1.py:312
+msgid ""
+"The requested change to reinforce_hour that will take effect at the time "
+"shown by next_reinforce_apply"
+msgstr ""
+"Запрошенное изменение reinforce_hour, которое вступит в силу во время, "
+"указанное в параметре next_reinforce_apply"
+
+#: models/structures_1.py:310
+msgid "next reinforce apply"
+msgstr "применить следующее укрепление"
+
+#: models/structures_1.py:321
+msgid "Corporation that owns the structure"
+msgstr "Корпорация, что владеет структурой"
+
+#: models/structures_1.py:328
+msgid "reinforce hour"
+msgstr "время укрепления"
+
+#: models/structures_1.py:330
+msgid ""
+"The average hour of day that determines the time +/- some hours when the "
+"structure will randomly exit its reinforcement periods and become vulnerable"
+" to attack against its armor and/or hull. "
+msgstr ""
+"Средний час дня, который определяет время +/- несколько часов, когда "
+"структура случайным образом выйдет из периодов усиления и станет уязвимой "
+"для атак по ее броне и/или корпусу."
+
+#: models/structures_1.py:339
+msgid "position x"
+msgstr "позиция по x"
+
+#: models/structures_1.py:340
+msgid "X coordinate of position in the solar system"
+msgstr "Координата X в солнечной системе"
+
+#: models/structures_1.py:346
+msgid "position y"
+msgstr "позиция по y"
+
+#: models/structures_1.py:347
+msgid "Y coordinate of position in the solar system"
+msgstr "Координата Y в солнечной системе"
+
+#: models/structures_1.py:353
+msgid "position z"
+msgstr "позиция по z в солнечной системе"
+
+#: models/structures_1.py:354
+msgid "Z coordinate of position in the solar system"
+msgstr "Координата Z в солнечной системе"
+
+#: models/structures_1.py:360 models/structures_2.py:55
+msgid "state"
+msgstr "состояние"
+
+#: models/structures_1.py:361
+msgid "Current state of the structure"
+msgstr "Текущее состояние структуры"
+
+#: models/structures_1.py:367
+msgid "state timer end"
+msgstr "таймер окончания состояния"
+
+#: models/structures_1.py:368
+msgid "Date at which the structure entered it's current state"
+msgstr "Дата, когда структура попала в текущее состояние"
+
+#: models/structures_1.py:374
+msgid "state timer start"
+msgstr "таймер начала состояния"
+
+#: models/structures_1.py:375
+msgid "Date at which the structure will move to it's next state"
+msgstr "Дата, когда структура перейдет в следующее состояние"
+
+#: models/structures_1.py:383
+msgid "List of tags for this structure. "
+msgstr "Список тегов этой структуры"
+
+#: models/structures_1.py:389
+msgid "unanchors at"
+msgstr "снимется с якоря в"
+
+#: models/structures_1.py:390
+msgid "Date at which the structure will unanchor"
+msgstr "Дата, когда структура снимется с якоря"
+
+#: models/structures_1.py:399
+msgid ""
+"Webhooks for sending notifications to. If any webhook is enabled, these will"
+" be used instead of the webhooks defined for the respective owner. If no "
+"webhook is enabled the owner's setting will be used. "
+msgstr ""
+"Вебхуки для отправки уведомлений. Если какой-либо вебхук включен, он будет "
+"использоваться вместо вебхуков, определенных для соответствующего владельца."
+" Если вебхук не включен, будут использоваться настройки владельца."
+
+#: models/structures_1.py:808
+msgid "The Eve item ID"
+msgstr "Айди предмета Eve"
+
+#: models/structures_1.py:815
+msgid "Structure this item is located in"
+msgstr "Структура, в которой находится этот элемент"
+
+#: models/structures_1.py:825
+msgid "is singleton"
+msgstr "единичный"
+
+#: models/structures_1.py:829
+msgid "location flag"
+msgstr "местонахождение"
+
+#: models/structures_1.py:830
+msgid "quantity"
+msgstr "количество"
+
+#: models/structures_1.py:833
+msgid "structure item"
+msgstr "элемент структуры"
+
+#: models/structures_1.py:834
+msgid "structure items"
+msgstr "элементы структуры"
+
+#: models/structures_2.py:47
+msgid "Structure this service is installed to"
+msgstr "Структура, в которой установлен этот служебный модуль"
+
+#: models/structures_2.py:50
+msgid "Name of the service"
+msgstr "Имя служебного модуля"
+
+#: models/structures_2.py:56
+msgid "Current state of this service"
+msgstr "Текущее состояние служебного модуля"
+
+#: models/structures_2.py:60
+msgid "structure service"
+msgstr "служебный модуль структуры"
+
+#: models/structures_2.py:61
+msgid "structure services"
+msgstr "служебные модули структуры"
+
+#: models/structures_2.py:80 webhooks/models.py:17
+msgid "none"
+msgstr "нет"
+
+#: models/structures_2.py:81
+msgid "terrible"
+msgstr "ужасно"
+
+#: models/structures_2.py:82
+msgid "bad"
+msgstr "плохо"
+
+#: models/structures_2.py:83
+msgid "neutral"
+msgstr "нейтрально"
+
+#: models/structures_2.py:84
+msgid "good"
+msgstr "хорошо"
+
+#: models/structures_2.py:85
+msgid "excellent"
+msgstr "превосходно"
+
+#: models/structures_2.py:216
+msgid "alliance member"
+msgstr "член альянса"
+
+#: models/structures_2.py:217
+msgid "config starbase equipment role"
+msgstr "конфиг роли оборудования орбитальной станции"
+
+#: models/structures_2.py:218
+msgid "corporation member"
+msgstr "член корпорации"
+
+#: models/structures_2.py:219
+msgid "starbase fuel technician role"
+msgstr "роль специалиста по топливу орбитальной станции"
+
+#: templates/structures/base.html:4 templates/structures/partials/menu.html:17
+msgid "Structures"
+msgstr "Структуры"
+
+#: templates/structures/modals/fitting_assets.html:9
+#: templates/structures/modals/starbase_detail.html:55
+#: templates/structures/modals/starbase_detail.html:65
+msgid "empty"
+msgstr "пусто"
+
+#: templates/structures/modals/poco_details.html:24
+msgid "Reinforcement Time"
+msgstr "Время укрепления"
+
+#: templates/structures/modals/poco_details.html:29
+msgid "Tax Rates & Access"
+msgstr "Ставки налога & Доступ"
+
+#: templates/structures/modals/poco_details.html:42
+msgid "Earliest"
+msgstr "Ранний"
+
+#: templates/structures/modals/poco_details.html:43
+msgid "Latest"
+msgstr "Последний"
+
+#: templates/structures/modals/poco_details.html:49
+msgid "Corporation members"
+msgstr "Члены корпорации"
+
+#: templates/structures/modals/poco_details.html:50
+msgid "Alliance members"
+msgstr "Члены альянса"
+
+#: templates/structures/modals/poco_details.html:51
+msgid "Terrible standing"
+msgstr "Ужасные отношения"
+
+#: templates/structures/modals/poco_details.html:52
+msgid "Bad standing"
+msgstr "Плохие отношения"
+
+#: templates/structures/modals/poco_details.html:53
+msgid "Neutral standing"
+msgstr "Нейтральные отношения"
+
+#: templates/structures/modals/poco_details.html:54
+msgid "Good standing"
+msgstr "Хорошие отношения"
+
+#: templates/structures/modals/poco_details.html:55
+msgid "Excellent standing"
+msgstr "Превосходные отношения"
+
+#: templates/structures/modals/starbase_detail.html:24
+#: templates/structures/modals/structure_details.html:32
+msgid "Fuel"
+msgstr "Топливо"
+
+#: templates/structures/modals/starbase_detail.html:29
+#: templates/structures/modals/structure_details.html:42
+msgid "Modules"
+msgstr "Модули"
+
+#: templates/structures/modals/starbase_detail.html:34
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/structures/modals/starbase_detail.html:39
+msgid "Access"
+msgstr "Доступ"
+
+#: templates/structures/modals/starbase_detail.html:72
+msgid "Allow alliance member usage"
+msgstr "Разрешить использование членам альянса"
+
+#: templates/structures/modals/starbase_detail.html:73
+msgid "Allow corporation member usage"
+msgstr "Разрешить использование членам корпорации"
+
+#: templates/structures/modals/starbase_detail.html:74
+msgid "Attack if standing lower than"
+msgstr "Атаковать, если отношения ниже чем"
+
+#: templates/structures/modals/starbase_detail.html:75
+msgid "Attack if security status lower than"
+msgstr "Атаковать, если статус безопасности ниже чем"
+
+#: templates/structures/modals/starbase_detail.html:76
+msgid "Attack if other security status is dropping"
+msgstr "Атаковать, если другой статус безопасности падает"
+
+#: templates/structures/modals/starbase_detail.html:77
+msgid "Attack if at war"
+msgstr "Атаковать, если воюете"
+
+#: templates/structures/modals/starbase_detail.html:78
+msgid "Use alliance standings"
+msgstr "Использовать отношения альянса"
+
+#: templates/structures/modals/starbase_detail.html:84
+msgid "Anchor role"
+msgstr "Anchor role"
+
+#: templates/structures/modals/starbase_detail.html:85
+msgid "Unanchor role"
+msgstr "Unanchor role"
+
+#: templates/structures/modals/starbase_detail.html:86
+msgid "Online role"
+msgstr "Online role"
+
+#: templates/structures/modals/starbase_detail.html:87
+msgid "Offline role"
+msgstr "Offline role"
+
+#: templates/structures/modals/starbase_detail.html:88
+msgid "Fuel bay view role"
+msgstr "Fuel bay view role"
+
+#: templates/structures/modals/starbase_detail.html:89
+msgid "Fuel bay take role"
+msgstr "Fuel bay take role"
+
+#: templates/structures/modals/structure_details.html:26
+msgid "Services"
+msgstr "Модули"
+
+#: templates/structures/modals/structure_details.html:37
+msgid "Ammo"
+msgstr "Боеприпасы"
+
+#: templates/structures/modals/structure_details.html:59
+msgid "Fuel Bay"
+msgstr "Отсек топлива"
+
+#: templates/structures/modals/structure_details.html:60
+msgid "Fuel Usage"
+msgstr "Использование топлива"
+
+#: templates/structures/modals/structure_details.html:66
+msgid "Ammo Hold"
+msgstr "Боеприпасы в хранении"
+
+#: templates/structures/modals/structure_details.html:67
+msgid "Fighter Bay"
+msgstr "Отсек истребителей"
+
+#: templates/structures/modals/structure_details.html:68
+msgid "Fighter Tubes"
+msgstr "Истребительные полосы"
+
+#: templates/structures/modals/structure_details.html:75
+msgid "High Slots"
+msgstr "Верхние слоты"
+
+#: templates/structures/modals/structure_details.html:76
+msgid "Medium Slots"
+msgstr "Средние слоты"
+
+#: templates/structures/modals/structure_details.html:77
+msgid "Low Slots"
+msgstr "Нижние слоты"
+
+#: templates/structures/modals/structure_details.html:78
+msgid "Rig Slots"
+msgstr "Слот для модификаторов"
+
+#: templates/structures/modals/structure_details.html:79
+msgid "Service Slots"
+msgstr "Слоты для служебных модулей"
+
+#: templates/structures/modals/tab_general_detail.html:7
+msgid "Basics"
+msgstr "Основы"
+
+#: templates/structures/modals/tab_general_detail.html:9
+#: templates/structures/partials/structures/jump_gates_list.html:29
+#: templates/structures/partials/structures/poco_list.html:31
+#: templates/structures/partials/structures/starbase_list.html:31
+#: templates/structures/partials/structures/structure_list.html:31
+msgid "Name"
+msgstr "Имя"
+
+#: templates/structures/modals/tab_general_detail.html:11
+#: templates/structures/partials/public/poco_list.html:14
+#: templates/structures/partials/structures/jump_gates_list.html:25
+#: templates/structures/partials/structures/poco_list.html:27
+#: templates/structures/partials/structures/starbase_list.html:27
+#: templates/structures/partials/structures/structure_list.html:27
+msgid "Type"
+msgstr "Тип"
+
+#: templates/structures/modals/tab_general_detail.html:13
+#: templates/structures/partials/structures/jump_gates_list.html:26
+#: templates/structures/partials/structures/poco_list.html:28
+#: templates/structures/partials/structures/starbase_list.html:28
+#: templates/structures/partials/structures/structure_list.html:28
+#: views/structures.py:169
+msgid "Group"
+msgstr "Группа"
+
+#: templates/structures/modals/tab_general_detail.html:16
+#: templates/structures/partials/public/poco_list.html:25
+#: templates/structures/partials/statistics/structure_summary.html:13
+#: templates/structures/partials/structures/jump_gates_list.html:17
+#: templates/structures/partials/structures/poco_list.html:19
+#: templates/structures/partials/structures/starbase_list.html:19
+#: templates/structures/partials/structures/structure_list.html:19
+msgid "Owner"
+msgstr "Владелец"
+
+#: templates/structures/modals/tab_general_detail.html:18 views/public.py:51
+#: views/structures.py:166
+msgid "Corporation"
+msgstr "Корпорация"
+
+#: templates/structures/modals/tab_general_detail.html:21
+#: templates/structures/partials/public/poco_list.html:26
+#: templates/structures/partials/statistics/structure_summary.html:14
+#: templates/structures/partials/structures/jump_gates_list.html:18
+#: templates/structures/partials/structures/poco_list.html:20
+#: templates/structures/partials/structures/starbase_list.html:20
+#: templates/structures/partials/structures/structure_list.html:20
+#: views/public.py:49 views/statistics.py:40 views/structures.py:165
+msgid "Alliance"
+msgstr "Альянс"
+
+#: templates/structures/modals/tab_general_detail.html:25
+#: templates/structures/partials/structures/jump_gates_list.html:21
+#: templates/structures/partials/structures/poco_list.html:23
+#: templates/structures/partials/structures/starbase_list.html:23
+#: templates/structures/partials/structures/structure_list.html:23
+msgid "Location"
+msgstr "Расположение"
+
+#: templates/structures/modals/tab_general_detail.html:27
+#: templates/structures/partials/public/poco_list.html:17 views/public.py:56
+#: views/structures.py:174
+msgid "Solar System"
+msgstr "Система"
+
+#: templates/structures/modals/tab_general_detail.html:29
+#: templates/structures/partials/public/poco_list.html:21 views/public.py:52
+#: views/structures.py:167
+msgid "Constellation"
+msgstr "Созвездие"
+
+#: templates/structures/modals/tab_general_detail.html:32
+#: templates/structures/partials/public/poco_list.html:22
+#: templates/structures/partials/structures/jump_gates_list.html:22
+#: templates/structures/partials/structures/poco_list.html:24
+#: templates/structures/partials/structures/starbase_list.html:24
+#: templates/structures/partials/structures/structure_list.html:24
+#: views/public.py:54 views/structures.py:171
+msgid "Region"
+msgstr "Регион"
+
+#: templates/structures/modals/tab_general_detail.html:36
+#: templates/structures/modals/tab_general_detail.html:40
+#: templates/structures/partials/structures/jump_gates_list.html:42
+#: templates/structures/partials/structures/starbase_list.html:39
+#: templates/structures/partials/structures/structure_list.html:39
+#: views/structures.py:173
+msgid "State"
+msgstr "Состояние"
+
+#: templates/structures/modals/tab_general_detail.html:49
+msgid "Timer Start"
+msgstr "Начало таймера"
+
+#: templates/structures/modals/tab_general_detail.html:50
+msgid "Timer End"
+msgstr "Конец таймера"
+
+#: templates/structures/modals/tab_general_detail.html:57
+msgid "Reinforcement Hour"
+msgstr "Время укрепления"
+
+#: templates/structures/modals/tab_general_detail.html:61
+msgid "Next Reinforcement Hour"
+msgstr "Следующее время укрепления"
+
+#: templates/structures/modals/tab_general_detail.html:65
+msgid "Next Reinforcement Apply"
+msgstr "Применить следующее укрепление"
+
+#: templates/structures/partials/menu.html:10
+msgid "Toggle navigation"
+msgstr "Переключить навигацию"
+
+#: templates/structures/partials/menu.html:27
+msgid "Structure List"
+msgstr "Список структур"
+
+#: templates/structures/partials/menu.html:33
+msgid "Statistics"
+msgstr "Статистика"
+
+#: templates/structures/partials/menu.html:41
+msgid "Public"
+msgstr "Публично"
+
+#: templates/structures/partials/menu.html:49
+msgid ""
+"Add new structure owner or add new sync character to an existing structure "
+"owner"
+msgstr ""
+"Добавить нового владельца структуры или нового персонажа для синхронизации "
+"существующего владельца структуры"
+
+#: templates/structures/partials/menu.html:50
+msgid "Add Owner / Sync Character"
+msgstr "Добавить владельца / Синхронизировать персонажа"
+
+#: templates/structures/partials/public/poco_list.html:6
+#: templates/structures/partials/structures/poco_list.html:8
+#: templates/structures/public.html:32 templates/structures/structures.html:52
+msgid "Customs Offices"
+msgstr "Таможенные офисы"
+
+#: templates/structures/partials/public/poco_list.html:13
+msgid "Planet"
+msgstr "Планета"
+
+#: templates/structures/partials/public/poco_list.html:18
+msgid "Security"
+msgstr "Безопасность"
+
+#: templates/structures/partials/public/poco_list.html:29 views/public.py:50
+msgid "Access?"
+msgstr "Доступ?"
+
+#: templates/structures/partials/public/poco_list.html:32
+msgid "Tax"
+msgstr "Налог"
+
+#: templates/structures/partials/statistics/structure_summary.html:6
+#: templates/structures/statistics.html:12
+msgid "Summary"
+msgstr "Сводка"
+
+#: templates/structures/partials/statistics/structure_summary.html:16
+msgid "Citadels"
+msgstr "Цитадели"
+
+#: templates/structures/partials/statistics/structure_summary.html:17
+msgid "Engineering<br>Complexes"
+msgstr "Промышленные <br> комплексы"
+
+#: templates/structures/partials/statistics/structure_summary.html:18
+msgid "Refineries"
+msgstr "Перерабатывающие комплексы"
+
+#: templates/structures/partials/statistics/structure_summary.html:19
+msgid "Other Upwell"
+msgstr "Прочее Апвелл"
+
+#: templates/structures/partials/statistics/structure_summary.html:20
+msgid "Customs<br>Offices"
+msgstr "Таможенные <br> офисы"
+
+#: templates/structures/partials/statistics/structure_summary.html:21
+#: templates/structures/structures.html:58
+msgid "Starbases"
+msgstr "Орбитальные станции"
+
+#: templates/structures/partials/statistics/structure_summary.html:22
+#: templates/structures/partials/statistics/structure_summary.html:27
+msgid "Total"
+msgstr "Всего"
+
+#: templates/structures/partials/structures/jump_gates_list.html:8
+#: templates/structures/structures.html:65
+msgid "Jump Gates"
+msgstr "Прыжковые врата"
+
+#: templates/structures/partials/structures/jump_gates_list.html:30
+#: templates/structures/partials/structures/poco_list.html:32
+#: templates/structures/partials/structures/starbase_list.html:32
+#: templates/structures/partials/structures/structure_list.html:32
+msgid "Tags"
+msgstr "Теги"
+
+#: templates/structures/partials/structures/jump_gates_list.html:34
+#: templates/structures/partials/structures/starbase_list.html:35
+#: templates/structures/partials/structures/structure_list.html:35
+msgid "Fuel Expires"
+msgstr "Топливо"
+
+#: templates/structures/partials/structures/jump_gates_list.html:35
+#: templates/structures/partials/structures/starbase_list.html:36
+#: templates/structures/partials/structures/structure_list.html:36
+msgid "Last Online"
+msgstr "Состояние"
+
+#: templates/structures/partials/structures/jump_gates_list.html:38
+msgid "Liquid Ozone"
+msgstr "Жидкий озон"
+
+#: templates/structures/partials/structures/jump_gates_list.html:39
+msgid "(units)"
+msgstr "(штук)"
+
+#: templates/structures/partials/structures/jump_gates_list.html:48
+msgid "Reinforced structures (except POCOs) are highlighted in red"
+msgstr "Укреплённые структуры (включая ПОСы) выделены красным цветом"
+
+#: templates/structures/partials/structures/starbase_list.html:8
+msgid "All Structures"
+msgstr "Все Структуры"
+
+#: templates/structures/partials/structures/starbase_list.html:40
+#: templates/structures/partials/structures/structure_list.html:40
+msgid "Core"
+msgstr "Ядро"
+
+#: templates/structures/partials/structures/starbase_list.html:48
+#: templates/structures/partials/structures/structure_list.html:48
+msgid "Reinforced structures are highlighted in red"
+msgstr "Укрепленные структуры помечены красным"
+
+#: templates/structures/partials/structures/structure_list.html:8
+#: templates/structures/structures.html:46
+msgid "Upwell Structures"
+msgstr "Структуры Апвелл"
+
+#: templates/structures/public.html:49
+msgid ""
+"Non corporation or alliance members will be assumed to have neutral standing"
+" with the owner"
+msgstr ""
+"Предполагается, что пилоты, не являющиеся членами корпорации или альянса, "
+"имеют нейтральную позицию по отношению к владельцу"
+
+#: templates/structures/public.html:50 templates/structures/structures.html:96
+msgid "Data can be outdated by up to 1 hour due to API caching"
+msgstr "Данные могут устареть на срок до 1 часа из-за кэширования API"
+
+#: templates/structures/public.html:51 templates/structures/structures.html:97
+msgid "Last updated"
+msgstr "Последнее обновление"
+
+#: templates/structures/structures.html:18
+msgid "Tags Filter (Active)"
+msgstr "Фильтр тегов (Активен)"
+
+#: templates/structures/structures.html:26
+#: templates/structures/structures.html:36
+#: templates/structures/structures.html:114
+msgid "Tags Filter"
+msgstr "Фильтр тегов"
+
+#: templates/structures/structures.html:95
+msgid "All dates are EVE time"
+msgstr "Все даты указаны во времени EVE"
+
+#: templates/structures/structures.html:122
+msgid "Reset Filter"
+msgstr "Сбросить фильтр"
+
+#: templates/structures/structures.html:125
+msgid "Clear Filter"
+msgstr "Очистить фильтр"
+
+#: templates/structures/structures.html:128
+msgid "Cancel"
+msgstr "Отменить"
+
+#: templates/structures/structures.html:131
+msgid "Apply Filter"
+msgstr "Применить фильтр"
+
+#: templates/structures/structures.html:140
+msgid "modalUpwellDetails "
+msgstr "modalUpwellDetails "
+
+#: templates/structures/templatetags/list_tax_item.html:9
+msgid "No Access"
+msgstr "Нет доступа"
+
+#: templates/structures/templatetags/list_tax_item.html:11
+msgid "Has Access"
+msgstr "Есть доступ"
+
+#: views/public.py:53
+msgid "Planet Type"
+msgstr "Тип планеты"
+
+#: views/public.py:55
+msgid "Space Type"
+msgstr "Тип Космоса"
+
+#: views/structures.py:168
+msgid "Core?"
+msgstr "Ядро?"
+
+#: views/structures.py:170
+msgid "Power Mode"
+msgstr "Режим мощности"
+
+#: views/structures.py:172
+msgid "Reinforced?"
+msgstr "Укреплено?"
+
+#: views/structures.py:332
+msgid "Fuel blocks per day (est.)"
+msgstr "Топливных блоков в день (примерно)"
+
+#: views/structures.py:569
+#, python-format
+msgid ""
+"You can only use your main or alt characters to add corporations. However, "
+"character %s is neither. "
+msgstr ""
+"Вы можете использовать только основной или альт. персонажа чтобы добавить "
+"корпорации. Однако, персонаж %s ни один."
+
+#: views/structures.py:602
+#, python-format
+msgid ""
+"%(corporation)s has been added with %(character)s as sync character. We have"
+" started fetching structures and notifications for this corporation and you "
+"will receive a report once the process is finished."
+msgstr ""
+"%(corporation)s добавлена синхронизирующим персонажем %(character)s. Мы "
+"начали получать данные о структурах и оповещениях данной корпорации и вы "
+"получите отчёт как только процесс завершится."
+
+#: views/structures.py:615
+#, python-format
+msgid "%(corporation)s was added as new structure owner by %(user)s."
+msgstr "%(user)s добавил(а) нового владельца структур %(corporation)s."
+
+#: views/structures.py:619
+#, python-format
+msgid "%s: Structure owner added: %s"
+msgstr "%s: Владелец структур добавлен: %s"
+
+#: views/structures.py:626
+#, python-format
+msgid ""
+"%(character)s has been added to %(corporation)s as sync character. You now "
+"have %(characters_count)d sync character(s) configured."
+msgstr ""
+"%(character)s был добавлен в %(corporation)s как синхронизирующий персонаж. "
+"На данный момент добавлено %(characters_count)d синхронизирующих персонажей."
+
+#: views/structures.py:641
+#, python-format
+msgid ""
+"%(character)s was added as sync character to %(corporation)s by %(user)s.\n"
+"We now have %(characters_count)d sync character(s) configured."
+msgstr ""
+"%(user)s добавил %(character)s как синхронизирующий персонаж %(corporation)s.\n"
+"На данный момент добавлено %(characters_count)d синхронизирующих персонажей."
+
+#: views/structures.py:651
+#, python-format
+msgid "%s: Character added to: %s"
+msgstr "%s: Персонаж добавлен: %s"
+
+#: views/structures.py:668
+msgid "service is up"
+msgstr "модуль включен"
+
+#: views/structures.py:669
+msgid "service is down"
+msgstr "модуль выключен"
+
+#: webhooks/models.py:18
+msgid "here"
+msgstr "here"
+
+#: webhooks/models.py:19
+msgid "everyone"
+msgstr "everyone"
+
+#: webhooks/models.py:24
+msgid "danger"
+msgstr "опасно"
+
+#: webhooks/models.py:25
+msgid "info"
+msgstr "информация"
+
+#: webhooks/models.py:26
+msgid "success"
+msgstr "успешно"
+
+#: webhooks/models.py:27
+msgid "warning"
+msgstr "предостережение"
+
+#: webhooks/models.py:37
+msgid "Discord Webhook"
+msgstr "Discord Webhook"
+
+#: webhooks/models.py:44
+msgid "Short name to identify this webhook"
+msgstr "Короткое имя для определения вебхука"
+
+#: webhooks/models.py:47
+msgid "url"
+msgstr "url"
+
+#: webhooks/models.py:51
+msgid ""
+"URL of this webhook, e.g. https://discordapp.com/api/webhooks/123456/abcdef"
+msgstr "URL вебхука"
+
+#: webhooks/models.py:56
+msgid "notes"
+msgstr "заметки"
+
+#: webhooks/models.py:60
+msgid "Notes regarding this webhook"
+msgstr "Заметки для вебхука"
+
+#: webhooks/models.py:63
+msgid "webhook type"
+msgstr "тип вебхука"
+
+#: webhooks/models.py:66
+msgid "Type of this webhook"
+msgstr "Тип вебхука"
+
+#: webhooks/models.py:71
+msgid "Whether notifications are currently sent to this webhook"
+msgstr "Отправляются ли в данный момент уведомления на вебхук"
