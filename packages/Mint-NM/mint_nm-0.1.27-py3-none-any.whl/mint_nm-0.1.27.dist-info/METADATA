@@ -1,0 +1,28 @@
+Metadata-Version: 2.4
+Name: Mint_NM
+Version: 0.1.27
+Summary: Tools for ENGPHYS 3NM4
+Home-page: https://github.com/mwelland/themintlab/Mint_NM
+Author: Michael Welland
+License: CC-BY-4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+License-File: LICENSE.txt
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: ipywidgets
+Requires-Dist: IPython
+Requires-Dist: pyppeteer
+Requires-Dist: nbconvert
+Requires-Dist: scipy
+Requires-Dist: plotly
+Dynamic: author
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
