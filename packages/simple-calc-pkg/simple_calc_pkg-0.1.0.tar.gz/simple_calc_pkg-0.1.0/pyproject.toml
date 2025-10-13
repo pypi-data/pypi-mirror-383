@@ -1,0 +1,16 @@
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simple-calc-pkg"  # PyPI name (must be unique on PyPI)
+version = "0.1.0"
+description = "A sample calculator package with add/subtract/multiply/divide."
+readme = "READ.md"
+requires-python = ">=3.8"
+authors = [{name = "Ch Srinivasa Rao", email = "airobohub@gmail.com"}]
+license = {text = "MIT"}
+
+[tool.setuptools.packages.find]
+where = ["."]
