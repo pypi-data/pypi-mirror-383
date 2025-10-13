@@ -1,0 +1,42 @@
+/**
+ * @file {{snake_case}}_base.c
+ * @brief Auto-generated code: Do not edit!
+ */
+
+#include "{{snake_case}}_base.h"
+
+#include <string.h>
+
+#define {{uppercase_name}}_OPERATION {{operation}}
+
+//******************************************************************************
+// Interface implementations
+//******************************************************************************
+static void {{camel_case}}Base_loadInputArguments(void *self, uint8_t *arguments, size_t argumentsSize) {
+  {{camel_case}}Base *_self = ({{camel_case}}Base *)self;
+  memcpy(&_self->inputArguments, arguments, argumentsSize);
+}
+
+static void {{camel_case}}Base_getReturnArguments(void *self, uint8_t *arguments, size_t *argumentsSize) {
+  {{camel_case}}Base *_self = ({{camel_case}}Base *)self;
+  *argumentsSize = sizeof({{camel_case}}OutputArguments_t);
+  memcpy(arguments, &_self->outputArguments, *argumentsSize);
+}
+
+static uint16_t {{camel_case}}Base_getOperation(void *self) {
+  return {{uppercase_name}}_OPERATION;
+}
+
+//******************************************************************************
+// Public methods
+//******************************************************************************
+void {{camel_case}}Base_create({{camel_case}}Base *self) {
+  self->argumentsInterfaceView.instance = self;
+  self->argumentsInterfaceView.loadInputArguments = {{camel_case}}Base_loadInputArguments;
+  self->argumentsInterfaceView.getReturnArguments = {{camel_case}}Base_getReturnArguments;
+  self->argumentsInterfaceView.getOperation = {{camel_case}}Base_getOperation;
+}
+
+TelecommandArgumentsInterface *{{camel_case}}Base_viewAsTelecommandArgumentsInterface({{camel_case}}Base *self) {
+  return &self->argumentsInterfaceView;
+}

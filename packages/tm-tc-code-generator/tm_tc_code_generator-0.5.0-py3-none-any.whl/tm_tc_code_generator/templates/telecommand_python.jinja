@@ -1,0 +1,83 @@
+# telecommand_template.jinja
+
+from telecommand_interface import TelecommandInterface, struct
+{% if return_type %}
+    {%- if return_name == 'timestamp' -%}
+from datetime import timedelta
+    {%- endif -%}
+{% endif %}
+
+
+class {{ class_name }}(TelecommandInterface):
+    {% if arguments -%}
+        {% for argument in arguments %}
+            {%- if argument['type'] == 'enum' %}
+    enum_map_{{ argument['name'] }} = {
+        {%- for value in argument['values'] -%}
+        {{ loop.index0 }}: "{{ value }}"{% if not loop.last %},{% endif %}
+        {%- endfor -%}
+    }
+            {%- endif -%}
+        {%- endfor -%}
+    {% endif %}
+
+    def __init__(self):
+        self.name = "{{ telecommand_name }}"
+        {% if arguments %}
+        self.help = "{{ telecommand_name }}: input args= {%- for argument in arguments %} {{ argument['name'] }}({{ argument['type'] }}{% if argument['type'] == 'enum' %}: {%- for value in argument['values'] -%} {{ loop.index0 }}:{{ value }}{% if not loop.last %}, {% endif %}{%- endfor -%}{% endif %}){% if not loop.last %}, {% endif %}{% endfor %}"
+        self.help_input = "{%- for argument in arguments %} {{ argument['name'] }}=({{ argument['type'] }}{% if argument['type'] == 'enum' %}: {%- for value in argument['values'] -%} {{ loop.index0 }}:{{ value }}{% if not loop.last %}, {% endif %}{%- endfor -%}{% endif %}){% if not loop.last %}, {% endif %}{% endfor %}"
+        {% else %}
+        self.help = "{{ telecommand_name }}: No input arguments"
+        self.help_input = "None"
+        {% endif %}
+        self.operation = {{ operation_id }}
+        self.area_version = 0
+        self.num_inputs = {{ num_inputs }}
+
+    def loadInputArguments(self, args):
+        {% if arguments %}
+        if not isinstance(args, (list, tuple)) or len(args) != {{ arguments|length }}:
+            raise ValueError("Expected {{ arguments|length }} arguments, but got {}".format(len(args)))
+
+        self.body = b""
+        
+        {% for arg in arguments %}
+        arg_{{ loop.index0 }} = args[{{ loop.index0 }}]
+        {%- if arg['type'] == 'float' %}
+        arg_{{ loop.index0 }} = float(arg_{{ loop.index0 }})
+        self.body += struct.pack('f', arg_{{ loop.index0 }})
+        {%- elif arg['type'] == 'uint16_t' %}
+        self.body += int(arg_{{ loop.index0 }}).to_bytes(2, 'little')
+        {%- elif arg['type'] == 'enum' %}
+        arg_{{ loop.index0 }} = int(arg_{{ loop.index0 }})
+        if arg_{{ loop.index0 }} not in self.enum_map_{{ arg['name'] }}:
+            raise ValueError(f"Invalid input for {{ arg['name'] }}")
+        self.body += arg_{{ loop.index0 }}.to_bytes(max((arg_{{ loop.index0 }}.bit_length() + 7) // 8, 1), 'little')
+        {%- endif %}
+        {% endfor %}
+
+        self.body_length = len(self.body)
+        {% else %}
+        # No arguments; nothing to process
+        self.body = bytes()
+        self.body_length = 0
+        {% endif %}
+
+
+    def parseOutputArguments(self, response):
+{%- if return_type %}
+        response_dict = {}
+    {%- if return_type == 'uint32_t' %}
+        response_int = int.from_bytes(response, 'little')
+    {%- if return_name == 'timestamp' %}
+        timestamp = timedelta(milliseconds=response_int)
+        response_dict['Date'] = str(timestamp)
+    {% endif %}
+    {%- elif return_type == 'string' %}
+        response_dict['{{ return_name }}'] = response.decode('utf-8').strip()
+    {% endif %}
+        return response_dict
+{% else %}
+        print("No output arguments!")
+        return None
+{% endif %}

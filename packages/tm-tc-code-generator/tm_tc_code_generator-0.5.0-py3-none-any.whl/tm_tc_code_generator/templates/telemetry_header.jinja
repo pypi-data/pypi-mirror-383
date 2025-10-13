@@ -1,0 +1,40 @@
+#ifndef TELEMETRIES_{{uppercase_name}}_H_
+#define TELEMETRIES_{{uppercase_name}}_H_
+
+#include "telemetry_interface.h"
+
+{% if enums %}
+{% for enumName, values in enums.items() %}
+typedef enum Tm{{camel_case}}{{enumName}} {
+  {% for value in values %}
+  {{value}},
+  {% endfor %}
+} Tm{{camel_case}}{{enumName}}_t;
+{% endfor %}
+
+{% endif %}
+typedef struct __attribute__((packed)) Tm{{camel_case}}Parameters {
+{% if parameters %}
+{% for parameter in parameters %}
+  {% if parameter.type == 'string' %}
+  {{parameter.name}};
+  {% elif parameter.type == 'enum' %}
+  Tm{{parameter.name}} {{parameter.enumName}};
+  {% else %}
+  {{parameter.type}} {{parameter.name}};
+  {% endif %}
+{% endfor %}
+{% endif %}
+} Tm{{camel_case}}Parameters_t;
+
+typedef struct Tm{{camel_case}} {
+  TelemetryInterface telemetryInterfaceView;
+  bool isEnabled;
+  Tm{{camel_case}}Parameters_t parameters;
+  // TODO: Add with objects/interfaces as needed
+} Tm{{camel_case}};
+
+void Tm{{camel_case}}_initialize(Tm{{camel_case}} *self);
+TelemetryInterface *Tm{{camel_case}}_viewAsTelemetryInterface(Tm{{camel_case}} *self);
+
+#endif  // TELEMETRIES_{{uppercase_name}}_H_

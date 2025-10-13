@@ -1,0 +1,50 @@
+/**
+ * @file tm_{{snake_case}}_base.c
+ * @brief Auto-generated code: Do not edit!
+ */
+
+#include "tm_{{snake_case}}_base.h"
+
+#include <string.h>
+
+#define TM_{{uppercase_name}}_OPERATION {{operation}}
+
+//******************************************************************************
+// Interface implementations
+//******************************************************************************
+static bool Tm{{camel_case}}Base_isEnabled(void *self) {
+  Tm{{camel_case}} *_self = (Tm{{camel_case}} *)self;
+  return _self->isEnabled;
+}
+
+static void Tm{{camel_case}}Base_setEnabled(void *self, bool state) {
+  Tm{{camel_case}} *_self = (Tm{{camel_case}} *)self;
+  _self->isEnabled = state;
+}
+
+static bool Tm{{camel_case}}Base_getParameters(void *self, uint8_t *parameters, size_t *parametersSize) {
+  Tm{{camel_case}} *_self = (Tm{{camel_case}} *)self;
+
+  *parametersSize = sizeof(_self->parameters);
+  memcpy(parameters, &_self->parameters, sizeof(_self->parameters));
+
+  return true;
+}
+
+static uint16_t Tm{{camel_case}}Base_getOperation(void *self) {
+  return TM_{{uppercase_name}}_OPERATION;
+}
+
+//******************************************************************************
+// Public methods
+//******************************************************************************
+void Tm{{camel_case}}Base_initialize(Tm{{camel_case}} *self, bool (*execute)(void *)) {
+  self->telemetryInterfaceView.instance = self;
+  self->telemetryInterfaceView.isEnabled = Tm{{camel_case}}Base_isEnabled;
+  self->telemetryInterfaceView.setEnabled = Tm{{camel_case}}Base_setEnabled;
+  self->telemetryInterfaceView.execute = execute;
+  self->telemetryInterfaceView.getParameters = Tm{{camel_case}}Base_getParameters;
+  self->telemetryInterfaceView.getOperation = Tm{{camel_case}}Base_getOperation;
+
+  self->isEnabled = false;
+}
