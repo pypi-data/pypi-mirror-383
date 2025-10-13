@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  id-token: write # Required for PyPI trusted publishing
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.UNHOLSTER_GITOPS_APP_ID }}
+          private-key: ${{ secrets.UNHOLSTER_GITOPS_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies and run tests
+        run: |
+          # Install dependencies
+          uv sync
+
+          # Run tests
+          uv run pytest tests/ -v
+
+          # Verify package can be imported
+          uv run python -c "import uncouple; print('Package imported successfully')"
+
+      - name: Python Semantic Release
+        id: release
+        uses: python-semantic-release/python-semantic-release@v10.4.0
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+
+      - name: Build package with new version
+        if: steps.release.outputs.released == 'true'
+        run: |
+          # Clean any existing build artifacts
+          rm -rf dist/
+          # Build with updated version
+          uv run python -m build
+
+      - name: Publish to PyPI
+        if: steps.release.outputs.released == 'true'
+        uses: pypa/gh-action-pypi-publish@release/v1
