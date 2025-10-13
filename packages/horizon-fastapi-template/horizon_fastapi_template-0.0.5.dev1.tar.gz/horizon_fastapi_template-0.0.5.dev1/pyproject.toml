@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "horizon-fastapi-template"
+version = "0.0.5.dev1"
+description = """A reusable FastAPI application factory
+The main contributor and maintainer is Chaim Mendelson, with contributions from Yehonatan Magen."""
+readme = "README.md"
+authors = [{ name = "Chaim Mendelson and Yehonatan Magen" }]
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = [
+    "aioftp>=0.21",
+    "fastapi>=0.110",
+    "httpx>=0.24",
+    "kubernetes-asyncio>=29.0",
+    "loguru>=0.7",
+    "prometheus-client>=0.17",
+    "pydantic>=2.11.10",
+    "pydantic-settings>=2.0",
+    "strawberry-graphql[fastapi]>=0.118.0",
+    "uvicorn>=0.24",
+    "pytest>=7.4",
+    "pytest-asyncio>=0.22",
+    "respx>=0.18.0",
+]
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["horizon_fastapi_template", "horizon_fastapi_template.*"]
+exclude = ["horizon_fastapi_template.tests*"]
+
+[tool.setuptools.package-data]
+horizon_fastapi_template = ["static/**"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.pytest.ini_options]
+testpaths = ["horizon_fastapi_template/tests"]
+python_files = ["test_*.py", "*_test.py"]
+
+addopts = "-ra -q --disable-warnings --strict-markers"
+
+markers = [
+    "asyncio: mark test to be run by the asyncio event loop",
+    "rest: mark test as needing a REST server",
+    "graphql: mark test as needing a GraphQL server",
+    "ftp: mark test as needing an ftp server",
+]
+
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)s] %(message)s"
+log_cli_date_format = "%H:%M:%S"
