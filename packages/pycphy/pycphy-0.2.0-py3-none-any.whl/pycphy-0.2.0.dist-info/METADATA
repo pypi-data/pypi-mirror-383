@@ -1,0 +1,483 @@
+Metadata-Version: 2.4
+Name: pycphy
+Version: 0.2.0
+Summary: Python: Computational Physics - Tools for physics dynamics simulation with CAD-based OpenFOAM case generation
+Home-page: https://github.com/SanjeevBashyal/pycphy
+Author: Sanjeev Bashyal
+Author-email: Sanjeev Bashyal <sanjeev.bashyal@example.com>
+Maintainer-email: Sanjeev Bashyal <sanjeev.bashyal@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/SanjeevBashyal/pycphy
+Project-URL: Repository, https://github.com/SanjeevBashyal/pycphy
+Project-URL: Documentation, https://github.com/SanjeevBashyal/pycphy#readme
+Project-URL: Bug Tracker, https://github.com/SanjeevBashyal/pycphy/issues
+Keywords: computational physics,simulation,openfoam,cfd,physics,autocad,cad,mesh generation,blockmesh
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.19.0
+Requires-Dist: scipy>=1.6.0
+Requires-Dist: matplotlib>=3.3.0
+Requires-Dist: pandas>=1.3.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx; extra == "docs"
+Requires-Dist: sphinx-rtd-theme; extra == "docs"
+Provides-Extra: cad
+Requires-Dist: pyautocad>=0.2.0; extra == "cad"
+Requires-Dist: pywin32>=304; extra == "cad"
+Provides-Extra: all
+Requires-Dist: pyautocad>=0.2.0; extra == "all"
+Requires-Dist: pywin32>=304; extra == "all"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# pycphy
+
+**Python: Computational Physics**
+
+A comprehensive Python package for computational physics simulations and tools, with a focus on OpenFOAM case development and management.
+
+**Author:** Sanjeev Bashyal  
+**Repository:** [https://github.com/SanjeevBashyal/pycphy](https://github.com/SanjeevBashyal/pycphy)
+
+## Overview
+
+`pycphy` is a Python package designed to provide tools and utilities for computational physics simulations. The package currently includes the `foamCaseDeveloper` module, which offers comprehensive tools for creating and managing OpenFOAM CFD simulation cases.
+
+## Features
+
+### foamCaseDeveloper Module
+
+The `foamCaseDeveloper` module provides:
+
+- **BlockMesh Generation**: Create OpenFOAM blockMeshDict files with custom geometries
+- **CAD-based Mesh Generation**: Generate blockMeshDict directly from AutoCAD CAD files with XData annotations
+- **Control Dictionary Setup**: Configure solver settings, time control, and output parameters
+- **Turbulence Model Configuration**: Set up RAS, LES, and laminar turbulence models
+- **Zero Field Generation**: Create initial field files (p, U, f, lambda) with CSV-based boundary conditions
+- **Complete Case Management**: Automatically create complete OpenFOAM case directories
+- **Validation and Error Checking**: Built-in validation for all configuration parameters
+
+## Installation
+
+### From Source
+
+```bash
+git clone https://github.com/SanjeevBashyal/pycphy.git
+cd pycphy
+pip install -e .
+```
+
+### With CAD Support (Recommended)
+
+```bash
+git clone https://github.com/SanjeevBashyal/pycphy.git
+cd pycphy
+pip install -e ".[cad]"
+```
+
+### Development Installation
+
+```bash
+git clone https://github.com/SanjeevBashyal/pycphy.git
+cd pycphy
+pip install -e ".[dev]"
+```
+
+### Full Installation (All Features)
+
+```bash
+git clone https://github.com/SanjeevBashyal/pycphy.git
+cd pycphy
+pip install -e ".[all]"
+```
+
+## Quick Start
+
+### Using the Command Line Interface
+
+```bash
+# Create an example case (traditional CLI)
+pycphy-foam --example
+
+# Create a custom case from configuration files (traditional CLI)
+pycphy-foam --case myCase --geometry configBlockMesh.py --control configControl.py --turbulence configTurbulence.py
+
+# Create a case with CAD-based mesh generation (default behavior)
+python pycphy/foamCaseDeveloper/develop_case.py
+# OR after installation:
+pycphy-develop
+
+# Create a case with traditional config-based generation
+python pycphy/foamCaseDeveloper/develop_case.py --config-mode
+# OR after installation:
+pycphy-develop --config-mode
+
+# Create a case with CAD-based mesh generation and debug output
+python pycphy/foamCaseDeveloper/develop_case.py --cad-debug --cad-tolerance 1e-6
+# OR after installation:
+pycphy-develop --cad-debug --cad-tolerance 1e-6
+```
+
+### Using Python API
+
+```python
+from pycphy.foamCaseDeveloper import FoamCaseManager, BlockMeshConfig, ControlConfig, TurbulenceConfig
+
+# Create a case manager
+case_manager = FoamCaseManager("myCase")
+
+# Set up geometry
+geometry_config = BlockMeshConfig(
+    p0=(0.0, 0.0, 0.0),
+    p1=(1.0, 1.0, 1.0),
+    cells=(50, 50, 50),
+    patch_names={
+        'minX': 'inlet',
+        'maxX': 'outlet',
+        'minY': 'frontWall',
+        'maxY': 'backWall',
+        'minZ': 'floor',
+        'maxZ': 'ceiling'
+    }
+)
+
+case_manager.setup_geometry(
+    p0=geometry_config.p0,
+    p1=geometry_config.p1,
+    cells=geometry_config.cells,
+    patch_names=geometry_config.patch_names
+)
+
+# Set up control
+control_config = ControlConfig()
+control_config.set_solver("interFoam")
+control_config.set_time_control(start_time=0, end_time=1.0, delta_t=0.001)
+
+case_manager.setup_control(control_config.get_parameters())
+
+# Set up turbulence
+turbulence_config = TurbulenceConfig("RAS")
+turbulence_config.set_ras_model("kOmegaSST")
+
+case_manager.setup_turbulence(
+    simulation_type=turbulence_config.get_simulation_type(),
+    model_properties=turbulence_config.get_model_properties()
+)
+
+# Create the complete case
+case_manager.create_full_case()
+```
+
+### CAD-based Mesh Generation
+
+```python
+from pycphy.foamCaseDeveloper import CADBlockMeshDeveloper, cad_mesh_config
+
+# Create CAD-based mesh developer
+cad_developer = CADBlockMeshDeveloper(
+    blocks_csv_file="Inputs/blocks.csv",
+    patches_csv_file="Inputs/patches.csv",
+    tolerance=1e-6,
+    block_xdata_app_name="BLOCKDATA",
+    region_xdata_app_name="REGIONDATA"
+)
+
+# Process CAD file and generate complete OpenFOAM case
+success = cad_developer.process_cad_file(
+    output_path="system/blockMeshDict",
+    debug=True
+)
+
+if success:
+    summary = cad_developer.get_summary()
+    print(f"Generated mesh with {summary['total_blocks']} blocks and {summary['total_patches']} patches")
+    print("Zero field files created with CSV boundary conditions")
+```
+
+## Package Structure
+
+```
+pycphy/
+├── __init__.py
+└── foamCaseDeveloper/
+    ├── __init__.py
+    ├── main.py                    # Command-line interface
+    ├── core/                      # Core functionality
+    │   ├── __init__.py
+    │   ├── foam_case_manager.py   # Main case management class
+    │   ├── block_mesh_developer.py # BlockMesh generation
+    │   ├── control_dict_writer.py  # Control dictionary writer
+    │   └── turbulence_properties_writer.py # Turbulence properties writer
+    ├── writers/                   # OpenFOAM dictionary writers
+    │   ├── __init__.py
+    │   ├── foam_writer.py         # Base writer class
+    │   ├── block_mesh_writer.py   # BlockMesh dictionary writer
+    │   ├── control_dict_writer.py # Control dictionary writer
+    │   └── turbulence_properties_writer.py # Turbulence properties writer
+    └── config/                    # Configuration classes
+        ├── __init__.py
+        ├── block_mesh_config.py   # Geometry configuration
+        ├── control_config.py      # Control configuration
+        └── turbulence_config.py   # Turbulence configuration
+```
+
+## Configuration
+
+### Geometry Configuration (BlockMesh)
+
+```python
+from pycphy.foamCaseDeveloper import BlockMeshConfig
+
+config = BlockMeshConfig(
+    p0=(0.0, 0.0, 0.0),      # Minimum corner
+    p1=(1.0, 1.0, 1.0),      # Maximum corner
+    cells=(50, 50, 50),      # Number of cells
+    patch_names={            # Boundary patch names
+        'minX': 'inlet',
+        'maxX': 'outlet',
+        'minY': 'frontWall',
+        'maxY': 'backWall',
+        'minZ': 'floor',
+        'maxZ': 'ceiling'
+    }
+)
+```
+
+### Control Configuration
+
+```python
+from pycphy.foamCaseDeveloper import ControlConfig
+
+config = ControlConfig()
+config.set_solver("interFoam")
+config.set_time_control(start_time=0, end_time=1.0, delta_t=0.001)
+config.set_write_control(write_interval=0.05)
+config.set_courant_control(max_co=1)
+```
+
+### Turbulence Configuration
+
+```python
+from pycphy.foamCaseDeveloper import TurbulenceConfig
+
+# RAS configuration
+ras_config = TurbulenceConfig("RAS")
+ras_config.set_ras_model("kOmegaSST")
+
+# LES configuration
+les_config = TurbulenceConfig("LES")
+les_config.set_les_model("kEqn")
+les_config.set_delta_model("smooth")
+
+# Laminar configuration
+laminar_config = TurbulenceConfig("laminar")
+```
+
+## Examples
+
+### Channel Flow Case
+
+```python
+from pycphy.foamCaseDeveloper import FoamCaseManager, BlockMeshConfig, ControlConfig, TurbulenceConfig
+
+# Create channel flow case
+case_manager = FoamCaseManager("channelFlow")
+
+# Channel geometry: 0.5m x 0.2m x 0.1m
+geometry = BlockMeshConfig(
+    p0=(0.0, 0.0, 0.0),
+    p1=(0.5, 0.2, 0.1),
+    cells=(50, 20, 50),
+    patch_names={
+        'minX': 'inlet',
+        'maxX': 'outlet',
+        'minY': 'frontWall',
+        'maxY': 'backWall',
+        'minZ': 'floor',
+        'maxZ': 'ceiling'
+    }
+)
+
+case_manager.setup_geometry(
+    p0=geometry.p0, p1=geometry.p1, cells=geometry.cells,
+    patch_names=geometry.patch_names
+)
+
+# Set up solver
+control = ControlConfig()
+control.set_solver("interFoam")
+control.set_time_control(start_time=0, end_time=1.0, delta_t=0.001)
+
+case_manager.setup_control(control.get_parameters())
+
+# Set up turbulence
+turbulence = TurbulenceConfig("RAS")
+turbulence.set_ras_model("kOmegaSST")
+
+case_manager.setup_turbulence(
+    simulation_type=turbulence.get_simulation_type(),
+    model_properties=turbulence.get_model_properties()
+)
+
+# Create the case
+case_manager.create_full_case()
+```
+
+## Requirements
+
+### Basic Requirements
+- Python >= 3.7
+- NumPy >= 1.19.0
+- SciPy >= 1.6.0
+- Matplotlib >= 3.3.0
+
+### CAD-based Generation Requirements
+- AutoCAD (with COM automation support)
+- Windows operating system (for AutoCAD COM interface)
+- pyautocad >= 0.2.0
+- win32com (included with pywin32)
+
+### CAD Setup for Mesh Generation
+
+To use CAD-based mesh generation:
+
+1. **Prepare your CAD file**:
+   - Create 3DSOLID entities for mesh blocks
+   - Create REGION entities for boundary patches
+   - Add XData to entities with block/patch information
+
+2. **Create CSV configuration files**:
+   - `blocks.csv`: Define block parameters (ID, cells, grading, etc.)
+   - `patches.csv`: Define boundary conditions for each patch
+
+3. **XData Format**:
+   - Blocks: Use "BLOCKDATA" app with block ID and description
+   - Regions: Use "REGIONDATA" app with region name
+
+4. **Run the generation**:
+   ```bash
+   # CAD-based case generation with all OpenFOAM files (default)
+   python pycphy/foamCaseDeveloper/develop_case.py
+   # OR after installation:
+   pycphy-develop
+   
+   # Traditional config-based case generation
+   python pycphy/foamCaseDeveloper/develop_case.py --config-mode
+   # OR after installation:
+   pycphy-develop --config-mode
+   ```
+
+## Integrated Workflow
+
+The `develop_case.py` script now supports both traditional config-based and CAD-based OpenFOAM case generation:
+
+### CAD-based Generation
+- **Mesh**: Generated directly from AutoCAD CAD files using XData annotations
+- **Zero fields**: Created with boundary conditions from CSV files
+- **Other files**: Generated from configuration files (control, turbulence, etc.)
+
+### Traditional Generation
+- **Mesh**: Generated from geometry configuration files
+- **Zero fields**: Generated from configuration files with hardcoded boundary conditions
+- **Other files**: Generated from configuration files
+
+### Command Line Options
+
+```bash
+# Basic usage (CAD-based generation is now default)
+python pycphy/foamCaseDeveloper/develop_case.py
+# OR after installation:
+pycphy-develop
+
+# Traditional config-based generation
+python pycphy/foamCaseDeveloper/develop_case.py --config-mode
+# OR after installation:
+pycphy-develop --config-mode
+
+# CAD-based with custom CSV files
+python pycphy/foamCaseDeveloper/develop_case.py --blocks-csv my_blocks.csv --patches-csv my_patches.csv
+# OR after installation:
+pycphy-develop --blocks-csv my_blocks.csv --patches-csv my_patches.csv
+
+# CAD-based with debug output
+python pycphy/foamCaseDeveloper/develop_case.py --cad-debug
+# OR after installation:
+pycphy-develop --cad-debug
+
+# CAD-based with custom tolerance and XData app names
+python pycphy/foamCaseDeveloper/develop_case.py --cad-tolerance 1e-5 --block-xdata-app MYBLOCKDATA --region-xdata-app MYREGIONDATA
+# OR after installation:
+pycphy-develop --cad-tolerance 1e-5 --block-xdata-app MYBLOCKDATA --region-xdata-app MYREGIONDATA
+```
+
+## Development
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Formatting
+
+```bash
+black pycphy/
+flake8 pycphy/
+```
+
+### Building Documentation
+
+```bash
+sphinx-build docs/ docs/_build/
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Citation
+
+If you use pycphy in your research, please cite:
+
+```bibtex
+@software{bashyal2025pycphy,
+  title={pycphy: Python Computational Physics},
+  author={Bashyal, Sanjeev},
+  year={2025},
+  url={https://github.com/SanjeevBashyal/pycphy}
+}
+```
+
+## Support
+
+For questions, issues, or contributions, please visit the [GitHub repository](https://github.com/SanjeevBashyal/pycphy).
