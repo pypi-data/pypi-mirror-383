@@ -1,0 +1,52 @@
+Metadata-Version: 2.3
+Name: mcp-django-shell
+Version: 0.10.0
+Summary: [DEPRECATED - Use mcp-django instead] MCP server providing a stateful Django shell for LLM assistants.
+Author: Josh Thomas
+Author-email: Josh Thomas <josh@joshthomas.dev>
+License: MIT License
+         
+         Copyright (c) 2025 Josh Thomas
+         
+         Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+         
+         The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+         
+         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Classifier: Development Status :: 7 - Inactive
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.1
+Classifier: Framework :: Django :: 5.2
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Dist: django>4.2
+Requires-Dist: fastmcp>=2.11.3
+Requires-Dist: mcp-django>=0.1.0,<1.0.0
+Requires-Dist: pydantic[email]>=2.11.7
+Requires-Python: >=3.10
+Project-URL: Documentation, https://github.com/joshuadavidthomas/mcp-django#README
+Project-URL: Issues, https://github.com/joshuadavidthomas/mcp-django/issues
+Project-URL: Source, https://github.com/joshuadavidthomas/mcp-django
+Description-Content-Type: text/markdown
+
+# mcp-django-shell
+
+> [!CAUTION]
+> **This package is deprecated as of version 0.10.0**
+> 
+> The shell functionality has been integrated into the main `mcp-django` package.
+> Please uninstall `mcp-django-shell` and install `mcp-django>=0.10.0` instead.
+>
+> ```bash
+> pip uninstall mcp-django-shell
+> pip install mcp-django>=0.10.0
+> ```
