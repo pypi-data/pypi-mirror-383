@@ -1,0 +1,1993 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Николай Постников, 2023
+# Тимур Шихалиев, 2023
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-08 13:14+0200\n"
+"PO-Revision-Date: 2020-12-07 21:40+0000\n"
+"Last-Translator: Тимур Шихалиев, 2023\n"
+"Language-Team: Russian (https://app.transifex.com/kalkoken-apps/teams/107978/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: app_settings.py:10
+msgid "Member Audit"
+msgstr "Просмотр пилотов"
+
+#: core/standings.py:10
+msgid "excellent standing"
+msgstr "отличная репутация"
+
+#: core/standings.py:11
+msgid "good standing"
+msgstr "хорошая репутация"
+
+#: core/standings.py:12
+msgid "neutral standing"
+msgstr "нейтральная репутация"
+
+#: core/standings.py:13
+msgid "bad standing"
+msgstr "плохая репутация"
+
+#: core/standings.py:14
+msgid "terrible standing"
+msgstr "ужасная репутация"
+
+#: models/character_sections_1.py:182
+msgid "alliance"
+msgstr "альянс"
+
+#: models/character_sections_1.py:183
+msgid "corporation"
+msgstr "корпорация"
+
+#: models/character_sections_1.py:184
+msgid "private"
+msgstr "частный"
+
+#: models/character_sections_1.py:185
+msgid "public"
+msgstr "общий"
+
+#: models/character_sections_1.py:205
+msgid "canceled"
+msgstr "отменено"
+
+#: models/character_sections_1.py:206
+msgid "deleted"
+msgstr "удалено"
+
+#: models/character_sections_1.py:207
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:14
+msgid "failed"
+msgstr "неудачный"
+
+#: models/character_sections_1.py:208
+msgid "finished"
+msgstr "завершен"
+
+#: models/character_sections_1.py:209
+msgid "finished contractor"
+msgstr "конечный исполнитель"
+
+#: models/character_sections_1.py:210
+msgid "finished issuer"
+msgstr "конечный создатель"
+
+#: models/character_sections_1.py:211 models/characters.py:146
+msgid "in progress"
+msgstr "выполняется "
+
+#: models/character_sections_1.py:212
+msgid "outstanding"
+msgstr "не выполнен"
+
+#: models/character_sections_1.py:213
+msgid "rejected"
+msgstr "отклонен"
+
+#: models/character_sections_1.py:214
+msgid "reversed"
+msgstr "отменен"
+
+#: models/character_sections_1.py:235
+msgid "auction"
+msgstr "аукцион"
+
+#: models/character_sections_1.py:236
+msgid "courier"
+msgstr "курьер"
+
+#: models/character_sections_1.py:237
+msgid "item exchange"
+msgstr "обмен"
+
+#: models/character_sections_1.py:238
+msgid "loan"
+msgstr "заем"
+
+#: models/character_sections_1.py:239
+msgid "unknown"
+msgstr "неизвестно"
+
+#: models/character_sections_1.py:401
+msgid "[Multiple Items]"
+msgstr "[Несколько предметов]"
+
+#: models/character_sections_2.py:78
+msgid "male"
+msgstr "мужчина"
+
+#: models/character_sections_2.py:79
+msgid "female"
+msgstr "женщина"
+
+#: models/character_sections_2.py:148
+msgid "Paladin Crusader"
+msgstr "Paladin Crusader"
+
+#: models/character_sections_2.py:149
+msgid "Templar Lieutenant"
+msgstr "Templar Lieutenant"
+
+#: models/character_sections_2.py:150
+msgid "Cardinal Lieutenant"
+msgstr "Cardinal Lieutenant"
+
+#: models/character_sections_2.py:151
+msgid "Arch Lieutenant"
+msgstr "Arch Lieutenant"
+
+#: models/character_sections_2.py:152
+msgid "Imperial Major"
+msgstr "Imperial Major"
+
+#: models/character_sections_2.py:153
+msgid "Marshal Commander"
+msgstr "Marshal Commander"
+
+#: models/character_sections_2.py:154
+msgid "Imperator Commander"
+msgstr "Imperator Commander"
+
+#: models/character_sections_2.py:155
+msgid "Tribunus Colonel"
+msgstr "Tribunus Colonel"
+
+#: models/character_sections_2.py:156
+msgid "Legatus Commodore"
+msgstr "Legatus Commodore"
+
+#: models/character_sections_2.py:157
+msgid "Divine Commodore"
+msgstr "Divine Commodore"
+
+#: models/character_sections_2.py:160
+msgid "Protectorate Ensign"
+msgstr "Protectorate Ensign"
+
+#: models/character_sections_2.py:161
+msgid "Second Lieutenant"
+msgstr "Second Lieutenant"
+
+#: models/character_sections_2.py:162
+msgid "First Lieutenant"
+msgstr "First Lieutenant"
+
+#: models/character_sections_2.py:163
+msgid "Captain"
+msgstr "Captain"
+
+#: models/character_sections_2.py:164
+msgid "Major"
+msgstr "Major"
+
+#: models/character_sections_2.py:165
+msgid "Lieutenant Colonel"
+msgstr "Lieutenant Colonel"
+
+#: models/character_sections_2.py:166
+msgid "Colonel"
+msgstr "Colonel"
+
+#: models/character_sections_2.py:167
+msgid "Wing Commander"
+msgstr "Wing Commander"
+
+#: models/character_sections_2.py:168
+msgid "Strike Commander"
+msgstr "Strike Commander"
+
+#: models/character_sections_2.py:169
+msgid "Brigadier General"
+msgstr "Brigadier General"
+
+#: models/character_sections_2.py:172
+msgid "Federation Minuteman"
+msgstr "Federation Minuteman"
+
+#: models/character_sections_2.py:173
+msgid "Defender Lieutenant"
+msgstr "Defender Lieutenant"
+
+#: models/character_sections_2.py:174
+msgid "Guardian Lieutenant"
+msgstr "Guardian Lieutenant"
+
+#: models/character_sections_2.py:175
+msgid "Lieutenant Sentinel"
+msgstr "Lieutenant Sentinel"
+
+#: models/character_sections_2.py:176
+msgid "Shield Commander"
+msgstr "Shield Commander"
+
+#: models/character_sections_2.py:177
+msgid "Aegis Commander"
+msgstr "Aegis Commander"
+
+#: models/character_sections_2.py:178
+msgid "Vice Commander"
+msgstr "Vice Commander"
+
+#: models/character_sections_2.py:179
+msgid "Major General"
+msgstr "Major General"
+
+#: models/character_sections_2.py:180
+msgid "Lieutenant General"
+msgstr "Lieutenant General"
+
+#: models/character_sections_2.py:181
+msgid "Luminaire General"
+msgstr "Luminaire General"
+
+#: models/character_sections_2.py:184
+msgid "Nation Warrior"
+msgstr "Nation Warrior"
+
+#: models/character_sections_2.py:185
+msgid "Spike Lieutenant"
+msgstr "Spike Lieutenant"
+
+#: models/character_sections_2.py:186
+msgid "Spear Lieutenant"
+msgstr "Spear Lieutenant"
+
+#: models/character_sections_2.py:187
+msgid "Venge Captain"
+msgstr "Venge Captain"
+
+#: models/character_sections_2.py:188
+msgid "Lance Commander"
+msgstr "Lance Commander"
+
+#: models/character_sections_2.py:189
+msgid "Blade Commander"
+msgstr "Blade Commander"
+
+#: models/character_sections_2.py:190
+msgid "Talon Commander"
+msgstr "Talon Commander"
+
+#: models/character_sections_2.py:191
+msgid "Voshud Major"
+msgstr "Voshud Major"
+
+#: models/character_sections_2.py:192
+msgid "Matar Colonel"
+msgstr "Matar Colonel"
+
+#: models/character_sections_2.py:193
+msgid "Valklear General"
+msgstr "Valklear General"
+
+#: models/character_sections_3.py:125
+msgid "base"
+msgstr ""
+
+#: models/character_sections_3.py:126
+msgid "headquarters"
+msgstr ""
+
+#: models/character_sections_3.py:127
+msgid "other"
+msgstr ""
+
+#: models/character_sections_3.py:128
+msgid "universal"
+msgstr ""
+
+#: models/character_sections_3.py:133
+msgid "account take 1"
+msgstr ""
+
+#: models/character_sections_3.py:134
+msgid "account take 2"
+msgstr ""
+
+#: models/character_sections_3.py:135
+msgid "account take 3"
+msgstr ""
+
+#: models/character_sections_3.py:136
+msgid "account take 4"
+msgstr ""
+
+#: models/character_sections_3.py:137
+msgid "account take 5"
+msgstr ""
+
+#: models/character_sections_3.py:138
+msgid "account take 6"
+msgstr ""
+
+#: models/character_sections_3.py:139
+msgid "account take 7"
+msgstr ""
+
+#: models/character_sections_3.py:140
+msgid "accountant"
+msgstr ""
+
+#: models/character_sections_3.py:141
+msgid "auditor"
+msgstr ""
+
+#: models/character_sections_3.py:142
+msgid "communications officer"
+msgstr ""
+
+#: models/character_sections_3.py:143
+msgid "config equipment"
+msgstr ""
+
+#: models/character_sections_3.py:144
+msgid "config starbase equipment"
+msgstr ""
+
+#: models/character_sections_3.py:145
+msgid "container take 1"
+msgstr ""
+
+#: models/character_sections_3.py:146
+msgid "container take 2"
+msgstr ""
+
+#: models/character_sections_3.py:147
+msgid "container take 3"
+msgstr ""
+
+#: models/character_sections_3.py:148
+msgid "container take 4"
+msgstr ""
+
+#: models/character_sections_3.py:149
+msgid "container take 5"
+msgstr ""
+
+#: models/character_sections_3.py:150
+msgid "container take 6"
+msgstr ""
+
+#: models/character_sections_3.py:151
+msgid "container take 7"
+msgstr ""
+
+#: models/character_sections_3.py:152
+msgid "contract manager"
+msgstr ""
+
+#: models/character_sections_3.py:153
+msgid "diplomat"
+msgstr ""
+
+#: models/character_sections_3.py:154
+msgid "director"
+msgstr ""
+
+#: models/character_sections_3.py:155
+msgid "factory manager"
+msgstr ""
+
+#: models/character_sections_3.py:156
+msgid "fitting manager"
+msgstr ""
+
+#: models/character_sections_3.py:157
+msgid "hangar query 1"
+msgstr ""
+
+#: models/character_sections_3.py:158
+msgid "hangar query 2"
+msgstr ""
+
+#: models/character_sections_3.py:159
+msgid "hangar query 3"
+msgstr ""
+
+#: models/character_sections_3.py:160
+msgid "hangar query 4"
+msgstr ""
+
+#: models/character_sections_3.py:161
+msgid "hangar query 5"
+msgstr ""
+
+#: models/character_sections_3.py:162
+msgid "hangar query 6"
+msgstr ""
+
+#: models/character_sections_3.py:163
+msgid "hangar query 7"
+msgstr ""
+
+#: models/character_sections_3.py:164
+msgid "hangar take 1"
+msgstr ""
+
+#: models/character_sections_3.py:165
+msgid "hangar take 2"
+msgstr ""
+
+#: models/character_sections_3.py:166
+msgid "hangar take 3"
+msgstr ""
+
+#: models/character_sections_3.py:167
+msgid "hangar take 4"
+msgstr ""
+
+#: models/character_sections_3.py:168
+msgid "hangar take 5"
+msgstr ""
+
+#: models/character_sections_3.py:169
+msgid "hangar take 6"
+msgstr ""
+
+#: models/character_sections_3.py:170
+msgid "hangar take 7"
+msgstr ""
+
+#: models/character_sections_3.py:171
+msgid "junior accountant"
+msgstr ""
+
+#: models/character_sections_3.py:172
+msgid "personnel manager"
+msgstr ""
+
+#: models/character_sections_3.py:173
+msgid "rent factory facility"
+msgstr ""
+
+#: models/character_sections_3.py:174
+msgid "rent office"
+msgstr ""
+
+#: models/character_sections_3.py:175
+msgid "rent research facility"
+msgstr ""
+
+#: models/character_sections_3.py:176
+msgid "security officer"
+msgstr ""
+
+#: models/character_sections_3.py:177
+msgid "skill plan manager"
+msgstr ""
+
+#: models/character_sections_3.py:178
+msgid "starbase defense operator"
+msgstr ""
+
+#: models/character_sections_3.py:179
+msgid "starbase fuel technician"
+msgstr ""
+
+#: models/character_sections_3.py:180
+msgid "station manager"
+msgstr ""
+
+#: models/character_sections_3.py:181
+msgid "trader"
+msgstr ""
+
+#: models/character_sections_3.py:210
+msgid "general roles"
+msgstr ""
+
+#: models/character_sections_3.py:229
+msgid "station services"
+msgstr ""
+
+#: models/character_sections_3.py:242
+msgid "accounting (divisional)"
+msgstr ""
+
+#: models/character_sections_3.py:255
+msgid "hangar access (headquarters)"
+msgstr ""
+
+#: models/character_sections_3.py:260
+msgid "container access (headquarters)"
+msgstr ""
+
+#: models/character_sections_3.py:265
+msgid "hangar access (based at)"
+msgstr ""
+
+#: models/character_sections_3.py:270
+msgid "container access (based at)"
+msgstr ""
+
+#: models/character_sections_3.py:275
+msgid "hangar access (other)"
+msgstr ""
+
+#: models/character_sections_3.py:280
+msgid "container access (other)"
+msgstr ""
+
+#: models/character_sections_3.py:296
+msgid "Location where this role is applicable."
+msgstr ""
+
+#: models/character_sections_3.py:299
+msgid "Role of a character"
+msgstr ""
+
+#: models/character_sections_3.py:540
+msgid "undefined"
+msgstr "не определено"
+
+#: models/character_sections_3.py:541
+msgid "station ID"
+msgstr "станция"
+
+#: models/character_sections_3.py:542
+msgid "market transaction ID"
+msgstr "рыночная транзакция"
+
+#: models/character_sections_3.py:543
+msgid "character ID"
+msgstr "персонаж"
+
+#: models/character_sections_3.py:544
+msgid "corporation ID"
+msgstr "корпорация"
+
+#: models/character_sections_3.py:545
+msgid "alliance ID"
+msgstr "альянс"
+
+#: models/character_sections_3.py:546
+msgid "eve system"
+msgstr "система eve"
+
+#: models/character_sections_3.py:547
+msgid "industry job ID"
+msgstr "промышленность"
+
+#: models/character_sections_3.py:548
+msgid "contract ID"
+msgstr "контракт"
+
+#: models/character_sections_3.py:549
+msgid "planet ID"
+msgstr "планета"
+
+#: models/character_sections_3.py:550
+msgid "system ID"
+msgstr "система"
+
+#: models/character_sections_3.py:551
+msgid "type ID"
+msgstr "тип"
+
+#: models/characters.py:54
+msgid "assets"
+msgstr "имущество"
+
+#: models/characters.py:55
+msgid "attributes"
+msgstr "атрибуты"
+
+#: models/characters.py:57
+msgid "contacts"
+msgstr "контакты"
+
+#: models/characters.py:58
+msgid "contracts"
+msgstr "контракты"
+
+#: models/characters.py:59
+msgid "corporation history"
+msgstr "история корпорации"
+
+#: models/characters.py:60
+msgid "faction warfare statistics"
+msgstr "статистика фракционных войн"
+
+#: models/characters.py:61
+msgid "implants"
+msgstr "импланты"
+
+#: models/characters.py:62
+msgid "jump clones"
+msgstr "джамп-клоны"
+
+#: models/characters.py:63 models/general.py:193
+msgid "location"
+msgstr "местонахождение"
+
+#: models/characters.py:64
+msgid "loyalty"
+msgstr "лояльность"
+
+#: models/characters.py:65
+msgid "mails"
+msgstr "письма"
+
+#: models/characters.py:66
+msgid "mining ledger"
+msgstr "учет добычи"
+
+#: models/characters.py:67
+msgid "online status"
+msgstr "статус онлайн"
+
+#: models/characters.py:68
+msgid "planets"
+msgstr ""
+
+#: models/characters.py:69
+msgid "roles"
+msgstr ""
+
+#: models/characters.py:70
+msgid "ship"
+msgstr "корабль"
+
+#: models/characters.py:71 models/general.py:405 models/general.py:438
+msgid "skills"
+msgstr "навыки"
+
+#: models/characters.py:72
+msgid "skill queue"
+msgstr "очередь навыков"
+
+#: models/characters.py:73 models/general.py:305 models/general.py:368
+msgid "skill sets"
+msgstr "наборы навыков"
+
+#: models/characters.py:74
+msgid "standings"
+msgstr ""
+
+#: models/characters.py:75
+msgid "wallet balance"
+msgstr "баланс кошелька"
+
+#: models/characters.py:76
+msgid "wallet journal"
+msgstr "журнал переводов"
+
+#: models/characters.py:77
+msgid "wallet transactions"
+msgstr "транзакции"
+
+#: models/characters.py:142
+msgid "disabled"
+msgstr "выключен"
+
+#: models/characters.py:143
+msgid "error"
+msgstr "ошибка"
+
+#: models/characters.py:144
+msgid "limited token"
+msgstr ""
+
+#: models/characters.py:145
+msgid "incomplete"
+msgstr "незавершенный"
+
+#: models/characters.py:147
+msgid "ok"
+msgstr "ок"
+
+#: models/characters.py:173
+msgid "Update is disabled"
+msgstr ""
+
+#: models/characters.py:174
+msgid "Errors occurred during update"
+msgstr ""
+
+#: models/characters.py:175
+msgid "Update is in progress"
+msgstr ""
+
+#: models/characters.py:176
+msgid "One or more sections have not yet been updated"
+msgstr ""
+
+#: models/characters.py:178
+msgid "One section can not be updated due to a token error"
+msgstr ""
+
+#: models/characters.py:180
+msgid "Update completed successfully"
+msgstr ""
+
+#: models/characters.py:189
+msgid "eve character"
+msgstr "персонаж eve"
+
+#: models/characters.py:193
+msgid "created at"
+msgstr "создано"
+
+#: models/characters.py:197
+msgid "is shared"
+msgstr "видимый"
+
+#: models/characters.py:202
+msgid "is disabled"
+msgstr "выключено"
+
+#: models/characters.py:206
+msgid "mailing lists"
+msgstr "списки рассылок"
+
+#: models/characters.py:211
+msgid "Time when user was last notified about a token error."
+msgstr ""
+
+#: models/characters.py:218
+msgid "character"
+msgstr "персонажа"
+
+#: models/characters.py:219
+msgid "characters"
+msgstr "персонажи"
+
+#: models/characters.py:857 models/characters.py:858
+msgid "character update status"
+msgstr "статус обновления персонажа"
+
+#: models/general.py:124
+msgid "compliance group designation"
+msgstr "обозначение группы соблюдения"
+
+#: models/general.py:125
+msgid "compliance group designations"
+msgstr "обозначения группы соблюдения"
+
+#: models/general.py:194
+msgid "locations"
+msgstr "местонахождения"
+
+#: models/general.py:280 models/general.py:328
+msgid "description"
+msgstr "описание"
+
+#: models/general.py:284
+msgid "is doctrine"
+msgstr "является доктриной"
+
+#: models/general.py:286
+msgid ""
+"This enables a skill set group to show up correctly in doctrine reports"
+msgstr "Включить корректное отображение группы набора навыков в отчетах"
+
+#: models/general.py:292
+msgid "is active"
+msgstr "активен"
+
+#: models/general.py:293
+msgid "Whether this skill set group is in active use"
+msgstr "Активна ли группа набора навыков"
+
+#: models/general.py:302 models/general.py:345
+msgid "name"
+msgstr "название"
+
+#: models/general.py:310
+msgid "skill set group"
+msgstr "группа наборов навыков"
+
+#: models/general.py:311
+msgid "skill set groups"
+msgstr "группы наборов навыков"
+
+#: models/general.py:319
+msgid "Doctrine: "
+msgstr "Формат:"
+
+#: models/general.py:332
+msgid "is visible"
+msgstr "отображается"
+
+#: models/general.py:334
+msgid ""
+"Non visible skill sets are not shown to users on their character sheet and "
+"used for audit purposes only."
+msgstr ""
+"Невидимые наборы навыков не отображаются на карточках персонажей и "
+"используются для аудита"
+
+#: models/general.py:354
+msgid "ship type"
+msgstr "тип корабля"
+
+#: models/general.py:357
+msgid ""
+"Ship type is used for visual presentation only. All skill requirements must "
+"be explicitly defined."
+msgstr ""
+"Тип корабля используется только для визуального отображения. Все требования "
+"к навыкам должны быть четко определены."
+
+#: models/general.py:367
+msgid "skill set"
+msgstr "набор навыков"
+
+#: models/general.py:410 models/general.py:437
+msgid "skill"
+msgstr "навык"
+
+#: models/general.py:419
+msgid "required level"
+msgstr "необходимый уровень"
+
+#: models/general.py:426
+msgid "recommended level"
+msgstr "рекомендуемый уровень"
+
+#: models/general.py:499 templates/memberaudit/reports.html:75
+#: templates/memberaudit/reports.html:140
+#: templates/memberaudit/reports.html:214
+msgid "Alliance"
+msgstr "Альянс"
+
+#: models/general.py:500 templates/memberaudit/character_finder.html:18
+#: templates/memberaudit/character_finder.html:19
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:13
+msgid "Character"
+msgstr "Персонаж"
+
+#: models/general.py:501
+#: templates/memberaudit/partials/character_viewer/tabs/corporation_history_2.html:6
+#: templates/memberaudit/partials/character_viewer/tabs/loyalty.html:9
+#: templates/memberaudit/reports.html:80
+#: templates/memberaudit/reports.html:145
+#: templates/memberaudit/reports.html:219 views/character_viewer_2.py:716
+msgid "Corporation"
+msgstr "Корпорация"
+
+#: models/general.py:502
+msgid "Mailing List"
+msgstr "Список адресатов"
+
+#: models/general.py:503
+msgid "Unknown"
+msgstr "Неизвестно"
+
+#: templates/admin/memberaudit/confirm_deleting_objects.html:16
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/admin/memberaudit/confirm_deleting_objects.html:17
+#: templates/admin/memberaudit/skillset/import_skills.html:21
+msgid "Cancel"
+msgstr "Отменить"
+
+#: templates/admin/memberaudit/skillset/change_list.html:9
+msgid "skill set from fitting"
+msgstr "набор навыков из фита"
+
+#: templates/admin/memberaudit/skillset/change_list.html:14
+msgid "skill set from skill plan"
+msgstr "набор из плана навыков"
+
+#: templates/admin/memberaudit/skillset/import_skills.html:6
+msgid "Home"
+msgstr "Дом"
+
+#: templates/memberaudit/character_finder.html:10
+#: templates/memberaudit/launcher.html:11
+#: templates/memberaudit/partials/character_viewer/sidebar.html:7
+msgid "Characters"
+msgstr "Персонажи"
+
+#: templates/memberaudit/character_finder.html:18
+#: templates/memberaudit/character_finder.html:20
+#: templates/memberaudit/data_export.html:15
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:26
+#: templates/memberaudit/modals/character_viewer/character_skill_set_details.html:22
+#: templates/memberaudit/modals/character_viewer/contract_items.html:6
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:45
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:11
+#: templates/memberaudit/partials/character_viewer/tabs/standings.html:11
+msgid "Name"
+msgstr "Имя"
+
+#: templates/memberaudit/character_finder.html:19
+#: templates/memberaudit/character_finder.html:21
+#: templates/memberaudit/partials/reports/tabs/corporation_compliance.html:8
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:12
+#: templates/memberaudit/partials/reports/tabs/user_compliance.html:10
+msgid "Organization"
+msgstr "Организация"
+
+#: templates/memberaudit/character_finder.html:20
+#: templates/memberaudit/character_finder.html:21
+#: templates/memberaudit/character_finder.html:22
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:10
+msgid "Main"
+msgstr "Основной"
+
+#: templates/memberaudit/character_finder.html:22
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:11
+#: templates/memberaudit/partials/reports/tabs/user_compliance.html:9
+#: templates/memberaudit/reports.html:70
+#: templates/memberaudit/reports.html:209
+msgid "State"
+msgstr "Статус"
+
+#: templates/memberaudit/character_finder.html:31
+#: templates/memberaudit/launcher.html:129
+#: templates/memberaudit/partials/character_name.html:11
+#: templates/memberaudit/partials/character_viewer/sidebar_character.html:10
+msgid "Main character"
+msgstr "Основной персонаж"
+
+#: templates/memberaudit/character_finder.html:32
+#: templates/memberaudit/launcher.html:130
+msgid "Currently shared with others"
+msgstr "В настоящее время видим другими"
+
+#: templates/memberaudit/character_finder.html:84
+msgid "Char Alliance"
+msgstr "Альянс персонажа"
+
+#: templates/memberaudit/character_finder.html:88
+msgid "Char Corporation"
+msgstr "Корпорация персонажа"
+
+#: templates/memberaudit/character_finder.html:92
+msgid "Main Alliance"
+msgstr "Основной Альянс"
+
+#: templates/memberaudit/character_finder.html:96
+msgid "Main Corporation"
+msgstr "Основная Корпорация"
+
+#: templates/memberaudit/character_finder.html:100
+#: templates/memberaudit/reports.html:234
+msgid "Main?"
+msgstr "Основной?"
+
+#: templates/memberaudit/character_finder.html:104
+msgid "Main State"
+msgstr "Основное состояние"
+
+#: templates/memberaudit/character_finder.html:108
+msgid "Unregistered?"
+msgstr "Не зарегистрирован?"
+
+#: templates/memberaudit/character_viewer.html:196
+#: templates/memberaudit/character_viewer.html:605
+#: templates/memberaudit/partials/character_viewer/tabs/jump_clones.html:9
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:9
+msgid "Region"
+msgstr "Регион"
+
+#: templates/memberaudit/character_viewer.html:200
+#: templates/memberaudit/character_viewer.html:609
+#: templates/memberaudit/partials/character_viewer/tabs/mining_ledger.html:13
+msgid "Solar System"
+msgstr "Звездная Система"
+
+#: templates/memberaudit/character_viewer.html:207
+msgid "Ship?"
+msgstr "Корабль?"
+
+#: templates/memberaudit/character_viewer.html:308
+msgid "NPC?"
+msgstr "NPC?"
+
+#: templates/memberaudit/character_viewer.html:312
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:14
+msgid "Watched?"
+msgstr "Отслеживаемый?"
+
+#: templates/memberaudit/character_viewer.html:316
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:15
+msgid "Blocked?"
+msgstr "Заблокированный?"
+
+#: templates/memberaudit/character_viewer.html:613
+msgid "Planet Type"
+msgstr ""
+
+#: templates/memberaudit/character_viewer.html:747
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:28
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:12
+#: templates/memberaudit/partials/character_viewer/tabs/roles.html:9
+#: templates/memberaudit/partials/character_viewer/tabs/skills.html:9
+msgid "Group"
+msgstr "Группа"
+
+#: templates/memberaudit/character_viewer.html:751
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:14
+#: templates/memberaudit/reports.html:224
+msgid "Required Skills?"
+msgstr "Требуемые навыки?"
+
+#: templates/memberaudit/character_viewer.html:755
+#: templates/memberaudit/reports.html:229
+msgid "Doctrine?"
+msgstr "Доктрина?"
+
+#: templates/memberaudit/character_viewer.html:794
+msgid "Level"
+msgstr "Уровень"
+
+#: templates/memberaudit/character_viewer.html:945
+msgid "Buy and Sell"
+msgstr "Купить и Продать"
+
+#: templates/memberaudit/data_export.html:10
+msgid "Topics"
+msgstr "Темы"
+
+#: templates/memberaudit/data_export.html:16
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:37
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:15
+msgid "Description"
+msgstr "Описание"
+
+#: templates/memberaudit/data_export.html:17
+msgid "Rows"
+msgstr "Строки"
+
+#: templates/memberaudit/data_export.html:18
+msgid "Export file age"
+msgstr "Файл экспортирован"
+
+#: templates/memberaudit/data_export.html:45
+#, python-format
+msgid ""
+"Export files contain the complete data of all %(amount_of_characters)s "
+"characters known to Member Audit."
+msgstr ""
+"Файлы экспорта содержат полную информацию по %(amount_of_characters)s "
+"персонажам известных Member Audit."
+
+#: templates/memberaudit/data_export.html:46
+msgid "They are in CSV format and zipped."
+msgstr "Они в формате CSV и упакованы в zip-архив."
+
+#: templates/memberaudit/data_export.html:47
+#, python-format
+msgid ""
+"Existing export files are updated after %(minutes_until_next_update)s "
+"minutes."
+msgstr ""
+"Существующие файлы экспорта будут обновлены через "
+"%(minutes_until_next_update)s минут."
+
+#: templates/memberaudit/launcher.html:20
+msgid "Register Character"
+msgstr "Зарегистрировать персонажа"
+
+#: templates/memberaudit/launcher.html:29
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: templates/memberaudit/launcher.html:67
+#: templates/memberaudit/partials/character_viewer/overview.html:47
+#: templates/memberaudit/partials/character_viewer/tabs/corporation_history_2.html:21
+#: templates/memberaudit/partials/solar_system.html:16
+msgid "(no data yet)"
+msgstr "(пока нет данных)"
+
+#: templates/memberaudit/launcher.html:75
+msgid "View this character."
+msgstr "Просмотреть персонажа."
+
+#: templates/memberaudit/launcher.html:82
+msgid "Disable access to this character for recruiters."
+msgstr "Остановить доступ к этому персонажу для рекрутеров."
+
+#: templates/memberaudit/launcher.html:86
+msgid "Are you sure you want to allow others to see this character?"
+msgstr "Вы уверены что хотите позволить другим видеть этого персонажа?"
+
+#: templates/memberaudit/launcher.html:90
+msgid "Allow others to see this character."
+msgstr "Позволить другим видеть этого персонажа."
+
+#: templates/memberaudit/launcher.html:96
+msgid "Are you sure you want to remove this character?"
+msgstr "Вы уверены что хотите убрать этого персонажа?"
+
+#: templates/memberaudit/launcher.html:98
+msgid "Remove this character."
+msgstr "Убрать этого персонажа."
+
+#: templates/memberaudit/launcher.html:114
+msgid "Please re-register characters with issues:"
+msgstr ""
+
+#: templates/memberaudit/launcher.html:123
+msgid "Please register unregistered characters:"
+msgstr ""
+
+#: templates/memberaudit/launcher.html:131
+msgid "Update status"
+msgstr ""
+
+#: templates/memberaudit/modals/character_viewer/asset_container.html:13
+#: templates/memberaudit/modals/character_viewer/character_skill_set_details.html:14
+#: templates/memberaudit/modals/character_viewer/contract.html:14
+msgid "Loading..."
+msgstr "Загружается..."
+
+#: templates/memberaudit/modals/character_viewer/asset_container.html:26
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:52
+#: templates/memberaudit/modals/character_viewer/character_skill_set_details.html:37
+#: templates/memberaudit/modals/character_viewer/contract.html:27
+#: templates/memberaudit/modals/character_viewer/contract_content.html:89
+#: templates/memberaudit/modals/character_viewer/mail.html:31
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:87
+msgid "Close"
+msgstr "Закрыть"
+
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:10
+msgid "Asset Container"
+msgstr "Контейнер"
+
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:27
+#: templates/memberaudit/modals/character_viewer/contract_items.html:7
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:11
+msgid "Qty"
+msgstr "Кол-во"
+
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:29
+msgid "Volume"
+msgstr "Объем"
+
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:30
+#: templates/memberaudit/modals/character_viewer/contract_items.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:14
+#: templates/memberaudit/partials/character_viewer/tabs/mining_ledger.html:12
+msgid "Price"
+msgstr "Цена"
+
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:31
+#: templates/memberaudit/modals/character_viewer/contract_items.html:11
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:15
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:48
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:60
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:13
+msgid "Total"
+msgstr "Стоимость"
+
+#: templates/memberaudit/modals/character_viewer/asset_container_content.html:42
+#: templates/memberaudit/modals/character_viewer/contract_items.html:23
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:28
+msgid "Grand Total:"
+msgstr "Итого"
+
+#: templates/memberaudit/modals/character_viewer/character_skill_set_details.html:23
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:46
+msgid "Required"
+msgstr "Требуется"
+
+#: templates/memberaudit/modals/character_viewer/character_skill_set_details.html:24
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:47
+msgid "Recommended"
+msgstr "Рекомендуется"
+
+#: templates/memberaudit/modals/character_viewer/character_skill_set_details.html:25
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:48
+msgid "Current"
+msgstr "Текущий"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:16
+msgid "Info by Issuer:"
+msgstr "Информация от поставщика:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:17
+msgid "Type:"
+msgstr "Тип:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:18
+msgid "Issued By:"
+msgstr "Создан:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:19
+msgid "Availability:"
+msgstr "В наличии:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:23
+msgid "Region:"
+msgstr "Регион:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:28
+msgid "Status:"
+msgstr "Статус:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:29
+#: templates/memberaudit/partials/character_viewer/overview.html:142
+msgid "Location:"
+msgstr "Местонахождение:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:35
+msgid "Date Issued:"
+msgstr "Дата создания:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:36
+msgid "Expiration Date:"
+msgstr "Дата истечения:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:39
+msgid "Complete In:"
+msgstr "Срок исполнения:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:40
+msgid "Volume:"
+msgstr "Объем:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:40
+msgid "m3"
+msgstr "м3"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:41
+msgid "Reward:"
+msgstr "Вознаграждение:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:41
+#: templates/memberaudit/modals/character_viewer/contract_content.html:53
+#: templates/memberaudit/modals/character_viewer/contract_content.html:65
+msgid "ISK"
+msgstr "ISK"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:42
+msgid "Collateral:"
+msgstr "Залог:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:43
+msgid "Destination:"
+msgstr "Назначение:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:51
+msgid "Buyer will pay"
+msgstr "Покупатель заплатит"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:63
+#: templates/memberaudit/modals/character_viewer/contract_content.html:79
+msgid "Buyer will get"
+msgstr "Покупатель получит"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:72
+msgid "Starting Bid:"
+msgstr "Начальная ставка:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:73
+msgid "Buyout Price:"
+msgstr "Цена выкупа:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:74
+msgid "Current Bid:"
+msgstr "Текущая ставка:"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:74
+msgid "so far"
+msgstr "до настоящего момента"
+
+#: templates/memberaudit/modals/character_viewer/contract_content.html:75
+msgid "Time Left:"
+msgstr "Оставшееся время:"
+
+#: templates/memberaudit/modals/character_viewer/contract_items.html:8
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:12
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/mining_ledger.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:12
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:11
+msgid "Type"
+msgstr "Тип"
+
+#: templates/memberaudit/modals/character_viewer/contract_items.html:9
+msgid "Category"
+msgstr "Категория"
+
+#: templates/memberaudit/modals/character_viewer/mail.html:15
+msgid "Mail"
+msgstr "Почта"
+
+#: templates/memberaudit/modals/character_viewer/mail_content.html:5
+msgid "From:"
+msgstr "От:"
+
+#: templates/memberaudit/modals/character_viewer/mail_content.html:6
+msgid "To:"
+msgstr "Кому:"
+
+#: templates/memberaudit/modals/character_viewer/mail_content.html:7
+msgid "Sent:"
+msgstr "Отправлено:"
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:25
+msgid "You meet all the required skills."
+msgstr "Вы обладаете всеми необходимыми навыками."
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:27
+msgid "You do not meet the skill requirements"
+msgstr "Вы не удовлетворяете требованиям по навыкам"
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:69
+msgid "Copy missing skills to clipboard"
+msgstr "Копировать недостающие навыки в буфер обмена"
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:73
+msgid "Legend:"
+msgstr "Легенда:"
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:75
+msgid "Below minimum requirements"
+msgstr "Ниже минимальных требований"
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:78
+msgid "Above required, but below recommended level"
+msgstr "Выше требуемого, но ниже рекомендуемого уровня"
+
+#: templates/memberaudit/modals/character_viewer/skill_set_content.html:81
+msgid "At/Above recommended level"
+msgstr "На/выше рекомендуемого уровня"
+
+#: templates/memberaudit/partials/character_name.html:14
+msgid "Main Currently shared with recruiters"
+msgstr "Основной персонаж видимый рекрутерам"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:8
+msgid "Overview"
+msgstr "Обзор"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:53
+msgid "Character:"
+msgstr "Персонаж:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:58
+msgid "Corporation:"
+msgstr "Корпорация:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:65
+msgid "Alliance:"
+msgstr "Альянс:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:76
+msgid "Faction:"
+msgstr "Фракция:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:83
+msgid "Race:"
+msgstr "Раса:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:90
+msgid "Main:"
+msgstr "Основа:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:97
+msgid "Born:"
+msgstr "Создан:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:104
+msgid "Skillpoints:"
+msgstr "Очки навыков:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:114
+msgid "Sec. Status:"
+msgstr "Статус безопасности:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:124
+msgid "Assets:"
+msgstr "Имущество:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:131
+msgid "Wallet:"
+msgstr "Кошелек:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:149
+msgid "Ship:"
+msgstr "Корабль:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:156
+msgid "System:"
+msgstr "Система:"
+
+#: templates/memberaudit/partials/character_viewer/overview.html:159
+msgid "Last Login:"
+msgstr "Заходил:"
+
+#: templates/memberaudit/partials/character_viewer/sidebar.html:23
+msgid "Unregistered character"
+msgstr "Незарегистрированный персонаж"
+
+#: templates/memberaudit/partials/character_viewer/sidebar.html:29
+msgid "(orphan)"
+msgstr "(нет родительских связей)"
+
+#: templates/memberaudit/partials/character_viewer/sidebar_character.html:14
+msgid "Currently shared with recruiters"
+msgstr "На данный момент видим для рекрутеров"
+
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:9
+msgid "Assets"
+msgstr "Имущество"
+
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:9
+#: templates/memberaudit/partials/character_viewer/tabs/jump_clones.html:11
+msgid "Location"
+msgstr "Местонахождение:"
+
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:13
+msgid "Volume (m3)"
+msgstr "Объем (м3)"
+
+#: templates/memberaudit/partials/character_viewer/tabs/assets.html:36
+msgid "Prices are average market prices."
+msgstr "Цены указаны в среднем по рынку."
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes.html:5
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:119
+msgid "Attributes"
+msgstr "Атрибуты"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:10
+msgid "Perception"
+msgstr "Восприятие"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:13
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:22
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:31
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:40
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:49
+msgid "points"
+msgstr "очки"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:19
+msgid "Memory"
+msgstr "Память"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:28
+msgid "Willpower"
+msgstr "Сила воли"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:37
+msgid "Intelligence"
+msgstr "Интеллект"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:46
+msgid "Charisma"
+msgstr "Харизма"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:58
+msgid "Neural Remap Available:"
+msgstr "Распределение атрибутов доступно:"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_attributes_content.html:61
+msgid "Bonus Remaps Available:"
+msgstr "Дополнительных распределений:"
+
+#: templates/memberaudit/partials/character_viewer/tabs/character_bio.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:15
+msgid "Bio"
+msgstr "Био"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:5
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:93
+msgid "Contacts"
+msgstr "Контакты"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/standings.html:10
+msgid "Standing"
+msgstr "Репутация"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contacts.html:13
+msgid "Standing Value"
+msgstr "Значение репутации"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:21
+msgid "Contracts"
+msgstr "Контракты"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:9
+msgid "Contract"
+msgstr "Контракт"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:11
+#: templates/memberaudit/partials/character_viewer/tabs/mails.html:54
+msgid "From"
+msgstr "От"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:12
+#: templates/memberaudit/partials/character_viewer/tabs/mails.html:55
+msgid "To"
+msgstr "Кому"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:13
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:20
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:6
+msgid "Status"
+msgstr "Статус"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:14
+msgid "Date Issued"
+msgstr "Дата создания"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:15
+msgid "Time Left"
+msgstr "Оставшееся время:"
+
+#: templates/memberaudit/partials/character_viewer/tabs/contracts.html:16
+msgid "Info"
+msgstr "Информация"
+
+#: templates/memberaudit/partials/character_viewer/tabs/corporation_history.html:6
+msgid "History"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/corporation_history_2.html:9
+msgid "(Closed)"
+msgstr "(Закрыто)"
+
+#: templates/memberaudit/partials/character_viewer/tabs/corporation_history_2.html:15
+msgid "Today"
+msgstr "Сегодня"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats.html:5
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:54
+msgid "Faction Warfare"
+msgstr "Фракционные войны"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:22
+#: views/character_viewer_2.py:717
+msgid "Faction"
+msgstr "Фракция"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:29
+msgid "Not enlisted"
+msgstr "Не зачислен"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:32
+msgid "Enlisted on"
+msgstr "Зачислен"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:34
+msgid "Current rank"
+msgstr "Текущий ранг"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:36
+msgid "Highest rank"
+msgstr "Высший ранг"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:42
+msgid "Kills"
+msgstr "Убийства"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:44
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:56
+msgid "Yesterday"
+msgstr "Вчера"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:46
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:58
+msgid "Last week"
+msgstr "За последнюю неделю"
+
+#: templates/memberaudit/partials/character_viewer/tabs/fw_stats_content.html:54
+msgid "Victory Points"
+msgstr "Победные очки"
+
+#: templates/memberaudit/partials/character_viewer/tabs/implants.html:4
+#: templates/memberaudit/partials/character_viewer/tabs/jump_clones.html:12
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:41
+msgid "Implants"
+msgstr "Импланты"
+
+#: templates/memberaudit/partials/character_viewer/tabs/implants.html:13
+msgid "No implants"
+msgstr "Без имплантов"
+
+#: templates/memberaudit/partials/character_viewer/tabs/jump_clones.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:46
+msgid "Jump Clones"
+msgstr "Джамп-клоны"
+
+#: templates/memberaudit/partials/character_viewer/tabs/jump_clones.html:10
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:10
+msgid "System"
+msgstr "Система"
+
+#: templates/memberaudit/partials/character_viewer/tabs/loyalty.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:80
+msgid "Loyalty"
+msgstr "Лояльность"
+
+#: templates/memberaudit/partials/character_viewer/tabs/loyalty.html:10
+msgid "Loyalty Points"
+msgstr "Очки лояльности"
+
+#: templates/memberaudit/partials/character_viewer/tabs/mails.html:6
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:106
+msgid "Mails"
+msgstr "Письма"
+
+#: templates/memberaudit/partials/character_viewer/tabs/mails.html:53
+msgid "Sent"
+msgstr "Отправлено"
+
+#: templates/memberaudit/partials/character_viewer/tabs/mails.html:56
+msgid "Subject"
+msgstr "Тема"
+
+#: templates/memberaudit/partials/character_viewer/tabs/mining_ledger.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:67
+msgid "Mining"
+msgstr "Добыча"
+
+#: templates/memberaudit/partials/character_viewer/tabs/mining_ledger.html:9
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:9
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:9
+msgid "Date"
+msgstr "Дата"
+
+#: templates/memberaudit/partials/character_viewer/tabs/mining_ledger.html:11
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:10
+msgid "Quantity"
+msgstr "Количество"
+
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:72
+msgid "Planets"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:11
+msgid "Planet"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:13
+msgid "Installations"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:14
+msgid "Upgrade Level"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/planets.html:15
+msgid "Last Update"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/roles.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:145
+msgid "Roles"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/roles.html:10
+msgid "Role"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/roles.html:11
+msgid "Granted?"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_queue.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:124
+msgid "Skill Queue"
+msgstr "Очередь навыков"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_queue.html:9
+#: templates/memberaudit/partials/character_viewer/tabs/skills.html:10
+msgid "Skill"
+msgstr "Навык"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_queue.html:10
+msgid "Finished"
+msgstr "Завершено"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_queue.html:11
+msgid "Position"
+msgstr "Место"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_sets.html:5
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:130
+#: templates/memberaudit/partials/reports/tabs_navigation.html:19
+msgid "Skill Sets"
+msgstr "Наборы навыков"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_sets.html:10
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:9
+msgid "Skill Set Group"
+msgstr "Группа наборов навыков"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_sets.html:11
+msgid "Skill Set"
+msgstr "Набор навыков"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_sets.html:12
+msgid "Has all required?"
+msgstr "Есть все необходимые?"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_sets.html:13
+msgid "Missing Required Skills"
+msgstr "Отсутствующие необходимые навыки"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skill_sets.html:14
+msgid "Missing Recommended Skills"
+msgstr "Отсутствующие рекомендованные навыки"
+
+#: templates/memberaudit/partials/character_viewer/tabs/skills.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:112
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:136
+msgid "Skills"
+msgstr "Навыки"
+
+#: templates/memberaudit/partials/character_viewer/tabs/standings.html:5
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:98
+msgid "NPC Standings"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/standings.html:12
+msgid "NPC Type"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/standings.html:13
+msgid "Eff. Standing (unmodifed)"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:5
+msgid "Last update"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:8
+msgid "missing"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:10
+msgid "updating"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:12
+msgid "OK"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/update_status.html:17
+msgid "Error"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:159
+msgid "Transactions"
+msgstr "Транзакции"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:11
+msgid "First party"
+msgstr "Первая сторона"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:12
+msgid "Second party"
+msgstr "Вторая сторона"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:13
+msgid "Amount"
+msgstr "Количество"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_journal.html:14
+msgid "Balance"
+msgstr "Баланс"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:4
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:164
+msgid "Market Transactions"
+msgstr "Рыночные сделки"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:12
+msgid "Unit Price"
+msgstr "Цена за единицу"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:14
+msgid "Client"
+msgstr "Клиент"
+
+#: templates/memberaudit/partials/character_viewer/tabs/wallet_transactions.html:15
+msgid "Where"
+msgstr "Куда"
+
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:27
+msgid "Corporations"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:34
+msgid "Clones"
+msgstr "Клоны"
+
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:60
+msgid "Industry"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:86
+msgid "Standings"
+msgstr ""
+
+#: templates/memberaudit/partials/character_viewer/tabs_navigation.html:152
+msgid "Wallet"
+msgstr "Кошелек"
+
+#: templates/memberaudit/partials/menu.html:11
+msgid "Toggle navigation"
+msgstr "Переключить управление"
+
+#: templates/memberaudit/partials/menu.html:26
+msgid "My Characters"
+msgstr "Мои персонажи"
+
+#: templates/memberaudit/partials/menu.html:35 views/character_viewer_1.py:170
+msgid "Character Sheet"
+msgstr "Карточка персонажа"
+
+#: templates/memberaudit/partials/menu.html:42 views/character_finder.py:38
+msgid "Character Finder"
+msgstr "Поиск персонажей"
+
+#: templates/memberaudit/partials/menu.html:50 views/reports.py:44
+msgid "Reports"
+msgstr "Отчеты"
+
+#: templates/memberaudit/partials/menu.html:58 views/data_export.py:28
+msgid "Data Export"
+msgstr "Экспорт данных"
+
+#: templates/memberaudit/partials/reports/tabs/_compliance_color_code.html:3
+msgid "Color code:"
+msgstr "Цветовой код:"
+
+#: templates/memberaudit/partials/reports/tabs/_compliance_color_code.html:4
+msgid "fully compliant"
+msgstr "полностью соответствует"
+
+#: templates/memberaudit/partials/reports/tabs/_compliance_color_code.html:5
+msgid "partly compliant"
+msgstr "частично соответствует"
+
+#: templates/memberaudit/partials/reports/tabs/_compliance_color_code.html:6
+msgid "not compliant"
+msgstr "не соответствует"
+
+#: templates/memberaudit/partials/reports/tabs/corporation_compliance.html:9
+msgid "Total Users"
+msgstr "Всего пользователей"
+
+#: templates/memberaudit/partials/reports/tabs/corporation_compliance.html:10
+msgid "Total Characters"
+msgstr "Всего персонажей"
+
+#: templates/memberaudit/partials/reports/tabs/corporation_compliance.html:11
+#, python-format
+msgid "Compliance %%"
+msgstr "Соответствие %%"
+
+#: templates/memberaudit/partials/reports/tabs/skill_sets.html:15
+msgid "Is Main?"
+msgstr "Основной?"
+
+#: templates/memberaudit/partials/reports/tabs/user_compliance.html:8
+msgid "User"
+msgstr "Пользователь"
+
+#: templates/memberaudit/partials/reports/tabs/user_compliance.html:11
+#: templates/memberaudit/reports.html:85
+msgid "Registered?"
+msgstr "Зарегистрированный?"
+
+#: templates/memberaudit/partials/reports/tabs/user_compliance.html:12
+#: templates/memberaudit/reports.html:90
+#: templates/memberaudit/reports.html:150
+msgid "Compliant?"
+msgstr "Соответствует?"
+
+#: templates/memberaudit/partials/reports/tabs/user_compliance.html:13
+msgid "Total Chars"
+msgstr "Всего персонажей"
+
+#: templates/memberaudit/partials/reports/tabs_navigation.html:7
+msgid "User Compliance"
+msgstr "Соответствие пользователя"
+
+#: templates/memberaudit/partials/reports/tabs_navigation.html:13
+msgid "Corporation Compliance"
+msgstr "Соответствие Корпорации"
+
+#: templates/memberaudit/reports.html:204
+msgid "Groups"
+msgstr "Группы"
+
+#: views/_common.py:14
+msgid "[Ungrouped]"
+msgstr "[Разгруппированный]"
+
+#: views/admin.py:39 views/admin.py:74
+#, python-format
+msgid "Skill Set %s has been created"
+msgstr "Набор навыков %s создан"
+
+#: views/admin.py:41 views/admin.py:76
+#, python-format
+msgid "Skill Set %s has been updated"
+msgstr "Набор навыков %s обновлен"
+
+#: views/admin.py:52
+msgid "Create skill set from fitting"
+msgstr "Создать набор навыков из подгонки"
+
+#: views/admin.py:85
+msgid "Create skill set from skill plan"
+msgstr "Создать набор навыков из плана"
+
+#: views/character_viewer_1.py:175
+msgid "You do not own this character"
+msgstr "Вы не владеете этим персонажем"
+
+#: views/character_viewer_2.py:212
+#, python-format
+msgid "Mail with pk %s not found for character %s"
+msgstr "Письмо с 1%s не было найдено для персонажа 1%s"
+
+#: views/character_viewer_2.py:384
+msgid "(training not active)"
+msgstr "(обучение не активно)"
+
+#: views/character_viewer_2.py:715
+msgid "Agent"
+msgstr ""
+
+#: views/character_viewer_2.py:785
+msgid "Buy"
+msgstr "Купить"
+
+#: views/character_viewer_2.py:785
+msgid "Sell"
+msgstr "Продать"
+
+#: views/data_export.py:59
+#, python-format
+msgid ""
+"Data export for topic %s has been started. This can take a couple of "
+"minutes. You will get a notification once it is completed."
+msgstr ""
+"Топик экспорта данных для %s запущен. Это займет несколько минут. По "
+"окончанию экспорта, вы получите уведомление."

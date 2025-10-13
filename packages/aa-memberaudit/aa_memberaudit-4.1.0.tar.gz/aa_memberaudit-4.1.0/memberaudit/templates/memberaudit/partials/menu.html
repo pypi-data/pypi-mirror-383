@@ -1,0 +1,66 @@
+{% load static %}
+{% load i18n %}
+{% load navactive %}
+{% load memberaudit %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse"
+                data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">{% translate "Toggle navigation" %}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="{% url 'memberaudit:index' %}">
+                {{ app_title }}
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                <li class="{% navactive request 'memberaudit:launcher' %}">
+                    <a href="{% url 'memberaudit:launcher' %}">
+                        {% translate 'My Characters' %}
+                        {%  if unregistered_count > 0 %}
+                            <span class="badge badge-nav">{{ unregistered_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+
+                {% if "/character_viewer/" in request.path %}
+                    <li class="{% renavactive request '/character_viewer/' %}">
+                        <a href="#">{% translate 'Character Sheet' %}</a>
+                    </li>
+                {% endif %}
+
+                {% if perms.memberaudit.finder_access %}
+                    <li class="{% navactive request 'memberaudit:character_finder' %}">
+                        <a href="{% url 'memberaudit:character_finder' %}">
+                            {% translate 'Character Finder' %}
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if perms.memberaudit.reports_access %}
+                    <li class="{% navactive request 'memberaudit:reports' %}">
+                        <a href="{% url 'memberaudit:reports' %}">
+                            {% translate 'Reports' %}
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if perms.memberaudit.exports_access %}
+                    <li class="{% navactive request 'memberaudit:data_export' %}">
+                        <a href="{% url 'memberaudit:data_export' %}">
+                            {% translate 'Data Export' %}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

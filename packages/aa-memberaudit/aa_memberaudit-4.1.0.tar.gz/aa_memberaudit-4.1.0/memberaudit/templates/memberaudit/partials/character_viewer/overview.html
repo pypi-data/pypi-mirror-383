@@ -1,0 +1,224 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load evelinks %}
+{% load memberaudit %}
+
+<!-- Character summary card -->
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col text-start">
+                {% translate 'Overview' %}
+            </div>
+            <div class="col text-end">
+                <div class="dropdown">
+                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Characters
+                        {% if all_characters %}
+                            <span class="badge text-bg-secondary">{{ all_characters|length }}</span>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for character in all_characters %}
+                            {% if character.memberaudit_character_pk and character.has_access %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'memberaudit:character_viewer' character.memberaudit_character_pk %}">
+                                        <span class="sidebar-character-list-item text-nowrap">
+                                            {% include "memberaudit/partials/character_viewer/sidebar_character.html" %}
+                                        </span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="dropdown-item disabled" aria-disabled="true">
+                                       <span class="sidebar-character-list-item text-nowrap">
+                                            {% include "memberaudit/partials/character_viewer/sidebar_character.html" %}&nbsp;
+                                            <i class="sidebar-character-list-item-icon fas fa-exclamation-triangle text-muted" title="{% translate 'Unregistered character' %}"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% empty %}
+                            <li>
+                                <a class="dropdown-item disabled" aria-disabled="true">
+                                    <span class="text-muted">{% translate '(orphan)' %}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="character-summary-flex">
+            <div class="character-summary-image hidden-xs">
+                <p class="text-center">
+                    <img width="128" height="128" class="img-rounded"
+                        src="{{ auth_character|character_portrait_url:128 }}" />
+                </p>
+
+                <p class="text-center">
+                    <a href="{{ auth_character|zkillboard_character_url }}" target="_blank">
+                        <img src="{% static 'memberaudit/images/zkillboard.png' %}"
+                            title="{{ auth_character.character_name }} on zKillboard">
+                    </a>
+
+                    <a href="{{ auth_character|evewho_character_url }}" target="_blank">
+                        <img src="{{ 1|character_portrait_url:32 }}"
+                            title="{{ auth_character.character_name }} on EveWho" width="16px" height="16px">
+                    </a>
+
+                    <a href="https://forums.eveonline.com/u/{{ auth_character.character_name.split|join:'_' }}/summary"
+                        target="_blank">
+                        <img src="{% static 'memberaudit/images/evelogo.png' %}"
+                            title="{{ auth_character.character_name }} on Eve Forums" width="16px" height="16px">
+                    </a>
+
+                    <a href="https://eve-search.com/search/author/{{ auth_character.character_name }}" target="_blank">
+                        <img src="{% static 'memberaudit/images/evesearch.png' %}"
+                            title="{{ auth_character.character_name }} on Eve Search" width="16px" height="16px">
+                    </a>
+                </p>
+            </div>
+
+            {% translate "(no data yet)" as no_data %}
+
+            <div class="character-summary-info">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <dl class="dl-horizontal">
+                            <dt>{% translate 'Character:' %}</dt>
+                            <dd class="nowrap">
+                                {% include 'memberaudit/partials/character_name.html' %}
+                            </dd>
+
+                            <dt>{% translate 'Corporation:' %}</dt>
+                            <dd>
+                                <a href="{{ auth_character.corporation_name|dotlan_corporation_url }}" target="_blank">
+                                    {{ auth_character.corporation_name }}
+                                </a>
+                            </dd>
+
+                            <dt>{% translate 'Alliance:' %}</dt>
+                            <dd>
+                                {% if auth_character.alliance_name %}
+                                <a href="{{ auth_character.alliance_name|dotlan_alliance_url }}" target="_blank">
+                                    {{ auth_character.alliance_name }}
+                                </a>
+                                {% else %}
+                                -
+                                {% endif %}
+                            </dd>
+
+                            <dt>{% translate 'Faction:' %}</dt>
+                            {% if character_details %}
+                                <dd>{{ character_details.faction|default:"-" }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Race:' %}</dt>
+                            {% if character_details %}
+                                <dd>{{ character_details.eve_bloodline.eve_race }} / {{ character_details.eve_bloodline }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Main:' %}</dt>
+                            <dd>{{ main|default:"-" }}</dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <dl class="dl-horizontal">
+                            <dt>{% translate 'Born:' %}</dt>
+                            {% if character_details %}
+                                <dd>{{ character_details.birthday|naturaltime }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Skillpoints:' %}</dt>
+                            {% if character.skillpoints %}
+                                <dd>
+                                    {% natural_number character.skillpoints.total %} (allocated)<br>
+                                    {% natural_number character.skillpoints.unallocated %} (unallocated)
+                                </dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Training:' %}</dt>
+                            {% if is_training %}
+                                <dd>{{skill_in_training}}</dd>
+                            {% else %}
+                                <dd class="text-warning">not active</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Assets:' %}</dt>
+                            {% if character_assets_total %}
+                                <dd>{% natural_number character_assets_total %} ISK (est.)</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Wallet:' %}</dt>
+                            {% if character.wallet_balance %}
+                                <dd>{% natural_number character.wallet_balance.total %} ISK</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+                        </dl>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <dl class="dl-horizontal">
+                            <dt>{% translate 'Location:' %}</dt>
+                            {% if character.location %}
+                                <dd>{{ character.location.location.name_plus }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'System:' %}</dt>
+                            <dd>{% include 'memberaudit/partials/solar_system.html' with character=character only %}</dd>
+
+                            <dt>{% translate 'Ship:' %}</dt>
+                            {% if character.ship %}
+                                <dd>{{ character.ship.eve_type.name }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Sec. Status:' %}</dt>
+                            {% if character_details.security_status %}
+                                <dd
+                                    class="{% if character_details.security_status < 0 %}text-danger{% elif character_details.security_status > 0 %}text-success{% endif %}">
+                                    {{ character_details.security_status|floatformat:1 }}
+                                </dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Home:' %}</dt>
+                            {% if character.clone_info and character.clone_info.home_location %}
+                                <dd>{{ character.clone_info.home_location.name_plus }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+
+                            <dt>{% translate 'Last Login:' %}</dt>
+                            {% if character.online_status.last_login %}
+                                <dd class="nowrap">{{ character.online_status.last_login|naturaltime }}</dd>
+                            {% else %}
+                                <dd class="text-muted">{{no_data}}</dd>
+                            {% endif %}
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
