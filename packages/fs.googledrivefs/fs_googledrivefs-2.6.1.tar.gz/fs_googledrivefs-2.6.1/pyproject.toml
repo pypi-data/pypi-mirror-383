@@ -1,0 +1,101 @@
+[project]
+name = "fs.googledrivefs"
+version = "2.6.1"
+description = "Pyfilesystem2 implementation for Google Drive"
+maintainers = [
+	{ name = "Rehan Khwaja", email = "rehan@khwaja.name" }
+]
+keywords = ["filesystem", "Pyfilesystem2", "google"]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"Intended Audience :: Developers",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+	"Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "fs>=2.4.13",
+    "google-api-python-client>=1.7.10",
+    "google-auth>=1.5.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/rkhwaja/fs.googledrivefs"
+
+[project.entry-points."fs.opener"]
+"googledrive" = "fs.googledrivefs.opener:GoogleDriveFSOpener"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["fs"]
+
+[tool.poe.tasks]
+lint = "ruff check fs/googledrivefs/ tests/"
+
+[tool.poe.tasks.test]
+shell = """
+pytest -n 4 --reruns 2 --only-rerun TimeoutError --cov=fs/googledrivefs --timeout=2700 || exit 1
+coverage xml
+"""
+
+[tool.ruff]
+line-length = 200
+lint.ignore = [
+    "ANN",      # Requires annotations
+    "D",        # Requires various docstrings
+    "DTZ",      # flake8-datetimez
+    "EM102",    # Disallows f-strings in exceptions
+    "ERA001",   # Disallows commented out code
+    "FBT002",   # Disallows boolean positional arguments
+    "FIX",      # Disallows FIXME-type comments
+    "G004",     # Disallows using f-strings in log strings
+    "I",        # False positive isort complaints
+    "N",        # PEP8 naming rules
+    "PT009",    # Use of unittest assertions - but they come from the `fs` package
+    "PT013",    # Requires pytest to be imported in a specific way
+    "PT027",    # Use of unittest assertions - but they come from the `fs` package
+    "PTH",      # Requires use of pathlib
+    "S101",     # Disallows use of assert
+    "TD",       # Requires a particular formatting of TODO comments
+    "TRY003",   # Disallows long exception messages
+    "W191",     # Disallows tab indentation
+    ]
+lint.select = ["ALL"]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"__init__.py" = [
+    "F401",     # Unused import
+    ]
+"tests/*.py" = [
+    "LOG015",   # Disallows logging through root logger
+]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "single"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.16.4",
+    "pyngrok>=7",
+    "pyperclip>=1.7",
+    "pytest-cov>=2.10.1",
+    "pytest-localserver>=0.5.0",
+    "pytest-rerunfailures>=14.0",
+    "pytest-timeout>=1.3.3",
+    "pytest-xdist>=3.2.1",
+    "pytest>=7.2.0",
+    "requests-oauthlib>=1.0",
+    "ruff>=0.12.3",
+]

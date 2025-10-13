@@ -1,0 +1,30 @@
+rule infer
+  command = /Users/rehan/.virtualenvs/googledrivefs/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --fix-module-collisions --no-report-errors --nofail --quick $in
+  description = infer $module
+rule check
+  command = /Users/rehan/.virtualenvs/googledrivefs/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --analyze-annotated --fix-module-collisions --nofail --quick $in
+  description = check $module
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/googledrivefs.pyi: check /Users/rehan/src/fs.googledrivefs/fs/googledrivefs/googledrivefs.py
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/googledrivefs.googledrivefs.imports
+  module = googledrivefs.googledrivefs
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/search.pyi: check /Users/rehan/src/fs.googledrivefs/fs/googledrivefs/search.py
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/googledrivefs.search.imports
+  module = googledrivefs.search
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/opener.pyi: check /Users/rehan/src/fs.googledrivefs/fs/googledrivefs/opener.py | /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/googledrivefs.pyi
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/googledrivefs.opener.imports
+  module = googledrivefs.opener
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/fs/googledrivefs/GoogleDriveFS.pyi: infer /Users/rehan/src/fs.googledrivefs/fs/googledrivefs/GoogleDriveFS.py
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/fs.googledrivefs.GoogleDriveFS.imports
+  module = fs.googledrivefs.GoogleDriveFS
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/__init__.pyi: check /Users/rehan/src/fs.googledrivefs/fs/googledrivefs/__init__.py | /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/googledrivefs.pyi /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/opener.pyi /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/search.pyi
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/googledrivefs.__init__.imports
+  module = googledrivefs.__init__
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/tests/__init__.pyi: check /Users/rehan/src/fs.googledrivefs/tests/__init__.py
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/tests.__init__.imports
+  module = tests.__init__
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/tests/generate-credentials.pyi: check /Users/rehan/src/fs.googledrivefs/tests/generate-credentials.py
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/tests.generate-credentials.imports
+  module = tests.generate-credentials
+build /Users/rehan/src/fs.googledrivefs/.pytype/pyi/tests/test_googledrivefs.pyi: check /Users/rehan/src/fs.googledrivefs/tests/test_googledrivefs.py | /Users/rehan/src/fs.googledrivefs/.pytype/pyi/googledrivefs/__init__.pyi /Users/rehan/src/fs.googledrivefs/.pytype/pyi/fs/googledrivefs/GoogleDriveFS.pyi
+  imports = /Users/rehan/src/fs.googledrivefs/.pytype/imports/tests.test_googledrivefs.imports
+  module = tests.test_googledrivefs

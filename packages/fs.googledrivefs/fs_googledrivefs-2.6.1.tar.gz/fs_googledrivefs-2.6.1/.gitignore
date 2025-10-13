@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+dist/
+uv.lock
+.venv
+*.egg-info
+pip-wheel-metadata
+requirements.txt
+
+# MacOS
+.DS_Store
+
+# pytest
+.pytest_cache
+.env
+*.json
+
+# pycharm
+.idea
+
+# windows
+.vs
+*.pyproj
+*.sln
