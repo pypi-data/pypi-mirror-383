@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oniondctw"
+version = "1.6.0"
+authors = [
+    { name = "dev, dev", email = "skull@tw-yichen.net" }
+]
+description = "洋蔥工具包 🧅 收錄洋蔥的名言與趣味功能！"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests",
+    "discord.py",
+]
+
+[project.urls]
+Homepage = "https://github.com/dc2023tw/oniondctw"
+
+[tool.setuptools]
+license-files = []
+
