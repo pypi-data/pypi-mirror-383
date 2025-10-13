@@ -1,0 +1,19 @@
+#ifndef TELECOMMANDS_{{uppercase_name}}_H_
+#define TELECOMMANDS_{{uppercase_name}}_H_
+
+#include "telecommand_interface.h"
+#include "{{snake_case}}_base.h"
+
+// TODO: Add includes as needed
+
+typedef struct {{camel_case}} {
+  TelecommandInterface telecommandInterfaceView;
+  {{camel_case}}Base base;
+  // TODO: Add with objects/interfaces as needed
+} {{camel_case}};
+
+void {{camel_case}}_create({{camel_case}} *self /* TODO: Add arguments if needed */);
+
+TelecommandInterface *{{camel_case}}_viewAsTelecommandInterface({{camel_case}} *self);
+
+#endif  // TELECOMMANDS_{{uppercase_name}}_H_
