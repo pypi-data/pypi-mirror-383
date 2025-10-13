@@ -1,0 +1,305 @@
+Metadata-Version: 2.4
+Name: suluvai
+Version: 2.0.0
+Summary: Production-ready Deep Agents with streaming and local storage support
+Home-page: https://github.com/suluvai/suluvai
+Author: SuluvAI Team
+Author-email: SuluvAI Team <contact@suluvai.com>
+License: MIT
+Project-URL: Homepage, https://github.com/suluvai/suluvai
+Project-URL: Documentation, https://github.com/suluvai/suluvai#readme
+Project-URL: Repository, https://github.com/suluvai/suluvai
+Project-URL: Bug Tracker, https://github.com/suluvai/suluvai/issues
+Keywords: langchain,langgraph,agents,ai,llm,streaming,deep-agents,suluvai
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: langchain-core>=0.3.0
+Requires-Dist: langgraph>=0.2.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: typing-extensions>=4.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Provides-Extra: openai
+Requires-Dist: langchain-openai>=0.2.0; extra == "openai"
+Requires-Dist: openai>=1.0.0; extra == "openai"
+Provides-Extra: anthropic
+Requires-Dist: langchain-anthropic>=0.2.0; extra == "anthropic"
+Requires-Dist: anthropic>=0.20.0; extra == "anthropic"
+Provides-Extra: tracing
+Requires-Dist: langsmith>=0.1.0; extra == "tracing"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# 🧠 SuluvAI
+
+**Production-ready Deep Agents** with streaming and local storage - built on stable LangGraph.
+
+A powerful, feature-rich LangChain agent framework similar to DeepAgents with enhanced capabilities for real-world applications.
+
+## ✨ Features
+
+### Core Features
+✅ **Sub-agents** - Delegate tasks to specialized agents  
+✅ **ReAct Pattern** - Reasoning + Acting with tool use  
+✅ **TODO Lists** - Plan complex multi-step tasks  
+✅ **Multi-turn Conversations** - State persists across turns  
+✅ **Production Ready** - Built on stable LangGraph 0.6.10
+
+### 🆕 New in v2.0
+🔥 **Token Streaming** - Real-time token-by-token output  
+🔥 **Event Streaming** - Stream tool calls, actions, and agent events  
+🔥 **Local File Storage** - Persistent disk-based storage  
+🔥 **Multi-level Folders** - Unlimited nested directory support  
+🔥 **File Search** - Advanced search with glob patterns  
+🔥 **File Operations** - Copy, move, organize files easily  
+
+## 📦 Installation
+
+```bash
+# Install from PyPI
+pip install suluvai
+
+# With OpenAI support
+pip install suluvai[openai]
+
+# With Anthropic support
+pip install suluvai[anthropic]
+
+# Full installation with all features
+pip install suluvai[openai,anthropic,tracing]
+```
+
+## 🚀 Quick Start
+
+### Basic Agent
+
+```python
+from suluvai import create_enhanced_agent, EnhancedAgentConfig
+from langchain_openai import ChatOpenAI
+
+# Initialize LLM
+llm = ChatOpenAI(model="gpt-4")
+
+# Configure with local storage
+config = EnhancedAgentConfig(
+    storage_mode="local",
+    storage_path="./my_workspace"
+)
+
+# Create agent
+agent, storage = create_enhanced_agent(
+    model=llm,
+    tools=[],
+    instructions="You are a helpful assistant.",
+    config=config
+)
+
+# Use it
+result = agent.invoke({
+    "messages": [("user", "Create a report")]
+})
+
+print(result["messages"][-1].content)
+```
+
+### Streaming Example
+
+```python
+import asyncio
+from suluvai import stream_agent_events, StreamEventType
+
+async def main():
+    # Stream tokens in real-time
+    async for event in stream_agent_events(
+        agent,
+        {"messages": [("user", "Tell me a story")]}
+    ):
+        if event.event_type == StreamEventType.TOKEN:
+            print(event.data, end="", flush=True)
+        elif event.event_type == StreamEventType.TOOL_START:
+            print(f"\n🔧 Using: {event.data['tool_name']}")
+
+asyncio.run(main())
+```
+
+### Multi-level Folder Example
+
+```python
+# Agent automatically organizes files in nested folders
+result = agent.invoke({
+    "messages": [("user", """
+        Create these files:
+        - data/sales/2024/q1/january.csv
+        - data/sales/2024/q2/april.csv
+        - reports/monthly/summary.md
+    """)]
+})
+
+# List all files
+files = storage.list_files()
+print(files)
+# ['data/sales/2024/q1/january.csv', 'data/sales/2024/q2/april.csv', ...]
+
+# Search for specific files
+csv_files = storage.search_files("*.csv")
+print(csv_files)
+
+# Get directory tree
+tree = storage.get_tree()
+print(tree)
+```
+
+## 🛠️ Built-in Tools
+
+### Filesystem Tools (Enhanced in v2.0)
+- `write_file(filepath, content)` - Write to files (supports nested paths)
+- `read_file(filepath)` - Read file contents
+- `list_files(directory, recursive)` - List files in directories
+- `delete_file(filepath)` - Delete a file
+- `create_directory(dirpath)` - Create nested directories
+- `list_directories(directory, recursive)` - List all directories
+- `search_files(pattern, directory)` - Search with glob patterns
+- `get_file_tree(directory, max_depth)` - Visual directory tree
+- `copy_file(src, dst)` - Copy files
+- `move_file(src, dst)` - Move/rename files
+
+### TODO Tools
+- `write_todos(tasks)` - Create/update TODO list
+- `get_todos()` - Get current TODO list
+- `mark_todo_done(task_number)` - Mark task as complete
+
+## Advanced Usage
+
+### Multi-turn Conversations with File Persistence
+
+```python
+# Turn 1: Fetch data
+state = agent.invoke({
+    "messages": [("user", "Fetch Q1 sales data")],
+    "files": {},
+    "todos": [],
+    "metadata": {}
+})
+
+# Files are now in state["files"]["q1_sales.csv"]
+
+# Turn 2: Analyze (agent can access existing files!)
+state = agent.invoke({
+    "messages": state["messages"] + [("user", "Analyze it")],
+    "files": state["files"],  # Pass existing files!
+    "todos": state["todos"],
+    "metadata": state["metadata"]
+})
+```
+
+### Multiple Subagents
+
+```python
+# Define specialized subagents
+data_fetcher = SubAgent(
+    name="data_fetcher",
+    description="Fetches data from databases",
+    tools=[get_schema, execute_query],
+    instructions="You fetch data..."
+)
+
+analyzer = SubAgent(
+    name="analyzer",
+    description="Analyzes data and finds insights",
+    tools=[analyze, correlate],
+    instructions="You analyze data..."
+)
+
+responder = SubAgent(
+    name="responder",
+    description="Formats responses beautifully",
+    tools=[format_markdown],
+    instructions="You format responses..."
+)
+
+# Create agent with all subagents
+agent = create_zita_agent(
+    model=llm,
+    tools=[],
+    subagents=[data_fetcher, analyzer, responder],
+    instructions="""You coordinate subagents:
+    1. Use data_fetcher to get data
+    2. Use analyzer to find insights
+    3. Use responder to format final answer"""
+)
+```
+
+## Comparison with DeepAgents
+
+| Feature | DeepAgents | SuluvAI |
+|---------|------------|-------------|
+| Stability | ⚠️ Alpha | ✅ Production Ready |
+| Token Streaming | ❌ No | ✅ Yes |
+| Local Storage | ❌ No | ✅ Yes |
+| Multi-level Folders | ❌ No | ✅ Yes |
+| Subagents | ✅ Yes | ✅ Yes |
+| Filesystem | ✅ Virtual Only | ✅ Virtual + Local |
+| TODO Lists | ✅ Yes | ✅ Yes |
+| File Search | ❌ No | ✅ Yes |
+
+## API Reference
+
+### `create_enhanced_agent()`
+
+```python
+def create_enhanced_agent(
+    model: Any,
+    tools: Sequence[BaseTool],
+    subagents: Optional[List[SubAgent]] = None,
+    instructions: str = "You are a helpful assistant.",
+    config: Optional[EnhancedAgentConfig] = None,
+    state_schema: type = SuluvAIAgentState
+) -> Tuple[CompiledGraph, LocalFileStorage]
+```
+
+**Parameters:**
+- `model`: LLM model (e.g., ChatOpenAI, ChatAnthropic)
+- `tools`: List of tools the main agent can use
+- `subagents`: List of SubAgent configurations
+- `instructions`: System prompt for the main agent
+- `config`: EnhancedAgentConfig for storage and streaming settings
+- `state_schema`: Custom state schema (default: SuluvAIAgentState)
+
+**Returns:** Tuple of (compiled agent, storage instance)
+
+### `SubAgent`
+
+```python
+@dataclass
+class SubAgent:
+    name: str           # Unique identifier
+    description: str    # What this subagent does
+    tools: List[Any]    # Tools this subagent can use
+    instructions: str   # System prompt for this subagent
+    model: Optional[Any] = None  # Optional specific model
+```
+
+## License
+
+MIT License - Copyright (c) 2025 Zitatech
+
+## Support
+
+Built and maintained by Zitatech for production SAP applications.

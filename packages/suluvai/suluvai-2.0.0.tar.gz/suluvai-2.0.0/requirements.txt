@@ -1,0 +1,13 @@
+# Core dependencies
+langchain-core>=0.3.0,<0.4.0
+langgraph>=0.2.0,<0.3.0
+pydantic>=2.0.0,<3.0.0
+typing-extensions>=4.0.0
+
+# Optional: LLM providers (install what you need)
+# langchain-openai>=0.2.0
+# langchain-anthropic>=0.2.0
+# langchain-google-genai>=0.0.5
+
+# Optional: Tracing and monitoring
+# langsmith>=0.1.0
