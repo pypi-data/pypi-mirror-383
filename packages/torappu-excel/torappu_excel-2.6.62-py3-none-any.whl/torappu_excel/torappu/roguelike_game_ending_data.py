@@ -1,0 +1,21 @@
+from pydantic import BaseModel, ConfigDict
+
+
+class RoguelikeGameEndingData(BaseModel):
+    model_config: ConfigDict = ConfigDict(extra="forbid")  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    id: str
+    familyId: int
+    name: str
+    desc: str
+    bgId: str
+    icons: list["RoguelikeGameEndingData.LevelIcon"]
+    priority: int
+    changeEndingDesc: str | None
+    bossIconId: str | None
+
+    class LevelIcon(BaseModel):
+        model_config: ConfigDict = ConfigDict(extra="forbid")  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        level: int
+        iconId: str
