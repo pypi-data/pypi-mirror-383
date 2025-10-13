@@ -1,0 +1,24 @@
+[project]
+name = "toolkitbrazil"
+version = "0.0.1"
+description = "A Python module with a collection of useful tools for Brazilians (and anyone else who wants to use it)"
+authors = [
+  {name = "Ricardo Colombani", email = "ricardo.colombani@gmail.com"}
+]
+keywords = ["library", "utility", "utilities"]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/coloric/toolkitbrazil"
+Documentation = "https://github.com/coloric/toolkitbrazil/docs"
+Repository = "https://github.com/coloric/toolkitbrazil"
+"Bug Tracker" = "https://github.com/coloric/toolkitbrazil/issues"
+Changelog = "https://github.com/coloric/toolkitbrazil/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+    "requests>=2.32.5",
+    "twine>=6.2.0",
+]
