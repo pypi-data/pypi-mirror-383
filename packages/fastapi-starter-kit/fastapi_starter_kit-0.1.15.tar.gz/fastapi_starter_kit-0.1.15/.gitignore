@@ -1,0 +1,53 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Logs
+logs/
+*.log
+
+# SQLite database
+*.db
+app.db
+
+# Environment variables
+# .env
+
+# Migrations SQLite or temp files
+migrations/__pycache__/
+migrations/*.db
+
+# VS Code / JetBrains IDEs
+.vscode/
+.idea/
+
+# Python packaging files
+_version.py
+*.egg-info/
+dist/
+build/
+
+# Byte-compiled / temporary files
+*.swp
+*.swo
+*.DS_Store
+
+# Pytest cache
+.pytest_cache/
+
+# MacOS system files
+.DS_Store
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# MyPy cache
+.mypy_cache/
+.dmypy.json
