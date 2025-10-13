@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools", "wheel", "setuptools-rust", "pymongo"]
+
+[project]
+name = "notmongo"
+version = "0.1.8"
+dependencies = ["pymongo"]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = ["pre-commit", "pytest", "pytest-asyncio", "ruff", "setuptools", "setuptools-rust"]

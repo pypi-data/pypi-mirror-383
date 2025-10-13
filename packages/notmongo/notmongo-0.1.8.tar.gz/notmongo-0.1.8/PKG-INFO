@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: notmongo
+Version: 0.1.8
+Requires-Python: >=3.10
+Requires-Dist: pymongo
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: setuptools; extra == "dev"
+Requires-Dist: setuptools-rust; extra == "dev"
