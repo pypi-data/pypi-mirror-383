@@ -1,0 +1,19 @@
+#include "tm_{{snake_case}}.h"
+
+#include "tm_{{snake_case}}_base.h"
+
+//******************************************************************************
+// Interface implementations
+//******************************************************************************
+static bool Tm{{camel_case}}_execute(void *self) {
+  // TODO: Replace with actual implementation
+}
+
+//******************************************************************************
+// Public methods
+//******************************************************************************
+void Tm{{camel_case}}_initialize(Tm{{camel_case}} *self  /* TODO: Add arguments if needed */) {
+  Tm{{camel_case}}Base_initialize(self, Tm{{camel_case}}_execute);
+
+  // TODO: Initialize objects/interfaces as needed
+}
