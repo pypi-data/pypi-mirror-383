@@ -1,0 +1,27 @@
+{% extends "app/base.html" %}
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'app/output.css' %}">
+<link rel="stylesheet" href="{% static 'app/main_styles.css' %}">
+<link rel="stylesheet" href="{% static 'app/chart_animations.css' %}">
+<link rel="stylesheet" href="{% static 'app/spinner.css' %}">
+<link rel="stylesheet" href="{% static 'app/notifications.css' %}">
+<script defer src="{% static 'app/htmxIncludeChartDimensions.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<main class="flex flex-row relative">
+    {% if navbar %}
+        {% include "app/navbar.html" %}
+    {% endif %}
+    <div class="grow">
+        {{ content }}
+    </div>
+    {% include "app/notifications.html" %}
+</main>
+
+{% endblock %}

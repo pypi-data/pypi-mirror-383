@@ -1,0 +1,11 @@
+<div class="flex flex-{{ direction }} gap-5 
+{% if direction == 'col' %}
+{% if main_element %} h-screen p-4{% else %} h-full{% endif %}
+{% else %}
+{% if main_element %} w-screen p-4{% else %} w-full{% endif %}
+{% endif %}
+">
+    {% for child in children %}
+        {{ child|safe }}
+    {% endfor %}
+</div>
