@@ -1,0 +1,41 @@
+[project]
+name = "convo-orchestrator"
+version = "0.1.0"
+description = "Orchestrated RAG components: Postgres lexical, Qdrant vectors, Ollama LLM/embeddings, chat services & examples."
+readme = "README.md"
+authors = [
+    { name = "Julio Galindo", email = "juliogalindo922@gmail.com" }
+]
+license = { text = "MIT" }
+keywords = ["rag", "qdrant", "postgres", "ollama", "chat", "sse"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+]
+requires-python = ">=3.12"
+dependencies = [
+    "asyncpg>=0.30.0",
+    "psycopg[binary]>=3.2.10",
+    "python-dotenv>=1.1.1",
+    "qdrant-client>=1.15.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/convo_orchestrator"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "fastapi>=0.118.1",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.0.0",
+    "uvicorn[standard]>=0.37.0",
+]
