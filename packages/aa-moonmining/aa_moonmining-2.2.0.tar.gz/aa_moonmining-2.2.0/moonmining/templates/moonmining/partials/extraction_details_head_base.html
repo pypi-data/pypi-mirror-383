@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load humanize %}
+{% load moonmining %}
+
+<dl class="dl-horizontal">
+    <dt>{% translate 'Refinery:' %}</dt>
+    <dd>{{ extraction.refinery.name }}</dd>
+
+    <dt>{% translate 'Company:' %}</dt>
+    <dd>{{ extraction.refinery.owner.name }}</dd>
+
+    <dt>{% translate 'Moon:' %}</dt>
+    <dd>{{ extraction.refinery.moon }}</dd>
+
+    <dt>{% translate 'Location:' %}</dt>
+    <dd>
+        {% include "moonmining/partials/location.html" with eve_solar_system=extraction.refinery.moon.eve_moon.eve_planet.eve_solar_system %}
+    </dd>
+
+    <dt>{% translate 'Labels:' %}</dt>
+    <dd>{{ extraction.refinery.moon.labels_html }}</dd>
+</dl>

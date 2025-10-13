@@ -1,0 +1,81 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "aa-moonmining"
+dynamic = ["version", "description"]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+authors = [{ name = "Erik Kalkoken", email = "kaloken87@gmail.com" }]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+dependencies = [
+    "allianceauth-app-utils>=1.27",
+    "allianceauth>=4,<5",
+    "django-bootstrap-form",
+    "django-datatables-view>=1.20",
+    "django-eveuniverse>=1.0",
+    "django-navhelper",
+    "PyYAML",
+]
+
+[project.urls]
+Homepage = "https://gitlab.com/ErikKalkoken/aa-moonmining"
+Source = "https://gitlab.com/ErikKalkoken/aa-moonmining"
+Changelog = "https://gitlab.com/ErikKalkoken/aa-moonmining/-/blob/master/CHANGELOG.md"
+Tracker = "https://gitlab.com/ErikKalkoken/aa-moonmining/-/issues"
+
+[tool.flit.module]
+name = "moonmining"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "DJANGO",
+    "ALLIANCEAUTH",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
+known_allianceauth = ["allianceauth", "app_utils"]
+known_django = ["django", "django_webtest", "esi", "eveuniverse"]
+
+[tool.pylint.'MASTER']
+ignore-patterns = ["__init__.py", "auth_hooks.py", "apps.py"]
+ignore-paths = ["^.*/tests/.*$", "^.*/migrations/.*$"]
+
+[tool.pylint.'BASIC']
+good-names = ["i", "j", "k", "ex", "pk", "id"]
+
+[tool.pylint.'FORMAT']
+max-line-length = 120
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "too-few-public-methods",
+    "cyclic-import",
+    "no-member",
+    "imported-auth-user",
+    "import-outside-toplevel",
+    "fixme",
+    "duplicate-code",
+]

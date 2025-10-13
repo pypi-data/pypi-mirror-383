@@ -1,0 +1,25 @@
+/* Moon list */
+.table-moons thead th {
+	vertical-align: top !important;
+}
+
+.table-moons tbody td {
+	vertical-align: middle !important;
+}
+
+.table-moons tbody td:nth-child(4) {
+	white-space: nowrap;
+}
+
+.table-moons tbody td:nth-child(5) {
+	white-space: nowrap;
+}
+
+.table-moons tbody td:nth-child(6) {
+	text-align: right;
+}
+
+.table-moons tbody td:nth-child(7) {
+	text-align: right;
+	white-space: nowrap;
+}

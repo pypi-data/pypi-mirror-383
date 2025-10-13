@@ -1,0 +1,78 @@
+{% load i18n %}
+
+{% include 'moonmining/partials/extraction_ledger_head.html' %}
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#ledger" aria-controls="ledger" role="tab" data-bs-toggle="tab">
+        {% translate 'Ledger' %}
+    </a></li>
+    <li class="nav-item" role="presentation"><a href="#characters" aria-controls="characters" role="tab" data-bs-toggle="tab">
+        {% translate 'Totals by character' %}
+    </a></li>
+</ul>
+<!-- Tab panes -->
+<div class="card card-default card-tabs">
+    <div class="card-body">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="ledger">
+                {% include 'moonmining/partials/extraction_ledger_ledger.html' %}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="characters">
+                {% include 'moonmining/partials/extraction_ledger_characters.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#table-ledger-ledger').DataTable({
+            lengthMenu: DEFAULT_LENGTH_MENU,
+            pageLength: DEFAULT_PAGE_LENGTH,
+            order: [ [0, "asc"], [1, "asc"], [2, "asc"], [3, "asc"] ],
+            filterDropDown: {
+                columns: [
+                    {
+                        idx: 0
+                    },
+                    {
+                        idx: 1
+                    },
+                    {
+                        idx: 2
+                    },
+                    {
+                        idx: 3
+                    },
+                    {
+                        idx: 4
+                    }
+                ],
+                bootstrap: true,
+                bootstrap_version: 5,
+                autoSize: false
+            }
+        });
+    });
+
+    $(function() {
+        $('#table-ledger-character-totals').DataTable({
+            lengthMenu: DEFAULT_LENGTH_MENU,
+            pageLength: DEFAULT_PAGE_LENGTH,
+            order: [ [0, "asc"] ],
+            filterDropDown: {
+                columns: [
+                    {
+                        idx: 1
+                    },
+                    {
+                        idx: 2
+                    }
+                ],
+                bootstrap: true,
+                bootstrap_version: 5,
+                autoSize: false
+            }
+        });
+    });
+</script>

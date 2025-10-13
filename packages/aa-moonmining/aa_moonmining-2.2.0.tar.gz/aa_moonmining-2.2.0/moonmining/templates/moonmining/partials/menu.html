@@ -1,0 +1,57 @@
+{% load static %}
+{% load i18n %}
+{% load navactive %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">{% translate "Toggle navigation" %}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'moonmining:index' %}">{% translate "Moon Mining" %}</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if perms.moonmining.extractions_access %}
+                    <li class="{% navactive request 'moonmining:extractions' %}">
+                        <a href="{% url 'moonmining:extractions' %}">
+                            {% translate 'Extractions' %}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if "/moonmining/extraction/" in request.path %}
+                    <li class="{% renavactive request '/moonmining/extraction/' %}">
+                        <a href="#">{% translate 'Extraction Details' %}</a>
+                    </li>
+                {% endif %}
+                <li class="{% navactive request 'moonmining:moons' %}">
+                    <a href="{% url 'moonmining:moons' %}">{% translate 'Moons' %}</a>
+                </li>
+                {% if "/moonmining/moon/" in request.path %}
+                    <li class="{% renavactive request '/moonmining/moon/' %}">
+                        <a href="#">{% translate 'Moon Details' %}</a>
+                    </li>
+                {% endif %}
+                 {% if perms.moonmining.reports_access %}
+                    <li class="{% navactive request 'moonmining:reports' %}">
+                        <a href="{% url 'moonmining:reports' %}">{% translate 'Reports' %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            {% if perms.moonmining.add_refinery_owner %}
+                <a  class="btn btn-secondary navbar-btn"
+                    style="float: right"
+                    href="{% url 'moonmining:add_owner' %}">
+                    {% translate 'Add Corporation' %}
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>

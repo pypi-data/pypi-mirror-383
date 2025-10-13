@@ -1,0 +1,5 @@
+{% load i18n %}
+
+<p class="text-muted">
+    {% blocktranslate with volume_per_month=total_volume_per_month|floatformat:"1" %}A value estimate represents an estimated monthly income calculated with average market prices and an assumed monthly ore volume of {{ volume_per_month }} million m3. All values are in billion ISK. {% endblocktranslate %}
+</p>
