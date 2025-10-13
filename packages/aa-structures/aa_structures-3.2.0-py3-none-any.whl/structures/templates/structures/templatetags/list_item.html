@@ -1,0 +1,22 @@
+{% load humanize %}
+
+<li class="list-group-item">
+    <div class="d-flex w-100 justify-content-between">
+        {% if is_muted %}
+            <span class="text-muted">{{ title }}</span>
+        {% else %}
+            {{ title }}
+        {% endif %}
+        <span>
+            {% if value is False or value is None %}
+                <i class="fas fa-times text-danger" title="Disabled"></i>
+            {% elif value is True %}
+                <i class="fas fa-check text-success" title="Enabled"></i>
+            {% elif url %}
+                <a href="{{ url }}" target="_blank">{{ value }}</a>
+            {% else %}
+                {{ value }}
+            {% endif %}
+        </span>
+    </div>
+</li>
