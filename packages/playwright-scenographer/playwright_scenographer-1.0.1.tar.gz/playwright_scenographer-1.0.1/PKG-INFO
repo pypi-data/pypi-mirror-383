@@ -1,0 +1,73 @@
+Metadata-Version: 2.4
+Name: playwright-scenographer
+Version: 1.0.1
+Summary: Playwright enables reliable end-to-end testing for modern web apps.
+Home-page: https://github.com/scenographer/scenographer-python
+Author: Scenographer Contributors
+License: MIT
+Keywords: Playwright WebExtension
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Internet :: WWW/HTTP :: Browsers
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: aiofiles
+Requires-Dist: aiohttp
+Requires-Dist: crx-unpack
+Requires-Dist: playwright
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Scenographer
+
+[![Build](https://github.com/scenographer/scenographer-python/actions/workflows/ci.yml/badge.svg)](https://github.com/scenographer/scenographer-python/actions/workflows/ci.yml)
+
+WebExtension for Playwright for Python
+
+## API Reference
+
+```python
+from playwright.async_api import async_playwright
+from scenographer.async_api import (
+    CHROME_STORE,
+    DEFAULT_STORAGE,
+    use_feed,
+    use_web_extensions
+)
+
+# Installing AdBlock
+# https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom
+
+await use_feed(DEFAULT_STORAGE, CHROME_STORE).install_extension("gighmmpiobklfepjocnamgkkbiglidom")
+
+async with async_playwright() as playwright:
+    args = use_web_extensions()
+
+    chromium = playwright.chromium
+    browser = await chromium.launch_persistent_context(
+        DEFAULT_STORAGE.get_base_directory(),
+        args=args,
+        headless=False
+    )
+
+    page = browser.pages[0]
+    await page.goto("chrome://extensions")
+```
