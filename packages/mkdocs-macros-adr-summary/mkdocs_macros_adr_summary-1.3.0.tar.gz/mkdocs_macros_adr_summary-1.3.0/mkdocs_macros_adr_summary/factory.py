@@ -1,0 +1,40 @@
+#  Copyright (c) 2024 Federico Busetti <729029+febus982@users.noreply.github.com>
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a
+#  copy of this software and associated documentation files (the "Software"),
+#  to deal in the Software without restriction, including without limitation
+#  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+#  and/or sell copies of the Software, and to permit persons to whom the
+#  Software is furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included in
+#  all copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#  DEALINGS IN THE SOFTWARE.
+
+from typing import Dict, Type
+
+from .interfaces import ADRParser, TYPE_ADRStyle
+from .parser import MADR2Parser, MADR3Parser, MADR4Parser, NygardParser
+
+parser_registry: Dict[TYPE_ADRStyle, Type[ADRParser]] = {
+    "nygard": NygardParser,
+    "MADR4": MADR4Parser,
+    "MADR3": MADR3Parser,
+    "MADR2": MADR2Parser,
+}
+
+
+def get_parser(adr_style: TYPE_ADRStyle) -> Type[ADRParser]:
+    try:
+        parser = parser_registry[adr_style]
+    except KeyError:
+        raise ValueError(f"Format {adr_style} not supported")
+
+    return parser
