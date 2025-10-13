@@ -1,0 +1,85 @@
+# AVST
+Audio Video Sync Tool
+
+## Description
+AVST is a tool that syncs two videos based on their audio.
+
+avst-sync:
+1. Extract audio from both videos
+2. Sync the audio of both videos, using cross correlation
+3. Pad the audios and videos to the same length considering the delay
+4. Save the corresponding synced audios and videos, then mux them into a single video
+5. [Optional] Save the synced videos stacked vertically for easier visualization
+
+avst-sync with --reference:
+1. Extract audio from both videos
+2. Sync the audio of video2 to video1, using cross correlation
+3. Pad or cut video2 to match video1's start time and length
+4. Save the synced audio and frames of video2, then mux them into a single video
+5. [Optional] Stack the original video1 and synced video2 vertically for easier visualization
+
+avst-cut:
+1. Pass the start and end times to cut the video
+2. Save the cut video
+
+## Dependencies
+- Python >=3.11
+- ffmpeg
+
+Additional python packages are listed in the requirements.txt file.
+
+## Install
+```bash
+pip install avst
+```
+
+## Install for dev
+
+```bash
+conda create -n avst python=3.11
+conda activate avst
+git clone https://github.com/fodorad/AVST
+cd AVST
+pip install -e .
+```
+
+## Usage
+
+### Sync two videos
+```bash
+avst-sync --video1_path path/to/video1.mp4 --video2_path path/to/video2.mp4 --visualize
+```
+
+#### Expected outputs
+| Video Name        | Description                                                    |
+|-------------------|----------------------------------------------------------------|
+| synced_video1.mp4 | Video 1 synced to Video 2                                      |
+| synced_video2.mp4 | Video 2 synced to Video 1                                      |
+| synced_session.mp4| synced_video1.mp4 and synced_video2.mp4 stacked vertically for easier visualization |
+
+### Sync a video to a reference video
+
+```bash
+avst-sync --video1_path path/to/video1.mp4 --video2_path path/to/video2.mp4 --reference --visualize
+```
+
+#### Expected outputs
+| Video Name        | Description                                                    |
+|-------------------|----------------------------------------------------------------|
+| synced_video2.mp4 | Video 2 synced to Video 1                                      |
+| synced_session.mp4| Original video1.mp4 and synced_video2.mp4 stacked vertically for easier visualization |
+
+### Cut a video
+```bash
+avst-cut --input path/to/video.mp4 --start 10 --end 20 --output path/to/cut_video.mp4
+```
+
+#### Expected outputs
+| Video Name        | Description                                                    |
+|-------------------|----------------------------------------------------------------|
+| cut_video.mp4     | Cut video from 10s to 20s                                      |
+
+
+# Contact
+
+* Ádám Fodor (fodorad201@gmail.com) [[website](https://adamfodor.com)]
