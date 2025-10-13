@@ -1,0 +1,5 @@
+[console_scripts]
+axiomos-demo = axiomos.cli.quick_demo:main
+axiomos-doctor = axiomos.cli.axir_doctor:main
+axiomos-smoke = axiomos.smoke:main
+axiomos-verify = axiomos.verify:verify_main
