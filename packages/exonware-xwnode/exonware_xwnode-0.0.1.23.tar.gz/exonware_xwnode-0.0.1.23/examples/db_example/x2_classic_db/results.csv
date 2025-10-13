@@ -1,0 +1,77 @@
+# Classic Database Benchmark Results - Combined
+"# All Tests: 1000 entities, 10000 entities, 100000 entities"
+
+# Configuration per test:
+"#   1,000: 500 users, 300 posts, 200 comments, 1,000 relationships"
+"#   10,000: 5,000 users, 3,000 posts, 2,000 comments, 10,000 relationships"
+"#   100,000: 50,000 users, 30,000 posts, 20,000 comments, 100,000 relationships"
+
+=== DETAILED RESULTS - 1000 Entities ===
+
+Rank,Database,Node Mode,Edge Mode,Total Time (ms),Peak Memory (MB),Operations/sec,Insert Time (ms),Insert Memory (MB),Read Time (ms),Read Memory (MB),Update Time (ms),Update Memory (MB),Relationships Time (ms),Relationships Memory (MB)
+1,Query-Optimized,TREE_GRAPH_HYBRID,WEIGHTED_GRAPH,13.34,213.9,3746862,9.35,213.9,0.16,213.9,0.26,213.9,3.57,213.9
+2,Persistence-Optimized,B_PLUS_TREE,EDGE_PROPERTY_STORE,13.59,214.9,3677904,8.90,214.9,0.19,214.9,0.13,214.9,4.37,214.9
+3,XWData-Optimized,HASH_MAP,None,13.99,216.0,3574722,9.42,216.0,0.15,216.0,0.14,216.0,4.27,216.0
+4,Memory-Efficient,B_TREE,CSR,14.27,213.0,3504468,9.98,213.0,0.15,213.0,0.11,213.0,4.03,213.0
+5,Read-Optimized,HASH_MAP,None,14.45,210.8,3459322,9.90,210.8,0.14,210.8,0.10,210.8,4.32,210.8
+6,Write-Optimized,LSM_TREE,DYNAMIC_ADJ_LIST,15.07,212.0,3318599,10.81,212.0,0.11,212.0,0.10,212.0,4.04,212.0
+
+=== SUMMARY - 1000 Entities ===
+
+Metric,Value
+Total Databases Tested,6
+Fastest Time (ms),13.34
+Slowest Time (ms),15.07
+Average Time (ms),14.12
+Lowest Memory (MB),210.8
+Highest Memory (MB),216.0
+Average Memory (MB),213.4
+Winner (Fastest),Query-Optimized
+Memory Champion (Lowest),Read-Optimized
+
+=== DETAILED RESULTS - 10000 Entities ===
+
+Rank,Database,Node Mode,Edge Mode,Total Time (ms),Peak Memory (MB),Operations/sec,Insert Time (ms),Insert Memory (MB),Read Time (ms),Read Memory (MB),Update Time (ms),Update Memory (MB),Relationships Time (ms),Relationships Memory (MB)
+1,Query-Optimized,TREE_GRAPH_HYBRID,WEIGHTED_GRAPH,280.13,245.3,178486,87.54,245.3,0.52,245.3,0.90,245.3,191.17,245.3
+2,Persistence-Optimized,B_PLUS_TREE,EDGE_PROPERTY_STORE,290.82,255.4,171926,89.29,255.3,0.55,255.3,0.88,255.4,200.11,255.4
+3,Read-Optimized,HASH_MAP,None,293.70,220.8,170240,85.86,220.8,0.75,220.8,0.95,220.8,206.15,220.8
+4,Write-Optimized,LSM_TREE,DYNAMIC_ADJ_LIST,294.59,230.8,169725,84.26,230.7,0.49,230.7,1.10,230.8,208.74,225.0
+5,XWData-Optimized,HASH_MAP,None,295.55,265.3,169176,89.06,265.3,0.48,265.3,0.88,265.3,205.13,264.4
+6,Memory-Efficient,B_TREE,CSR,299.59,235.3,166896,86.31,235.3,0.56,235.3,0.87,235.3,211.86,235.3
+
+=== SUMMARY - 10000 Entities ===
+
+Metric,Value
+Total Databases Tested,6
+Fastest Time (ms),280.13
+Slowest Time (ms),299.59
+Average Time (ms),292.40
+Lowest Memory (MB),220.8
+Highest Memory (MB),265.3
+Average Memory (MB),242.2
+Winner (Fastest),Query-Optimized
+Memory Champion (Lowest),Read-Optimized
+
+=== DETAILED RESULTS - 100000 Entities ===
+
+Rank,Database,Node Mode,Edge Mode,Total Time (ms),Peak Memory (MB),Operations/sec,Insert Time (ms),Insert Memory (MB),Read Time (ms),Read Memory (MB),Update Time (ms),Update Memory (MB),Relationships Time (ms),Relationships Memory (MB)
+1,Read-Optimized,HASH_MAP,None,27975.03,314.2,1787,915.36,313.7,7.37,313.7,9.41,314.2,27042.90,308.6
+2,XWData-Optimized,HASH_MAP,None,28077.30,829.1,1781,932.27,828.6,10.10,828.6,11.93,829.1,27122.99,824.4
+3,Persistence-Optimized,B_PLUS_TREE,EDGE_PROPERTY_STORE,28510.17,726.2,1754,980.09,725.7,7.93,725.7,10.38,726.2,27511.77,721.1
+4,Query-Optimized,TREE_GRAPH_HYBRID,WEIGHTED_GRAPH,28655.25,622.7,1745,885.51,622.2,7.50,622.2,10.11,622.7,27752.14,618.1
+5,Memory-Efficient,B_TREE,CSR,29656.76,519.4,1686,942.61,519.0,7.92,519.0,12.26,519.4,28693.97,515.0
+6,Write-Optimized,LSM_TREE,DYNAMIC_ADJ_LIST,30181.79,416.3,1657,903.23,415.8,7.62,415.8,10.42,416.3,29260.53,411.9
+
+=== SUMMARY - 100000 Entities ===
+
+Metric,Value
+Total Databases Tested,6
+Fastest Time (ms),27975.03
+Slowest Time (ms),30181.79
+Average Time (ms),28842.72
+Lowest Memory (MB),314.2
+Highest Memory (MB),829.1
+Average Memory (MB),571.3
+Winner (Fastest),Read-Optimized
+Memory Champion (Lowest),Read-Optimized
+
