@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: lightcone_io
+Version: 0.3.0
+Summary: Module for reading SWIFT lightcone output.
+Author-email: John Helly <j.c.helly@durham.ac.uk>
+Requires-Python: >=3.10
+Requires-Dist: h5py
+Requires-Dist: numpy
+Requires-Dist: mpi4py
+Requires-Dist: unyt
+Requires-Dist: healpy
+Requires-Dist: virgodc>=1.0.1
+Requires-Dist: scipy
+Requires-Dist: tqdm

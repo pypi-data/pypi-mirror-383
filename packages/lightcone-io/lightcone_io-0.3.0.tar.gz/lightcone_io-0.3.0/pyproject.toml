@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lightcone_io"
+dynamic = ["version"]
+authors = [
+  { name="John Helly", email="j.c.helly@durham.ac.uk" },
+]
+description = "Module for reading SWIFT lightcone output."
+requires-python = ">=3.10"
+dependencies = [
+    "h5py",
+    "numpy",
+    "mpi4py",
+    "unyt",
+    "healpy",
+    "virgodc>=1.0.1",
+    "scipy",
+    "tqdm",
+]
+
+[tool.setuptools]
+packages = ["lightcone_io",]
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
