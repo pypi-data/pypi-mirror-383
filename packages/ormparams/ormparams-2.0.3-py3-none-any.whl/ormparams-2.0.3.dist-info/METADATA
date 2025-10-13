@@ -1,0 +1,40 @@
+Metadata-Version: 2.4
+Name: ormparams
+Version: 2.0.3
+Summary: Query parameter parser and filter for ORM-based applications
+Author-email: AntonKochurka <antonkotchurka@email.com>
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: sqlalchemy
+Provides-Extra: fastapi
+Requires-Dist: fastapi>=0.100; extra == "fastapi"
+Requires-Dist: pydantic>=2.0; extra == "fastapi"
+
+ORMParams
+===========
+
+[![PyPI](https://img.shields.io/pypi/v/ormparams)](https://pypi.org/project/ormparams)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/AntonKochurka/ormparams)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
+
+
+Query parameter parser and filter for ORM-based applications. Soon will include a FastAPI extension.
+
+
+## Installation
+
+```bash
+pip install ormparams
+````
+
+Also, for the upcoming FastAPI integration:
+
+```bash
+pip install "ormparams[fastapi]"
+```
+
+
+## Quick Start
