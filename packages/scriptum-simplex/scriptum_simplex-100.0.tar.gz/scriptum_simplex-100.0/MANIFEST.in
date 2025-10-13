@@ -1,0 +1,43 @@
+# Include documentation
+include README.md
+include LICENSE.txt
+include CHANGELOG.md
+include PROJECT_SUMMARY.md
+include INSTALL.txt
+
+# Include sample files
+include sample_document.md
+include sample_with_criticmarkup.md
+
+# Include theme editor samples
+recursive-include editor/theme_editor/samples *.md
+
+# Include documentation
+recursive-include docs *.md
+
+# Include configuration files
+include config.toml
+include mypy.ini
+include .flake8
+
+# Include build scripts (for reference)
+include build_criticmarkup_editor.bat
+include build_theme_editor.bat
+include criticmarkup_editor.spec
+include theme_editor.spec
+
+# Exclude unnecessary files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+global-exclude *.so
+global-exclude *.dylib
+
+# Exclude build artifacts
+prune build
+prune dist
+prune *.egg-info
+prune .pytest_cache
+prune .mypy_cache
+prune .hypothesis
+prune .coverage

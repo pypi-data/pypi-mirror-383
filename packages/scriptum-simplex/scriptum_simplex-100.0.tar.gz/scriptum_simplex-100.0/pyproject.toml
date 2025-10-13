@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scriptum_simplex"
+version = "100.00"
+description = "Markdown editor with CriticMarkup support and Typora theme editor"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+keywords = [
+    "markdown",
+    "editor",
+    "criticmarkup",
+    "change-tracking",
+    "typora",
+    "themes",
+    "css-editor",
+    "document-editing",
+    "collaborative-editing",
+    "gui",
+    "tkinter",
+]
+authors = [
+    {name = "Scriptum Simplex Project", email = "scriptum.simplex@example.com"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Science/Research",
+    "Topic :: Text Editors",
+    "Topic :: Office/Business",
+    "Topic :: Documentation",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Environment :: X11 Applications",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: MacOS X",
+]
+dependencies = [
+    "ttkbootstrap>=1.10.1",
+    "markdown>=3.4.0",
+    "mistune>=3.0.0",
+    "tinycss2>=1.2.1",
+    "cssselect2>=0.7.0",
+    "webencodings>=0.5.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.5.0",
+    "flake8>=6.1.0",
+    "black>=23.7.0",
+]
+build = [
+    "pyinstaller>=5.13.0",
+    "wheel>=0.41.0",
+    "twine>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://sourceforge.net/projects/scriptum-simplex/"
+Documentation = "https://sourceforge.net/p/scriptum-simplex/wiki/"
+Repository = "https://sourceforge.net/p/scriptum-simplex/code/"
+"Bug Tracker" = "https://sourceforge.net/p/scriptum-simplex/tickets/"
+
+[project.scripts]
+criticmarkup-editor = "criticmarkup:main"
+typora-theme-editor = "theme_editor:main"
+
+[project.gui-scripts]
+criticmarkup-editor-gui = "criticmarkup:main"
+typora-theme-editor-gui = "theme_editor:main"
+
+[tool.setuptools]
+packages = ["editor", "editor.full_typora_theme_support", "editor.theme_editor", "editor.theme_editor.ui", "editor.theme_editor.widgets"]
+
+[tool.setuptools.package-data]
+"editor.theme_editor" = ["samples/*.md"]

@@ -1,0 +1,201 @@
+# Scriptum Simplex
+
+A desktop Markdown editor with special support for CriticMarkup syntax, built using Python, Tkinter, and TTK Bootstrap following the Model-View-Controller (MVC) architectural pattern.
+
+## Features
+
+- **Two-pane interface**: Live editor on the left, rendered preview on the right
+- **CriticMarkup support**: Full support for all CriticMarkup syntax elements
+- **Advanced Markdown rendering**: Complete GitHub Flavored Markdown (GFM) support
+  - **Table rendering** with column alignment (left/center/right)
+  - Inline formatting in tables (**bold**, *italic*, `code`)
+  - Code blocks with syntax highlighting
+  - Lists, headings, quotes, and more
+- **AST-based rendering**: Direct Abstract Syntax Tree rendering for better performance
+- **File operations**: New, Open, Save, Save As functionality
+- **Modern UI**: Built with TTK Bootstrap for a modern look and feel
+- **Cross-platform**: Works on Windows, macOS, and Linux
+
+## CriticMarkup Syntax Supported
+
+- **Additions**: `{++text to add++}`
+- **Deletions**: `{--text to delete--}`
+- **Substitutions**: `{~~old text~>new text~~}`
+- **Comments**: `{>>comment text<<}`
+- **Highlights**: `{==highlighted text==}`
+
+## Table Syntax
+
+Scriptum Simplex supports GitHub Flavored Markdown tables with column alignment:
+
+```markdown
+| Left Aligned | Center Aligned | Right Aligned |
+|:-------------|:--------------:|--------------:|
+| Text         | Text           | Text          |
+| More         | Content        | 100           |
+```
+
+**Alignment markers:**
+- `:---` = Left aligned (default)
+- `:---:` = Center aligned
+- `---:` = Right aligned
+
+Tables support **inline formatting** like **bold**, *italic*, and `code` within cells.
+
+## Installation
+
+1. **Clone or download this repository**
+
+2. **Install Python dependencies**:
+   ```bash
+   cd criticmarkup-editor
+   pip install -r requirements.txt
+   ```
+
+3. **Run the application**:
+   ```bash
+   python main.py
+   ```
+
+## Dependencies
+
+- `ttkbootstrap>=1.10.1` - Modern Tkinter themes
+- `marko>=2.0.0` - Markdown parser with AST support and GFM extensions
+- `criticmarkup>=0.7.0` - CriticMarkup processing
+- `tk_html_widgets>=0.40` - HTML rendering in Tkinter (for HTML preview)
+- `pytest>=7.4.0` - Testing framework
+- `mypy>=1.0.0` - Type checking (dev dependency)
+- `flake8>=6.0.0` - Code linting (dev dependency)
+
+## Project Structure
+
+```
+scriptum-simplex/
+├── editor/
+│   ├── __init__.py
+│   ├── main.py         # Application entry point
+│   ├── model.py        # Data and business logic (Model)
+│   ├── view.py         # GUI components (View)
+│   └── controller.py   # Connects Model and View (Controller)
+├── tests/
+│   ├── __init__.py
+│   ├── test_model.py       # Unit tests for the model
+│   └── test_integration.py # Integration tests
+├── main.py             # Main launcher script
+├── requirements.txt    # Python dependencies
+└── README.md          # This file
+```
+
+## Architecture
+
+The application follows the **Model-View-Controller (MVC)** pattern:
+
+- **Model** (`model.py`): Manages data and business logic
+  - Stores raw Markdown/CriticMarkup text
+  - Handles file I/O operations
+  - Converts text to HTML using CriticMarkup and Markdown libraries
+
+- **View** (`view.py`): Manages the user interface
+  - Creates the main window with two-pane layout
+  - Handles user input and displays output
+  - Shows dialogs and manages UI state
+
+- **Controller** (`controller.py`): Coordinates between Model and View
+  - Handles user actions (menu clicks, text changes)
+  - Updates the Model based on user input
+  - Updates the View based on Model changes
+
+## Usage
+
+1. **Start the application** by running `python main.py`
+
+2. **Write Markdown and CriticMarkup** in the left pane:
+   ```markdown
+   # My Document
+   
+   This is **bold** text with {++an addition++}.
+   
+   Here's a {~~mistake~>correction~~} in the text.
+   
+   {>>This is a comment about the document<<}
+   
+   {==This section is important==}
+   ```
+
+3. **See the live preview** in the right pane with proper styling for CriticMarkup elements
+
+4. **Use the File menu** to:
+   - Create new documents (Ctrl+N)
+   - Open existing files (Ctrl+O)
+   - Save your work (Ctrl+S)
+   - Save with a new name (Ctrl+Shift+S)
+
+5. **Use the Edit menu** for standard editing operations:
+   - Undo/Redo (Ctrl+Z/Ctrl+Y)
+   - Cut/Copy/Paste (Ctrl+X/Ctrl+C/Ctrl+V)
+
+## Testing
+
+Run the test suite to verify everything works correctly:
+
+```bash
+# Run all tests
+python -m pytest tests/ -v
+
+# Run only unit tests
+python -m pytest tests/test_model.py -v
+
+# Run only integration tests
+python -m pytest tests/test_integration.py -v
+```
+
+## Development
+
+The codebase is well-documented and follows Python best practices:
+
+- Type hints for better code clarity
+- Comprehensive docstrings
+- Separation of concerns through MVC pattern
+- Extensive test coverage
+- Error handling and user feedback
+
+## Keyboard Shortcuts
+
+- `Ctrl+N` - New file
+- `Ctrl+O` - Open file
+- `Ctrl+S` - Save file
+- `Ctrl+Shift+S` - Save as
+- `Ctrl+Z` - Undo
+- `Ctrl+Y` - Redo
+- `Ctrl+X` - Cut
+- `Ctrl+C` - Copy
+- `Ctrl+V` - Paste
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Run the test suite
+6. Submit a pull request
+
+## License
+
+This project is open source. Feel free to use, modify, and distribute as needed.
+
+## Troubleshooting
+
+**Application won't start:**
+- Make sure all dependencies are installed: `pip install -r requirements.txt`
+- Check that you're using Python 3.7 or later
+
+**Preview not updating:**
+- Check the console for error messages
+- Verify that the CriticMarkup syntax is correct
+
+**File operations not working:**
+- Check file permissions
+- Ensure the directory exists and is writable
+
+For more help, check the test files for usage examples or create an issue in the repository.
