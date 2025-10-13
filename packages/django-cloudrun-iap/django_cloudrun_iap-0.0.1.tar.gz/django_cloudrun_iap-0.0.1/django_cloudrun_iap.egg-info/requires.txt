@@ -1,0 +1,11 @@
+django~=3.2
+google-auth>=2.0.0
+requests
+
+[dev]
+ipdb
+
+[test]
+pytest>=7.0
+pytest-django>=4.5
+pytest-mock>=3.0
