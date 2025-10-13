@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools >= 78", "setuptools_scm >= 6.2", "Cython >= 3.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dnaio"
+authors = [
+    {name = "Marcel Martin", email = "marcel.martin@scilifelab.se"},
+    {name = "Ruben Vorderman", email = "r.h.p.vorderman@lumc.nl"}
+]
+description = "Read and write FASTA and FASTQ files efficiently"
+readme = "README.rst"
+license = "MIT"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics"
+]
+requires-python = ">=3.10"
+dependencies = [
+    "xopen >= 1.4.0"
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "Cython",
+    "pytest"
+]
+
+[project.urls]
+"Homepage" = "https://dnaio.readthedocs.io/"
+"Changelog" = "https://dnaio.readthedocs.io/en/latest/changes.html"
+"Repository" = "https://github.com/marcelm/dnaio/"
+
+[tool.setuptools.exclude-package-data]
+dnaio = ["*.pyx"]
+
+[tool.setuptools_scm]
+write_to = "src/dnaio/_version.py"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.cibuildwheel.windows.environment]
+CFLAGS = "-O3 -DNDEBUG"
+
+[tool.cibuildwheel.macos.environment]
+CFLAGS = "-O3 -DNDEBUG"
+
+[tool.cibuildwheel.linux.environment]
+CFLAGS = "-O3 -DNDEBUG"
+
+[tool.cibuildwheel]
+test-requires = "pytest"
+test-command = ["cd {project}", "pytest tests"]
+build-verbosity = 1
+
+[[tool.cibuildwheel.overrides]]
+select = "*-win*"
+test-command = ["cd /d {project}", "pytest tests"]
+
+[tool.mypy]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.coverage.report]
+precision = 1
+exclude_also = [
+    "def __repr__",
+    "@overload",
+    "if TYPE_CHECKING:",
+]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+include = [
+    "*/site-packages/dnaio/*",
+    "tests/*",
+]
+
+[tool.coverage.paths]
+source = [
+    "src/",
+    "*/site-packages/",
+]
