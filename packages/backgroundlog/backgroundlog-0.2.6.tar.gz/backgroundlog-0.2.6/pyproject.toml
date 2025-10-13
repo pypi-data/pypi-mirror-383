@@ -1,0 +1,58 @@
+[project]
+name = "backgroundlog"
+version = "0.2.6"
+description = "A logging handler wrapper to improve logging performace by sending writes to a background thread"
+readme = "README.md"
+keywords = [ "logging", "log", "thread", "threading", "non-blocking" ]
+requires-python = ">=3.10"
+authors = [
+    { name = "Diego J. Romero López", email = "diegojromerolopez@gmail.com" },
+]
+classifiers=[
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries",
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = []
+
+[project.urls]
+repository = "https://github.com/diegojromerolopez/backgroundlog"
+documentation = "https://github.com/diegojromerolopez/backgroundlog/blob/main/README.md"
+"Bug Tracker" = "https://github.com/diegojromerolopez/backgroundlog/issues"
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "coverage>=7.9.2",
+    "flake8>=7.3.0",
+    "flake8-quotes>=3.4.0",
+    "isort>=6.0.1",
+    "mypy>=1.16.1",
+]
+
+[tool.black]
+skip_string_normalization = true
+
+[tool.flake8]
+inline-quotes = "'"
+multiline-quotes = "'''"
+docstring-quotes = '"""'
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.13"
+disallow_any_unimported = true
+disallow_any_expr = false
+disallow_any_decorated = true
+disallow_any_explicit = true
+disallow_any_generics = true
+disallow_subclassing_any = true
