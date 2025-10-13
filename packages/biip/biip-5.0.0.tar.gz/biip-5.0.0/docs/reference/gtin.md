@@ -1,0 +1,3 @@
+# `biip.gtin`
+
+::: biip.gtin
