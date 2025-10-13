@@ -1,0 +1,58 @@
+import asyncio
+from collections.abc import Awaitable
+from collections.abc import Callable
+from functools import wraps
+from typing import Any
+from typing import cast
+
+from intuned_cli.utils.browser import close_cli_browser
+from intuned_cli.utils.browser import is_cli_browser_launched
+from intuned_cli.utils.console import console
+from intuned_cli.utils.error import CLIError
+from intuned_cli.utils.error import CLIExit
+from intuned_cli.utils.error import log_automation_error
+from runtime.errors.run_api_errors import RunApiError
+
+
+def cli_command[F: Callable[..., Awaitable[Any]]](fn: F) -> F:
+    @wraps(fn)
+    async def wrapper(*args: Any, **kwargs: Any):
+        keep_open = kwargs.get("keep_browser_open", False)
+        if keep_open:
+            console.print(
+                "[bold]--keep-browser-open is set, the CLI will not close the last browser after the command completes.[/bold]"
+            )
+        try:
+            result = await fn(*args, **kwargs)
+            return result
+        except CLIError as e:
+            if e.auto_color:
+                console.print(f"[bold red]{e.message}[/bold red]")
+            else:
+                console.print(e.message)
+            raise CLIExit(1) from e
+        except RunApiError as e:
+            log_automation_error(e)
+            raise CLIExit(1) from e
+        except KeyboardInterrupt:
+            console.print("[bold red]Aborted[/bold red]")
+            raise CLIExit(1) from None
+        except Exception as e:
+            console.print(
+                f"[red][bold]An error occurred: [/bold]{e}\n[bold]Please report this issue to the Intuned team.[/bold]"
+            )
+            raise CLIExit(1) from e
+        finally:
+            if keep_open:
+                await _wait_for_user_input()
+            await close_cli_browser()
+
+    return cast(F, wrapper)
+
+
+async def _wait_for_user_input():
+    if not is_cli_browser_launched():
+        return
+    if not console.is_terminal:
+        return
+    await asyncio.to_thread(console.input, "Press Enter to continue...")
