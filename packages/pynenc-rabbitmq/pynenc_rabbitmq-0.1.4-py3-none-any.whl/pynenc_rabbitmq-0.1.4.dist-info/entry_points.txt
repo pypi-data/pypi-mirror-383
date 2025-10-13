@@ -1,0 +1,3 @@
+[pynenc.plugins]
+rabbitmq_broker = pynenc_rabbitmq.broker.rabbitmq_broker
+rabbitmq_builder = pynenc_rabbitmq.builder:RabbitMqBuilderPlugin
