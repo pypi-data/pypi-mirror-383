@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+include cache.zip
+recursive-include pyviser *
+global-exclude *.pyc
+global-exclude __pycache__
