@@ -1,0 +1,62 @@
+# Coefficients for Bolometric Correction Calculations
+#
+# This file contains the polynomial coefficients (with uncertainties) used to compute
+# the bolometric correction (BC) for stars based on their temperature. The bolometric
+# correction is determined via a fourth-order polynomial fit of the form:
+#
+#     BC = a + b*T + c*T^2 + d*T^3 + e*T^4
+#
+# which can be efficiently evaluated using Horner's method:
+#
+#     BC = a + T*(b + T*(c + T*(d + T*e)))
+#
+# Each photometric filter (e.g., B, V, G, GBP, GRP, TESS) has its own set of coefficients.
+# The coefficients are expressed as pairs [nominal value, uncertainty] and are intended to be
+# converted to ufloat objects (using the Python uncertainties package) to properly propagate
+# errors during calculations.
+#
+# These coefficients are based on the methodology described in:
+# https://arxiv.org/pdf/2305.12538
+
+B:
+  a: [-1272.43, 394.2]
+  b: [1075.85, 394.4]
+  c: [-337.831, 147.7]
+  d: [46.8074, 24.53]
+  e: [-2.42862, 1.552]
+  RMS: 0.136257
+V:
+  a: [-3767.98, 288.8]
+  b: [3595.86, 290.9]
+  c: [-1286.59, 109.6]
+  d: [204.764, 18.32]
+  e: [-12.2469, 1.146]
+  RMS: 0.120071
+G:
+  a: [-1407.14, 256.7]
+  b: [1305.08, 258.9]
+  c: [-453.605, 97.67]
+  d: [70.2338, 16.34]
+  e: [-4.1047, 1.023]
+  RMS: 0.111068
+GBP:
+  a: [-3421.55, 293.6]
+  b: [3248.19, 296.1]
+  c: [-1156.82, 111.7]
+  d: [183.372, 18.68]
+  e: [-10.9305, 1.169]
+  RMS: 0.126577
+GRP:
+  a: [-1415.67, 253.3]
+  b: [1342.38, 255.4]
+  c: [-475.827, 96.34]
+  d: [74.9702, 16.12]
+  e: [-4.44923, 1.009]
+  RMS: 0.109179
+TESS:
+  a: [-318.533, 18.92]
+  b: [232.298, 14.4]
+  c: [-55.2916, 3.642]
+  d: [4.27613, 0.3061]
+  e: [0, 0]
+  RMS: 0.110951
