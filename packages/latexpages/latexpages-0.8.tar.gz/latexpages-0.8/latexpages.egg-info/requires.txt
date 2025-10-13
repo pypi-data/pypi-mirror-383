@@ -1,0 +1,12 @@
+
+[dev]
+build
+wheel
+twine
+mypy
+flake8
+Flake8-pyproject
+pep8-naming
+
+[test]
+coverage[toml]
