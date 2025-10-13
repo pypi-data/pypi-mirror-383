@@ -1,0 +1,81 @@
+Metadata-Version: 2.4
+Name: mac-formatter-gui
+Version: 0.1.2
+Summary: A simple Tkinter GUI to format MAC addresses into common styles and copy them to clipboard.
+Author-email: Neil Johnson <apps@erudicon.com>
+License-Expression: MIT
+Project-URL: Homepage, https://erudicon.com/2025/10/12/mac-address-formatter/
+Keywords: mac,mac address,formatter,gui,tkinter
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Operating System :: OS Independent
+Classifier: Environment :: Win32 (MS Windows)
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# MAC Formatter GUI
+
+A simple Tkinter GUI to normalize and display MAC addresses in three common formats:
+
+- Colon: `XX:XX:XX:XX:XX:XX`
+- Dash: `XX-XX-XX-XX-XX-XX`
+- Dotted: `XXXX.XXXX.XXXX`
+
+It also lets you choose UPPERCASE or lowercase and copy the results to your clipboard.
+
+## Installation
+
+You can install from PyPI once published:
+
+```
+pip install mac-formatter-gui
+```
+
+For local development (from this repository root):
+
+```
+pip install -e .
+```
+
+## Usage
+
+After installation, launch the app with the console command:
+
+```
+mac-formatter
+```
+
+Or via Python:
+
+```
+python -m mac_formatter.app
+```
+
+## Requirements
+
+- Python 3.8+
+- Tkinter (comes with standard CPython on most platforms)
+
+## Development
+
+Build and test the distribution locally:
+
+```
+python -m build
+```
+
+Upload to TestPyPI:
+
+```
+python -m twine upload -r testpypi dist/*
+```
+
+Upload to PyPI:
+
+```
+python -m twine upload dist/*
+```
+
