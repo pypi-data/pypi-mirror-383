@@ -1,0 +1,1070 @@
+{
+  "Read-Optimized": {
+    "database": "Read-Optimized",
+    "node_mode": "HASH_MAP",
+    "edge_mode": "None",
+    "total_time_ms": 12.513100169599056,
+    "peak_memory_mb": 205.56640625,
+    "metrics": {
+      "insert_user": {
+        "count": 1,
+        "total_time_ms": 2.485299948602915,
+        "min_time_ms": 2.485299948602915,
+        "max_time_ms": 2.485299948602915,
+        "avg_time_ms": 2.485299948602915,
+        "peak_memory_mb": 204.578125
+      },
+      "insert_post": {
+        "count": 1,
+        "total_time_ms": 1.4760000631213188,
+        "min_time_ms": 1.4760000631213188,
+        "max_time_ms": 1.4760000631213188,
+        "avg_time_ms": 1.4760000631213188,
+        "peak_memory_mb": 204.8125
+      },
+      "insert_comment": {
+        "count": 1,
+        "total_time_ms": 0.9381999261677265,
+        "min_time_ms": 0.9381999261677265,
+        "max_time_ms": 0.9381999261677265,
+        "avg_time_ms": 0.9381999261677265,
+        "peak_memory_mb": 205.00390625
+      },
+      "insert_relationship": {
+        "count": 1,
+        "total_time_ms": 4.622800275683403,
+        "min_time_ms": 4.622800275683403,
+        "max_time_ms": 4.622800275683403,
+        "avg_time_ms": 4.622800275683403,
+        "peak_memory_mb": 205.53125
+      },
+      "read_user": {
+        "count": 1,
+        "total_time_ms": 0.09569991379976273,
+        "min_time_ms": 0.09569991379976273,
+        "max_time_ms": 0.09569991379976273,
+        "avg_time_ms": 0.09569991379976273,
+        "peak_memory_mb": 205.53125
+      },
+      "read_post": {
+        "count": 1,
+        "total_time_ms": 0.05440041422843933,
+        "min_time_ms": 0.05440041422843933,
+        "max_time_ms": 0.05440041422843933,
+        "avg_time_ms": 0.05440041422843933,
+        "peak_memory_mb": 205.53125
+      },
+      "read_comment": {
+        "count": 1,
+        "total_time_ms": 0.045800115913152695,
+        "min_time_ms": 0.045800115913152695,
+        "max_time_ms": 0.045800115913152695,
+        "avg_time_ms": 0.045800115913152695,
+        "peak_memory_mb": 205.53515625
+      },
+      "update_user": {
+        "count": 1,
+        "total_time_ms": 0.0758003443479538,
+        "min_time_ms": 0.0758003443479538,
+        "max_time_ms": 0.0758003443479538,
+        "avg_time_ms": 0.0758003443479538,
+        "peak_memory_mb": 205.546875
+      },
+      "update_post": {
+        "count": 1,
+        "total_time_ms": 0.029199756681919098,
+        "min_time_ms": 0.029199756681919098,
+        "max_time_ms": 0.029199756681919098,
+        "avg_time_ms": 0.029199756681919098,
+        "peak_memory_mb": 205.546875
+      },
+      "update_comment": {
+        "count": 1,
+        "total_time_ms": 0.04020007327198982,
+        "min_time_ms": 0.04020007327198982,
+        "max_time_ms": 0.04020007327198982,
+        "avg_time_ms": 0.04020007327198982,
+        "peak_memory_mb": 205.5546875
+      },
+      "soft_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.013199634850025177,
+        "min_time_ms": 0.013199634850025177,
+        "max_time_ms": 0.013199634850025177,
+        "avg_time_ms": 0.013199634850025177,
+        "peak_memory_mb": 205.5546875
+      },
+      "search_users": {
+        "count": 1,
+        "total_time_ms": 0.318099744617939,
+        "min_time_ms": 0.318099744617939,
+        "max_time_ms": 0.318099744617939,
+        "avg_time_ms": 0.318099744617939,
+        "peak_memory_mb": 205.55859375
+      },
+      "list_posts_by_user": {
+        "count": 1,
+        "total_time_ms": 0.045800115913152695,
+        "min_time_ms": 0.045800115913152695,
+        "max_time_ms": 0.045800115913152695,
+        "avg_time_ms": 0.045800115913152695,
+        "peak_memory_mb": 205.55859375
+      },
+      "list_comments_by_post": {
+        "count": 1,
+        "total_time_ms": 0.04159985110163689,
+        "min_time_ms": 0.04159985110163689,
+        "max_time_ms": 0.04159985110163689,
+        "avg_time_ms": 0.04159985110163689,
+        "peak_memory_mb": 205.55859375
+      },
+      "list_all_users": {
+        "count": 1,
+        "total_time_ms": 0.011600088328123093,
+        "min_time_ms": 0.011600088328123093,
+        "max_time_ms": 0.011600088328123093,
+        "avg_time_ms": 0.011600088328123093,
+        "peak_memory_mb": 205.55859375
+      },
+      "query_followers": {
+        "count": 1,
+        "total_time_ms": 1.1677001602947712,
+        "min_time_ms": 1.1677001602947712,
+        "max_time_ms": 1.1677001602947712,
+        "avg_time_ms": 1.1677001602947712,
+        "peak_memory_mb": 205.5625
+      },
+      "query_following": {
+        "count": 1,
+        "total_time_ms": 1.0146996937692165,
+        "min_time_ms": 1.0146996937692165,
+        "max_time_ms": 1.0146996937692165,
+        "avg_time_ms": 1.0146996937692165,
+        "peak_memory_mb": 205.56640625
+      },
+      "hard_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.016800127923488617,
+        "min_time_ms": 0.016800127923488617,
+        "max_time_ms": 0.016800127923488617,
+        "avg_time_ms": 0.016800127923488617,
+        "peak_memory_mb": 205.56640625
+      },
+      "hard_delete_post": {
+        "count": 1,
+        "total_time_ms": 0.009899958968162537,
+        "min_time_ms": 0.009899958968162537,
+        "max_time_ms": 0.009899958968162537,
+        "avg_time_ms": 0.009899958968162537,
+        "peak_memory_mb": 205.56640625
+      },
+      "hard_delete_user": {
+        "count": 1,
+        "total_time_ms": 0.010299962013959885,
+        "min_time_ms": 0.010299962013959885,
+        "max_time_ms": 0.010299962013959885,
+        "avg_time_ms": 0.010299962013959885,
+        "peak_memory_mb": 205.56640625
+      }
+    },
+    "stats": {
+      "name": "Read-Optimized",
+      "node_mode": "HASH_MAP",
+      "edge_mode": "None",
+      "total_users": 490,
+      "total_posts": 290,
+      "total_comments": 190,
+      "total_relationships": 997
+    }
+  },
+  "Write-Optimized": {
+    "database": "Write-Optimized",
+    "node_mode": "LSM_TREE",
+    "edge_mode": "DYNAMIC_ADJ_LIST",
+    "total_time_ms": 12.248801067471504,
+    "peak_memory_mb": 206.71484375,
+    "metrics": {
+      "insert_user": {
+        "count": 1,
+        "total_time_ms": 2.382699865847826,
+        "min_time_ms": 2.382699865847826,
+        "max_time_ms": 2.382699865847826,
+        "avg_time_ms": 2.382699865847826,
+        "peak_memory_mb": 205.8984375
+      },
+      "insert_post": {
+        "count": 1,
+        "total_time_ms": 1.4361999928951263,
+        "min_time_ms": 1.4361999928951263,
+        "max_time_ms": 1.4361999928951263,
+        "avg_time_ms": 1.4361999928951263,
+        "peak_memory_mb": 206.14453125
+      },
+      "insert_comment": {
+        "count": 1,
+        "total_time_ms": 1.1102003045380116,
+        "min_time_ms": 1.1102003045380116,
+        "max_time_ms": 1.1102003045380116,
+        "avg_time_ms": 1.1102003045380116,
+        "peak_memory_mb": 206.2734375
+      },
+      "insert_relationship": {
+        "count": 1,
+        "total_time_ms": 4.4120000675320625,
+        "min_time_ms": 4.4120000675320625,
+        "max_time_ms": 4.4120000675320625,
+        "avg_time_ms": 4.4120000675320625,
+        "peak_memory_mb": 206.6875
+      },
+      "read_user": {
+        "count": 1,
+        "total_time_ms": 0.07090019062161446,
+        "min_time_ms": 0.07090019062161446,
+        "max_time_ms": 0.07090019062161446,
+        "avg_time_ms": 0.07090019062161446,
+        "peak_memory_mb": 206.6875
+      },
+      "read_post": {
+        "count": 1,
+        "total_time_ms": 0.08539995178580284,
+        "min_time_ms": 0.08539995178580284,
+        "max_time_ms": 0.08539995178580284,
+        "avg_time_ms": 0.08539995178580284,
+        "peak_memory_mb": 206.6875
+      },
+      "read_comment": {
+        "count": 1,
+        "total_time_ms": 0.0513000413775444,
+        "min_time_ms": 0.0513000413775444,
+        "max_time_ms": 0.0513000413775444,
+        "avg_time_ms": 0.0513000413775444,
+        "peak_memory_mb": 206.6875
+      },
+      "update_user": {
+        "count": 1,
+        "total_time_ms": 0.08849985897541046,
+        "min_time_ms": 0.08849985897541046,
+        "max_time_ms": 0.08849985897541046,
+        "avg_time_ms": 0.08849985897541046,
+        "peak_memory_mb": 206.6953125
+      },
+      "update_post": {
+        "count": 1,
+        "total_time_ms": 0.03400025889277458,
+        "min_time_ms": 0.03400025889277458,
+        "max_time_ms": 0.03400025889277458,
+        "avg_time_ms": 0.03400025889277458,
+        "peak_memory_mb": 206.69921875
+      },
+      "update_comment": {
+        "count": 1,
+        "total_time_ms": 0.03319978713989258,
+        "min_time_ms": 0.03319978713989258,
+        "max_time_ms": 0.03319978713989258,
+        "avg_time_ms": 0.03319978713989258,
+        "peak_memory_mb": 206.70703125
+      },
+      "soft_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.008299946784973145,
+        "min_time_ms": 0.008299946784973145,
+        "max_time_ms": 0.008299946784973145,
+        "avg_time_ms": 0.008299946784973145,
+        "peak_memory_mb": 206.70703125
+      },
+      "search_users": {
+        "count": 1,
+        "total_time_ms": 0.34190015867352486,
+        "min_time_ms": 0.34190015867352486,
+        "max_time_ms": 0.34190015867352486,
+        "avg_time_ms": 0.34190015867352486,
+        "peak_memory_mb": 206.70703125
+      },
+      "list_posts_by_user": {
+        "count": 1,
+        "total_time_ms": 0.04540011286735535,
+        "min_time_ms": 0.04540011286735535,
+        "max_time_ms": 0.04540011286735535,
+        "avg_time_ms": 0.04540011286735535,
+        "peak_memory_mb": 206.70703125
+      },
+      "list_comments_by_post": {
+        "count": 1,
+        "total_time_ms": 0.033800024539232254,
+        "min_time_ms": 0.033800024539232254,
+        "max_time_ms": 0.033800024539232254,
+        "avg_time_ms": 0.033800024539232254,
+        "peak_memory_mb": 206.70703125
+      },
+      "list_all_users": {
+        "count": 1,
+        "total_time_ms": 0.011700205504894257,
+        "min_time_ms": 0.011700205504894257,
+        "max_time_ms": 0.011700205504894257,
+        "avg_time_ms": 0.011700205504894257,
+        "peak_memory_mb": 206.70703125
+      },
+      "query_followers": {
+        "count": 1,
+        "total_time_ms": 1.0871998965740204,
+        "min_time_ms": 1.0871998965740204,
+        "max_time_ms": 1.0871998965740204,
+        "avg_time_ms": 1.0871998965740204,
+        "peak_memory_mb": 206.7109375
+      },
+      "query_following": {
+        "count": 1,
+        "total_time_ms": 0.9905998595058918,
+        "min_time_ms": 0.9905998595058918,
+        "max_time_ms": 0.9905998595058918,
+        "avg_time_ms": 0.9905998595058918,
+        "peak_memory_mb": 206.7109375
+      },
+      "hard_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.009400304406881332,
+        "min_time_ms": 0.009400304406881332,
+        "max_time_ms": 0.009400304406881332,
+        "avg_time_ms": 0.009400304406881332,
+        "peak_memory_mb": 206.71484375
+      },
+      "hard_delete_post": {
+        "count": 1,
+        "total_time_ms": 0.008500181138515472,
+        "min_time_ms": 0.008500181138515472,
+        "max_time_ms": 0.008500181138515472,
+        "avg_time_ms": 0.008500181138515472,
+        "peak_memory_mb": 206.71484375
+      },
+      "hard_delete_user": {
+        "count": 1,
+        "total_time_ms": 0.007600057870149612,
+        "min_time_ms": 0.007600057870149612,
+        "max_time_ms": 0.007600057870149612,
+        "avg_time_ms": 0.007600057870149612,
+        "peak_memory_mb": 206.71484375
+      }
+    },
+    "stats": {
+      "name": "Write-Optimized",
+      "node_mode": "LSM_TREE",
+      "edge_mode": "DYNAMIC_ADJ_LIST",
+      "total_users": 490,
+      "total_posts": 290,
+      "total_comments": 190,
+      "total_relationships": 997
+    }
+  },
+  "Memory-Efficient": {
+    "database": "Memory-Efficient",
+    "node_mode": "B_TREE",
+    "edge_mode": "CSR",
+    "total_time_ms": 12.242600787431002,
+    "peak_memory_mb": 207.8203125,
+    "metrics": {
+      "insert_user": {
+        "count": 1,
+        "total_time_ms": 2.195400185883045,
+        "min_time_ms": 2.195400185883045,
+        "max_time_ms": 2.195400185883045,
+        "avg_time_ms": 2.195400185883045,
+        "peak_memory_mb": 207.08203125
+      },
+      "insert_post": {
+        "count": 1,
+        "total_time_ms": 1.513299997895956,
+        "min_time_ms": 1.513299997895956,
+        "max_time_ms": 1.513299997895956,
+        "avg_time_ms": 1.513299997895956,
+        "peak_memory_mb": 207.29296875
+      },
+      "insert_comment": {
+        "count": 1,
+        "total_time_ms": 1.0240999981760979,
+        "min_time_ms": 1.0240999981760979,
+        "max_time_ms": 1.0240999981760979,
+        "avg_time_ms": 1.0240999981760979,
+        "peak_memory_mb": 207.42578125
+      },
+      "insert_relationship": {
+        "count": 1,
+        "total_time_ms": 4.682600032538176,
+        "min_time_ms": 4.682600032538176,
+        "max_time_ms": 4.682600032538176,
+        "avg_time_ms": 4.682600032538176,
+        "peak_memory_mb": 207.796875
+      },
+      "read_user": {
+        "count": 1,
+        "total_time_ms": 0.07170019671320915,
+        "min_time_ms": 0.07170019671320915,
+        "max_time_ms": 0.07170019671320915,
+        "avg_time_ms": 0.07170019671320915,
+        "peak_memory_mb": 207.796875
+      },
+      "read_post": {
+        "count": 1,
+        "total_time_ms": 0.0963001511991024,
+        "min_time_ms": 0.0963001511991024,
+        "max_time_ms": 0.0963001511991024,
+        "avg_time_ms": 0.0963001511991024,
+        "peak_memory_mb": 207.796875
+      },
+      "read_comment": {
+        "count": 1,
+        "total_time_ms": 0.0621001236140728,
+        "min_time_ms": 0.0621001236140728,
+        "max_time_ms": 0.0621001236140728,
+        "avg_time_ms": 0.0621001236140728,
+        "peak_memory_mb": 207.796875
+      },
+      "update_user": {
+        "count": 1,
+        "total_time_ms": 0.11509982869029045,
+        "min_time_ms": 0.11509982869029045,
+        "max_time_ms": 0.11509982869029045,
+        "avg_time_ms": 0.11509982869029045,
+        "peak_memory_mb": 207.8046875
+      },
+      "update_post": {
+        "count": 1,
+        "total_time_ms": 0.02819998189806938,
+        "min_time_ms": 0.02819998189806938,
+        "max_time_ms": 0.02819998189806938,
+        "avg_time_ms": 0.02819998189806938,
+        "peak_memory_mb": 207.80859375
+      },
+      "update_comment": {
+        "count": 1,
+        "total_time_ms": 0.033800024539232254,
+        "min_time_ms": 0.033800024539232254,
+        "max_time_ms": 0.033800024539232254,
+        "avg_time_ms": 0.033800024539232254,
+        "peak_memory_mb": 207.81640625
+      },
+      "soft_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.0074999406933784485,
+        "min_time_ms": 0.0074999406933784485,
+        "max_time_ms": 0.0074999406933784485,
+        "avg_time_ms": 0.0074999406933784485,
+        "peak_memory_mb": 207.81640625
+      },
+      "search_users": {
+        "count": 1,
+        "total_time_ms": 0.30740024521946907,
+        "min_time_ms": 0.30740024521946907,
+        "max_time_ms": 0.30740024521946907,
+        "avg_time_ms": 0.30740024521946907,
+        "peak_memory_mb": 207.8203125
+      },
+      "list_posts_by_user": {
+        "count": 1,
+        "total_time_ms": 0.02619996666908264,
+        "min_time_ms": 0.02619996666908264,
+        "max_time_ms": 0.02619996666908264,
+        "avg_time_ms": 0.02619996666908264,
+        "peak_memory_mb": 207.8203125
+      },
+      "list_comments_by_post": {
+        "count": 1,
+        "total_time_ms": 0.020999927073717117,
+        "min_time_ms": 0.020999927073717117,
+        "max_time_ms": 0.020999927073717117,
+        "avg_time_ms": 0.020999927073717117,
+        "peak_memory_mb": 207.8203125
+      },
+      "list_all_users": {
+        "count": 1,
+        "total_time_ms": 0.006800051778554916,
+        "min_time_ms": 0.006800051778554916,
+        "max_time_ms": 0.006800051778554916,
+        "avg_time_ms": 0.006800051778554916,
+        "peak_memory_mb": 207.8203125
+      },
+      "query_followers": {
+        "count": 1,
+        "total_time_ms": 1.0505998507142067,
+        "min_time_ms": 1.0505998507142067,
+        "max_time_ms": 1.0505998507142067,
+        "avg_time_ms": 1.0505998507142067,
+        "peak_memory_mb": 207.8203125
+      },
+      "query_following": {
+        "count": 1,
+        "total_time_ms": 0.9747003205120564,
+        "min_time_ms": 0.9747003205120564,
+        "max_time_ms": 0.9747003205120564,
+        "avg_time_ms": 0.9747003205120564,
+        "peak_memory_mb": 207.8203125
+      },
+      "hard_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.010899733752012253,
+        "min_time_ms": 0.010899733752012253,
+        "max_time_ms": 0.010899733752012253,
+        "avg_time_ms": 0.010899733752012253,
+        "peak_memory_mb": 207.8203125
+      },
+      "hard_delete_post": {
+        "count": 1,
+        "total_time_ms": 0.0073998235166072845,
+        "min_time_ms": 0.0073998235166072845,
+        "max_time_ms": 0.0073998235166072845,
+        "avg_time_ms": 0.0073998235166072845,
+        "peak_memory_mb": 207.8203125
+      },
+      "hard_delete_user": {
+        "count": 1,
+        "total_time_ms": 0.007500406354665756,
+        "min_time_ms": 0.007500406354665756,
+        "max_time_ms": 0.007500406354665756,
+        "avg_time_ms": 0.007500406354665756,
+        "peak_memory_mb": 207.8203125
+      }
+    },
+    "stats": {
+      "name": "Memory-Efficient",
+      "node_mode": "B_TREE",
+      "edge_mode": "CSR",
+      "total_users": 490,
+      "total_posts": 290,
+      "total_comments": 190,
+      "total_relationships": 1000
+    }
+  },
+  "Query-Optimized": {
+    "database": "Query-Optimized",
+    "node_mode": "TREE_GRAPH_HYBRID",
+    "edge_mode": "WEIGHTED_GRAPH",
+    "total_time_ms": 13.346600346267223,
+    "peak_memory_mb": 208.80859375,
+    "metrics": {
+      "insert_user": {
+        "count": 1,
+        "total_time_ms": 2.4859001860022545,
+        "min_time_ms": 2.4859001860022545,
+        "max_time_ms": 2.4859001860022545,
+        "avg_time_ms": 2.4859001860022545,
+        "peak_memory_mb": 208.08984375
+      },
+      "insert_post": {
+        "count": 1,
+        "total_time_ms": 1.9648997113108635,
+        "min_time_ms": 1.9648997113108635,
+        "max_time_ms": 1.9648997113108635,
+        "avg_time_ms": 1.9648997113108635,
+        "peak_memory_mb": 208.28515625
+      },
+      "insert_comment": {
+        "count": 1,
+        "total_time_ms": 1.5436001121997833,
+        "min_time_ms": 1.5436001121997833,
+        "max_time_ms": 1.5436001121997833,
+        "avg_time_ms": 1.5436001121997833,
+        "peak_memory_mb": 208.41796875
+      },
+      "insert_relationship": {
+        "count": 1,
+        "total_time_ms": 4.688400309532881,
+        "min_time_ms": 4.688400309532881,
+        "max_time_ms": 4.688400309532881,
+        "avg_time_ms": 4.688400309532881,
+        "peak_memory_mb": 208.78515625
+      },
+      "read_user": {
+        "count": 1,
+        "total_time_ms": 0.04810001701116562,
+        "min_time_ms": 0.04810001701116562,
+        "max_time_ms": 0.04810001701116562,
+        "avg_time_ms": 0.04810001701116562,
+        "peak_memory_mb": 208.78515625
+      },
+      "read_post": {
+        "count": 1,
+        "total_time_ms": 0.049999915063381195,
+        "min_time_ms": 0.049999915063381195,
+        "max_time_ms": 0.049999915063381195,
+        "avg_time_ms": 0.049999915063381195,
+        "peak_memory_mb": 208.78515625
+      },
+      "read_comment": {
+        "count": 1,
+        "total_time_ms": 0.04110019654035568,
+        "min_time_ms": 0.04110019654035568,
+        "max_time_ms": 0.04110019654035568,
+        "avg_time_ms": 0.04110019654035568,
+        "peak_memory_mb": 208.78515625
+      },
+      "update_user": {
+        "count": 1,
+        "total_time_ms": 0.0879000872373581,
+        "min_time_ms": 0.0879000872373581,
+        "max_time_ms": 0.0879000872373581,
+        "avg_time_ms": 0.0879000872373581,
+        "peak_memory_mb": 208.79296875
+      },
+      "update_post": {
+        "count": 1,
+        "total_time_ms": 0.02600019797682762,
+        "min_time_ms": 0.02600019797682762,
+        "max_time_ms": 0.02600019797682762,
+        "avg_time_ms": 0.02600019797682762,
+        "peak_memory_mb": 208.796875
+      },
+      "update_comment": {
+        "count": 1,
+        "total_time_ms": 0.02819998189806938,
+        "min_time_ms": 0.02819998189806938,
+        "max_time_ms": 0.02819998189806938,
+        "avg_time_ms": 0.02819998189806938,
+        "peak_memory_mb": 208.8046875
+      },
+      "soft_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.007899943739175797,
+        "min_time_ms": 0.007899943739175797,
+        "max_time_ms": 0.007899943739175797,
+        "avg_time_ms": 0.007899943739175797,
+        "peak_memory_mb": 208.8046875
+      },
+      "search_users": {
+        "count": 1,
+        "total_time_ms": 0.2965000458061695,
+        "min_time_ms": 0.2965000458061695,
+        "max_time_ms": 0.2965000458061695,
+        "avg_time_ms": 0.2965000458061695,
+        "peak_memory_mb": 208.80859375
+      },
+      "list_posts_by_user": {
+        "count": 1,
+        "total_time_ms": 0.02479972317814827,
+        "min_time_ms": 0.02479972317814827,
+        "max_time_ms": 0.02479972317814827,
+        "avg_time_ms": 0.02479972317814827,
+        "peak_memory_mb": 208.80859375
+      },
+      "list_comments_by_post": {
+        "count": 1,
+        "total_time_ms": 0.02350006252527237,
+        "min_time_ms": 0.02350006252527237,
+        "max_time_ms": 0.02350006252527237,
+        "avg_time_ms": 0.02350006252527237,
+        "peak_memory_mb": 208.80859375
+      },
+      "list_all_users": {
+        "count": 1,
+        "total_time_ms": 0.0060996972024440765,
+        "min_time_ms": 0.0060996972024440765,
+        "max_time_ms": 0.0060996972024440765,
+        "avg_time_ms": 0.0060996972024440765,
+        "peak_memory_mb": 208.80859375
+      },
+      "query_followers": {
+        "count": 1,
+        "total_time_ms": 1.0174000635743141,
+        "min_time_ms": 1.0174000635743141,
+        "max_time_ms": 1.0174000635743141,
+        "avg_time_ms": 1.0174000635743141,
+        "peak_memory_mb": 208.80859375
+      },
+      "query_following": {
+        "count": 1,
+        "total_time_ms": 0.982699915766716,
+        "min_time_ms": 0.982699915766716,
+        "max_time_ms": 0.982699915766716,
+        "avg_time_ms": 0.982699915766716,
+        "peak_memory_mb": 208.80859375
+      },
+      "hard_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.00890018418431282,
+        "min_time_ms": 0.00890018418431282,
+        "max_time_ms": 0.00890018418431282,
+        "avg_time_ms": 0.00890018418431282,
+        "peak_memory_mb": 208.80859375
+      },
+      "hard_delete_post": {
+        "count": 1,
+        "total_time_ms": 0.0073998235166072845,
+        "min_time_ms": 0.0073998235166072845,
+        "max_time_ms": 0.0073998235166072845,
+        "avg_time_ms": 0.0073998235166072845,
+        "peak_memory_mb": 208.80859375
+      },
+      "hard_delete_user": {
+        "count": 1,
+        "total_time_ms": 0.007300172001123428,
+        "min_time_ms": 0.007300172001123428,
+        "max_time_ms": 0.007300172001123428,
+        "avg_time_ms": 0.007300172001123428,
+        "peak_memory_mb": 208.80859375
+      }
+    },
+    "stats": {
+      "name": "Query-Optimized",
+      "node_mode": "TREE_GRAPH_HYBRID",
+      "edge_mode": "WEIGHTED_GRAPH",
+      "total_users": 490,
+      "total_posts": 290,
+      "total_comments": 190,
+      "total_relationships": 997
+    }
+  },
+  "Persistence-Optimized": {
+    "database": "Persistence-Optimized",
+    "node_mode": "B_PLUS_TREE",
+    "edge_mode": "EDGE_PROPERTY_STORE",
+    "total_time_ms": 13.094998896121979,
+    "peak_memory_mb": 209.796875,
+    "metrics": {
+      "insert_user": {
+        "count": 1,
+        "total_time_ms": 2.633200027048588,
+        "min_time_ms": 2.633200027048588,
+        "max_time_ms": 2.633200027048588,
+        "avg_time_ms": 2.633200027048588,
+        "peak_memory_mb": 209.07421875
+      },
+      "insert_post": {
+        "count": 1,
+        "total_time_ms": 1.8606996163725853,
+        "min_time_ms": 1.8606996163725853,
+        "max_time_ms": 1.8606996163725853,
+        "avg_time_ms": 1.8606996163725853,
+        "peak_memory_mb": 209.2890625
+      },
+      "insert_comment": {
+        "count": 1,
+        "total_time_ms": 0.9818999096751213,
+        "min_time_ms": 0.9818999096751213,
+        "max_time_ms": 0.9818999096751213,
+        "avg_time_ms": 0.9818999096751213,
+        "peak_memory_mb": 209.41796875
+      },
+      "insert_relationship": {
+        "count": 1,
+        "total_time_ms": 4.541600123047829,
+        "min_time_ms": 4.541600123047829,
+        "max_time_ms": 4.541600123047829,
+        "avg_time_ms": 4.541600123047829,
+        "peak_memory_mb": 209.7734375
+      },
+      "read_user": {
+        "count": 1,
+        "total_time_ms": 0.03879982978105545,
+        "min_time_ms": 0.03879982978105545,
+        "max_time_ms": 0.03879982978105545,
+        "avg_time_ms": 0.03879982978105545,
+        "peak_memory_mb": 209.7734375
+      },
+      "read_post": {
+        "count": 1,
+        "total_time_ms": 0.04359986633062363,
+        "min_time_ms": 0.04359986633062363,
+        "max_time_ms": 0.04359986633062363,
+        "avg_time_ms": 0.04359986633062363,
+        "peak_memory_mb": 209.7734375
+      },
+      "read_comment": {
+        "count": 1,
+        "total_time_ms": 0.036699697375297546,
+        "min_time_ms": 0.036699697375297546,
+        "max_time_ms": 0.036699697375297546,
+        "avg_time_ms": 0.036699697375297546,
+        "peak_memory_mb": 209.77734375
+      },
+      "update_user": {
+        "count": 1,
+        "total_time_ms": 0.07149996235966682,
+        "min_time_ms": 0.07149996235966682,
+        "max_time_ms": 0.07149996235966682,
+        "avg_time_ms": 0.07149996235966682,
+        "peak_memory_mb": 209.7890625
+      },
+      "update_post": {
+        "count": 1,
+        "total_time_ms": 0.02529984340071678,
+        "min_time_ms": 0.02529984340071678,
+        "max_time_ms": 0.02529984340071678,
+        "avg_time_ms": 0.02529984340071678,
+        "peak_memory_mb": 209.7890625
+      },
+      "update_comment": {
+        "count": 1,
+        "total_time_ms": 0.02589961513876915,
+        "min_time_ms": 0.02589961513876915,
+        "max_time_ms": 0.02589961513876915,
+        "avg_time_ms": 0.02589961513876915,
+        "peak_memory_mb": 209.79296875
+      },
+      "soft_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.007200054824352264,
+        "min_time_ms": 0.007200054824352264,
+        "max_time_ms": 0.007200054824352264,
+        "avg_time_ms": 0.007200054824352264,
+        "peak_memory_mb": 209.79296875
+      },
+      "search_users": {
+        "count": 1,
+        "total_time_ms": 0.3046998754143715,
+        "min_time_ms": 0.3046998754143715,
+        "max_time_ms": 0.3046998754143715,
+        "avg_time_ms": 0.3046998754143715,
+        "peak_memory_mb": 209.796875
+      },
+      "list_posts_by_user": {
+        "count": 1,
+        "total_time_ms": 0.02479972317814827,
+        "min_time_ms": 0.02479972317814827,
+        "max_time_ms": 0.02479972317814827,
+        "avg_time_ms": 0.02479972317814827,
+        "peak_memory_mb": 209.796875
+      },
+      "list_comments_by_post": {
+        "count": 1,
+        "total_time_ms": 0.02259993925690651,
+        "min_time_ms": 0.02259993925690651,
+        "max_time_ms": 0.02259993925690651,
+        "avg_time_ms": 0.02259993925690651,
+        "peak_memory_mb": 209.796875
+      },
+      "list_all_users": {
+        "count": 1,
+        "total_time_ms": 0.006100162863731384,
+        "min_time_ms": 0.006100162863731384,
+        "max_time_ms": 0.006100162863731384,
+        "avg_time_ms": 0.006100162863731384,
+        "peak_memory_mb": 209.796875
+      },
+      "query_followers": {
+        "count": 1,
+        "total_time_ms": 1.212799921631813,
+        "min_time_ms": 1.212799921631813,
+        "max_time_ms": 1.212799921631813,
+        "avg_time_ms": 1.212799921631813,
+        "peak_memory_mb": 209.796875
+      },
+      "query_following": {
+        "count": 1,
+        "total_time_ms": 1.2041004374623299,
+        "min_time_ms": 1.2041004374623299,
+        "max_time_ms": 1.2041004374623299,
+        "avg_time_ms": 1.2041004374623299,
+        "peak_memory_mb": 209.796875
+      },
+      "hard_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.020700041204690933,
+        "min_time_ms": 0.020700041204690933,
+        "max_time_ms": 0.020700041204690933,
+        "avg_time_ms": 0.020700041204690933,
+        "peak_memory_mb": 209.796875
+      },
+      "hard_delete_post": {
+        "count": 1,
+        "total_time_ms": 0.016800127923488617,
+        "min_time_ms": 0.016800127923488617,
+        "max_time_ms": 0.016800127923488617,
+        "avg_time_ms": 0.016800127923488617,
+        "peak_memory_mb": 209.796875
+      },
+      "hard_delete_user": {
+        "count": 1,
+        "total_time_ms": 0.01600012183189392,
+        "min_time_ms": 0.01600012183189392,
+        "max_time_ms": 0.01600012183189392,
+        "avg_time_ms": 0.01600012183189392,
+        "peak_memory_mb": 209.796875
+      }
+    },
+    "stats": {
+      "name": "Persistence-Optimized",
+      "node_mode": "B_PLUS_TREE",
+      "edge_mode": "EDGE_PROPERTY_STORE",
+      "total_users": 490,
+      "total_posts": 290,
+      "total_comments": 190,
+      "total_relationships": 999
+    }
+  },
+  "XWData-Optimized": {
+    "database": "XWData-Optimized",
+    "node_mode": "HASH_MAP",
+    "edge_mode": "None",
+    "total_time_ms": 13.872499112039804,
+    "peak_memory_mb": 210.8046875,
+    "metrics": {
+      "insert_user": {
+        "count": 1,
+        "total_time_ms": 2.662499900907278,
+        "min_time_ms": 2.662499900907278,
+        "max_time_ms": 2.662499900907278,
+        "avg_time_ms": 2.662499900907278,
+        "peak_memory_mb": 210.06640625
+      },
+      "insert_post": {
+        "count": 1,
+        "total_time_ms": 1.6044997610151768,
+        "min_time_ms": 1.6044997610151768,
+        "max_time_ms": 1.6044997610151768,
+        "avg_time_ms": 1.6044997610151768,
+        "peak_memory_mb": 210.26953125
+      },
+      "insert_comment": {
+        "count": 1,
+        "total_time_ms": 1.2662997469305992,
+        "min_time_ms": 1.2662997469305992,
+        "max_time_ms": 1.2662997469305992,
+        "avg_time_ms": 1.2662997469305992,
+        "peak_memory_mb": 210.39453125
+      },
+      "insert_relationship": {
+        "count": 1,
+        "total_time_ms": 4.090399947017431,
+        "min_time_ms": 4.090399947017431,
+        "max_time_ms": 4.090399947017431,
+        "avg_time_ms": 4.090399947017431,
+        "peak_memory_mb": 210.7890625
+      },
+      "read_user": {
+        "count": 1,
+        "total_time_ms": 0.12320000678300858,
+        "min_time_ms": 0.12320000678300858,
+        "max_time_ms": 0.12320000678300858,
+        "avg_time_ms": 0.12320000678300858,
+        "peak_memory_mb": 210.7890625
+      },
+      "read_post": {
+        "count": 1,
+        "total_time_ms": 0.08699996396899223,
+        "min_time_ms": 0.08699996396899223,
+        "max_time_ms": 0.08699996396899223,
+        "avg_time_ms": 0.08699996396899223,
+        "peak_memory_mb": 210.7890625
+      },
+      "read_comment": {
+        "count": 1,
+        "total_time_ms": 0.05479995161294937,
+        "min_time_ms": 0.05479995161294937,
+        "max_time_ms": 0.05479995161294937,
+        "avg_time_ms": 0.05479995161294937,
+        "peak_memory_mb": 210.79296875
+      },
+      "update_user": {
+        "count": 1,
+        "total_time_ms": 0.12650014832615852,
+        "min_time_ms": 0.12650014832615852,
+        "max_time_ms": 0.12650014832615852,
+        "avg_time_ms": 0.12650014832615852,
+        "peak_memory_mb": 210.79296875
+      },
+      "update_post": {
+        "count": 1,
+        "total_time_ms": 0.03749970346689224,
+        "min_time_ms": 0.03749970346689224,
+        "max_time_ms": 0.03749970346689224,
+        "avg_time_ms": 0.03749970346689224,
+        "peak_memory_mb": 210.796875
+      },
+      "update_comment": {
+        "count": 1,
+        "total_time_ms": 0.04820013418793678,
+        "min_time_ms": 0.04820013418793678,
+        "max_time_ms": 0.04820013418793678,
+        "avg_time_ms": 0.04820013418793678,
+        "peak_memory_mb": 210.80078125
+      },
+      "soft_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.009799841791391373,
+        "min_time_ms": 0.009799841791391373,
+        "max_time_ms": 0.009799841791391373,
+        "avg_time_ms": 0.009799841791391373,
+        "peak_memory_mb": 210.80078125
+      },
+      "search_users": {
+        "count": 1,
+        "total_time_ms": 0.3519998863339424,
+        "min_time_ms": 0.3519998863339424,
+        "max_time_ms": 0.3519998863339424,
+        "avg_time_ms": 0.3519998863339424,
+        "peak_memory_mb": 210.8046875
+      },
+      "list_posts_by_user": {
+        "count": 1,
+        "total_time_ms": 0.03829970955848694,
+        "min_time_ms": 0.03829970955848694,
+        "max_time_ms": 0.03829970955848694,
+        "avg_time_ms": 0.03829970955848694,
+        "peak_memory_mb": 210.8046875
+      },
+      "list_comments_by_post": {
+        "count": 1,
+        "total_time_ms": 0.034700147807598114,
+        "min_time_ms": 0.034700147807598114,
+        "max_time_ms": 0.034700147807598114,
+        "avg_time_ms": 0.034700147807598114,
+        "peak_memory_mb": 210.8046875
+      },
+      "list_all_users": {
+        "count": 1,
+        "total_time_ms": 0.011200085282325745,
+        "min_time_ms": 0.011200085282325745,
+        "max_time_ms": 0.011200085282325745,
+        "avg_time_ms": 0.011200085282325745,
+        "peak_memory_mb": 210.8046875
+      },
+      "query_followers": {
+        "count": 1,
+        "total_time_ms": 1.4326004311442375,
+        "min_time_ms": 1.4326004311442375,
+        "max_time_ms": 1.4326004311442375,
+        "avg_time_ms": 1.4326004311442375,
+        "peak_memory_mb": 210.8046875
+      },
+      "query_following": {
+        "count": 1,
+        "total_time_ms": 1.8055997788906097,
+        "min_time_ms": 1.8055997788906097,
+        "max_time_ms": 1.8055997788906097,
+        "avg_time_ms": 1.8055997788906097,
+        "peak_memory_mb": 210.8046875
+      },
+      "hard_delete_comment": {
+        "count": 1,
+        "total_time_ms": 0.04829978570342064,
+        "min_time_ms": 0.04829978570342064,
+        "max_time_ms": 0.04829978570342064,
+        "avg_time_ms": 0.04829978570342064,
+        "peak_memory_mb": 210.8046875
+      },
+      "hard_delete_post": {
+        "count": 1,
+        "total_time_ms": 0.014599878340959549,
+        "min_time_ms": 0.014599878340959549,
+        "max_time_ms": 0.014599878340959549,
+        "avg_time_ms": 0.014599878340959549,
+        "peak_memory_mb": 210.8046875
+      },
+      "hard_delete_user": {
+        "count": 1,
+        "total_time_ms": 0.024500302970409393,
+        "min_time_ms": 0.024500302970409393,
+        "max_time_ms": 0.024500302970409393,
+        "avg_time_ms": 0.024500302970409393,
+        "peak_memory_mb": 210.8046875
+      }
+    },
+    "stats": {
+      "name": "XWData-Optimized",
+      "node_mode": "HASH_MAP",
+      "edge_mode": "None",
+      "total_users": 490,
+      "total_posts": 290,
+      "total_comments": 190,
+      "total_relationships": 1000
+    }
+  }
+}

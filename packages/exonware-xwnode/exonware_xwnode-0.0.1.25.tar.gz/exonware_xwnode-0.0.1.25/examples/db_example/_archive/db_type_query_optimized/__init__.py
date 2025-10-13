@@ -1,0 +1,2 @@
+"""Query-Optimized Database"""
+
