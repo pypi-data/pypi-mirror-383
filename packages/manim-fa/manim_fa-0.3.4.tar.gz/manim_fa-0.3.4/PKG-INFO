@@ -1,0 +1,62 @@
+Metadata-Version: 2.4
+Name: manim-fa
+Version: 0.3.4
+Summary: افزونه‌ی مانیم برای نمایش متن فارسی (راست به چپ) با قابلیت تبدیل خودکار از حروف لاتین به فارسی
+Home-page: https://github.com/Tabesh2020/manim-fa
+Author: علی تابش
+Author-email: علی تابش <tabesh_ali@yahoo.com>
+License: MIT License
+        
+        Copyright (c) 2025 Alli Tabesh
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software...
+Project-URL: Homepage, https://github.com/Tabesh2020/manim-fa
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: manim>=0.17.0
+Requires-Dist: arabic-reshaper
+Requires-Dist: python-bidi
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# manim-fa (v0.3.0)
+
+افزونه‌ی مانیم برای نمایش دادن متن فارسی (از راست به چپ) با قابلیت خودکار آوانگاری از فنگلش به فارسی.
+
+
+## نحوه نصب پلاگین
+
+```bash
+pip install manim-fa
+```
+
+## نحوه استفاده از این پلاگین
+```python
+from manim import Scene
+from manim_fa import FaText
+
+class Test(Scene):
+    def construct(self):
+        # ایجاد متن مستقیم فارسی
+        t1 = FaText("سلام برشما کاربر گرامی!", color="BLUE", font_size=70)
+        
+        # قابلیت آوا نگاری از فنگلش به فارسی
+        t2 = FaText("Salam bar shoma karbre manim farsi", translit=True, color="GREEN", font_size=70)
+        
+        self.play(Write(t1))
+        self.play(Transform(t1, t2))
+        self.wait(2)
+```
+
+## تراز بندی متن از راست به چپ
+برای ایجاد متن‌های بلند :
+
+```python
+from manim_fa.layout import arrange_rtl
+text_group = VGroup(line1, line2, line3)
+arrange_rtl(text_group)
+```
