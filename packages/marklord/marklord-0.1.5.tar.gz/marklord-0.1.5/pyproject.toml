@@ -1,0 +1,22 @@
+[project]
+name = "marklord"
+version = "0.1.5"
+description = "Watermarking tool for images or PDF"
+authors = [{ email = "phil@secdev.org" }]
+dependencies = [ "pillow", "pdf2image", "numpy" ]
+readme = "README.md"
+license = "GPL-2.0-only"
+keywords = ["watermark", "watermarking"]
+
+[project.scripts]
+marklord="marklord:main"
+
+
+[build-system]
+requires = ["setuptools>=77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project.urls]
+Repository = "https://github.com/secdev/marklord/"
+Issues = "https://github.com/secdev/marklord/issues"
