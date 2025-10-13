@@ -1,0 +1,16 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "notpotty"
+version = "0.1.1"
+description = "Фильтр нецензурной лексики для русского языка"
+authors = ["StreetShiffter <agwzdushaz@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/StreetShiffter/notpotty"
+keywords = ["mat", "censor", "russian"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
