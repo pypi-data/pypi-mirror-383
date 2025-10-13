@@ -1,0 +1,916 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="search" title="Search" href="../search.html"><link rel="next" title="pyliblinear._liblinear module" href="pyliblinear._liblinear.html"><link rel="prev" title="pyliblinear" href="index.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>pyliblinear package - pyliblinear 249.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/ci.css?v=9221f92a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">pyliblinear 249.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">pyliblinear 249.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">pyliblinear</a><input aria-label="Toggle navigation of pyliblinear" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">pyliblinear package</a><input aria-label="Toggle navigation of pyliblinear package" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html">pyliblinear._liblinear module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="pyliblinear-package">
+<h1>pyliblinear package<a class="headerlink" href="#pyliblinear-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyliblinear._liblinear.html">pyliblinear._liblinear module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear-a-liblinear-python-api">pyliblinear - a liblinear python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.__new__"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.__new__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.features"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.features()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.from_iterables"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.from_iterables()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.height"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.labels"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.load"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.save"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.FeatureMatrix.width"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.width</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.bias"><code class="docutils literal notranslate"><span class="pre">Model.bias</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.is_oneclass"><code class="docutils literal notranslate"><span class="pre">Model.is_oneclass</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.is_probability"><code class="docutils literal notranslate"><span class="pre">Model.is_probability</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.is_regression"><code class="docutils literal notranslate"><span class="pre">Model.is_regression</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.load"><code class="docutils literal notranslate"><span class="pre">Model.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.predict"><code class="docutils literal notranslate"><span class="pre">Model.predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.rho"><code class="docutils literal notranslate"><span class="pre">Model.rho</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.save"><code class="docutils literal notranslate"><span class="pre">Model.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.solver_type"><code class="docutils literal notranslate"><span class="pre">Model.solver_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Model.train"><code class="docutils literal notranslate"><span class="pre">Model.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver"><code class="docutils literal notranslate"><span class="pre">Solver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.C"><code class="docutils literal notranslate"><span class="pre">Solver.C</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.__new__"><code class="docutils literal notranslate"><span class="pre">Solver.__new__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.eps"><code class="docutils literal notranslate"><span class="pre">Solver.eps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.nu"><code class="docutils literal notranslate"><span class="pre">Solver.nu</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.p"><code class="docutils literal notranslate"><span class="pre">Solver.p</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.regularize_bias"><code class="docutils literal notranslate"><span class="pre">Solver.regularize_bias</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.type"><code class="docutils literal notranslate"><span class="pre">Solver.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.w_recalc"><code class="docutils literal notranslate"><span class="pre">Solver.w_recalc</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyliblinear._liblinear.html#pyliblinear._liblinear.Solver.weights"><code class="docutils literal notranslate"><span class="pre">Solver.weights()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-pyliblinear">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyliblinear" title="Link to this heading">¶</a></h2>
+<dl class="field-list">
+<dt class="field-odd">Copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Copyright 2015 - 2025
+André Malo or his licensors, as applicable</p>
+</dd>
+<dt class="field-even">License<span class="colon">:</span></dt>
+<dd class="field-even"><p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</dd>
+</dl>
+<section id="pyliblinear-a-liblinear-python-api">
+<h3>pyliblinear - a liblinear python API<a class="headerlink" href="#pyliblinear-a-liblinear-python-api" title="Link to this heading">¶</a></h3>
+<p>pyliblinear - a liblinear python API</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyliblinear.</span></span><span class="sig-name descname"><span class="pre">FeatureMatrix</span></span><a class="headerlink" href="#pyliblinear.FeatureMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Feature matrix to be used for training or prediction.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.__new__">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assign_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.FeatureMatrix.__new__" title="Link to this definition">¶</a></dt>
+<dd><p>Create <cite>FeatureMatrix</cite> instance from a single iterable. If <cite>assign_labels</cite>
+is omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the iterable is expected to provide 2-tuples,
+containing the label and the accompanying feature vector. If
+<cite>assign_labels</cite> is passed and not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the iterable should only
+provide the feature vectors. All labels are then assigned to the value of
+<cite>assign_labels</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>iterable</em>) – Iterable providing the feature vectors and/or tuples of label and
+feature vector. See description.</p></li>
+<li><p><strong>assign_labels</strong> (<em>int</em>) – Value to be assigned to all labels. In this case the iterable is
+expected to provide only the feature vectors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New feature matrix instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyliblinear.FeatureMatrix" title="pyliblinear.FeatureMatrix">FeatureMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.features">
+<span class="sig-name descname"><span class="pre">features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.FeatureMatrix.features" title="Link to this definition">¶</a></dt>
+<dd><p>Return the features as iterator of dicts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The feature vectors</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>iterable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.from_iterables">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_iterables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.FeatureMatrix.from_iterables" title="Link to this definition">¶</a></dt>
+<dd><p>Create <cite>FeatureMatrix</cite> instance from a two separated iterables - labels and
+features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> (<em>iterable</em>) – Iterable providing the labels per feature vector (assigned by order)</p></li>
+<li><p><strong>features</strong> (<em>iterable</em>) – Iterable providing the feature vector per label (assigned by order)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New feature matrix instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyliblinear.FeatureMatrix" title="pyliblinear.FeatureMatrix">FeatureMatrix</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The lengths of the iterables differ</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.height">
+<span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#pyliblinear.FeatureMatrix.height" title="Link to this definition">¶</a></dt>
+<dd><p>The matrix height (number of labels and vectors).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.FeatureMatrix.labels" title="Link to this definition">¶</a></dt>
+<dd><p>Return the labels as iterator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The labels</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>iterable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.load">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.FeatureMatrix.load" title="Link to this definition">¶</a></dt>
+<dd><p>Create <cite>FeatureMatrix</cite> instance from a file.</p>
+<p>Each line of the file contains the label and the accompanying sparse feature
+vector, separated by a space/tab sequence. The feature vector consists of
+index/value pairs. The index and the value are separated by a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>).
+The pairs are separated by space/tab sequences. Accepted line endings are
+<code class="docutils literal notranslate"><span class="pre">\r</span></code>, <code class="docutils literal notranslate"><span class="pre">\n</span></code> and <code class="docutils literal notranslate"><span class="pre">\r\n</span></code>.</p>
+<p>All numbers are represented as strings parsable either as ints (for indexes)
+or doubles (for values and labels).</p>
+<p>Note that the exact I/O exceptions depend on the stream passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>file</em><em> or </em><em>str</em>) – Either a readable stream or a filename. If the passed object provides a
+<code class="docutils literal notranslate"><span class="pre">read</span></code> attribute/method, it’s treated as readable file stream, as a
+filename otherwise. If it’s a stream, the stream is read from the current
+position and remains open after hitting EOF. In case of a filename, the
+accompanying file is opened in text mode, read from the beginning and
+closed afterwards.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New feature matrix instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyliblinear.FeatureMatrix" title="pyliblinear.FeatureMatrix">FeatureMatrix</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>IOError</strong> – Error reading the file</p></li>
+<li><p><strong>ValueError</strong> – Error parsing the file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.FeatureMatrix.save" title="Link to this definition">¶</a></dt>
+<dd><p>Save <cite>FeatureMatrix</cite> instance to a file.</p>
+<p>Each line of the file contains the label and the accompanying
+sparse feature vector, separated by a space. The feature vector consists of
+index/value pairs. The index and the value are separated by a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>).
+The pairs are separated by a space again. The line ending is <code class="docutils literal notranslate"><span class="pre">\n</span></code>.</p>
+<p>All numbers are represented as strings parsable either as ints (for indexes)
+or doubles (for values and labels).</p>
+<p>Note that the exact I/O exceptions depend on the stream passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>file</em><em> or </em><em>str</em>) – Either a writeable stream or a filename. If the passed object provides a
+<code class="docutils literal notranslate"><span class="pre">write</span></code> attribute/method, it’s treated as writeable stream, as a
+filename otherwise. If it’s a stream, the stream is written to the current
+position and remains open when done. In case of a filename, the
+accompanying file is opened in text mode, truncated, written from the
+beginning and closed afterwards.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IOError</strong> – Error writing the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.FeatureMatrix.width">
+<span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pyliblinear.FeatureMatrix.width" title="Link to this definition">¶</a></dt>
+<dd><p>The matrix width (number of features).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyliblinear.Model">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyliblinear.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><a class="headerlink" href="#pyliblinear.Model" title="Link to this definition">¶</a></dt>
+<dd><p>Classification model. Use its Model.load or Model.train methods to construct
+a new instance</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Model.bias">
+<span class="sig-name descname"><span class="pre">bias</span></span><a class="headerlink" href="#pyliblinear.Model.bias" title="Link to this definition">¶</a></dt>
+<dd><p>Bias used to create the model</p>
+<p><code class="docutils literal notranslate"><span class="pre">None</span></code> if no bias was applied or applicable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Model.is_oneclass">
+<span class="sig-name descname"><span class="pre">is_oneclass</span></span><a class="headerlink" href="#pyliblinear.Model.is_oneclass" title="Link to this definition">¶</a></dt>
+<dd><p>Is model a oneclass SVM model?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Model.is_probability">
+<span class="sig-name descname"><span class="pre">is_probability</span></span><a class="headerlink" href="#pyliblinear.Model.is_probability" title="Link to this definition">¶</a></dt>
+<dd><p>Is model a probability model?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Model.is_regression">
+<span class="sig-name descname"><span class="pre">is_regression</span></span><a class="headerlink" href="#pyliblinear.Model.is_regression" title="Link to this definition">¶</a></dt>
+<dd><p>Is model a regression model?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.Model.load">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.Model.load" title="Link to this definition">¶</a></dt>
+<dd><p>Create <cite>Model</cite> instance from a file (previously created by
+Model.save())</p>
+<p>Note that the exact I/O exceptions depend on the stream passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>file</em><em> or </em><em>str</em>) – Either a readable stream or a filename. If the passed object provides a
+<code class="docutils literal notranslate"><span class="pre">read</span></code> attribute/method, it’s treated as readable file stream, as a
+filename otherwise. If it’s a stream, the stream is read from the current
+position and remains open after hitting EOF. In case of a filename, the
+accompanying file is opened in text mode, read from the beginning and
+closed afterwards.</p></li>
+<li><p><strong>mmap</strong> (<em>bool</em>) – Load the model into a file-backed memory area? Default: false</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New model instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyliblinear.Model" title="pyliblinear.Model">Model</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>IOError</strong> – Error reading the file</p></li>
+<li><p><strong>ValueError</strong> – Error parsing the file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.Model.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.Model.predict" title="Link to this definition">¶</a></dt>
+<dd><p>Run the model on <cite>matrix</cite> and predict labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<a class="reference internal" href="#pyliblinear.FeatureMatrix" title="pyliblinear.FeatureMatrix"><em>pyliblinear.FeatureMatrix</em></a><em> or </em><em>iterable</em>) – Either a feature matrix or a simple iterator over feature vectors to
+inspect and predict upon.</p></li>
+<li><p><strong>label_only</strong> (<em>bool</em>) – Return the label only? If false, the decision dict for all labels is
+returned as well.</p></li>
+<li><p><strong>probability</strong> (<em>bool</em>) – Use probability estimates?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Result iterator. Either over labels or over label/decision dict</dt><dd><p>tuples.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Model.rho">
+<span class="sig-name descname"><span class="pre">rho</span></span><a class="headerlink" href="#pyliblinear.Model.rho" title="Link to this definition">¶</a></dt>
+<dd><p>Rho value of the model</p>
+<p><code class="docutils literal notranslate"><span class="pre">None</span></code> if not applicable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.Model.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.Model.save" title="Link to this definition">¶</a></dt>
+<dd><p>Save <cite>Model</cite> instance to a file.</p>
+<p>After some basic information about solver type, dimensions and labels the
+model matrix is stored as a sequence of doubles per line. The matrix is
+transposed, so the height is the number of features (including the bias
+feature) and the width is the number of classes.</p>
+<p>All numbers are represented as strings parsable either as ints (for
+dimensions and labels) or doubles (other values).</p>
+<p>Note that the exact I/O exceptions depend on the stream passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>file</em><em> or </em><em>str</em>) – Either a writeable stream or a filename. If the passed object provides a
+<code class="docutils literal notranslate"><span class="pre">write</span></code> attribute/method, it’s treated as writeable stream, as a
+filename otherwise. If it’s a stream, the stream is written to the current
+position and remains open when done. In case of a filename, the
+accompanying file is opened in text mode, truncated, written from the
+beginning and closed afterwards.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IOError</strong> – Error writing the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Model.solver_type">
+<span class="sig-name descname"><span class="pre">solver_type</span></span><a class="headerlink" href="#pyliblinear.Model.solver_type" title="Link to this definition">¶</a></dt>
+<dd><p>Solver type used to create the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.Model.train">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.Model.train" title="Link to this definition">¶</a></dt>
+<dd><p>Create model instance from a training run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<a class="reference internal" href="#pyliblinear.FeatureMatrix" title="pyliblinear.FeatureMatrix"><em>pyliblinear.FeatureMatrix</em></a>) – Feature matrix to use for training</p></li>
+<li><p><strong>solver</strong> (<a class="reference internal" href="#pyliblinear.Solver" title="pyliblinear.Solver"><em>pyliblinear.Solver</em></a>) – Solver instance. If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default solver is picked.</p></li>
+<li><p><strong>bias</strong> (<em>float</em>) – Bias to the hyperplane. Of omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, no bias is applied.
+<code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New model instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyliblinear.Model" title="pyliblinear.Model">Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyliblinear.Solver">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyliblinear.</span></span><span class="sig-name descname"><span class="pre">Solver</span></span><a class="headerlink" href="#pyliblinear.Solver" title="Link to this definition">¶</a></dt>
+<dd><p>Solver container</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.C">
+<span class="sig-name descname"><span class="pre">C</span></span><a class="headerlink" href="#pyliblinear.Solver.C" title="Link to this definition">¶</a></dt>
+<dd><p>The configured C parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.Solver.__new__">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.Solver.__new__" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>__new__(cls, type=None, C=None, eps=None, p=None, nu=None, weights=None,</dt><dd><p>regularize_bias=True, w_recalc=False)</p>
+</dd>
+</dl>
+<p>Construct new solver instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> (<em>str</em><em> or </em><em>int</em>) – The solver type. One of the keys or values of the <code class="docutils literal notranslate"><span class="pre">SOLVER_TYPES</span></code> dict.
+If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default solver type is applied
+(<code class="docutils literal notranslate"><span class="pre">L2R_L2LOSS_SVC_DUAL</span> <span class="pre">==</span> <span class="pre">1</span></code>)</p></li>
+<li><p><strong>C</strong> (<em>float</em>) – Cost parameter, if omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, it defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>. <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – Tolerance of termination criterion. If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default is
+applied, depending on the solver type. <code class="docutils literal notranslate"><span class="pre">eps</span> <span class="pre">&gt;</span> <span class="pre">0</span></code></p></li>
+<li><p><strong>p</strong> (<em>float</em>) – Epsilon in loss function of epsilon-SVR. If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code> it
+defaults to <code class="docutils literal notranslate"><span class="pre">0.1</span></code>. <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>.</p></li>
+<li><p><strong>nu</strong> (<em>float</em>) – approximates the fraction of data as outliers (only for ONECLASS_SVM
+solver). If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code> it defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code>.</p></li>
+<li><p><strong>weights</strong> (<em>mapping</em>) – Iterator over label weights. This is either a <code class="docutils literal notranslate"><span class="pre">dict</span></code>, mapping labels to
+weights (<code class="docutils literal notranslate"><span class="pre">{int:</span> <span class="pre">float,</span> <span class="pre">...}</span></code>) or an iterable of 2-tuples doing the same
+(<code class="docutils literal notranslate"><span class="pre">[(int,</span> <span class="pre">float),</span> <span class="pre">...]</span></code>). If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, no weight is applied.</p></li>
+<li><p><strong>regularize_bias</strong> (<em>bool</em>) – Enable bias regularization? Default: true</p></li>
+<li><p><strong>w_recalc</strong> (<em>bool</em>) – Enable w-recalculation after optimization? Only valid for for solvers
+of type L2R_L2LOSS_SVC_DUAL and L2R_L1LOSS_SVC_DUAL.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Solver instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyliblinear.Solver" title="pyliblinear.Solver">Solver</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Some invalid parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.eps">
+<span class="sig-name descname"><span class="pre">eps</span></span><a class="headerlink" href="#pyliblinear.Solver.eps" title="Link to this definition">¶</a></dt>
+<dd><p>The configured eps parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.nu">
+<span class="sig-name descname"><span class="pre">nu</span></span><a class="headerlink" href="#pyliblinear.Solver.nu" title="Link to this definition">¶</a></dt>
+<dd><p>The configured nu parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.p">
+<span class="sig-name descname"><span class="pre">p</span></span><a class="headerlink" href="#pyliblinear.Solver.p" title="Link to this definition">¶</a></dt>
+<dd><p>The configured p parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.regularize_bias">
+<span class="sig-name descname"><span class="pre">regularize_bias</span></span><a class="headerlink" href="#pyliblinear.Solver.regularize_bias" title="Link to this definition">¶</a></dt>
+<dd><p>The configured regularize_bias parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#pyliblinear.Solver.type" title="Link to this definition">¶</a></dt>
+<dd><p>The configured solver type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyliblinear.Solver.w_recalc">
+<span class="sig-name descname"><span class="pre">w_recalc</span></span><a class="headerlink" href="#pyliblinear.Solver.w_recalc" title="Link to this definition">¶</a></dt>
+<dd><p>The configured w_recalc parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyliblinear.Solver.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyliblinear.Solver.weights" title="Link to this definition">¶</a></dt>
+<dd><p>Return the configured weights as a dict (label -&gt; weight).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The weights (maybe empty)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="pyliblinear._liblinear.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">pyliblinear._liblinear module</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">pyliblinear</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2015 - 2025 André Malo
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">pyliblinear package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pyliblinear">Module contents</a><ul>
+<li><a class="reference internal" href="#pyliblinear-a-liblinear-python-api">pyliblinear - a liblinear python API</a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix</span></code></a><ul>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.__new__"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.__new__()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.features"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.features()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.from_iterables"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.from_iterables()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.height"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.height</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.labels"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.labels()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.load"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.load()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.save"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.save()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.FeatureMatrix.width"><code class="docutils literal notranslate"><span class="pre">FeatureMatrix.width</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyliblinear.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li><a class="reference internal" href="#pyliblinear.Model.bias"><code class="docutils literal notranslate"><span class="pre">Model.bias</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.is_oneclass"><code class="docutils literal notranslate"><span class="pre">Model.is_oneclass</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.is_probability"><code class="docutils literal notranslate"><span class="pre">Model.is_probability</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.is_regression"><code class="docutils literal notranslate"><span class="pre">Model.is_regression</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.load"><code class="docutils literal notranslate"><span class="pre">Model.load()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.predict"><code class="docutils literal notranslate"><span class="pre">Model.predict()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.rho"><code class="docutils literal notranslate"><span class="pre">Model.rho</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.save"><code class="docutils literal notranslate"><span class="pre">Model.save()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.solver_type"><code class="docutils literal notranslate"><span class="pre">Model.solver_type</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Model.train"><code class="docutils literal notranslate"><span class="pre">Model.train()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyliblinear.Solver"><code class="docutils literal notranslate"><span class="pre">Solver</span></code></a><ul>
+<li><a class="reference internal" href="#pyliblinear.Solver.C"><code class="docutils literal notranslate"><span class="pre">Solver.C</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.__new__"><code class="docutils literal notranslate"><span class="pre">Solver.__new__()</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.eps"><code class="docutils literal notranslate"><span class="pre">Solver.eps</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.nu"><code class="docutils literal notranslate"><span class="pre">Solver.nu</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.p"><code class="docutils literal notranslate"><span class="pre">Solver.p</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.regularize_bias"><code class="docutils literal notranslate"><span class="pre">Solver.regularize_bias</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.type"><code class="docutils literal notranslate"><span class="pre">Solver.type</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.w_recalc"><code class="docutils literal notranslate"><span class="pre">Solver.w_recalc</span></code></a></li>
+<li><a class="reference internal" href="#pyliblinear.Solver.weights"><code class="docutils literal notranslate"><span class="pre">Solver.weights()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=f8fdbfbc"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
