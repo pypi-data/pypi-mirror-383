@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unsatisfiable"
+version = "1.0.0"
+requires-python = ">6.28"
+authors = [
+    {name = "John Sirois", email = "john.sirois@gmail.com"},
+]
+description = "An unsatisfiable dependency to support flagging unsupported environments."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["dependencies", "fail", "error", "impossible"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/jsirois/unsatisfiable"
+
+[dependency-groups]
+dev = ["dev-cmd"]
+release = [
+    {include-group = "dev-cmd"},
+
+    "build",
+    "twine",
+]
+
+[tool.dev-cmd.commands.clean]
+args = ["git", "clean", "-fdx", "dist"]
+
+[tool.dev-cmd.commands.tag]
+when = "python_version >= '3.11'"
+args = [
+    "python",
+    "-c",
+"""
+import shlex
+import subprocess
+import sys
+import tomllib
+from pathlib import Path
+
+
+version = tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"]
+
+args = ["git", "tag", "--sign", "-am", f"Release {{version}", f"v{{version}"]
+if "{-dryrun?dryrun:}" == "dryrun":
+    print(f"Would run: {{shlex.join(args)}", file=sys.stderr)
+else:
+    subprocess.run(args, check=True)
+"""
+]
+
+[tool.dev-cmd.commands.build]
+dependency-group = "release"
+args = ["pyproject-build", "."]
+
+[tool.dev-cmd.commands.upload]
+dependency-group = "release"
+args = ["twine", "upload", "dist/*"]
+
+[tool.dev-cmd.tasks.release]
+steps = ["clean", "tag", "build", "upload"]
+
