@@ -1,0 +1,93 @@
+Metadata-Version: 2.4
+Name: simple_fastapi_auth
+Version: 1.0
+Author: Carlo Moro
+Author-email: Carlo Moro <cnmoro@gmail.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: python-jose
+Requires-Dist: passlib
+Requires-Dist: bcrypt
+Requires-Dist: fastapi
+Requires-Dist: python-multipart
+Dynamic: author
+Dynamic: license-file
+Dynamic: requires-python
+
+```python
+# app.py
+
+from fastapi_auth.auth import setup_auth, build_auth_router, restrict, protect_router
+from services.users import authenticate_user, create_user
+from other_router import other_router
+from fastapi import FastAPI
+import uvicorn, os
+
+# Configure auth library
+auth_manager = setup_auth(
+    auth_endpoint="/auth/login",
+    jwt_secret_key=os.getenv("JWT_SECRET_KEY", "A-Secure-Key"),
+    access_token_expire_minutes=int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440")),
+    token_renewal_minutes=int(os.getenv("TOKEN_RENEWAL_MINUTES", "30")),
+    database_path=os.getenv("AUTH_DB_PATH", "auth.db") # Minimal SQLite for Auth/Tokens
+)
+
+app = FastAPI()
+
+# Build and Register the Auth Router
+app.include_router(
+    build_auth_router(
+        authenticate_user=authenticate_user,
+        create_user=create_user
+    )
+)
+
+@app.get("/restricted_ep")
+@restrict(roles_allowed=["admin"], inject_user=True)
+def root(current_user: dict):
+    return {"message": f"Welcome {current_user['username']} - ID {current_user['user_id']}, to the API !"}
+
+@app.get("/unrestricted_ep")
+def root():
+    return {"message": "Welcome to the API!"}
+
+# Protect other routes
+protect_router(other_router)
+app.include_router(other_router)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+```
+
+```python
+# services/users.py
+
+from fastapi import HTTPException, status
+from fastapi_auth.auth import get_auth_manager
+
+def authenticate_user(username: str, password: str):
+    # 1 - Get user from database by username, fetch password
+    user = {} # dummy just for the example
+    
+    # 2 - Verify password using the manager helper fn
+    if not get_auth_manager().verify_password(password, user["password"]):
+        return None
+    return {"user_id": username, "role": user["role"]}
+
+def create_user(user_dict: dict):
+    # 1 - Validate if username already exists
+    user_already_exists = user_dict['username'] in [] # dummy just for the example
+    if user_already_exists:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already exists"
+        )
+    
+    # 2 - Create user in database
+    # user_dict contains username, password, role, and any extra metadata
+    pass
+```
