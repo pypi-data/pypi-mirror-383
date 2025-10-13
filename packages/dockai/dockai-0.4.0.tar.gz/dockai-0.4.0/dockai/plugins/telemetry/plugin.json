@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "telemetry",
+  "version": "0.2.0",
+  "config": {
+    "sqlite_path": "~/.dockai/usage.db",
+    "max_free_rows": 10,
+    "license_key": "",
+
+    "product_salt": "DOCKAI-TELEMETRY-SALT", 
+    "accepted_demo_prefix": "DEMO-"           
+  }
+}
