@@ -1,0 +1,89 @@
+trnsfr
+======
+
+Description
+-----------
+A simple Python script to upload files on transfer.sh servers from CLI.
+
+
+Usage
+-----
+```
+$ pip install trnsfr
+
+$ trnsfr
+usage: trnsfr.py [-h] [-s SERVER] [-k MAX_DAYS] [-t MAX_DOWNLOADS] [-d]
+                 [-v | -n | -q] [-e ENCRYPT_PASSWORD] [-m {clamav,virustotal}]
+                 file [file ...]
+
+version: 1.0
+
+positional arguments:
+  file                  File(s) to upload
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+Server parameters:
+  -s SERVER, --server SERVER
+                        Server instance URL (default:
+                        "https://transfer.adminforge.de/")
+
+Upload parameters:
+  -k MAX_DAYS, --max-days MAX_DAYS
+                        Maximum number of days to keep file on the server
+  -t MAX_DOWNLOADS, --max-downloads MAX_DOWNLOADS
+                        Maximum number of times that file can be downloaded
+
+Output parameters:
+  -d, --show-delete-url
+                        Show URL to delete (default: False)
+
+Display parameters:
+  -v, --verbose         Verbose output (default: False)
+  -n, --no-progress-bar
+                        Do not display the progress bar (default: False)
+  -q, --quiet           Display only the download link without progress bar
+                        (default: False)
+
+Confidentiality parameters:
+  -e ENCRYPT_PASSWORD, --encrypt-password ENCRYPT_PASSWORD
+                        Encrypt file with that password on the server-side
+                        (default: None)
+
+Malware scan parameters:
+  -m {clamav,virustotal}, --scan-malware {clamav,virustotal}
+                        Scan for malware with ClamAV or Virustotal (possible
+                        values: ['clamav', 'virustotal'] ; default: None): /!\
+                        this feature can be unavailable on the server and
+                        hence failing the whole upload ! (default: False)
+
+```
+  
+
+Changelog
+---------
+* version 1.0 - 2025-10-12: Initial commit
+
+
+Credits
+-------
+* https://github.com/dutchcoders/transfer.sh
+* https://github.com/tanrax/transfersh-cli
+
+
+Copyright and license
+---------------------
+
+trnsfr is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+trnsfr is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+
+See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with trnsfr. 
+If not, see http://www.gnu.org/licenses/.
+
+Contact
+-------
+* Thomas Debize < tdebize at mail d0t com >
