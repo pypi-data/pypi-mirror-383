@@ -1,0 +1,117 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scrava"
+version = "0.1.1"
+description = "The Definitive Web Scraping Framework for Python"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Nextract Data Solutions", email = "hello@nextract.dev"},
+    {name = "Parth Ravrani", email = "hello@nextract.dev"}
+]
+maintainers = [
+    {name = "Nextract Data Solutions", email = "hello@nextract.dev"}
+]
+keywords = [
+    "web-scraping",
+    "scraping",
+    "crawler",
+    "spider",
+    "async",
+    "asyncio",
+    "http",
+    "playwright",
+    "data-extraction",
+    "web-automation"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP",
+    "Framework :: AsyncIO",
+]
+
+dependencies = [
+    "httpx>=0.27.0",
+    "parsel>=1.8.1",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "PyYAML>=6.0",
+    "structlog>=24.0.0",
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+browser = [
+    "playwright>=1.40.0",
+]
+redis = [
+    "redis>=5.0.0",
+    "redis-py-cluster>=2.1.0",
+]
+mongo = [
+    "motor>=3.3.0",
+]
+excel = [
+    "openpyxl>=3.1.0",
+]
+all = [
+    "playwright>=1.40.0",
+    "redis>=5.0.0",
+    "motor>=3.3.0",
+    "openpyxl>=3.1.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/nextractdevelopers/Scrava"
+Documentation = "https://github.com/nextractdevelopers/Scrava#readme"
+Repository = "https://github.com/nextractdevelopers/Scrava"
+Issues = "https://github.com/nextractdevelopers/Scrava/issues"
+Changelog = "https://github.com/nextractdevelopers/Scrava/releases"
+Company = "https://nextract.dev"
+
+[project.scripts]
+scrava = "scrava.cli.main:main"
+scrava-format = "scrava.formatters.cli:app"
+
+[tool.setuptools]
+packages = ["scrava"]
+
+[tool.setuptools.package-data]
+scrava = ["py.typed"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
