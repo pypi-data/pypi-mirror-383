@@ -1,0 +1,138 @@
+[build-system]
+requires = ["setuptools>=65.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mypylogger"
+version = "0.1.5"
+description = "Production-ready Python logging library with structured JSON output, environment-driven configuration, and real-time development support"
+authors = [{name = "Stephen Abbot", email = "stub@bittikens.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["logging", "json", "structured-logging", "python", "production", "environment-config"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Logging",
+    "Topic :: System :: Systems Administration",
+    "Typing :: Typed"
+]
+
+dependencies = [
+    "python-json-logger>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/stabbotco1/mypylogger"
+Repository = "https://github.com/stabbotco1/mypylogger"
+Documentation = "https://github.com/stabbotco1/mypylogger#readme"
+"Bug Tracker" = "https://github.com/stabbotco1/mypylogger/issues"
+"Security" = "https://github.com/stabbotco1/mypylogger/blob/main/VULNERABILITIES.md"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-watch>=4.2.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+    "pip-audit>=2.6.0",
+    "pre-commit>=3.0.0",
+    "build>=0.10.0",
+    "twine>=4.0.0",
+    "psutil>=5.9.0",
+    "pyyaml>=6.0.0",
+    "tomli>=2.0.0",
+    "packaging>=23.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mypylogger*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--cov=mypylogger --cov-report=html --cov-report=term-missing --cov-fail-under=90 --strict-markers --strict-config"
+markers = [
+    "unit: Unit tests (fast, isolated)",
+    "integration: Integration tests (medium speed, real dependencies)",
+    "performance: Performance benchmark tests (slow)",
+    "slow: Slow tests that should be run less frequently"
+]
+
+[tool.coverage.run]
+source = ["mypylogger"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/build/*",
+    "*/dist/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod"
+]
+show_missing = true
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["mypylogger"]
+force_grid_wrap = 0
+combine_as_imports = true
+include_trailing_comma = true
