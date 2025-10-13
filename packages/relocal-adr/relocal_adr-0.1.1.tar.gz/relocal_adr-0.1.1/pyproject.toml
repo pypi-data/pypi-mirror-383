@@ -1,0 +1,47 @@
+[project]
+name = "relocal-adr"
+version = "0.1.1"
+description = "ADR: Real-Time and Robust 3D Place Recognition with Adaptive Data Reorganization and Geodesic-Constrained Plane Suppression"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [
+    { name = "HopeCollector", email = "cmw0249@gmail.com" }
+]
+keywords = [
+    "pointcloud",
+    "lidar",
+    "autonomous driving",
+    "place recognition",
+    "3d vision",
+    "loop closure detection",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/HopeCollector/adr_code"
+Documentation = "https://github.com/HopeCollector/adr_code#readme"
+Source = "https://github.com/HopeCollector/adr_code"
+
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+]
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
