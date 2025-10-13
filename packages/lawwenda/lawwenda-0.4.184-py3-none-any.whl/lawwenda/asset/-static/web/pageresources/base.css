@@ -1,0 +1,36 @@
+/*
+* SPDX-FileCopyrightText: © 2021 Josef Hahn
+* SPDX-License-Identifier: AGPL-3.0-only
+*/
+
+body:not(.access-readwrite) .only-access-readwrite {
+    display: none;
+}
+
+.panelpiece sl-button::part(base) {
+    background: #ffffff33;
+    color: #ffffffdd;
+}
+
+sl-button.tag::part(base) {
+    background: #ffffff33;
+    color: #ffffffdd;
+    height: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.only-visible-in-fullsizedetails-mode {
+    visibility: var(--only-visible-in-fullsizedetails-mode);
+}
+
+@keyframes busy_fadein {
+    to {
+        opacity: 1.0;
+    }
+}
+
+@keyframes busy_fadeout {
+    to {
+        opacity: 0.0;
+    }
+}

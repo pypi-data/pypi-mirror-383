@@ -1,0 +1,30 @@
+<!doctype html>
+<!--
+  SPDX-FileCopyrightText: © 2021 Josef Hahn
+  SPDX-License-Identifier: AGPL-3.0-only
+-->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="{url_internals_name}/static/piweb/3rdparty/node_modules/@shoelace-style/shoelace/dist/shoelace/shoelace.css" type="text/css"/>
+        <link rel="stylesheet" href="{url_internals_name}/static/pageresources/base.css" type="text/css"/>
+        <script type="text/javascript">
+            piwebBaseStylesRef = '<link rel="stylesheet" href="{url_internals_name}/static/pageresources/base.css" type="text/css"/>';
+        </script>
+        <script type="module" src="{url_internals_name}/static/piweb/3rdparty/node_modules/@shoelace-style/shoelace/dist/shoelace/shoelace.esm.js"></script>
+        <script type="module" src="{url_internals_name}/static/piweb/busy.js"></script>
+        <script type="module" src="{url_internals_name}/static/piweb/mapview.js"></script>
+        <script type="module" src="{url_internals_name}/static/components/detailspanel.js"></script>
+        <script type="module" src="{url_internals_name}/static/components/directoryview.js"></script>
+        <script type="module" src="{url_internals_name}/static/components/locationbar.js"></script>
+        <script type="module" src="{url_internals_name}/static/components/notification.js"></script>
+        <script type="module" src="{url_internals_name}/static/components/searchpanel.js"></script>
+        {html_head_inner.unescaped}
+        <title>{rootname}</title>
+    </head>
+    <body data-rootname="{rootname}" data-initialpath="{path}" data-url-internals-name="{url_internals_name}"
+          data-csrf_token="{csrf_token}" class="access-{accessmode}">
+        {html_body_inner.unescaped}
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<!--
+  SPDX-FileCopyrightText: © 2021 Josef Hahn
+  SPDX-License-Identifier: AGPL-3.0-only
+-->
+<div id="header">
+    <img id="logo" src="{url_internals_name}/static/img/lawwenda.png" alt="Lawwenda"/>
+    <lawwenda-locationbar id="locationbar"></lawwenda-locationbar>
+    <sl-dropdown hoist id="mainmenudropdown">
+        <sl-button slot="trigger" id="btnmenu" type="primary">
+            <sl-icon name="list"></sl-icon>
+        </sl-button>
+        <sl-menu id="mainmenu">
+            <sl-menu-item value="newdir" class="only-access-readwrite">
+                <sl-icon slot="prefix" name="folder-plus"></sl-icon> New directory...
+            </sl-menu-item>
+            <sl-menu-item value="upload" class="only-access-readwrite">
+                <sl-icon slot="prefix" name="upload"></sl-icon> Upload...
+            </sl-menu-item>
+            <sl-menu-divider class="only-access-readwrite"></sl-menu-divider>
+            <sl-menu-item value="search">
+                <sl-icon slot="prefix" name="search"></sl-icon> Search...
+            </sl-menu-item>
+            <sl-menu-item value="sort">
+                <sl-icon slot="prefix"></sl-icon> Sort...
+            </sl-menu-item>
+            <sl-menu-item value="revealhidden">
+                <sl-icon slot="prefix"></sl-icon> Reveal hidden files
+            </sl-menu-item>
+            <sl-menu-divider></sl-menu-divider>
+            <sl-menu-item value="smallrows">
+                <sl-icon slot="prefix"></sl-icon> Small rows
+            </sl-menu-item>
+            <sl-menu-divider></sl-menu-divider>
+            <sl-menu-item value="select">
+                <sl-icon slot="prefix"></sl-icon> Select...
+            </sl-menu-item>
+            <sl-menu-divider></sl-menu-divider>
+            <sl-menu-item value="help">
+                <sl-icon slot="prefix" name="question-circle-fill"></sl-icon> Help
+            </sl-menu-item>
+        </sl-menu>
+    </sl-dropdown>
+</div>
+<div id="maingrid">
+    <lawwenda-directoryview id="dirview"></lawwenda-directoryview>
+    <div id="details">
+        <div id="detailsinner">
+            <lawwenda-detailspanel id="detailspanel" access-mode="{accessmode}"></lawwenda-detailspanel>
+        </div>
+    </div>
+</div>
+<div id="notificationareaouter">
+    <div id="notificationarea">
+    </div>
+</div>
+<div id="searchouter">
+</div>

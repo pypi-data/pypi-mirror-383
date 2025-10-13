@@ -1,0 +1,181 @@
+/*
+* SPDX-FileCopyrightText: © 2021 Josef Hahn
+* SPDX-License-Identifier: AGPL-3.0-only
+*/
+
+body {
+    --header-height: 2.2rem;
+    --small-detailspanel-height: 30vh;
+    --panel-bgcolor: #36365b;
+    --panel-fgcolor: #fafafa;
+    --icon-size: 5rem;
+    --previewerpiece-width: 12em;
+    --previewerpiece-height: 24em;
+    --only-visible-in-fullsizedetails-mode: collapse;
+}
+
+body.smallrows {
+    --icon-size: 2.5rem;
+}
+
+body.fullsizedetails {
+    overflow: hidden;
+    --only-visible-in-fullsizedetails-mode: visible;
+}
+
+#mainmenudropdown {
+    grid-column: 3;
+}
+
+#mainmenudropdown::part(panel) {
+    max-height: calc(100vh - var(--header-height) - 1em);
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    overflow: hidden;
+    background: var(--panel-bgcolor);
+    z-index: 100;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto 1fr auto;
+    box-shadow: 0 0 8pt black;
+}
+
+#logo {
+    grid-column: 1;
+    height: var(--header-height);
+}
+
+#locationbar {
+    grid-column: 2;
+    height: var(--header-height);
+}
+
+#btnmenu {
+    margin: 0.125em 0.5em 0 0.125em;
+}
+
+#btnmenu::part(base) {
+    font-size: 2.0em;
+}
+
+#maingrid {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 2fr minmax(0, 50rem) 1fr auto 1fr;
+    margin-top: var(--header-height);
+    min-height: calc(99vh - var(--header-height));
+}
+
+#dirview {
+    grid-column: 2;
+}
+
+#details {
+    color: var(--panel-fgcolor);
+}
+
+.fullsizedetails #details {
+    position: fixed;
+    top: var(--header-height);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: initial;
+    border: none;
+    border-radius: 0;
+    width: initial;
+    background: var(--panel-bgcolor);
+}
+
+.fullsizedetails #detailsinner {
+    max-height: initial;
+    border: none;
+    border-radius: 0;
+    --previewerpiece-width: 100%;
+    --previewerpiece-height: 100%;
+    margin-bottom: 100vh;
+    max-height: initial;
+}
+
+#notificationareaouter {
+    position: fixed;
+    top: var(--header-height);
+    right: 1em;
+    background: #535364f2;
+    border-radius: 0 0 0.5rem 0.5rem;
+    box-shadow: 0 0 8pt black;
+}
+
+#notificationarea {
+    margin: 0 0.5rem;
+    overflow-y: auto;
+    width: 60vw;
+    max-height: 40vh;
+}
+
+#searchouter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 7em;
+    background: #535364f2;
+    border-radius: 0 0 0.5rem 0.5rem;
+    z-index: 1000;
+}
+
+#searchouter lawwenda-searchpanel {
+    min-height: var(--header-height);
+    --expanded-height: 60vh;
+}
+
+@media screen and (max-width: 950pt) {
+
+    #details {
+        position: fixed;
+        bottom: 0;
+        max-height: var(--small-detailspanel-height);
+        left: 0;
+        right: 0
+        width: initial;
+        background: var(--panel-bgcolor);
+        border-width: 0.25rem 0.7rem 0 0;
+        border-style: solid;
+        border-color: var(--panel-bgcolor);
+        overflow: auto;
+        box-shadow: 0 0 8pt black;
+    }
+
+    #detailsinner {
+        margin: 0 0.5rem 0.5rem 0.5rem;
+    }
+
+    #dirview {
+        margin-bottom: calc(1em + var(--small-detailspanel-height));
+    }
+
+}
+
+@media screen and not (max-width: 950pt) {
+
+    #details {
+        grid-column: 4;
+        width: 24em;
+    }
+
+    #detailsinner {
+        position: sticky;
+        top: calc(3em + var(--header-height));
+        border: 0.5rem solid var(--panel-bgcolor);
+        background: var(--panel-bgcolor);
+        max-height: calc(100vh - 5em - var(--header-height));
+        overflow: auto;
+        box-shadow: 0 0 8pt black;
+    }
+
+}

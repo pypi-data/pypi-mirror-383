@@ -1,0 +1,22 @@
+[MASTER]
+ignore=pimetadatainterpreter.py,
+       project_info.py
+
+[MESSAGES CONTROL]
+enable=all
+disable=fixme,
+        locally-disabled,
+        suppressed-message,
+        too-few-public-methods
+
+[STRING]
+check-quote-consistency=yes
+
+[FORMAT]
+expected-line-ending-format=LF
+indent-after-paren=4
+indent-string='    '
+max-line-length=120
+
+[BASIC]
+good-names=f, i, j, k, ex, _
