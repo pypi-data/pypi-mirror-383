@@ -1,0 +1,181 @@
+Metadata-Version: 2.4
+Name: errorify
+Version: 0.0.2
+Summary: A lightweight Python package for structured and readable exception details.
+Home-page: https://github.com/bipni/Errorify
+Author: Bipu Mirza
+Author-email: bipumirja@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/bipni/Errorify/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Debuggers
+Classifier: Topic :: System :: Logging
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: requires-python
+Dynamic: summary
+
+# Errorify
+
+Errorify is a lightweight Python package that helps you **format and display exception details** in a clean, structured, and readable way.
+It captures essential information - such as the exception type, message, file path, line number, and a timestamp - making debugging simpler and logs more meaningful.
+
+---
+
+## Installation
+
+Install Errorify directly from PyPI:
+
+```bash
+pip install errorify
+```
+
+---
+
+## Usage
+
+To use **Errorify**, import it and pass the caught exception object (`error`) into the `errorify()` function.
+It will return a **formatted string** containing all relevant exception details.
+
+### Example 1 - Basic Usage
+
+```python
+from errorify import errorify
+
+try:
+    raise ValueError("Invalid value")
+except Exception as e:
+    print(errorify(e))
+```
+
+### Example Output
+
+```
+-------------------------------- Error Details --------------------------------
+Timestamp: 2025-10-12 18:45:20 +0000
+Exception Name: ValueError
+Exception Message: Invalid value
+Exception File Path: /home/user/Documents/test.py
+Exception File Name: test.py
+Exception File Line Number: 4
+Error File Path: /home/user/Documents/test.py
+Error File Name: test.py
+Error Function Name: <module>
+Error File Line Number: 4
+-------------------------------------------------------------------------------
+```
+
+---
+
+### Example 2 - With Custom Timezone
+
+You can specify a timezone offset in hours using the `tz_offset` parameter.
+This is useful when running code on a server (UTC) but you want local timestamps in logs.
+
+```python
+from errorify import errorify
+
+try:
+    1 / 0
+except Exception as e:
+    print(errorify(e, tz_offset=+6))
+```
+
+#### Example Output
+
+```
+-------------------------------- Error Details --------------------------------
+Timestamp: 2025-10-12 23:45:20 +0600
+Exception Name: ZeroDivisionError
+Exception Message: division by zero
+Exception File Path: /home/user/Documents/test.py
+Exception File Name: test.py
+Exception File Line Number: 4
+Error File Path: /home/user/Documents/test.py
+Error File Name: test.py
+Error Function Name: <module>
+Error File Line Number: 4
+-------------------------------------------------------------------------------
+```
+
+---
+
+## Parameters
+
+| Parameter          | Type                     | Default                  | Description                                                                            |
+| ------------------ | ------------------------ | ------------------------ | -------------------------------------------------------------------------------------- |
+| `error`            | `BaseException`          | Required                 | The caught exception object.                                                           |
+| `tz_offset`        | `int` / `float` / `None` | `None`                   | Timezone offset in hours (e.g. `+6`, `-5.5`, `+3.5`). Defaults to UTC if not provided. |
+| `timestamp_format` | `str`                    | `"%Y-%m-%d %H:%M:%S %z"` | Datetime format for the timestamp (standard `strftime` format).                        |
+
+---
+
+## Example Integration
+
+You can use **Errorify** inside larger applications or logging systems to generate readable error summaries:
+
+```python
+from errorify import errorify
+
+def divide(a, b):
+    return a / b
+
+try:
+    divide(5, 0)
+except Exception as e:
+    # Print or log formatted error details
+    print(errorify(e, tz_offset=+5.5))
+```
+
+Output:
+
+```
+-------------------------------- Error Details --------------------------------
+Timestamp: 2025-10-12 22:15:42 +0530
+Exception Name: ZeroDivisionError
+Exception Message: division by zero
+Exception File Path: /home/user/project/app.py
+Exception File Name: app.py
+Exception File Line Number: 7
+Error File Path: /home/user/project/app.py
+Error File Name: app.py
+Error Function Name: divide
+Error File Line Number: 7
+-------------------------------------------------------------------------------
+```
+
+---
+
+## Notes
+
+- `errorify()` should always be called **inside an `except` block**.
+- Works across **Linux, macOS, and Windows**.
+- No external dependencies - pure Python standard library.
+- Safe for **production logging**, **debugging**, or **error reporting systems**.
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Author
+
+**Bipu Mirza**
+📧 [bipumirja@gmail.com](mailto:bipumirja@gmail.com)
+🔗 [GitHub: bipni](https://github.com/bipni)
