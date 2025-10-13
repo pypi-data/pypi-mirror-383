@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "git_boss"
+version = "0.0.1"
+description = "Python git project management tool"
+authors = [
+    { name = "kristof9851" }
+]
+readme = "README.md"
+license = {file = "LICENSE.md"}
+requires-python = ">=3.8"
+dependencies = [
+    "gitpython>=3.1.40",
+]
+
+[project.urls]
+Homepage = "https://github.com/kristof9851/git_boss"
+Issues = "https://github.com/kristof9851/git_boss/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
