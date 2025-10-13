@@ -1,0 +1,87 @@
+Metadata-Version: 2.4
+Name: mkdocs-wikipedia
+Version: 0.1.0
+Summary: Add overlay on wikipedia links in MkDocs
+License: MIT
+License-File: LICENSE.md
+Keywords: mkdocs,python,wiki,wikipedia
+Author: Yves Chevallier
+Author-email: yves.chevallier@heig-vd.ch
+Requires-Python: >=3.9,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Dist: mkdocs (>=1.6.1,<2.0.0)
+Requires-Dist: pydantic (>=2.9.2,<3.0.0)
+Requires-Dist: ruamel-yaml (>=0.18.15,<0.19.0)
+Requires-Dist: unidecode (>=1.4.0,<2.0.0)
+Project-URL: Documentation, https://github.com/yves-chevallier/mkdocs-wikipedia
+Project-URL: Source, https://github.com/yves-chevallier/mkdocs-wikipedia
+Project-URL: Tracker, https://github.com/yves-chevallier/mkdocs-wikipedia/issues
+Description-Content-Type: text/markdown
+
+# MkDocs Wikipedia Plugin
+
+[![CI](https://github.com/yves-chevallier/mkdocs-wikipedia/actions/workflows/ci.yml/badge.svg)](https://github.com/yves-chevallier/mkdocs-wikipedia/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/yves-chevallier/mkdocs-wikipedia/branch/main/graph/badge.svg)](https://codecov.io/gh/yves-chevallier/mkdocs-wikipedia)
+[![PyPI](https://img.shields.io/pypi/v/mkdocs-wikipedia.svg)](https://pypi.org/project/mkdocs-wikipedia/)
+[![Repo Size](https://img.shields.io/github/repo-size/yves-chevallier/mkdocs-wikipedia.svg)](https://github.com/yves-chevallier/mkdocs-wikipedia)
+[![Python Versions](https://img.shields.io/pypi/pyversions/mkdocs-wikipedia.svg?logo=python)](https://pypi.org/project/mkdocs-wikipedia/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+
+![MkDocs](https://img.shields.io/badge/MkDocs-1.6+-blue.svg?logo=mkdocs)
+![MkDocs Material](https://img.shields.io/badge/MkDocs%20Material-supported-success.svg?logo=materialdesign)
+![Wikipedia](https://img.shields.io/badge/Wikipedia-API-lightgrey.svg?logo=wikipedia)
+![Python](https://img.shields.io/badge/Python-typed-blue.svg?logo=python)
+
+This plugin allows you to fetch and display Wikipedia summaries in your MkDocs pages. It is compatible with MkDocs Material and MkDocs Books.
+
+## Installation
+
+```bash
+pip install mkdocs-wikipedia
+```
+
+Activate the plugin in your `mkdocs.yml`:
+
+```yaml
+plugins:
+  - wikipedia:
+      language: "fr"
+      timeout: 5
+```
+
+Install the plugin using pip:
+
+```bash
+pip install mkdocs-wikipedia
+```
+
+Activate the plugin in your `mkdocs.yml`:
+
+```yaml
+plugins:
+  - wikipedia:
+      language: "fr"
+      timeout: 5
+      filename: "links.yml"  # Optional, default is "links.yml"
+```
+
+## Usage
+
+In you pages, when you add a wikipedia tag, it will be replaced by the summary of the corresponding Wikipedia page.
+
+```md
+[MkDocs](https://en.wikipedia.org/wiki/MkDocs)
+```
+
