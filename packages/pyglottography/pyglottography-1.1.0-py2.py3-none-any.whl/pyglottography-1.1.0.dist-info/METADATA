@@ -1,0 +1,104 @@
+Metadata-Version: 2.1
+Name: pyglottography
+Version: 1.1.0
+Summary: Programmatic curation of Glottography datasets
+Home-page: https://github.com/glottography/pyglottography
+Author: Robert Forkel
+Author-email: robert_forkel@eva.mpg.de
+License: Apache 2.0
+Project-URL: Bug Tracker, https://github.com/glottography/pyglottography/issues
+Keywords: linguistics
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: License :: OSI Approved :: Apache Software License
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: csvw>=3.6.0
+Requires-Dist: simplepybtex
+Requires-Dist: cldfbench
+Requires-Dist: cldfgeojson>=1.1.0
+Requires-Dist: pyglottolog
+Requires-Dist: clldutils
+Requires-Dist: pycldf>=1.30.0
+Requires-Dist: shapely
+Requires-Dist: mako
+Provides-Extra: dev
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: wheel; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+Requires-Dist: tox; extra == "dev"
+Provides-Extra: test
+Requires-Dist: pytest>=5; extra == "test"
+Requires-Dist: pytest-mock; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Requires-Dist: coverage>=4.2; extra == "test"
+
+# pyglottography
+
+Programmatic curation of Glottography datasets
+
+[![Build Status](https://github.com/glottography/pyglottography/workflows/tests/badge.svg)](https://github.com/glottography/pyglottography/actions?query=workflow%3Atests)
+[![PyPI](https://img.shields.io/pypi/v/pyglottography.svg)](https://pypi.org/project/pyglottography)
+
+
+## Installation
+
+Install via pip from [PyPI](https://pypi.org/project/pyglottography):
+```shell
+pip install pyglottography
+```
+
+> [!NOTE]
+> We use GDAL's [ogr2ogr](https://gdal.org/en/latest/programs/ogr2ogr.html) command to convert between
+> GeoJSON and GeoPackage formats. Thus, some functionality of `pyglottography` requires a working
+> [GDAL](https://gdal.org/en/latest/index.html) installation.
+
+
+## Curating Glottography datasets with `pyglottography`
+
+### Bootstrapping a new dataset
+
+`pyglottography` provides a [cldfbench project template](https://github.com/cldf/cldfbench?tab=readme-ov-file#custom-dataset-templates),
+which can be used with the `cldfbench new` command:
+```shell
+cldfbench new --template glottography
+```
+
+
+### Providing the `raw` data
+
+The `cldfbench` workflow uses data in a project's `raw` directory - enriched with information from
+`etc` - to create a CLDF dataset in the `cldf` directory. By default, `pyglottography` expects input
+data as follows:
+- Geo-data, i.e. shapes for languoid areas, is expected in a GeoJSON file `raw/dataset.geojson`. Each
+  feature in thie GeoJSON file should have a unique value for the `id` property.
+- Metadata about the shapes is expected in a CSV file `etc/features.csv`. This file must have an `id`
+  column with values corresponding to the feature `id`s in the geo-data.
+
+While metadata could be read entirely from the `properties` object of features in the GeoJSON file,
+`pyglottography` looks up the metadata in a different file to allow for more transparent curation.
+Since the Glottolog language catalog is released in a new version about twice a year, it is necessary
+to be able to recreate a Glottography dataset with updated Glottocodes. With the raw data setup as
+implemented in `pyglottography`, this only requires changes in `etc/features.csv`, which can easily
+be tracked with versioning software such as git.
+
+
+### Running the CLDF creation
+
+```shell
+cldfbench makecldf cldfbench_<dsid>.py
+```
