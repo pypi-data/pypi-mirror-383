@@ -1,0 +1,22 @@
+[project]
+name = "broca"
+version = "0.0.2"
+description = "Universal LLM inference client manager and adapter"
+authors = [
+    {name = "Bobby Lange",email = "mail@robertlange.me"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "openai (>=2.1.0,<3.0.0)",
+    "google-genai (>=1.43.0,<2.0.0)",
+    "mistralai (>=1.9.11,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "broca", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

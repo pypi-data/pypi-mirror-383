@@ -1,0 +1,20 @@
+Metadata-Version: 2.3
+Name: broca
+Version: 0.0.2
+Summary: Universal LLM inference client manager and adapter
+Author: Bobby Lange
+Author-email: mail@robertlange.me
+Requires-Python: >=3.13
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: google-genai (>=1.43.0,<2.0.0)
+Requires-Dist: mistralai (>=1.9.11,<2.0.0)
+Requires-Dist: openai (>=2.1.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+# Broca
+
+Broca is a Universal LLM inference adapter and client manager.
+It can be used to manage connections to multiple LLM providers (Google, Mistral, OpanAI...) while using their native Python 
+implementation.
+
