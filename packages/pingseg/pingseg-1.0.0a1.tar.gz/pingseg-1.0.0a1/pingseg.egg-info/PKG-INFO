@@ -1,0 +1,48 @@
+Metadata-Version: 2.4
+Name: pingseg
+Version: 1.0.0a1
+Summary: Utility to perform semantic segmentation on sonar imagery.
+Author: Cameron Bodine
+Author-email: bodine.cs@gmail.email
+Project-URL: Issues, https://github.com/PINGEcosystem/PINGSeg/issues
+Project-URL: GitHub, https://github.com/PINGEcosystem/PINGSeg
+Project-URL: Homepage, https://PINGEcosystem.github.io/PINGSeg/
+Keywords: pingmapper,sonar,ecology,remotesensing,sidescan,sidescan-sonar,aquatic,humminbird,lowrance,gis,oceanography,limnology
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Classifier: Topic :: Scientific/Engineering :: Oceanography
+Classifier: Topic :: Scientific/Engineering :: GIS
+Classifier: Topic :: Scientific/Engineering :: Hydrology
+Requires-Python: <3.13
+Description-Content-Type: text/markdown
+Requires-Dist: pinginstaller
+Requires-Dist: pingwizard
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: keywords
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# PINGSeg
+[![PyPI - Version](https://img.shields.io/pypi/v/pingseg?style=flat-square&label=Latest%20Version%20(PyPi))](https://pypi.org/project/pingseg/)
+
+Utility to perform semantic segmentation on sonar imagery.
+
+**UNDER CONSTRUCTION**
+
+Check back soon....
+
+# Installation
+
+
+# Acknowledgements
+This would not have been possible without the fantastic work of [Dr. Daniel Buscombe](https://github.com/dbuscombe-usgs) and [Dr. Evan Goldstein](https://github.com/ebgoldstein) and as implemented in [Segmentation Gym](https://github.com/Doodleverse/segmentation_gym).
