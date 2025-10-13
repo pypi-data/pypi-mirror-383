@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: alt-legibilidade
+Version: 0.1.2
+Summary: Ferramenta para análise de legibilidade de textos em português
+Home-page: https://github.com/marcopolomoreno/alt-python
+Author: Equipe ALT
+Author-email: marcopolo@unir.br
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Natural Language :: Portuguese
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pymupdf
+Requires-Dist: python-docx
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+Ferramenta do projeto ALT (https://legibilidade.com) para contar letras, palavras, sílabas, frases e calcular índices como Flesch, Gunning Fog, ARI, CLI e Gulpease em língua portuguesa. Suporta arquivos .txt, .pdf e .docx.
