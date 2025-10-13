@@ -1,0 +1,124 @@
+[tool.poetry]
+name = "omnidep"
+version = "0.3.10"
+description = "Linter to compare project dependencies against imports in source code"
+readme = "README.rst"
+authors = ["Steve Jessop <68118527+sjjessop@users.noreply.github.com>"]
+license = "MIT"
+homepage = "https://github.com/sjjessop/omnidep"
+classifiers = ["Programming Language :: Python :: 3.14"]
+packages = [{ include = "omnidep" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8.1"
+
+isort = { version = ">=5.0.1", python = "<3.10" }  # 5.0.1 fixes some issue importing vendored toml
+tomli = { version = ">=1.1.0", python = "<3.11" }  # 1.1.0 adds support for binary filehandles
+
+[tool.poetry.group.dev.dependencies]
+coverage = { version = "*", extras = ["toml"] }
+isort = "*"
+mypy = "*"
+pytest = "*"
+pytest-cov = "*"
+ruff = "~0.14.0"
+
+[tool.poetry.group.test_case.dependencies]
+# Projects used as dependencies in test cases, that need to be installed so
+# omnidep can detect them.
+cffi = [{ version = "<2", python = "<3.9" }, { version = ">=2.0.0", python = ">=3.14" }]  # No binaries
+opentelemetry-api = "*"
+opentelemetry-sdk = "*"
+pyOpenSSL = "*"
+
+[tool.poetry.scripts]
+omnidep = 'omnidep.main:script_entry_point'
+
+[tool.poetry.urls]
+"Changelog" = "https://github.com/sjjessop/omnidep/tree/develop#changelog"
+
+
+[tool.omnidep]
+local-test-paths = ["omnidep/tst/"]
+ignore-imports = [
+    # Used in test cases as a missing package/module
+    "no_such_module",
+    # Used in test cases as a namespace package
+    "opentelemetry",
+    # Omnidep does not understand version-specific imports
+    "tomllib",
+]
+
+
+[tool.isort]
+force_sort_within_sections = true
+lines_after_imports=1
+multi_line_output = "VERTICAL_GRID_GROUPED"
+include_trailing_comma = true
+src_paths = ["omnidep"]
+known_first_party = ["omnidep"]
+
+
+[tool.mypy]
+pretty = true
+strict = true
+warn_unreachable = true
+disallow_untyped_calls = false
+overrides = [{module = "opentelemetry", ignore_missing_imports = true}]
+
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]
+
+
+[tool.pytest.ini_options]
+filterwarnings = ["error"]
+
+
+[tool.ruff]
+output-format = "full"
+show-fixes = true
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    # Old-school flake8 rules
+    "E", "F",
+    # Helpers for tedious admin
+    "EXE", "INP", "YTT",
+    # Coding style warts
+    "A001", "A002", "C4", "ISC", "PTH", "RET", "RSE",
+    # Potential code improvements
+    "B", "C90", "FBT", "PGH", "PL", "PT", "RUF", "S", "UP"
+]
+ignore = [
+    "B023",  # The problem is not the function definition, but escaped references.
+    "C401",  # Writing set() to imply deduplication is clearer to me than just punctuation.
+    "E501",  # I have a 4k display.
+    "PLR0913",  # Restricts keyword-only arguments too much
+    "PLR2004",  # Rejects too many innocuous numbers.
+    "PTH201",  # Explicit is better than implicit, so allow Path('.')
+]
+
+[tool.ruff.lint.per-file-ignores]
+"omnidep/tst/*" = [
+    "S101",  # pytest expects asserts
+]
+
+[tool.ruff.lint.flake8-pytest-style]
+parametrize-names-type = "csv"
+
+[tool.ruff.lint.pyupgrade]
+# While still supporting Python 3.8, avoids having different style requirements
+# according to whether or not each file imports __future__ annotations.
+keep-runtime-typing = true
+
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
