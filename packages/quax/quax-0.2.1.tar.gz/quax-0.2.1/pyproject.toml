@@ -1,0 +1,82 @@
+[project]
+name = "quax"
+version = "0.2.1"
+description = "Multiple dispatch in JAX via custom interpreters."
+readme = "README.md"
+requires-python =">=3.10"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Patrick Kidger", email = "contact@kidger.site"},
+]
+keywords = ["jax", "multiple-dispatch", "equinox"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+urls = {repository = "https://github.com/patrick-kidger/quax" }
+dependencies = [
+    "jax>=0.5.3,!=0.7.0,!=0.7.1",
+    "jaxtyping>=0.3.3",
+    "equinox>=0.13.2",
+    "plum-dispatch>=2.2.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=4.1.0",
+]
+docs = [
+  "hippogriffe==0.2.0",
+  "mkdocs==1.6.1",
+  "mkdocs-include-exclude-files==0.1.0",
+  "mkdocs-ipynb==0.1.1",
+  "mkdocs-material==9.6.7",
+  "mkdocstrings[python]==0.28.3",
+  "pymdown-extensions==10.14.3",
+]
+tests = [
+    "beartype>=0.20.2",
+    "pytest>=8.3.5",
+    "pytest-env>=1.1.5",
+    "jax[cpu]",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["quax/*"]
+
+[tool.pytest.ini_options]
+addopts = "--jaxtyping-packages=quax,beartype.beartype(conf=beartype.BeartypeConf(strategy=beartype.BeartypeStrategy.On))"
+
+[tool.pytest_env]
+JAX_CHECK_TRACER_LEAKS = 1
+
+[tool.ruff.lint]
+select = ["E", "F", "I001", "UP"]
+ignore = ["E402", "E721", "E731", "E741", "F722"]
+fixable = ["I001", "F401", "UP"]
+
+[tool.ruff.lint.flake8-import-conventions.extend-aliases]
+"jax.extend" = "jex"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+lines-after-imports = 2
+extra-standard-library = ["typing_extensions"]
+order-by-type = false
+
+[tool.pyright]
+reportIncompatibleMethodOverride = true
+include = ["quax", "tests"]
