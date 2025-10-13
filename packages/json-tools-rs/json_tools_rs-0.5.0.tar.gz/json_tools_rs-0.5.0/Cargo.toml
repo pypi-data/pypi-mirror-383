@@ -1,0 +1,45 @@
+[package]
+name = "json-tools-rs"
+version = "0.5.0"
+edition = "2021"
+description = "A high-performance Rust library for advanced JSON manipulation with SIMD-accelerated parsing, including flattening nested JSON structures and automatic type conversion"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/amaye15/json-tools-rs"
+keywords = ["json", "flatten", "manipulation", "parsing"]
+categories = ["data-structures", "parsing"]
+readme = "README.md"
+
+[lib]
+name = "json_tools_rs"
+path = "src/lib.rs"
+
+# Support both library and Python extension
+crate-type = ["rlib", "cdylib"]
+
+[[bin]]
+name = "json-tools-rs"
+path = "src/main.rs"
+
+[dependencies]
+regex = "1.11.1"
+simd-json = { version = "0.15.1", features = ["serde_impl"] }
+serde_json = "1.0.141"
+pyo3 = { version = "0.25.1", features = ["extension-module"], optional = true }
+thiserror = "2.0.12"
+rustc-hash = "2.0.0"
+ahash = "0.8.11"
+lazy_static = "1.5.0"
+fast-float = "0.2"
+
+[features]
+default = []  # Add python to default features
+python = ["pyo3"]
+
+test-assets-performance = []
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "comprehensive_benchmark"
+harness = false
