@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML with Deep Nesting</title>
+</head>
+<body>
+    <h1>HTML with Deeply Nested Elements</h1>
+    <p>This document contains deeply nested HTML elements to test parser robustness.</p>
+    
+    <div class="level-1">
+        <h2>Level 1 Heading</h2>
+        <p>Level 1 paragraph with <strong>bold text</strong>.</p>
+        <div class="level-2">
+            <h3>Level 2 Heading</h3>
+            <p>Level 2 paragraph with <em>emphasized text</em>.</p>
+            <div class="level-3">
+                <h4>Level 3 Heading</h4>
+                <p>Level 3 paragraph with <a href="https://example.com">a link</a>.</p>
+                <div class="level-4">
+                    <h5>Level 4 Heading</h5>
+                    <p>Level 4 paragraph with <code>code snippet</code>.</p>
+                    <div class="level-5">
+                        <h6>Level 5 Heading</h6>
+                        <p>Level 5 paragraph with <span style="color: red;">colored text</span>.</p>
+                        <div class="level-6">
+                            <p>Level 6 paragraph with <strong><em><a href="#">deep <code>mixed</code> nesting</a></em></strong>.</p>
+                            <div class="level-7">
+                                <p>Level 7 paragraph.</p>
+                                <ul>
+                                    <li>Level 7 list item 1</li>
+                                    <li>Level 7 list item 2
+                                        <ul>
+                                            <li>Nested list item 1</li>
+                                            <li>Nested list item 2
+                                                <ul>
+                                                    <li>Double-nested list item 1</li>
+                                                    <li>Double-nested list item 2</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>Level 7 list item 3</li>
+                                </ul>
+                                <div class="level-8">
+                                    <p>Level 8 paragraph with <span><span><span>triple-nested span</span></span></span>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <blockquote>
+        <p>This is a blockquote with nested elements:</p>
+        <blockquote>
+            <p>This is a nested blockquote with more elements:</p>
+            <blockquote>
+                <p>This is a double-nested blockquote.</p>
+            </blockquote>
+        </blockquote>
+    </blockquote>
+</body>
+</html>

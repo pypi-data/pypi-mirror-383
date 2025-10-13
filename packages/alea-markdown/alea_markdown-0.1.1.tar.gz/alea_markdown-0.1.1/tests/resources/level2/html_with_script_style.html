@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML with Script and Style Tags</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: navy;
+        }
+        p {
+            line-height: 1.5;
+        }
+        .highlight {
+            background-color: yellow;
+            padding: 2px;
+        }
+        /* This <p> tag should be ignored since it's in a comment */
+    </style>
+    <script type="text/javascript">
+        function greet() {
+            alert('Hello World!');
+            // This <p> tag should be ignored since it's in a comment
+            var html = "<p>This is dynamically generated</p>";
+            document.getElementById('output').innerHTML = html;
+        }
+        /* 
+           Multi-line comment with <p>HTML tags</p> that
+           <h1>should be ignored</h1>
+        */
+    </script>
+</head>
+<body>
+    <h1>HTML with Script and Style Tags</h1>
+    <p>This document contains <span class="highlight">script</span> and <span class="highlight">style</span> tags with HTML markup inside them.</p>
+    <p>The parser should ignore HTML tags inside script and style elements.</p>
+    <div id="output"></div>
+    <button onclick="greet()">Click me</button>
+    <script>
+        // Inline script with <p>tags that should be ignored</p>
+        console.log("Page loaded");
+    </script>
+</body>
+</html>

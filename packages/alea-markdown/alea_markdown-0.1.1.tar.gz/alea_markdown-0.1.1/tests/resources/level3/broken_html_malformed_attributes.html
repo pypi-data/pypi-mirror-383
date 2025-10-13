@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Broken HTML - Malformed Attributes</title>
+</head>
+<body>
+    <h1 class=>Hello World - Malformed Attributes</h1>
+    <p id="content' style=color:red>This document has malformed attributes.</p>
+    <div class="container" style="background-color:blue>Unclosed attribute quote.</div>
+    <a href=https://example.com title="Link>Missing quote in attribute</a>
+    <ul class=list" id=items>
+        <li value=1>First item</li>
+        <li data-item="2>Second item</li>
+        <li data-item='3">Third item</li>
+    </ul>
+    <img src="placeholder.jpg alt="Broken image" />
+</body>
+</html>

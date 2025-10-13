@@ -1,0 +1,215 @@
+[MASTER]
+# Specify a configuration file.
+# rcfile=
+
+# A comma-separated list of file extensions that should be Python files.
+extension-pkg-whitelist=lxml
+
+# Disable checks on files matching the regex patterns
+ignore=CVS
+
+# Add files or directories to ignore - no need to lint the test directory
+ignore-paths=tests
+
+# Pickle the results for later comparisons
+persistent=yes
+
+# List of plugins (comma-separated) to load
+load-plugins=
+
+# Use multiple processes to speed up Pylint
+jobs=4
+
+# Allow loading of arbitrary C extensions
+unsafe-load-any-extension=no
+
+[MESSAGES CONTROL]
+# Disable the following PyLint messages:
+disable=
+    # Cosmetic issues
+    line-too-long,               # C0301: Line too long
+    too-many-lines,              # C0302: Too many lines in module
+    too-many-branches,
+    too-many-arguments,
+    too-many-positional-arguments,
+    too-many-instance-attributes,
+
+    # Code structure issues that are often ok
+    too-few-public-methods,      # R0903: Too few public methods
+
+    # Style preferences that are debatable
+    no-else-return,              # R1705: Unnecessary "else" after "return"
+    duplicate-code,              # R0801: Similar lines in X files
+    raise-missing-from,          # W0707: Consider explicitly re-raising
+    attribute-defined-outside-init, # W0201: Attribute defined outside __init__
+    
+    # Import organization
+    import-outside-toplevel,     # C0415: Import outside toplevel
+    
+    # Don't complain about catching Exception
+    broad-exception-caught,      # W0718: Catching too general exception Exception
+    
+    # Method overriding style
+    arguments-renamed,           # W0237: Parameter name differs from overridden method
+
+    # Let's handle this differently - these are lxml-related
+    c-extension-no-member       # E1101: Module has no member
+    
+    # Abstract method issues
+
+# Enable the following PyLint messages (even if they are disabled by default)
+enable=
+    trailing-whitespace,
+    missing-docstring,
+    bad-indentation,
+    unused-import,
+    unused-variable,
+    syntax-error,
+    undefined-variable
+
+[REPORTS]
+# Set the output format.
+output-format=text
+
+# Tells whether to display a full report or only the messages
+reports=no
+
+# Python expression which should return a note less than 10
+evaluation=10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
+
+
+[BASIC]
+# Regular expression which should only match the correct module names
+module-rgx=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
+
+# Regular expression which should only match correct function names
+function-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Regular expression which should only match correct method names
+method-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Regular expression which should only match correct instance attribute names
+attr-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Regular expression which should only match correct argument names
+argument-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Regular expression which should only match correct variable names
+variable-rgx=[a-z_][a-z0-9_]{1,50}$
+
+# Regular expression which should only match correct attribute names in class bodies
+class-attribute-rgx=([A-Za-z_][A-Za-z0-9_]{2,50}|(__.*__))$
+
+# Regular expression which should only match correct list comprehension / generator expression variable names
+inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=i,j,k,ex,Run,_,id,df,f,e
+
+# Bad variable names which should always be refused, separated by a comma
+bad-names=foo,bar,baz,toto,tutu,tata
+
+# Regular expression which should only match function or class names that do not need a docstring.
+no-docstring-rgx=__.*__
+
+# Minimum line length for functions/classes that require docstrings, shorter ones are exempt.
+docstring-min-length=5
+
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=100
+
+# Maximum number of lines in a module
+max-module-lines=1500
+
+[VARIABLES]
+# Tells whether we should check for unused import in __init__ files.
+init-import=no
+
+# A regular expression matching the beginning of the name of dummy variables.
+dummy-variables-rgx=_$|dummy|unused
+
+# List of strings which can identify a callback function by name
+callbacks=cb_,_cb
+
+[SIMILARITIES]
+# Minimum lines number of a similarity.
+min-similarity-lines=6
+
+# Ignore comments when computing similarities.
+ignore-comments=yes
+
+# Ignore docstrings when computing similarities.
+ignore-docstrings=yes
+
+# Ignore imports when computing similarities.
+ignore-imports=yes
+
+[TYPECHECK]
+# Tells whether missing members accessed in mixin class should be ignored.
+ignore-mixin-members=yes
+
+# List of module names for which member attributes should not be checked.
+ignored-modules=lxml,lxml.etree,lxml.html
+
+# List of classes names for which member attributes should not be checked.
+ignored-classes=SQLObject,lxml.etree._Element
+
+# List of members which are set dynamically and missed by pylint inference system.
+generated-members=REQUEST,acl_users,aq_parent
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=10
+
+# Argument names that match this expression will be ignored.
+ignored-argument-names=_.*
+
+# Maximum number of locals for function / method body
+max-locals=30
+
+# Maximum number of return / yield for function / method body
+max-returns=10
+
+# Maximum number of statements in function / method body
+max-statements=50
+
+# Maximum number of parents for a class (see R0901).
+max-parents=10
+
+# Maximum number of attributes for a class (see R0902).
+max-attributes=15
+
+# Minimum number of public methods for a class (see R0903).
+min-public-methods=0
+
+# Maximum number of public methods for a class (see R0904).
+max-public-methods=30
+
+[CLASSES]
+# List of method names used to declare (i.e. assign) instance attributes.
+defining-attr-methods=__init__,__new__,setUp
+
+# List of valid names for the first argument in a class method.
+valid-classmethod-first-arg=cls
+
+# List of valid names for the first argument in a metaclass class method.
+valid-metaclass-classmethod-first-arg=mcs
+
+[IMPORTS]
+# Deprecated modules which should not be used, separated by a comma
+deprecated-modules=regsub,TERMIOS,Bastion,rexec
+
+# Create a graph of every (i.e. internal and external) dependencies in the given file.
+import-graph=
+
+# Create a graph of external dependencies in the given file.
+ext-import-graph=
+
+# Create a graph of internal dependencies in the given file.
+int-import-graph=
+
+[EXCEPTIONS]
+# Exceptions that will emit a warning when being caught.
+overgeneral-exceptions=builtins.Exception,builtins.BaseException
