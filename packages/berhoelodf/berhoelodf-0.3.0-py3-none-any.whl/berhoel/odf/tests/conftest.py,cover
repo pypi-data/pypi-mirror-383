@@ -1,0 +1,40 @@
+  #! /usr/bin/env python
+> """Common settiongs for testing `berhoel.odf`."""
+  
+  # Standard library imports.
+> from pathlib import Path
+  
+  # Third party library imports.
+> import pytest
+  
+> __date__ = "2022/08/09 15:42:57 hoel"
+> __author__ = "Berthold Höllmann"
+> __copyright__ = "Copyright © 2020 by Berthold Höllmann"
+> __credits__ = ["Berthold Höllmann"]
+> __maintainer__ = "Berthold Höllmann"
+> __email__ = "berhoel@gmail.com"
+  
+  
+> @pytest.fixture()
+> def base_path():
+>     """Return path to project base."""
+>     return Path(__file__).parents[3]
+  
+  
+> @pytest.fixture()
+> def data_path(base_path):
+>     """Return path to data directory."""
+>     return base_path / "data"
+  
+  
+> @pytest.fixture()
+> def data1(data_path):
+>     """Return path to first sample data file."""
+>     return data_path / "sample1.ods"
+  
+  
+  # Local Variables:
+  # mode: python
+  # compile-command: "poetry run tox"
+  # time-stamp-pattern: "30/__date__ = \"%:y/%02m/%02d %02H:%02M:%02S %u\""
+  # End:
