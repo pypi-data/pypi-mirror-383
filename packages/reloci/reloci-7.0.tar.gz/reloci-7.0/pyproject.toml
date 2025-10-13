@@ -1,0 +1,92 @@
+[build-system]
+requires = ["uv_build>=0.8.4"]
+build-backend = "uv_build"
+
+[project]
+name = 'reloci'
+version = '7.0'
+description = 'Organize photos based on exif'
+readme = 'README.md'
+requires-python = '>=3.13'
+license = 'MIT'
+license-files = ['LICENSE']
+authors = [
+    {name = 'Arne de Laat', email = 'arne@delaat.net'},
+]
+maintainers = [
+    {name = 'Arne de Laat', email = 'arne@delaat.net'},
+]
+keywords = [
+    'photos',
+    'exif',
+    'date',
+    'directories',
+    'organize',
+]
+classifiers = [
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Topic :: Desktop Environment :: File Managers',
+]
+dependencies = [
+    'pyexiftool==0.5.6',
+    'python-baseconv==1.2.2',
+    'rich==14.2.0',
+]
+
+[project.optional-dependencies]
+dev = [
+    'coverage==7.10.7',
+    'ty==0.0.1a22',
+]
+
+[project.urls]
+Repository = 'https://github.com/153957/reloci/'
+
+[project.scripts]
+reloci = 'reloci.cli:reloci'
+file_info = 'reloci.cli:file_info'
+check_interval = 'reloci.check_interval:main'
+
+[tool.uv.build-backend]
+module-name = 'reloci'
+module-root = ''
+
+[tool.ruff]
+line-length = 120
+target-version = 'py311'
+
+[tool.ruff.format]
+quote-style = 'single'  # Prefer single quotes, except for triple quotes strings
+
+[tool.ruff.lint]
+select = ['ALL']  # https://docs.astral.sh/ruff/rules/
+ignore = [
+    'CPY001',  # Do not require copyright notices
+    'D',  # Ignore docstring checks
+    'EM',  # Allow messages directly in exceptions
+    'FBT001',  # Allow positional for boolean arguments
+    'FBT002',  # Allow default value for boolean arguments
+    'PD',  # Not using pandas
+    'PLR0913',  # Allow functions with many arguments
+    'PLR6301',  # Allow not using self in methods
+    'PT',  # Not using pytest
+    'RET504',  # Allow variable assignment before return
+    'SIM108',  # Allow if-else block instead of ternary
+    'T201',  # Allow using print
+    'TRY003',  # Specific messages for common exception classes
+]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = 'single'
+
+[tool.ruff.lint.isort]
+lines-between-types = 1
+
+[tool.coverage.run]
+branch = true
+source = [
+    'reloci',
+    'tests',
+]
