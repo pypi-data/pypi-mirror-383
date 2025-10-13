@@ -1,0 +1,33 @@
+Metadata-Version: 2.4
+Name: poweretl-utils
+Version: 0.0.3a1
+Summary: poweretl is library to support database, data-warehouse, data-lakehouse python projects. poweretl-utils is independent package for not only etl tasks.
+Keywords: python,etl,database,data-lakehouse,data-warehouse
+Author: Roman Plaza
+Author-email: r.plazaman@gmail.com
+Requires-Python: >=3.13
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: dacite (>=1.9.2,<2.0.0)
+Requires-Dist: deepmerge (>=2.0,<3.0)
+Requires-Dist: json5 (>=0.12.1,<0.13.0)
+Requires-Dist: pyyaml (>=6.0.3,<7.0.0)
+Description-Content-Type: text/markdown
+
+# Overview
+*poweretl* is library to support database, data-warehouse, data-lakehouse python projects. *poweretl-utils* is independent package for not only etl tasks.
+
+Read more about library on git-hub: [poweretl](https://github.com/plazacraft/poweretl)
+
+# Features
+| Class                                     | Features
+| ----------------------------------------- | --------------------------------------------------------- |
+| poweretl.utils.file.FileCommandSplitter   |   |
+| poweretl.utils.file.FileMerger            |   |
+| poweretl.utils.file.MultiFileReader       |   |
+| poweretl.utils.text.TokensReplacer        |   |
+
+
+
+
