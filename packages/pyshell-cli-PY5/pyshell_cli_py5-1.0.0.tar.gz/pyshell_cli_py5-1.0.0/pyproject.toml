@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyshell-cli-PY5"
+version = "1.0.0"
+description = "A modular UNIX-like shell implementation in Python with plugin architecture"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "PyShell Contributors", email = "pyshell@example.com"}
+]
+keywords = ["shell", "terminal", "command-line", "unix", "bash", "cli", "educational"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Topic :: System :: Shells",
+    "Topic :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/pyshell"
+Repository = "https://github.com/yourusername/pyshell"
+Issues = "https://github.com/yourusername/pyshell/issues"
+Documentation = "https://github.com/yourusername/pyshell/blob/main/README.md"
+
+[project.scripts]
+pyshell = "pyshell.main:main"
+
+[tool.setuptools]
+packages = ["pyshell", "pyshell.commands", "pyshell.core", "pyshell.utils"]
+
+[tool.setuptools.package-data]
+pyshell = ["resources/*"]
+
