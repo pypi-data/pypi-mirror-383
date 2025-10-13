@@ -1,0 +1,126 @@
+Metadata-Version: 2.4
+Name: axiomos
+Version: 0.1.5
+Summary: A lightweight AXIR playground to run numerical kernels across CPU and OpenCL
+Author: Axiomos
+License: MIT
+Project-URL: Homepage, https://github.com/Aidenkuro10/axiomos-vitrine
+Project-URL: Documentation, https://github.com/Aidenkuro10/axiomos-vitrine#readme
+Project-URL: Repository, https://github.com/Aidenkuro10/axiomos-vitrine
+Keywords: opencl,kernels,gemm,axir,numpy,runtime,AI
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.23
+Requires-Dist: jsonschema>=4.21
+Requires-Dist: tqdm>=4.0
+Provides-Extra: opencl
+Requires-Dist: pyopencl>=2022.3; extra == "opencl"
+Dynamic: license-file
+
+[![PyPI version](https://img.shields.io/pypi/v/axiomos.svg?logo=pypi)](https://pypi.org/project/axiomos/)
+
+# AXIOMOS – Minimal Public Showcase
+
+This repository is a **public showcase** proving that **AXIR** – the universal AI runtime IR – works **without exposing any proprietary core code**.  
+It relies on the public PyPI package **`axiomos`** (CPU + OpenCL), already published.
+
+> ✨ Goal: let anyone (YC, investors, reviewers) **test in 2 minutes** that the IR executes correctly and results are verifiable across backends.
+
+---
+
+## ⚡️ Quickstart
+
+### 1) Environment setup
+```bash
+python -m venv .venv
+# Windows
+.\.venv\Scripts\activate
+# macOS/Linux
+# source .venv/bin/activate
+
+2) Install the public runtime
+
+CPU only:
+
+python -m pip install axiomos
+
+With OpenCL (if GPU/drivers are available):
+
+python -m pip install "axiomos[opencl]"
+
+3) Generate two example fixtures
+python make_fixtures.py
+
+
+This creates:
+
+examples/
+ ├─ vector_add_small.axir.json
+ └─ softmax2d_small.axir.json
+
+✅ Demo 1 — Environment check
+axiomos-doctor
+
+
+If OpenCL is not available, you can still use --backend-a cpu --backend-b cpu.
+
+✅ Demo 2 — “Hello AXIR” (vector add)
+
+Compare CPU vs CPU on a simple vector:
+
+axiomos-verify examples/vector_add_small.axir.json --buffer hC --backend-a cpu --backend-b cpu
+
+
+Expected output: RESULT: PASS.
+
+✅ Demo 3 — Softmax2D (8×8)
+
+Without GPU (CPU vs CPU):
+
+axiomos-verify examples/softmax2d_small.axir.json --buffer hY --backend-a cpu --backend-b cpu
+
+
+With GPU (CPU vs OpenCL):
+
+# Windows PowerShell
+$env:AXIOMOS_OCL_REAL="1"
+# macOS/Linux
+# export AXIOMOS_OCL_REAL=1
+
+axiomos-verify examples/softmax2d_small.axir.json --buffer hY --backend-a cpu --backend-b opencl
+
+
+Expected output:
+
+SHAPES     : CPU(8, 8) vs OPENCL(8, 8)
+max_abs_err: 0.0
+ALLCLOSE   : True (atol=1e-06, rtol=1e-05)
+[SMOKE] RESULT: PASS
+
+🔥 Demo 4 — Small benchmark (optional)
+axiomos-smoke --axir examples/softmax2d_small.axir.json --buffer hY --backend-a opencl --backend-b cpu --inproc --time --warmup 3 --repeat 10
+
+
+Produces an OpenCL vs CPU latency comparison.
+If no GPU is present, use --backend-a cpu --backend-b cpu.
+
+🧩 What this showcase proves
+
+Portability – the same .axir.json runs on both CPU and OpenCL.
+
+Verifiability – axiomos-verify checks numerical equality with strict tolerance (allclose).
+
+Simplicity – 2 fixtures, 3 commands, no access to proprietary code needed.
+
+The full runtime (optimizations, advanced kernels, Ed25519 signature, etc.) remains private.
+This showcase demonstrates only the critical path: IR → execution → verification.
+
+🪪 License
+
+MIT (for this public showcase only). The full runtime remains proprietary.
+'@ | Out-File -Encoding utf8 -FilePath .\README.md -NoNewline
