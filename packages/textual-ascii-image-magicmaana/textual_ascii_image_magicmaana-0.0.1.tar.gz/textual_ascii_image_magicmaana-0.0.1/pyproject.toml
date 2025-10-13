@@ -1,0 +1,19 @@
+[project]
+name = "textual_ascii_image_magicmaana"
+version = "0.0.1"
+authors = [
+  { name="Theo", email="theobaker99@gmail.com" },
+]
+description = "A small, single file, package to convert a PIL image into a Rich / Textual compatible ascii image."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/pypa/sampleproject"
+Issues = "https://github.com/pypa/sampleproject/issues"
