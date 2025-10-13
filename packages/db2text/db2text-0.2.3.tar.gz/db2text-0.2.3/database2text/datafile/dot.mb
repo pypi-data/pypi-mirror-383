@@ -1,0 +1,26 @@
+graph 表结构 {
+	size = "8.5,11";
+	margin=0;
+	pad=0.1;
+	page="8.5,11";
+#	charset=utf8;
+	ratio="fill"
+#	dpi = 300
+#	rankdir = "TR"
+#	node[shape=record fontname="wqy-zenhei" size="30,30"]
+	node[shape=plaintext fontname="wqy-zenhei"]
+	
+	{% for t in TABLE %}
+    {{ t.tname }} [
+        label=<
+            <table border="1" cellborder="0">
+            <tr><td colspan="3">{{ t.tdesc }} {{ t.tname }}</td></tr>
+            {%- for c in t.md %}
+                <tr><td align="left">{{ c.desc }}</td><td align="left">{{ c.pk and '<u>' or ''}}{{ c.name }}{{ c.pk and '</u>' or ''}}</td><td align="left">{{ c.ts }}</td></tr>
+            {%- endfor %}
+            </table>
+        >
+     ]
+	{% endfor %}
+
+}
