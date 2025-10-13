@@ -1,0 +1,171 @@
+{% load humanize %}
+{% load i18n %}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">{{ contract_summary }}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
+        {% else %}
+            <dl class="dl-horizontal">
+                <dt>{% translate 'Info by Issuer:' %}</dt> <dd>{{ contract.title|default:"(None)" }}</dd>
+                <dt>{% translate 'Type:' %}</dt> <dd>{{ contract.get_contract_type_display|title }}</dd>
+                <dt>{% translate 'Issued By:' %}</dt> <dd>{{ contract.issuer.name }}</dd>
+                <dt>{% translate 'Availability:' %}</dt>
+                <dd>
+                    {{ contract.get_availability_display|title }}
+                    {% if contract.availability == contract.AVAILABILITY_PUBLIC  %}
+                        - {% translate 'Region:' %} {{ contract.start_location.eve_solar_system.eve_constellation.eve_region }}
+                    {% else %}
+                        - {{ contract.assignee.name }}
+                    {% endif %}
+                </dd>
+                <dt>{% translate 'Status:' %}</dt> <dd>{{ contract.get_status_display|title }}</dd>
+                <dt>{% translate 'Location:' %}</dt>
+                <dd>
+                    <a href="{{ contract.start_location.solar_system_url }}" target="_blank">
+                        {{ contract.start_location.name }}
+                    </a>
+                </dd>
+                <dt>{% translate 'Date Issued:' %}</dt> <dd>{{ contract.date_issued|date:MY_DATETIME_FORMAT }}</dd>
+                <dt>{% translate 'Expiration Date:' %}</dt> <dd>{{ contract.date_expired|date:MY_DATETIME_FORMAT }}</dd>
+                <hr>
+                {% if contract.contract_type == contract.TYPE_COURIER %}
+                    <dt>{% translate 'Complete In:' %}</dt> <dd>{{ contract.days_to_complete }}</dd>
+                    <dt>{% translate 'Volume:' %}</dt> <dd>{{ contract.volume|floatformat:2|intcomma }} {% translate 'm3' %}</dd>
+                    <dt>{% translate 'Reward:' %}</dt> <dd>{{ contract.reward|floatformat:2|intcomma }} {% translate 'ISK' %}</dd>
+                    <dt>{% translate 'Collateral:' %}</dt> <dd>{{ contract.collateral|floatformat:2|intcomma }}</dd>
+                    <dt>{% translate 'Destination:' %}</dt>
+                    <dd>
+                        <a href="{{ contract.end_location.solar_system_url }}" target="_blank">
+                            {{ contract.end_location.name }}
+                        </a>
+                    </dd>
+                {% elif contract.contract_type == contract.TYPE_ITEM_EXCHANGE %}
+                    {% if contract.price or has_items_requested %}
+                        <h4 class="text-danger">{% translate 'Buyer will pay' %}</h4>
+                        {% if contract.price %}
+                            <p>{{ contract.price|floatformat:2|intcomma }} {% translate 'ISK' %}</p>
+                        {% endif %}
+                        {% if has_items_requested %}
+                            {% include "memberaudit/modals/character_viewer/contract_items.html" with table_name="tab_contract_items_requested" %}
+                        {% endif %}
+                    {% endif %}
+
+                    <hr>
+
+                    {% if contract.reward or has_items_included %}
+                        <h4 class="text-success">{% translate 'Buyer will get' %}</h4>
+                        {% if contract.reward %}
+                            <p>{{ contract.reward|floatformat:2|intcomma }} {% translate 'ISK' %}</p>
+                        {% endif %}
+                        {% if has_items_included %}
+                            {% include "memberaudit/modals/character_viewer/contract_items.html" with table_name="tab_contract_items_included" %}
+                        {% endif %}
+                    {% endif %}
+                {% elif contract.contract_type == contract.TYPE_AUCTION %}
+                    <dt>{% translate 'Starting Bid:' %}</dt> <dd>{{ contract.price|floatformat:2|intcomma }}</dd>
+                    <dt>{% translate 'Buyout Price:' %}</dt> <dd>{{ contract.buyout|floatformat:2|intcomma }}</dd>
+                    <dt>{% translate 'Current Bid:' %}</dt> <dd>{{ current_bid|floatformat:2|intcomma }} ({{ bids_count }} {% translate 'so far' %})</dd>
+                    <dt>{% translate 'Time Left:' %}</dt> <dd>{{ contract.date_expired|timeuntil }}</dd>
+
+                    <hr>
+
+                    <h4 class="text-success">{% translate 'Buyer will get' %}</h4>
+                    {% if has_items_included %}
+                        {% include "memberaudit/modals/character_viewer/contract_items.html" with table_name="tab_contract_items_included" %}
+                    {% endif %}
+                {% endif %}
+            </dl>
+        {% endif %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            {% translate 'Close' %}
+        </button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        {% if has_items_requested or has_items_included %}
+            var columns = [
+                { data: 'name',
+                    render: {
+                        _: 'display',
+                        sort: 'sort'
+                    }
+                },
+                {
+                    data: 'quantity',
+                    render: $.fn.dataTable.render.number( ',', '.', 0 )
+                },
+                { data: 'group' },
+                { data: 'category' },
+                {
+                    data: 'price',
+                    render: $.fn.dataTable.render.number( ',', '.', 2 )
+                },
+                {
+                    data: 'total',
+                    render: $.fn.dataTable.render.number( ',', '.', 2 )
+                }
+            ]
+            var order = [[0, "asc"]]
+            var footerCallback = function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over all pages
+                var total = api
+                    .column( 5 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                // Update footer
+                $( api.column( 5 ).footer() ).html(
+                    total.toLocaleString(
+                        {minimumFractionDigits: 2, maximumFractionDigits: 2}
+                    )
+                );
+            }
+        {% endif %}
+        {% if has_items_requested %}
+            $('#tab_contract_items_requested').DataTable({
+                ajax: {
+                    url: "{% url 'memberaudit:character_contract_items_requested_data' character.pk contract.pk %}",
+                    dataSrc: 'data',
+                    cache: false
+                },
+                columns: columns,
+                order: order,
+                footerCallback: footerCallback
+            });
+        {% endif %}
+
+        {% if has_items_included %}
+            $('#tab_contract_items_included').DataTable({
+                ajax: {
+                    url: "{% url 'memberaudit:character_contract_items_included_data' character.pk contract.pk %}",
+                    dataSrc: 'data',
+                    cache: false
+                },
+                columns: columns,
+                order: order,
+                footerCallback: footerCallback
+            });
+        {% endif %}
+    });
+</script>

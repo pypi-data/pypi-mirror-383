@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load evelinks %}
+
+{% if has_corporation_history %}
+    {% for corporation in corporation_history %}
+        <small class="text-muted">{% translate 'Corporation' %}</small><br>
+        <a href="{{ corporation.corporation_name|dotlan_corporation_url }}" target="_blank">{{ corporation.corporation_name }}</a>&nbsp;
+        {% if corporation.is_deleted %}
+        &nbsp;{% translate '(Closed)' %}&nbsp;
+        {% endif %}
+        {{ corporation.start_date|date:MY_DATETIME_FORMAT }} to
+        {% if not corporation.is_last %}
+            {{ corporation.end_date|date:MY_DATETIME_FORMAT }}
+        {% else %}
+            {% translate 'Today' %}
+        {% endif %}
+        &nbsp;({{ corporation.end_date|timeuntil:corporation.start_date }})
+        <hr id="history_divider">
+    {% endfor %}
+{% else %}
+    <p class="text-muted">{% translate "(no data yet)" %}</p>
+{% endif %}

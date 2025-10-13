@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<div role="tabcard" class="tab-pane" id="bio">
+    <h3>{% translate 'Bio' %}</h3>
+    {{ character_details.description_html|default:"-" }}
+    <br>
+    <br>
+    {% include 'memberaudit/partials/character_viewer/tabs/update_status.html' with update_section=sections_update_status.character_details %}
+</div>

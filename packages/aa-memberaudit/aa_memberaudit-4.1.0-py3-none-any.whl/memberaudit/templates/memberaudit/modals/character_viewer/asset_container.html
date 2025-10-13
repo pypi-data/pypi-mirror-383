@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+<!-- Modal for Contracts -->
+<div class="modal" id="modalCharacterAssetContainer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-xl" role="document" id="modalCharacterAssetContainerContent">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">{% translate 'Loading...' %}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                {% if NIGHT_MODE %}
+                    <img src="{% static 'memberaudit/images/Spinner-1s-64px-dark.gif' %}"/>
+                {% else %}
+                    <img src="{% static 'memberaudit/images/Spinner-1s-64px-light.gif' %}"/>
+                {% endif %}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    {% translate 'Close' %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

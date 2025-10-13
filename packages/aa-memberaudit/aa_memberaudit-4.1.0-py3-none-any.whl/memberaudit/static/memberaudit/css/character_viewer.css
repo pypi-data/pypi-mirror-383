@@ -1,0 +1,316 @@
+@media all {
+    h3 {
+        margin-top: 0;
+    }
+
+    h4 {
+        margin-top: 0;
+    }
+
+    /* character summary */
+    .character-summary-flex {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .character-summary-image {
+        /*margin-left: 1em;*/
+        margin-right: 1rem;
+    }
+
+    .character-summary-info {
+        margin-right: 1rem;
+        margin-left: 1rem;
+        flex-grow: 1;
+    }
+
+    /* dl styling */
+    dl {
+        width: 100%;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    dt {
+        float: left;
+        width: 30%;
+        /* adjust the width; make sure the total of both is 100% */
+        padding: 0;
+        /*margin-bottom: 1em;*/
+    }
+
+    dd {
+        float: left;
+        width: 70%;
+        /* adjust the width; make sure the total of both is 100% */
+        padding: 0;
+        /*margin-bottom: 1em;*/
+    }
+
+    /* Assets Tab */
+    #tab_assets tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    #tab_assets tbody td:nth-child(2) {
+        text-align: right;
+    }
+
+    #tab_assets tbody td:nth-child(4) {
+        text-align: right;
+    }
+
+    #tab_assets tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_assets tbody td:nth-child(6) {
+        text-align: right;
+    }
+
+    #tab_assets tfoot th:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_assets tfoot th:nth-child(6) {
+        text-align: right;
+    }
+
+    /* Assets Modal */
+    #tab_asset_children tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    #tab_asset_children tbody td:nth-child(2) {
+        text-align: right;
+    }
+
+    #tab_asset_children tbody td:nth-child(4) {
+        text-align: right;
+    }
+
+    #tab_asset_children tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_asset_children tbody td:nth-child(6) {
+        text-align: right;
+    }
+
+    #tab_asset_children tfoot th:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_asset_children tfoot th:nth-child(6) {
+        text-align: right;
+    }
+
+    .template-light-mode .breadcrumb>.active {
+        color: rgb(0, 0, 0);
+        font-weight: bold;
+    }
+
+    .template-dark-mode .breadcrumb>.active {
+        color: rgb(255, 255, 255);
+        font-weight: bold;
+    }
+
+    /* Contacts */
+    #tab_contacts tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    #tab_contacts tbody td:nth-child(3) {
+        text-align: right;
+    }
+
+    /* Contracts */
+    #tab_contracts tbody td:nth-child(6) {
+        white-space: nowrap;
+    }
+
+    #tab_skill_sets tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    /* Contracts Modal */
+    #tab_contract_items_requested tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_contract_items_requested tbody td:nth-child(6) {
+        text-align: right;
+    }
+
+    #tab_contract_items_requested tfoot th:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_contract_items_requested tfoot th:nth-child(6) {
+        text-align: right;
+    }
+
+    #tab_contract_items_included tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_contract_items_included tbody td:nth-child(6) {
+        text-align: right;
+    }
+
+    #tab_contract_items_included tfoot th:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_contract_items_included tfoot th:nth-child(6) {
+        text-align: right;
+    }
+
+    /* Loyalty */
+    #tab_loyalty tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    #tab_loyalty tbody td:nth-child(2) {
+        text-align: right;
+    }
+
+    /* Mail */
+    #tab_mails tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    .mail-title {
+        margin-top: 0px;
+        font-size: 18px;
+    }
+
+    /* Mining Ledger */
+    #tab_mining_ledger tbody td:nth-child(3) {
+        text-align: right;
+    }
+
+    #tab_mining_ledger tbody td:nth-child(4) {
+        text-align: right;
+    }
+
+    /* Planets */
+
+    #tab_planets tbody td:nth-child(5) {
+        text-align: center;
+    }
+
+    #tab_planets tbody td:nth-child(6) {
+        text-align: center;
+    }
+
+    /* Skillqueue */
+    #tab_skillqueue tbody td:nth-child(2) {
+        text-align: right;
+    }
+
+    /* Wallet Journal */
+    #tab_wallet_journal tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    #tab_wallet_journal tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_wallet_journal tfoot td:nth-child(5) {
+        text-align: right;
+    }
+
+    #tab_wallet_journal tbody td:nth-child(6) {
+        text-align: right;
+    }
+
+    #tab_wallet_journal tfoot td:nth-child(6) {
+        text-align: right;
+    }
+
+    /* Wallet Transactions */
+    #tab_wallet_transactions tbody td:nth-child(1) {
+        white-space: nowrap;
+    }
+
+    #tab_wallet_transactions tbody td:nth-child(2) {
+        text-align: right;
+    }
+
+    #tab_wallet_transactions tbody td:nth-child(4) {
+        text-align: right;
+    }
+
+    #tab_wallet_transactions tbody td:nth-child(5) {
+        text-align: right;
+    }
+
+    /* sidebar */
+    .sidebar_characters {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sidebar_character {
+        margin: 0.2rem 0;
+        white-space: nowrap;
+    }
+
+    .sidebar_character_disabled {
+        margin: 0.2rem 0;
+        display: block;
+        padding: 0.2rem 0.4rem;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .sidebar_character>a {
+        display: block;
+        padding: 0.2rem 0.4rem;
+        text-decoration: none;
+    }
+
+    .sidebar-character-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .sidebar-character-list-item-name {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .template-light-mode .sidebar_character>a {
+        color: rgb(44, 62, 80);
+    }
+
+    .template-dark-mode .sidebar_character>a {
+        color: rgb(255, 255, 255);
+    }
+
+    .template-light-mode .sidebar_character:hover>a,
+    .template-light-mode .sidebar_character.active>a {
+        background-color: rgb(236, 240, 241);
+    }
+
+    .template-dark-mode .sidebar_character:hover>a,
+    .template-dark-mode .sidebar_character.active>a {
+        background-color: rgb(34, 34, 34);
+    }
+
+    #history_divider {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .dotted-underline {
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-underline-position: under;
+    }
+}

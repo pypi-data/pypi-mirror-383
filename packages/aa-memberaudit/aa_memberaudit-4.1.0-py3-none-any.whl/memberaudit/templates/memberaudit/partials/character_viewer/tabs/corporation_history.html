@@ -1,0 +1,16 @@
+{% load static %}
+{% load i18n %}
+{% load humanize %}
+
+<div role="tabcard" class="tab-pane" id="history">
+    <h3>{% translate 'History' %}</h3>
+    <div id="div_corporation_history">
+        {% if NIGHT_MODE %}
+            <img src="{% static 'memberaudit/images/Spinner-1s-64px-dark.gif' %}"/>
+        {% else %}
+            <img src="{% static 'memberaudit/images/Spinner-1s-64px-light.gif' %}"/>
+        {% endif %}
+    </div>
+    <br>
+    {% include 'memberaudit/partials/character_viewer/tabs/update_status.html' with update_section=sections_update_status.corporation_history %}
+</div>
