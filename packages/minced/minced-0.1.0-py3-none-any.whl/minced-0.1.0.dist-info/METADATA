@@ -1,0 +1,41 @@
+Metadata-Version: 2.4
+Name: minced
+Version: 0.1.0
+Summary: Minced script API for building and testing scripts without the full Minced application
+Home-page: https://github.com/yourusername/minced-script-api
+Author: Your Name
+Author-email: your_email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+Dynamic: summary
+
+# Minced Script API
+
+This repository packages the public runtime objects that Minced-compatible
+scripts rely on. Install it from PyPI to build and test scripts without the
+full Minced application:
+
+```bash
+pip install minced-script-api
+```
+
+After installation scripts can import the shared runtime context and base
+classes:
+
+```python
+from minced import MINCED, MincedScriptBase
+```
+
+See the inline documentation for details on each helper.
