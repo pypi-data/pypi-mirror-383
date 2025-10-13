@@ -1,0 +1,37 @@
+Metadata-Version: 2.4
+Name: pybinrpc
+Version: 2025.10.0
+Summary: Python implementation of the Bin-RPC protocol.
+Home-page: https://github.com/sukramj/pybinrpc
+Author-email: SukramJ <sukramj@icloud.com>
+License: MIT License
+Project-URL: Source Code, https://github.com/sukramj/pybinrpc
+Project-URL: Bug Reports, https://github.com/sukramj/pybinrpc/issues
+Project-URL: Docs: Dev, https://github.com/sukramj/pybinrpc
+Project-URL: Forum, https://github.com/sukramj/pybinrpc/discussions
+Keywords: home,automation,homematic,cuxd
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Home Automation
+Requires-Python: >=3.13.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+[![releasebadge]][release]
+[![License][license-shield]](LICENSE.md)
+[![GitHub Sponsors][sponsorsbadge]][sponsors]
+
+# PyBinRPC
+
+A lightweight Python 3 library that enable python libraries to interact with BinRPC backends.
+
+[license-shield]: https://img.shields.io/github/license/SukramJ/pybinrpc.svg?style=for-the-badge
+[release]: https://github.com/SukramJ/pybinrpc/releases
+[releasebadge]: https://img.shields.io/github/v/release/SukramJ/pybinrpc?style=for-the-badge
+[sponsorsbadge]: https://img.shields.io/github/sponsors/SukramJ?style=for-the-badge&label=GitHub%20Sponsors&color=green
+[sponsors]: https://github.com/sponsors/SukramJ
