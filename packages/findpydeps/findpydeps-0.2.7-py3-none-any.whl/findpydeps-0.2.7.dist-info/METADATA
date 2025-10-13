@@ -1,0 +1,118 @@
+Metadata-Version: 2.1
+Name: findpydeps
+Version: 0.2.7
+Summary: Find the python dependencies used by your python files and projects
+Home-page: https://github.com/Nicolas-Reyland/findpydeps
+Author: Nicolas Reyland
+Author-email: nicolas@reyland.dev
+Maintainer: Nicolas Reyland
+Maintainer-email: nicolas@reyland.dev
+License: MIT License
+Project-URL: Bug Tracker, https://github.com/Nicolas-Reyland/findpydeps/issues
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3
+Classifier: Environment :: Console
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Natural Language :: English
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+[![Downloads](https://static.pepy.tech/badge/findpydeps)](https://pepy.tech/project/findpydeps)
+[![Downloads](https://static.pepy.tech/badge/findpydeps/month)](https://pepy.tech/project/findpydeps)
+[![Downloads](https://static.pepy.tech/badge/findpydeps/week)](https://pepy.tech/project/findpydeps)
+
+# findpydeps
+Find the python dependencies used by your python files and projects.
+
+## Installation
+Simply install it via pip:
+```bash
+pip install findpydeps
+```
+
+If you are having trouble with the pip installation, you can use the source file :
+```bash
+git clone https://github.com/Nicolas-Reyland/findpydeps
+cp findpydeps/src/findpydeps/findpydeps.py ~/.local/bin/findpydeps
+```
+
+## Usage
+Example usage:
+```bash
+findpydeps -i "$HOME"/python/example-project/ test.py ../test2.py
+```
+
+The output of `findpydeps -i main.py -l --no-header` could look like that :
+```
+tensorflow
+pandas
+numpy
+pillow
+requests
+```
+
+You could then use the output like this :
+```bash
+cd your_python_project
+findpydeps -i main.py --follow-local-imports > requirements.txt
+pip install -r requirements.txt
+```
+
+For exhaustive usage information, please refer to the `findpydeps -h` output (or `python3 -m findpydeps -h`) :
+```
+usage: findpydeps.py [-h] [-i input [input ...]] [-d expr] [-r policy] [-l] [-s] [--blocks] [--no-blocks] [--functions] [--no-functions] [--submodules-as-modules] [-v] [--header]
+                     [--no-header]
+
+Find the python dependencies used by your python files
+
+options:
+  -h, --help            show this help message and exit
+  -i input [input ...], --input input [input ...]
+                        input files and/or directories (directories will be scanned for *.py files)
+  -d expr, --dir-scanning-expr expr
+                        only process files with this expression in scanned directories [default: *.py]
+  -r policy, --removal-policy policy
+                        removal policy for modules (0: local & stdlib, 1: local only, 2: stdlib only, 3: no removal) [default: 0]
+  -l, --follow-local-imports
+                        also scan files which are imported locally (not libraries)
+  -s, --strict          raise an error on SyntaxErrors in the input python files
+  --blocks              scan contents of 'if', 'try' and 'with' blocks
+  --no-blocks           don't scan contents of 'if', 'try' and 'with' blocks
+  --functions           scan contents of functions
+  --no-functions        don't scan contents of functions
+  --submodules-as-modules
+                        submodule imports are treated as module-imports (e.g. "import random.shuffle" generates "random.shuffle", not "random", which is the default behavior)
+  -v, --verbose         verbose mode (all messages prepended with '#')
+  --header              show the greeting header
+  --no-header           don't show the greeting header
+```
+
+
+## Todo
+ * Option to manually exclude/include modules
+
+MIT License
+
+Copyright (c) 2021 Nicolas Reyland
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
