@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cybuddy"
+version = "1.1.2"
+description = "Smart Cybersecurity learning assistant"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Cybuddy Team" }]
+keywords = ["cybersecurity", "learning", "pentesting", "security", "cli", "tui"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: Education",
+    "Topic :: System :: Networking",
+]
+dependencies = [
+  "prompt-toolkit>=3.0",
+  "rich>=13.7",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "ruff>=0.6.9",
+  "mypy>=1.11",
+  "types-setuptools",
+]
+
+[project.urls]
+Homepage = "https://github.com/cyguidesltd/cybuddy"
+Documentation = "https://github.com/cyguidesltd/cybuddy#readme"
+Issues = "https://github.com/cyguidesltd/cybuddy/issues"
+Source = "https://github.com/cyguidesltd/cybuddy"
+
+[project.scripts]
+cybuddy = "cybuddy.__main__:run"
+
+[tool.ruff]
+line-length = 88
+target-version = "1.1.2"
+
+[tool.ruff.lint]
+select = ["E","F","I","UP","B"]
+
+[tool.mypy]
+python_version = "1.1.2"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
