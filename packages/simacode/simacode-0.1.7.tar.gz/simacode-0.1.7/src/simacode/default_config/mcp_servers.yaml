@@ -1,0 +1,315 @@
+# MCP Server Configuration
+# This file configures MCP (Model Context Protocol) servers for SimaCode
+
+# Global MCP settings
+mcp:
+  enabled: false
+  timeout: 300
+  max_concurrent: 5
+  log_level: INFO
+  cache_ttl: 300
+  health_check_interval: 30
+  # Content forwarding URL configuration
+  forward_url: "${FORWARD_URL:-http://localhost/smc_forward}"
+
+# MCP server definitions
+servers:
+  # File System Access Server
+  filesystem:
+    name: filesystem
+    enabled: false  # Enabled for project use
+    type: stdio
+    command: ["python", "tools/mcp_filesystem_server.py"]
+    args: ["--root", "."]
+    environment:
+      WORKSPACE_ROOT: "."
+    working_directory: null
+    timeout: 60
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations: ["read", "write", "list", "create", "delete"]
+      allowed_paths: [".", "/tmp"]
+      forbidden_paths: ["/etc", "/usr", "/sys", "/proc", "/root"]
+      max_execution_time: 60
+      network_access: false
+
+  # UI-TARS MCP Server (HTTP/WebSocket)
+  # Note: Server must be started manually using: python tools/mcp_browser_agent_tars_automation.py
+  agent_tars:
+    name: agent_tars
+    enabled: false  # WebSocket compatibility fixed
+    type: websocket
+    url: "${UI_TARS_MCP_URL:-ws://localhost:10001/mcp/ws}"
+    headers:
+      User-Agent: "SimaCode-MCP-Client/1.0"
+    command: []  # No auto-start - server must be started manually
+    args: []
+    environment:
+      UI_TARS_MCP_URL: "${UI_TARS_MCP_URL:-ws://localhost:10001/mcp/ws}"
+    working_directory: null
+    timeout: 300  # Longer timeout for UI operations
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "web_interaction"
+        - "verification_handling"
+      allowed_paths: []
+      forbidden_paths: []
+      max_execution_time: 300
+      network_access: true
+
+  # Browser-use MCP Proxy Server (WebSocket) - AI-driven Browser Automation via Remote REST Service
+  # Note: Server must be started manually using: python tools/mcp_browser_use_proxy_server.py
+  browser_use_proxy:
+    name: browser_use_proxy
+    enabled: false  # Enable for remote browser-use integration
+    type: websocket
+    url: "${BROWSER_USE_PROXY_URL:-ws://localhost:8082/mcp/ws}"
+    headers:
+      User-Agent: "SimaCode-MCP-Client/1.0"
+    command: []  # No auto-start - server must be started manually
+    args: []
+    environment:
+      BROWSER_USE_PROXY_URL: "${BROWSER_USE_PROXY_URL:-ws://localhost:8082/mcp/ws}"
+      BROWSER_USE_REST_URL: "${BROWSER_USE_REST_URL:-http://localhost:8000}"
+      BROWSER_USE_TIMEOUT: "${BROWSER_USE_TIMEOUT:-600}"
+      BROWSER_USE_MAX_RETRIES: "${BROWSER_USE_MAX_RETRIES:-3}"
+      BROWSER_USE_RETRY_DELAY: "${BROWSER_USE_RETRY_DELAY:-2.0}"
+    working_directory: null
+    timeout: 300  # Longer timeout for complex browser automation tasks
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "browser_use_execute_task"
+      allowed_paths: []  # Browser automation doesn't need file system access
+      forbidden_paths: []
+      max_execution_time: 300
+      network_access: true  # Required for browser automation and HTTP proxy
+
+  # Email IMAP MCP Server (stdio) - Email checking and retrieval via IMAP
+  # Configuration is now loaded directly from .simacode/config.yaml
+  email_imap:
+    name: email_imap
+    enabled: false  # Enable for email automation features
+    type: stdio
+    command: ["python", "tools/mcp_imap_receive_email.py"]
+    args: ["--config", ".simacode/config.yaml"]
+    environment: {}  # No environment variables needed - configuration loaded from .simacode/config.yaml
+    working_directory: null
+    timeout: 120  # Email operations can take some time, especially for slower IMAP servers
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "read"      # Allow reading operations (get_email, get_recent_emails, list_folders)
+        - "execute"   # Allow general execution operations
+        - "access"    # Allow access operations (check_emails)
+      allowed_paths: []  # Email operations don't need file system access
+      forbidden_paths: []
+      max_execution_time: 60
+      network_access: true  # Required for IMAP connections
+
+  # Email SMTP MCP Server (stdio) - Email sending via SMTP with comprehensive validation
+  email_smtp:
+    name: email_smtp
+    enabled: false  # Enable for email sending automation features
+
+    type: stdio
+    command: ["python", "tools/mcp_smtp_send_email.py"]
+
+    # Email SMTP MCP Server (embedded) - PyInstaller-compatible embedded mode
+    # This is the embedded version of email_smtp that works in PyInstaller environments
+    #type: embedded
+    #module_path: tools.mcp_smtp_send_email
+    #main_function: main
+
+    args: []
+    environment:
+      EMAIL_SMTP_SERVER: "${EMAIL_SMTP_SERVER:-smtp.gmail.com}"
+      EMAIL_SMTP_PORT: "${EMAIL_SMTP_PORT:-587}"
+      EMAIL_USERNAME: "${EMAIL_USERNAME}"
+      EMAIL_PASSWORD: "${EMAIL_PASSWORD}"
+      EMAIL_FROM_NAME: "${EMAIL_FROM_NAME:-SimaCode Assistant}"
+      EMAIL_FROM_EMAIL: "${EMAIL_FROM_EMAIL}"
+      EMAIL_TIMEOUT: "${EMAIL_TIMEOUT:-60}"
+    working_directory: null
+    timeout: 120  # Email sending operations can take time
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "send"      # Allow email sending operations
+        - "execute"   # Allow general execution operations
+        - "validate"  # Allow email validation operations
+      allowed_paths: []  # SMTP operations don't need file system access (except for attachments)
+      forbidden_paths: []
+      max_execution_time: 90
+      network_access: true  # Required for SMTP connections
+
+  # TICMaker WebSocket MCP Server - HTML页面创建和修改工具
+  # Note: Server must be started manually using: python tools/mcp_ticmaker_websocket_server.py
+  ticmaker_websocket:
+    name: ticmaker_websocket
+    enabled: false  # Enable for TICMaker WebSocket HTML generation features
+    type: websocket
+    url: "${TICMAKER_WS_URL:-ws://localhost:10002/mcp/ws}"
+    headers:
+      User-Agent: "SimaCode-MCP-Client/1.0"
+    command: []  # No auto-start - server must be started manually
+    args: []
+    environment:
+      TICMAKER_WS_URL: "${TICMAKER_WS_URL:-ws://localhost:10002/mcp/ws}"
+      TICMAKER_OUTPUT_DIR: "${TICMAKER_OUTPUT_DIR:-.simacode/mcp/ticmaker_output}"
+    working_directory: null
+    timeout: 300  # Longer timeout for complex content generation
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "create"    # Allow HTML page creation
+        - "modify"    # Allow HTML page modification
+        - "read"      # Allow reading existing files
+        - "write"     # Allow writing HTML files
+        - "execute"   # Allow general execution operations
+      allowed_paths: [".simacode/mcp/ticmaker_output", "./", "/tmp"]  # Allow access to output directory
+      forbidden_paths: ["/etc", "/usr", "/sys", "/proc", "/root"]
+      max_execution_time: 300  # Extended timeout for WebSocket operations
+      network_access: true  # Required for WebSocket connections
+
+  # TICMaker stdio MCP Server - HTML页面创建和修改工具 (推荐)
+  # Configuration is loaded directly from .simacode/config.yaml
+  ticmaker:
+    name: ticmaker
+    enabled: false  # Enable for TICMaker stdio HTML generation features
+    type: stdio
+    command: ["python", "tools/mcp_ticmaker_stdio_server.py"]
+    args: ["--config", ".simacode/config.yaml"]
+    environment:
+      TICMAKER_OUTPUT_DIR: "${TICMAKER_OUTPUT_DIR:-.simacode/mcp/ticmaker_output}"
+      TICMAKER_TEMPLATE: "${TICMAKER_TEMPLATE:-modern}"
+      # AI客户端配置
+      TICMAKER_AI_ENABLED: "${TICMAKER_AI_ENABLED:-true}"
+      TICMAKER_AI_BASE_URL: "${TICMAKER_AI_BASE_URL:-https://openai.pgpt.cloud/v1}"
+      TICMAKER_AI_API_KEY: "${TICMAKER_AI_API_KEY:-${OPENAI_API_KEY}}"
+      TICMAKER_AI_MODEL: "${TICMAKER_AI_MODEL:-gpt-4o-mini}"
+      TICMAKER_AI_MAX_TOKENS: "${TICMAKER_AI_MAX_TOKENS:-16384}"
+      TICMAKER_AI_TEMPERATURE: "${TICMAKER_AI_TEMPERATURE:-0.7}"
+    working_directory: null
+    timeout: 120  # Interactive content creation can take some time
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "create"    # Allow HTML page creation
+        - "modify"    # Allow HTML page modification
+        - "read"      # Allow reading existing files
+        - "write"     # Allow writing HTML files
+        - "execute"   # Allow general execution operations
+      allowed_paths: [".simacode/mcp/ticmaker_output", "./", "/tmp"]  # Allow access to output directory
+      forbidden_paths: ["/etc", "/usr", "/sys", "/proc", "/root"]
+      max_execution_time: 120
+      network_access: true  # 需要网络访问以调用AI API
+
+  # TICMaker Async stdio MCP Server - HTML页面创建和修改工具 (异步任务增强版)
+  # Enhanced version with MCP async task support for complex content generation
+  ticmaker_async:
+    name: ticmaker_async
+    enabled: false  # Enable for TICMaker async HTML generation features with task enhancement
+    type: stdio
+    command: ["python", "tools/mcp_ticmaker_async_stdio_server.py"]
+    args: ["--config", ".simacode/config.yaml"]
+    environment:
+      TICMAKER_OUTPUT_DIR: "${TICMAKER_OUTPUT_DIR:-.simacode/mcp/ticmaker_async_output}"
+      TICMAKER_TEMPLATE: "${TICMAKER_TEMPLATE:-modern}"
+      TICMAKER_AI_ENABLED: "${TICMAKER_AI_ENABLED:-true}"
+      TICMAKER_AI_BASE_URL: "${TICMAKER_AI_BASE_URL:-https://openai.pgpt.cloud/v1}"
+      TICMAKER_AI_API_KEY: "${TICMAKER_AI_API_KEY:-${OPENAI_API_KEY}}"
+      TICMAKER_AI_MODEL: "${TICMAKER_AI_MODEL:-gpt-4o-mini}"
+      TICMAKER_AI_MAX_TOKENS: "${TICMAKER_AI_MAX_TOKENS:-16384}"
+      TICMAKER_AI_TEMPERATURE: "${TICMAKER_AI_TEMPERATURE:-0.7}"
+      TICMAKER_ASYNC_ENABLED: "${TICMAKER_ASYNC_ENABLED:-true}"
+      TICMAKER_ASYNC_THRESHOLD: "${TICMAKER_ASYNC_THRESHOLD:-30.0}"
+      TICMAKER_TASK_TIMEOUT: "${TICMAKER_TASK_TIMEOUT:-300.0}"
+    working_directory: null
+    timeout: 300
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "create"
+        - "modify"
+        - "read"
+        - "write"
+        - "execute"
+        - "async_task"
+      allowed_paths: [".simacode/mcp/ticmaker_output", "./", "/tmp"]
+      forbidden_paths: ["/etc", "/usr", "/sys", "/proc", "/root"]
+      max_execution_time: 300
+      network_access: true
+
+  # Project Analyzer MCP Proxy Server (WebSocket) - Frontend Project Analysis via Remote REST Service
+  # Note: Server must be started manually using: python tools/mcp_project_analyzer_proxy_server.py
+  project_analyzer_proxy:
+    name: project_analyzer_proxy
+    enabled: false  # Enable for remote project analyzer integration
+    type: websocket
+    url: "${PROJECT_ANALYZER_PROXY_URL:-ws://localhost:8083/mcp/ws}"
+    headers:
+      User-Agent: "SimaCode-MCP-Client/1.0"
+    command: []  # No auto-start - server must be started manually
+    args: []
+    environment:
+      PROJECT_ANALYZER_PROXY_URL: "${PROJECT_ANALYZER_PROXY_URL:-ws://localhost:8083/mcp/ws}"
+      PROJECT_ANALYZER_REST_URL: "${PROJECT_ANALYZER_REST_URL:-http://localhost:8002}"
+      PROJECT_ANALYZER_TIMEOUT: "${PROJECT_ANALYZER_TIMEOUT:-300}"
+      PROJECT_ANALYZER_MAX_RETRIES: "${PROJECT_ANALYZER_MAX_RETRIES:-3}"
+      PROJECT_ANALYZER_RETRY_DELAY: "${PROJECT_ANALYZER_RETRY_DELAY:-2.0}"
+    working_directory: null
+    timeout: 300  # Longer timeout for project analysis operations
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "project_analyze_from_zip"
+        - "analyze"
+      allowed_paths: []  # Project analysis doesn't need direct file system access
+      forbidden_paths: []
+      max_execution_time: 300
+      network_access: true  # Required for project analysis and HTTP proxy
+
+  # MMmaker stdio MCP Server - 语音生成工具 (Text-to-Speech)
+  # Configuration is loaded directly from .simacode/config.yaml
+  mmmaker:
+    name: mmmaker
+    enabled: false  # Enable for voice generation features
+    type: stdio
+    command: ["python", "tools/mcp_mmmaker_stdio_server.py"]
+    args: ["--config", ".simacode/config.yaml"]
+    environment:
+      MMMAKER_OUTPUT_DIR: "${MMMAKER_OUTPUT_DIR:-.simacode/mcp/mmmaker_output}"
+      MMMAKER_VOICE: "${MMMAKER_VOICE:-alloy}"
+      # AI客户端配置
+      MMMAKER_AI_ENABLED: "${MMMAKER_AI_ENABLED:-true}"
+      MMMAKER_AI_BASE_URL: "${MMMAKER_AI_BASE_URL:-https://openai.pgpt.cloud/v1}"
+      MMMAKER_AI_API_KEY: "${MMMAKER_AI_API_KEY:-${OPENAI_API_KEY}}"
+      MMMAKER_AI_MODEL: "${MMMAKER_AI_MODEL:-tts-1}"
+      MMMAKER_AI_VOICE: "${MMMAKER_AI_VOICE:-alloy}"
+      MMMAKER_AI_SPEED: "${MMMAKER_AI_SPEED:-1.0}"
+      MMMAKER_AI_RESPONSE_FORMAT: "${MMMAKER_AI_RESPONSE_FORMAT:-mp3}"
+    working_directory: null
+    timeout: 180  # Voice generation can take some time, especially for longer texts
+    max_retries: 3
+    retry_delay: 2.0
+    security:
+      allowed_operations:
+        - "generate"  # Allow voice generation operations
+        - "create"    # Allow audio file creation
+        - "write"     # Allow writing audio files
+        - "execute"   # Allow general execution operations
+      allowed_paths: [".simacode/mcp/mmmaker_output", "./", "/tmp"]  # Allow access to output directory
+      forbidden_paths: ["/etc", "/usr", "/sys", "/proc", "/root"]
+      max_execution_time: 180  # Extended timeout for voice generation
+      network_access: true  # 需要网络访问以调用语音生成API
