@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "loothelp"
+version = "0.1.0"
+description = "A simple transparent loot tracking overlay."
+authors = [{ name = "Me" }]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    "PyQt6",
+    "keyboard"
+]
+
+[project.scripts]
+loothelp = "loothelp.main:main"
