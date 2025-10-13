@@ -1,0 +1,40 @@
+[project]
+name = "pikados"
+version = "0.1.0"
+description = "Pika-wrapper"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pika",
+]
+authors = [
+    { name = "Niek Hoekstra" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Networking",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.isort]
+profile = "wemake"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pikados"]
+only-packages = true
+
+[tool.hatch.build.targets.sdist]
+include = ["pikados"]
