@@ -1,0 +1,50 @@
+Metadata-Version: 2.4
+Name: PROtect-UniBo
+Version: 0.1.0
+Summary: PROtect is a GUI-CLI desktop application providing basic features to manage passwords (add/edit/delete entry, import/export...), safely isolating accounts of more users accessing it
+Home-page: https://github.com/unibo-dtm-se-2425-PROtect/artifact
+Author: Francesca Gaeta, Filippo Bonaldo, Alberto Antonello
+Author-email: francesca.gaeta2@studio.unibo.it, filippo.bonaldo@studio.unibo.it, alberto.antonello2@studio.unibo.it
+License: Apache 2.0 License
+Project-URL: Bug Reports, https://github.com/unibo-dtm-se-2425-PROtect/artifact/issues
+Project-URL: Source, https://github.com/unibo-dtm-se-2425-PROtect/artifact
+Keywords: aeuitas,horizon2020,xai,bias
+Platform: Independent
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3.12.0
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: kivy>=2.3.0
+Requires-Dist: pytest>=8.4
+Requires-Dist: pyperclip>=1.9
+Requires-Dist: mypy_extensions>=1.1
+Requires-Dist: mypy>=1.17
+Requires-Dist: mysql-connector-python>=9.3.0
+Requires-Dist: rich>=14.0.0
+Requires-Dist: cryptography>=45.0.5
+Requires-Dist: gem>=0.1
+Requires-Dist: pandas>=2.2
+Requires-Dist: pycryptodome>=3.23
+Requires-Dist: ttkbootstrap>=1.14
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: platform
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# PROtect - Password Manager
