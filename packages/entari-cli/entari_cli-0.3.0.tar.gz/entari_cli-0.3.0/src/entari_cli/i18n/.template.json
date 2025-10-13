@@ -1,0 +1,235 @@
+{
+  "$schema": ".template.schema.json",
+  "scopes": [
+    {
+      "scope": "entari_cli",
+      "types": [
+        {
+          "subtype": "commands",
+          "types": [
+            {
+              "subtype": "init",
+              "types": [
+                "description",
+                {
+                  "subtype": "options",
+                  "types": [
+                    "develop",
+                    "python",
+                    "install_args"
+                  ]
+                },
+                {
+                  "subtype": "messages",
+                  "types": [
+                    "success",
+                    "initialized"
+                  ]
+                }
+              ]
+            },
+            {
+              "subtype": "add",
+              "types": [
+                "description",
+                {
+                  "subtype": "options",
+                  "types": [
+                    "disabled",
+                    "optional",
+                    "priority"
+                  ]
+                },
+                {
+                  "subtype": "prompts",
+                  "types": [
+                    "name",
+                    "failed",
+                    "success"
+                  ]
+                }
+              ]
+            },
+            {
+              "subtype": "new",
+              "types": [
+                "description",
+                {
+                  "subtype": "options",
+                  "types": [
+                    "static",
+                    "application",
+                    "file",
+                    "disabled",
+                    "optional",
+                    "priority",
+                    "python",
+                    "install_args"
+                  ]
+                },
+                {
+                  "subtype": "prompts",
+                  "types": [
+                    "is_plugin_project",
+                    "plugin_name",
+                    "plugin_version",
+                    "plugin_description",
+                    "plugin_author_name",
+                    "plugin_author_email",
+                    "python_requires",
+                    "license",
+                    "is_single_file",
+                    "is_disposable"
+                  ]
+                },
+                {
+                  "subtype": "messages",
+                  "types": [
+                    "invalid",
+                    "corrected",
+                    "keep",
+                    "installed",
+                    "exists",
+                    "created",
+                    "proj_exists",
+                    "in_venv"
+                  ]
+                }
+              ]
+            },
+            {
+              "subtype": "remove",
+              "types": [
+                "description",
+                {
+                  "subtype": "prompts",
+                  "types": [
+                    "name",
+                    "success"
+                  ]
+                }
+              ]
+            },
+            {
+              "subtype": "run",
+              "types": [
+                "description",
+                {
+                  "subtype": "options",
+                  "types": [
+                    "python"
+                  ]
+                }
+              ]
+            },
+            {
+              "subtype": "generate",
+              "types": [
+                "description",
+                {
+                  "subtype": "messages",
+                  "types": [
+                    "generated"
+                  ]
+                }
+              ]
+            },
+            {
+              "subtype": "version",
+              "types": [
+                "description"
+              ]
+            },
+            "config_path",
+            {
+              "subtype": "setting",
+              "types": [
+                "description",
+                "key",
+                "value",
+                {
+                  "subtype": "options",
+                  "types": [
+                    "local",
+                    "delete",
+                    "edit"
+                  ]
+                },
+                {
+                  "subtype": "edit",
+                  "types": [
+                    "failed_key",
+                    "failed_delete",
+                    "success",
+                    "failed"
+                  ]
+                },
+                {
+                  "subtype": "delete",
+                  "types": [
+                    "missing",
+                    "not_exist",
+                    "success"
+                  ]
+                },
+                {
+                  "subtype": "set",
+                  "types": [
+                      "missing",
+                      "success"
+                  ]
+                },
+                "get_failed",
+                {
+                  "subtype": "list",
+                  "types": [
+                    "title",
+                    "global",
+                    "local"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "subtype": "errors",
+          "types": [
+            "python_not_found",
+            "invalid_project_name"
+          ]
+        },
+        {
+          "subtype": "config",
+          "types": [
+            "ext_failed",
+            "ask_format",
+            "not_supported",
+            "exists",
+            "created"
+          ]
+        },
+        {
+          "subtype": "project",
+          "types": [
+            "select_python",
+            "select_pm",
+            "please_select",
+            "install_failed",
+            "no_python_found",
+            "invalid_selection",
+            "fallback_pip"
+          ]
+        },
+        {
+          "subtype": "venv",
+          "types": [
+            "use",
+            "create",
+            "ask_create"
+          ]
+        }
+      ]
+    }
+  ]
+}
