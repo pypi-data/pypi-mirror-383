@@ -1,0 +1,15 @@
+PyYAML
+
+[dev]
+build
+wheel
+twine
+mypy
+types-PyYAML
+flake8
+Flake8-pyproject
+pep8-naming
+
+[test]
+pytest>=7
+pytest-cov

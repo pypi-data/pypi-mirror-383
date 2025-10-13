@@ -1,0 +1,4 @@
+# development environment: --editable install in development mode (includes all extras_require)
+-e .[dev,test]
+# exact dependency versions used in development
+PyYAML==6.0
