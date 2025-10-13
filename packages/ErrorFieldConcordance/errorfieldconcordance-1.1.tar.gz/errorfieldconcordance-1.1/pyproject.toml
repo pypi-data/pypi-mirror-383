@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tools.setuptools]
+packages=["src"]
+
+[project]
+name = "ErrorFieldConcordance"
+version = "1.1"
+authors = [
+	{name = "Joe Rinehart", email = "joerinehartmd@gmail.com"},
+]
+description = "Calculation of trending concordance between two measures using the Error Field method"
+readme = "README.md"
+requires-python = ">3.0"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["numpy","matplotlib"]
+keywords=["statistics","method comparison","cardiac output","concordance","trending"]
+
+	
