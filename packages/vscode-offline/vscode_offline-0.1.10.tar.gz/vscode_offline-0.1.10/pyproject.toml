@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vscode-offline"
+dynamic = ["version"]
+description = "Download and install VS Code for offline environments"
+readme = "README.md"
+authors = [{ name = "Chuck Fan", email = "fanck0605@qq.com" }]
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Utilities",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/fanck0605/vscode-offline"
+
+[project.scripts]
+vscode-offline = "vscode_offline:main"
+
+[dependency-groups]
+dev = [
+    "lefthook>=1.13.6",
+    "pyright>=1.1.406",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.13.3",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/vscode_offline/_version.py"
+
+[tool.ruff.lint]
+select = [
+    "ANN", # flake8-annotations
+    "I",   # isort
+    "F",   # Pyflakes
+]

@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.ruff_cache/
+
+# Virtual environments
+.venv
+
+# Hatch VCS version file
+/src/vscode_offline/_version.py
+
+# VS Code offline installer directory
+vscode-offline-installer/
