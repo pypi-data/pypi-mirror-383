@@ -1,0 +1,592 @@
+# dbop-runner
+
+**Resilient SQLAlchemy operation runner**
+Retry, backoff, SAVEPOINT handling, and backend-specific timeouts — all while using your existing SQLAlchemy sessions.
+
+* ✅ Works with `Session` and `AsyncSession`
+* 🔁 Retries transient faults (deadlocks, lock timeouts, disconnects)
+* 🧱 Uses SAVEPOINTs when you already have an outer transaction
+* 🕒 Per-operation `lock_timeout` / `statement_timeout`
+* 🧩 PostgreSQL, MySQL/MariaDB, SQLite
+* 🧠 Typed, small, and framework-agnostic (FastAPI/Gunicorn friendly)
+
+---
+
+## Why?
+
+Typical DB code either:
+
+1. **Doesn’t retry** (deadlocks bubble up and you lose the whole request), or
+2. **Retries blindly** and risks partial commits, especially inside an open transaction.
+
+`dbop-runner` makes one thing simple and safe:
+
+> **Run a single operation function against an existing SQLAlchemy session with retries.**
+> If you’re already in a transaction, it retries inside a **SAVEPOINT** so the rest of your work remains intact.
+> You decide when to **commit/rollback** the *outer* transaction.
+
+---
+
+## Installation
+
+```bash
+# minimal
+pip install dbop-runner
+
+# with dev tools
+pip install "dbop-runner[dev]"
+
+# drivers used in integration tests (optional)
+pip install "dbop-runner[postgres,mysql]"
+```
+
+Supported:
+
+* SQLAlchemy **2.x**
+* Postgres: `psycopg` (sync) / `asyncpg` (async)
+* MySQL/MariaDB: `pymysql` (sync) / `aiomysql` (async)
+* SQLite / aiosqlite (for unit tests)
+
+---
+
+## Quick Start (async)
+
+```python
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy import text
+from dbop_runner import DBOpRunner
+
+engine = create_async_engine("postgresql+asyncpg://user:pass@localhost/db", pool_pre_ping=True)
+SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
+runner = DBOpRunner(max_retries=5, default_lock_timeout_s=5)
+
+async def update_user(sess: AsyncSession):
+    await sess.execute(text("UPDATE users SET seen_at = now() WHERE id=:id"), {"id": 42})
+
+async def main():
+    async with SessionLocal() as sess:
+        # You can run this standalone…
+        await runner.run_async(sess, update_user, name="update-user")
+
+        # …or under an outer transaction you control:
+        async with sess.begin():
+            await runner.run_async(sess, update_user, name="update-user")
+            # more steps…
+            # commit happens when the with-block exits
+```
+
+## Quick Start (sync)
+
+```python
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker, Session
+from dbop_runner import DBOpRunner
+
+engine = create_engine("postgresql+psycopg://user:pass@localhost/db", pool_pre_ping=True, future=True)
+SessionLocal = sessionmaker(engine, expire_on_commit=False)
+runner = DBOpRunner(max_retries=3, default_lock_timeout_s=5)
+
+def rename(sess: Session):
+    sess.execute(text("UPDATE projects SET name=:n WHERE id=:id"), {"id": 1, "n": "Demo"})
+
+with SessionLocal() as sess:
+    with sess.begin():  # you own the outer transaction
+        runner.run(sess, rename, name="rename-project")
+        # more operations…
+```
+
+---
+
+## How it works (the mental model)
+
+* **You** own the **outer transaction** (`with sess.begin(): ...`). You decide when to commit/rollback **everything**.
+* `DBOpRunner` runs each operation function inside a **SAVEPOINT** (`begin_nested()`).
+
+  * If a transient error (e.g., deadlock) occurs, just the inner step is rolled back and retried.
+  * Your outer transaction boundary is preserved.
+* If you’re *not* in a transaction already, the runner will open one for that attempt.
+
+This matches real-world service behavior: you bundle steps in one unit of work, retry individual steps safely, and commit once at the end.
+
+---
+
+## Common Patterns
+
+### 1) Batch of steps, commit once at the end
+
+```python
+with sess.begin():
+    runner.run(sess, step_a, name="step-a")
+    runner.run(sess, step_b, name="step-b")
+    # commit when leaving the block
+```
+
+### 2) Read-only
+
+```python
+result = runner.run(sess, lambda s: s.execute(text("SELECT …")), name="read-x", read_only=True)
+```
+
+### 3) Abort based on logic
+
+```python
+with sess.begin():
+    runner.run(sess, step_a, name="step-a")
+    if should_abort:
+        raise RuntimeError("abort")  # rolls back outer tx
+    runner.run(sess, step_b, name="step-b")
+```
+
+### 4) Per-operation timeouts
+
+```python
+runner.run(
+    sess,
+    step_fn,
+    name="step",
+    lock_timeout_s=3,       # wait at most 3s for locks
+    stmt_timeout_s=10,      # (PG) cancel after 10s execution
+)
+```
+
+> Postgres uses `SET LOCAL lock_timeout/statement_timeout` (literals).
+> MySQL uses `innodb_lock_wait_timeout` and `MAX_EXECUTION_TIME` (ms).
+> SQLite: no per-statement timeouts; set `busy_timeout` on the engine if needed.
+
+---
+
+## Logging
+
+`DBOpRunner` emits structured logs for failures (`WARNING` on transient, `ERROR` otherwise) and a final `INFO` “done” record with attempts used and elapsed seconds.
+
+Example error log payload:
+
+```python
+{
+  "message": "update-user failed",
+  "dialect": "postgresql",
+  "attempt": 0,
+  "transient": True,
+  "sync": False,
+  "exception": "DBAPIError('…')"
+}
+```
+
+Inject your own logger:
+
+```python
+runner = DBOpRunner(logger=my_logger)
+```
+
+---
+
+## Transient error detection (dialect-aware)
+
+* **PostgreSQL**: deadlock (`40P01`), lock not available (`55P03`), and general `OperationalError`
+* **MySQL/MariaDB**: deadlock (1213), lock wait timeout (1205), lost connections (2006/2013), and `OperationalError`
+* **SQLite**: “database is locked” and `OperationalError`
+
+These are treated as **transient** (retryable). Everything else is **non-transient** (no retry unless you increase `max_retries` and your DB actually throws OperationalError variants you want to treat as transient).
+
+---
+
+## API
+
+```python
+class DBOpRunner:
+    def __init__(
+        self,
+        *,
+        max_retries: int = 5,
+        initial_delay: float = 0.1,
+        max_delay: float = 1.0,
+        default_lock_timeout_s: int | None = 10,
+        default_stmt_timeout_s: int | None = None,
+        default_raises: bool = True,
+        logger: logging.Logger | None = None,
+    )
+
+    def run(
+        self,
+        sess: Session,
+        fn: Callable[[Session], T],
+        *,
+        name: str = "db-op",
+        read_only: bool = False,
+        lock_timeout_s: int | None = None,
+        stmt_timeout_s: int | None = None,
+        default: T | None = None,
+        raises: bool | None = None,
+    ) -> T | None
+
+    async def run_async(
+        self,
+        sess: AsyncSession,
+        fn: Callable[[AsyncSession], Awaitable[T]],
+        *,
+        name: str = "db-op",
+        read_only: bool = False,
+        lock_timeout_s: int | None = None,
+        stmt_timeout_s: int | None = None,
+        default: T | None = None,
+        raises: bool | None = None,
+    ) -> T | None
+```
+
+Notes:
+
+* `raises`: if `False`, non-transient errors return `default` instead of raising.
+* `default_*_timeout_s` act as per-attempt defaults; override per call.
+
+---
+
+## Recipes
+
+### Sync read + write, with timeouts
+
+```python
+def read(sess):
+    return sess.execute(text("SELECT id FROM users WHERE state=:s"), {"s": "active"}).scalars().all()
+
+def write(sess):
+    sess.execute(text("UPDATE users SET state='active' WHERE id=:id"), {"id": 7})
+
+with sess.begin():
+    ids = runner.run(sess, read, name="list-active", read_only=True, stmt_timeout_s=5)
+    runner.run(sess, write, name="activate-user", lock_timeout_s=3)
+```
+
+### Async batch under outer transaction
+
+```python
+async def step_a(s): await s.execute(text("UPDATE t1 SET val='a' WHERE id=1"))
+async def step_b(s): await s.execute(text("UPDATE t2 SET val='b' WHERE id=1"))
+
+async with async_sess.begin():
+    await runner.run_async(async_sess, step_a, name="step-a")
+    await runner.run_async(async_sess, step_b, name="step-b")
+```
+
+---
+
+## Testing
+
+### Unit tests (SQLite)
+
+```bash
+make install-fast
+make test
+# or with coverage:
+make cov
+```
+
+### Integration tests (Docker: Postgres / MySQL)
+
+```bash
+# Postgres types roundtrip
+make install-all
+make integration
+
+# MySQL types roundtrip
+make integration-mysql
+```
+
+Targets use `tests/integration/docker-compose.yml` and run the test files under `tests/integration/`.
+
+---
+
+## Gotchas & Tips
+
+* Pass a **Session/AsyncSession**, not a raw connection. The runner expects SQLAlchemy sessions.
+* If you already opened a transaction elsewhere, **that’s fine** — the runner uses SAVEPOINT for retries.
+* Postgres `SET LOCAL …` cannot use bind params; literals are used intentionally.
+* SQLite has no per-statement timeouts; if needed, set `connect_args={"timeout": …}` or SQLAlchemy’s `pool_timeout`.
+* Keep operation functions **idempotent** where possible; retried steps may run more than once.
+
+---
+
+## Compatibility
+
+* Python 3.9–3.13
+* SQLAlchemy 2.x
+* Postgres: `psycopg` (sync), `asyncpg` (async)
+* MySQL/MariaDB: `pymysql` (sync), `aiomysql` (async)
+* SQLite / aiosqlite
+
+---
+
+## Local development
+
+### 1) Install deps
+
+```bash
+# fast (uv)
+uv venv .venv
+# for unit tests (SQLite only)
+uv pip install -e '.[dev]'
+# for integration tests too (Postgres + MySQL/MariaDB)
+uv pip install -e '.[dev,postgres,mysql]'
+```
+
+> pip equivalent:
+>
+> ```bash
+> python -m venv .venv
+> . .venv/bin/activate
+> # SQLite only:
+> pip install -e '.[dev]'
+> # + drivers for integrations:
+> pip install -e '.[dev,postgres,mysql]'
+> ```
+
+**What the extras include**
+
+| Extra      | Purpose / unlocks                             |
+| ---------- | --------------------------------------------- |
+| `postgres` | `psycopg` (sync) and `asyncpg` (async) tests  |
+| `mysql`    | `pymysql` (sync) and `aiomysql` (async) tests |
+
+> These match what CI uses and what the `Makefile` integration targets expect.
+
+### 2) Create `.env` (not committed)
+
+```dotenv
+# use a single shared SQLite file for both sync + async
+TEST_SYNC_DB_URL=sqlite:///./.pytest-sqlite.db
+TEST_ASYNC_DB_URL=sqlite+aiosqlite:///./.pytest-sqlite.db
+
+# make `src/` imports work in VS Code test runs
+PYTHONPATH=src
+```
+
+Keep `.env` gitignored. Commit a `env.example` instead:
+
+```bash
+cp env.example .env
+```
+
+### 3) Run tests
+
+```bash
+# unit (SQLite)
+make test
+# coverage (SQLite)
+make cov
+```
+
+### 4) Integration tests (Docker)
+
+```bash
+# install optional drivers if you didn’t earlier
+uv pip install -e '.[postgres,mysql]'
+
+# Postgres types + deadlocks
+make integration
+
+# MySQL/MariaDB types + deadlocks
+make integration-mysql
+```
+
+> The Makefile spins up Docker services and sets `TEST_*_DB_URL` for you, so you don’t need to change your `.env` for integrations.
+
+---
+## Migrating when you commit/rollback explicitly
+
+`DBOpRunner` doesn’t manage the outer transaction for you. That’s on purpose: you keep control of **when** to `commit()` or `rollback()`, while the runner wraps each operation in a **SAVEPOINT** (if you’re already in a transaction) and retries transient errors for you.
+
+Below are common before/after patterns using **only SQLAlchemy Sessions/AsyncSessions**.
+
+### 1) Single write with explicit commit
+
+#### Before (plain SQLAlchemy)
+
+```python
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+def save_user(sess: Session, row: dict) -> None:
+    sess.execute(text("INSERT INTO users (id, name) VALUES (:id, :name)"), row)
+
+with Session(bind=engine, expire_on_commit=False) as sess:
+    try:
+        save_user(sess, {"id": 1, "name": "Ada"})
+        sess.commit()
+    except:
+        sess.rollback()
+        raise
+```
+
+#### After (with DBOpRunner)
+
+```python
+from dbop_runner import DBOpRunner
+
+runner = DBOpRunner(max_retries=3, default_lock_timeout_s=5)
+
+def save_user(sess: Session, row: dict) -> None:
+    sess.execute(text("INSERT INTO users (id, name) VALUES (:id, :name)"), row)
+
+with Session(bind=engine, expire_on_commit=False) as sess:
+    try:
+        with sess.begin():  # commit/rollback here, same as before
+            runner.run(sess, lambda s: save_user(s, {"id": 1, "name": "Ada"}), name="insert-user")
+    except:
+        # rollback already done by `begin()` on error, but explicit is fine if not using a context
+        sess.rollback()
+        raise
+```
+
+> Why better: you keep the same transaction boundary, but `save_user` is retried if a transient error occurs (deadlock, lock wait timeout, etc.), via a SAVEPOINT when inside the `begin()`.
+
+---
+
+### 2) Multi-step unit of work with conditional abort
+
+#### Before
+
+```python
+def step_a(sess: Session): ...
+def step_b(sess: Session): ...
+def should_abort(sess: Session) -> bool: ...
+
+with Session(bind=engine) as sess:
+    try:
+        with sess.begin():
+            step_a(sess)
+            if should_abort(sess):
+                raise RuntimeError("abort")
+            step_b(sess)
+    except:
+        sess.rollback()
+        raise
+```
+
+#### After
+
+```python
+runner = DBOpRunner(max_retries=3, default_lock_timeout_s=5)
+
+with Session(bind=engine) as sess:
+    try:
+        with sess.begin():
+            runner.run(sess, step_a, name="step-a")
+            if should_abort(sess):
+                raise RuntimeError("abort")   # rolls back outer tx
+            runner.run(sess, step_b, name="step-b")
+    except:
+        sess.rollback()
+        raise
+```
+
+> Each `runner.run(...)` is independently retryable via SAVEPOINT. If you choose to abort, the **outer** transaction still rolls back everything (A and B).
+
+---
+
+### 3) Async version
+
+#### Before
+
+```python
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
+
+async def write(sess: AsyncSession):
+    await sess.execute(text("UPDATE users SET seen_at = now() WHERE id=:id"), {"id": 1})
+
+async with AsyncSession(bind=async_engine) as sess:
+    try:
+        async with sess.begin():
+            await write(sess)
+    except:
+        await sess.rollback()
+        raise
+```
+
+#### After
+
+```python
+from dbop_runner import DBOpRunner
+
+runner = DBOpRunner(max_retries=3, default_lock_timeout_s=5)
+
+async def write(sess: AsyncSession):
+    await sess.execute(text("UPDATE users SET seen_at = now() WHERE id=:id"), {"id": 1})
+
+async with AsyncSession(bind=async_engine) as sess:
+    try:
+        async with sess.begin():
+            await runner.run_async(sess, write, name="mark-seen")
+    except:
+        await sess.rollback()
+        raise
+```
+
+---
+
+### 4) Add per-operation timeouts (keeps your commit/rollback flow)
+
+```python
+def heavy_read(sess: Session):
+    return sess.execute(text("SELECT ...")).all()
+
+with Session(bind=engine) as sess, sess.begin():
+    rows = runner.run(
+        sess,
+        heavy_read,
+        name="heavy-read",
+        read_only=True,
+        lock_timeout_s=2,     # fail fast if blocked on locks
+        stmt_timeout_s=10,    # cap execution time
+    )
+```
+
+* **PostgreSQL**: `SET LOCAL lock_timeout` / `SET LOCAL statement_timeout`
+* **MySQL/MariaDB**: `innodb_lock_wait_timeout` / `MAX_EXECUTION_TIME`
+* **SQLite**: no-ops (per-statement session timeouts aren’t available)
+
+---
+
+### 5) “I don’t want exceptions to bubble up”
+
+Use `raises=False` and a `default` value:
+
+```python
+with Session(bind=engine) as sess, sess.begin():
+    result = runner.run(
+        sess,
+        lambda s: s.execute(text("SELECT 1")).scalar_one(),
+        name="maybe-fails",
+        raises=False,
+        default=None,
+    )
+    # `result` is None on failure; outer tx still intact
+```
+
+---
+
+### Key takeaways
+
+* **You** still decide the commit/rollback boundary using `with sess.begin():` (or `async with sess.begin():`).
+* `DBOpRunner` wraps **each operation** with SAVEPOINT + retries so transient errors don’t poison the outer transaction.
+* Swap your “call function then commit/rollback” to “`with sess.begin(): runner.run(...);`” and your behavior stays explicit while becoming more resilient.
+
+---
+## **Changelog**
+Detailed changelog in [CHANGELOG.md](CHANGELOG.md).
+
+---
+## **License**
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+## Support and Contact
+
+For inquiries or support, please open an issue or start a discussion on our [GitHub repository](https://github.com/yokha/dbop-runner).
+
+## **Connect with Me**
+- [LinkedIn](https://www.linkedin.com/in/youssef-khaya-88a1a128)
+---
+Developed by [Youssef Khaya](https://www.linkedin.com/in/youssef-khaya-88a1a128)
+
+---
