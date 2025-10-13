@@ -1,0 +1,276 @@
+Metadata-Version: 2.2
+Name: jarvion
+Version: 1.0.1
+Author: Salman Developer
+Author-email: salmanfareedchishty135@gmail.com
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+
+# Jarvion – Real-Time AI Assistant (OpenAI + Gemini + ElevenLabs + TTS)
+
+**Jarvion** is an advanced, real-time, bilingual AI assistant framework inspired by *Jarvis*.  
+It listens to your voice, understands speech in real time, responds conversationally, and speaks back naturally using **ElevenLabs** or **pyttsx3**.
+
+This README covers:
+- pip installation & local testing
+- programmatic use and CLI examples
+- configuration (API keys, voices, thresholds)
+- packaging & publishing to PyPI
+- troubleshooting & tips
+- security & privacy notes
+
+---
+
+## 📦 Installation (pip)
+
+Install the released package from PyPI:
+
+```bash
+pip install jarvion
+````
+
+If you want the local development version (install from source):
+
+```bash
+git clone https://github.com/<yourusername>/jarvion.git
+cd jarvion
+pip install .
+```
+
+Or build and install the wheel locally:
+
+```bash
+pip install build
+python -m build
+pip install dist/jarvion-1.0.1-py3-none-any.whl
+```
+
+To uninstall:
+
+```bash
+pip uninstall jarvion
+```
+
+---
+
+## ⚙️ Quickstart — Programmatic Usage
+
+Minimal example (listening + speaking using default config):
+
+```python
+from jarvion.core import Jarvis, Config
+
+cfg = Config(
+    openai_key="YOUR_OPENAI_KEY",         # optional if using Gemini-only
+    ai_provider="openai",                 # "openai", "gemini", or "both"
+    elevenlabs_key="YOUR_ELEVENLABS_KEY", # optional; use pyttsx3 fallback if absent
+    eleven_voice="21m00Tcm4TlvDq8ikWAM",  # ElevenLabs voice ID (not voice name)
+    speak_chunk_threshold=300,            # number of characters to buffer before speaking
+    interrupt_on_user_speech=True         # whether TTS stops when user starts speaking
+)
+
+jarvis = Jarvis(cfg)
+jarvis.start()  # starts background listener and TTS player
+
+# programmatic input (like simulating user speech)
+jarvis.send_text("Tell me a joke about penguins.")
+
+# stop later
+jarvis.stop()
+```
+
+**Notes**
+
+* `send_text()` lets you feed text directly (useful for GUIs, tests, or remote control).
+* `speak_chunk_threshold` controls how long an assistant response accumulates before being synthesized and played.
+
+---
+
+## 🗣️ CLI Usage
+
+If `setup.py` defines a console entry point (`jarvion=jarvion.core:main`), after installation you can run:
+
+```bash
+jarvion
+```
+
+This will launch the full-duplex assistant (listen + speak). Say `exit` or `quit` to stop.
+
+---
+
+## 🧩 Using ElevenLabs TTS
+
+ElevenLabs requires a voice **ID** (not the display name). To get voice IDs:
+
+1. Sign in at [https://elevenlabs.io/app/voices](https://elevenlabs.io/app/voices)
+2. Click a voice — the URL contains the voice ID, e.g.:
+   `https://elevenlabs.io/app/voice/21m00Tcm4TlvDq8ikWAM` → voice id = `21m00Tcm4TlvDq8ikWAM`
+3. Put that ID in `Config.eleven_voice`.
+
+Programmatic ElevenLabs test (quick):
+
+```python
+import requests
+
+ELEVEN_API_KEY = "YOUR_KEY"
+VOICE_ID = "21m00Tcm4TlvDq8ikWAM"
+url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+headers = {"xi-api-key": ELEVEN_API_KEY, "Content-Type": "application/json"}
+data = {"text": "Hello from ElevenLabs!", "voice_settings": {"stability":0.5,"similarity_boost":0.75}}
+r = requests.post(url, headers=headers, json=data)
+if r.status_code == 200:
+    with open("out.wav","wb") as f: f.write(r.content)
+```
+
+---
+
+## 🔁 Example: GUI Integration (Tkinter)
+
+```python
+import tkinter as tk
+from jarvion.core import Jarvis, Config
+
+cfg = Config(openai_key="YOUR_OPENAI_KEY", ai_provider="openai")
+jarvis = Jarvis(cfg)
+jarvis.start()
+
+def send():
+    text = entry.get()
+    jarvis.send_text(text)
+    entry.delete(0, tk.END)
+
+root = tk.Tk()
+entry = tk.Entry(root, width=60)
+entry.pack(side=tk.LEFT)
+tk.Button(root, text="Send", command=send).pack(side=tk.RIGHT)
+root.mainloop()
+```
+
+---
+
+## 🛠 Packaging & Publishing (PyPI)
+
+1. Ensure your `setup.py`, `pyproject.toml` (optional), and `README.md` are ready. `README.md` will be used for the long description.
+2. Build distributions:
+
+```bash
+pip install build twine
+python -m build
+```
+
+3. Upload to PyPI (you’ll be prompted for credentials):
+
+```bash
+twine upload dist/*
+```
+
+4. Install from PyPI to test:
+
+```bash
+pip install jarvion
+jarvion
+```
+
+**Local testing (install wheel directly)**
+
+```bash
+pip install dist/jarvion-1.0.1-py3-none-any.whl
+```
+
+---
+
+## 🧰 Recommended `requirements.txt`
+
+```
+openai>=1.0.0
+google-generativeai>=0.4.0
+elevenlabs>=1.0.0   # optional, only if you use ElevenLabs SDK
+pyttsx3>=2.90
+SpeechRecognition>=3.10.0
+pyaudio>=0.2.13     # or sounddevice + soundfile alternative
+requests>=2.25.0
+sounddevice>=0.4.0
+soundfile>=0.11.0
+```
+
+> Note: `pyaudio` can be tricky to install on Windows (use prebuilt wheels or `pipwin install pyaudio`).
+
+---
+
+## 🩺 Troubleshooting & Tips
+
+**1. Speaks only first/last words or cuts off mid-sentence**
+
+* Increase `speak_chunk_threshold` so Jarvis buffers more text before TTS.
+* If using ElevenLabs, ensure the full audio file is saved then played (`sd.wait()` or write-then-play approach).
+* When using `pyttsx3`, make sure you don’t call `.stop()` prematurely and avoid overlapping `runAndWait()` calls.
+
+**2. `"Method Not Allowed"` on ElevenLabs URL**
+
+* Don’t open the TTS endpoint in a browser (that sends GET). Use `POST` with your API key and JSON body.
+
+**3. `msilib` or `cx_Freeze` build errors on Python 3.13**
+
+* Uninstall `cx_Freeze` if you don’t need it:
+
+  ```bash
+  pip uninstall cx_Freeze
+  ```
+* Or use Python 3.12 if you need `msilib`-dependent builds.
+
+**4. Microphone issues on Windows**
+
+* For `pyaudio`, either install Visual C++ build tools or use `pipwin`:
+
+  ```bash
+  pip install pipwin
+  pipwin install pyaudio
+  ```
+
+**5. ElevenLabs voice not found**
+
+* Use the *voice ID*, not the display name.
+
+**6. Debugging**
+
+* Add logging prints around the TTS worker to verify buffer contents and playback flow.
+* Use headphones to avoid TTS → microphone feedback.
+
+---
+
+## 🔐 Security & Privacy
+
+* **Never commit API keys** to source code. Use environment variables:
+
+  ```bash
+  export OPENAI_API_KEY="sk-..."
+  export ELEVENLABS_API_KEY="eleven-..."
+  ```
+* Be mindful of sensitive data — voice streams and transcripts may be sent to third-party APIs (OpenAI/ElevenLabs). If you need local-only processing, rely on offline STT/TTS alternatives (Whisper local, pyttsx3).
+
+---
+
+## 📝 Versioning & Changelog
+
+Keep a `CHANGELOG.md` and increment semantic versioning:
+
+* `MAJOR.MINOR.PATCH` (e.g., `1.0.0`)
+* Example release notes: new features, bug fixes, breaking changes.
+
+---
+
+## ❤️ Contributing
+
+Contributions welcome:
+
+* Add new voice providers, better wake-word detection, GUI frontends, or integrations (Home Assistant, Alexa).
+* Open a PR or issue on GitHub with a minimal repro and tests.
+
+---
+
+## ⚖️ License
+
+MIT License © 2025 Salman Fareed Chishty
