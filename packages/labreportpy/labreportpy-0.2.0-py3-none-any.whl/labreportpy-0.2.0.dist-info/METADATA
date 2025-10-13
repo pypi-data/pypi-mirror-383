@@ -1,0 +1,39 @@
+Metadata-Version: 2.4
+Name: labreportpy
+Version: 0.2.0
+Summary: Small collection of tools for lab reports in physics.
+Author: Anno Knierim
+Maintainer-email: Anno Knierim <anno.knierim@tu-dortmund.de>
+License: MIT
+License-File: LICENSE
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: >=3.12
+Requires-Dist: click
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: rich
+Requires-Dist: scipy
+Description-Content-Type: text/markdown
+
+# labreportpy
+
+`labreportpy` is a small collection of tools and functions that may be useful for
+the analysis of data obtained in experiments in laboratory courses for physics.
+
+## Installation
+
+Install `labreportpy` from PyPI using [uv](https://docs.astral.sh/uv/):
+```
+$ uv pip install labreportpy
+```
+
+Or, from the repository, e.g. in editable development mode:
+```
+$ uv pip install --group dev -e .
+```
