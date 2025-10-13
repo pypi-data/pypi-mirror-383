@@ -1,0 +1,48 @@
+# Local agent settings (root only - don't ignore src/lite_kits/kits/*/.claude etc.)
+/.github/*
+!/.github/workflows/
+/.claude
+/.specify
+/specs
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp example files
+examples/minimal-todo-app/*
+!examples/minimal-todo-app/README.md
