@@ -1,0 +1,25 @@
+include README.md
+include LICENSE
+include CONTRIBUTING.md
+include CHANGELOG.md
+include pyproject.toml
+
+# Documentation
+include FORMATTERS.md
+include FORMATTERS_QUICK_START.md
+include CLI_GUIDE.md
+include PLATFORM.md
+
+# Examples
+recursive-include examples *.py
+recursive-include examples *.md
+
+# Exclude build artifacts and caches
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+global-exclude *.so
+global-exclude .git*
+global-exclude .vscode
+global-exclude .pytest_cache
+
