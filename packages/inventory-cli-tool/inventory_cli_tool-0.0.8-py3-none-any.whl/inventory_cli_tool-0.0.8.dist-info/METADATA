@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: inventory-cli-tool
+Version: 0.0.8
+Summary: A CLI tool and API to manage an inventory in MongoDB.
+Author-email: Your Name <your.email@example.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi
+Requires-Dist: pydantic
+Requires-Dist: uvicorn[standard]
+Requires-Dist: motor
+Requires-Dist: python-dotenv
+Requires-Dist: click
+Requires-Dist: rich
