@@ -1,0 +1,109 @@
+Metadata-Version: 2.4
+Name: init-provider-sqlalchemy
+Version: 0.1.1
+Summary: SQLAlchemy provider for init-provider
+Project-URL: Homepage, https://github.com/vduseev/init-provider-sqlalchemy
+Project-URL: Documentation, https://github.com/vduseev/init-provider-sqlalchemy
+Project-URL: Repository, https://github.com/vduseev/init-provider-sqlalchemy
+Project-URL: Issues, https://github.com/vduseev/init-provider-sqlalchemy/issues
+Author-email: vduseev <vagiz@duseev.com>
+Maintainer-email: vduseev <vagiz@duseev.com>
+License-Expression: Apache-2.0
+License-File: LICENSE
+Keywords: database,postgres,provider,service,singleton
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Requires-Dist: greenlet>=3.2.4
+Requires-Dist: init-provider>=0.1.3
+Requires-Dist: sqlalchemy>=2.0.44
+Description-Content-Type: text/markdown
+
+<h1><code>init-provider-sqlalchemy</code></h1>
+
+Database provider implemented using [`init-provider`](https://github.com/vduseev/init-provider).
+
+![PyPI - Version](https://img.shields.io/pypi/v/init-provider-sqlalchemy)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/init-provider-sqlalchemy)
+![PyPI - Status](https://img.shields.io/pypi/status/init-provider-sqlalchemy)
+![PyPI - License](https://img.shields.io/pypi/l/init-provider-sqlalchemy)
+
+Table of Contents
+
+- [Quick start](#quick-start)
+- [Installation](#installation)
+- [License](#license)
+
+## Quick start
+
+Below is a full runnable example that uses everything in this library.
+
+```python
+import asyncio
+import os
+from init_provider import setup, dispose
+from init_provider_sqlalchemy import Database
+from sqlalchemy import text
+
+
+@setup
+def configure() -> None:
+    os.environ["DATABASE_ENGINE_URL"] = "sqlite:///example.db"
+    os.environ["DATABASE_ENGINE_ASYNC_URL"] = "sqlite+aiosqlite:///example.db"
+    os.environ["DATABASE_ENGINE_ECHO"] = "False"
+    os.environ["DATABASE_SESSION_EXPIRE_ON_COMMIT"] = "False"
+
+
+@dispose
+def cleanup() -> None:
+    os.unlink("example.db")
+
+
+def sync_test() -> None:
+    with Database.session() as session:
+        result = session.execute(text("SELECT 1"))
+        print(result.scalar())
+
+
+async def async_test() -> None:
+    async with Database.async_session() as session:
+        result = await session.execute(text("SELECT 1"))
+        print(result.scalar())
+
+
+async def main() -> None:
+    sync_test()
+    await async_test()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+## Installation
+
+Using `pip`:
+
+```shell
+pip install init-provider-sqlalchemy
+```
+
+Using `uv`:
+
+```shell
+uv add init-provider-sqlalchemy
+```
+
+## License
+
+Licensed under the [Apache-2.0 License](./LICENSE).
