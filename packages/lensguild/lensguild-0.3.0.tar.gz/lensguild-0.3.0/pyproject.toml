@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lensguild"
+version = "0.3.0"
+description = "Optical design tools"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [{ name = "Anton Sharapov", email = "sharapov.anton@gmail.com" }]
+
+dependencies = ["PyQt5",
+                "numpy>=1.23"]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "mypy", "ruff"]
+qa  = ["tox", "pre-commit"]
+
+[project.urls]
+Homepage = "https://github.com/SharapovAnton/lensguild"
+Issues = "https://github.com/SharapovAnton/lensguild/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lensguild*"]
+exclude = ["tests*", "examples*"]
+
+[tool.setuptools]
+include-package-data = true
