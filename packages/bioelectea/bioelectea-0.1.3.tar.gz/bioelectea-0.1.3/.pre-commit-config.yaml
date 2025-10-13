@@ -1,0 +1,25 @@
+﻿repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+      - id: ruff-format
+
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
+        # 🔑 venv/배포 산출물은 제외
+        exclude: ^(\.venv.*|venv|\.vscode|dist|build|\.eggs|\.pytest_cache|\.mypy_cache|docs/|scripts/|notebooks/)
+        # 🔑 파일 범위: src/와 tests/만
+        files: ^(src/|tests/)
+        args:
+          - --config-file=pyproject.toml
+          - --install-types
+          - --non-interactive
+        additional_dependencies: []
