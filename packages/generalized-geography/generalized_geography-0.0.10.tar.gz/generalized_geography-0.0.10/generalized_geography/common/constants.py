@@ -1,0 +1,4 @@
+LOSE = 0
+WIN = 1
+LOOP = 2
+UNKNOWN = 3
