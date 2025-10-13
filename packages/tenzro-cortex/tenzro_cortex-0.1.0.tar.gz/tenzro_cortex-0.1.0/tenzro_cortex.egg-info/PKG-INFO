@@ -1,0 +1,73 @@
+Metadata-Version: 2.4
+Name: tenzro-cortex
+Version: 0.1.0
+Summary: Universal LLM Training Platform - Train any model on any hardware
+Home-page: https://cortex.tenzro.network
+Author: Tenzro Team
+Author-email: team@tenzro.network
+License: Apache-2.0
+Project-URL: Documentation, https://docs.tenzro.network
+Project-URL: Source, https://github.com/tenzro/tenzro-cortex
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click!=8.3.0,>=8.0.0
+Requires-Dist: requests>=2.28.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: pyyaml>=6.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Tenzro Cortex
+
+**Universal LLM Training Platform** - Train any model, any task, any hardware.
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Quick Start
+
+```bash
+# Install
+pip install tenzro-cortex
+
+# Login
+tenzro auth login
+
+# Train
+tenzro train --model microsoft/phi-2 --data training.jsonl
+```
+
+## Features
+
+- ✅ **Any Model** - 1000+ HuggingFace models
+- ✅ **LoRA Fine-tuning** - Parameter-efficient training
+- ✅ **Distributed** - Multi-GPU, multi-node
+- ✅ **OpenAI API** - Compatible inference
+
+## Documentation
+
+https://docs.tenzro.network
+
+## License
+
+Apache License 2.0
+
+© 2025 Tenzro Network
