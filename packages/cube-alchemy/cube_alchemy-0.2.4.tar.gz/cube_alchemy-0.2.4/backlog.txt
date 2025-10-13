@@ -1,0 +1,19 @@
+-on plots, allow to pass a list of plots to plot and plot all of them reusing the query
+- streamlit integration
+- yaml definitions
+- reserved keywords (_key_, _index_, etc) are hardcoded now, leave it as a high level variable to be able to change and adapt easily.
+- input check for catalog source
+
+- docs hypercube. I could tell something about directed graphs and/or primary/secondary relationships in order to solve circular references issues. Make an assessment of whether those properties could add some analytics value vs re-defining the schema through data modelling or not along with trade off of implementing them vs leaving the directed but avoid cycles. Also mention bridge tables, and other methods for resolving those inherit problems on the data, why it is not simple to automate this as it will depend on the specific analysis that the analyst is trying to do. Be short, just as a comment on why the tree is chosen over other types of graph (consistency, and there is no analytic value added vs the tree with the right data model; if that is the output of the assessment only)
+
+
+-try to achieve aggregate 
+
+
+- remember to update the docs with the new graph parameters, also need to update readme.
+- also update the docs with the new query implementation allowing for on the fly options
+
+
+done
+- visualize graph definition (look at how gp.draw works, pos is already giving the right nodes position and I could leverage that)
+- allow to query without definition, something like plot without definition

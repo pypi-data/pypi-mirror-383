@@ -1,0 +1,4 @@
+mkdocs gh-deploy
+
+python -m build
+twine upload dist/*
