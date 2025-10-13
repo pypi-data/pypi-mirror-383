@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "nunchaku"
+version = "0.16.1"
+description = "Optimally partitioning data into piece-wise linear segments."
+authors = ["Yu Huo <yhuo@tuta.io>", "Peter Swain <peter.swain@ed.ac.uk>"]
+
+license = "MIT"
+readme = "readme.md"
+homepage = "https://nunchaku.readthedocs.io"
+repository = "https://git.ecdf.ed.ac.uk/s1856140/nunchaku"
+documentation = "https://nunchaku.readthedocs.io"
+keywords = ["linear trend", "Bayesian inference", "log phase", "exponential growth", "change point analysis"]
+classifiers= [
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Science/Research",
+]
+packages = [
+    { include = "nunchaku" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9, <3.13"
+numpy = "^2.0.0"
+scipy = "^1.10.1"
+matplotlib = "^3.5.0"
+pandas = ">=1.4"
+tqdm = "^4.65.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.6.0"
+jupyter = "^1.0.0"
+flake8 = "^4.0.1"
+pyright = "^1.1.258"
+Sphinx = "^6.1"
+seaborn = "^0.12.2"
+coverage = "^7.2.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

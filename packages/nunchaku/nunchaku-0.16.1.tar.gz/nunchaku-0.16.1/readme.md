@@ -1,0 +1,70 @@
+# Nunchaku: Optimally partitioning data into piece-wise segments
+`nunchaku` is a statistically rigorous, Bayesian algorithm to infer the optimal partitioning of a data set into contiguous piece-wise segments.
+
+## Who might find this useful?
+Scientists and engineers who wish to detect change points within a dataset, at which the dependency of one variable on the other change. 
+
+For example, if `y`'s underlying function is a piece-wise linear function of `x`, `nunchaku` will find the points at which the gradient and the intercept change. 
+
+## What does it do?
+Given a dataset with two variables (e.g. a 1D time series), it infers the piece-wise function that best approximates the dataset. The function can be a piece-wise constant function, a piece-wise linear function, or a piece-wise function described by linear combinations of arbitrary basis functions (e.g. polynomials, sines).
+
+For piece-wise linear functions, it provides statistics for each segment, from which users select the segment(s) of most interest, for example, the one with the largest gradient or the one with the largest $R^2$. 
+
+For details about how it works, please refer to our [paper](https://doi.org/10.1093/bioinformatics/btad688), freely available on *Bioinformatics*.
+
+## Installation
+To install via PyPI, type in Terminal (for Linux/Mac OS users) or Anaconda Prompt (for Windows users with [Anaconda](https://docs.anaconda.com/free/anaconda/install/windows/) installed): 
+```
+> pip install nunchaku
+```
+
+For developers, create a virtual environment, install poetry and then install `nunchaku` with Poetry: 
+```
+> git clone https://git.ecdf.ed.ac.uk/s1856140/nunchaku.git
+> cd nunchaku 
+> poetry install --with dev 
+```
+
+## Quick start
+Data `x` is a list or a 1D Numpy array, sorted ascendingly; the data `y` is a list or a 1D Numpy array, or a 2D Numpy array with each row being one replicate of the measurement.
+Below is a script to analyse the built-in example data. 
+```
+>>> from nunchaku import Nunchaku, get_example_data
+>>> x, y = get_example_data()
+>>> # load data and set the prior of the gradient
+>>> nc = Nunchaku(x, y, prior=[-5, 5]) 
+>>> # compare models with 1, 2, 3 and 4 linear segments
+>>> numseg, evidences = nc.get_number(num_range=(1, 4))
+>>> # get the mean and standard deviation of the boundary points
+>>> bds, bds_std = nc.get_iboundaries(numseg)
+>>> # get the information of all segments
+>>> info_df = nc.get_info(bds)
+>>> # plot the data and the segments
+>>> nc.plot(info_df)
+>>> # get the underlying piece-wise function (for piece-wise linear functions only)
+>>> y_prediction = nc.predict(info_df)
+```
+
+More detailed examples are provided in [a Jupyter Notebook in our repository](https://git.ecdf.ed.ac.uk/s1856140/nunchaku/-/blob/master/examples.ipynb).
+
+## Documentation
+Detailed documentation is available on [Readthedocs](https://nunchaku.readthedocs.io/en/latest/).
+
+## Development history
++ `v0.16.1`: Replace lambdas with module-level named functions to ensure compatibility with `concurrent.futures`.
++ `v0.16.0`: Added support for Python 3.12 and NumPy 2.0; introduced a `quiet` option; re-implemented key computations in log space to prevent overflow and improve numerical stability.
++ `v0.15.4`: Improved handling of bad initial guess for EM algorithm. The last release to support Python 3.8 and NumPy 1.x.
++ `v0.15.2`: Dependency fix release.
++ `v0.15.1`: Bug fix release.
++ `v0.15.0`: supports detection of piece-wise functions described by a linear combination of arbitrary basis; supports Python 3.11.
++ `v0.14.0`: supports detection of linear segments.
+
+## Similar packages
++ The [`NOT`](https://cran.r-project.org/web/packages/not/index.html) package written in R.
++ The [`beast`](https://cran.r-project.org/web/packages/beast/index.html) package written in R. 
+
+## Citation
+If you find this useful, please cite our paper: 
+
+Huo, Y., Li, H., Wang, X., Du, X., & Swain, P. S. (2023). Nunchaku: Optimally partitioning data into piece-wise linear segments. *Bioinformatics*. https://doi.org/10.1093/bioinformatics/btad688
