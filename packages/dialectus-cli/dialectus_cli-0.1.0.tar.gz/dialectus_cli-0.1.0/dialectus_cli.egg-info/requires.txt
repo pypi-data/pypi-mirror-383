@@ -1,0 +1,12 @@
+rich>=14.1.0
+click>=8.2.1
+pydantic>=2.11.0
+dialectus-engine>=0.1.2
+
+[dev]
+pip-tools>=7.0.0
+pyright>=1.1.0
+ruff>=0.5.0
+pytest>=7.0
+twine
+build
