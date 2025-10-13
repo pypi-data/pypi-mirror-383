@@ -1,0 +1,66 @@
+name: Build and Publish Wheels
+
+on:
+  push:
+    tags: ["v*"]          # Trigger on version tags (e.g. v0.1.2)
+  workflow_dispatch:       # Allow manual trigger from the Actions tab
+
+jobs:
+  build_wheels:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-13, windows-2022]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: python -m pip install --upgrade pip cibuildwheel==2.* build
+
+      # === Build wheels for all platforms ===
+      - name: Build wheels with cibuildwheel
+        env:
+          # Python versions to build for
+          CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-*"
+          # Skip PyPy, 32-bit, and musllinux wheels (optional)
+          CIBW_SKIP: "pp* *_i686 *-musllinux_*"
+          # Target architectures
+          CIBW_ARCHS_LINUX: "x86_64 aarch64"
+          CIBW_ARCHS_MACOS: "x86_64 arm64"
+          CIBW_ARCHS_WINDOWS: "AMD64 ARM64"
+          # Simple post-build test to verify import
+          CIBW_TEST_COMMAND: "python -c \"import pyrbd3\""
+        run: python -m cibuildwheel --output-dir wheelhouse
+
+      # === Build source distribution (sdist) ===
+      - name: Build sdist
+        run: python -m build --sdist --outdir wheelhouse
+
+      # === Upload to PyPI when tagging ===
+      - name: Upload to PyPI
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m pip install --upgrade twine
+          python -m twine upload wheelhouse/*
+
+      # === Optional: Upload to TestPyPI instead ===
+      # - name: Upload to TestPyPI
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+      #   run: |
+      #     python -m pip install --upgrade twine
+      #     python -m twine upload --repository-url https://test.pypi.org/legacy/ wheelhouse/*
