@@ -1,0 +1,279 @@
+Metadata-Version: 2.4
+Name: clerk-auth-django
+Version: 0.1.1
+Summary: Django REST Framework authentication library with Clerk integration
+License: MIT
+Keywords: django,clerk,authentication,jwt,drf,rest-framework
+Author: Ernesto Martinez
+Author-email: ernesto@example.com
+Requires-Python: >=3.11,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.0
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: Django (>=4.2)
+Requires-Dist: PyJWT[crypto] (>=2.8)
+Requires-Dist: cryptography (>=41.0)
+Requires-Dist: djangorestframework (>=3.14)
+Requires-Dist: requests (>=2.31)
+Project-URL: Documentation, https://github.com/ernes7/clerk-auth/tree/main/docs
+Project-URL: Homepage, https://github.com/ernes7/clerk-auth
+Project-URL: Repository, https://github.com/ernes7/clerk-auth
+Description-Content-Type: text/markdown
+
+# clerk-auth-django
+
+Django REST Framework authentication library with Clerk integration.
+
+## Installation
+
+```bash
+pip install clerk-auth-django
+```
+
+## Quick Start
+
+### 1. Add to INSTALLED_APPS
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    # ...
+    'clerk_auth',
+]
+```
+
+### 2. Configure Clerk Settings
+
+```python
+# settings.py
+CLERK_AUTH = {
+    'SECRET_KEY': 'sk_test_...',  # Required: Your Clerk secret key
+    'USER_MODEL': 'auth.User',    # Your minimal user model
+    'AUTO_CREATE_USER': True,     # Auto-create user on first auth (default: True)
+}
+```
+
+### 3. Define Your User Model
+
+```python
+# models.py
+from clerk_auth.models import ClerkUser
+
+class User(ClerkUser):
+    """Minimal user model - only app-specific fields"""
+    # clerk_id (PK) inherited from ClerkUser
+    stripe_customer_id = models.CharField(max_length=255, null=True)
+    subscription_tier = models.CharField(max_length=50, default='free')
+    preferences = models.JSONField(default=dict)
+```
+
+### 4. Use in Your Views
+
+```python
+# views.py
+from rest_framework import viewsets
+from clerk_auth.permissions import HasRole
+
+class InvoiceViewSet(viewsets.ModelViewSet):
+    permission_classes = [HasRole('admin')]
+
+    def get_queryset(self):
+        # Normal Django ForeignKey filtering!
+        return self.request.user.invoices.all()
+```
+
+## Features
+
+### Authentication
+
+Automatic JWT verification and user creation:
+
+```python
+# The authentication class automatically:
+# 1. Validates JWT from Authorization header
+# 2. Creates User record on first auth (if AUTO_CREATE_USER=True)
+# 3. Attaches JWT claims to request.user.clerk_claims
+# 4. Attaches org_role to request.user.org_role
+```
+
+### Permissions
+
+Role-based and permission-based access control:
+
+```python
+from clerk_auth.permissions import HasRole, HasPermission, HasAnyRole
+
+class AdminView(APIView):
+    permission_classes = [HasRole('admin')]
+
+class EditorView(APIView):
+    permission_classes = [HasAnyRole('admin', 'editor')]
+
+class InvoiceView(APIView):
+    permission_classes = [HasPermission('read:invoices')]
+```
+
+### Decorators
+
+Function-based view support:
+
+```python
+from clerk_auth.decorators import require_role, require_permission
+
+@require_role('admin')
+def admin_only_view(request):
+    return Response({'message': 'Admin access granted'})
+
+@require_permission('write:invoices')
+def create_invoice(request):
+    return Response({'message': 'Invoice created'})
+```
+
+### Webhooks
+
+Handle Clerk webhook events:
+
+```python
+# urls.py
+from clerk_auth.webhooks import ClerkWebhookView
+
+urlpatterns = [
+    path('webhooks/clerk/', ClerkWebhookView.as_view()),
+]
+
+# settings.py
+CLERK_AUTH = {
+    # ...
+    'WEBHOOK_SECRET': 'whsec_...',
+}
+```
+
+## Configuration
+
+### Complete Configuration Reference
+
+```python
+CLERK_AUTH = {
+    # Required
+    'SECRET_KEY': 'sk_test_...',
+
+    # User Management
+    'USER_MODEL': 'auth.User',           # Your minimal user model
+    'AUTO_CREATE_USER': True,            # Create User on first auth (default: True)
+    'USER_FIELD_MAPPING': {
+        'email': 'email',                # Optional: cache email from JWT
+    },
+    'UPDATE_USER_ON_AUTH': False,        # Update cached fields on each request
+
+    # JWT Claims
+    'ROLE_CLAIM': 'org_role',
+    'ORG_CLAIM': 'org_id',
+    'PERMISSIONS_CLAIM': 'permissions',
+    'METADATA_CLAIM': 'public_metadata',
+
+    # Caching
+    'CACHE_PUBLIC_KEYS': True,
+    'CACHE_TIMEOUT': 3600,
+    'CACHE_KEY_PREFIX': 'clerk_auth',
+
+    # Multi-tenancy
+    'ENABLE_ORG_CONTEXT': True,
+    'ORG_HEADER': 'X-Organization-ID',
+
+    # Webhooks
+    'WEBHOOK_SECRET': 'whsec_...',
+    'WEBHOOK_TOLERANCE': 300,
+}
+```
+
+## Architecture
+
+### Pattern 2: Minimal User Model (Recommended)
+
+```python
+# Your User model stores ONLY app-specific data
+class User(ClerkUser):
+    clerk_id = models.CharField(primary_key=True)  # Inherited
+    stripe_customer_id = models.CharField(null=True)
+    subscription_tier = models.CharField(default='free')
+
+# Clerk stores ALL authentication data:
+# - Email, password, name
+# - Organization roles and memberships
+# - Public/private metadata
+
+# Benefits:
+# - Normal Django ForeignKey relationships
+# - Single source of truth (Clerk)
+# - Automatic user creation on first auth
+# - No password management in your app
+```
+
+## API Reference
+
+### Authentication Classes
+
+- `ClerkAuthentication`: DRF authentication class
+- `ClerkJWTBackend`: Django authentication backend
+
+### Permission Classes
+
+- `HasRole(role)`: Check organization role
+- `HasAnyRole(*roles)`: Check any of the roles
+- `HasPermission(permission)`: Check permission string
+- `HasAllPermissions(*permissions)`: Check all permissions
+- `IsOrgMember`: Verify org membership
+- `IsOrgAdmin`: Admin role shortcut
+
+### Decorators
+
+- `@require_auth`: Require authentication
+- `@require_role(role)`: Require specific role
+- `@require_permission(perm)`: Require permission
+
+### Models
+
+- `ClerkUser`: Abstract base model for minimal user records
+
+### Management Commands
+
+```bash
+# Sync users from Clerk API
+python manage.py sync_clerk_users
+
+# Verify Clerk configuration
+python manage.py verify_clerk_setup
+```
+
+## Testing
+
+```bash
+# Run tests
+poetry run pytest
+
+# With coverage
+poetry run pytest --cov=clerk_auth --cov-report=html
+
+# Type checking
+poetry run mypy src/clerk_auth
+```
+
+## License
+
+MIT License - see [LICENSE](../../LICENSE) file for details.
+
+## Links
+
+- [Documentation](https://github.com/ernes7/clerk-auth/tree/main/docs)
+- [GitHub Repository](https://github.com/ernes7/clerk-auth)
+- [Issue Tracker](https://github.com/ernes7/clerk-auth/issues)
+- [Clerk Documentation](https://clerk.com/docs)
+
