@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+dist/
+uv.lock
+*.egg-info
+.venv
+
+# MacOS
+.DS_Store
+
+# pytest
+.pytest_cache
+.env
+*.json
+ngrok.yml
+
+# pycharm
+.idea
+
+# windows
+.vs
+*.pyproj
+*.sln

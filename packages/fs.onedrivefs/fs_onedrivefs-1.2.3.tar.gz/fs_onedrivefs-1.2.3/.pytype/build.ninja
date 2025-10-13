@@ -1,0 +1,30 @@
+rule infer
+  command = /Users/rehan/.virtualenvs/onedrivefs/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --fix-module-collisions --no-report-errors --nofail --quick $in
+  description = infer $module
+rule check
+  command = /Users/rehan/.virtualenvs/onedrivefs/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.9 -o $out --analyze-annotated --fix-module-collisions --nofail --quick $in
+  description = check $module
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/onedrivefs.pyi: check /Users/rehan/src/fs.onedrivefs/fs/onedrivefs/onedrivefs.py
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/onedrivefs.onedrivefs.imports
+  module = onedrivefs.onedrivefs
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/opener.pyi: check /Users/rehan/src/fs.onedrivefs/fs/onedrivefs/opener.py | /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/onedrivefs.pyi
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/onedrivefs.opener.imports
+  module = onedrivefs.opener
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/tests/github.pyi: check /Users/rehan/src/fs.onedrivefs/tests/github.py
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/tests.github.imports
+  module = tests.github
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/__init__.pyi: check /Users/rehan/src/fs.onedrivefs/fs/onedrivefs/__init__.py | /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/onedrivefs.pyi /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/opener.pyi
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/onedrivefs.__init__.imports
+  module = onedrivefs.__init__
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/fs/onedrivefs/OneDriveFS.pyi: infer /Users/rehan/src/fs.onedrivefs/fs/onedrivefs/OneDriveFS.py
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/fs.onedrivefs.OneDriveFS.imports
+  module = fs.onedrivefs.OneDriveFS
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/tests/generate-credentials.pyi: check /Users/rehan/src/fs.onedrivefs/tests/generate-credentials.py
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/tests.generate-credentials.imports
+  module = tests.generate-credentials
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/tests/__init__.pyi: check /Users/rehan/src/fs.onedrivefs/tests/__init__.py
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/tests.__init__.imports
+  module = tests.__init__
+build /Users/rehan/src/fs.onedrivefs/.pytype/pyi/tests/test_onedrivefs.pyi: check /Users/rehan/src/fs.onedrivefs/tests/test_onedrivefs.py | /Users/rehan/src/fs.onedrivefs/.pytype/pyi/fs/onedrivefs/OneDriveFS.pyi /Users/rehan/src/fs.onedrivefs/.pytype/pyi/onedrivefs/__init__.pyi /Users/rehan/src/fs.onedrivefs/.pytype/pyi/tests/github.pyi
+  imports = /Users/rehan/src/fs.onedrivefs/.pytype/imports/tests.test_onedrivefs.imports
+  module = tests.test_onedrivefs
