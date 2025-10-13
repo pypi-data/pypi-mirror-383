@@ -1,0 +1,185 @@
+Metadata-Version: 2.4
+Name: Pear2Pear
+Version: 0.1.9
+Summary: Pear2Pear package
+Home-page: https://github.com/vanouri/P2P_EIP_PUB_Package
+Author: Nouri valentin
+Author-email: valentin.nouri20@gmail.com
+License: BSD 2-clause
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: mpi4py>=2.0
+Requires-Dist: numpy
+Requires-Dist: multiprocess==0.70.18
+Requires-Dist: numba==0.62.1
+Requires-Dist: numpy==2.3.3
+Requires-Dist: pandas==2.3.3
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: summary
+
+# Pear2Pear
+
+**Pear2Pear** is a Python library for **genetic discovery and optimization of trading patterns**.
+It leverages **evolutionary algorithms**, **Numba acceleration**, and **parallelized backtesting** to automatically discover, test, and evolve profitable signal combinations from historical financial data.
+
+Designed for **quantitative research**, **algorithmic trading**, and **financial AI experimentation**, Pear2Pear autonomously evolves pattern-based strategies based on profitability metrics such as the **profit factor**.
+
+---
+
+## ✨ Key Features
+
+* 🧬 **Genetic Trading Pattern Evolution**
+  Generates and evolves complex trading conditions across multiple market indicators using crossover, mutation, and elitism.
+
+* ⚡ **Performance-Driven**
+  Core trading simulations and gain calculations are compiled with **Numba**, providing large performance gains over standard Python.
+
+* 🧠 **Adaptive Anti-Overfitting System**
+  Monitors fitness improvements and re-evaluates on unseen test data to detect overfitting automatically.
+
+* 🔁 **Parallelized Fitness Evaluation**
+  Scales to modern CPUs using the `multiprocess` module for concurrent evaluation of multiple patterns.
+
+* 📈 **Profit Factor Optimization**
+  Each evolved pattern is scored based on its ability to generate consistent gains versus losses over a test dataset.
+
+---
+
+## 📦 Installation
+
+Install directly from PyPI:
+
+```bash
+pip install pear2pear
+```
+
+---
+
+## 🚀 Quick Start
+
+Below is a minimal working example of how to use **Pear2Pear**.
+
+```python
+from pear2pear import startGeneration
+
+# Example input data
+givenData = [
+    [["rsi", 2, ">", "rsi", 1], ["atr", 2, ">", "atr", 3], ["atr", 2, ">", "atr", 1]],
+    [["dochiant_mid_5", 4, ">", "dochiant_mid_5", 3], ["dochiant_up_5", 3, ">", "dochiant_up", 2], ["atr", 2, "<", "atr", 1]]
+]
+
+pipeline = [
+    {
+        "name": "Stock - test ( scalp )",
+        "columns_list": [
+            "ema",
+            "dochiant_low_5",
+            "dochiant_up_5",
+            "dochiant_mid_5",
+            "dochiant_low",
+            "dochiant_up",
+            "dochiant_mid",
+            "obv",
+            "atr",
+            "rsi"
+        ],
+        "status": False,
+        "isBellow": True
+    }
+]
+
+# Start the genetic pattern evolution
+startGeneration(givenData, pipeline)
+```
+
+This will:
+
+1. Load the training dataset (default: `./Pear2Pear/dataset_1h.csv`)
+2. Generate an initial population of random indicator-based patterns
+3. Evolve, crossbreed, and mutate patterns to maximize profit factor
+4. Re-test the best-performing patterns on a separate dataset to avoid overfitting
+
+---
+
+## 🧩 Core Concepts
+
+### 🔹 **Pattern Representation**
+
+Each pattern is a structured condition linking indicators, indices, and relational operators:
+
+```python
+["rsi", 2, ">", "rsi", 1]
+```
+
+This means “RSI(2) is greater than RSI(1)”, representing a potential buy or sell trigger.
+
+### 🔹 **Pipeline**
+
+The pipeline defines which columns (indicators) can be used and whether to train bullish or bearish logic.
+
+### 🔹 **Fitness Function**
+
+Each generation evaluates its patterns’ performance using a simulated wallet system.
+The **Profit Factor** is computed as:
+
+[
+\text{Profit Factor} = \frac{\text{Sum of Profitable Trades}}{\text{Sum of Losing Trades}}
+]
+
+The genetic process seeks to maximize this ratio across thousands of simulations.
+
+---
+
+## ⚙️ Configuration
+
+### 📁 Default Dataset Paths
+
+* **Training data:** `./Pear2Pear/dataset_1h.csv`
+* **Testing data:** `TESTFILEPATH` (environment variable)
+
+### 🔧 Evolution Parameters
+
+| Parameter         | Default   | Description                                      |
+| ----------------- | --------- | ------------------------------------------------ |
+| `population_size` | 200–500   | Number of candidate patterns per generation      |
+| `mutation_chance` | 0.015–0.5 | Probability of random pattern mutation           |
+| `refresh_chance`  | 0.015–0.2 | Probability of full pattern regeneration         |
+| `elitism_num`     | adaptive  | Number of top-performing patterns kept unchanged |
+
+---
+
+## 🧪 Under the Hood
+
+Pear2Pear implements a **multi-stage evolutionary loop** consisting of:
+
+1. **Population Initialization** – Random patterns are generated based on a configurable schema of indicators.
+2. **Fitness Evaluation** – Each pattern is applied to historical candle data to simulate gains and losses.
+3. **Selection** – Top-performing patterns are selected using weighted fitness probabilities.
+4. **Crossover & Mutation** – Parents are combined and altered to explore new possibilities.
+5. **Overfitting Detection** – Best candidates are validated on unseen datasets; if overfit, retraining is triggered.
+6. **Iteration** – The process continues until convergence or a performance plateau.
+
+All key computational components are JIT-compiled using **Numba** for speed.
+
+---
+
+## 🧰 Dependencies
+
+* Python ≥ 3.9
+* pandas
+* numpy
+* numba
+* multiprocess
+
+Install dependencies automatically with:
+
+```bash
+pip install -r requirements.txt
+```
