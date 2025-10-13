@@ -1,0 +1,247 @@
+# cmake-init
+
+> 🚀 Generate modern CMake projects with best practices built-in
+
+Powered by [UV](https://github.com/astral-sh/uv) - the fast Python package manager.
+
+---
+
+## Quick Start
+
+```bash
+# 1. Install UV
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 2. Clone & Setup
+git clone https://github.com/Guo-astro/cmake-start.git
+cd cmake-start
+./tasks.sh setup
+
+# 3. Create a project
+uv run cmake-init my-project
+
+# 4. Build it
+cd my-project
+cmake --preset=dev
+cmake --build --preset=dev
+```
+
+---
+
+## Usage
+
+```bash
+# C++ executable (default)
+uv run cmake-init my-app
+
+# C++ library
+uv run cmake-init -s my-lib
+
+# C++ header-only library
+uv run cmake-init -h my-headers
+
+# C project
+uv run cmake-init --c my-c-app
+
+# C++20 standard
+uv run cmake-init --std 20 my-modern-app
+
+# With Conan/vcpkg
+uv run cmake-init -p conan my-app
+```
+
+**Important**: Project names must be lowercase (e.g., `my-project`, not `MyProject`)
+
+---
+
+## Installing Code Quality Tools (Optional)
+
+These tools are **auto-detected** - your project will build fine without them, but they provide extra code checking:
+
+### clang-tidy
+
+```bash
+# macOS
+brew install llvm
+
+# Ubuntu/Debian
+sudo apt install clang-tidy
+
+# Fedora
+sudo dnf install clang-tools-extra
+
+# NixOS
+nix-env -iA nixpkgs.clang-tools
+
+# Windows
+choco install llvm
+```
+
+### cppcheck
+
+```bash
+# macOS
+brew install cppcheck
+
+# Ubuntu/Debian
+sudo apt install cppcheck
+
+# Fedora
+sudo dnf install cppcheck
+
+# NixOS
+nix-env -iA nixpkgs.cppcheck
+
+# Windows
+choco install cppcheck
+```
+
+When you run `cmake --preset=dev`, you'll see:
+```
+-- Found clang-tidy: /path/to/clang-tidy
+-- Found cppcheck: /path/to/cppcheck
+-- Code quality tools status:
+--   clang-tidy: ON
+--   cppcheck:   ON
+```
+
+If tools aren't found, they're automatically disabled with installation instructions.
+
+---
+
+## Development
+
+### Project Structure
+
+```
+cmake-start/
+├── cmake-init/              ← Edit these files
+│   ├── cmake_init.py       
+│   ├── template.py         
+│   └── templates/          
+│
+├── src/cmake_init_lib/     ← Auto-generated (don't edit)
+│   ├── cmake_init.py       
+│   ├── template.py         
+│   └── cmake-init.zip      
+│
+└── build.py                ← Builds everything
+```
+
+### Making Changes
+
+```bash
+# 1. Edit source files
+vim cmake-init/cmake_init.py
+vim cmake-init/templates/common/cmake/code-quality.cmake
+
+# 2. Rebuild (copies files + creates template ZIP)
+python build.py
+
+# 3. Test
+uv run cmake-init test-project
+```
+
+**Single source of truth**: Always edit files in `cmake-init/`, then run `python build.py`
+
+---
+
+## Common Issues
+
+### "ModuleNotFoundError"
+```bash
+./fix-editable.sh
+```
+
+### "Changes not working"
+```bash
+python build.py  # Run after editing cmake-init/
+```
+
+### "Invalid project name"
+```bash
+# Bad:  uv run cmake-init MyProject
+# Good: uv run cmake-init my-project
+```
+
+### NixOS build errors
+```bash
+export CXX=clang++
+cmake --preset=dev
+```
+
+---
+
+## Commands Reference
+
+| Command | Description |
+|---------|-------------|
+| `uv run cmake-init my-app` | Create C++ executable |
+| `uv run cmake-init -s my-lib` | Create C++ library |
+| `uv run cmake-init -h my-headers` | Create header-only library |
+| `uv run cmake-init --c my-c-app` | Create C project |
+| `uv run cmake-init --std 20 my-app` | Use C++20 |
+| `uv run cmake-init -p conan my-app` | Use Conan package manager |
+| `uv run cmake-init --version` | Show version |
+| `python build.py` | Build after editing templates |
+| `python release.py patch` | Release new version to PyPI |
+| `./tasks.sh setup` | Initial setup |
+| `./fix-editable.sh` | Fix import errors |
+
+---
+
+## Releasing to PyPI
+
+**One command release:**
+
+```bash
+# Option 1: Automatic (commits everything first)
+./quick-release.sh patch  # 1.0.1 → 1.0.2
+
+# Option 2: Manual (requires clean git)
+python release.py patch   # 1.0.1 → 1.0.2
+```
+
+The script automates:
+- ✅ Version bump in pyproject.toml
+- ✅ Template archive build (build.py)
+- ✅ Wheel + source distribution build
+- ✅ Git commit & tag
+- ✅ PyPI upload
+- ✅ GitHub push
+
+**First time setup:**
+```bash
+# Get PyPI token: https://pypi.org/manage/account/token/
+export PYPI_TOKEN='pypi-...'
+# OR configure ~/.pypirc (see .pypirc.example)
+```
+
+See `RELEASE.md` for detailed documentation.
+
+---
+
+## What Makes This Different?
+
+✅ **Auto-detects** clang-tidy and cppcheck - no build failures  
+✅ **Latest vcpkg** - automatically fetches current baseline hash  
+✅ **Fast** - powered by UV (10-100x faster than pip)  
+✅ **Modern** - CMake presets, FetchContent-ready  
+✅ **Developer-friendly** - helpful error messages  
+✅ **Cross-platform** - macOS, Linux, Windows, NixOS  
+✅ **Single source** - edit `cmake-init/`, run `build.py`  
+
+---
+
+## Links
+
+- [CMake Documentation](https://cmake.org/documentation/)
+- [UV Documentation](https://github.com/astral-sh/uv)
+- [clang-tidy Docs](https://clang.llvm.org/extra/clang-tidy/)
+- [cppcheck Manual](http://cppcheck.sourceforge.net/manual.pdf)
+- [Report Issues](https://github.com/Guo-astro/cmake-start/issues)
+- [Original cmake-init](https://github.com/friendlyanon/cmake-init)
+
+---
+
+**Made with ❤️ for developers who hate boilerplate**
