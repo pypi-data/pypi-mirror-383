@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: clipin
+Version: 0.1.0
+Summary: A simple python clipboard manager without dependencies
+Author: Nuno Brum
+License: MIT
+Project-URL: Homepage, https://github.com/nunobrum/clipin
+Project-URL: Repository, https://github.com/nunobrum/clipin
+Project-URL: Issues, https://github.com/nunobrum/clipin/issues
+Keywords: clipboard,copy,paste,cross-platform
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Systems Administration
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# 🧠 clipin
+
+**clipin** is a pure-Python, cross-platform clipboard utility that supports multiple clipboard formats—text, HTML, 
+and images (where supported)—without third-party dependencies.
+
+## ✅ Features
+
+- ✅ Cross-platform: Windows, macOS, Linux
+- 🧩 Supports formats:
+  - `text/plain`
+  - `text/html`
+  - `image/png` (partial support)
+- ❌ No third-party Python packages
+
+## 🚀 Installation
+
+```bash
+pip install clipin
+```
+## 📦 Usage
+
+```python
+from clipin import Clipboard
+cb = Clipboard()
+cb.copy("Hello, World!")
+print(cb.paste())  # Outputs: Hello, World!
+
