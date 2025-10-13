@@ -1,0 +1,30 @@
+[project]
+name = "mcp-server-vikingdb-fastmcp"
+version = "0.1.3"
+description = "a mcp server for vikingdb store and search"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+ "aiohttp>=3.11.10",
+ "mcp>=1.1.0",
+ "python-dotenv>=1.0.1",
+ "volcengine>=1.0.164",
+]
+[project.urls]
+Homepage = "https://github.com/fastmcp-me/vikingdb-mcp-server#readme"
+Repository = "https://github.com/fastmcp-me/vikingdb-mcp-server.git"
+Issues = "https://github.com/fastmcp-me/vikingdb-mcp-server/issues"
+
+[[project.authors]]
+name = "KashiwaByte"
+email = "471314513@qq.com"
+
+[build-system]
+requires = [ "hatchling",]
+build-backend = "hatchling.build"
+
+[project.scripts]
+mcp-server-vikingdb = "mcp_server_vikingdb:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_server_vikingdb"]
