@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pylon_pathfind"
+version = "0.1.0"
+description = "Weather-aware pathfinding for a mobile solar-car strategy system"
+authors = [{name="RJ PRJ Group 5"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["networkx>=3.2"]
+
+[project.urls]
+Homepage = "https://example.com/pylon_pathfind"
