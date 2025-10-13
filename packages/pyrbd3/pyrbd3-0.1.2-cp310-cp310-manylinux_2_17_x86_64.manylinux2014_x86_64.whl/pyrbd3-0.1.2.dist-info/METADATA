@@ -1,0 +1,73 @@
+Metadata-Version: 2.2
+Name: pyrbd3
+Version: 0.1.2
+Summary: Fast Reliability Block Diagram Evaluation Tool
+Keywords: RBD,reliability,MCS,pybind11,C++
+Author-Email: Shakthivelu Janardhanan <shakthivelu.janardhanan@tum.de>, Yaxuan Chen <yaxuan.chen@tum.de>
+License: MIT License
+         
+         Copyright (c) 2025 Shakthivelu Janardhanan, Yaxuan Chen
+         
+         Permission is hereby granted, free of charge, to any person obtaining a copy
+         of this software and associated documentation files (the "Software"), to deal
+         in the Software without restriction, including without limitation the rights
+         to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+         copies of the Software, and to permit persons to whom the Software is
+         furnished to do so, subject to the following conditions:
+         
+         The above copyright notice and this permission notice shall be included in all
+         copies or substantial portions of the Software.
+         
+         THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+         IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+         FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+         AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+         LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+         OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+         SOFTWARE.
+Project-URL: Homepage, https://github.com/shakthij98/PyRBD3
+Requires-Python: >=3.8
+Requires-Dist: pandas
+Requires-Dist: networkx
+Requires-Dist: tqdm
+Requires-Dist: loguru
+Description-Content-Type: text/markdown
+
+# PyRBD3
+Fast and lightweight Reliability Block Diagram (RBD) evaluation library, powered by modern C++ and pybind11.
+Provides high-performance algorithms for minimal cut sets, path sets, and system availability computation.
+
+## Installation
+
+Precompiled binary wheels are available for Linux:
+```bash
+pip install pyrbd3
+```
+
+That’s it — no compiler setup or manual build steps are required.
+If you prefer a clean environment:
+```bash
+conda create -n pyrbd3 python=3.10
+conda activate pyrbd3
+pip install pyrbd3
+```
+
+## Quick Example
+
+```python
+from pyrbd3 import read_graph, evaluate_availability
+
+topo = "Germany_17"
+G, _, _ = read_graph(f"topologies/{topo}", topo)
+
+node_prob = {node: 0.9 for node in G.nodes()}
+
+src, dst = 0, 1
+
+availability = evaluate_availability(G, node_prob, src=src, dst=dst, algorithm="sdp")
+
+print(f"System availability from {src} to {dst} in {topo}: {availability:.6f}")
+```
+
+## Topology Reference
+**Germany_17**: [SNDlib 1.0-survivable network design library](https://sndlib.put.poznan.pl/home.action)
