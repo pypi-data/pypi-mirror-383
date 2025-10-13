@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oct-to-tiff"
+version = "0.6.0"
+dependencies = [
+    "defusedxml",
+    "numpy",
+    "roifile",
+    "tifffile",
+]
+requires-python = ">=3.11"
+authors = [{name = "Cameron Lloyd", email = "lloyd@med.unideb.hu"}]
+maintainers = [{name = "Cameron Lloyd", email = "lloyd@med.unideb.hu"}]
+description = "A command line tool for converting optical coherence tomography angiography (OCTA) data."
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICEN[CS]E.*"]
+keywords = ["angiography", "cli", "oct", "octa"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "ruff",
+    "types-defusedxml"
+]
+
+[project.urls]
+Homepage = "https://github.com/camlloyd/oct-to-tiff"
+"Bug Tracker" = "https://github.com/camlloyd/oct-to-tiff/issues"
+Changelog = "https://github.com/camlloyd/oct-to-tiff/blob/main/CHANGELOG.md"
+
+[project.scripts]
+oct-to-tiff = "oct_to_tiff.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "I", # isort
+    "S", # flake8-bandit
+]
