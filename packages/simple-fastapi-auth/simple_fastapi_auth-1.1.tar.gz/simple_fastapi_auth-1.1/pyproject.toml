@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simple_fastapi_auth"
+version = "1.1"
+authors = [
+  { name="Carlo Moro", email="cnmoro@gmail.com" },
+]
+description = "A *heavily* opinionated library for simplifying the boilerplate of FastAPI authentication."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "python-jose",
+    "passlib",
+    "bcrypt",
+    "fastapi",
+    "python-multipart"
+]
