@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=75.8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "modchemlib"
+version = "0.0.4"
+authors = [
+  {name = "Modestra", email = "kirillkarachev04@gmail.com"},
+]
+description = "Library for registration chemistry experiment"
+readme = "README.md"
+requires-python = ">=3.10.0"
+keywords = ["science", "chem", "chemistry"]
+classifiers = [
+   "Programming Language :: Python :: 3",
+   "License :: OSI Approved :: MIT License",
+   "Operating System :: OS Independent",
+]
+dependencies = [
+    "Events>=0.5",
+    "requests>=2.32.5",
+]
+
+[project.scripts]
+chem-init = "modchem.commands:execute_experiment_environment"
+
+[tool.setuptools.packages.find]
+where = ["src"]
