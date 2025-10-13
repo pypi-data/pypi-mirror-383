@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mac-formatter-gui"
+version = "0.1.1"
+description = "A simple Tkinter GUI to format MAC addresses into common styles and copy them to clipboard."
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+  { name = "Neil Johnson", email = "apps@erudicon.com" }
+]
+license = "MIT"
+keywords = ["mac", "mac address", "formatter", "gui", "tkinter"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "Environment :: Win32 (MS Windows)",
+  "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://erudicon.com/2025/10/12/mac-address-formatter/"
+
+[project.scripts]
+mac-formatter = "mac_formatter.app:main"
+
+[tool.setuptools]
+packages = ["mac_formatter"]
+include-package-data = true
