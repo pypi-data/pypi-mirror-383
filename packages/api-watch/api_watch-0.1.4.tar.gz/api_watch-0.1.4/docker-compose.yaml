@@ -1,0 +1,12 @@
+services:
+  apiwatch:
+    # image: theisaac/api-watch:latest
+    build: .
+    ports:
+      - "22222:22222"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WATCHDOG_USERNAME=admin
+      - WATCHDOG_PASSWORD=admin
+    command: python -m apiwatch
