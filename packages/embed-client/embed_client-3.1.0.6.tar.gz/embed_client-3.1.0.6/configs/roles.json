@@ -1,0 +1,47 @@
+{
+  "enabled": true,
+  "default_policy": {
+    "deny_by_default": false,
+    "require_role_match": false,
+    "case_sensitive": false,
+    "allow_wildcard": false
+  },
+  "roles": {
+    "admin": [
+      "read",
+      "write",
+      "delete",
+      "admin"
+    ],
+    "user": [
+      "read",
+      "write"
+    ],
+    "readonly": [
+      "read"
+    ],
+    "guest": [
+      "read"
+    ],
+    "proxy": [
+      "read",
+      "write"
+    ]
+  },
+  "permissions": {
+    "read": [
+      "GET"
+    ],
+    "write": [
+      "POST",
+      "PUT",
+      "PATCH"
+    ],
+    "delete": [
+      "DELETE"
+    ],
+    "admin": [
+      "*"
+    ]
+  }
+}
