@@ -1,0 +1,52 @@
+/* File: src/shareit/tui/app.tcss */
+
+Screen {
+    background: #0d1b2a;
+    color: #e0e1dd;
+    layout: vertical;
+}
+
+Header {
+    background: #1b263b;
+    color: #778da9;
+    text-style: bold;
+}
+
+Footer {
+    background: #1b263b;
+}
+
+#peers {
+    height: 40%;
+    border: round #415a77;
+}
+
+#drop_zone {
+    height: 1fr;
+    padding: 1;
+    border: heavy #415a77;
+}
+
+#transfer_log {
+    height: 1fr;
+}
+
+ProgressBar {
+    margin: 1 0;
+    height: 1;
+    background: #415a77;
+    color: #06d6a0;
+}
+
+/* Styling for the file select modal */
+FileSelectScreen {
+    align: center middle;
+}
+
+#file_select_grid {
+    grid-size: 1;
+    width: 80%;
+    height: 80%;
+    background: #0d1b2a; /* Use the same background */
+    border: thick #1b263b;
+}
