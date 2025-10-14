@@ -1,0 +1,328 @@
+# filefilter - File Filter Library
+
+![PyPI - Version](https://img.shields.io/pypi/v/filefilter?style=for-the-badge)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/filefilter?style=for-the-badge)
+![PyPI - License](https://img.shields.io/pypi/l/filefilter?style=for-the-badge)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/filefilter?style=for-the-badge&color=%23F0F)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/filefilter?style=for-the-badge)
+
+A small, cross-platform Python library for selecting files from a directory tree using **JSON-defined include/exclude filters**.  
+It focuses on predictable pattern logic rather than the underlying filesystem walk.
+
+---
+
+##  Features That Matter
+
+- **Pattern-driven filtering** — no manual path checks.
+- **Case-insensitive matching** across all platforms.
+- **Supports rich glob-style patterns**:
+  - `*` → one or more characters  
+  - `**` → zero or more characters  
+  - Works in both directory and filename segments.
+- **Anchored directory semantics**:
+  - No prefix → root-anchored
+  - `*/` → exactly N levels below root
+  - `**/` → anywhere
+- **Explicit extension filtering** (`["py", "tar.gz", ".*"]`)
+- **Fine-grained include/exclude precedence**
+- **Symlinks ignored** (never followed)
+
+---
+
+##  Decision Order (Inclusion / Exclusion Logic)
+
+When scanning files, the library applies filters in this exact sequence:
+
+1️⃣ **Hard excludes**  
+   - If the file extension matches `exclude.extensions` → excluded.  
+   - If the full path matches `exclude.files` → excluded.  
+   - If its parent directory matches `exclude.dirs` → excluded.
+
+2️⃣ **Include-file override**  
+   - If the file matches any `include.files` pattern → **included immediately**,  
+     even if its extension isn’t in `include.extensions`.
+
+3️⃣ **Inclusion gating**  
+   - If there are *any* include patterns (dirs or files), the file must match  
+     one of them to be included.  
+     Otherwise, it’s excluded.
+
+4️⃣ **Extension whitelist**  
+   - If `include.extensions` is not empty, only matching extensions are included.
+
+5️⃣ **Everything else**  
+   - Included by default.
+
+---
+
+##  Configuration Schema
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": [],
+      "files": [],
+      "extensions": []
+    },
+    "exclude": {
+      "dirs": [],
+      "files": [],
+      "extensions": []
+    }
+  }
+}
+```
+
+| Field | Description |
+|-------|--------------|
+| `root_dir` | Base directory (absolute or relative). |
+| `filters.include.dirs` | Directory inclusion patterns. |
+| `filters.include.files` | File inclusion patterns (glob-like). |
+| `filters.include.extensions` | Extension whitelist. |
+| `filters.exclude.*` | Same structure, but acts as exclusion filters. |
+
+---
+
+##  Pattern Rules Recap
+
+| Symbol | Meaning |
+|:-------|:--------|
+| `*` | one or more characters (no slashes) |
+| `**` | zero or more characters (can cross dirs) |
+| Leading `**/` | match anywhere in the tree |
+| Leading `*/` | match exactly N levels below root |
+| Trailing `/**` | match directory and all descendants |
+| `.ext` or `ext` | file extension match (case-insensitive) |
+| `.*` in extensions | any non-empty extension |
+
+---
+
+##  Examples (Practical Scenarios)
+
+###  Example 1 — Include all `.py` files anywhere
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": ["**"],
+      "files": [],
+      "extensions": ["py"]
+    },
+    "exclude": {
+      "dirs": [],
+      "files": [],
+      "extensions": []
+    }
+  }
+}
+```
+
+| File Path | Result | Reason |
+|------------|---------|--------|
+| `main.py` | ✅ | `.py` extension matches |
+| `src/app.py` | ✅ | `.py` extension matches |
+| `docs/readme.md` | ❌ | wrong extension |
+| `a/b/c/module.py` | ✅ | `.py` file anywhere |
+
+> ✅ All `.py` files anywhere in the project.
+
+---
+
+###  Example 2 — Only Python files in root
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": [],
+      "files": ["*.py"],
+      "extensions": []
+    },
+    "exclude": {
+      "dirs": [],
+      "files": [],
+      "extensions": []
+    }
+  }
+}
+```
+
+| File Path | Result | Reason |
+|------------|---------|--------|
+| `main.py` | ✅ | matches `*.py` at root |
+| `helper.py` | ✅ | matches `*.py` at root |
+| `src/app.py` | ❌ | subdirectory, not root |
+| `src/helper.py` | ❌ | subdirectory, not root |
+
+> ✅ Matches `.py` files **only in the project root**, not deeper folders.
+
+---
+
+###  Example 3 — Include only certain substructure
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": [],
+      "files": ["*/hi/**/hello.py"],
+      "extensions": []
+    },
+    "exclude": {
+      "dirs": [],
+      "files": [],
+      "extensions": []
+    }
+  }
+}
+```
+
+| File Path | Result | Reason |
+|------------|---------|--------|
+| `a/hi/hello.py` | ✅ | matches `*/hi/**/hello.py` |
+| `a/hi/x/hello.py` | ✅ | `hi` one level below root, deeper path allowed |
+| `hi/hello.py` | ❌ | missing leading dir before `hi` |
+| `a/b/hi/hello.py` | ❌ | `hi` too deep |
+| `a/hi/hello.txt` | ❌ | wrong filename |
+
+> ✅ Collects any `hello.py` file under a folder named `hi` that is **exactly one level below root**, with any depth below that.
+
+---
+
+###  Example 4 — Exclude specific pattern while including `.py` files
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": ["**"],
+      "files": [],
+      "extensions": [".py"]
+    },
+    "exclude": {
+      "dirs": [],
+      "files": ["*/hi/**/hello.py"],
+      "extensions": []
+    }
+  }
+}
+```
+
+| File Path | Result | Reason |
+|------------|---------|--------|
+| `main.py` | ✅ | `.py`, no exclusion hit |
+| `src/lib/module.py` | ✅ | `.py`, no exclusion hit |
+| `a/hi/hello.py` | ❌ | excluded by `*/hi/**/hello.py` |
+| `src/hi/utils/hello.py` | ❌ | matches exclusion pattern |
+| `hi/hello.py` | ✅ | not excluded (no leading dir before `hi`) |
+
+> ✅ Includes all `.py` files except those named `hello.py` inside a `hi` folder that is **one directory below root**.
+
+---
+
+###  Example 5 — Directory pattern focus
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": ["**/myfolder/**"],
+      "files": [],
+      "extensions": ["py"]
+    },
+    "exclude": {
+      "dirs": ["**/__pycache__/**"],
+      "files": [],
+      "extensions": []
+    }
+  }
+}
+```
+
+| File Path | Result | Reason |
+|------------|---------|--------|
+| `src/myfolder/x/hello.py` | ✅ | inside `myfolder` |
+| `src/myfolder/sub/a.py` | ✅ | inside `myfolder` |
+| `src/myfolder/__pycache__/cached.py` | ❌ | excluded dir |
+| `src/other/hello.py` | ❌ | outside `myfolder` |
+
+> ✅ Collects `.py` files anywhere under directories named `myfolder`, excluding `__pycache__`.
+
+---
+
+###  Example 6 — Combined complex filters
+
+```json
+{
+  "root_dir": ".",
+  "filters": {
+    "include": {
+      "dirs": ["src/**", "scripts"],
+      "files": ["**/*.sh", "*.py"],
+      "extensions": ["py", "sh"]
+    },
+    "exclude": {
+      "dirs": ["**/__pycache__/**", "build"],
+      "files": ["*/legacy/**"],
+      "extensions": ["log"]
+    }
+  }
+}
+```
+
+| File Path | Result | Reason |
+|------------|---------|--------|
+| `src/main.py` | ✅ | `.py`, included dir |
+| `scripts/setup.sh` | ✅ | matched by `**/*.sh` |
+| `build/config.py` | ❌ | excluded dir `build` |
+| `src/legacy/module.py` | ❌ | excluded by `*/legacy/**` |
+| `docs/readme.md` | ❌ | wrong extension |
+| `src/utils/tool.log` | ❌ | excluded by extension |
+
+> ✅ Keeps `.py` or `.sh` files under `src` or `scripts`, ignoring logs, builds, and legacy directories.
+
+---
+
+## Summary of Behavior
+
+- Exclusions **always win** first.
+- A matching `include.files` **forces inclusion**.
+- If any include filters exist, at least one must match.
+- Extensions act as a **final whitelist**.
+- Matching is **case-insensitive** and normalized.
+- `**` can span directory boundaries, not just characters.
+
+---
+
+##  Example Usage
+
+```python
+import json
+from file_filter import filter_paths
+
+config = {
+    "root_dir": ".",
+    "filters": {
+        "include": { "dirs": ["**"], "files": [], "extensions": ["py"] },
+        "exclude": { "dirs": ["__pycache__"], "files": [], "extensions": [] }
+    }
+}
+
+paths = filter_paths(json.dumps(config))
+for p in paths:
+    print(p)
+```
+
+---
+
+##  License
+
+MIT License © 2025 Ioannis D. (devcoons)
