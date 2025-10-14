@@ -1,0 +1,95 @@
+---
+modules:
+  - .llms # docassemble.ALToolbox.llms
+---
+id: interview order
+mandatory: True
+code: |
+  system_message
+  process_input
+  show_results
+---
+id: ask_for_input
+question: |
+  Enter an instruction and text to transform
+subquestion: |
+  This screen lets you experiment with the OpenAI API. It works
+  like the OpenAI playground.
+
+  Enter a system instruction and text to transform.
+
+  For example, you could enter a system instruction of:
+  
+  ```
+  Rewrite the input to 
+  a 6th grade reading level
+  ``` 
+  
+  and text of 
+
+  ```
+  In accordance with the stipulations set forth in Section 4, Subsection 3.2 of the Company's Operational Handbook, it is incumbent upon all employees to meticulously submit their individualized timekeeping records for the preceding month no later than the fifth business day of the ensuing month. Failure to comply with this mandate may result in a sequential series of remedial actions as outlined in the Employee Disciplinary Policy, commencing with a formal written reprimand and potentially culminating in termination of employment, contingent upon the recurrent nature of the non-compliance and the discretion of the departmental supervisor in consultation with the Human Resources Department, pursuant to company policy and applicable labor laws.
+  ```
+
+  It may help to include an instruction like "reply only with the changed text" in your system
+  instruction to avoid extraneous information in the response.
+fields:
+  - System instructions: system_message
+    datatype: area
+  - Text to transform: user_message
+    datatype: area
+  - Creativity (temperature): temperature
+    datatype: range
+    min: 0
+    max: 1
+    default: 0.5
+    step: 0.05
+    help: |
+      The higher the temperature, the more creative the response. The lower the temperature, the more predictable the response.
+  - Provider: provider
+    datatype: radio
+    choices:
+      - OpenAI: "https://api.openai.com/v1/"
+      - Google Gemini: "https://generativelanguage.googleapis.com/v1beta/openai/"
+  - Model: model
+    datatype: combobox
+    choices:
+      - gpt-4o-mini
+      - gpt-4o
+      - gpt-4.1-mini
+      - gpt-4.1
+    default: gpt-4o-mini
+    help: |
+      The model to use for the chat completion. The default is the smallest model, which is the fastest and cheapest.
+    show if:
+      variable: provider
+      is: "https://api.openai.com/v1/"
+  - Model: model
+    datatype: combobox
+    choices:
+      - "gemini-2.0-flash"
+      - "gemini-2.5-flash-preview-04-17"
+      - "gemini-2.5-pro-preview-05-06"
+    default: gemini-2.0-flash
+    show if:
+      variable: provider
+      is: "https://generativelanguage.googleapis.com/v1beta/openai/"
+---
+code: |
+  results = chat_completion(
+    system_message,
+    user_message,
+    temperature=temperature,
+    # The following are optional parameters shown for demonstration purposes
+    model=model,
+    json_mode=False,
+    openai_base_url=provider,
+    openai_api = get_config("google gemini api key") if provider == "https://generativelanguage.googleapis.com/v1beta/openai/" else None,
+  )
+  process_input = True
+---
+event: show_results
+question: |
+  Here are your results
+subquestion: |
+  ${ single_to_double_newlines(results) }

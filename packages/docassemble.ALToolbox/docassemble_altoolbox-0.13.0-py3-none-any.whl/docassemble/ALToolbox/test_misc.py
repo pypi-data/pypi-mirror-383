@@ -1,0 +1,84 @@
+# do not pre-load
+
+import unittest
+from unittest.mock import patch
+from .misc import button_array, ButtonDict, true_values_with_other, fa_icon
+import xml.etree.ElementTree as ET
+
+
+class TestButtonArray(unittest.TestCase):
+    @patch("docassemble.ALToolbox.misc.user_has_privilege", return_value=False)
+    @patch("ALToolbox.misc.user_has_privilege", return_value=False)
+    def test_button_array_generates_correct_html(
+        self, mock_privilege, mock_privilege2
+    ) -> None:
+        """Test button_array generates correct HTML
+
+        Args:
+            mock_privilege: A mock object
+            mock_privilege2: A mock object
+        """
+        buttons = [
+            ButtonDict(name="Button 1", image="image1", url="url1"),
+            ButtonDict(name="Button 2", image="image2", url="url2"),
+        ]
+
+        # Just check it is valid HTML
+        button_array_html = button_array(buttons)
+        try:
+            ET.fromstring(button_array_html)
+            # If the parsing succeeds, the HTML is well-formed
+        except ET.ParseError:
+            # If the parsing fails, the HTML is not well-formed
+            self.fail("button_array generated malformed HTML")
+        self.assertIn("Button 1", button_array_html)
+        self.assertIn("Button 2", button_array_html)
+
+    @patch("docassemble.ALToolbox.misc.user_has_privilege", return_value=False)
+    @patch("ALToolbox.misc.user_has_privilege", return_value=False)
+    @patch("docassemble.base.functions.this_thread")
+    def test_button_array_filters_by_privilege(
+        self, mock_this_thread, mock_privilege, mock_privilege2
+    ) -> None:
+        """Test button_array filters by privilege
+
+        Args:
+            mock_this_thread: A mock object
+            mock_privilege: A mock object
+            mock_privilege2: A mock object
+        """
+        mock_this_thread.current_info = {"user": {"is_authenticated": True}}
+        buttons = [
+            ButtonDict(name="Button 1", image="image1", url="url1", privilege="admin"),
+            ButtonDict(name="Button 2", image="image2", url="url2"),
+        ]
+        self.assertNotIn("Button 1", button_array(buttons))
+
+    def test_fa_icon(self):
+        try:
+            ET.fromstring(fa_icon("question-circle"))
+        except ET.ParseError:
+            self.fail("fa_icon generated malformed HTML")
+
+        try:
+            ET.fromstring(fa_icon("question-circle", color="red"))
+        except ET.ParseError:
+            self.fail("fa_icon with color arg generated malformed HTML")
+
+        try:
+            ET.fromstring(fa_icon("question-circle", color_css="#0dcaf0"))
+        except ET.ParseError:
+            self.fail("fa_icon with color_css arg generated malformed HTML")
+
+        try:
+            ET.fromstring(fa_icon("question-circle", color=None))
+        except ET.ParseError:
+            self.fail("fa_icon with color_css arg generated malformed HTML")
+
+        self.assertTrue(
+            fa_icon("question-circle", color=None, size=None).startswith(":")
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
