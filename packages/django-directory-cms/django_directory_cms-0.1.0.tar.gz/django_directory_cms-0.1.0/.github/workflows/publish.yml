@@ -1,0 +1,51 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+
+jobs:
+  publish:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v5
+
+      - name: Verify version matches tag
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          PACKAGE_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
+          echo "Tag version: $TAG_VERSION"
+          echo "Package version: $PACKAGE_VERSION"
+          if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "ERROR: Tag version ($TAG_VERSION) does not match package version ($PACKAGE_VERSION)"
+            exit 1
+          fi
+
+      - name: Install package
+        run: |
+          uv sync --extra dev
+
+      - name: Run tests
+        run: |
+          PYTHONPATH=. uv run python tests/manage.py test
+
+      - name: Build package
+        run: |
+          uv build
+
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

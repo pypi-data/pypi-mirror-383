@@ -1,0 +1,229 @@
+Metadata-Version: 2.4
+Name: django-directory-cms
+Version: 0.1.0
+Summary: Reusable Django CMS package with SEO-optimized pages and hierarchical menus
+Project-URL: Homepage, https://github.com/directory-platform/django-directory-cms
+Project-URL: Repository, https://github.com/directory-platform/django-directory-cms
+Project-URL: Issues, https://github.com/directory-platform/django-directory-cms/issues
+Author: Directory Platform Team
+License: MIT
+License-File: LICENSE
+Keywords: cms,content-management,django,menus,pages,seo
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.0
+Classifier: Framework :: Django :: 5.1
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Internet :: WWW/HTTP :: Site Management
+Classifier: Typing :: Typed
+Requires-Python: >=3.12
+Requires-Dist: django-seo-audit>=0.2.0
+Requires-Dist: django>=4.2
+Requires-Dist: pillow>=10.0.0
+Provides-Extra: dev
+Requires-Dist: django-stubs>=4.2.0; extra == 'dev'
+Requires-Dist: mypy>=1.7.0; extra == 'dev'
+Requires-Dist: ruff>=0.1.0; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# Django Directory CMS
+
+A reusable Django CMS package providing SEO-optimized pages and hierarchical menus with Bootstrap Icons support.
+
+## Features
+
+- **Pages App**: Highly SEO-optimized static pages with:
+  - 16 SEO fields (title, meta description, OG tags, Twitter cards, schema.org)
+  - Automatic slug generation with collision handling
+  - Integration with `django-seo-audit` for SEO scoring
+  - Publishing controls (active, published status)
+
+- **Menus App**: Hierarchical navigation menus with:
+  - Parent/child relationships for dropdown menus
+  - Bootstrap Icons integration (42 curated icons)
+  - Page linking with automatic URL updates
+  - Custom URL support for external links
+  - Order control and visibility settings
+  - Global context processor for site-wide access
+
+## Installation
+
+```bash
+pip install django-directory-cms
+```
+
+## Quick Start
+
+### 1. Add to INSTALLED_APPS
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    # ...
+    "django_directory_cms.pages",
+    "django_directory_cms.menus",
+    # Required dependency
+    "django_seo_audit",
+]
+```
+
+### 2. Add Context Processor
+
+```python
+# settings.py
+TEMPLATES = [
+    {
+        "OPTIONS": {
+            "context_processors": [
+                # ...
+                "django_directory_cms.menus.context_processors.menu_items",
+            ],
+        },
+    },
+]
+```
+
+### 3. Run Migrations
+
+```bash
+python manage.py migrate django_directory_cms_pages
+python manage.py migrate django_directory_cms_menus
+```
+
+### 4. Include URLs
+
+```python
+# urls.py
+from django.urls import include, path
+
+urlpatterns = [
+    # ...
+    path("pages/", include("django_directory_cms.pages.urls")),
+]
+```
+
+## Usage
+
+### Creating Pages
+
+Pages can be created via Django admin or programmatically:
+
+```python
+from django_directory_cms.pages.models import Page
+
+page = Page.objects.create(
+    title="About Us",
+    content="<p>Welcome to our site!</p>",
+    seo_title="About Our Company",
+    meta_description="Learn more about our mission and values",
+    is_published=True,
+)
+
+# Access SEO methods from django-seo-audit mixin
+print(page.get_seo_title())  # "About Our Company"
+print(page.get_absolute_url())  # "/pages/about-us/"
+```
+
+### Creating Menus
+
+Menu items can link to pages or custom URLs:
+
+```python
+from django_directory_cms.menus.models import MenuItem
+
+# Link to a page
+menu_item = MenuItem.objects.create(
+    title="About",
+    anchor_text="About",
+    page=page,
+    icon_class="bi-info-circle",
+    order=1,
+)
+
+# Custom external link
+external_link = MenuItem.objects.create(
+    title="Documentation",
+    anchor_text="Docs",
+    url="https://docs.example.com",
+    icon_class="bi-book",
+    is_external=True,
+    order=2,
+)
+
+# Hierarchical menu
+parent = MenuItem.objects.create(
+    title="Resources",
+    anchor_text="Resources",
+    url="/resources/",
+    order=3,
+)
+
+child = MenuItem.objects.create(
+    title="Blog",
+    anchor_text="Blog",
+    url="/blog/",
+    parent=parent,
+    order=1,
+)
+```
+
+### Templates
+
+Access menus in templates via context processor:
+
+```html
+<!-- Menu items are available globally as `menu_items` -->
+<nav>
+  <ul>
+    {% for item in menu_items %}
+      <li>
+        <a href="{{ item.get_url }}" {% if item.is_external %}target="_blank"{% endif %}>
+          {% if item.display_icon %}<i class="{{ item.display_icon }}"></i>{% endif %}
+          {{ item.anchor_text }}
+        </a>
+        {% if item.menu_children %}
+          <ul>
+            {% for child in item.menu_children %}
+              <li><a href="{{ child.get_url }}">{{ child.anchor_text }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+```
+
+## Requirements
+
+- Python 3.12+
+- Django 4.2+
+- django-seo-audit 0.2.0+
+- Pillow 10.0.0+ (for image fields)
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Credits
+
+Built by the Directory Platform team.
+
+## Links
+
+- **GitHub**: https://github.com/directory-platform/django-directory-cms
+- **PyPI**: https://pypi.org/project/django-directory-cms/
+- **Issues**: https://github.com/directory-platform/django-directory-cms/issues
+
+## Development
+
+See [CLAUDE.md](CLAUDE.md) for development guidelines and architecture documentation.
