@@ -1,0 +1,136 @@
+Metadata-Version: 2.4
+Name: unifiedai-sdk
+Version: 1.0.5
+Summary: Unified SDK for multi-provider LLM comparison (Cerebras, AWS Bedrock) with OpenAI-compatible interface.
+Author-email: Your Team <team@example.com>
+License: MIT
+License-File: LICENSE
+Keywords: bedrock,cerebras,comparison,llm,openai-compatible,sdk
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.9
+Requires-Dist: cerebras-cloud-sdk>=0.5.0
+Requires-Dist: httpx>=0.27.0
+Requires-Dist: httpx[http2]
+Requires-Dist: opentelemetry-api>=1.20.0
+Requires-Dist: prometheus-client>=0.20.0
+Requires-Dist: pybreaker>=1.0.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: structlog>=24.0.0
+Requires-Dist: tenacity>=8.0.0
+Provides-Extra: dev
+Requires-Dist: black>=24.0.0; extra == 'dev'
+Requires-Dist: mypy>=1.8.0; extra == 'dev'
+Requires-Dist: pre-commit>=3.0.0; extra == 'dev'
+Requires-Dist: pytest-asyncio>=0.23.0; extra == 'dev'
+Requires-Dist: pytest-benchmark>=4.0.0; extra == 'dev'
+Requires-Dist: pytest-cov>=4.0.0; extra == 'dev'
+Requires-Dist: pytest-vcr>=1.0.0; extra == 'dev'
+Requires-Dist: pytest>=8.0.0; extra == 'dev'
+Requires-Dist: ruff>=0.3.0; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# UnifiedAI SDK
+
+OpenAI-compatible Python SDK unifying multiple providers (Cerebras, AWS Bedrock) with Solo and Comparison modes, strict models, and built‑in telemetry.
+
+## Highlights
+- OpenAI-like API: `UnifiedAI().chat.completions.create(...)` (sync) and `AsyncUnifiedAI` (async)
+- Pluggable adapters: Cerebras, Bedrock (extensible)
+- Modes: Solo and side‑by‑side Comparison
+- Observability: structured logs, Prometheus metrics (SDK), tracing hooks
+- Credentials: pass at client construction or use env
+
+## Install
+From PyPI (core):
+```bash
+pip install unifiedai-sdk
+```
+
+Optional extras:
+```bash
+# Cerebras Cloud SDK integration
+pip install "unifiedai-sdk[cerebras]"
+
+# HTTP/2 support for httpx
+pip install "unifiedai-sdk[http2]"
+```
+
+From GitHub (optional):
+```bash
+pip install git+https://github.com/<your-org-or-user>/<your-repo>.git#subdirectory=cerebras
+```
+
+## Usage
+
+### Sync (scripts/CLI)
+```python
+from unifiedai import UnifiedAI
+
+client = UnifiedAI(
+    provider="cerebras",
+    model="llama3",
+    credentials={"api_key": "csk-..."},  # or set CEREBRAS_KEY in env
+)
+resp = client.chat.completions.create(
+    messages=[{"role": "user", "content": "Hello"}]
+)
+print(resp.choices[0].message["content"])
+```
+
+### Async (web backends)
+```python
+from unifiedai import AsyncUnifiedAI
+
+async with AsyncUnifiedAI(provider="cerebras", model="llama3") as client:
+    resp = await client.chat.completions.create(
+        messages=[{"role": "user", "content": "Hello"}]
+    )
+```
+
+### Streaming (async)
+```python
+async with AsyncUnifiedAI(provider="cerebras", model="llama3") as client:
+    async for chunk in client.chat.completions.stream(
+        messages=[{"role": "user", "content": "Stream this"}]
+    ):
+        print(chunk.delta.get("content", ""), end="")
+```
+
+### Comparison (two providers)
+```python
+from unifiedai import AsyncUnifiedAI
+
+async with AsyncUnifiedAI() as client:
+    result = await client.compare(
+        providers=["cerebras", "bedrock"],
+        model="llama3",
+        messages=[{"role": "user", "content": "Compare outputs"}],
+    )
+    print(result.winner, result.comparative_metrics.speed_difference_ms)
+```
+
+## Credentials
+- Precedence: per‑provider credentials > global client credentials > environment (SDKConfig).
+- Cerebras: set `CEREBRAS_KEY` or pass `credentials={"api_key": "..."}`.
+- Bedrock: planned; wire `credentials_by_provider` similarly.
+
+## FastAPI demo (Swagger UI)
+```bash
+uvicorn apps.chat.backend:app --reload --port 8000
+# Swagger UI: http://localhost:8000/docs
+```
+
+## Project Structure
+- `src/unifiedai/`: SDK implementation (clients, adapters, models, core)
+- `examples/`: usage examples (solo, streaming, comparison)
+- `apps/chat/`: demo FastAPI backend
+- `tests/`: unit tests
+
+## License
+MIT
