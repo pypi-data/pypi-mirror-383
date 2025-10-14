@@ -1,0 +1,52 @@
+Metadata-Version: 2.4
+Name: pysurveyx
+Version: 0.21.0
+Summary: Unified complex-survey framework: design, calibration, replicate variance, GLM, quantiles, dynamic reports.
+Author: Dr. Doulat (maintainer)
+License: MIT License
+Project-URL: Homepage, https://your-org.github.io/pysurveyx/
+Project-URL: Documentation, https://your-org.github.io/pysurveyx/
+Project-URL: Repository, https://github.com/your-org/pysurveyx
+Project-URL: Issues, https://github.com/your-org/pysurveyx/issues
+Keywords: survey,weights,raking,entropy,BRR,JK,bootstrap,replicate weights,quantile regression,calibration,design effect,NHANES,BRFSS
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.22
+Requires-Dist: pandas>=1.5
+Requires-Dist: scipy>=1.9
+Requires-Dist: patsy>=0.5
+Requires-Dist: plotly>=5.15
+Requires-Dist: dash>=2.14
+Provides-Extra: viz
+Requires-Dist: plotly>=5.15; extra == "viz"
+Requires-Dist: dash>=2.14; extra == "viz"
+Provides-Extra: pdf
+Requires-Dist: reportlab>=3.6; extra == "pdf"
+Provides-Extra: full
+Requires-Dist: plotly>=5.15; extra == "full"
+Requires-Dist: dash>=2.14; extra == "full"
+Requires-Dist: reportlab>=3.6; extra == "full"
+
+
+# pysurveyx (v0.21.0)
+
+A unified Python framework for **complex surveys**, inspired by R's `survey`:
+- Sampling designs (strata/PSU/SSU), FPCs, replicate-weight variance (BRR/Fay/JK/bootstrap)
+- Calibration: raking, bounded, entropy, entropy_bounded (+ multiway)
+- Estimators: totals, means, proportions, ratios, GLM, quantiles (+ Woodruff SEs)
+- Quantile regression with replicate SEs (pinball & smoothed SAL)
+- **Dynamic, self-contained HTML reports** with Plotly
+
+## End-to-end
+```bash
+python examples/end_to_end.py --out report_out
+# Produces: report_out.html (self-contained) and optional PDF
+```
+
+## Docs
+Built via Sphinx and auto-published to GitHub Pages on tag pushes.

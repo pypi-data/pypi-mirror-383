@@ -1,0 +1,32 @@
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pysurveyx"
+version = "0.21.0"
+description = "Unified complex-survey framework: design, calibration, replicate variance, GLM, quantiles, dynamic reports."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT License"}
+authors = [{name="Dr. Doulat (maintainer)"}]
+keywords = ["survey","weights","raking","entropy","BRR","JK","bootstrap","replicate weights","quantile regression","calibration","design effect","NHANES","BRFSS"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Information Analysis"
+]
+dependencies = ["numpy>=1.22","pandas>=1.5","scipy>=1.9","patsy>=0.5","plotly>=5.15","dash>=2.14"]
+[project.optional-dependencies]
+viz = ["plotly>=5.15","dash>=2.14"]
+pdf = ["reportlab>=3.6"]
+full = ["plotly>=5.15","dash>=2.14","reportlab>=3.6"]
+
+[project.urls]
+Homepage = "https://your-org.github.io/pysurveyx/"
+Documentation = "https://your-org.github.io/pysurveyx/"
+Repository = "https://github.com/your-org/pysurveyx"
+Issues = "https://github.com/your-org/pysurveyx/issues"
