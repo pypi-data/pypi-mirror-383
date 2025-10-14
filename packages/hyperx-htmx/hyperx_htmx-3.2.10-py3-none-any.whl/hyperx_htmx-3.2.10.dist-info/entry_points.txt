@@ -1,0 +1,4 @@
+[console_scripts]
+hx = hyperx.bin.cli.hx:main
+hx-env = hyperx.bin.cli.logger.setenv:main
+hx-find = hyperx.bin.cli.utils.autodiscover:main
