@@ -1,0 +1,47 @@
+[project]
+name = "HowdenParser"
+version = "4.0.3"
+description = "A simple configuration manager with Pydantic and JSON export."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+authors = [
+    { name = "JesperThoftIllemannJ", email = "jesper.jaeger@howdendanmark.dk" },
+]
+keywords = [
+    "config",
+    "configuration",
+    "pydantic",
+    "json",
+]
+homepage = "https://github.com/yourusername/config"
+repository = "https://github.com/yourusername/config"
+documentation = "https://github.com/yourusername/config"
+dependencies = [
+    "mistralai (>=1.9.3,<2.0.0)",
+    "llama-parse (>=0.6.58,<0.7.0)",
+    "langchain (>=0.3.27,<0.4.0)",
+    "fitz (>=0.0.1.dev2,<0.0.2)",
+    "pypdf2 (>=3.0.1,<4.0.0)",
+    "pdf2image (>=1.17.0,<2.0.0)",
+    "torch (>=2.8.0,<3.0.0)",
+    "torchvision (>=0.23.0,<0.24.0)",
+    "torchaudio (>=2.8.0,<3.0.0)",
+    "hf-xet (>=1.1.7,<2.0.0)",
+    "transformers (==4.56.0)",
+    "tomli-w (>=1.2.0,<2.0.0)",
+]
+
+[project.license]
+text = "MIT"
+
+[project.optional-dependencies]
+dev = [
+    "toml (>=0.10.2,<0.11.0)",
+    "tomli-w (>=1.2.0,<2.0.0)",
+]
+
+[build-system]
+requires = [
+    "poetry-core>=2.0.0,<3.0.0",
+]
+build-backend = "poetry.core.masonry.api"
