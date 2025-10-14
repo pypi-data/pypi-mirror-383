@@ -1,0 +1,39 @@
+[workspace]
+resolver = "2"
+members = ["crates/specado-py"]
+
+[workspace.package]
+version = "0.2.0-alpha.18"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/specado/specado"
+rust-version = "1.75"
+
+[workspace.dependencies]
+tokio = { version = "1.40", features = ["rt-multi-thread", "macros", "signal", "io-std"] }
+serde = { version = "1.0.214", features = ["derive"] }
+serde_json = "1.0.132"
+serde_yaml = "0.9.34"
+thiserror = "2.0.3"
+async-trait = "0.1.83"
+tracing = "0.1.41"
+once_cell = "1.19.0"
+reqwest = { version = "0.12.9", default-features = false, features = ["json", "rustls-tls"] }
+jsonschema = "0.26.1"
+serde_json_path = "0.7.2"
+clap = { version = "4.5.23", features = ["derive", "env"] }
+colored = "2.1.0"
+anyhow = "1.0"
+assert_cmd = "2.0"
+predicates = "3.1"
+httpmock = "0.7"
+tempfile = "3.10"
+pythonize = "0.22.0"
+pyo3 = { version = "0.22.6", features = ["extension-module", "abi3-py39"] }
+specado-core = { path = "crates/specado-core" }
+specado-schemas = { path = "crates/specado-schemas" }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
