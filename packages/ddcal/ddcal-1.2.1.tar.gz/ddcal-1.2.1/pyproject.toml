@@ -1,0 +1,21 @@
+[project]
+name = "ddcal"
+version = "1.2.1"
+authors = [
+  { name="Marian Lux", email="mlux.ddcal@swisdata.com" },
+]
+description = "clustering packages with DDCAL algorithm"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "numpy>=1.21"
+]
+[project.urls]
+Homepage = "https://github.com/luxmar/DDCAL"
+Issues = "https://github.com/luxmar/DDCAL/issues"
