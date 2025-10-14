@@ -1,0 +1,38 @@
+Metadata-Version: 2.4
+Name: mrkle
+Version: 0.0.1rc0
+Classifier: Programming Language :: Rust
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Typing :: Typed
+Requires-Dist: black==22.3 ; extra == 'quality'
+Requires-Dist: flake8>=3.8.3 ; extra == 'quality'
+Requires-Dist: mypy>=1.18.1 ; extra == 'quality'
+Requires-Dist: setuptools-rust>=1.5.2 ; extra == 'testing'
+Requires-Dist: pytest>=7.2.0 ; extra == 'testing'
+Requires-Dist: pytest-benchmark>=4.0.0 ; extra == 'testing'
+Requires-Dist: hypothesis>=6.70.2 ; extra == 'testing'
+Requires-Dist: mrkle[quality] ; extra == 'dev'
+Requires-Dist: mrkle[testing] ; extra == 'dev'
+Requires-Dist: sphinx>=7.4.7 ; extra == 'dev'
+Provides-Extra: quality
+Provides-Extra: testing
+Provides-Extra: dev
+Summary: A fast and flexible Merkle Tree library.
+Author-email: Luca Vivona <lucavivona01@gmail.com>
+Requires-Python: >=3.9
+Project-URL: Homepage, https://mrkle.org
+Project-URL: Documentation, https://docs.mrkle.org
+Project-URL: Source, https://github.com/LVivona/mrkle
