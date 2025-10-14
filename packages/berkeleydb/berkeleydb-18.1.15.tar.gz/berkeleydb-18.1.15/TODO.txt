@@ -1,0 +1,232 @@
+- 20250205: Add ``DB_TXN_ACTIVE *st_txnarray`` data to ``DBEnv.txn_stat()``.
+
+- 20250203: Type hints.
+
+- 20241214: Add more DBError subclasses.
+
+- 20241214: Support ``DB_ENV->memp_register()``.
+
+- 20241214: Support functions ``db_env_set_func_*``.
+
+- 20241109: Support DB_STAT_ALLOC ???.
+
+- 20241109: Support BLOBs / External files.
+
+- 20241109: Support BULK operation.
+
+- 20241109: Support MULTIPLE operation.
+
+- 20241109: Support slices.
+
+- 20241109: Support Multiversion.
+
+- 20241109: Support partitioned databases.
+
+- 20241109: Support TLS in the replication manager. Under Berkeley DB 18.1,
+  this is the default but we can not configure it, so you better disable TLS
+  for now.
+
+- 20241109: Support ``set_app_dispatch()``.
+
+- 20241109: export MPOOL functionality and statistics.
+
+- 20241109: Support ``set_thread_id_string()`` and ``thread_id_string``.
+
+- 20241109: Support Oracle Berkeley DB mutexes.
+
+- 20241109: Support BLOBs under Oracle Berkeley DB 6.2.
+
+- 20240229: When only using Python Stable API, we should compile this
+  lib using the lowest supported Python release, and test that binary against
+  all the supported Python releases.
+
+  Note, nevertheless, that we should test that compilation in all supported
+  Python releases works. Notice this phrase in Python documentation:
+
+    Also note that the Limited API is not necessarily stable: compiling with
+    Py_LIMITED_API with Python 3.8 means that the extension will run with
+    Python 3.12, but it will not necessarily compile with Python 3.12. In
+    particular, parts of the Limited API may be deprecated and removed,
+    provided that the Stable ABI stays stable.
+
+- 20240229: When using Python Stable API, we should include the Berkeley DB
+  release version we link with in the shared object name.
+
+- 20240229: When using Python Stable API and including the Berkeley DB release
+  version we link with in the shared object name, we should publish binary
+  packages in Pypi containing shared objects for all the supported
+  Berkeley DB versions. For platforms like x86-64 Linux and OpenSolaris.
+
+  Beware if we have several Berkeley DB versions in the system, results
+  could be unexpected.
+
+- 20231005: The package installs files under "include/python3.XX/berkeleydb/".
+  Is that appropriate?
+
+- 20230410: RECNO databases should accept strings, not only bytes.
+
+- 20230410: Cursors should support iterator protocol.
+
+- 20230410: In currently supported Python releases, we always have threads
+  available.
+
+- 20220121: Rewrite all the test suite discovery and test driver.
+
+- 20210615: Add annotated types to the API.
+
+- 20210527: The legacy "bsddb3" library should be upgraded to search for
+  new Berkeley DB libraries and raise an error pointing to this project.
+
+- 20210402: Complete the mapping emulation in "db[key]". Rewrite "has" and
+  "exists()" methods.
+
+- 20210402: CHECK: "FSConverter" leaks if failure, and several other leaks.
+  We could check RefCounts with "py_refcnt(obj)". See Py_CLEANUP_SUPPORTED.
+
+- 20210402: In a lot of code, we should check if the handle is closed first.
+
+- 20210402: Better management of unknown DBtypes.
+
+- 20210402: Can we use several secondary databases?
+
+- 20210402: CHECK make_key_dbt with HEAP databases and cursors.
+
+- 20201210: We are possibly leaking memory because the pathlike support.
+
+- 20201210: Implement "DB_ENV->set_backup_callbacks()".
+
+- 20201126: Move the readme published in PYPI to "markdown", for more power.
+
+* 20161120: Document how to install with alternative Oracle Berkeley DB paths
+  using PIP.
+
+* 20160421: Merge "README.txt" with the sphinx documentation.
+
+* 20080402: If a prepared/recovered transaction is garbaged collected,
+  we leak transactions. Can we call "discard" in a safe way?.
+
+* 20080403: If an exception is raised in a thread in the TestSuite, we
+  pass the test. Bad!.
+
+* 20080403: Write a test for MVCC.
+
+* 20080403: We should recreate the test data directory in every
+  execution, and delete it when finished.
+
+* 20080403: "txn_stat" provides a list of active transactions. Export it
+  to Python.
+
+* 20080426: Verify that "DB_ENV->set_event_notify" follows the API.
+
+* 20080522: Update the "README.txt" document.
+
+* 20080531: "DB_ENV->rep_set_limit" and "DB_ENV->rep_get_limit", support
+  for long values.
+
+* 20080720: The test for crash documented in http://bugs.python.org/issue3307
+  is disabled because it prints a error message to screen. Solve this and
+  reenable the test. This would require "set_errfile" implementation.
+
+* 20080811: "DB.has_key()" must be retained in python3.0, since it allows
+  a transaction parameter.
+
+* 20080812: "DBEnv.db_home", under python3.0, is automatically converted
+  to bytes. What charset is used?.
+
+* 20080812: Since Python 3.0 dropped the "cmp" function in "sort()"
+  methods, we need to handcode some "Insertion sort" functions, in
+  the testsuite and in the production code. This is ugly and slow.
+
+* 20080812: We use "getattr()" to avoid "obj.next()" automatic
+  conversion via "2to3" tool. Improve this.
+
+* 20080813: Create a "__contains__" routine in DB, etc, to use
+  when 2to3 tools translate "has_key" to "in".
+
+* 20080813: We can store "None" values in a database. How can we
+  differenciate between stored "None" and NotFound?. We can
+  use exceptions or the "default" parameter, but... this is ugly.
+
+* 20080813: TO INVESTIGATE (posible bug in Berkeley DB): if you
+  duplicate a duplicated cursor, crash.
+
+* 20080918: If "DB_close_internal()" fails in "DB_verify()", we
+  should close the DB handle.
+
+* 20080929: Support "master leases". Beware bug
+  http://forums.oracle.com/forums/thread.jspa?forumID=272&threadID=708324
+
+* 20081011: Evaluate support of "with" statement for things like
+  transactions.
+
+* 20081013: Evaluate convenience of returning named tuples in some places.
+
+* 20081013: Evaluate convenience of supporting "sys.getsizeof()".
+
+* 20090121: In the "associate()" callback, there are mallocs to
+  contain the "data" portion of DBT's. Test that they are correctly
+  freed by Berkeley DB.
+
+* 20090121: If somethings goes wrong in the "associate()" callback,
+  we are going to leak memory and coredump. Solve it.
+
+* 20090121: If the "associate()" callback returns an empty list, crash.
+
+* 20090204: "txn->stat()" returns also a list of active transactions.
+  Evaluate if we must export that data to python.
+
+* 20090204: A lot of binding functions allow optional parameters, but
+  not keyword ones. Normalize this.
+
+* 20090204: "rep_set_limit()" and "rep_get_limit()" only manages "bytes",
+  not gigabytes.
+
+* 20090423: Evaluate convenience of supporting DTrace.
+
+* 20090427: Split base replication and replication manager
+  documentation in documents separated of DBENV docs.
+
+* 20090427: "__contains__()" is not transactionally protected. This is
+  a problem. Maybe we should raise an exception to avoid the usage
+  of patterns like "if key in DB", not transactionally protected.
+  Think about this.
+
+* 20090428: Support DB_MULTIPLE and DB_MULTIPLE_KEY.
+
+* 20090630: "README.txt" needs some love.
+
+* 20091112: DBEnv->set_flags() must support True/False.
+
+* 20091206: Review ALL documentation, text and comments in code.
+
+* 20100111: If "DB_ENV->set/get_mp_mmapsize()" is 32 bits in
+  64 bits architecture, it is not going to be enough.
+
+* 20100112: Currently we increment refcounts of the parent
+  objects. These can keep parent objects around, so better
+  allow GC of them to close the entire object tree.
+
+* 20100112: LogCursors should be iterable.
+
+* 20100112: "DBEnv->log_file()" use an iterative method to
+  calculate the space. Improve it.
+
+* 20100217: When a "Lock" is garbage collected, we leak it
+  and we do not release it.
+
+* 20100318: Iterate keys in dbshelve load all keys in memory first.
+
+* 20100318: Implement "__iter__()" in DB, maybe thru a DBCursor.
+
+* 20100406: Document in the manual the use of the C API.
+
+* 20100917: Review and update all documentation.
+
+* 20100917: Some errors are exported as integer values, beside the
+  proper exception. For instance, DB_SECONDARY_BAD. Evaluate if it
+  is convenient or not.
+
+* 20120116: After dropping Python 2.3 support, some integers
+  returned should be promoted to "unsigned integers". Same with
+  input values.
+
