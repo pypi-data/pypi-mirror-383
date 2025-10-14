@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo "Installing Helm"
+      - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  pre_build:
+    commands:
+      - export IMAGE_TAG=$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION} | head -c 6)
+      - export ENV=dev
+      - echo "Image Tag - $IMAGE_TAG"
+  build:
+    commands:
+      - printenv > .env
+      - aws secretsmanager get-secret-value --secret-id usf-chat-dev --region $AWS_REGION | jq -r '.SecretString' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> .env
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - docker build -t $REPOSITORY_URI:${IMAGE_TAG} .
+      - docker push $REPOSITORY_URI:${IMAGE_TAG}
+      - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION --role-arn $ROLE_ARN
+      - helm template $HELM_RELEASE_NAME chart/civie -n $ENV -f chart/civie/values-$ENV.yaml --set image.repository=$REPOSITORY_URI --set image.tag=$IMAGE_TAG --create-namespace
+      - helm upgrade --install $HELM_RELEASE_NAME chart/civie -n $ENV -f chart/civie/values-$ENV.yaml --set image.repository=$REPOSITORY_URI --set image.tag=$IMAGE_TAG --create-namespace --wait --timeout=15m

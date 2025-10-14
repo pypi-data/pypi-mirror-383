@@ -1,0 +1,119 @@
+# Git and version control
+.git
+.gitignore
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+*.out
+
+# Temporary files
+temp_pdfs/*
+static/*
+*.tmp
+*.temp
+
+# Documentation
+README.md
+DEPLOYMENT.md
+*.md
+
+# Docker files (except the one being built)
+Dockerfile.dev
+docker-compose.override.yml
+.dockerignore
+
+# Node modules (if any)
+node_modules/
+
+# Other development files
+.env.example
+.env.local
+.env.development
+example_usage.py
+test_*.py
+tests/
+
+# Kubernetes files
+chart/
+k8s/
+
+# CI/CD files
+.github/
+.gitlab-ci.yml
+buildspec*.yml
+
+# Monitoring and logging (development)
+# monitoring/
