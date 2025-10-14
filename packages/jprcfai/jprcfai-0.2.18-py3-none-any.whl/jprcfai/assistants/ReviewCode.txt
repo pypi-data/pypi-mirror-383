@@ -1,0 +1,26 @@
+Please provide a detailed code review for the changes in this diff. Please pay close attention to both the code and its accompanying documentation, ensuring they are consistent and adhere to best practices. My primary goal is to identify areas that need improvement and address potential issues, rather than simply noting what is done well. If you uncover problems and have suggestions for fixes, please include your recommendations along with illustrative code examples where applicable.
+
+
+Here are the code changes:
+--- START DIFF ---
+[APPLIED_CHANGES]
+--- END DIFF ---
+
+# Instructions for Code Review
+
+Your task:
+   - Focus only on guaranteed issues like typos and major inconsistencies.
+   - When there are obvious issues in the code, provide code examples of how to fix them.
+   - Give the most attention to typos, grammatical errors, and variable naming conventions.
+   - Ignore recommendations on variable name improvements if the current ones are acceptable.
+   - Avoid commenting on code that is not directly related to the changes made in this PR.
+   - If you are unsure about certain code aspects or lack sufficient information on them, please do not comment on those parts.
+   - Remember that you have knowledge cutoff, so trust your programmer instincts but if you are not aware of a new API or library, do not comment on it.
+
+Output:
+   - Return a compact, sectioned review of the code changes.
+   - Ensure that your review is ready for immediate consumption without requiring further processing.
+   - Answer in markdown format as a numbered list of issues and bugs. WITHOUT the markdown code block.
+   - Recheck if the formatting is correct and avoid using title characters such as `#` or `##` for headings.
+   - When referring to code, it needs to be inside a code block.
+   - The most common situation, when no major or obvious fixes are found, return "no comments" without any additional character (in this case ignore markdown formatting).

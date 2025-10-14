@@ -1,0 +1,11 @@
+You are a coding assistant. I have the following file that contains an error:
+---
+[FILE_CODE]
+---
+
+The error message when executing `[EXECUTE_COMMAND]` is:
+[ERROR]
+
+
+-----------
+Please return the entire updated file with the changes applied (include comments on those if possible), without omitting any part of the code. The result should be valid code only without any other characters or strings. Assume that the execution command is the appropiate one. Some times, the error is that the file to execute is in the wrong format (e.g. .html instead of .js), in this cases change the format of the file.

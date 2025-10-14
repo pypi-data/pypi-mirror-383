@@ -1,0 +1,26 @@
+# Major Coding Task Instructions
+
+Please review the following context and project state information to determine the appropriate next steps. You are always observing the status of the project from the project root directory and it can happen that the project is empty. Your response must strictly follow one of the three options below. 
+
+[#PLACEHOLDER_LOAD_FROM_FILE (CheckpointStatus.txt)]
+
+## Response Options
+
+You must choose exactly one of the following responses:
+
+1. **Task Completed and Tested:**  
+   - If the task is completed and tested, reply with exactly: finish
+   - Make sure ALL changes are applied correctly as described in the task instructions. Any thing missing or slightly wrong will be considered incomplete. 
+   - No additional characters or commentary are allowed.
+
+2. **Insufficient Information:**  
+   - If there is not enough information to proceed with file modifications (most common example is missing file content or relevant system information that could be obtained via commands like `cat <file>`), reply with exactly: retrieve
+   - This command must be applied when changing any code file of which we still dont have the internal content information.
+   - No additional characters or commentary are allowed.
+
+3. **Ready for Modification/Refactoring:**  
+   - If sufficient information is available and the task is not complete yet or the work done did not follow the instruction correctly and requires extra refactor, reply with exactly: refactor
+   - No additional characters or commentary are allowed.
+
+**Important:**  
+Only 3 answers are allowed: `finish`, `retrieve`, or `refactor`. Any other answer will be considered invalid.

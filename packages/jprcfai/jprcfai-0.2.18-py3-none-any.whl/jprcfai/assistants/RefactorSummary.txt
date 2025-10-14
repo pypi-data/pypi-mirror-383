@@ -1,0 +1,16 @@
+# Major Coding Task Summary
+
+Please review the following context and project state information to summarize the full extend of modification that were done. You are always observing the status of the project from the project root directory and it can happen that the project is empty. You are responsable to apply the changes to the project. Your response must strictly be code in a bash script. Your response will be read by a machine, not a human.
+The following was the context of the project BEFORE changes were applied:
+
+[#PLACEHOLDER_LOAD_FROM_FILE (CheckpointStatus.txt)]
+
+This was the input given to a refactor agent (openAI model), and the agent created and executed a bash script to apply the changes.
+The script was the following:
+---
+[BASH_SCRIPT_PLACEHOLDER]
+---
+
+The result was not tested yet, and I do not want to evaluate the quality of the code, but I want to know what changes were applied.
+Your Job is to extend/modify the section "Summary of Work Done" unless the summary section was empty just summarize what the agent did. Don't refer that it created a script, just refer to the changes that were made on the execution of the script. To make your job more clear, I am not asking a code revision, it is more like 'full changes applied description' that would fit well for a pull request. RETURN THE DESCRIPTION ONLY, I DONT WANT A FILE, JUST PURE TEXT and remember that the summary section should be extended/modified in case it existed, so don't erase information that is already there. JUST PURE TEXT, NO CODE!
+
