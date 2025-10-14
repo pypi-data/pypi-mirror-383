@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: aionetschool
+Version: 1.0.1
+Summary: Неофициальная Python-библиотека для работы с API инстансов сервиса «Сетевой Город. Образование»
+Home-page: https://github.com/kamekuro/aionetschool
+Author: kamekuro
+Author-email: me@kamekuro.ru
+License: AGPLv3+
+Keywords: python netschool netcity api wrapper library client питон пайтон нетскул сетевой город апи обёртка библиотека клиент
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)
+Classifier: Natural Language :: Russian
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: httpx==0.23.3
+Requires-Dist: marshmallow==3.19.0
+Requires-Dist: marshmallow-dataclass==8.5.11
+Requires-Dist: typing_extensions==4.12.2
+Requires-Dist: typeguard==4.4.1
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# aionetschool
+**aionetschool** — это форк библиотеки [nm17/netschoolapi](https://github.com/nm17/netschoolapi), асинхронного клиента для «Сетевого Города», который может получить дневник с домашними заданиями и оценками, объявления и просроченные задания.
+> **Библиотека не имеет никакого отношения к «ИрТех»**
+
+## Установка
+Установка через pip осуществляется командой:
+```
+pip3 install aionetschool
+```
+
+## Лицензия
+Код библиотеки распространяется под лицензией [GNU AGPL v3](https://github.com/kamekuro/aionetschool/blob/master/LICENSE).
