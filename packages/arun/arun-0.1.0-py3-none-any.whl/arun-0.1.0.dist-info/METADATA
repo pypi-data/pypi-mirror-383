@@ -1,0 +1,90 @@
+Metadata-Version: 2.4
+Name: arun
+Version: 0.1.0
+Summary: Make asyncio service
+Home-page: https://github.com/zloidemon/arun/
+Author: Veniamin Gvozdikov
+Author-email: g.veniamin@googlemail.com
+License: BSD
+Keywords: arun
+Platform: any
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python
+Classifier: Topic :: System :: Boot
+Classifier: Topic :: System :: Systems Administration
+License-File: LICENSE
+License-File: AUTHORS.rst
+Requires-Dist: aiohttp_jrpc>=0.2.0
+Requires-Dist: setproctitle>=1.3.6
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: platform
+Dynamic: requires-dist
+Dynamic: summary
+
+arun
+====
+
+Make asyncio service fast with arun. See example dir with example of usage.
+
+Run example
+-----------
+
+.. code:: bash
+
+    python examples/example.py --manage \
+      --config examples/example.conf \
+      --logconfig examples/logging.conf
+
+Get service stats
+-----------------
+
+.. code:: bash
+
+    curl -H "content-type: application/json" -X POST \
+      -d '{"jsonrpc": 2.0, "method": "stats", "params": {}, "id": 1}' \
+      http://127.0.0.1:8080/manage
+
+Run reconfigure service
+-----------------------
+
+.. code:: bash
+
+    curl -H "content-type: application/json" -X POST \
+      -d '{"jsonrpc": 2.0, "method": "reconfig", "params": {}, "id": 2}' \
+      http://127.0.0.1:8080/manage
+
+Handilng singnals
+-----------------
+
+.. code:: bash
+
+    kill -SIGTERM $(pgrep application)
+
+``arun`` BSD license.
+
+0.0.1
+-----
+
+* init release
+
+Credits
+=======
+
+``arun`` is written by `Veniamin Gvozdikov <https://github.com/zloidemon>`_.
+
+Contributors
+------------
+
+Please add yourself here alphabetically when you submit your first pull request.
