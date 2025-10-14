@@ -1,0 +1,12 @@
+[run]
+omit =
+    tests/*
+    optimed/__init__.py
+    optimed/wrappers/__init__.py
+    optimed/processes/__init__.py
+    optimed/processes/preview.py
+
+[report]
+exclude_lines =
+    if __name__ == '__main__':  # Exclude this common block from coverage
+    pragma: no cover            # Exclude lines with 'no cover' pragma

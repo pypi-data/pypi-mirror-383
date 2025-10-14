@@ -1,0 +1,95 @@
+Metadata-Version: 2.3
+Name: optimed
+Version: 1.0.0a4
+Summary: Optimed
+Project-URL: Homepage, https://github.com/bluemindai/optimed.git
+Project-URL: Issues, https://github.com/bluemindai/optimed/issues
+Author-email: Roman Fitzjalen <info@bluemind.co>
+License: Apache-2.0
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.13
+Requires-Dist: coverage==7.6.12
+Requires-Dist: joblib==1.4.2
+Requires-Dist: nibabel==5.3.2
+Requires-Dist: numpy==2.3.3
+Requires-Dist: pre-commit==4.1.0
+Requires-Dist: psutil==5.9.8
+Requires-Dist: pynrrd==1.1.3
+Requires-Dist: pyyaml==6.0.2
+Requires-Dist: scikit-image==0.25.2
+Requires-Dist: scipy==1.16.1
+Requires-Dist: simpleitk==2.5.2
+Requires-Dist: slicerio==1.1.2
+Requires-Dist: vtk==9.5.2
+Requires-Dist: xmltodict==0.14.2
+Provides-Extra: gpu
+Requires-Dist: cupy-cuda12x==13.0.0; (platform_system != 'Darwin') and extra == 'gpu'
+Requires-Dist: pylibraft-cu12==24.8.1; (platform_system != 'Darwin') and extra == 'gpu'
+Description-Content-Type: text/markdown
+
+# Optimed - CV Medical Tool
+[![License Apache 2.0](https://badgen.net/badge/license/apache2.0/blue)](LICENSE)
+[![PyPI version](https://badge.fury.io/py/optimed.svg)](https://pypi.org/project/optimed/)
+[![Downloads](https://pepy.tech/badge/optimed)](https://pepy.tech/project/optimed)
+
+## About the Project  
+Optimed is a tool for working with 2D/3D medical images.  
+It simplifies the tasks of loading, transforming, analyzing, and visualizing data for medical research and clinical practice.
+
+Read more about available modules [here](documents/readme_modules.md)
+
+## Installation
+
+Optimed is available via [PyPI](https://pypi.org/project/optimed/), which makes installation quick and easy. Follow the steps below to install the package for your desired setup.
+
+### 1. Standard Installation (CPU Only)
+
+For most users who do not require GPU acceleration, install the core package with:
+
+```bash
+pip install optimed
+```
+
+### 2. GPU-Accelerated Installation
+
+To leverage GPU capabilities for faster processing, install Optimed with GPU support:
+
+```bash
+pip install optimed[gpu]
+```
+
+> **Note:** Ensure you have a compatible GPU and have installed the necessary drivers and libraries (such as CUDA) to enable GPU acceleration.
+
+# Contributing
+Optimed welcomes your contributions!<br>
+Thanks so much to all of our amazing contributors!
+
+<a href="https://github.com/bluemindai/optimed/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=bluemindai/optimed&r="  width="100px"/>
+</a>
+
+## Contributor License Agreement
+This project welcomes contributions and suggestions. Most contributions require you to
+agree to a [Contributor License Agreement](CONTRIBUTING.md) (CLA) declaring that you have the right to, and
+actually do, grant us the rights to use your contribution. 
+
+# License
+
+This project is licensed under the Apache 2.0 License.
+
+By the way, if by chance you ever run into me on the street, in a café, hotel, airport, or bar, I’d be happy if you bought me a beer!
+
+# Citation
+If you use ```optimed``` in your research, please cite it as follows:
+```
+@misc{optimed2025,
+    title={optimed - CV Medical Library}, 
+    author={BlueMind AI Inc. and Roman Fitzjalen, Gleb Sakhnov, Georgy Nanyan},
+    year={2025},
+    note={Version 1.0.0}
+}
+```
+## Contact
+If you have any questions, please raise an issue or contact us at [info@bluemind.co](info@bluemind.co).
