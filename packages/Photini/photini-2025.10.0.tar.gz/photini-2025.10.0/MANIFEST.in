@@ -1,0 +1,11 @@
+# setuptools-scm automatically includes everything that's in git
+# ignore stuff that's not required to build photini
+recursive-exclude .github *
+recursive-exclude .tx *
+recursive-exclude src/doc *
+recursive-exclude src/lang *.po *.rst
+recursive-exclude src/lang/templates *
+recursive-exclude src/Photini.egg-info *
+recursive-exclude tests *
+recursive-exclude utils *
+exclude .gitignore .readthedocs.yaml transifex.yml src/run_photini.py
