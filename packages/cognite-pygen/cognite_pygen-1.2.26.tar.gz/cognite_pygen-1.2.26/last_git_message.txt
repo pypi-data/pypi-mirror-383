@@ -1,0 +1,20 @@
+[PYG-426] 🐛 Sorting nested bug (#525)
+
+# Description
+
+**Reviewer**: All code inside `examples/` is generated.
+
+This is the a small but urgent fix needed for AtlasAI and Impact.
+
+
+## Bump
+
+- [x] Patch
+- [ ] Minor
+- [ ] Skip
+
+## Changelog
+### Fixed
+
+- [alpha] When calling the QueryExecutor.list(...) with sort and nested
+properties the results are now sorted.
