@@ -1,0 +1,10 @@
+[project]
+name = "test-uv-demo-package-install"
+version = "0.2.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.0.0",
+    "is-uv-demo>=0.1.0",
+]
