@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://specado.dev/schemas/provider-spec.v1.json",
+  "type": "object",
+  "required": ["provider", "models", "endpoints", "mappings", "constraints", "auth"],
+  "properties": {
+    "provider": {"type": "string"},
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {"type": "string"}
+        }
+      }
+    },
+    "inherits": {"type": "string"},
+    "interface": {
+      "type": "string",
+      "description": "Neutral interface hint (e.g., conversational.generate)",
+      "anyOf": [
+        {
+          "enum": [
+            "conversational.generate",
+            "conversational.stream",
+            "text.generate",
+            "text.extract",
+            "text.moderate",
+            "tools.call",
+            "embeddings.generate",
+            "search.rerank",
+            "vision.describe",
+            "image.generate",
+            "image.edit",
+            "image.variations",
+            "speech.synthesize",
+            "audio.transcribe",
+            "audio.translate",
+            "video.generate",
+            "video.transcribe"
+          ]
+        },
+        {
+          "pattern": "^x[_\\-A-Za-z0-9.]+$"
+        }
+      ]
+    },
+    "contract_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "context_window": {"type": "integer", "minimum": 1},
+        "supports_tools": {"type": "boolean", "default": false},
+        "supports_custom_tools": {"type": "boolean", "default": false},
+        "supports_parallel_tool_calls": {"type": "boolean", "default": false},
+        "supports_allowed_tools": {"type": "boolean", "default": false},
+        "supports_json_mode": {"type": "boolean", "default": false},
+        "supports_seed": {"type": "boolean", "default": false},
+        "supports_frequency_penalty": {"type": "boolean", "default": false},
+        "supports_presence_penalty": {"type": "boolean", "default": false},
+        "supports_logit_bias": {"type": "boolean", "default": false},
+        "supports_logprobs": {"type": "boolean", "default": false},
+        "supports_top_logprobs": {"type": "boolean", "default": false},
+        "supports_n": {"type": "boolean", "default": false},
+        "supports_response_format": {"type": "boolean", "default": false},
+        "supports_stop": {"type": "boolean", "default": false},
+        "supports_temperature": {"type": "boolean", "default": false},
+        "supports_top_p": {"type": "boolean", "default": false},
+        "supports_top_k": {"type": "boolean", "default": false},
+        "supports_image_input": {"type": "boolean", "default": false},
+        "supports_extended_thinking": {"type": "boolean", "default": false},
+        "responses_api": {"type": "boolean", "default": false},
+        "reasoning_controls": {"type": "array", "items": {"type": "string"}},
+        "thought_signatures": {"type": "string"}
+      },
+      "additionalProperties": false,
+      "default": {}
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {"pattern": "^x[_\\-A-Za-z0-9.]+$"},
+      "additionalProperties": true,
+      "default": {}
+    },
+    "capabilities_extra": {
+      "type": "object",
+      "propertyNames": {"pattern": "^x[_\\-A-Za-z0-9.]+$"},
+      "additionalProperties": true,
+      "default": {}
+    },
+    "unsupported_parameters": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "auth": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["type", "token_env"],
+          "properties": {
+            "type": {"const": "bearer"},
+            "token_env": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "header", "key_env"],
+          "properties": {
+            "type": {"const": "apikey"},
+            "header": {"type": "string"},
+            "key_env": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "endpoints": {
+      "type": "object",
+      "properties": {
+        "chat": {
+          "type": "object",
+          "required": ["method", "url", "headers"],
+          "properties": {
+            "method": {"type": "string", "enum": ["POST"]},
+            "url": {"type": "string", "format": "uri"},
+            "headers": {"type": "object"}
+          }
+        },
+        "embeddings": {
+          "type": "object",
+          "required": ["method", "url", "headers"],
+          "properties": {
+            "method": {"type": "string", "enum": ["POST"]},
+            "url": {"type": "string", "format": "uri"},
+            "headers": {"type": "object"}
+          }
+        },
+        "images": {
+          "type": "object",
+          "required": ["method", "url", "headers"],
+          "properties": {
+            "method": {"type": "string", "enum": ["POST"]},
+            "url": {"type": "string", "format": "uri"},
+            "headers": {"type": "object"}
+          }
+        },
+        "speech": {
+          "type": "object",
+          "required": ["method", "url", "headers"],
+          "properties": {
+            "method": {"type": "string", "enum": ["POST"]},
+            "url": {"type": "string", "format": "uri"},
+            "headers": {"type": "object"}
+          }
+        },
+        "video": {
+          "type": "object",
+          "required": ["method", "url", "headers"],
+          "properties": {
+            "method": {"type": "string", "enum": ["POST"]},
+            "url": {"type": "string", "format": "uri"},
+            "headers": {"type": "object"}
+          }
+        }
+      }
+    },
+    "mappings": {
+      "type": "object",
+      "required": ["request", "response"],
+      "properties": {
+        "request": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"},
+              "code": {"type": "string"},
+              "clamp": {
+                "type": "array",
+                "items": {"type": "number"},
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        },
+        "response": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["supports"],
+      "properties": {
+        "supports": {
+          "type": "object",
+          "properties": {
+            "json_mode": {"type": "boolean"},
+            "tools": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  }
+}
