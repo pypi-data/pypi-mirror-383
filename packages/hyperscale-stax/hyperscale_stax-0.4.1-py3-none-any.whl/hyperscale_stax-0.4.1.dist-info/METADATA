@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: hyperscale-stax
+Version: 0.4.1
+Summary: Deploy Cloudformation stack sets
+Project-URL: repository, https://github.com/hyperscale-consulting/stax
+Author-email: Andy Caine <andy@hyperscale.consulting>, Henry Addico <henry@hyperscale.consulting>
+License-Expression: MIT
+License-File: LICENSE
+Requires-Python: >=3.10
+Requires-Dist: boto3>=1.40.36
+Requires-Dist: cfn-lint>=1.39.1
+Requires-Dist: click>=8.3.0
+Requires-Dist: pyyaml>=6.0.2
+Requires-Dist: sigstore>=4.0.0
