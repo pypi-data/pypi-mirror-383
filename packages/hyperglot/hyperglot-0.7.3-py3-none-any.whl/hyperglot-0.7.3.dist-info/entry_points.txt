@@ -1,0 +1,7 @@
+[console_scripts]
+hyperglot = hyperglot.cli:cli
+hyperglot-data = hyperglot.cli:data
+hyperglot-export = hyperglot.cli:export
+hyperglot-report = hyperglot.cli:report
+hyperglot-save = hyperglot.cli:save_sorted
+hyperglot-validate = hyperglot.validate:validate
