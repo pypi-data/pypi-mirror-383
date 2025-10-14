@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "panshi-base"
+version = "0.1.19"
+description = ""
+authors = ["dengwenjie <dengwenjie@numgal.com>"]
+readme = "README.md"
+
+
+[[tool.poetry.source]]
+name = "tsinghua-pypi"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+priority = "default"
+
+[[tool.poetry.source]]
+name = "dplus-public"
+url = "http://192.168.3.3:8081/repository/pypi-public/simple"
+priority = "supplemental"
+
+[tool.poetry.dependencies]
+python = ">3.7,<4"
+loguru = "^0.7.2"
+pydantic = "^2.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
