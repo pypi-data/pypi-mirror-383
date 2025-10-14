@@ -1,0 +1,93 @@
+Metadata-Version: 2.1
+Name: a2y-inst
+Version: 1.7.7
+Summary: A module that contains kinds of instrument drivers.
+Home-page: http://www.kersci.com/a2y/inst.html
+Author: Yu Han
+Author-email: hanjunyu@163.com
+License: Private
+Platform: Windows
+Platform: Linux
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: Free For Educational Use
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: Operating System :: POSIX :: Linux
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyserial (>=3.4)
+Requires-Dist: a2y-handy
+Requires-Dist: a2y-modbus (>=2.1.1)
+Requires-Dist: bleak (>=0.22.0)
+
+# Python Module: a2y_inst
+
+## 简述
+这个模块包含各种外设、仪器的驱动程序。
+
+## ChangeLog
+
+- 2025-10-05 给`xinje.XD5E`增加几个`multi int32`方法。版本升级为 1.7.7。
+
+- 2025-10-04 增加`mvs.MVSCamera`类。版本升为 1.7.6。
+
+- 2025-10-01 给`mvs.Camera.snap`接口增加`transform`参数。版本升为 1.7.5。
+
+- 2025-09-28 给`xinje.XD5E`增加`set_multi_float32`和`get_multi_float32`方法，版本升为 1.7.4。
+
+- 2025-09-26 完善`mvs_native`，解决`MvCameraControl.dll`加载不了的问题。
+
+- 2025-09-18 完善`msv`，添加迭代器相关接口，趁还没有正式发布修改了几个接口的签名。版本升级为 1.7.3。
+
+- 2025-09-17 升级`mvs_native`：使用`MvImport`版本 4.6.0.1。版本升级为 1.7.2。
+
+- 2025-09-16 完善`msv`，海康工业相机可以拍照了（试验了一款 500M 像素的黑白相机）。版本设为 1.7.1。
+
+- 2025-09-15 加入`inst.mvs_native`，海康工业相机官方驱动程序（修正版）。版本升级为 1.7.0。
+
+- 2025-07-11 加入`xinje.XD5E.convert_registers_to_string`静态方法。版本升级为 1.6.3。
+
+- 2025-05-20 增强`bluetooth.DeviceWriter`，使得它的`terminator`可以接受正则表达式。版本升级为 1.6.2。
+
+- 2025-04-28 给`bluetooth.connect`加入`disconnected_callback`参数（默认值为`None`），与原来的接口已经不兼容。版本升级为 1.6.1。
+
+- 2025-04-23 加入 inst.bluetooth，一个`bleak`的简易包装，让蓝牙测试更方便一些。版本升级为 1.6.0。
+
+- 2025-04-23 修正一些编码风格。没有功能改进。版本升级为 1.5.9。
+
+- 2025-04-15 完善`itech.IT8500plus`和`asundar.ADS906`。版本升为1.5.8。
+
+- 2025-04-14 加入捷普`DIO`控制卡驱动，适用于`DIO56`。把`angshengd`重命名为`asundar`。版本升级为 1.5.7。
+
+- 2025-04-08 加入昂盛达模拟电池驱动`angshengda.ADS906`。版本升级为 1.5.6。
+
+- 2025-02-09 完善 inst.rek，试图让这仪器脆弱的通信更鲁棒些。版本升级为 1.5.5。
+
+- 2025-02-02 基本完成 RK9920 的驱动模块：inst.rek，并通过初步测试。版本升级为 1.5.4。
+
+- 2024-10-04 修正 inst.mind_vision.Camera 内存泄漏的问题。版本升级为 1.5.2。
+
+- 2024-09-28 给 inst.xinje.XD5E 加入`get_float32`和`set_float32`两个方法。版本升级为 1.5.1。
+
+- 2024-09-17 加入 hspy.DCSource，一款直流程控电源，来自汉晟普源。版本升级为 1.5.0。
+
+- 2024-09-06 修正`inst.mastech.MS6701`解析报文的一个错误（可能是产品本身升级换代造成）。版本升级为 1.4.7。
+
+- 2024-06-19 修改`inst.dt1309.DT1309`，使其兼容`kcom`。版本升级为 1.4.6。未经实践检验。
+
+- 2024-06-19 完善`xinje.XD5E`，增加都多个线圈、写单个线圈的功能。版本升级为 1.4.5。
+
+- 2024-05-16 修改 dt1309.DT1309 的实现，不使用 event 来提供实时同步，提高响应速度。
+新增属性接口 good。版本提升为 1.4.4。
+
+- 2024-05-16 修改 dt1309.DT1309 的实现，不继承 Serial，改为提供 serial 属性；增加 status 属性以方便检查连接状态。
+版本升级为 1.4.3。
+
+- 2024-05-09 发布版本 1.4.2。加入 gwinstek.GPT9900，一款绝缘耐压测试仪的驱动。
+
+- 2024-05-08 发布版本 1.4.1。解决 gwinstek.GPP4323.write_command 的代码错误。
+
+- 2024-05-06 发布版本 1.4.0，初步实现 gwinstek.GPP4323，为对应仪器（多通道程控直流电源）提供驱动。
+
+
