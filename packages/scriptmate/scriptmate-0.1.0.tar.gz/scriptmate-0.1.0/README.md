@@ -1,0 +1,243 @@
+# ScriptMate
+
+🤖 **Your Intelligent Script Partner** - Making command-line collaboration as seamless as working with a trusted companion
+
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://badge.fury.io/py/scriptmate.svg)](https://badge.fury.io/py/scriptmate)
+
+## Overview
+
+ScriptMate is your intelligent script partner, making command-line collaboration as seamless as working with a trusted companion. It understands natural language descriptions and generates corresponding shell commands. Whether you're a beginner or an experienced developer, ScriptMate helps you quickly find and execute the right commands.
+
+## ✨ Features
+
+- 🤖 **Natural Language Understanding**: Supports natural language descriptions to understand user intent
+- 🔧 **Cross-Platform**: Works on Windows, macOS, and Linux
+- 🛡️ **Safe Execution**: Requires user confirmation before execution for security
+- 📝 **Detailed Explanations**: Provides detailed explanations and reasoning process
+- ⚙️ **Flexible Configuration**: Supports multiple LLM service providers
+- 🎨 **Rich Interface**: Beautiful terminal output with colors and icons
+- 📊 **Command History**: Track and review executed commands
+- 🔍 **Dry Run Mode**: Preview commands without execution
+
+## 🚀 Installation
+
+### Using pip
+
+```bash
+pip install scriptmate
+```
+
+### Using uv
+
+```bash
+uv add scriptmate
+```
+
+### From Source
+
+```bash
+git clone https://github.com/your-username/scriptmate.git
+cd scriptmate
+uv sync
+uv pip install -e .
+```
+
+## 🎯 Quick Start
+
+### 1. Initial Setup
+
+On first use, ScriptMate will guide you through the configuration:
+
+```bash
+scriptmate generate "show current user"
+```
+
+You'll be prompted to enter:
+- **API Key**: Your LLM service API key
+- **Model Name**: e.g., `gpt-3.5-turbo`, `gpt-4`
+- **Base URL**: e.g., `https://api.openai.com/v1`
+
+### 2. Basic Usage
+
+```bash
+# Generate and execute commands
+scriptmate generate "show current user"
+scriptmate generate "list files in current directory"
+scriptmate generate "check disk usage"
+
+# Preview without execution (dry run)
+scriptmate generate --dry-run "find all Python files"
+
+# Auto-confirm execution
+scriptmate generate -y "show system time"
+```
+
+### 3. Configuration Management
+
+```bash
+# Show current configuration
+scriptmate config show
+
+# Setup new configuration
+scriptmate config setup
+
+# Test configuration
+scriptmate config test
+
+# Reset configuration
+scriptmate config reset
+```
+
+### 4. System Information
+
+```bash
+# Show version
+scriptmate --version
+
+# Show system info
+scriptmate info
+
+# Show command history
+scriptmate history
+```
+
+## 📋 Command Examples
+
+```bash
+# File Operations
+scriptmate generate "find all .py files recursively"
+scriptmate generate "show file permissions of current directory"
+scriptmate generate "compress folder into zip"
+
+# System Monitoring
+scriptmate generate "show memory usage"
+scriptmate generate "list running processes"
+scriptmate generate "check network connections"
+
+# Git Operations
+scriptmate generate "show git status with colors"
+scriptmate generate "create new branch and switch to it"
+
+# Network Operations
+scriptmate generate "ping google.com 5 times"
+scriptmate generate "download file from URL"
+```
+
+## ⚙️ Configuration
+
+Configuration is stored in `~/.scriptmate/config.json`:
+
+```json
+{
+    "api_key": "your-api-key",
+    "model_name": "gpt-3.5-turbo",
+    "base_url": "https://api.openai.com/v1",
+    "created_at": "2024-01-01T00:00:00Z"
+}
+```
+
+## 🔌 Supported LLM Services
+
+ScriptMate supports all OpenAI API-compatible services:
+
+- **OpenAI**: GPT-3.5, GPT-4, GPT-4 Turbo
+- **Azure OpenAI**: Enterprise OpenAI services
+- **Anthropic Claude**: Via compatible interfaces
+- **Local Models**: Ollama, LocalAI, etc.
+- **Other Services**: Any OpenAI API-compatible service
+
+## 🛡️ Security Features
+
+- **User Confirmation**: All commands require confirmation before execution
+- **Dangerous Command Detection**: Automatic detection of potentially harmful commands
+- **Safe Storage**: Secure API key storage with masked display
+- **Dry Run Mode**: Preview commands without execution
+- **Error Handling**: Comprehensive error handling and validation
+
+## 🏗️ Architecture
+
+```
+scriptmate/
+├── cli.py          # Command-line interface (Click framework)
+├── config.py       # Configuration management (JSON storage)
+├── llm_client.py   # LLM client (OpenAI-compatible API)
+├── executor.py     # Command executor (Safe execution)
+└── utils.py        # Utility functions
+```
+
+## 🧪 Development
+
+### Setup Development Environment
+
+```bash
+git clone https://github.com/your-username/scriptmate.git
+cd scriptmate
+uv sync --dev
+```
+
+### Run Tests
+
+```bash
+# Run all tests
+uv run pytest
+
+# Run with coverage
+uv run pytest --cov=scriptmate
+
+# Run linting
+uv run flake8 src/ tests/
+uv run black --check src/ tests/
+```
+
+### Build and Publish
+
+```bash
+# Build package
+uv build
+
+# Publish to PyPI (requires credentials)
+uv publish
+```
+
+## 📚 Documentation
+
+- **[Design Document](DESIGN.md)**: Detailed architecture and design decisions
+- **[Contributing Guide](CONTRIBUTING.md)**: How to contribute to the project
+- **[Changelog](CHANGELOG.md)**: Version history and updates
+- **[Examples](examples/)**: Detailed usage examples
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+If you encounter issues or have suggestions:
+
+1. Check the [FAQ](docs/FAQ.md)
+2. Search existing [Issues](https://github.com/your-username/scriptmate/issues)
+3. Create a new Issue
+
+## 🙏 Acknowledgments
+
+- Built with [Click](https://click.palletsprojects.com/) for CLI interface
+- Powered by [Rich](https://rich.readthedocs.io/) for beautiful terminal output
+- Managed with [uv](https://github.com/astral-sh/uv) for fast Python packaging
+
+---
+
+**ScriptMate - Your intelligent script partner, making command-line collaboration as seamless as working with a trusted companion!** 🚀✨
+
+[中文文档](README_CN.md) | [English](README.md)
