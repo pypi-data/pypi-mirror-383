@@ -1,0 +1,19 @@
+{% if css_local_path %}
+<link rel="stylesheet" href="{{ url_for('static', filename=css_local_path) }}" crossorigin=""/>
+{% else %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@{{ css_version }}/dist/leaflet.css">
+{% endif %}
+{% if js_local_path %}
+<script src="{{ url_for('static', filename=js_local_path) }}"></script>
+{% else %}
+<script nonce={{ csp_nonce_callback() if csp_nonce_callback else "" }} src="https://unpkg.com/leaflet@{{ js_version }}/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+{% endif %}
+<script nonce={{ csp_nonce_callback() if csp_nonce_callback else "" }} >
+     var leaflet_default_icon = L.icon({
+          iconUrl: "{{ leaflet.default_icon_marker_url or url_for('leaflet.static', filename='images/marker-icon.png') }}",
+          shadowUrl: "{{ leaflet.default_icon_marker_shadow_url or url_for('leaflet.static', filename='images/marker-shadow.png') }}",
+          iconAnchor: [12.5,41],
+     }) 
+</script>
