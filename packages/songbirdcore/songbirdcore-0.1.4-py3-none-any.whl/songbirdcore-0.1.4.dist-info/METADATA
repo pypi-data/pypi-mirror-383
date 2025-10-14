@@ -1,0 +1,142 @@
+Metadata-Version: 2.4
+Name: songbirdcore
+Version: 0.1.4
+Summary: core low level api for songbird
+Author: Christian Boin
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: annotated-types==0.7.0
+Requires-Dist: beautifulsoup4==4.12.3
+Requires-Dist: cachetools==6.2.1
+Requires-Dist: certifi==2024.12.14
+Requires-Dist: charset-normalizer==3.4.0
+Requires-Dist: cssselect==1.2.0
+Requires-Dist: deprecation==2.1.0
+Requires-Dist: eyeD3==0.9.8
+Requires-Dist: fake-useragent==2.0.3
+Requires-Dist: filetype==1.2.0
+Requires-Dist: google-api-core==2.26.0
+Requires-Dist: google-api-python-client==2.184.0
+Requires-Dist: google-auth==2.41.1
+Requires-Dist: google-auth-httplib2==0.2.0
+Requires-Dist: google-auth-oauthlib==1.2.2
+Requires-Dist: googleapis-common-protos==1.70.0
+Requires-Dist: greenlet==3.1.1
+Requires-Dist: httplib2==0.31.0
+Requires-Dist: idna==3.10
+Requires-Dist: lxml==5.3.0
+Requires-Dist: lxml_html_clean==0.4.1
+Requires-Dist: mutagen==1.47.0
+Requires-Dist: oauthlib==3.3.1
+Requires-Dist: packaging==25.0
+Requires-Dist: parse==1.20.2
+Requires-Dist: playwright==1.49.1
+Requires-Dist: proto-plus==1.26.1
+Requires-Dist: protobuf==6.32.1
+Requires-Dist: pyasn1==0.6.1
+Requires-Dist: pyasn1_modules==0.4.2
+Requires-Dist: pydantic==2.11.10
+Requires-Dist: pydantic-settings==2.11.0
+Requires-Dist: pydantic_core==2.33.2
+Requires-Dist: pyee==12.0.0
+Requires-Dist: pyparsing==3.2.5
+Requires-Dist: pyquery==2.0.1
+Requires-Dist: python-dotenv==1.1.1
+Requires-Dist: requests==2.32.3
+Requires-Dist: requests-htmlc==0.0.8
+Requires-Dist: requests-oauthlib==2.0.0
+Requires-Dist: rsa==4.9.1
+Requires-Dist: soupsieve==2.6
+Requires-Dist: typing-inspection==0.4.2
+Requires-Dist: typing_extensions==4.12.2
+Requires-Dist: uritemplate==4.2.0
+Requires-Dist: urllib3==2.2.3
+Requires-Dist: w3lib==2.2.1
+Requires-Dist: yt-dlp==2025.9.26
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: click; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: mkdocs; extra == "dev"
+Requires-Dist: mkdocs-material; extra == "dev"
+Requires-Dist: mike; extra == "dev"
+Requires-Dist: mkdocstrings-python; extra == "dev"
+Provides-Extra: package
+Requires-Dist: build; extra == "package"
+Requires-Dist: twine; extra == "package"
+Dynamic: license-file
+
+# songbirdcore 🐦
+
+Low-level package with common code used across songbird's
+cli and api.
+
+See: 
+
+- [songbirdcli](https://github.com/cboin1996/songbird.git)
+- [songbirdapi](https://github.com/cboin1996/songbirdapi.git)
+
+## Documentation
+
+`songbirdcore`'s documentation may be found [here](https://cboin1996.github.io/songbirdcore)
+
+## Requirements
+
+- Python version >= 3.11
+
+## Installation
+
+To install, run
+
+```bash
+pip install songbirdcore
+```
+
+To install the latest development version from `test-pypi`
+run
+
+```bash
+    python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ songbirdcore
+```
+
+## Development
+
+Once you have clone the repository, run
+
+```bash
+export ENV=dev
+make setup
+source venv/bin/activate
+make requirements
+```
+
+This configures a virtual environment locally.
+You can then run tests by performing the steps below.
+
+### Updating Requirements
+
+Updating the requirements for this package may be done
+through
+
+```bash
+make update-requirements
+make requirements
+```
+
+## Tests
+
+Configure your vscode debugger by creating a `.vscode/settings.json`
+file with the following contents:
+
+```json
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+}
+```
