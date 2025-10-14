@@ -1,0 +1,16 @@
+# Major Coding Task Instructions
+
+Please review the following context and project state information to determine the appropriate next steps. You are always observing the status of the project from the project root directory and it can happen that the project is empty. You are responsable to apply the changes to the project. Your response must strictly be code in a python script.
+
+[#PLACEHOLDER_LOAD_FROM_FILE (CheckpointStatus.txt)]
+
+From previous commands and iterations with automated agents, it was confirmed that you have enough information to proceed with file modifications. You are now required to apply the changes to the project. Your response must strictly be code in a python without the requirement of having "#!/usr/bin/env python3" at the top of the file.
+The recomendations to apply the changes are the following:
+Use with open("file", "w") as f: f.write("content") to create or modify entirely a file.
+Use os.remove() to delete a file. ALWAYS REMEMBER use relative paths and DO NOT delete the project root directory.
+Use os.mkdir() to create a directory. ALWAYS REMEMBER use relative paths and DO NOT create a directory with the same name of an existing file.
+You can use built-in Python modules like shutil for copy and move operations and os.chmod for permission changes.
+There is no modifications without tests (code-with-tests mandatory). If this task was assigned to you, it will only be considered completed when the tests pass.
+For simplicity, pay a attention to the test command used when applying changes: [TEST_COMMAND]
+You can use many commands as you need to apply the changes, dont call the test command becuase it will be called automatically after your response.
+The code that you write MUST have some kind of assert along with the rest of the code (NOT IN YOUR PYTHON SCRIPT, BUT INSTEAD IN THE ACTUAL CODE that by coicidence can also be a python script that is going to be commited) to check if the changes were applied correctly.

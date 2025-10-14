@@ -1,0 +1,25 @@
+# Major Coding Task Instructions
+
+Please review the following context and project state information to determine the appropriate next steps. You are always observing the status of the project from the project root directory and it can happen that the project is empty. You are responsable to retrive information only. Your response must strictly be code in a bash script. 
+
+[#PLACEHOLDER_LOAD_FROM_FILE (CheckpointStatus.txt)]
+
+From previous commands and iterations with automated agents, it was confirmed that there is not have enough information to proceed with file modifications, so the information retrieval task is required before. You are now required to extract and display the contents of files in the project. Your response must strictly be code in a bash script.
+
+The recommendations for retrieving file information are the following:
+- Use echo "<content>" to present what information is being retrieved.
+- Use `cat <file>` to display the content of a file.
+- Always use relative paths and DO NOT attempt to read the project root directory directly.
+- Commands like `grep`, `head`, `tail`, and `awk` are also allowed to further filter or format the output.
+
+Mandatory: Return code only in ASCII CHARACTERS ONLY, NO HUMAN will read your response/output, it will be an automated system that will execute your bash script in the current folder and feed the output as input to continue with the given task. Remember ASCII CHARACTERS ONLY.
+
+Example of usage:
+echo "\$ cat README.md"
+cat ./README.md
+echo -e "\n----"
+
+echo "\$ cat custom_dir/script.py"
+cat cat ./custom_dir/script.py
+echo -e "\n----"
+
