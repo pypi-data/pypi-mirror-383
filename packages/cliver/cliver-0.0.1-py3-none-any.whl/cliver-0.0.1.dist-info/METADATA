@@ -1,0 +1,24 @@
+Metadata-Version: 2.3
+Name: cliver
+Version: 0.0.1
+Summary: An AI Agent to make your CLI clever and more
+Author: Lin Gao
+Author-email: Lin Gao <aoingl@gmail.com>
+Requires-Dist: click>=8.1.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: httpx>=0.24.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: prompt-toolkit>=3.0.0
+Requires-Dist: pyyaml>=6.0.0
+Requires-Dist: mcp>=1.2.1
+Requires-Dist: openai>=1.0.0
+Requires-Dist: langchain>=0.3.0
+Requires-Dist: langchain-mcp-adapters>=0.1.4
+Requires-Dist: langchain-openai>=0.3.18
+Requires-Dist: langchain-core>=0.3.63
+Requires-Dist: langchain-ollama>=0.3.3
+Requires-Dist: python-dotenv>=1.1.0
+Requires-Dist: jinja2>=3.1.0
+Requires-Dist: requests>=2.32.3
+Requires-Dist: json-repair>=0.52.0
+Requires-Python: >=3.10
