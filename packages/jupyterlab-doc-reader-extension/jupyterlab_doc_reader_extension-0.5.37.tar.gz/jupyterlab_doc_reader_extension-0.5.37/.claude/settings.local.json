@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make:*)",
+      "Bash(jupyter server extension:*)",
+      "Bash(jupyter labextension:*)",
+      "Read(//var/log/**)",
+      "Bash(pip install:*)",
+      "Bash(pip show:*)",
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
