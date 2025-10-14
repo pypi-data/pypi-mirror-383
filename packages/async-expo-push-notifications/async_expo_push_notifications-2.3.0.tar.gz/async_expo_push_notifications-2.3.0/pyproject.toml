@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "async-expo-push-notifications"
+version = "2.3.0"
+description = "Expo Server SDK for Python with async/await support, Pydantic models, and full type hints"
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "Roach", email = "tmdgusya@gmail.com"}
+]
+maintainers = [
+    {name = "Roach", email = "tmdgusya@gmail.com"}
+]
+keywords = ["expo", "push", "notifications", "async", "pydantic", "type-hints"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.25.0",
+    "httpx>=0.24.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/tmdgusya/async-expo-notification-sdk"
+Repository = "https://github.com/tmdgusya/async-expo-notification-sdk"
+Issues = "https://github.com/tmdgusya/async-expo-notification-sdk/issues"
+Documentation = "https://github.com/tmdgusya/async-expo-notification-sdk#readme"
+
+[tool.setuptools]
+packages = ["exponent_server_sdk"]
+zip-safe = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
