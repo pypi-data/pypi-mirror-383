@@ -1,0 +1,86 @@
+Metadata-Version: 2.4
+Name: langchain-imap
+Version: 0.1.0
+Summary: LangChain integration for retrieving emails from IMAP servers
+License: MIT
+License-File: LICENSE
+Author: Julien FOURET
+Author-email: julien.fouret@univ-lyon1.fr
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Provides-Extra: docling
+Requires-Dist: docling (>=2.54.0,<3.0.0) ; extra == "docling"
+Requires-Dist: html-to-markdown (>=1.14.1,<2.0.0)
+Requires-Dist: langchain-core (>=0.3.15,<0.4.0)
+Requires-Dist: pypdf (>=6.1.1,<7.0.0)
+Requires-Dist: pyyaml (>=6.0,<7.0)
+Project-URL: Repository, https://github.com/langchain-ai/langchain
+Project-URL: Release Notes, https://github.com/langchain-ai/langchain/releases?q=tag%3A%22imap%3D%3D0%22&expanded=true
+Project-URL: Source Code, https://github.com/langchain-ai/langchain/tree/master/libs/partners/imap
+Description-Content-Type: text/markdown
+
+# langchain-imap
+
+This package provides the `ImapRetriever` for LangChain, enabling search and retrieval of emails from IMAP servers as LangChain `Document` objects.
+
+## Installation
+
+```bash
+pip install -U langchain-imap
+```
+
+For full document processing (DOCX, PPTX, etc.) with docling:
+
+```bash
+pip install "langchain-imap[docling]"
+```
+
+## Quickstart
+
+```python
+from langchain_imap import ImapConfig, ImapRetriever
+
+config = ImapConfig(
+    host="imap.gmail.com",
+    port=993,
+    user="your-email@gmail.com",
+    password="your-app-password",  # Use app password for Gmail
+    ssl_mode="ssl",
+)
+
+retriever = ImapRetriever(config=config, k=10)
+
+# Search emails using IMAP syntax
+docs = retriever.invoke('SUBJECT "urgent"')
+for doc in docs:
+    print(doc.page_content)  # Formatted email content
+```
+
+## Attachment Handling
+
+Three modes:
+- `"names_only"` (default): List attachment names
+- `"text_extract"`: Extract text from PDFs and plain text attachments
+- `"full_content"`: Full extraction using docling from office documents (requires [docling] extra)
+
+## Use in Chains
+
+Integrate with LLMs for QA over emails. See the [documentation notebook](docs/retrievers.ipynb) for examples.
+
+## Configuration
+
+- **auth_method**: "login" (default), supports others
+- **ssl_mode**: "ssl" (default), "starttls", "plain"
+- **verify_cert**: `False` for self-signed certs (not for production)
+
+Supports Gmail, Outlook, Yahoo, custom IMAP servers.
+
+## API Reference
+
+[ImapRetriever](https://api.python.langchain.com/en/latest/retrievers/langchain_imap.retrievers.ImapRetriever.html)
+
