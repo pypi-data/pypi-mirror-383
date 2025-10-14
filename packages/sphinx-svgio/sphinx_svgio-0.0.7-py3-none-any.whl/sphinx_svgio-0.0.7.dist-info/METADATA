@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: sphinx_svgio
+Version: 0.0.7
+Summary: Sphinx extension for drawio embedding
+Project-URL: Homepage, https://github.com/Bigyin1/sphinx_svgio
+Author: Sergey Aparin
+License-Expression: MIT
+License-File: LICENCE
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Requires-Dist: importlib-resources
+Requires-Dist: sphinx<9,>=7.1
+Description-Content-Type: text/markdown
+
+# Sphinx SVG.IO Package
+
+This is a simple extension for embedding draw.io diagramms into sphinx docs.
+
+### Usage
+
+
+In conf.py:
+```python
+extensions = ["sphinx_svgio"]
+
+drawio_js_offline_path = "path/to/viewer-static.min.js" # relative to conf.py or absolute
+```
+
+In rst:
+
+```rst
+.. svgio:: path/to/scheme.drawio.svg
+    :name: scheme_1
+    :page: 2
+    :caption: some caption
+```
+
+With `page` option you can choose an initial page of complex draw.io scheme.
+By default it is page `1`
+
+
+Also it is possible to add a description for every diagramm page:
+
+```rst
+.. svgio-list::
+    :name: scheme_1
+
+    .. svgio-page::
+        :page: 1
+
+        page 1 description
+
+    .. svgio-page::
+        :page: 2
+
+        page 2 description
+
+
+    .. svgio-page::
+        :page: 3
+
+        page 3 description
+```
+
+:name: option must be the same as in the target `svgio::` directive
