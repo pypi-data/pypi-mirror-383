@@ -1,0 +1,77 @@
+{% extends "coop_cms/article.html" %}
+{% load i18n coop_utils %}
+
+{% block meta_title %}coop_cms{% endblock %}
+
+{% block jquery_declaration %}
+{{block.super}}
+{% endblock %}
+
+{% block extra_head %}
+{{block.super}}
+<style>
+    a{
+        color: #000;
+    }
+    
+    ul.article-list {
+        padding: 5px 5px;
+        list-style : none;
+    }
+    
+    ul.article-list li {
+        margin-bottom: 10px;
+    }
+    
+    .links a {
+        padding: 4px 8px;
+        border: solid #aaa thin;
+        border-radius: 5px 5px 5px 5px;
+        background: #ddd;
+    }
+    .links a:hover {
+        background: #ccc;
+    }
+    .publication-info {
+        display: inline-block;
+        padding: 2px;
+        font-size: 0.9em;
+        margin: 0 5px;
+        min-width: 100px;
+    }
+    .publication0 {
+        background: #ff7070;
+    }
+    .publication1 {
+        background: #222;
+        color: #fff;
+    }
+    .publication2 {
+        background: #8df6ff;
+    }
+</style>
+{% endblock %}
+
+{% block document %}
+    <div class="article">
+        <h3>{% trans "Articles" %}</h3>
+        {% if articles %}
+            <ul class="article-list">
+            {% for art in articles %}
+                <li>
+                    <span class="publication-info publication{{ art.publication }}">{{ art.get_publication_display }}</span>
+                    <a href="{{ art.get_absolute_url }}">{{ art.title|dehtml }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+            <div class="links">
+                {% if articles_list_url %}<a href="{{ articles_list_url }}">{% trans "View all articles" %}</a>{% endif %}
+                {% if add_article_url %}<a href="{{ add_article_url }}" class="colorbox-form">{% trans "Add article" %}</a>{% endif %}
+            </div>
+        {% else %}
+            <div class="links">
+                {% if add_article_url %}<a href="{{ add_article_url }}" class="colorbox-form">Let's start and create your first article</a>{% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
