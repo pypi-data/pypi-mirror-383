@@ -1,0 +1,66 @@
+/* Django RemixIcon Preview Widget Styles */
+
+.remix-icon-preview-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.remix-icon-preview-input {
+    max-width: 200px;
+}
+
+.icon-preview-simple {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.icon-preview-simple i {
+    font-size: 16px;
+    color: #495057;
+    min-width: 16px;
+}
+
+.icon-preview-simple .icon-name {
+    color: #6c757d;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+}
+
+/* Django admin dark theme support (using html[data-theme] attribute) */
+html[data-theme="dark"] .icon-preview-simple {
+    background-color: #2b2b2b;
+    border-color: #444;
+    color: #fff;
+}
+
+html[data-theme="dark"] .icon-preview-simple i {
+    color: #fff;
+}
+
+html[data-theme="dark"] .icon-preview-simple .icon-name {
+    color: #fff;
+}
+
+/* Auto theme support - follows system preferences */
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] .icon-preview-simple {
+        background-color: #2b2b2b;
+        border-color: #444;
+        color: #fff;
+    }
+
+    html[data-theme="auto"] .icon-preview-simple i {
+        color: #fff;
+    }
+
+    html[data-theme="auto"] .icon-preview-simple .icon-name {
+        color: #fff;
+    }
+}

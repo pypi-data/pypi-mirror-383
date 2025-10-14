@@ -1,0 +1,6 @@
+include README.md
+include LICENSE
+recursive-include django_remix_icon/static *
+recursive-include django_remix_icon/templates *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]

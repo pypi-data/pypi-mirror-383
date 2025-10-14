@@ -1,0 +1,307 @@
+/* Django RemixIcon Widget Styles */
+
+/* Main widget container */
+.remix-icon-widget {
+    position: relative;
+    max-width: 400px;
+    overflow: visible !important;
+}
+
+/* Search input container */
+.icon-search-container {
+    position: relative;
+    margin-bottom: 10px;
+    overflow: visible !important;
+}
+
+.icon-search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.icon-search-input:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 1px #007cba;
+}
+
+/* Search results dropdown */
+.icon-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 99999 !important;
+    display: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: -1px;
+}
+
+.icon-search-results.show {
+    display: block;
+}
+
+.icon-search-result {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-search-result:hover {
+    background-color: #f8f9fa;
+}
+
+.icon-search-result:last-child {
+    border-bottom: none;
+}
+
+.icon-search-result.selected {
+    background-color: #007cba;
+    color: #fff;
+}
+
+.icon-search-result i {
+    font-size: 18px;
+    min-width: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 1;
+    font-family: "remixicon" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-search-result .icon-label {
+    font-size: 13px;
+    color: #666;
+    flex: 1;
+    margin: 0 8px;
+}
+
+.icon-search-result.selected .icon-label {
+    color: #fff;
+}
+
+.remix-icon-widget input[type="hidden"] {
+    display: none;
+}
+
+/* Icon preview */
+.icon-preview {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-preview i {
+    font-size: 20px;
+    color: #495057;
+}
+
+.icon-preview .icon-name {
+    font-size: 12px;
+    color: #6c757d;
+    font-family: 'Monaco', 'Courier New', monospace;
+}
+
+/* Simple preview widget */
+.remix-icon-preview-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-preview-simple {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 3px;
+}
+
+.icon-preview-simple i {
+    font-size: 16px;
+    color: #495057;
+}
+
+.icon-preview-simple .icon-name {
+    font-size: 11px;
+    color: #6c757d;
+    font-family: 'Monaco', 'Courier New', monospace;
+}
+
+/* Loading state */
+.icon-search-results .loading {
+    padding: 15px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* No results state */
+.icon-search-results .no-results {
+    padding: 15px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* Django admin specific styles */
+.form-row .remix-icon-widget {
+    max-width: none;
+}
+
+.form-row .icon-search-input {
+    width: 300px;
+}
+
+.form-row {
+    overflow: visible !important;
+}
+
+.form-row > div {
+    overflow: visible !important;
+}
+
+.django-admin .form-row,
+.django-admin .form-group,
+.django-admin .fieldBox {
+    overflow: visible !important;
+}
+
+.inline-group .remix-icon-widget {
+    max-width: 250px;
+}
+
+.inline-group .icon-search-input {
+    width: 200px;
+}
+
+.inline-group .icon-preview {
+    padding: 5px;
+    font-size: 11px;
+}
+
+.inline-group .icon-preview i {
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .remix-icon-widget {
+        max-width: none;
+    }
+
+    .icon-search-input {
+        width: 100%;
+    }
+
+    .icon-search-results {
+        max-height: 150px;
+    }
+}
+
+/* Accessibility improvements */
+.icon-search-input:focus + .icon-search-results {
+    border-color: #007cba;
+}
+
+.icon-search-result:focus {
+    outline: 2px solid #007cba;
+    outline-offset: -2px;
+}
+
+/* Django admin dark theme support (using html[data-theme] attribute) */
+html[data-theme="dark"] .remix-icon-widget .icon-search-input {
+    background-color: #2b2b2b;
+    border-color: #444;
+    color: #fff;
+}
+
+html[data-theme="dark"] .remix-icon-widget .icon-search-results {
+    background-color: #2b2b2b;
+    border-color: #444;
+}
+
+html[data-theme="dark"] .remix-icon-widget .icon-search-result {
+    border-bottom-color: #444;
+    color: #fff;
+}
+
+html[data-theme="dark"] .remix-icon-widget .icon-search-result .icon-label {
+    color: #fff;
+}
+
+html[data-theme="dark"] .remix-icon-widget .icon-search-result:hover {
+    background-color: #404040;
+}
+
+html[data-theme="dark"] .remix-icon-widget .icon-preview {
+    background-color: #2b2b2b;
+    border-color: #444;
+    color: #fff;
+}
+
+html[data-theme="dark"] .remix-icon-widget .icon-preview .icon-name {
+    color: #fff;
+}
+
+/* Auto theme support - follows system preferences */
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] .remix-icon-widget .icon-search-input {
+        background-color: #2b2b2b;
+        border-color: #444;
+        color: #fff;
+    }
+
+    html[data-theme="auto"] .remix-icon-widget .icon-search-results {
+        background-color: #2b2b2b;
+        border-color: #444;
+    }
+
+    html[data-theme="auto"] .remix-icon-widget .icon-search-result {
+        border-bottom-color: #444;
+        color: #fff;
+    }
+
+    html[data-theme="auto"] .remix-icon-widget .icon-search-result .icon-label {
+        color: #fff;
+    }
+
+    html[data-theme="auto"] .remix-icon-widget .icon-search-result:hover {
+        background-color: #404040;
+    }
+
+    html[data-theme="auto"] .remix-icon-widget .icon-preview {
+        background-color: #2b2b2b;
+        border-color: #444;
+        color: #fff;
+    }
+
+    html[data-theme="auto"] .remix-icon-widget .icon-preview .icon-name {
+        color: #fff;
+    }
+}

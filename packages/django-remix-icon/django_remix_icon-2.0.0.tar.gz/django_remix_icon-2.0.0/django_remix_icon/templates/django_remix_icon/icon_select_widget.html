@@ -1,0 +1,21 @@
+{% load remix_icon_tags %}
+<div class="remix-icon-widget-container">
+    <div class="icon-search-wrapper">
+        <input type="text" class="icon-search-input" placeholder="Search RemixIcons..." autocomplete="off">
+        <div class="icon-search-results"></div>
+    </div>
+    {{ widget }}
+    <div class="icon-preview-wrapper">
+        {% if widget.value %}
+            <div class="current-icon-preview">
+                {% remix_icon widget.value %}
+                <span class="icon-name">{{ widget.value }}</span>
+            </div>
+        {% else %}
+            <div class="current-icon-preview" style="display: none;">
+                <i class=""></i>
+                <span class="icon-name"></span>
+            </div>
+        {% endif %}
+    </div>
+</div>

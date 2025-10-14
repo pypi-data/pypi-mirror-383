@@ -1,0 +1,11 @@
+{% load remix_icon_tags %}
+<span{% for key, value in attrs.items %} {{ key }}="{{ value }}"{% endfor %}>
+    {% if is_valid_icon %}
+        {% remix_icon icon_name %}
+    {% else %}
+        <i class="ri-question-line" title="Invalid icon: {{ icon_name }}"></i>
+    {% endif %}
+    {% if text %}
+        <span class="icon-text">{{ text }}</span>
+    {% endif %}
+</span>
