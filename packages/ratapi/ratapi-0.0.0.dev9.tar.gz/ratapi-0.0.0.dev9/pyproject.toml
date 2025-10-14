@@ -1,0 +1,90 @@
+[build-system]
+requires = [
+    'setuptools>=61',
+    'wheel',
+    'pybind11>=2.4',
+]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = "ratapi"
+version = "0.0.0.dev9"
+description = "Python extension for the Reflectivity Analysis Toolbox (RAT)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.8.3",
+    "numpy>=1.20",
+    "prettytable>=3.9.0",
+    "pydantic>=2.7.2",
+    "scipy>=1.13.1",
+    "strenum>=0.4.15 ; python_full_version < '3.11'",
+    "tqdm>=4.66.5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.10"
+]
+orso = [
+    "orsopy>=1.2.1",
+    "pint>=0.24.4"
+]
+matlab_latest = ["matlabengine"]
+matlab_2025b = ["matlabengine == 25.2.*"]
+matlab_2025a = ["matlabengine == 25.1.2"]
+matlab_2024b = ["matlabengine == 24.2.2"]
+matlab_2024a = ["matlabengine == 24.1.4"]
+matlab_2023b = ["matlabengine == 23.2.3"]
+matlab_2023a = ["matlabengine == 9.14.3"]
+
+[tool.uv]
+conflicts = [
+    [
+        { extra = "matlab_latest" },
+        { extra = "matlab_2025b" },
+        { extra = "matlab_2025a" },
+        { extra = "matlab_2024b" },
+        { extra = "matlab_2024a" },
+        { extra = "matlab_2023b" },
+        { extra = "matlab_2023a" },
+    ],
+]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E",   # pycodestyle errors
+          "F",   # pyflakes
+          "UP",  # pyupgrade
+          "B",   # flake8-bugbear
+          "SIM", # flake8-simplify
+          "I",   # isort
+          "D"]  # pydocstyle
+
+ignore = ["SIM103", # needless bool
+          "SIM108", # if-else block instead of ternary operator
+          "D105",   # undocumented __init__
+          "D107",   # undocumented magic method
+          "D203",   # blank line before class docstring
+          "D213",   # multi line summary should start at second line
+          "UP038"]  # non pep604 isinstance - to be removed
+
+# ignore docstring lints in the tests and install script
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
+"setup.py" = ["D"]
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.isort]
+known-first-party = ["ratapi.rat_core"]
