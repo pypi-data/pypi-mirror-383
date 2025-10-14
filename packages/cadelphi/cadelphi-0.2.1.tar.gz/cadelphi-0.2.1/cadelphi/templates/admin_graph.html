@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_admin_graph"] }}{% endblock %}
+{% block extra_head %}
+<script type="module" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+{% endblock %}
+{% block content %}
+<section class="panel">
+  <header class="panel-header">
+    <h2>{{ texts["graph_heading"] }}</h2>
+    <div class="actions">
+      <a class="button secondary" href="{{ path_for('admin_dashboard') }}">{{ texts["button_back_to_dashboard"] }}</a>
+    </div>
+  </header>
+  <div class="controls">
+    <label>{{ texts["graph_metric_label"] }}
+      <select id="metric-select">
+        <option value="average">{{ texts["graph_metric_average"] }}</option>
+        <option value="max">{{ texts["graph_metric_max"] }}</option>
+        <option value="min">{{ texts["graph_metric_min"] }}</option>
+      </select>
+    </label>
+  </div>
+  <div id="graph-container" class="graph-container"></div>
+</section>
+<section class="panel">
+  <h3>{{ texts["graph_summary_heading"] }}</h3>
+  <table class="summary-table" id="graph-summary">
+    <thead>
+      <tr>
+        <th>{{ texts["graph_summary_column_title"] }}</th>
+        <th>{{ texts["graph_summary_column_argument"] }}</th>
+        <th>{{ texts["graph_summary_column_value"] }}</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+<section class="panel">
+  <header class="panel-header">
+    <h3>{{ texts['graph_table_heading'] }}</h3>
+    <div class="table-actions">
+      <input
+        type="search"
+        id="argument-search"
+        placeholder="{{ texts['graph_table_search_placeholder'] }}"
+        aria-label="{{ texts['graph_table_search_placeholder'] }}"
+      />
+      <button type="button" class="button secondary" id="argument-export">{{ texts['graph_table_export'] }}</button>
+    </div>
+  </header>
+  <p class="table-hint">{{ texts['graph_table_sort_hint'] }}</p>
+  <div class="table-responsive">
+    <table class="data-table" id="argument-table">
+      <thead>
+        <tr>
+          <th data-sort="topic">{{ texts['graph_table_topic'] }}</th>
+          <th data-sort="argument">{{ texts['graph_table_argument'] }}</th>
+          <th data-sort="votes">{{ texts['graph_table_votes'] }}</th>
+          <th data-sort="average">{{ texts['graph_table_average'] }}</th>
+          <th data-sort="highest">{{ texts['graph_table_highest'] }}</th>
+          <th data-sort="lowest">{{ texts['graph_table_lowest'] }}</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.__CADELPHI_GRAPH__ = {
+    dataEndpoint: "{{ path_for('admin_graph_data') }}",
+    summaryEndpoint: "{{ path_for('admin_graph_summary') }}",
+    tableEndpoint: "{{ path_for('admin_graph_table_data') }}",
+    errorMessage: "{{ texts["graph_error_fetch"] }}",
+    summaryErrorMessage: "{{ texts["graph_summary_error"] }}",
+    tableErrorMessage: "{{ texts['graph_table_error'] }}",
+    tableNoData: "{{ texts['graph_table_no_data'] }}",
+    tableNoMatch: "{{ texts['graph_table_no_match'] }}",
+    tableLoading: "{{ texts['graph_table_loading'] }}",
+    voteSummaryLabel: "{{ texts['graph_table_vote_summary'] }}",
+    voteCommentLabel: "{{ texts['graph_table_vote_comment_label'] }}",
+    exportFileName: "{{ texts['graph_table_export_filename'] }}"
+  };
+</script>
+<script src="{{ asset_url('js/admin_graph.js') }}"></script>
+{% endblock %}

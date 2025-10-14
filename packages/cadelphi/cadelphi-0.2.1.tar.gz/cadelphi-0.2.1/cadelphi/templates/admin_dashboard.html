@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_admin_dashboard"] }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <header class="panel-header">
+    <h2>{{ texts["admin_dashboard_heading"] }}</h2>
+    <div class="actions">
+      <a class="button" href="{{ path_for('admin_graph') }}">{{ texts["button_view_graph"] }}</a>
+      <a class="button" href="{{ path_for('admin_settings_page') }}">{{ texts["button_settings"] }}</a>
+      <a class="button secondary" href="{{ path_for('admin_logout') }}">{{ texts["button_logout"] }}</a>
+    </div>
+  </header>
+  {% if settings %}
+  <p>{{ texts["active_strategy"].format(strategy=strategy_labels.get(settings.selection_strategy.value, settings.selection_strategy.value)) }}</p>
+  {% endif %}
+</section>
+
+<section class="panel accent">
+  <h3>{{ texts["admin_topic_create_heading"] }}</h3>
+  <form class="form-grid" method="post" action="{{ path_for('admin_create_topic') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <label>
+      {{ texts["label_topic_title"] }}
+      <input type="text" name="title" required />
+    </label>
+    <label>
+      {{ texts["label_topic_description_optional"] }}
+      <textarea name="description" rows="3"></textarea>
+    </label>
+    <button type="submit" class="button">{{ texts["button_add_topic"] }}</button>
+  </form>
+</section>
+
+<section class="panel">
+  <h3>{{ texts["topics_heading"] }}</h3>
+  {% if topics_data %}
+  {% for topic_data in topics_data %}
+  <article class="topic-block">
+    <header class="topic-header">
+      <div class="topic-info">
+        <h4>{{ topic_data.topic.title }}</h4>
+        {% if topic_data.topic.description %}
+        <p>{{ topic_data.topic.description }}</p>
+        {% endif %}
+      </div>
+      <form
+        method="post"
+        action="{{ path_for('admin_delete_topic', topic_id=topic_data.topic.id) }}"
+        class="inline-form"
+        onsubmit="return confirm('{{ texts["confirm_delete_topic"] }}');"
+      >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+        <button type="submit" class="button danger">{{ texts["button_delete_topic"] }}</button>
+      </form>
+    </header>
+    {% if topic_data.arguments %}
+    <ul class="argument-list">
+      {% for item in topic_data.arguments %}
+      <li>
+        <div class="argument-header">
+          <div class="argument-text">{{ item.argument.content }}</div>
+          <form
+            method="post"
+            action="{{ path_for('admin_delete_argument', argument_id=item.argument.id) }}"
+            class="inline-form"
+            onsubmit="return confirm('{{ texts["confirm_delete_argument"] }}');"
+          >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+            <button type="submit" class="button danger compact">{{ texts["button_delete_argument"] }}</button>
+          </form>
+        </div>
+        <div class="argument-meta">
+          <span>{{ texts["author_label"] }}: {{ item.argument.author.name or texts["anonymous_label"] }}</span>
+          <span>{{ texts["vote_count_label"] }}: {{ item.vote_count }}</span>
+          {% if item.average_score %}
+          <span>{{ texts["average_label"] }}: {{ '%.2f'|format(item.average_score) }}</span>
+          <span>{{ texts["max_label"] }}: {{ item.max_score }}</span>
+          <span>{{ texts["min_label"] }}: {{ item.min_score }}</span>
+          {% else %}
+          <span>{{ texts["no_votes_label"] }}</span>
+          {% endif %}
+        </div>
+        {% if item.argument.votes %}
+        <details>
+          <summary>{{ texts["vote_details_summary"] }}</summary>
+          <ul class="vote-list">
+            {% for vote in item.argument.votes %}
+            <li>
+              <strong>{{ vote.score }}/5</strong>
+              <span>- {{ vote.participant.name or texts["anonymous_label"] }}</span>
+              {% if vote.comment %}
+              <p>{{ vote.comment }}</p>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </details>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>{{ texts["no_arguments_topic"] }}</p>
+    {% endif %}
+    <footer class="topic-footer">
+      <h5>{{ texts["admin_argument_create_heading"] }}</h5>
+      <form class="form-grid" method="post" action="{{ path_for('admin_create_argument', topic_id=topic_data.topic.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+        <label>
+          {{ texts["label_argument_author_optional"] }}
+          <input type="text" name="author_name" />
+        </label>
+        <label>
+          {{ texts["label_argument_content"] }}
+          <textarea name="content" rows="3" required></textarea>
+        </label>
+        <button type="submit" class="button">{{ texts["button_add_argument"] }}</button>
+      </form>
+    </footer>
+  </article>
+  {% endfor %}
+  {% else %}
+  <p>{{ texts["no_topics_admin"] }}</p>
+  {% endif %}
+</section>
+{% endblock %}

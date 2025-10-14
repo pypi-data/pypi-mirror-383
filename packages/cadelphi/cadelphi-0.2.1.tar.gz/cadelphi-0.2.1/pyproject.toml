@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cadelphi"
+version = "0.2.1"
+description = "Computerized Argument Delphi experimentation toolkit"
+readme = "README.md"
+authors = [
+  {name = "Sadi Evren SEKER", email = "cadelphi@sadievrenseker.com"}
+]
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.27",
+  "sqlalchemy>=2.0",
+  "jinja2>=3.1",
+  "python-multipart>=0.0.6",
+  "itsdangerous>=2.1",
+  "passlib[argon2]>=1.7",
+  "argon2-cffi>=21.3"
+]
+
+[project.urls]
+Homepage = "https://github.com/sadievrenseker/cadelphi"
+
+[project.scripts]
+cadelphi = "cadelphi.__main__:main"
+
+[tool.setuptools.package-data]
+"cadelphi" = [
+  "templates/*.html",
+  "static/css/*.css",
+  "static/js/*.js"
+]
+
+[tool.setuptools.packages.find]
+include = ["cadelphi*"]
+exclude = ["test_env*"]
