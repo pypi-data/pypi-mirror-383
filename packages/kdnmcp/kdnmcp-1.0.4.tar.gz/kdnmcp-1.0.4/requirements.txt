@@ -1,0 +1,36 @@
+# FastMCP framework
+fastmcp>=0.15.0
+
+# HTTP client for API requests
+httpx>=0.27.0
+
+# Async support
+anyio>=4.0.0
+
+# Data validation and serialization
+pydantic>=2.5.0
+pydantic-settings>=2.0.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# Logging
+loguru>=0.7.0
+
+# Date/time handling
+python-dateutil>=2.8.0
+
+# JSON handling
+orjson>=3.9.0
+
+# Development dependencies
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Server deployment
+uvicorn[standard]>=0.24.0
+gunicorn>=21.2.0
+fastapi>=0.104.0

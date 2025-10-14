@@ -1,0 +1,42 @@
+# 包含项目文档
+include README.md
+include LICENSE
+include requirements.txt
+include .env.example
+include pytest.ini
+
+# 包含快递鸟文档
+recursive-include kdndoc *.md
+
+# 包含必要的模块
+recursive-include settings *.py
+recursive-include middleware *.py
+recursive-include tools *.py
+recursive-include utils *.py
+recursive-include docs *.py
+recursive-include models *.py
+
+# 包含配置文件
+recursive-include .roo *.json
+
+# 排除不需要的文件
+exclude .env
+exclude .env.test
+exclude Dockerfile
+exclude docker-compose.yml
+exclude *.log
+
+# 排除缓存和临时文件
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude *.so
+global-exclude .DS_Store
+global-exclude *.egg-info
+
+# 排除测试和开发文件
+prune tests
+prune .git
+prune .pytest_cache
+prune logs
+prune build
+prune dist
