@@ -1,0 +1,146 @@
+Metadata-Version: 2.4
+Name: dify-file-parser
+Version: 1.0.0
+Summary: 基于 Dify 项目文件处理功能抽离的通用文件解析器
+Home-page: https://github.com/javen-yan/file-parser
+Author: Javen Yan
+Author-email: javen.yan@example.com
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Text Processing :: General
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiofiles>=23.2.1
+Requires-Dist: asyncio-throttle>=1.0.2
+Requires-Dist: pandas>=2.1.3
+Requires-Dist: PyPDF2>=3.0.1
+Requires-Dist: pdfplumber>=0.10.3
+Requires-Dist: pymupdf>=1.23.8
+Requires-Dist: python-docx>=0.8.11
+Requires-Dist: openpyxl>=3.1.2
+Requires-Dist: python-pptx>=0.6.23
+Requires-Dist: Pillow>=10.0.1
+Requires-Dist: pytesseract>=0.3.10
+Requires-Dist: opencv-python>=4.8.1.78
+Requires-Dist: chardet>=5.2.0
+Requires-Dist: markdown>=3.5.1
+Requires-Dist: aiohttp>=3.8.6
+Requires-Dist: loguru>=0.7.2
+Requires-Dist: pydantic>=2.4.2
+Requires-Dist: pytest>=7.4.3
+Requires-Dist: pytest-asyncio>=0.21.1
+Requires-Dist: pytest-cov>=4.1.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.3; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.1; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+Requires-Dist: mypy>=1.5.0; extra == "dev"
+Provides-Extra: ocr
+Requires-Dist: pytesseract>=0.3.10; extra == "ocr"
+Requires-Dist: opencv-python>=4.8.1.78; extra == "ocr"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# 文件解析器 (File Parser)
+
+一个基于 Dify 项目文件处理功能抽离的通用文件解析器，支持多种文件格式转换为 AI 可识别的文本。
+
+## 功能特性
+
+- 📄 支持多种文件格式：PDF、Word、Excel、PowerPoint、图片、文本等
+- 🔍 集成 OCR 技术，支持图片文字识别
+- 🚀 高性能异步处理
+- 🔧 模块化设计，易于扩展
+- 📝 统一的文本输出格式
+- 🛡️ 错误处理和日志记录
+
+## 支持的文件格式
+
+| 格式 | 扩展名 | 状态 | 说明 |
+|------|--------|------|------|
+| PDF | .pdf | ✅ | 支持文本提取和 OCR |
+| Word | .docx, .doc | ✅ | 支持文档内容提取 |
+| Excel | .xlsx, .xls | ✅ | 支持表格数据提取 |
+| PowerPoint | .pptx, .ppt | ✅ | 支持幻灯片内容提取 |
+| 图片 | .jpg, .jpeg, .png, .bmp, .tiff | ✅ | 支持 OCR 文字识别 |
+| 文本 | .txt, .md | ✅ | 直接文本读取 |
+| CSV | .csv | ✅ | 表格数据解析 |
+
+## 快速开始
+
+### 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+### 基本使用
+
+```python
+from file_parser import FileParser
+
+# 创建解析器实例
+parser = FileParser()
+
+# 解析单个文件
+result = await parser.parse_file("document.pdf")
+print(result.text)
+
+# 批量解析文件
+files = ["doc1.pdf", "doc2.docx", "image.png"]
+results = await parser.parse_files(files)
+for result in results:
+    print(f"文件: {result.filename}")
+    print(f"内容: {result.text[:100]}...")
+```
+
+## 项目结构
+
+```
+file-parser/
+├── file_parser/           # 核心模块
+│   ├── __init__.py
+│   ├── base.py           # 基础解析器类
+│   ├── parsers/          # 具体解析器实现
+│   │   ├── __init__.py
+│   │   ├── pdf_parser.py
+│   │   ├── word_parser.py
+│   │   ├── excel_parser.py
+│   │   ├── ppt_parser.py
+│   │   ├── image_parser.py
+│   │   └── text_parser.py
+│   ├── ocr/              # OCR 相关功能
+│   │   ├── __init__.py
+│   │   └── tesseract_ocr.py
+│   └── utils/            # 工具函数
+│       ├── __init__.py
+│       └── file_utils.py
+├── tests/                # 测试文件
+├── examples/             # 示例代码
+├── requirements.txt      # 依赖列表
+└── README.md
+```
+
+## 许可证
+
+MIT License
