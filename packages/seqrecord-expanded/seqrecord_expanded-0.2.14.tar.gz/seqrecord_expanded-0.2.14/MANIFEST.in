@@ -1,0 +1,15 @@
+include *.rst
+include *.txt
+include *.cfg
+include .bumpversion.cfg
+include Makefile
+include README.md
+include tox.ini
+include setup.py
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+recursive-include requirements *.txt
+recursive-include tests *.py
+global-exclude __pycache__
+global-exclude *.py[co]
