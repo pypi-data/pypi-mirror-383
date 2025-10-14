@@ -1,0 +1,156 @@
+"""
+    Copyright 2024 Inmanta
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    Contact: code@inmanta.com
+"""
+
+
+std::Host.via [0:1] -- Context
+"""
+Relation to the context entity tree describing how to access the remote host io.
+"""
+
+
+entity Context:
+    """
+    Base entity for all types of contexts that can be used with the mitogen router.
+    A context can be used via another one using the via relation.
+
+    When serialized, the chain of context will form a recursive dict structure that
+    can be used to construct the desired mitogen context object.
+
+    :attr method_name: Value used internally to select the correct connection class when
+        constructing the mitogen context.
+    :attr name: The name to give to the constructed context.
+    """
+    string method_name
+    string name
+end
+Context.via [0:1] -- Context
+"""
+Access the current context (self) via the attached context.
+"""
+
+# We want to define the identity in the model to make sure we don't emit multiple context
+# with the same methods and name, but using different configuration options (which would
+# cause conflicts in the agent cache).  Unfortunately, this is currently not possible as
+# the `via` relation is optional.
+# https://github.com/inmanta/inmanta-core/issues/7821
+# index Context(via, method_name, name)
+
+
+entity Local extends Context:
+    """
+    Construct a context on the local machine as a subprocess of the current process. The associated stream implementation is mitogen.master.Stream.
+
+    :attr remote_name: The argv[0] suffix for the new process. If remote_name is test, the new process argv[0] will be mitogen:test.
+        If unspecified, defaults to <username>@<hostname>:<pid>.
+        This variable cannot contain slash characters, as the resulting argv[0] must be presented in such a way as to allow Python to determine
+        its installation prefix. This is required to support virtualenv.
+    :attr python_path: String or list path to the Python interpreter to use for bootstrap. Defaults to sys.executable for local connections,
+        and python for remote connections.
+        It is possible to pass a list to invoke Python wrapped using another tool, such as ["/usr/bin/env", "python"].
+    :attr debug: If True, arrange for debug logging (enable_debug()) to be enabled in the new context. Automatically True when enable_debug()
+        has been called, but may be used selectively otherwise.
+    :attr unidirectional: If True, arrange for the child's router to be constructed with unidirectional routing enabled. Automatically True when
+        it was enabled for this router, but may still be explicitly set to False.
+    :attr connect_timeout: Fractional seconds to wait for the subprocess to indicate it is healthy. Defaults to 30 seconds.
+    :attr profiling: If True, arrange for profiling (profiling) to be enabled in the new context. Automatically True when profiling is True, but
+        may be used selectively otherwise.
+    """
+    string method_name = "local"
+    string name = ""
+    string? remote_name = null
+    string[]? python_path = null
+    bool? debug = null
+    bool? unidirectional = null
+    bool? profiling = null
+end
+
+
+entity Ssh extends Local:
+    """
+    Construct a remote context over an OpenSSH ssh invocation.
+
+    The ssh process is started in a newly allocated pseudo-terminal to support typing interactive passwords and responding to prompts, if a password is specified,
+    or check_host_keys=accept. In other scenarios, BatchMode is enabled and no PTY is allocated. For many-target configurations, both options should be avoided as
+    most systems have a conservative limit on the number of pseudo-terminals that may exist.
+
+    :attr username: The SSH username; default is unspecified, which causes SSH to pick the username to use.
+    :attr ssh_path: Absolute or relative path to ssh. Defaults to ssh.
+    :attr ssh_args: Additional arguments to pass to the SSH command.
+    :attr port: Port number to connect to; default is unspecified, which causes SSH to pick the port number.
+    :attr check_host_keys: Specifies the SSH host key checking mode. Defaults to enforce.
+        ignore: no host key checking is performed. Connections never fail due to an unknown or changed host key.
+        accept: known hosts keys are checked to ensure they match, new host keys are automatically accepted and verified in future connections.
+        enforce: known host keys are checked to ensure they match, unknown hosts cause a connection failure.
+    :attr password: Password to type if/when ssh requests it. If not specified and a password is requested, mitogen.ssh.PasswordError is raised.
+    :attr identity_file: Path to an SSH private key file to use for authentication. Default is unspecified, which causes SSH to pick the identity file.
+        When this option is specified, only identity_file will be used by the SSH client to perform authenticaion; agent authentication is automatically disabled,
+        as is reading the default private key from ~/.ssh/id_rsa, or ~/.ssh/id_dsa.
+    :attr identities_only: If True and a password or explicit identity file is specified, instruct the SSH client to disable any authentication identities inherited
+        from the surrounding environment, such as those loaded in any running ssh-agent, or default key files present in ~/.ssh. This ensures authentication attempts
+        only occur using the supplied password or SSH key.
+    :attr compression: If True, enable ssh compression support. Compression has a minimal effect on the size of modules transmitted, as they are already compressed,
+        however it has a large effect on every remaining message in the otherwise uncompressed stream protocol, such as function call arguments and return values.
+    :attr ssh_debug_level: Optional integer 0..3 indicating the SSH client debug level.
+    """
+    string method_name = "ssh"
+    string hostname
+    string? username = null
+    string? ssh_path = null
+    string[]? ssh_args = null
+    int? port = null
+    string? check_host_keys = null
+    string? password = null
+    string? identity_file = null
+    bool? identities_only = null
+    bool? compression = null
+    int? ssh_debug_level = null
+end
+
+
+entity Sudo extends Local:
+    """
+    Construct a context on the local machine over a sudo invocation. The sudo process is started in a newly allocated pseudo-terminal, and supports typing
+    interactive passwords.
+
+    :attr username: Username to pass to sudo as the -u parameter, defaults to root.
+    :attr sudo_path: Filename or complete path to the sudo binary. PATH will be searched if given as a filename. Defaults to sudo.
+    :attr password: The password to use if/when sudo requests it. Depending on the sudo configuration, this is either the current account password or the target
+        account password. mitogen.sudo.PasswordError will be raised if sudo requests a password but none is provided.
+    :attr set_home: If True, request sudo set the HOME environment variable to match the target UNIX account.
+    :attr preserve_env: If True, request sudo to preserve the environment of the parent process.
+    :attr selinux_type: If not None, the SELinux security context to use.
+    :attr selinux_role: If not None, the SELinux role to use.
+    :attr sudo_args: Arguments in the style of sys.argv that would normally be passed to sudo. The arguments are parsed in-process to set equivalent parameters.
+        Re-parsing ensures unsupported options cause mitogen.core.StreamError to be raised, and that attributes of the stream match the actual behaviour of sudo.
+    """
+    string method_name = "sudo"
+    string name = ""
+    string? username = null
+    string? sudo_path = null
+    string? password = null
+    bool? set_home = null
+    bool? preserve_env = null
+    string? selinux_type = null
+    string? selinux_role = null
+    string[]? sudo_args = null
+end
+
+
+implement Local using std::none
+implement Ssh using std::none
+implement Sudo using std::none
