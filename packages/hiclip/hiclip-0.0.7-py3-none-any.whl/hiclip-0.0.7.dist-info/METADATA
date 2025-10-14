@@ -1,0 +1,93 @@
+Metadata-Version: 2.4
+Name: hiclip
+Version: 0.0.7
+Summary: 
+License: MIT
+License-File: LICENSE
+Author: liminghong.dev
+Author-email: lmh0066@outlook.com
+Requires-Python: >=3.9
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: botocore (>=1.34.25)
+Requires-Dist: captum (>=0.7.0,<0.8.0)
+Requires-Dist: cooler (>=0.9.3,<0.10.0)
+Requires-Dist: crayons (>=0.2)
+Requires-Dist: numpy (>=1.21.0)
+Requires-Dist: rich (>=13.7.0,<14.0.0)
+Requires-Dist: scvi-tools (>=1.0.4,<2.0.0)
+Requires-Dist: torch (>=1.12.0)
+Requires-Dist: torchvision (>=0.4)
+Requires-Dist: visdom (>=0.1.8)
+Description-Content-Type: text/markdown
+
+# HiClip
+
+## Installation
+hiclip can be installed using pip.
+``` bash
+pip install hiclip
+```
+Then, install the appropriate version of PyTorch. After experimental verification, hiclip works well in the environment of pytorch 2.0.1 + CUDA 11.7.
+``` bash
+# This is just an example, you can find the appropriate version in https://pytorch.org/get-started/previous-versions/
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2
+```
+
+## Tutorial
+### generate train dataset
+```python
+import hiclip
+
+
+# uri also support .cool file
+dataset = hiclip.setup_data(
+    main_cooler_uri="main/K562.mcool::/resolutions/5000",
+    sub_cooler_uri="sub/K562.mcool::/resolutions/5000",
+    target_cooler_uri="target/K562.mcool::/resolutions/5000",
+)
+dataset.write(filename="dataset", compression="gzip")
+```
+### train
+```python
+import anndata
+import hiclip
+
+
+dataset = anndata.read_h5ad("dataset")
+hiclip.HiClip.setup_anndata(dataset)
+model = hiclip.HiClip(dataset)
+
+model.train(
+    max_epochs=200,
+    save_ckpt_every_n_epoch=2,
+    plan_kwargs={"lr": 1e-3, "weight_decay": 0},
+    batch_size=4,
+    num_workers=16,
+)
+```
+### predict or observe
+```python
+import anndata
+import hiclip
+
+
+dataset = anndata.read_h5ad("dataset")
+model = hiclip.HiClip.load(
+    ".hiclip/202X-XX-XX_XX-XX-XX_val_hiclip_metric/epoch=...",
+    dataset
+)
+
+# if predict
+pred: anndata.AnnData = model.predict(dataset)
+# if observe
+pred = model.observe(main_cooler_uri, sub_cooler_uri, chrom, start, end)
+```
+
+**The specific case is in the examples folder.**
