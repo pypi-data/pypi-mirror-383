@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: groundhog-hpc
+Version: 0.2.6
+Summary: Iterative HPC function development. As many 'first tries' as you need.
+Author-email: Owen Price Skelly <OwenPriceSkelly@uchicago.edu>
+License: MIT
+License-File: LICENSE
+Keywords: FaaS,Function Serving,Globus Compute,HPC
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.10
+Requires-Dist: globus-compute-sdk>=3.12.0
+Requires-Dist: jinja2>=3.0.0
+Requires-Dist: packaging>=24.0
+Requires-Dist: tomli>=1.1.0; python_full_version < '3.11'
+Requires-Dist: typer>=0.16.1
+Description-Content-Type: text/markdown
+
+Home of `hog` ☀️🦫🕳️
+
+see also: [examples/README.md](./examples/README.md)
