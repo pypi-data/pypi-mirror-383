@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: dragoneye-python
+Version: 0.4.0
+License-Expression: MIT
+Requires-Python: >=3.8
+Requires-Dist: requests
+Requires-Dist: pydantic>=2
+Requires-Dist: typing-extensions>=4.0.0
+Requires-Dist: backoff>=2.0.0
+Requires-Dist: aiohttp
