@@ -1,0 +1,9 @@
+include README.md
+include LICENSE
+include CHANGELOG.md
+include *.txt
+include *.md
+recursive-include source_license_sdk *.py
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .DS_Store

@@ -1,0 +1,100 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "source-license-sdk"
+version = "1.0.0"
+description = "A Python SDK for Source-License platform license validation and activation"
+readme = "README.md"
+requires-python = ">=3.13"
+license = {text = "GPL-3.0"}
+authors = [
+    {name = "PixelRidge Softworks", email = "support@pixelridgesoftworks.com"},
+]
+keywords = ["license", "licensing", "software-license", "activation", "validation", "drm"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Software Distribution",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy",
+]
+system = [
+    "psutil>=5.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/PixelRidgeSoftworks/Source-License"
+Documentation = "https://github.com/PixelRidgeSoftworks/SL_Python_SDK"
+Repository = "https://github.com/PixelRidgeSoftworks/SL_Python_SDK"
+"Bug Tracker" = "https://github.com/PixelRidgeSoftworks/SL_Python_SDK/issues"
+Discord = "https://discord.gg/j6v99ZPkrQ"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["source_license_sdk*"]
+exclude = ["tests*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py37']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = [
+    "tests",
+]
+python_files = [
+    "test_*.py",
+    "*_test.py",
+]
+
+[tool.mypy]
+python_version = "3.7"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
