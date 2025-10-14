@@ -1,0 +1,255 @@
+Metadata-Version: 2.1
+Name: batch-face
+Version: 1.5.4
+Summary: Batch Face Preprocessing for Modern Research
+Home-page: https://github.com/elliottzheng/batch-face
+Author: Elliott Zheng
+Author-email: admin@hypercube.top
+License: MIT
+Project-URL: Documentation, https://github.com/elliottzheng/batch-face
+Project-URL: Source, https://github.com/elliottzheng/batch-face
+Project-URL: Tracker, https://github.com/elliottzheng/batch-face/issues
+Keywords: face-detection pytorch RetinaFace face-alignment
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: torch
+Requires-Dist: torchvision
+Requires-Dist: opencv-python
+Requires-Dist: opencv-transforms
+Requires-Dist: sixdrepnet
+
+# Batch Face for Modern Research
+
+This repo provides the out-of-box face detection, face alignment, head pose estimation and face parsing with batch input support and enables real-time application on CPU.
+
+
+## Features
+1. Batch input support for faster data processing.
+2. Smart API.
+3. Ultrafast with inference runtime acceleration.
+4. Automatically download pre-trained weights.
+5. Minimal dependencies.
+6. Unleash the power of GPU for batch processing.
+
+### Requirements
+
+- Linux, Windows or macOS
+- Python 3.5+ (it may work with other versions too)
+- opencv-python
+- PyTorch (>=1.0) 
+- ONNX (optional)
+
+While not required, for optimal performance it is highly recommended to run the code using a CUDA enabled GPU.
+
+## Install
+
+The easiest way to install it is using pip:
+
+```bash
+pip install git+https://github.com/elliottzheng/batch-face.git@master
+```
+No extra setup needs, most of the pretrained weights will be downloaded automatically.
+
+If you have trouble install from source, you can try install from PyPI:
+
+```bash
+pip install batch-face
+```
+the PyPI version is not guaranteed to be the latest version, but we will try to keep it up to date.
+
+## Usage
+You can clone the repo and run tests like this
+```
+python -m tests.camera
+```
+### Face Detection
+
+We wrap the [RetinaFace](https://github.com/biubug6/Pytorch_Retinaface) model and provide a simple API for batch face detection.
+
+#### Detect face and five landmarks on single image
+```python
+import cv2
+from batch_face import RetinaFace
+
+detector = RetinaFace(gpu_id=0)
+img = cv2.imread("examples/obama.jpg")
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+max_size = 1080 # if the image's max size is larger than 1080, it will be resized to 1080, -1 means no resize
+resize = 1 # resize the image to speed up detection, default is 1, no resize
+threshold = 0.95 # confidence threshold
+
+# now we recommand to specify return_dict=True to get the result in a more readable way
+faces = detector(img, threshold=threshold, resize=resize, max_size=max_size, return_dict=True)
+face = faces[0]
+box = face['box']
+kps = face['kps']
+score = face['score']
+
+# the old way to get the result
+faces = detector(img, threshold=threshold, resize=resize, max_size=max_size)
+box, kps, score = faces[0]
+
+```
+#### Running on CPU/GPU
+
+In order to specify the device (GPU or CPU) on which the code will run one can explicitly pass the device id.
+```python
+from batch_face import RetinaFace
+# 0 means using GPU with id 0 for inference
+# default -1: means using cpu for inference
+fp16 = True # use fp16 to speed up detection and save GPU memory
+
+detector = RetinaFace(gpu_id=0, fp16=True)
+```
+|      | GPU(GTX 1080TI,batch size=1) | GPU(GTX 1080TI，batch size=750) | CPU(Intel(R) Core(TM) i7-7800X CPU @ 3.50GHz) |
+| ---- | ---------------------------- | ------------------------------- | --------------------------------------------- |
+| FPS  | 44.02405810720893            | 96.64058005582535               | 15.452635835550483                            |
+| SPF  | 0.022714852809906007         | 0.010347620010375976            | 0.0647138786315918                            |
+
+
+#### Batch input for faster detection
+
+**Detector with CUDA process batch input faster than the same amount of single input.** 
+
+```python
+import cv2
+from batch_face import RetinaFace
+
+detector = RetinaFace()
+img= cv2.imread('examples/obama.jpg')
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+max_size = 1080 # if the image's max size is larger than 1080, it will be resized to 1080, -1 means no resize
+resize = 1 # resize the image to speed up detection, default is 1, no resize
+resize_device = 'cpu' # resize on cpu or gpu, default is gpu
+threshold = 0.95 # confidence threshold for detection
+batch_size = 100 # batch size for detection, the larger the faster but more memory consuming, default is -1, which means batch_size = number of input images
+batch_images = [img,img] # pseudo batch input
+
+all_faces = detector(batch_images, threshold=threshold, resize=resize, max_size=max_size, batch_size=batch_size) 
+faces = all_faces[0] # the first input image's detection result
+box, kps, score = faces[0] # the first face's detection result
+```
+
+![](./images/gpu_batch.png)
+
+#### Batch input for different size images
+
+In v1.5.2, we enhanced the batch support for different size images, so you can just pass a list of np.array to the detector, and the detector will resize the all images to the same size(specified by `max_size`, default is 640) and then do the detection, which makes it even faster the the previous implementation of `pseudo_batch_detect`, see [tests/detection_on_pseudo_batch.py](tests/detection_on_pseudo_batch.py) for more details.
+
+
+
+
+### Face Alignment
+
+We wrap the [Face Landmark](https://github.com/cunjian/pytorch_face_landmark) model and provide a simple API for batch face alignment.
+
+#### face alignment on single image
+
+```python 
+from batch_face import drawLandmark_multiple, LandmarkPredictor, RetinaFace
+
+predictor = LandmarkPredictor(0)
+detector = RetinaFace(0)
+
+imgname = "examples/obama.jpg"
+img = cv2.imread(imgname)
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+faces = detector(img)
+
+if len(faces) == 0:
+    print("NO face is detected!")
+    exit(-1)
+
+# the first input for the predictor is a list of face boxes. [[x1,y1,x2,y2]]
+results = predictor(faces, img, from_fd=True) # from_fd=True to convert results from our detection results to simple boxes
+
+for face, landmarks in zip(faces, results):
+    img = drawLandmark_multiple(img, face[0], landmarks)
+```
+### Head Pose Estimation
+
+We wrap the [SixDRepNet](https://github.com/jahongir7174/SixDRepNet) model and provide a simple API for batch head pose estimation.
+
+#### Head pose estimation on video
+```python
+from batch_face import RetinaFace, SixDRep, draw_landmarks, load_frames_rgb, Timer
+
+vis = True
+gpu_id = 0
+batch_size = 100
+threshold = 0.95
+detector = RetinaFace(gpu_id=gpu_id)
+head_pose_estimator = SixDRep(gpu_id=gpu_id)
+video_file = 'examples/ross.mp4'
+frames = load_frames_rgb(video_file) # simple wrapper to load video frames with opencv and convert to RGB, 0~255, UInt8, HWC
+print(f'Loaded {len(frames)} frames')
+print('image size:', frames[0].shape)
+# it might take longer time to detect since is first time to run the model
+all_faces = detector(frames, batch_size=batch_size, return_dict=True, threshold=threshold, resize=0.5)
+head_poses = head_pose_estimator(all_faces, frames, batch_size=batch_size, update_dict=True, input_face_type='dict')
+# the head pose will be updated in the all_faces dict
+out_frames = []
+for faces, frame in zip(all_faces, frames):
+    for face in faces:
+        head_pose_estimator.plot_pose_cube(frame, face['box'], **face['head_pose'])
+    out_frames.append(frame)
+
+if vis:
+    import imageio
+    out_file = 'examples/head_pose.mp4'
+    imageio.mimsave(out_file, out_frames, fps=8)
+```
+check out the result video [here](./examples/head_pose.mp4)
+you can run the script `python -m tests.video_head_pose` to see the result.
+
+### Face Parsing
+
+We wrap the [FaRL](https://github.com/FacePerceiver/farl) model from [facer](https://github.com/FacePerceiver/facer) and provide a simple API for batch face parsing.
+
+If you want to use the face parsing model, you need to install the `pyfacer>=0.0.5` package.
+```bash
+pip install pyfacer>=0.0.5 -U
+```
+
+#### Face Parsing on video
+
+```python
+import numpy as np
+import cv2
+from batch_face import RetinaFace, FarlParser, load_frames_rgb
+gpu_id = 0
+video_file = 'examples/ross.mp4'
+retinaface = RetinaFace(gpu_id)
+face_parser = FarlParser(gpu_id=gpu_id, name='farl/lapa/448') # you can choose different model from [farl/celebm/448, farl/lapa/448]
+frames = load_frames_rgb(video_file)
+all_faces = retinaface(frames, return_dict=True, threshold=0.95)
+# optional, you can do some face filtering here, for example you can filter out 
+all_faces = face_parser(frames, all_faces)
+label_names = face_parser.label_names
+
+print(label_names)
+for frame_i, (faces, frame) in enumerate(zip(all_faces, frames)):
+    for face_i, face in enumerate(faces):
+        seg_logits = face['seg_logits']
+        seg_preds = face['seg_preds']
+        vis_seg_preds = face_parser.color_lut[seg_preds]
+        # blend with input frame
+        frame = cv2.addWeighted(frame, 0.5, vis_seg_preds, 0.5, 0)
+        vis_frame = np.concatenate([vis_seg_preds, frame], axis=1)
+        cv2.imwrite(f'vis_{frame_i}_{face_i}.png', vis_frame[...,::-1])
+
+```
+check out the result images [here](./examples/ross_seg.png)
+you can run the script `python -m tests.parsing_on_video` to see the result.
+
+## References
+
+- Face Detection Network and pretrained model are from [biubug6/Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface)
+- Face Alignment Network and pretrained model are from [cunjian/pytorch_face_landmark](https://github.com/cunjian/pytorch_face_landmark)
+- Face Reconstruction Network and pretrained model are from [cleardusk/3DDFA](https://github.com/cleardusk/3DDFA)
+- Head Pose Estimation Network and pretrained model are from [jahongir7174/SixDRepNet](https://github.com/jahongir7174/SixDRepNet)
+- Face Parsing Network and pretrained model are from [FacePerceiver/farl](https://github.com/FacePerceiver/farl) and [FacePerceiver/facer](https://github.com/FacePerceiver/facer)
