@@ -1,0 +1,5 @@
+[console_scripts]
+gget-mcp = gget_mcp.server:cli_app
+server = gget_mcp.server:server
+sse = gget_mcp.server:sse
+stdio = gget_mcp.server:stdio
