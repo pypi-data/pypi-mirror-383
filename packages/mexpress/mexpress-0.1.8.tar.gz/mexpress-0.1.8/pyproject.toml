@@ -1,0 +1,15 @@
+[project]
+name = "mexpress"
+dependencies = ["numpy"]
+description = "Math parser and evaluator capable of computing gradients and Hessians."
+readme = "README.md"
+version = "0.1.8"
+requires-python = ">=3.10"
+[build-system]
+requires = ["maturin>1.0,<2.0"]
+build-backend = "maturin"
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "mexpress._mexpress"
+[tool.ruff.lint]
+ignore = ["E731"]
