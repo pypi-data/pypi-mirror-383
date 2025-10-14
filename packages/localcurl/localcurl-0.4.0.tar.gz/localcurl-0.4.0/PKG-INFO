@@ -1,0 +1,77 @@
+Metadata-Version: 2.4
+Name: localcurl
+Version: 0.4.0
+Summary: Replay remote curl requests locally
+Author: Sylvain Gable
+License-Expression: MIT
+License-File: LICENSE
+Requires-Python: >=3.9
+Requires-Dist: pyperclip>=1.9.0
+Requires-Dist: requests>=2.32.3
+Requires-Dist: typer>=0.12.0
+Description-Content-Type: text/markdown
+
+# localcurl
+
+A tool to replay remote curl requests locally for easier debugging and testing.
+
+## Why use localcurl?
+
+When debugging API issues or developing locally against a remote service, you often need to replay real requests from production or staging environments. `localcurl` makes it easy by automatically rewriting curl commands to point to your local service while preserving all headers, authentication, and other parameters.
+
+## Installation
+
+With uv :
+```bash
+uv tool install localcurl
+```
+
+With pip :
+
+```bash
+pip install localcurl
+```
+NB: supports Python 3.9+
+
+## Usage
+
+```bash
+localcurl http://localhost:8080 curl https://api.example.com/endpoint
+```
+Or, as a shorthand:
+```bash
+lc http://localhost:8080 curl https://api.example.com/endpoint
+```
+
+The curl command can also be piped from stdin:
+```bash
+echo 'curl https://api.example.com/endpoint' | localcurl http://localhost:8080
+```
+
+Or read from the clipboard:
+```bash
+localcurl http://localhost:8080
+```
+
+## Options
+
+- `addrport`: The local address to send the request to (e.g., `http://localhost:8080`)
+- `--no-verify`: Disable server TLS certificate verification
+- `--keep-host-cookie-prefix`: Prevent stripping `__Host-` prefix from cookies
+- `--cookie`: Add a cookie to the request (e.g. `--cookie session=abc123`)
+- `--header`: Add a header to the request (e.g. `header 'Authorization: Bearer abc123'`)
+- `--sid`: Add a session cookie to request (shorthand for `--cookie sessionid=`). The cookie name can be overridden by setting a `LC_SID_COOKIE_NAME` environment variable.
+- `--auth-token`: Add an authentication header to request (shorthand for `--header 'Authorization: Token ...'`). The header name and prefix can be overridden by setting a `LC_AUTH_TOKEN_HEADER` environment variable (defaults to `Authorization: Token`).
+- `curl_command`: The curl command to parse (reads from stdin/clipboard if not provided)
+
+## Examples
+
+Redirect an API request to your local service:
+```bash
+localcurl http://localhost:3000 'curl -H "Authorization: Bearer token123" https://api.example.com/users'
+```
+
+Ignore TLS verification for local development:
+```bash
+localcurl --no-verify https://localhost:8443 'curl https://api.example.com/secure-endpoint'
+```

@@ -1,0 +1,39 @@
+[project]
+name = "localcurl"
+version = "0.4.0"
+description = "Replay remote curl requests locally"
+readme = "README.md"
+authors = [
+    { name = "Sylvain Gable"}
+]
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = [
+    "pyperclip>=1.9.0",
+    "requests>=2.32.3",
+    "typer>=0.12.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "mypy>=1.0.0",
+    "types-requests",
+    "types-pyperclip; python_version>='3.9'",
+]
+
+[project.scripts]
+localcurl = "localcurl.cli:app"
+lc = "localcurl.cli:app"
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+show_error_codes = true
+pretty = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

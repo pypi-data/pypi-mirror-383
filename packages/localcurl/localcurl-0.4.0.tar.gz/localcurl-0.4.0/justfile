@@ -1,0 +1,31 @@
+default:
+    just --list
+
+publish-minor-update:
+    uv version --bump minor
+    git add pyproject.toml uv.lock
+    git commit -m "Bump minor version"
+    git push
+    rm -f dist/*
+    uv publish --username __token__
+
+# Run tests
+[group('qa')]
+test:
+    uv run --group dev pytest
+
+
+# Run linters
+[group('qa')]
+lint:
+    uvx ruff check
+    uvx ruff format
+
+# Check types
+[group('qa')]
+typecheck:
+    uvx ty check --python .venv src
+
+# Perform all checks
+[group('qa')]
+check-all: lint typecheck test
