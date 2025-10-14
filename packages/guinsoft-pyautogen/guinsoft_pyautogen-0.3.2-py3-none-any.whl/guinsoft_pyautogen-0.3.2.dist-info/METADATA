@@ -1,0 +1,79 @@
+Metadata-Version: 2.4
+Name: guinsoft_pyautogen
+Version: 0.3.2
+Summary: guinsoft_pyautogen
+Author: guinsoft
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: openai>1
+Requires-Dist: diskcache
+Requires-Dist: termcolor
+Requires-Dist: flaml
+Requires-Dist: python-dotenv
+Requires-Dist: flaml[blendsearch]; extra == "blendsearch"
+Requires-Dist: sympy; extra == "mathchat"
+Requires-Dist: pydantic==1.10.9; extra == "mathchat"
+Requires-Dist: wolframalpha; extra == "mathchat"
+Requires-Dist: chromadb; extra == "retrievechat"
+Requires-Dist: tiktoken; extra == "retrievechat"
+Requires-Dist: sentence-transformers; extra == "retrievechat"
+Requires-Dist: pypdf; extra == "retrievechat"
+Requires-Dist: chromadb; extra == "teachable"
+Requires-Dist: chromadb; extra == "test"
+Requires-Dist: lancedb; extra == "test"
+Requires-Dist: coverage>=5.3; extra == "test"
+Requires-Dist: datasets; extra == "test"
+Requires-Dist: ipykernel; extra == "test"
+Requires-Dist: nbconvert; extra == "test"
+Requires-Dist: nbformat; extra == "test"
+Requires-Dist: pre-commit; extra == "test"
+Requires-Dist: pydantic==1.10.9; extra == "test"
+Requires-Dist: pytest-asyncio; extra == "test"
+Requires-Dist: pytest>=6.1.1; extra == "test"
+Requires-Dist: sympy; extra == "test"
+Requires-Dist: tiktoken; extra == "test"
+Requires-Dist: wolframalpha; extra == "test"
+Requires-Dist: qdrant-client[fastembed]; extra == "test"
+Requires-Dist: langchain; extra == "test"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# 桂软guinsoft_pyautogen
+
+## 打包为 whl
+### 安装打包工具（若未安装）
+* pip install setuptools wheel
+
+### 打包（生成dist目录，内含新whl文件）
+* python setup.py bdist_wheel
+
+## 验证
+### 安装新包
+* pip install dist/guinsoft_pyautogen-0.3.2-py3-none-any.whl
+
+###  验证功能（如导入包并执行测试代码）
+* python -c "import guinsoft_pyautogen; print(guinsoft_pyautogen.__version__)"
+
+## 推送到PyPi
+### 安装twine工具
+* pip install twine
+
+### 验证包
+* twine check dist/*
+
+### 推送包（注册PyPI账号，生成token）
+* twine upload dist/*
