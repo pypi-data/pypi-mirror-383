@@ -1,0 +1,61 @@
+Metadata-Version: 2.4
+Name: rag-kmk
+Version: 0.0.52
+Summary: A simple RAG implementation for educational purposes implemented by Murat Karakaya Akademi
+Author-email: Murat Karakaya <kmkarakaya@gmail.com>
+License: MIT License
+Project-URL: Homepage, https://github.com/kmkarakaya/rag-kmk
+Keywords: rag-kmk
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy==1.26.4
+Requires-Dist: PyYAML==6.0.1
+Requires-Dist: PyMuPDF==1.24.7
+Requires-Dist: python-docx==1.1.2
+Requires-Dist: langchain==0.2.10
+Requires-Dist: sentence-transformers==3.0.1
+Requires-Dist: google-genai==1.43.0
+Requires-Dist: chromadb==0.5.3
+Requires-Dist: streamlit==1.50.0
+Requires-Dist: docx2txt==0.9
+Provides-Extra: all
+Requires-Dist: rag-kmk[extra]; extra == "all"
+Provides-Extra: extra
+Requires-Dist: pandas; extra == "extra"
+Dynamic: license-file
+
+# rag-kmk
+
+
+[![image](https://img.shields.io/pypi/v/rag-kmk.svg)](https://pypi.python.org/pypi/rag-kmk)
+[![image](https://img.shields.io/conda/vn/conda-forge/rag-kmk.svg)](https://anaconda.org/conda-forge/rag-kmk)
+
+
+**A simple RAG implementation for educational purposes implemented by Murat Karakaya Akademi**
+
+
+-   Free software: MIT License
+-   Documentation: https://kmkarakaya.github.io/rag-kmk
+-   Tutorial: https://www.youtube.com/@MuratKarakayaAkademi
+    
+
+## Features
+
+- TODO: 
+- add other file types
+
+## Local development notes
+
+- The project stores a local persistent ChromaDB under `./chromaDB` by default.
+- To avoid checking runtime DB files into source control, add `chromaDB/` to your `.gitignore`.
+
+If you need to switch to an in-memory collection for quick tests, set `vector_db.chromaDB_path` to `null` in `rag_kmk/config/config.yaml`.
