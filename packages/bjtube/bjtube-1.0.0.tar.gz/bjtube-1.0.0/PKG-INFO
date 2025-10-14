@@ -1,0 +1,55 @@
+Metadata-Version: 2.4
+Name: bjtube
+Version: 1.0.0
+Summary: A YouTube downloader with faster speed, ffmpeg is essential to use before installation. with auto-update and dependency installer.
+Home-page: https://github.com/babaralijamali/bjtube
+Author: Babar Ali Jamali
+Author-email: babar995@gmail.com
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Multimedia :: Video
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: requires-python
+Dynamic: summary
+
+# \# bjtube 🎥
+
+A fast, reliable YouTube downloader with faster speed, ffmpeg is essential to use before installation.
+📦 Author: Babar Ali Jamali
+
+
+
+> ⚙️ Requires FFmpeg to be installed and accessible from the command line.
+
+
+
+\## Features
+
+\- Fast multi-format video downloads  
+
+\- Auto merges audio+video  
+
+\- Clean and interactive CLI interface  
+
+\- Auto checks yt-dlp updates  
+
+
+
+\## Installation
+
+```bash
+
+pip install bjtube
+
+
+
