@@ -1,0 +1,11 @@
+{
+    // jupyter notebook format on save
+    "notebook.formatOnSave.enabled": true,
+    "notebook.output.wordWrap": true,
+
+    // overall python formatter
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+    },
+}

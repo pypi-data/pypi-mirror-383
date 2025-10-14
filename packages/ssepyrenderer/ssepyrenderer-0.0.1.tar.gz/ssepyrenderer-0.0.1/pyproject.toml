@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ssepyrenderer"
+version = "0.0.1"
+description = ''
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "temp", email = "temp@example.com" },
+]
+classifiers = [
+  "Framework :: Jupyter",
+  "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "anywidget>=0.9.18",
+    "ipywidgets>=8.1.7",
+    "traitlets>=5.14.3",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["ssepywidget"]
+
+[tool.hatch.build.force-include]
+"ssepywidget/widget.js" = "ssepywidget/widget.js"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.1",
+]
+
+[tool.hatch.build.targets.sdist]
+# exclude = [".git", ".venv"]
+
