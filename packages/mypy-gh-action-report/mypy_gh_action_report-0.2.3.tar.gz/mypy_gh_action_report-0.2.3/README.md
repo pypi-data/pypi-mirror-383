@@ -1,0 +1,25 @@
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
+[![PyPI](https://img.shields.io/pypi/v/mypy-gh-action-report.svg)](https://pypi.python.org/pypi/mypy-gh-action-report/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/mypy-gh-action-report?style=flat-square)](https://pypi.python.org/pypi/mypy-gh-action-report/)
+[![Tests workflow](https://github.com/bc291/mypy-gh-action-report/actions/workflows/tests.yml/badge.svg)](https://github.com/bc291/mypy-gh-action-report)
+
+# mypy-gh-action-report
+
+Notify Mypy output via [GitHub Workflow Commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions)
+
+## Installation
+
+```bash
+pip install mypy-gh-action-report
+```
+
+## Docs
+
+Available [here](https://bc291.github.io/mypy-gh-action-report/)
+
+## Thanks
+
+- [github-action-utils](https://github.com/saadmk11/github-action-utils)
+- [typer](https://github.com/tiangolo/typer)
