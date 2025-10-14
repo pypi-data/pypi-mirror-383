@@ -1,0 +1,10 @@
+dtoolcore>=3.18.0
+dservercore>=0.20.0
+dserver-direct-mongo-plugin
+
+[test]
+dservercore
+dserver-retrieve-plugin-mongo
+dserver-search-plugin-mongo
+pytest
+pytest-cov
