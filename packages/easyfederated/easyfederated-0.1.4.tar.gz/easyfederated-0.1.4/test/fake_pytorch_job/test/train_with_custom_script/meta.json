@@ -1,0 +1,16 @@
+{
+    "name": "train_with_custom_script",
+    "resource_spec": {},
+    "min_clients": 2,
+    "deploy_map": {
+        "app_server": [
+            "server"
+        ],
+        "app_site1": [
+            "site1"
+        ],
+        "app_site2": [
+            "site2"
+        ]
+    }
+}
