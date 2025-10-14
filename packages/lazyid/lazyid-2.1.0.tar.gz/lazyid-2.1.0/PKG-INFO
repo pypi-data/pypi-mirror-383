@@ -1,0 +1,212 @@
+Metadata-Version: 2.4
+Name: lazyid
+Version: 2.1.0
+Summary: Minimal 16-character URL-safe unique ID generator based on a millisecond timestamp and cryptographically secure random bits.
+Author-email: niefdev <niefdev@gmail.com>
+Maintainer-email: niefdev <niefdev@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/niefdev/lazyid
+Project-URL: Repository, https://github.com/niefdev/lazyid.git
+Project-URL: Issues, https://github.com/niefdev/lazyid/issues
+Project-URL: Documentation, https://github.com/niefdev/lazyid#readme
+Keywords: id,unique-id,short-id,uuid,identifier,base36,timestamp,url-safe,lazyid,python
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+# LazyId
+
+[](https://www.npmjs.com/package/lazyid)
+[](https://www.google.com/search?q=LICENSE)
+
+Minimal 16-character URL-safe unique ID generator based on a millisecond timestamp and cryptographically secure random bits.
+
+## Overview
+
+LazyId is a lightweight library for generating and parsing 16-character, URL-safe unique identifiers. Each ID consists of two parts: a time component derived from a millisecond timestamp (UTC) and a cryptographically secure random component, which are then encoded using **Base36** (`0-9`, `a-z`).
+
+No external dependencies. Available for JavaScript, TypeScript, and Python.
+
+-----
+
+## Features
+
+  - **Compact**: Generates 16-character IDs using a URL-safe Base36 alphabet.
+  - **Timestamp-Based**: The first 8 characters are derived from a millisecond timestamp (since the Unix epoch, UTC).
+  - **Cryptographic Random**: The last 8 characters are derived from secure random data.
+  - **Cross-Platform**: Available for JavaScript, TypeScript, and Python with identical output.
+  - **Reversible**: Extract the original millisecond timestamp from any ID.
+  - **No Dependencies**: Uses only standard libraries.
+  - **Practically Collision-Free**: Safe for use at a massive scale.
+
+-----
+
+## Installation
+
+### JavaScript
+
+Install via npm:
+
+```bash
+npm install lazyid
+```
+
+### TypeScript
+
+Install via npm (scoped package):
+
+```bash
+npm install lazyid
+```
+
+### Python
+
+Install via pip:
+
+```bash
+pip install lazyid
+```
+
+-----
+
+## Usage
+
+### JavaScript
+
+```javascript
+// CommonJS
+const lazyid = require("lazyid");
+
+// ES Modules
+import lazyid from "lazyid";
+
+// Generate a new ID
+let id = lazyid(); 
+// -> Example: 'k2vtbmo2j5ah57z1'
+
+// Extract the timestamp from an ID
+let timestamp = lazyid(id);
+// -> Example: 1728494747234 (this is an integer millisecond timestamp)
+```
+
+### TypeScript
+
+```typescript
+import lazyid from "lazyid";
+
+// Generate a new ID
+const id: string = lazyid();
+// -> Example: 'k2vtbmo2j5ah57z1'
+
+// Extract the timestamp from an ID
+const timestamp: number = lazyid(id);
+// -> Example: 1728494747234 (this is an integer millisecond timestamp)
+```
+
+### Python
+
+```python
+from lazyid import lazyid
+
+# Generate a new ID
+new_id = lazyid()
+# -> Example: 'k2vtbmo2j5ah57z1'
+
+# Extract the timestamp from an ID
+timestamp = lazyid(new_id)
+# -> Example: 1728494747234 (this is an integer millisecond timestamp)
+```
+
+-----
+
+## API Reference
+
+### `lazyid([id])`
+
+  - **Generate**: Call with no arguments to create a new LazyId string.
+  - **Parse**: Call with an ID string to extract the original `integer` millisecond timestamp.
+
+**Parameters:**
+  - `id` (string, optional): If provided, extract timestamp from this ID string.
+
+**Returns:**
+
+  - **JavaScript**: `string` (on generate) or `number` (on parse).
+  - **TypeScript**: `string` (on generate) or `number` (on parse) with full type safety.
+  - **Python**: `str` (on generate) or `int` (on parse).
+
+**Throws:** Throws an error if the input string is invalid.
+
+-----
+
+## Structure of a LazyId
+
+  - **Total Length**: 16 characters.
+  - **Encoding**: Base36 (`0123456789abcdefghijklmnopqrstuvwxyz`).
+  - **Composition**: The ID is formed from the combination of two numerical components, encoded into Base36:
+    1.  **Time Component (First 8 characters)**: Derived from the current millisecond timestamp (`Date.now() % 36**8`).
+    2.  **Random Component (Last 8 characters)**: Derived from cryptographically secure random bytes (`crypto.randomBytes` in JS/TS, `os.urandom` in Python).
+
+-----
+
+## Notes
+
+  - **Timezone**: All timestamps are processed in UTC.
+  - **Random Quality**: Uses cryptographic-grade random generators (`crypto.randomBytes` in JS/TS, `os.urandom` in Python) with no fallback.
+  - **Interoperability**: IDs generated in any language can be correctly parsed in any other supported language.
+
+-----
+
+## Collision Resistance
+
+By combining a time component with millisecond precision and a random component with **\~2.8 trillion** (`36^8`) possibilities, LazyId collisions are practically impossible, even in distributed systems generating thousands of IDs per millisecond. It is safe for use as database primary keys, URL slugs, filenames, or event IDs.
+
+-----
+
+## Contributing
+
+Contributions are welcome\! Please submit issues or pull requests to the GitHub repository.
+
+1.  Fork the repository.
+2.  Create a feature branch (`git checkout -b feature/your-feature`).
+3.  Commit your changes (`git commit -m 'Add your feature'`).
+4.  Push to the branch (`git push origin feature/your-feature`).
+5.  Open a Pull Request.
+
+-----
+
+## Issues
+
+Report bugs or request features at [https://github.com/niefdev/lazyid/issues](https://github.com/niefdev/lazyid/issues).
+
+-----
+
+## License
+
+MIT © [niefdev](https://github.com/niefdev)
+
+-----
+
+## Author
+
+Developed by **niefdev**
+
+## Repository
+
+Source code: [https://github.com/niefdev/lazyid](https://github.com/niefdev/lazyid)
+
+## Homepage
+
+Learn more: [https://github.com/niefdev/lazyid\#readme](https://github.com/niefdev/lazyid#readme)
