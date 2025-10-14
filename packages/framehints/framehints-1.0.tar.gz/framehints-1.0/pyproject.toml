@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=70.1", "wheel>=0.43"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "framehints"
+version = "1.0"
+description = ""
+authors = [
+    { name = "lutrarutra", email = "lutrarutra@pm.me" }
+]
+requires-python = ">=3.11"
+
+dependencies = [
+    "numpy>= 2.2",
+    "interop >= 1.5",
+    "pandas >= 2.3",
+]
+
+[tool.flake8]
+max-line-length = 88
+exclude = [
+    ".git",
+    "__pycache__",
+]
+extend-ignore = ["E501", "W292", "W293"]
