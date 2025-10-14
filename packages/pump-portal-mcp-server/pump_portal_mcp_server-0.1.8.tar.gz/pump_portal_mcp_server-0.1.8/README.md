@@ -1,0 +1,281 @@
+# Pump Portal MCP Server 🚀
+
+A production-ready **Model Context Protocol (MCP)** server that provides Solana blockchain trading operations through **PumpPortal Lightning API**. Create wallets, launch tokens, and execute trades with reliable transaction handling.
+
+## ✨ Features
+
+- 🏦 **Wallet Management**: Create secure trading wallets with API keys
+- 💰 **Balance Checking**: Check SOL balance using Helius RPC
+- 🪙 **Token Creation**: Launch new SPL tokens with metadata and social links
+- 💰 **Trading Operations**: Buy and sell tokens across multiple DEXs
+- 💸 **Fee Collection**: Claim creator fees from token trading activity
+- 🔄 **Lightning API**: Reliable transaction execution via PumpPortal infrastructure
+- 🛡️ **Production Ready**: Comprehensive error handling, logging, and validation
+- 📊 **Trading Resources**: Access wallet info and trading status via MCP resources
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+1. **PumpPortal API Key** - Create a wallet using the `create_wallet` tool
+2. **Python 3.11+** (for development only)
+
+### Installation
+
+Option 1: Using `uvx` (Recommended)
+
+```bash
+uvx pump-portal-mcp-server@latest
+```
+
+Option 2: From Source (for development)
+
+```bash
+git clone https://github.com/pump-portal/pump-portal-mcp-server.git
+cd pump-portal-mcp-server
+uv sync
+```
+
+## 🔧 Configuration
+
+### Claude Code (VS Code Extension)
+
+Install and configure in VS Code:
+
+1. Install the Claude Code extension
+2. Open Command Palette (`Cmd/Ctrl + Shift + P`)
+3. Run "Claude Code: Add MCP Server"
+4. Configure with this simple setup:
+
+```json
+{
+  "name": "pump-portal",
+  "config": {
+    "command": "uvx",
+    "args": [
+      "pump-portal-mcp-server@latest"
+    ],
+    "env": {
+      "API_KEY": "your-pumpportal-api-key-here",
+      "WALLET_ADDRESS": "your-wallet-public-key-here"
+    }
+  }
+}
+```
+
+**Getting your API key and wallet address:**
+
+Note: You can start the server without these values and use the `create_wallet` tool first. The tool will show you exactly what to add to your configuration.
+
+**Option 1: Use the create_wallet tool (Recommended)**
+1. Start the server (API_KEY and WALLET_ADDRESS are optional at startup)
+2. Use the `create_wallet` tool to generate a new wallet
+3. The tool will display the exact JSON env configuration to add
+4. Copy the env object and add it to your MCP server configuration
+5. Restart the MCP server for the changes to take effect
+
+**Option 2: Use PumpPortal web interface**
+1. Visit https://pumpportal.fun/trading-api/setup
+2. Click 'Create Wallet'
+3. Copy the `apiKey` and `walletPublicKey` from the response
+4. Set them as environment variables and restart the server
+
+**Option 3: Use curl command**
+```bash
+curl 'https://pumpportal.fun/api/create-wallet'
+```
+Copy the `apiKey` and `walletPublicKey` from the response, set them as environment variables, and restart the server.
+
+## 🛠️ Available Tools
+
+### Wallet Operations
+
+#### `create_wallet`
+Create a new trading wallet and API key.
+
+**Returns:**
+- `apiKey`: For Lightning API operations
+- `walletPublicKey`: Public key for receiving funds
+- `privateKey`: Keep secure for wallet access
+
+#### `check_balance`
+Check comprehensive wallet balance including SOL and all token holdings with USD values.
+
+Queries Solana blockchain via Helius RPC for SOL and token balances, then fetches current USD prices from Jupiter API to calculate total wallet value.
+
+**Parameters:**
+- `wallet_address`: Solana wallet public key (optional, uses configured wallet if not provided)
+
+**Returns:**
+- `sol`: SOL balance with USD price and value
+- `tokens`: List of all token holdings with mint addresses, amounts, USD prices, and values
+- `total_tokens`: Number of different tokens held
+- `total_tokens_value_usd`: Total value of all tokens in USD
+- `total_value_usd`: Total wallet value in USD (SOL + tokens)
+- `wallet_address`: The wallet address checked
+- `solscan_url`: URL to view wallet on Solscan
+
+**Example:**
+```python
+# Check configured wallet balance
+check_balance()
+
+# Check specific wallet balance
+check_balance(wallet_address="So11111111111111111111111111111111111111112")
+```
+
+**Response includes:**
+- SOL balance and current USD value
+- Every token holding with amount and USD value
+- Total portfolio value in USD
+
+### Token Operations
+
+#### `create_token`
+Launch a new SPL token on PumpPortal with 50% slippage.
+
+**Parameters:**
+- `name`: Token name
+- `symbol`: Token ticker (1-10 chars)
+- `description`: Token description
+- `dev_buy_amount`: SOL amount for initial buy (min 0.01)
+- `image_base64`: Token icon (base64 encoded, optional)
+- `twitter`: Twitter URL (optional)
+- `telegram`: Telegram URL (optional)
+- `website`: Website URL (optional)
+
+**Example:**
+```python
+create_token(
+    name="My Token",
+    symbol="MTK",
+    description="A revolutionary token",
+    dev_buy_amount=0.1,
+    twitter="https://twitter.com/mytoken",
+    website="https://mytoken.com"
+)
+```
+
+### Trading Operations
+
+#### `buy_token`
+Buy tokens using Lightning API on Pump.fun pool with 10% slippage.
+
+**Parameters:**
+- `mint`: Token contract address
+- `amount`: Amount to trade
+- `denominated_in_sol`: "true" for SOL amount, "false" for token count
+
+#### `sell_token`
+Sell tokens using Lightning API on Pump.fun pool with 10% slippage.
+
+**Parameters:**
+- `mint`: Token contract address
+- `amount`: Amount to trade (can be "100%" to sell all)
+- `denominated_in_sol`: "true" for SOL amount, "false" for token count
+
+#### `claim_fees`
+Claim creator fees from all your Pump.fun tokens.
+
+Claims accumulated creator fees from all your tokens on Pump.fun. Uses default settings (priority fee: 0.000001 SOL).
+
+**Example:**
+```python
+claim_fees()
+```
+
+## 📊 Available Resources
+
+### Wallet Information
+- `pumpportal://wallet/current` - Current wallet configuration and status
+- `pumpportal://status/trading` - Trading service capabilities and settings
+
+## 💡 Available Prompts
+
+### Trading Guidance
+- `token_launch_checklist` - Comprehensive token launch checklist
+- `trading_strategy_guide` - Trading strategies and risk management
+- `portfolio_management` - Portfolio diversification and management
+
+## ⚙️ Environment Variables
+
+```bash
+# Recommended (set after using create_wallet tool)
+API_KEY=your-pumpportal-api-key-here           # API key from create_wallet tool
+WALLET_ADDRESS=your-wallet-public-key-here     # Wallet public key from create_wallet tool
+
+# Helius API Key (required for balance checking)
+# Get your free API key at https://www.helius.dev/
+HELIUS_API_KEY=your-helius-api-key-here        # Helius API key for RPC calls
+
+# Optional trading configuration
+DEFAULT_SLIPPAGE=10                    # Default slippage percentage
+DEFAULT_PRIORITY_FEE=0.0005           # Default priority fee in SOL
+DEFAULT_POOL=pump                      # Default exchange pool
+API_TIMEOUT=30                         # API request timeout (seconds)
+
+# Optional logging configuration
+LOG_LEVEL=INFO                         # DEBUG, INFO, WARNING, ERROR
+LOG_FORMAT=standard                    # standard, json, detailed
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Need to set up your wallet**
+- The server can run without API_KEY and WALLET_ADDRESS at startup
+- Use the `create_wallet` tool - it will show you the exact JSON env configuration to add
+- After creating a wallet, add the env configuration shown in the tool output to your MCP server config
+- Restart the MCP server for the changes to take effect
+
+**"Trading failed" errors**
+- Check your wallet has sufficient SOL balance
+- Verify the token mint address is correct
+- Adjust slippage settings for volatile markets
+- Ensure priority fee is adequate for network conditions
+
+**"Token creation failed"**
+- Verify dev buy amount is at least 0.01 SOL
+- Check token name and symbol are valid
+- Ensure image is properly base64 encoded if provided
+- Verify all URLs are valid and accessible
+
+### Development Setup
+
+For local development:
+
+```bash
+# Clone repository
+git clone https://github.com/pump-portal/pump-portal-mcp-server.git
+cd pump-portal-mcp-server
+
+# Install with uv
+uv sync
+
+# Run locally (you can start without API_KEY/WALLET_ADDRESS)
+uv run python -m pump_portal_mcp_server.server
+
+# Use create_wallet tool, then set environment variables as instructed
+# export API_KEY=your-api-key-here
+# export WALLET_ADDRESS=your-wallet-public-key-here
+```
+
+## ⚠️ Risk Disclaimer
+
+Trading cryptocurrencies involves substantial risk of loss and is not suitable for all investors. The Pump Portal MCP Server is a tool for executing trades and does not provide financial advice. Always:
+
+- Do your own research before trading
+- Never invest more than you can afford to lose
+- Understand the risks of cryptocurrency trading
+- Consider consulting with a financial advisor
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 🆘 Support
+
+- **Issues**: [GitHub Issues](https://github.com/pump-portal/pump-portal-mcp-server/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/pump-portal/pump-portal-mcp-server/discussions)
+- **PumpPortal**: [PumpPortal.fun](https://pumpportal.fun)
