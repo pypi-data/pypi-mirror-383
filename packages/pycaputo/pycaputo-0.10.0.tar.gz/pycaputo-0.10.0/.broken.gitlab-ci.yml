@@ -1,0 +1,40 @@
+cache:
+  - key:
+      files:
+        - requirements-test.txt
+    paths:
+      - vendor/apt
+      - vendor/python
+
+before_script:
+  - echo $CI_PROJECT_DIR
+  - python --version
+  - free -h
+  - export APT_DIR="$(pwd)/vendor/apt" && mkdir -pv "$APT_DIR"
+  - apt-get update && apt-get -o dir::cache::archives="$APT_DIR" install -y --no-install-recommends just
+  - python -m venv --system-site-packages vendor/python
+  - source vendor/python/bin/activate
+  - just pip-install
+
+ruff:
+  image: "python:3.13"
+  script: |
+    just ruff
+
+mypy:
+  image: "python:3.13"
+  script: |
+    just mypy
+
+pytest:
+  image: "python:$PYTHON_VERSION"
+  parallel:
+    matrix:
+      - PYTHON_VERSION: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+  script: |
+    just test
+
+examples:
+  image: "python:3.13"
+  script: |
+    just examples
