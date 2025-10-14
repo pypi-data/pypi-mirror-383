@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: mytqdm
+Version: 1.0.11
+Summary: mytqdm is a wrapper around tqdm that allows to see and share your progress on https://mytqdm.app
+Home-page: https://github.com/padmalcom/mytqdm
+Author: Jonas Freiknecht
+Author-email: j.freiknecht@googlemail.com
+License: MIT
+Project-URL: Documentation, https://mytqdm.app/docs
+Project-URL: GitHub, https://github.com/padmalcom/mytqdm
+Project-URL: Changelog, https://github.com/padmalcom/mytqdm/blob/master/CHANGELOG.md
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: tqdm>=4.67.1
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# MyTqdm
+See and share your tqdm state everywhere with everyone on [mytqdm.app](https://mytqdm.app)!
+
+## Support
+Writing software takes time. I'd be happy to get your support.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y11M25J7)
+
+## Installation
+```pip install mytqdm```
+
+## Obtain api key
+Enter your email on [mytqdm.app](https://mytqdm.app) to receive a custom api key. Use this key to upload your progress automatically via your mytqdm instance in your python code.
+
+## Usage
+- Import via ```from mytqdm import mytqdm``` and use ```mytqdm``` instead of ```tqdm```.
+- Provide your ```api_key``` in the mytqdm constructor. Optionally provide a ```title```.
+
+Example:
+```
+from mytqdm import mytqdm
+
+MY_API_KEY = "..."
+for i in mytqdm(range(10000), api_key=MY_API_KEY, title="Our progress to make POs happy."):
+    ...
+```
+
+See [mytqdm.app/docs](https://mytqdm.app/docs) for detailed instructions and how to obtain your current progress.
