@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv run ruff:*)",
+      "Bash(uv run ruff format:*)",
+      "Read(//Users/nehal/src/**)",
+      "Bash(chmod:*)",
+      "Bash(./nb.sh:*)",
+      "Bash(./test_notebooks.sh:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
