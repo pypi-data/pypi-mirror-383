@@ -1,0 +1,63 @@
+[project]
+name = "wingwalker"
+version = "1.1.0"
+description = "Wingwalker Airfoil and Wing Design Tools'"
+authors = [
+  { name="David Days", email="david.c.days@gmail.com" },
+]
+license = "MIT"
+readme = "Pkg-README.md"
+repository = "https://github.com/david-days/wingwalker-pypi"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    'shapely',
+    'numpy',
+    'pyvista',
+    'typer',
+    'typing-extensions',
+    'pymeshlab'
+]
+
+[project.urls]
+Homepage = "https://github.com/david-days/wingwalker-pypi"
+Issues = "https://github.com/david-days/wingwalker-pypi"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/wingwalker"
+]
+
+[tool.hatch.build.targets.wheel.force-include]
+"data/" = "wingwalker/data"
+
+[tool.pytest.ini_options]
+addopts = [
+    "-s"
+]
+pythonpath = [
+    "src"
+]
+testpaths = [
+    "tests"
+]
+markers = [
+    "display: marks tests that bring up a display window to be inspected",
+    "user_action: marks tests that require a user response to complete",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "svg: mark a test as targeting image generation and steps",
+    "threeD: mark a test as working with 3D modeling and wing generation",
+    "io: mark a test as targeting file IO",
+    "disk: mark a test as persisting project data to the disk",
+    "analytics: mark a test as testing data analytics",
+    "testing: mark a test as targeting infrastructure (software, libraries, network connectivity, etc)"
+]
+
+
