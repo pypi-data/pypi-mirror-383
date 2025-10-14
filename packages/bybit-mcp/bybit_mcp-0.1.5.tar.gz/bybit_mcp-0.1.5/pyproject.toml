@@ -1,0 +1,45 @@
+[project]
+name = "bybit-mcp"
+version = "0.1.5"
+description = "Bybit MCP Server - Model Context Protocol implementation for Bybit trading API"
+authors = [{ name = "Brian Cusack", email = "briancusack78@gmail.com" }]
+requires-python = ">=3.13"
+readme = "README.md"
+dependencies = [
+    "pybit>=5.11.0",
+    "pydantic>=2.11.5",
+    "python-dotenv>=1.1.0",
+    "mcp>=1.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/BCusack/bybit-py-mcp"
+Issues = "https://github.com/BCusack/bybit-py-mcp/issues"
+
+[project.scripts]
+bybit-mcp = "bybit_mcp.main:cli_main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bybit_mcp"]
+
+[dependency-groups]
+dev = ["pytest>=8.4.0", "ruff>=0.11.13"]
+
+[tool.ruff]
+line-length = 180
+select = ["E", "F", "W", "I"]
+ignore = []
+exclude = [".venv", "build", "dist"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.ruff.lint]
+# Enable autofix for all enabled rules
+fixable = ["E", "F", "W", "I"]

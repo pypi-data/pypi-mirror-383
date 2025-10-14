@@ -1,0 +1,14 @@
+services:
+  bybit-mcp:
+    build: .
+    container_name: bybit-mcp-server
+    environment:
+      - BYBIT_API_KEY=${BYBIT_API_KEY}
+      - BYBIT_API_SECRET=${BYBIT_API_SECRET}
+      - BYBIT_TESTNET=${BYBIT_TESTNET:-false}
+      - BYBIT_TRADING_ENABLED=${BYBIT_TRADING_ENABLED:-false}
+    stdin_open: true
+    tty: true
+    volumes:
+      - /tmp:/tmp
+    restart: unless-stopped
