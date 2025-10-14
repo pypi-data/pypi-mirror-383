@@ -1,0 +1,11 @@
+global:
+  cache_dir: ./cache
+  device: cpu
+  precision: float32
+logging:
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  level: INFO
+models:
+  rna_fm:
+    checkpoint_path: ./pretrained/rna_fm/RNA-FM_pretrained.pth
+    config_path: ./pretrained/rna_fm/config.yaml

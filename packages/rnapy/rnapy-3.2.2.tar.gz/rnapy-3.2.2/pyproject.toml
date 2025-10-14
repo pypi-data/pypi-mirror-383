@@ -1,0 +1,278 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools-scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rnapy"
+version = "3.2.2"
+description = "Unified RNA Analysis Toolkit - ML-powered RNA sequence analysis and structure prediction"
+readme = "README.md"
+license = { text = "MIT" }
+keywords = ["RNA", "bioinformatics", "machine-learning", "structure-prediction", "sequence-analysis"]
+authors = [
+    { name = "Linorman", email = "zyh52616@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.12"
+dependencies = [
+    # Core ML & Scientific Stack (aligned to requirements.txt)
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "torch-cluster",
+    "torch-geometric",
+    "torch-scatter",
+    "numpy~=2.2.5",
+    "scipy>=1.12.0",
+    "pandas>=1.3.0",
+    "scikit-learn>=0.24.0",
+    "numexpr",
+    "bottleneck",
+    "numba",
+    "llvmlite",
+    "einops>=0.4.0",
+    "performer-pytorch",
+    "axial-positional-embedding",
+    "local-attention",
+    "fair-esm",
+    "rna-fm",
+    "pytorch-lightning",
+    "pytorch-ignite>=0.4.6",
+    "torchmetrics",
+    "torchsummary",
+    "dm-tree",
+    # Bioinformatics / Sequence Models
+    "biopython~=1.85",
+    "biotite",
+    "mygene>=3.2.0",
+    "biothings-client>=0.2.0",
+    "tape-proteins",
+    # NLP / Transformer Ecosystem
+    "transformers",
+    "tokenizers",
+    "huggingface-hub",
+    "sacremoses",
+    "regex",
+    "protobuf",
+    "filelock",
+    # Configuration / Structured Config
+    "hydra-core>=1.0.0",
+    "omegaconf>=2.0.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "python-box>=6.0.0",
+    "ml-collections>=0.1.0",
+    # Visualization & Plotting
+    "matplotlib>=3.5.0",
+    "seaborn",
+    "pillow>=9.0.0",
+    "contourpy>=1.0.0",
+    "cycler>=0.11.0",
+    "fonttools>=4.30.0",
+    "qmllib",
+    # Web / Network / Auth (base HTTP/aiohttp; cloud auth in optional extras)
+    "requests>=2.26.0",
+    "aiohttp>=3.8.0",
+    "yarl",
+    "frozenlist",
+    "aiosignal",
+    "async-timeout",
+    "charset-normalizer>=2.0.0",
+    "idna>=3.0",
+    "urllib3>=1.26.0",
+    # Data / I-O / Extended
+    "lxml",
+    "pandas-datareader",
+    "opencv-python",
+    "pyyaml>=6.0.0",
+    # Utilities / Core Helpers
+    "packaging>=21.0",
+    "pyparsing>=3.0.0",
+    "python-dateutil>=2.8.0",
+    "six>=1.15.0",
+    "joblib>=1.0.0",
+    "tabulate>=0.8.9",
+    "colorama>=0.4.4",
+    "contextlib2>=21.0.0",
+    "psutil",
+    "typing-extensions",
+    "future",
+    "attrs",
+    "more-itertools",
+    "pluggy",
+    "py",
+    "cachetools",
+    "importlib-metadata",
+    "importlib-resources",
+    "setuptools",
+    "wheel",
+    "openmm",
+    "huggingface_hub",
+    "hf_xet",
+    "requests>=2.25.0",
+    "beautifulsoup4>=4.9.0",
+    "tqdm>=4.60.0",
+    # Low-level / C Extensions
+    "cffi",
+    "pycparser",
+    "cython",
+]
+
+[project.optional-dependencies]
+# Dev / QA / Tooling
+dev = [
+    "tqdm>=4.62.0",
+    "absl-py>=1.0.0",
+    "tensorboard>=2.6.0",
+    "tensorboard-data-server>=0.6.0",
+    "tensorboard-plugin-wit>=1.8.0",
+    "tensorboardx",
+    "mypy",
+    "mypy-extensions",
+    "typed-ast",
+    "flake8",
+    "pycodestyle",
+    "pyflakes",
+    "autopep8",
+    "pytest",
+    "ipython-genutils",
+    "jedi",
+    "parso",
+    "jmespath",
+    "decorator",
+    "entrypoints",
+    "prompt-toolkit",
+    "traitlets",
+    "wcwidth",
+    "monkeytype",
+    "pre-commit",
+    "pylint",
+    "pytest-cov",
+    "build",
+    "twine",
+]
+
+# Jupyter / Notebook Environment + Security
+jupyter = [
+    "ipykernel",
+    "ipython",
+    "jupyter",
+    "jupyter-client",
+    "jupyter-console",
+    "jupyter-core",
+    "jupyterlab-widgets",
+    "widgetsnbextension",
+    "ipywidgets",
+    "nbclient",
+    "nbconvert",
+    "nbformat",
+    "nest-asyncio",
+    "prometheus-client",
+    "pygments",
+    # Security / Sanitization
+    "bleach",
+    "defusedxml",
+    "webencodings",
+    "markdown",
+    "mistune",
+    "jsonschema",
+    "pyrsistent",
+    "pandocfilters",
+    "send2trash",
+    "terminado",
+    "testpath",
+    "jupyterlab",
+    "jupytext",
+    "ipympl",
+]
+
+# Web / Network (HTTP, aiohttp, charsets)
+web = [
+    "aiohttp>=3.8.0",
+    "yarl",
+    "frozenlist",
+    "aiosignal",
+    "async-timeout",
+    "charset-normalizer>=2.0.0",
+    "idna>=3.0",
+    "urllib3>=1.26.0",
+]
+
+# Cloud / Auth (Google/AWS & related)
+cloud = [
+    "google-auth>=1.34.0",
+    "google-auth-oauthlib",
+    "oauthlib",
+    "requests-oauthlib",
+    "s3transfer",
+    "boto3",
+    "botocore",
+    "rsa",
+    "pyopenssl",
+    "cryptography",
+    "pysocks",
+]
+
+# Visualization extra (kept for backward compatibility; mirrors requirements)
+visualization = [
+    "opencv-python",
+    "contourpy>=1.0.0",
+    "cycler>=0.11.0",
+    "fonttools>=4.30.0",
+]
+
+[project.scripts]
+rnapy = "rnapy.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/linorman/rnapy"
+Repository = "https://github.com/linorman/rnapy"
+"Bug Reports" = "https://github.com/linorman/rnapy/issues"
+Documentation = "https://github.com/linorman/rnapy/blob/main/README.md"
+
+[tool.setuptools]
+packages = ["rnapy"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+rnapy = [
+    "configs/*.yaml",
+    "configs/*.yml",
+    "data/*",
+    "**/*.yaml",
+    "**/*.yml",
+]
+
+[tool.setuptools.dynamic]
+# version = {attr = "rnapy.__version__"}
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
