@@ -1,0 +1,39 @@
+Metadata-Version: 2.1
+Name: echobox
+Version: 1.5.46
+Summary: echobox
+Home-page: 
+Author: kiuber
+Author-email: kiuber.zhang@gmail.com
+Keywords: echobox,kiuber
+Platform: any
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows :: Windows 11
+Requires-Dist: six==1.16.0
+Requires-Dist: ruamel.yaml.clib==0.2.14
+Requires-Dist: ruamel.yaml==0.18.15
+Requires-Dist: Jinja2; python_version < "3.10"
+Requires-Dist: Jinja2==3.1.2; python_version >= "3.10"
+Requires-Dist: netaddr==0.8.0
+Requires-Dist: requests; python_version < "3.10"
+Requires-Dist: requests==2.29.0; python_version >= "3.10"
+Requires-Dist: tzlocal==2.1
+Requires-Dist: redis; python_version < "3.10"
+Requires-Dist: redis==5.0.0; python_version >= "3.10"
+Requires-Dist: configparser==3.7.4
+Requires-Dist: oss2==2.18.3
+Requires-Dist: jsonpickle==3.0.2
+Requires-Dist: portalocker==2.8.2
+Requires-Dist: ifaddr==0.2.0
+Requires-Dist: bitmath==1.3.3.1
+Requires-Dist: pyOpenSSL==24.2.1
