@@ -1,0 +1,301 @@
+Metadata-Version: 2.4
+Name: mcp-toolbox-cli
+Version: 0.1.0
+Summary: CLI tool for uploading and managing MCP tools on MCP ToolBox platform
+Author-email: MCP ToolBox <muldercw@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://muldercw.com
+Project-URL: Repository, https://github.com/muldercw/mcp-toolbox-cli
+Project-URL: Issues, https://github.com/muldercw/mcp-toolbox-cli/issues
+Keywords: mcp,tools,cli,model-context-protocol,toolbox
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0.0
+Requires-Dist: requests>=2.28.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: tqdm>=4.64.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: flake8>=4.0.0; extra == "dev"
+Dynamic: license-file
+
+# MCP ToolBox CLI
+
+A command-line tool for uploading and managing Model Context Protocol (MCP) tools on the MCP ToolBox platform at [muldercw.com](https://muldercw.com).
+
+## Installation
+
+### From PyPI
+
+```bash
+pip install mcp-toolbox-cli
+```
+
+### From Source
+
+```bash
+git clone https://github.com/muldercw/mcp-toolbox-cli.git
+cd mcp-toolbox-cli
+pip install -e .
+```
+
+## Quick Start
+
+### 1. Login
+
+First, authenticate with your MCP ToolBox account:
+
+```bash
+mcp-toolbox login
+```
+
+You can use Personal Access Tokens (recommended) or email/password. Your credentials are securely stored in `~/.mcp-toolbox/config.json`.
+
+### 2. Upload a Tool
+
+Upload a new MCP tool (JSON schema, Python file, or ZIP package):
+
+```bash
+mcp-toolbox upload my-tool.json \
+  --name "My Awesome Tool" \
+  --version "1.0.0" \
+  --description "A tool that does amazing things" \
+  --tags "api,automation,productivity" \
+  --thumbnail thumbnail.png
+```
+
+Or use the interactive prompt:
+
+```bash
+mcp-toolbox upload my-tool.zip
+# You'll be prompted for name, version, and description
+```
+
+### 3. List Your Tools
+
+View all available tools:
+
+```bash
+mcp-toolbox list
+```
+
+## Commands
+
+### Authentication
+
+#### `login`
+Login to MCP ToolBox and save credentials.
+
+```bash
+mcp-toolbox login [--email EMAIL] [--password PASSWORD] [--url URL]
+```
+
+**Options:**
+- `--email`: Your account email (prompts if not provided)
+- `--password`: Your account password (prompts if not provided)
+- `--url`: API URL (default: https://muldercw.com)
+
+#### `logout`
+Clear saved credentials.
+
+```bash
+mcp-toolbox logout
+```
+
+#### `whoami`
+Show currently logged-in user.
+
+```bash
+mcp-toolbox whoami
+```
+
+### Tool Management
+
+#### `upload`
+Upload a new tool to the platform.
+
+```bash
+mcp-toolbox upload FILE [OPTIONS]
+```
+
+**Arguments:**
+- `FILE`: Path to your tool file (JSON, Python, or ZIP)
+
+**Options:**
+- `--name TEXT`: Tool name (required)
+- `--version TEXT`: Version number (required)
+- `--description TEXT`: Tool description (required)
+- `--tags TEXT`: Comma-separated tags
+- `--thumbnail PATH`: Path to thumbnail image
+
+**Example:**
+```bash
+mcp-toolbox upload ./github-tool.zip \
+  --name "GitHub Integration" \
+  --version "1.0.0" \
+  --description "Manage GitHub repos and issues" \
+  --tags "github,api,git" \
+  --thumbnail github-icon.png
+```
+
+#### `new-version`
+Upload a new version of an existing tool.
+
+```bash
+mcp-toolbox new-version TOOL_ID FILE [OPTIONS]
+```
+
+**Arguments:**
+- `TOOL_ID`: The UUID of the existing tool
+- `FILE`: Path to the new version file
+
+**Options:**
+- `--version TEXT`: New version number (required)
+- `--changelog TEXT`: Description of changes
+
+**Example:**
+```bash
+mcp-toolbox new-version 5d796b82-ff8c-4028-ae74-3e0f410d71b7 ./github-tool-v2.zip \
+  --version "2.0.0" \
+  --changelog "Added webhook support and improved error handling"
+```
+
+#### `update-thumbnail`
+Update the thumbnail image for a tool.
+
+```bash
+mcp-toolbox update-thumbnail TOOL_ID THUMBNAIL
+```
+
+**Arguments:**
+- `TOOL_ID`: The UUID of the tool
+- `THUMBNAIL`: Path to the new thumbnail image
+
+**Example:**
+```bash
+mcp-toolbox update-thumbnail 5d796b82-ff8c-4028-ae74-3e0f410d71b7 new-icon.png
+```
+
+#### `list`
+List available tools on the platform.
+
+```bash
+mcp-toolbox list [OPTIONS]
+```
+
+**Options:**
+- `--page INTEGER`: Page number (default: 1)
+- `--page-size INTEGER`: Tools per page (default: 10)
+
+## File Formats
+
+The CLI supports uploading:
+
+1. **JSON Schema Files** (`.json`)
+   - MCP tool schema definitions
+
+2. **Python Files** (`.py`)
+   - Python implementations of MCP tools
+
+3. **ZIP Packages** (`.zip`)
+   - Complete tool packages with code, dependencies, and documentation
+   - Must include a valid MCP tool schema
+
+## Configuration
+
+Configuration is stored in `~/.mcp-toolbox/config.json` and includes:
+
+- API URL
+- Authentication token
+
+You can manually edit this file or use the `login` command to update credentials.
+
+## Examples
+
+### Upload a Simple JSON Tool
+
+```bash
+mcp-toolbox upload weather-api.json \
+  --name "Weather API Tool" \
+  --version "1.0.0" \
+  --description "Fetch weather data from OpenWeather API" \
+  --tags "weather,api"
+```
+
+### Upload a Complete Package with Thumbnail
+
+```bash
+mcp-toolbox upload slack-bot.zip \
+  --name "Slack Bot Integration" \
+  --version "1.2.0" \
+  --description "Send messages and manage channels" \
+  --tags "slack,messaging,bot,collaboration" \
+  --thumbnail slack-icon.png
+```
+
+### List All Tools
+
+```bash
+mcp-toolbox list --page 1 --page-size 20
+```
+
+### Update to a New Version
+
+```bash
+# First, find your tool ID using 'list' command
+mcp-toolbox list
+
+# Then upload the new version
+mcp-toolbox new-version abc-123-def-456 my-tool-v2.zip \
+  --version "2.0.0" \
+  --changelog "Major refactor with improved performance"
+```
+
+## Development
+
+### Setting Up Development Environment
+
+```bash
+git clone https://github.com/muldercw/mcp-toolbox-cli.git
+cd mcp-toolbox-cli
+pip install -e ".[dev]"
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Formatting
+
+```bash
+black mcp_toolbox_cli/
+flake8 mcp_toolbox_cli/
+```
+
+## Security
+
+- Your authentication token is stored locally in `~/.mcp-toolbox/config.json`
+- Keep this file secure and never commit it to version control
+- Use `logout` to clear credentials when done
+
+## Support
+
+- **Documentation**: https://muldercw.com/docs
+- **Issues**: https://github.com/muldercw/mcp-toolbox-cli/issues
+- **Email**: muldercw@gmail.com
+
+## License
+
+MIT License - see LICENSE file for details
