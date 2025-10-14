@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: controllable-py
+Version: 0.1.0
+Summary: Control your computer using your hands.
+Author-email: simon0302010 <simon0302010@gmail.com>
+Requires-Python: <3.13,>=3.9
+License-File: LICENSE
+Requires-Dist: PyQt5
+Requires-Dist: mediapipe>=0.10.5
+Requires-Dist: screeninfo
+Requires-Dist: pyautogui
+Requires-Dist: loess
+Requires-Dist: Pillow
+Requires-Dist: pynput
+Requires-Dist: requests
+Requires-Dist: tqdm
+Dynamic: license-file
