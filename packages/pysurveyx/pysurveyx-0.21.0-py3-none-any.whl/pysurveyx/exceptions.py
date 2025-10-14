@@ -1,0 +1,2 @@
+class SurveyError(Exception):
+    pass
