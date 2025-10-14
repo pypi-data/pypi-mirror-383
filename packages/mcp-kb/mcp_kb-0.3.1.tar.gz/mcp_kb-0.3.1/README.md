@@ -1,0 +1,162 @@
+# MCP Knowledge Base Server
+
+This project implements a Model Context Protocol (MCP) server that manages a local markdown knowledge base. It provides tools for creating, reading, updating, searching, and organizing documents stored beneath a configurable root directory. The server uses `FastMCP` for transport and schema generation, so the Python tool functions double as the canonical source of truth for MCP metadata.
+
+## Running the server
+
+```bash
+uv run mcp-kb-server --root /path/to/knowledgebase
+```
+
+To expose multiple transports, pass `--transport` flags (supported values: `stdio`,
+`sse`, `http`):
+
+```bash
+uv run mcp-kb-server --transport stdio --transport http
+```
+
+Use `--host` and `--port` to bind HTTP/SSE transports to specific interfaces:
+
+```bash
+uv run mcp-kb-server --transport http --host 0.0.0.0 --port 9000
+```
+
+On first launch the server copies a bundled `KNOWLEDBASE_DOC.md` into the
+`.data/` directory if it is missing so that every deployment starts with a
+baseline usage guide.
+
+## Optional ChromaDB Mirroring
+
+The CLI can mirror knowledge base changes into a Chroma collection without
+exposing raw Chroma operations as MCP tools. Mirroring is enabled by default via
+the `persistent` client, which stores data under `<root>/chroma`. Choose a
+different backend with `--chroma-client` (choices: `ephemeral`, `persistent`,
+`http`, `cloud`). Example:
+
+```bash
+uv run mcp-kb-server \
+  --root /path/to/knowledgebase \
+  --chroma-client ephemeral \
+  --chroma-collection local-kb \
+  --chroma-embedding default
+```
+
+Persistent and remote clients accept additional flags:
+
+- `--chroma-data-dir`: storage directory for the persistent client (defaults to
+  `<root>/chroma` when not supplied).
+- `--chroma-host`, `--chroma-port`, `--chroma-ssl`, `--chroma-custom-auth`:
+  options for a self-hosted HTTP server.
+- `--chroma-tenant`, `--chroma-database`, `--chroma-api-key`: credentials for
+  Chroma Cloud deployments.
+- `--chroma-id-prefix`: custom document ID prefix (`kb::` by default).
+
+Every flag has a matching environment variable (`MCP_KB_CHROMA_*`), so the
+following snippet enables an HTTP client without modifying CLI commands:
+
+```bash
+export MCP_KB_CHROMA_CLIENT=http
+export MCP_KB_CHROMA_HOST=chroma.internal
+export MCP_KB_CHROMA_PORT=8001
+export MCP_KB_CHROMA_CUSTOM_AUTH="username:password"
+uv run mcp-kb-server --transport http
+```
+
+When enabled, any file creation, update, or soft deletion is synchronously
+propagated to the configured Chroma collection, ensuring semantic search stays
+in lockstep with the markdown knowledge base.
+
+The `kb.search` MCP tool automatically queries Chroma when mirroring is active,
+falling back to direct filesystem scans if the semantic index returns no hits.
+
+## Reindexing
+
+Use the standalone CLI to rebuild external indexes (e.g., Chroma) from the
+current knowledge base. This command is not exposed as an MCP tool.
+
+```bash
+uv run mcp-kb-reindex --root /path/to/knowledgebase \
+  --chroma-client persistent \
+  --chroma-data-dir /path/to/chroma \
+  --chroma-collection knowledge-base \
+  --chroma-embedding default
+```
+
+- Honors the same `--chroma-*` flags and `MCP_KB_CHROMA_*` environment
+  variables as the server.
+- Processes all non-deleted `*.md` files under the root and prints a summary:
+  `Reindexed N documents`.
+
+## Testing
+
+```bash
+uv run pytest
+```
+
+## LLM Client Configuration
+
+Below are sample configurations for popular MCP-capable LLM clients. All
+examples assume this repository is cloned locally and that `uv` is installed.
+
+### Claude Desktop
+
+Add the following block to your Claude Desktop `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "local-kb": {
+      "server-name": "kb-server",
+      "command": "uv",
+      "args": [
+        "run",
+        "mcp-kb-server",
+        "--root",
+        "/absolute/path/to/.knowledgebase"
+      ]
+    }
+  }
+}
+```
+
+### Cursor AI
+
+In Cursor's `cursor-settings.json`, register the server as a custom tool:
+
+```json
+{
+  "mcpServers": {
+    "local_knowledge_base": {
+      "id": "local-kb",
+      "title": "Local Knowledge Base",
+      "command": "uvx",
+      "args": [
+        " --from",
+        "~/cursor_projects/local_knowledge_base",
+        "mcp-kb-server"
+      ]
+    }
+  }
+}
+```
+
+### VS Code (Claude MCP Extension)
+
+For the `Claude MCP` extension, add an entry to `settings.json`:
+
+```json
+{
+  "claudeMcp.servers": {
+    "local-kb": {
+      "command": "uv",
+      "args": ["run", "mcp-kb-server"],
+      "env": {
+        "MCP_KB_ROOT": "/absolute/path/to/.knowledgebase"
+      }
+    }
+  }
+}
+```
+
+Adjust the `--root` flag or `MCP_KB_ROOT` environment variable to point at the
+desired knowledge base directory for each client.
