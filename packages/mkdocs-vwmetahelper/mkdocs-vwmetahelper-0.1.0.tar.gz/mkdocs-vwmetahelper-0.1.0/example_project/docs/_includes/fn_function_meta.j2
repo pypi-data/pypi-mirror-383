@@ -1,0 +1,9 @@
+{% macro fn_function_meta(page) -%}
+{% if page.meta.stories %}
+### Stories
+{% for item in page.meta.stories %}
+  {% set sm = get_meta(item.id) %}
+  {% if sm %}- [{{ sm.title }}]({{ sm.url }}) — {{ sm.status|default('todo') }}, {{ sm.progress|default(0) }}%{% else %}- ⚠️ Missing id {{ item.id }}{% endif %}
+{% endfor %}
+{% endif %}
+{%- endmacro %}
