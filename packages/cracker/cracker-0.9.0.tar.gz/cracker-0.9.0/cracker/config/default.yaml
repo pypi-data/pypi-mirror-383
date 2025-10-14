@@ -1,0 +1,19 @@
+cracker:
+  language: English
+  speaker: polly
+  speed: 4
+
+speakers:
+  polly:
+    voice: Joanna
+    profile_name: default
+
+  espeak:
+    voice: English
+
+  google:
+    voice: en-US
+    credentials_file: ~/.google-tts.json
+
+  frogger:
+    voice: English
