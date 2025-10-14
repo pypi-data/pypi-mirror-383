@@ -1,0 +1,78 @@
+# This is a basic workflow to help you get started with Actions
+name: dev workflow
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "test"
+  test:
+    # The type of runner that the job will run on
+    strategy:
+      matrix:
+        python-versions: ["3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-22.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      
+      - name: Set up Python ${{ matrix.python-versions }}
+        run: uv python install ${{ matrix.python-versions }}
+      
+      - name: Create virtual environment
+        run: uv venv --python ${{ matrix.python-versions }}
+      
+      - name: Install dependencies
+        run: |
+          uv pip install -e ".[dev,test]"
+      
+      - name: Run linting (non-blocking)
+        run: |
+          uv run flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics || echo "Linting issues found (non-blocking)"
+          uv run black --check src/ tests/ || echo "Code formatting issues found (non-blocking)"
+          uv run isort --check-only src/ tests/ || echo "Import sorting issues found (non-blocking)"
+      
+      - name: Run tests with coverage
+        run: |
+          # Coverage includes surfdrive if it exists (cross-platform Python check)
+          uv run python -c "
+          import os
+          import subprocess
+          import sys
+          cov_args = ['--cov=minio_file']
+          if os.path.exists('src/surfdrive'):
+              cov_args.append('--cov=surfdrive')
+          cmd = ['uv', 'run', 'pytest', 'tests/', '-v', '-m', 'not slow'] + cov_args + ['--cov-report=xml', '--cov-report=term-missing']
+          result = subprocess.run(cmd)
+          sys.exit(result.returncode)
+          "
+      
+      - name: List files
+        run: ls -la
+        shell: bash
+      
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: false # Changed to false to prevent CI failures
+          verbose: true # optional (default = false)
+        if: matrix.os == 'ubuntu-22.04' && matrix.python-versions == '3.10'  # Only upload once
