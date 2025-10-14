@@ -1,0 +1,11 @@
+[console_scripts]
+pycmor = pycmor.cli:main
+pymor = pycmor.cli:main
+
+[pycmor.cli_subcommands]
+externals = pycmor.core.externals:externals
+plugins = pycmor.core.plugins:plugins
+
+[pymor.cli_subcommands]
+externals = pycmor.core.externals:externals
+plugins = pycmor.core.plugins:plugins
