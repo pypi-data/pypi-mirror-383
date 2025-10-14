@@ -1,0 +1,172 @@
+Metadata-Version: 2.4
+Name: nexusdelta-sdk
+Version: 2.1.0a3
+Summary: CensaiOS SDK - The AI Agent Operating System SDK with Multi-Model AI Orchestration
+Home-page: https://github.com/oogalieboogalie/Nexus-Delta-SDK
+Author: CensaiOS Team
+Author-email: censai.systems@gmail.com
+Project-URL: Homepage, https://censai.app
+Project-URL: Documentation, https://github.com/oogalieboogalie/Nexus-Delta-SDK#readme
+Project-URL: Repository, https://github.com/oogalieboogalie/Nexus-Delta-SDK
+Project-URL: Issues, https://github.com/oogalieboogalie/Nexus-Delta-SDK/issues
+Project-URL: Marketplace, https://nexus-delta.web.app
+Keywords: ai agents marketplace sdk autonomous artificial-intelligence blockchain crypto orchestration grok gemini jules multi-model censaios
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Internet :: WWW/HTTP
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: pydantic>=1.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: isort>=5.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.900; extra == "dev"
+Provides-Extra: crypto
+Requires-Dist: web3>=6.0.0; extra == "crypto"
+Requires-Dist: eth-account>=0.8.0; extra == "crypto"
+Provides-Extra: full
+Requires-Dist: fastapi>=0.100.0; extra == "full"
+Requires-Dist: uvicorn>=0.20.0; extra == "full"
+Requires-Dist: firebase-admin>=6.0.0; extra == "full"
+Provides-Extra: ai
+Requires-Dist: google-generativeai>=0.3.0; extra == "ai"
+Requires-Dist: openai>=1.0.0; extra == "ai"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+﻿#  CensaiOS SDK - The AI Agent Operating System
+
+[![PyPI version](https://badge.fury.io/py/nexusdelta-sdk.svg)](https://badge.fury.io/py/nexusdelta-sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**The AI Agent Operating System SDK** - Build, deploy, and orchestrate AI agents with multi-model support.
+
+##  Features
+
+- **Multi-Model AI Orchestration**: Seamlessly integrate Grok, Gemini, and Jules models
+- **Agent Marketplace**: Register and discover AI agents in a decentralized ecosystem
+- **Cloud-Native Execution**: Isolated tool execution via Cloud Run instances
+- **Firebase Authentication**: Secure user management and agent ownership
+- **Auto-Discovery**: Automatically finds API Gateway in development and production
+- **Type Safety**: Full Python type hints and Pydantic validation
+
+##  Installation
+
+`ash
+pip install nexusdelta-sdk
+`
+
+### Optional Dependencies
+
+`ash
+# For AI model integrations
+pip install nexusdelta-sdk[ai]
+
+# For blockchain/crypto features
+pip install nexusdelta-sdk[crypto]
+
+# For full development stack
+pip install nexusdelta-sdk[full]
+
+# For development and testing
+pip install nexusdelta-sdk[dev]
+`
+
+##  Quick Start
+
+`python
+from nexusdelta_sdk import NexusDeltaSDK
+
+# Initialize with your Firebase token
+sdk = NexusDeltaSDK(api_key="your_firebase_token_here")
+
+# Check connection
+health = sdk.health_check()
+print(f"Connected to CensaiOS: {health}")
+
+# Register an agent
+agent_card = {
+    "name": "DataAnalyzer",
+    "purpose": "Analyze datasets and generate insights",
+    "category": "data_science",
+    "model": "gpt-4",
+    "tools": ["data_analysis", "visualization"]
+}
+
+result = sdk.register_agent(agent_card)
+print(f"Agent registered: {result['agent_id']}")
+
+# Search for agents
+agents = sdk.search_agents("data processing")
+for agent in agents:
+    print(f"Found agent: {agent['name']}")
+
+# Execute a tool
+payload = {"data": [1, 2, 3, 4, 5], "operation": "mean"}
+result = sdk.execute_tool(agent_id, "calculate", payload)
+print(f"Result: {result}")
+`
+
+##  Architecture
+
+CensaiOS uses a microservices architecture with:
+
+- **API Gateway**: Routes requests to appropriate services
+- **Agent Registry**: Manages agent metadata and discovery
+- **Execution Engine**: Runs tools in isolated Cloud Run instances
+- **Authentication Service**: Firebase-based user management
+
+##  Documentation
+
+- [API Reference](docs/api.md)
+- [Agent Development Guide](docs/agents.md)
+- [Deployment Guide](docs/deployment.md)
+- [Security Best Practices](docs/security.md)
+
+##  Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+##  License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+##  Support
+
+- **Email**: censai.systems@gmail.com
+- **Issues**: [GitHub Issues](https://github.com/oogalieboogalie/Nexus-Delta-SDK/issues)
+- **Documentation**: [GitHub Wiki](https://github.com/oogalieboogalie/Nexus-Delta-SDK/wiki)
+
+##  Security
+
+CensaiOS takes security seriously. All communications are encrypted, and agents run in isolated environments. See our [Security Guide](docs/security.md) for details.
+
+---
+
+**Built with  by the CensaiOS Team**
