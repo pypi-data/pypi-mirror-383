@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "solpoc"
+version = "0.9.7"
+
+authors = [
+    {name = "Antoine Grosjean", email = "antoine.grosjean@epf.fr"},
+    {name = "Audrey Soum-Glaude", email = "Audrey.Soum-Glaude@promes.cnrs.fr"},
+    {name = "Antoine Moreau", email = "antoine.moreau@uca.fr" },
+    {name = "Pauline Bennet", email = "pauline.bennet.pro@gmail.com"},
+    {name = "Thalita Drumond", email = "thalita.drumond@epf.fr"}
+]
+maintainers = [
+    {name = "Thalita Drumond", email = "thalita.drumond@epf.fr"},
+    {name = "Antoine Grosjean", email = "antoine.grosjean@epf.fr"},
+]
+description = "Solar Performances Optimization Code (SolPOC) is an Academic research code, used for solar energy. SolPOC can solve and optimize a stack of thin layers for designed solar mirror, anti-reflective coating, thermal absorber etc."
+
+requires-python = ">=3.9"
+
+keywords = ["SolPOC", "thin layers stack", "multilayer coating", "global optimization", "solar energy", "optics"]
+
+license-files = ["LICEN[CS]E*"]
+readme = {file  = "README.md", content-type = "text/markdown"}
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+
+[project.urls]
+Homepage = "https://github.com/SolPOCandCo/SolPOC"
+Issues = "https://github.com/SolPOCandCo/SolPOC/issues"
+
+[tool.setuptools.packages]
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["Examples", "tests"]
+
+[project.scripts]
+solpoc-init = "solpoc:init"
+
+[tool.setuptools]
+include-package-data = true
