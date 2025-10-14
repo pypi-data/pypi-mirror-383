@@ -1,0 +1,19 @@
+[project]
+name = "vlas"
+authors = [
+    {name = "Rishabh", email = "rishabh@observee.com"},
+]
+version = "0.0.0"
+description = "VLMS - Video Intelligence SDK"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = [
+    "sdk",
+    "api",
+    "services",
+    "vlms",
+]
