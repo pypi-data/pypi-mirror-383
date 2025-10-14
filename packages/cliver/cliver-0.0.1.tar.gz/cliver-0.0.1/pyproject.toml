@@ -1,0 +1,73 @@
+[project]
+name = "cliver"
+version = "0.0.1"
+description = "An AI Agent to make your CLI clever and more"
+authors = [
+    { name = "Lin Gao", email = "aoingl@gmail.com" }
+]
+requires-python = ">=3.10"
+
+dependencies = [
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "httpx>=0.24.0",
+    "pydantic>=2.0.0",
+    "prompt-toolkit>=3.0.0",
+    "pyyaml>=6.0.0",
+    "mcp>=1.2.1",
+    "openai>=1.0.0",
+    "langchain>=0.3.0",
+    "langchain-mcp-adapters>=0.1.4",
+    "langchain-openai>=0.3.18",
+    "langchain-core>=0.3.63",
+    "langchain-ollama>=0.3.3",
+    "python-dotenv>=1.1.0",
+    "jinja2>=3.1.0",
+    "requests>=2.32.3",
+    "json-repair>=0.52.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov",
+    "pytest-asyncio>=1.2.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+    "ruff>=0.0.270",
+    "black>=25.1.0",
+]
+
+docs = [
+    "mkdocs>=1.4.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocs-minify-plugin>=0.2.0",
+]
+
+[project.scripts]
+cliver = "cliver.cli:cliver_main"
+
+[build-system]
+requires = ["uv_build>=0.7,<0.8"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+select = ["E", "F", "B", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
