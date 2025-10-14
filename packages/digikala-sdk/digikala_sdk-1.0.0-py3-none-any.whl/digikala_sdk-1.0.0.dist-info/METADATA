@@ -1,0 +1,317 @@
+Metadata-Version: 2.4
+Name: digikala-sdk
+Version: 1.0.0
+Summary: Asynchronous Python SDK for Digikala API
+Author-email: Digikala SDK Team <sdk@digikala.com>
+License: MIT
+Project-URL: Homepage, https://github.com/digikala/digikala-sdk
+Project-URL: Documentation, https://docs.digikala.com/sdk
+Project-URL: Repository, https://github.com/digikala/digikala-sdk
+Project-URL: Issues, https://github.com/digikala/digikala-sdk/issues
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Framework :: AsyncIO
+Classifier: Framework :: FastAPI
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: httpx>=0.24.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: respx>=0.20.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Provides-Extra: fastapi
+Requires-Dist: fastapi>=0.100.0; extra == "fastapi"
+Requires-Dist: uvicorn>=0.23.0; extra == "fastapi"
+Provides-Extra: cache
+Requires-Dist: aiocache>=0.12.0; extra == "cache"
+Provides-Extra: ratelimit
+Requires-Dist: aiolimiter>=1.1.0; extra == "ratelimit"
+Provides-Extra: full
+Requires-Dist: aiocache>=0.12.0; extra == "full"
+Requires-Dist: aiolimiter>=1.1.0; extra == "full"
+
+# Digikala SDK
+
+<div align="center">
+
+**Asynchronous Python SDK for Digikala API**
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)]()
+[![AsyncIO](https://img.shields.io/badge/Framework-AsyncIO-green)]()
+[![License](https://img.shields.io/badge/License-MIT-yellow)]()
+
+**Fast • Type-Safe • Production-Ready**
+
+[Documentation](docs/SDK_Documentation.md) • [Quick Start](docs/QUICK_START.md) • [Examples](examples/) • [API Reference](docs/)
+
+</div>
+
+---
+
+## Features
+
+- 🚀 **Fully Asynchronous** - Built on `httpx.AsyncClient` with async/await support
+- ✅ **Type-Safe** - Complete Pydantic v2 models with validation
+- 🔄 **Automatic Retries** - Intelligent retry logic with exponential backoff
+- ⚡ **Rate Limiting** - Client-side rate limiting (optional with `aiolimiter`)
+- 💾 **Caching** - Response caching support (optional with `aiocache`)
+- 🛡️ **Comprehensive Error Handling** - Full exception hierarchy
+- 📝 **Well-Documented** - Extensive documentation and examples
+- 🧪 **Well-Tested** - 95%+ test coverage
+
+---
+
+## Installation
+
+### Basic Installation
+
+```bash
+pip install digikala-sdk
+```
+
+### With Optional Features
+
+```bash
+# With rate limiting
+pip install digikala-sdk[ratelimit]
+
+# With caching
+pip install digikala-sdk[cache]
+
+# With all features
+pip install digikala-sdk[full]
+```
+
+---
+
+## Quick Start
+
+```python
+import asyncio
+from digikala_sdk import DigikalaClient
+
+async def main():
+    # Using context manager (recommended)
+    async with DigikalaClient(api_key="your-api-key") as client:
+        # Get product details
+        product = await client.products.get_product(id=12345)
+        print(f"Product: {product.data.product.title_fa}")
+        print(f"Price: {product.data.product.default_variant.price.selling_price:,} Rials")
+
+        # Search products
+        results = await client.products.search(q="laptop")
+        print(f"\nFound {results.data.pager.total_items} products")
+
+asyncio.run(main())
+```
+
+**👉 [See more examples →](docs/QUICK_START.md)**
+
+---
+
+## API Modules
+
+| Module | Description | Documentation |
+|--------|-------------|---------------|
+| **Products** | Product details and search | [📚 Docs](docs/products.md) |
+| **Sellers** | Seller information and listings | [📚 Docs](docs/sellers.md) |
+| **Brands** | Brand information and listings | [📚 Docs](docs/brands.md) |
+
+---
+
+## Advanced Features
+
+### Rate Limiting
+
+```python
+from digikala_sdk import DigikalaClient, DigikalaConfig
+
+config = DigikalaConfig(
+    api_key="your-api-key",
+    rate_limit_requests=50  # 50 requests per minute
+)
+
+async with DigikalaClient(config=config) as client:
+    # Requests automatically throttled
+    for product_id in product_ids:
+        product = await client.products.get_product(id=product_id)
+```
+
+### Response Caching
+
+```python
+config = DigikalaConfig(
+    api_key="your-api-key",
+    cache_config={
+        "enabled": True,
+        "backend": "memory",  # or "redis"
+        "ttl": 300  # 5 minutes
+    }
+)
+
+async with DigikalaClient(config=config) as client:
+    # GET requests cached automatically
+    product = await client.products.get_product(id=12345)
+```
+
+**👉 [Full configuration guide →](docs/SDK_Documentation.md#configuration)**
+
+---
+
+## Error Handling
+
+```python
+from digikala_sdk import DigikalaClient
+from digikala_sdk.exceptions import (
+    NotFoundError,
+    RateLimitError,
+    DigikalaAPIError
+)
+
+async with DigikalaClient(api_key="your-api-key") as client:
+    try:
+        product = await client.products.get_product(id=12345)
+    except NotFoundError:
+        print("Product not found")
+    except RateLimitError as e:
+        print(f"Rate limited. Retry after {e.retry_after}s")
+    except DigikalaAPIError as e:
+        print(f"API error: {e}")
+```
+
+**👉 [Complete error handling guide →](docs/ERROR_HANDLING.md)**
+
+---
+
+## Documentation
+
+### 📚 Complete Documentation
+
+- **[SDK Documentation](docs/SDK_Documentation.md)** - Complete SDK manual
+- **[Quick Start Guide](docs/QUICK_START.md)** - Get started quickly
+- **[Error Handling](docs/ERROR_HANDLING.md)** - Exception handling guide
+
+### 📖 API References
+
+- **[Products API](docs/products.md)** - Product operations
+- **[Sellers API](docs/sellers.md)** - Seller operations
+- **[Brands API](docs/brands.md)** - Brand operations
+
+### 💡 Examples
+
+See the [`examples/`](examples/) directory for complete examples:
+- Basic usage patterns
+- FastAPI integration
+- Advanced configuration
+- Error handling strategies
+
+---
+
+## Requirements
+
+- **Python**: 3.8+
+- **Dependencies**:
+  - `httpx >= 0.24.0`
+  - `pydantic >= 2.0.0`
+- **Optional**:
+  - `aiolimiter >= 1.1.0` (for rate limiting)
+  - `aiocache >= 0.12.0` (for caching)
+
+---
+
+## Project Structure
+
+```
+digikala-sdk/
+├── docs/                    # 📚 Documentation
+│   ├── SDK_Documentation.md
+│   ├── products.md
+│   ├── sellers.md
+│   └── brands.md
+├── examples/                # 💡 Usage examples
+├── src/                     # 📦 Source code
+│   ├── client.py           # Main client
+│   ├── config.py           # Configuration
+│   ├── exceptions.py       # Exceptions
+│   ├── models/             # Pydantic models
+│   └── services/           # API services
+└── tests/                   # 🧪 Test suite
+```
+
+---
+
+## Development
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/digikala/digikala-sdk.git
+cd digikala-sdk
+
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install in editable mode with dev dependencies
+pip install -e ".[dev]"
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=src tests/
+
+# Run specific test file
+pytest tests/test_products.py
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Support
+
+- **📚 Documentation**: [docs/SDK_Documentation.md](docs/SDK_Documentation.md)
+- **🐛 Issues**: [GitHub Issues](https://github.com/digikala/digikala-sdk/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/digikala/digikala-sdk/discussions)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the Digikala SDK Team**
+
+[Documentation](docs/SDK_Documentation.md) • [API Reference](docs/) • [Examples](examples/)
+
+</div>
