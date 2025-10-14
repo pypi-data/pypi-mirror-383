@@ -1,0 +1,67 @@
+# Publish package on main branch if it's tagged with 'v*'
+name: release & publish workflow
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    tags:
+      - "v*"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "release"
+  release:
+    name: Create Release
+    runs-on: ubuntu-22.04
+    environment:
+      name: pypi
+      url: https://pypi.org/p/sdp-tools
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
+      contents: write # for publishing to GH-pages
+      pages: write # for publishing to GH-pages
+    strategy:
+      matrix:
+        python-versions: ["3.10"]
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      
+      - name: Set up Python ${{ matrix.python-versions }}
+        run: uv python install ${{ matrix.python-versions }}
+      
+      - name: Create virtual environment
+        run: uv venv --python ${{ matrix.python-versions }}
+      
+      - name: Install dependencies
+        run: |
+          uv pip install -e ".[dev]"
+      
+      - name: Build documentation
+        run: |
+          uv run mkdocs build
+      
+      - name: Publish documentation
+        run: uv run mkdocs gh-deploy --force
+      
+      - name: Build wheels and source tarball
+        run: |
+          uv build
+      
+      - name: Show build artifacts
+        run: |
+          ls -la dist/
+        shell: bash
+      
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
