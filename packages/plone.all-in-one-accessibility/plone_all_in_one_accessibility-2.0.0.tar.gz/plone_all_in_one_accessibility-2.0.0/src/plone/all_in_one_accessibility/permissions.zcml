@@ -1,0 +1,18 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
+  i18n_domain="plone">
+
+  <configure zcml:condition="installed AccessControl.security">
+  <!-- -*- extra stuff goes here -*- -->
+
+    <permission
+        id="plone.all_in_one_accessibility.AddAllInOneAccessibilitySetting"
+        title="plone.all_in_one_accessibility: Add AllInOneAccessibilitySetting"
+    />
+
+
+
+  </configure>
+
+</configure>

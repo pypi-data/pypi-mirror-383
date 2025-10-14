@@ -1,0 +1,61 @@
+.inline-field-row {
+  display: flex;
+  gap: 20px;
+}
+
+.inline-field-row .field {
+  flex: 1;
+}
+
+.icon-select-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.icon-select-option {
+  width: 115px;
+  height: 115px;
+  background-color: #4b0082;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.icon-select-option img {
+  max-width: 70%;
+  height: auto;
+}
+
+.icon-select-option.selected {
+  border-color: green;
+  border-width: 4px;
+  /* increase border thickness */
+  position: relative;
+  /* needed for absolute positioning of checkmark */
+}
+
+/* Checkmark circle in top right corner */
+.icon-select-option.selected::after {
+  content: "✔";
+  /* checkmark symbol */
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  background-color: green;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}

@@ -1,0 +1,43 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="plone.all_in_one_accessibility">
+
+  <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
+  <include package="z3c.jbot" file="meta.zcml" />
+  <browser:jbot
+      directory="overrides"
+      layer="plone.all_in_one_accessibility.interfaces.IPloneAllInOneAccessibilityLayer"
+      />
+
+  <!-- Publish static files -->
+  <plone:static
+      name="plone.all_in_one_accessibility"
+      type="plone"
+      directory="static"
+      />
+  <include file="viewlets.zcml" />
+
+  <!-- <browser:page
+    name="view"
+    for="plone.all_in_one_accessibility.content.all_in_one_accessibility_setting.IAllInOneAccessibilitySetting"
+    class="plone.all_in_one_accessibility.browser.all_in_one_accessibility_setting_view.AllInOneAccessibilitySettingView"
+    permission="zope2.View"
+    template="templates/all_in_one_accessibility_setting_view.pt"
+    /> -->
+
+  <browser:page
+    name="++add++All in One Accessibility Setting"
+    for="*"
+    class=".all_in_one_accessibility_add.AllInOneAccessibilityAddView"
+    permission="cmf.AddPortalContent"
+  />
+
+  <browser:page
+    name="edit"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".redirect_edit_view.RedirectToSettingEditView"
+    permission="zope2.View"
+  />
+</configure>
