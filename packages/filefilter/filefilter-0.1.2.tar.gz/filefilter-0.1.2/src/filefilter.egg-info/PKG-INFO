@@ -1,0 +1,47 @@
+Metadata-Version: 2.4
+Name: filefilter
+Version: 0.1.2
+Summary: Filter files in a directory tree based on configurable glob rules.
+Author-email: "Ioannis D (devcoons)" <support@devcoons.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/devcoons/filefilter
+Project-URL: Issues, https://github.com/devcoons/filefilter/issues
+Keywords: filefilter
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pip-tools; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: license-file
+
+# filefilter
+
+Filter files in a directory tree using include/exclude rules with globs.
+
+## Features
+
+- Include/exclude by directory patterns (`**`, `*`, explicit root `/`).
+- Include/exclude by filename patterns (`*`, no `?`).
+- Include/exclude by file extension.
+- Config driven via JSON.
+
+## Installation
+
+```bash
+pip install filefilter
