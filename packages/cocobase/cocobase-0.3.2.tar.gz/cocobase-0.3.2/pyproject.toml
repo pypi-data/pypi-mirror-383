@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cocobase"
+version = "0.3.2"
+description = "The python client for the Cocobase BAAS"
+authors = [
+    { name="Patrick Chidera", email="lordyacey@gmail.com" }
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "requests",  # or any other dependencies
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
