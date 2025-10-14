@@ -1,0 +1,66 @@
+[build-system]
+requires = [
+    "setuptools>=64",
+    "wheel",
+    "cython>=3.0",
+    "numpy>=2.2.1",
+    "scipy"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyspatialstats"
+version = "0.1.1"
+description = ""
+authors = [
+    { name = "Jasper Roebroek", email = "roebroek.jasper@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+
+dependencies = [
+    "numpy>=2.2.1",
+    "joblib",
+    "pandas",
+    "scipy"
+]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+documentation = [
+    'sphinx',
+    'sphinx_rtd_theme',
+    'numpydoc',
+    'jupyter',
+    'matplotlib',
+    'rasterio'
+]
+develop = [
+    "cython",
+    "sphinx",
+    "sphinx_rtd_theme",
+    "numpydoc",
+    "jupyter",
+    "matplotlib",
+    "pytest",
+    "joblib",
+    "statsmodels",
+    "rasterio"
+]
+test = [
+    "pytest",
+    "statsmodels",
+    "scikit-learn",
+    "xarray"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pyspatialstats*"]
+
+[project.urls]
+repository = "https://github.com/jasperroebroek/pyspatialstats"
+documentation = "https://pyspatialstats.readthedocs.io/en/latest/index.html"

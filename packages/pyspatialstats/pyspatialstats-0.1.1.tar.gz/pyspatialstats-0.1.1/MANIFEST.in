@@ -1,0 +1,4 @@
+global-include *.pyx
+global-include *.pxd
+exclude pyspatialstats/*/*.c
+exclude pyspatialstats/*/*/*.c
