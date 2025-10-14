@@ -1,0 +1,127 @@
+"""
+{{ pascal_name }} Service
+Business logic layer with role-based permission validation
+"""
+from typing import List
+from sqlalchemy.orm import Session
+from atams.exceptions import NotFoundException, ForbiddenException, BadRequestException
+
+from app.repositories.{{ singular_name }}_repository import {{ pascal_name }}Repository
+from app.schemas.{{ singular_name }} import {{ pascal_name }}Create, {{ pascal_name }}Update, {{ pascal_name }}
+
+
+class {{ pascal_name }}Service:
+    """Service for {{ pascal_name }} business logic"""
+
+    def __init__(self):
+        self.repository = {{ pascal_name }}Repository()
+
+    def get_{{ singular_name }}(
+        self,
+        db: Session,
+        {{ singular_name }}_id: int,
+        current_user_role_level: int,
+        current_user_id: int
+    ) -> {{ pascal_name }}:
+        """
+        Get single {{ singular_name }} with role-based access control
+
+        Permission logic:
+        - Level 100: Can view any {{ singular_name }}
+        - Level 50: Can view {{ plural_name }} in organization
+        - Level 10: Can only view own {{ singular_name }}
+        """
+        db_{{ singular_name }} = self.repository.get(db, {{ singular_name }}_id)
+
+        if not db_{{ singular_name }}:
+            raise NotFoundException(f"{{ pascal_name }} with ID {%raw%}{{%endraw%}{{ singular_name }}_id{%raw%}}{%endraw%} not found")
+
+        # SECOND LEVEL VALIDATION - What can each role level do?
+        if current_user_role_level >= 100:
+            pass  # Super Admin can view any
+        elif current_user_role_level >= 50:
+            pass  # Admin can view
+        elif current_user_role_level >= 10:
+            # TODO: Add ownership check if needed
+            pass
+        else:
+            raise ForbiddenException("Insufficient permission to view {{ singular_name }}")
+
+        return {{ pascal_name }}.model_validate(db_{{ singular_name }})
+
+    def get_{{ plural_name }}(
+        self,
+        db: Session,
+        skip: int = 0,
+        limit: int = 100,
+        current_user_role_level: int = 0
+    ) -> List[{{ pascal_name }}]:
+        """Get list of {{ plural_name }} with pagination"""
+        if current_user_role_level < 50:
+            raise ForbiddenException("Insufficient permission to list {{ plural_name }}")
+
+        db_{{ plural_name }} = self.repository.get_multi(db, skip=skip, limit=limit)
+        return [{{ pascal_name }}.model_validate(item) for item in db_{{ plural_name }}]
+
+    def create_{{ singular_name }}(
+        self,
+        db: Session,
+        {{ singular_name }}: {{ pascal_name }}Create,
+        current_user_role_level: int
+    ) -> {{ pascal_name }}:
+        """Create new {{ singular_name }}"""
+        if current_user_role_level < 50:
+            raise ForbiddenException("Insufficient permission to create {{ singular_name }}")
+
+        if not {{ singular_name }}.{{ prefix }}name or len({{ singular_name }}.{{ prefix }}name.strip()) == 0:
+            raise BadRequestException("{{ pascal_name }} name is required")
+
+        db_{{ singular_name }} = self.repository.create(db, {{ singular_name }}.model_dump())
+        return {{ pascal_name }}.model_validate(db_{{ singular_name }})
+
+    def update_{{ singular_name }}(
+        self,
+        db: Session,
+        {{ singular_name }}_id: int,
+        {{ singular_name }}: {{ pascal_name }}Update,
+        current_user_role_level: int,
+        current_user_id: int
+    ) -> {{ pascal_name }}:
+        """Update existing {{ singular_name }}"""
+        db_{{ singular_name }} = self.repository.get(db, {{ singular_name }}_id)
+
+        if not db_{{ singular_name }}:
+            raise NotFoundException(f"{{ pascal_name }} with ID {%raw%}{{%endraw%}{{ singular_name }}_id{%raw%}}{%endraw%} not found")
+
+        if current_user_role_level >= 100:
+            pass  # Super Admin can update any
+        elif current_user_role_level >= 50:
+            pass  # Admin can update
+        elif current_user_role_level >= 10:
+            # TODO: Add ownership check if needed
+            pass
+        else:
+            raise ForbiddenException("Insufficient permission to update {{ singular_name }}")
+
+        update_data = {{ singular_name }}.model_dump(exclude_unset=True)
+        db_{{ singular_name }} = self.repository.update(db, db_{{ singular_name }}, update_data)
+        return {{ pascal_name }}.model_validate(db_{{ singular_name }})
+
+    def delete_{{ singular_name }}(
+        self,
+        db: Session,
+        {{ singular_name }}_id: int,
+        current_user_role_level: int
+    ) -> None:
+        """Delete {{ singular_name }}"""
+        if current_user_role_level < 50:
+            raise ForbiddenException("Insufficient permission to delete {{ singular_name }}")
+
+        deleted = self.repository.delete(db, {{ singular_name }}_id)
+
+        if not deleted:
+            raise NotFoundException(f"{{ pascal_name }} with ID {%raw%}{{%endraw%}{{ singular_name }}_id{%raw%}}{%endraw%} not found")
+
+    def get_total_{{ plural_name }}(self, db: Session) -> int:
+        """Get total count of {{ plural_name }}"""
+        return self.repository.count(db)
