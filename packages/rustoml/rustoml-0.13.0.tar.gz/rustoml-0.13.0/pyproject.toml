@@ -1,0 +1,89 @@
+[build-system]
+requires = ["maturin>=1,<2"]
+build-backend = "maturin"
+
+[project]
+name = "rustoml"
+requires-python = ">=3.10, <3.15"
+authors = [
+    {name = "Sean Lees", email = "sean@mozeik.com"},
+    {name = "Samuel Colvin", email = "s@muelcolvin.com"}
+]
+keywords = ["toml", "parser", "serializer", "rust", "performance"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Rust",
+    "Topic :: File Formats",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing",
+    "Typing :: Typed",
+]
+dynamic = [
+    "description",
+    "license",
+    "readme",
+    "version"
+]
+
+[project.urls]
+Homepage = "https://github.com/seanmozeik/rustoml"
+
+[dependency-groups]
+dev = [
+    "dirty-equals",
+    "maturin",
+    "nox>=2025.5.1",
+    "pytest",
+    "pytest-cov>=7.0.0",
+    "pytest-pretty",
+    "pytest-speed",
+    "ruff",
+    "ty",
+]
+
+[tool.maturin]
+python-source = "python"
+bindings = "pyo3"
+module-name = "rustoml._rustoml"
+features = ["pyo3/extension-module", "pyo3/generate-import-lib"]
+
+[tool.pytest.ini_options]
+testpaths = ["./tests"]
+filterwarnings = ["error"]
+xfail_strict = true
+# avoid pytest warning when pytest-speed is not installed
+markers = ["benchmark"]
+addopts = "--cov=rustoml --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["rustoml"]
+branch = true
+
+[tool.coverage.report]
+precision = 2
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "@overload",
+]
+
+[tool.ruff]
+line-length = 120
+lint.extend-select = ["Q", "RUF100", "UP", "I"]
+lint.isort = { known-first-party = ["rustoml", "tests"] }
+target-version = "py314"
+

@@ -1,0 +1,21 @@
+[package]
+name = "rustoml"
+version = "0.13.0"
+authors = ["Samuel Colvin <s@muelcolvin.com>", "Sean Lees <sean@mozeik.com>"]
+edition = "2021"
+readme = "README.md"
+
+[dependencies]
+toml = {version = "0.9.8", features = ["preserve_order"]}
+serde = "1.0.228"
+pyo3 = "0.26.0"
+ahash = "0.8.12"
+nohash-hasher = "0.2.0"
+
+[lib]
+name = "_rustoml"
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
