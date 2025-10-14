@@ -1,0 +1,10 @@
+include tox.ini
+include tests/*.py
+include tests/robottests/*.robot
+include tests/robottests/*.py
+include sphinxdocs/*.py
+include sphinxdocs/*.rst
+include .coveragerc
+include .pylintrc
+include README.rst
+include CHANGES.rst
