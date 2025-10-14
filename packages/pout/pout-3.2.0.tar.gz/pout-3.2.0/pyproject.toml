@@ -1,0 +1,56 @@
+[project]
+requires-python = ">=3.10"
+description = "Prints out python variables in an easy to read way, handy for debugging"
+authors = [
+  { name = "Jay Marcyes", email = "jay@marcyes.com" }
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Plugins",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Testing",
+  "Programming Language :: Python :: 3"
+]
+name = "pout"
+dynamic = [
+  "version"
+]
+readme = "README.md"
+license = "MIT"
+license-files = [
+  "LICENSE.txt"
+]
+
+[project.urls]
+Homepage = "https://github.com/Jaymon/pout"
+Repository = "https://github.com/Jaymon/pout"
+
+[project.optional-dependencies]
+tests = [
+  "testdata"
+]
+
+[project.scripts]
+pout = "pout.__main__:main"
+
+[build-system]
+requires = [
+  "setuptools>=62.3.0"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+exclude = [
+  "tests*",
+  "example*",
+  "*_test*",
+  "docs*"
+]
+include = [
+  "pout*"
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "pout.__version__" }
+
