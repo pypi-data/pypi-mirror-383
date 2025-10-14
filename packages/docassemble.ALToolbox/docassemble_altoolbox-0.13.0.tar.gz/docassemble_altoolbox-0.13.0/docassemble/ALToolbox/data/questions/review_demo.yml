@@ -1,0 +1,29 @@
+---
+include:
+  - review_widget.yml
+---
+mandatory: True
+question: |
+  Review Widget
+subquestion: |
+  ${ review_widget(up_action='up_action', down_action='down_action', review_action='review_action') }
+continue button field: goto_next
+---
+mandatory: True
+question: Results
+subquestion: |
+  Thumbs?: ${ thumbs_value }
+
+  Feedback text: ${ review_response }
+---
+event: review_action
+code: |
+  review_response = action_argument('review_text')
+---
+event: up_action
+code: |
+  thumbs_value = 1
+---
+event: down_action
+code: |
+  thumbs_value = -1

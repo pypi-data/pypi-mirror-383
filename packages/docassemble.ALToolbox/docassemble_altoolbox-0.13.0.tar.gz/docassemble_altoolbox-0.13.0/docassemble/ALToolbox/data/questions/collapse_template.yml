@@ -1,0 +1,12 @@
+comment: |
+  To use:
+  include:
+    - docassemble.ALToolbox:collapse_template.yml
+  
+  Note this is already included in AssemblyLine interviews by default
+---
+modules:
+  - .misc
+---
+features:
+  css: collapse_template.css
