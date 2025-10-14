@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyrootfinder"
+version = "0.1.1"
+authors = [
+  { name = "Sanjay Choudhary", email = "sanjay@mailchat.me" },
+]
+description = "A clean, robust, and easy-to-use Python package for finding roots of equations using multiple numerical algorithms."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+keywords = [
+  "root finding",
+  "numerical methods",
+  "solver",
+  "newton",
+  "bisection",
+  "brentq",
+  "secant",
+  "halley",
+  "equation"
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.urls]
+Homepage = "https://github.com/cu-sanjay/pyrootfinder"
+Repository = "https://github.com/cu-sanjay/pyrootfinder"
+Issues = "https://github.com/cu-sanjay/pyrootfinder/issues"
+Documentation = "https://github.com/cu-sanjay/pyrootfinder#readme"

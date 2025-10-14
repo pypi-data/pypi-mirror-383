@@ -1,0 +1,177 @@
+Metadata-Version: 2.4
+Name: pyrootfinder
+Version: 0.1.1
+Summary: A clean, robust, and easy-to-use Python package for finding roots of equations using multiple numerical algorithms.
+Author-email: Sanjay Choudhary <sanjay@mailchat.me>
+License: MIT License
+        
+        Copyright (c) 2025 Sanjay Choudhary
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://github.com/cu-sanjay/pyrootfinder
+Project-URL: Repository, https://github.com/cu-sanjay/pyrootfinder
+Project-URL: Issues, https://github.com/cu-sanjay/pyrootfinder/issues
+Project-URL: Documentation, https://github.com/cu-sanjay/pyrootfinder#readme
+Keywords: root finding,numerical methods,solver,newton,bisection,brentq,secant,halley,equation
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+<div align="center">
+
+<img src="https://i.imgur.com/2WcPLYI.png" alt="pyrootfinder logo" width="300"/>
+
+# **Python Root Finder**
+
+[![PyPI version](https://badge.fury.io/py/pyrootfinder.svg)](https://badge.fury.io/py/pyrootfinder)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A clean, robust, and easy-to-use Python package for finding roots of single-variable, real-valued functions using a suite of classic numerical algorithms.
+
+</div>
+
+## Key Features
+
+- **Consistent API**: All solvers return a standardized *RootResult* object.
+- **Robust Error Handling**: Solvers handle edge cases like convergence failure or bad inputs gracefully without crashing.
+- **Clear & Informative Output**: The result object reports the root, success status, iterations, and diagnostic messages.
+- **Suite of Algorithms**:
+  - **Bracketing methods**: *bisection, secant, brentq (recommended)*
+  - **Derivative-based methods**: *newton, halley*
+
+## Installation
+
+Install using pip:
+
+```bash
+pip install pyrootfinder
+```
+
+## Quick Start
+
+Find the root of the function:
+
+$$
+f(x) = x^3 - x - 2
+$$
+
+```python
+import pyrootfinder as rf
+import math
+
+# define the function
+f = lambda x: x**3 - x - 2
+
+# use a bracketing method (brent's method is highly recommended)
+# root lies between 1 and 2
+result_brent = rf.brentq(f, a=1, b=2)
+print(result_brent)
+
+# use a derivative-based method (newton's method)
+f_prime = lambda x: 3*x**2 - 1
+result_newton = rf.newton(f, x0=1.5, f_prime=f_prime)
+print(result_newton)
+```
+
+### Example Output
+
+```
+---- Brent's (Brentq) Result (Success) ----
+    Root: 1.5213797068
+    Function Value: 0.000000e+00
+    Iterations: 9
+    Message: Convergence achieved.
+-------------------------------------------
+
+---- Newton-Raphson Result (Success) ----
+    Root: 1.5213797068
+    Function Value: -1.110223e-16
+    Iterations: 3
+    Message: Convergence achieved.
+-----------------------------------------
+```
+
+## Handling Failures
+
+The library is designed to fail gracefully. If a root cannot be found within the given bracket or iteration limit, a clear failure message is returned.
+
+```python
+# find a root where none exists in the given bracket
+result_fail = rf.bisection(lambda x: x**2 + 1, a=-10, b=10)
+print(result_fail)
+```
+
+### Failure Output
+
+```
+---- Bisection Result (Failed) ----
+     Message: Root not bracketed or multiple roots exist in [a, b].
+     Iterations: 0
+-----------------------------------
+```
+
+## API Overview
+
+All solvers return a **RootResult** object with attributes such as **root**, **iterations**, **success**, and **message**.
+
+```python
+rf.bisection(f, a, b, tol=1e-8, max_iter=100)
+rf.secant(f, a, b, tol=1e-8, max_iter=100)
+rf.brentq(f, a, b, tol=1e-8, max_iter=100)
+rf.newton(f, x0, f_prime, tol=1e-8, max_iter=100)
+rf.halley(f, x0, f_prime, f_prime2, tol=1e-8, max_iter=100)
+```
+
+## Hacktoberfest
+
+This repository is participating in [Hacktoberfest](https://hacktoberfest.com/). Contributions are welcome from developers of all experience levels. If you're new to open source, check out issues labeled `good first issue` or `help wanted`.
+
+To contribute:
+
+- Fork the repository
+- Create a new branch
+- Make your changes
+- Submit a pull request
+
+Please read the [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before submitting.
+
+## Community and Support
+
+If you have questions, suggestions, or feedback:
+
+- Open an issue on GitHub
+- Join discussions under relevant pull requests
+- Refer to the documentation and examples in the repo
+
+## License
+
+This project is licensed under the **[MIT License](LICENSE)**.
