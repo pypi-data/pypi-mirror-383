@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "guess-file-mime-type"
+version = "0.1.0a1"
+description = "A minimal, cross-platform, and cross-version utility to safely guess a file's MIME type."
+readme = "README.md"
+requires-python = ">=2"
+license = "MIT"
+authors = [
+  { name="Jifeng Wu", email="jifengwu2k@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jifengwu2k/guess-file-mime-type"
+"Bug Tracker" = "https://github.com/jifengwu2k/guess-file-mime-type/issues"
