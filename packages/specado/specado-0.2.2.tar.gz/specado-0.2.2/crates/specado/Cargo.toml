@@ -1,0 +1,27 @@
+[package]
+name = "specado-temp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Specado core SDK for building provider-neutral AI workflows."
+readme = "README.md"
+keywords = ["ai", "llm", "sdk"]
+categories = ["api-bindings", "command-line-utilities"]
+publish = true
+
+[lib]
+name = "specado"
+
+[features]
+default = []
+hot-reload = ["specado-core/hot-reload"]
+audit-logging = ["specado-core/audit-logging"]
+cli-resolver = ["specado-core/cli-resolver"]
+
+[dependencies]
+specado-core = { workspace = true, default-features = false }
+serde_yaml.workspace = true
+serde_json.workspace = true
+serde.workspace = true
