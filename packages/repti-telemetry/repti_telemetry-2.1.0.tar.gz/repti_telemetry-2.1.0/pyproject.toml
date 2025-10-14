@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repti-telemetry"
+version = "2.1.0"
+description = "Unified telemetry library for ReptiDex microservices - logging, metrics, and tracing"
+authors = [{name = "ReptiDex Team", email = "dev@reptidex.com"}]
+license = {text = "MIT"}
+requires-python = ">=3.12"
+dependencies = [
+    "python-json-logger>=2.0.7",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.0.3",
+]
+
+[project.optional-dependencies]
+fastapi = [
+    "fastapi>=0.104.0",
+    "starlette>=0.27.0",
+]
+metrics = [
+    "prometheus-client>=0.19.0",
+]
+all = [
+    "fastapi>=0.104.0",
+    "starlette>=0.27.0",
+    "prometheus-client>=0.19.0",
+]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "pytest-cov>=4.1.0",
+    "black>=23.11.0",
+    "isort>=5.12.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.1",
+    "pre-commit>=3.5.0",
+    "bandit>=1.7.5",
+    "build>=1.0.0",
+    "twine>=4.0.0",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers --cov=repti_telemetry --cov-report=term-missing"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
