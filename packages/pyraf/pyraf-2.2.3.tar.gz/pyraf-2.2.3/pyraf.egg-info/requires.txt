@@ -1,0 +1,14 @@
+configobj
+numpy
+
+[:sys_platform == "darwin"]
+pyobjc
+
+[docs]
+astropy-sphinx-theme
+numpydoc
+sphinx
+
+[test]
+astropy
+pytest

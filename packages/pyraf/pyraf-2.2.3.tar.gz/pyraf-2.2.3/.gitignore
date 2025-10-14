@@ -1,0 +1,52 @@
+# Compiled files
+*.py[cod]
+*.a
+*.o
+*.so
+__pycache__
+
+# Other generated files
+pyraf/version.py
+login.cl*
+htmlcov
+.coverage
+MANIFEST
+
+# Sphinx
+docs/api
+docs/_build
+
+# Eclipse editor project files
+.project
+.pydevproject
+.settings
+
+# Pycharm editor project files
+.idea
+
+# Packages/installer info
+*.egg*
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+distribute-*.tar.gz
+
+# Other
+.cache
+.tox
+.*.sw[op]
+*~
+cmd*.cl
+.pytest_cache/
+clcache.v2.sqlite3
+uparm
+
+# Mac OSX
+.DS_Store

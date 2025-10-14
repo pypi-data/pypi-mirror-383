@@ -1,0 +1,9 @@
+include LICENSE.txt
+include README.rst
+include setup.py
+include setup.cfg
+include MANIFEST.in
+recursive-include pyraf *
+recursive-include tools *.py
+global-exclude *.pyc *.o *.so *.sqlite3
+recursive-inclulde docs *
