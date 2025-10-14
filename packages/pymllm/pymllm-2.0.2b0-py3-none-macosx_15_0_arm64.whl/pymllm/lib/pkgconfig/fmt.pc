@@ -1,0 +1,11 @@
+prefix=/var/folders/q0/wmf37v850txck86cpnvwm_zw0000gn/T/tmpk03a1rno/wheel/platlib/pymllm
+exec_prefix=/var/folders/q0/wmf37v850txck86cpnvwm_zw0000gn/T/tmpk03a1rno/wheel/platlib/pymllm
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: fmt
+Description: A modern formatting library
+Version: 11.2.0
+Libs: -L${libdir} -lfmt
+Cflags: -I${includedir}
+
