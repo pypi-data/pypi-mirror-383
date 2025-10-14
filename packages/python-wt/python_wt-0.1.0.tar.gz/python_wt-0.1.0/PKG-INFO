@@ -1,0 +1,1079 @@
+Metadata-Version: 2.4
+Name: python-wt
+Version: 0.1.0
+Summary: The ultimate git worktree manager with beautiful TUI and modern CLI
+Project-URL: Homepage, https://github.com/ajcasagrande/pywt
+Project-URL: Documentation, https://pywt.readthedocs.io
+Project-URL: Repository, https://github.com/ajcasagrande/pywt
+Project-URL: Issues, https://github.com/ajcasagrande/pywt/issues
+Author: Anthony Casagrande
+License: MIT
+License-File: LICENSE
+Keywords: cli,developer-tools,git,tui,worktree
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Software Development :: Version Control :: Git
+Classifier: Topic :: Utilities
+Classifier: Typing :: Typed
+Requires-Python: >=3.12
+Requires-Dist: cyclopts>=2.9.0
+Requires-Dist: platformdirs>=4.3.0
+Requires-Dist: pydantic>=2.9.0
+Requires-Dist: rich>=13.9.0
+Requires-Dist: textual>=0.82.0
+Requires-Dist: tomli>=2.0.0; python_version < '3.11'
+Provides-Extra: dev
+Requires-Dist: mypy>=1.13.0; extra == 'dev'
+Requires-Dist: pytest-asyncio>=0.24.0; extra == 'dev'
+Requires-Dist: pytest-cov>=5.0.0; extra == 'dev'
+Requires-Dist: pytest-mock>=3.14.0; extra == 'dev'
+Requires-Dist: pytest>=8.3.0; extra == 'dev'
+Requires-Dist: ruff>=0.7.0; extra == 'dev'
+Requires-Dist: types-psutil; extra == 'dev'
+Description-Content-Type: text/markdown
+
+<div align="center">
+
+# wt - Git Worktree Manager
+
+**The ultimate git worktree manager with a beautiful TUI and modern CLI**
+
+[![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![PyPI Version](https://img.shields.io/pypi/v/wt.svg)](https://pypi.org/project/wt/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Type checked: mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](http://mypy-lang.org/)
+[![Tests](https://img.shields.io/badge/tests-pytest-green.svg)](https://pytest.org/)
+
+[Features](#features) •
+[Installation](#installation) •
+[Quick Start](#quick-start) •
+[CLI Reference](#cli-reference) •
+[TUI](#tui) •
+[Configuration](#configuration) •
+[Contributing](#contributing)
+
+</div>
+
+---
+
+## Overview
+
+`pywt` is a modern, powerful, and user-friendly git worktree manager that simplifies working with multiple git worktrees. Whether you're juggling multiple features, reviewing PRs, or maintaining several branches simultaneously, `pywt` makes it effortless with both a beautiful terminal user interface (TUI) and a comprehensive command-line interface (CLI).
+
+### Why wt?
+
+- **Intuitive TUI**: Navigate and manage worktrees with an interactive, keyboard-driven interface
+- **Powerful CLI**: Complete control from the command line with rich output
+- **Fast & Reliable**: Built with async operations and comprehensive error handling
+- **Type-Safe**: Fully typed with Pydantic models and mypy strict mode
+- **Configurable**: Flexible configuration system with sensible defaults
+- **Modern Python**: Built with Python 3.12+ and modern best practices
+
+---
+
+## Features
+
+### Core Functionality
+
+- **Create Worktrees**: Easily create new worktrees from existing or new branches
+- **List & Filter**: View all worktrees with rich formatting and filtering options
+- **Delete & Cleanup**: Remove worktrees with automatic branch cleanup
+- **Switch & Navigate**: Quickly switch between worktrees
+- **Lock & Unlock**: Protect worktrees from accidental deletion
+- **Prune & Repair**: Clean up stale worktrees and repair broken references
+
+### User Experience
+
+- **Interactive TUI**: Beautiful Textual-based interface with keyboard shortcuts
+- **Rich CLI Output**: Colorful tables, emoji, and formatted output via Rich
+- **Smart Defaults**: Sensible configuration with zero setup required
+- **Batch Operations**: Perform operations on multiple worktrees simultaneously
+- **Auto-Setup**: Run custom commands after creating worktrees (e.g., `npm install`)
+- **Git Integration**: Deep integration with git for maximum reliability
+
+### Developer Features
+
+- **Type Safety**: Full type coverage with Pydantic and mypy
+- **Error Handling**: Comprehensive exception system with clear error messages
+- **Testing**: High test coverage with pytest and async support
+- **Documentation**: Clear docstrings and usage examples
+- **Performance**: Parallel operations and intelligent caching
+- **Cross-Platform**: Works on Linux, macOS, and Windows
+
+---
+
+## Installation
+
+### Using pip
+
+```bash
+pip install pywt
+```
+
+### Using pipx (Recommended)
+
+[pipx](https://pipx.pypa.io/) installs the package in an isolated environment:
+
+```bash
+pipx install pywt
+```
+
+### Using uv (Fastest)
+
+[uv](https://github.com/astral-sh/uv) is the fastest Python package installer:
+
+```bash
+uv tool install pywt
+```
+
+### From Source
+
+```bash
+git clone https://github.com/ajcasagrande/pywt.git
+cd pywt
+pip install -e ".[dev]"
+```
+
+### Verify Installation
+
+```bash
+wt --version
+# Output: wt version 1.0.0
+```
+
+---
+
+## Quick Start
+
+### CLI Quick Start
+
+#### List all worktrees
+
+```bash
+# Simple list
+wt list
+
+# With detailed information
+wt list --verbose
+
+# Filter by branch pattern
+wt list --filter "feature/*"
+```
+
+#### Create a new worktree
+
+```bash
+# Create from existing branch
+wt create feature/new-api
+
+# Create with new branch from main
+wt create feature/new-ui --new-branch --from main
+
+# Create in specific directory
+wt create hotfix/bug-123 --path ../worktrees/hotfix-123
+```
+
+#### Delete a worktree
+
+```bash
+# Delete with confirmation
+wt delete feature/old-feature
+
+# Force delete without confirmation
+wt delete feature/old-feature --force
+
+# Keep the branch when deleting
+wt delete feature/old-feature --keep-branch
+```
+
+#### Switch to a worktree
+
+```bash
+# Switch and cd to worktree
+wt switch feature/new-api
+
+# Just print the path (for scripting)
+wt switch feature/new-api --print-only
+```
+
+### TUI Quick Start
+
+Launch the interactive TUI:
+
+```bash
+wt tui
+```
+
+Or simply:
+
+```bash
+wt
+```
+
+#### TUI Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `↑` / `↓` | Navigate worktrees |
+| `Enter` | Switch to selected worktree |
+| `n` | Create new worktree |
+| `d` | Delete selected worktree |
+| `l` | Toggle lock on worktree |
+| `r` | Refresh worktree list |
+| `f` | Open filter dialog |
+| `/` | Search worktrees |
+| `?` | Show help dialog |
+| `q` | Quit |
+
+![TUI Demo](docs/images/tui-demo.gif)
+*The beautiful wt TUI in action*
+
+---
+
+## CLI Reference
+
+### Global Options
+
+```bash
+wt [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options:**
+- `--version`: Show version and exit
+- `--help`: Show help message and exit
+- `--config PATH`: Use custom config file
+- `--no-color`: Disable colored output
+- `--verbose`: Enable verbose output
+- `--quiet`: Suppress non-error output
+
+### Commands
+
+#### `wt list` - List worktrees
+
+List all git worktrees in the repository.
+
+```bash
+wt list [OPTIONS]
+```
+
+**Options:**
+- `--filter PATTERN`: Filter worktrees by branch name pattern
+- `--sort-by FIELD`: Sort by field (path, branch, updated)
+- `--reverse`: Reverse sort order
+- `--format FORMAT`: Output format (table, json, csv)
+- `--verbose, -v`: Show detailed information
+
+**Examples:**
+
+```bash
+# List all worktrees
+wt list
+
+# Show only feature branches
+wt list --filter "feature/*"
+
+# Output as JSON
+wt list --format json
+
+# Sort by last updated
+wt list --sort-by updated
+```
+
+#### `wt create` - Create worktree
+
+Create a new git worktree.
+
+```bash
+wt create BRANCH [OPTIONS]
+```
+
+**Arguments:**
+- `BRANCH`: Branch name for the worktree
+
+**Options:**
+- `--path PATH`: Custom path for the worktree
+- `--new-branch, -b`: Create a new branch
+- `--from REF`: Base branch or commit (default: configured base_branch)
+- `--track REMOTE`: Track a remote branch
+- `--no-setup`: Skip running setup command
+- `--force, -f`: Force creation (overwrite existing)
+- `--detach`: Create with detached HEAD
+
+**Examples:**
+
+```bash
+# Create from existing branch
+wt create feature/login
+
+# Create new branch from main
+wt create feature/new-feature -b --from main
+
+# Create in specific location
+wt create hotfix/bug --path ../worktrees/urgent-fix
+
+# Create and track remote branch
+wt create feature/api --track origin/feature/api
+```
+
+#### `wt delete` - Delete worktree
+
+Delete an existing git worktree.
+
+```bash
+wt delete BRANCH [OPTIONS]
+```
+
+**Arguments:**
+- `BRANCH`: Branch name or worktree path
+
+**Options:**
+- `--force, -f`: Force deletion without confirmation
+- `--keep-branch`: Keep the branch after deleting worktree
+- `--cleanup`: Also clean up remote-tracking branches
+
+**Examples:**
+
+```bash
+# Delete with confirmation
+wt delete feature/old-feature
+
+# Force delete without prompt
+wt delete feature/old-feature --force
+
+# Delete but keep the branch
+wt delete feature/old-feature --keep-branch
+```
+
+#### `wt switch` - Switch worktree
+
+Switch to a different worktree (changes directory).
+
+```bash
+wt switch BRANCH [OPTIONS]
+```
+
+**Arguments:**
+- `BRANCH`: Branch name or worktree path
+
+**Options:**
+- `--create, -c`: Create worktree if it doesn't exist
+- `--print-only, -p`: Only print the path without switching
+
+**Examples:**
+
+```bash
+# Switch to worktree
+wt switch feature/api
+
+# Print path for scripting (use with cd $(wt switch -p feature/api))
+wt switch --print-only feature/api
+
+# Switch and create if needed
+wt switch feature/new-feature --create
+```
+
+#### `wt lock` - Lock worktree
+
+Lock a worktree to prevent deletion.
+
+```bash
+wt lock BRANCH [OPTIONS]
+```
+
+**Arguments:**
+- `BRANCH`: Branch name or worktree path
+
+**Options:**
+- `--reason TEXT`: Reason for locking
+
+**Examples:**
+
+```bash
+# Lock a worktree
+wt lock feature/important
+
+# Lock with reason
+wt lock main --reason "Production branch - do not delete"
+```
+
+#### `wt unlock` - Unlock worktree
+
+Unlock a previously locked worktree.
+
+```bash
+wt unlock BRANCH
+```
+
+**Arguments:**
+- `BRANCH`: Branch name or worktree path
+
+**Examples:**
+
+```bash
+wt unlock feature/important
+```
+
+#### `wt prune` - Prune worktrees
+
+Remove stale worktree references.
+
+```bash
+wt prune [OPTIONS]
+```
+
+**Options:**
+- `--dry-run, -n`: Show what would be pruned without doing it
+- `--verbose, -v`: Show detailed information
+
+**Examples:**
+
+```bash
+# Preview what will be pruned
+wt prune --dry-run
+
+# Actually prune stale worktrees
+wt prune
+```
+
+#### `wt repair` - Repair worktrees
+
+Repair administrative files in worktrees.
+
+```bash
+wt repair [PATH]
+```
+
+**Arguments:**
+- `PATH`: Path to worktree to repair (default: current directory)
+
+**Examples:**
+
+```bash
+# Repair current worktree
+wt repair
+
+# Repair specific worktree
+wt repair ../worktrees/feature-branch
+```
+
+#### `wt info` - Show information
+
+Display detailed information about the current or specified worktree.
+
+```bash
+wt info [BRANCH] [OPTIONS]
+```
+
+**Arguments:**
+- `BRANCH`: Branch name or worktree path (default: current)
+
+**Options:**
+- `--format FORMAT`: Output format (text, json, yaml)
+
+**Examples:**
+
+```bash
+# Show info for current worktree
+wt info
+
+# Show info for specific worktree as JSON
+wt info feature/api --format json
+```
+
+#### `wt tui` - Launch TUI
+
+Launch the interactive terminal user interface.
+
+```bash
+wt tui [OPTIONS]
+```
+
+**Options:**
+- `--theme THEME`: Color theme (dark, light, auto)
+
+**Examples:**
+
+```bash
+# Launch TUI
+wt tui
+
+# Launch with light theme
+wt tui --theme light
+```
+
+---
+
+## TUI
+
+The TUI provides an intuitive, keyboard-driven interface for managing worktrees.
+
+### Features
+
+- **Real-time Updates**: Automatically refreshes worktree status
+- **Keyboard Navigation**: Full keyboard control with vim-style keys
+- **Visual Indicators**: Color-coded status, emoji, and icons
+- **Search & Filter**: Quickly find worktrees with fuzzy search
+- **Batch Operations**: Select multiple worktrees for bulk actions
+- **Context Help**: Built-in help system with keyboard shortcuts
+
+### Screenshots
+
+#### Main View
+
+![Main View](docs/images/tui-main.png)
+*The main TUI view showing all worktrees with status indicators*
+
+#### Create Dialog
+
+![Create Dialog](docs/images/tui-create.png)
+*Interactive dialog for creating new worktrees*
+
+#### Filter View
+
+![Filter View](docs/images/tui-filter.png)
+*Filtering worktrees by branch pattern*
+
+---
+
+## Configuration
+
+`wt` uses a hierarchical configuration system with support for global and repository-specific settings.
+
+### Configuration Files
+
+Configuration is loaded from the following locations (in order of precedence):
+
+1. `$REPO_ROOT/.wt.toml` - Repository-specific config
+2. `$XDG_CONFIG_HOME/wt/config.toml` - User config (Linux/macOS)
+3. `~/.config/wt/config.toml` - User config (fallback)
+4. `%APPDATA%/wt/config.toml` - User config (Windows)
+
+### Configuration Format
+
+Configuration uses TOML format:
+
+```toml
+# .wt.toml or ~/.config/wt/config.toml
+
+[global]
+# Default base branch for new worktrees
+base_branch = "main"
+
+# Command to run after creating a worktree
+setup_command = "npm install && npm run build"
+
+# Default remote name
+remote_name = "origin"
+
+# Maximum concurrent operations
+max_concurrent = 4
+
+# Automatically fetch from remote before operations
+auto_fetch = true
+
+# Clean up branches when deleting worktrees
+cleanup_on_delete = true
+
+# Default directory for new worktrees (relative to repo root)
+worktree_dir = "../worktrees"
+
+[ui]
+# Enable colored output in CLI
+colors = true
+
+# Show emoji in output
+show_emoji = true
+
+# Rich table style (rounded, simple, heavy, etc.)
+table_style = "rounded"
+
+# Use pager for long output
+pager = true
+
+# Use compact display mode
+compact = false
+
+[performance]
+# Enable caching of git operations
+cache_enabled = true
+
+# Cache TTL in seconds (0 = no expiration)
+cache_ttl = 300
+
+# Enable parallel git operations
+parallel_operations = true
+
+[logging]
+# Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+level = "INFO"
+
+# Log file path (null = no file logging)
+file = null
+
+# Log format string
+format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+[git]
+# Default prefix for new branches (e.g., 'feature/')
+default_branch_prefix = ""
+
+# Path to git commit message template
+commit_template = null
+
+# Sign commits with GPG
+gpg_sign = false
+
+# Default pull strategy (merge, rebase, ff-only)
+pull_strategy = "merge"
+```
+
+### Environment Variables
+
+Configuration can also be set via environment variables:
+
+```bash
+# Override base branch
+export WT_GLOBAL_BASE_BRANCH="develop"
+
+# Disable colors
+export WT_UI_COLORS="false"
+
+# Set log level
+export WT_LOGGING_LEVEL="DEBUG"
+```
+
+Environment variable format: `WT_<SECTION>_<KEY>` (all uppercase)
+
+### Example Configurations
+
+#### Minimal Setup
+
+```toml
+[global]
+base_branch = "main"
+```
+
+#### Frontend Developer
+
+```toml
+[global]
+base_branch = "develop"
+setup_command = "npm ci && npm run build"
+worktree_dir = "../wt"
+
+[ui]
+show_emoji = true
+table_style = "rounded"
+```
+
+#### Enterprise Setup
+
+```toml
+[global]
+base_branch = "main"
+remote_name = "origin"
+auto_fetch = true
+cleanup_on_delete = false
+max_concurrent = 8
+
+[git]
+gpg_sign = true
+pull_strategy = "rebase"
+
+[logging]
+level = "INFO"
+file = "~/.local/share/wt/wt.log"
+
+[performance]
+cache_enabled = true
+cache_ttl = 600
+parallel_operations = true
+```
+
+---
+
+## Development
+
+### Setup Development Environment
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/wt.git
+   cd wt
+   ```
+
+2. **Create virtual environment**
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install development dependencies**
+
+   ```bash
+   pip install -e ".[dev]"
+   ```
+
+4. **Install pre-commit hooks**
+
+   ```bash
+   pre-commit install
+   ```
+
+### Development Workflow
+
+#### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=wt --cov-report=html
+
+# Run specific test file
+pytest tests/test_repository.py
+
+# Run with verbose output
+pytest -v
+
+# Run only unit tests
+pytest -m unit
+
+# Run only integration tests
+pytest -m integration
+```
+
+#### Code Quality
+
+```bash
+# Format code with ruff
+ruff format .
+
+# Lint code
+ruff check .
+
+# Fix auto-fixable issues
+ruff check --fix .
+
+# Type check with mypy
+mypy src/wt
+
+# Run all checks
+ruff check . && ruff format --check . && mypy src/wt
+```
+
+#### Building Documentation
+
+```bash
+# Build HTML documentation
+cd docs
+make html
+
+# View documentation
+open _build/html/index.html
+```
+
+#### Building Package
+
+```bash
+# Build source and wheel distributions
+python -m build
+
+# Install locally
+pip install dist/wt-*.whl
+```
+
+### Project Structure
+
+```
+wt/
+├── src/
+│   └── wt/
+│       ├── __init__.py          # Package initialization
+│       ├── cli/                 # CLI implementation
+│       │   ├── __init__.py
+│       │   ├── main.py          # Main CLI entry point
+│       │   └── commands/        # CLI command modules
+│       ├── tui/                 # TUI implementation
+│       │   ├── __init__.py
+│       │   ├── app.py           # Main TUI application
+│       │   └── widgets/         # Custom TUI widgets
+│       ├── core/                # Core functionality
+│       │   ├── __init__.py
+│       │   ├── models.py        # Pydantic models
+│       │   ├── exceptions.py   # Exception classes
+│       │   └── repository.py   # Git repository operations
+│       └── config/              # Configuration management
+│           ├── __init__.py
+│           ├── settings.py      # Settings models
+│           └── loader.py        # Config file loader
+├── tests/                       # Test suite
+│   ├── unit/                    # Unit tests
+│   ├── integration/             # Integration tests
+│   └── fixtures/                # Test fixtures
+├── docs/                        # Documentation
+│   ├── images/                  # Screenshots and diagrams
+│   └── examples/                # Example configurations
+├── pyproject.toml               # Project metadata and config
+├── README.md                    # This file
+└── LICENSE                      # MIT License
+```
+
+### Technologies Used
+
+- **CLI Framework**: [cyclopts](https://github.com/BrianPugh/cyclopts) - Modern CLI framework
+- **TUI Framework**: [Textual](https://textual.textualize.io/) - TUI framework for Python
+- **Rich Output**: [Rich](https://rich.readthedocs.io/) - Beautiful terminal formatting
+- **Data Validation**: [Pydantic](https://docs.pydantic.dev/) - Data validation and settings
+- **Testing**: [pytest](https://pytest.org/) - Testing framework
+- **Linting**: [Ruff](https://github.com/astral-sh/ruff) - Fast Python linter
+- **Type Checking**: [mypy](http://mypy-lang.org/) - Static type checker
+
+---
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+### How to Contribute
+
+1. **Fork the repository**
+
+   Click the "Fork" button on GitHub.
+
+2. **Clone your fork**
+
+   ```bash
+   git clone https://github.com/yourusername/wt.git
+   cd wt
+   ```
+
+3. **Create a feature branch**
+
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+
+4. **Make your changes**
+
+   - Write code following the project style
+   - Add tests for new functionality
+   - Update documentation as needed
+
+5. **Run tests and checks**
+
+   ```bash
+   # Run tests
+   pytest
+
+   # Run linting
+   ruff check .
+
+   # Run type checking
+   mypy src/wt
+
+   # Run formatting
+   ruff format .
+   ```
+
+6. **Commit your changes**
+
+   ```bash
+   git add .
+   git commit -m "feat: add amazing feature"
+   ```
+
+   Follow [Conventional Commits](https://www.conventionalcommits.org/) format:
+   - `feat:` - New feature
+   - `fix:` - Bug fix
+   - `docs:` - Documentation changes
+   - `test:` - Test changes
+   - `refactor:` - Code refactoring
+   - `style:` - Code style changes
+   - `chore:` - Maintenance tasks
+
+7. **Push to your fork**
+
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+
+8. **Open a Pull Request**
+
+   Go to the original repository and click "New Pull Request".
+
+### Code Style
+
+- Follow [PEP 8](https://pep8.org/) style guide
+- Use type hints for all functions and methods
+- Write docstrings for all public APIs (Google style)
+- Keep functions small and focused
+- Maintain high test coverage (>90%)
+
+### Testing Guidelines
+
+- Write unit tests for all new code
+- Include integration tests for complex features
+- Use meaningful test names that describe what is being tested
+- Mock external dependencies in unit tests
+- Ensure all tests pass before submitting PR
+
+### Documentation
+
+- Update README.md for user-facing changes
+- Add docstrings to all public functions and classes
+- Include examples in docstrings
+- Update CLI help text for command changes
+
+### Getting Help
+
+- Open an [issue](https://github.com/yourusername/wt/issues) for bug reports
+- Use [discussions](https://github.com/yourusername/wt/discussions) for questions
+- Check existing issues before creating new ones
+- Provide minimal reproducible examples for bugs
+
+---
+
+## Roadmap
+
+### Version 1.x
+
+- [x] Core worktree management (create, delete, list)
+- [x] Beautiful TUI with Textual
+- [x] Rich CLI output
+- [x] Configuration system
+- [x] Comprehensive test suite
+- [ ] Shell completions (bash, zsh, fish)
+- [ ] Git hooks integration
+- [ ] Worktree templates
+
+### Version 2.x
+
+- [ ] Remote worktree support
+- [ ] Worktree groups and tagging
+- [ ] Advanced filtering and search
+- [ ] Worktree snapshots and backup
+- [ ] Integration with popular tools (VS Code, JetBrains)
+- [ ] Performance optimizations
+- [ ] Plugin system
+
+---
+
+## FAQ
+
+### Why use worktrees instead of branches?
+
+Git worktrees allow you to have multiple branches checked out simultaneously in different directories. This is useful for:
+- Working on multiple features in parallel
+- Reviewing PRs without stashing changes
+- Running different versions side-by-side
+- Comparing code across branches
+
+### Can I use wt with existing worktrees?
+
+Yes! `wt` detects and manages all worktrees in your repository, whether created with `wt` or `git worktree`.
+
+### Does wt modify my git configuration?
+
+No, `wt` uses standard git commands and doesn't modify your git configuration. All worktrees are created using `git worktree` under the hood.
+
+### What's the difference between CLI and TUI?
+
+- **CLI**: Command-line interface for scripting and automation
+- **TUI**: Interactive terminal UI for visual management
+
+Both provide the same functionality, choose based on your preference.
+
+### How do I uninstall wt?
+
+```bash
+pip uninstall wt
+# or
+pipx uninstall wt
+# or
+uv tool uninstall wt
+```
+
+### Where are configuration files stored?
+
+- Linux/macOS: `~/.config/wt/config.toml`
+- Windows: `%APPDATA%/wt/config.toml`
+- Repository-specific: `$REPO_ROOT/.wt.toml`
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2024 Anthony
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## Acknowledgments
+
+- Built with [Textual](https://textual.textualize.io/) by [Textualize](https://www.textualize.io/)
+- CLI powered by [cyclopts](https://github.com/BrianPugh/cyclopts)
+- Beautiful output via [Rich](https://rich.readthedocs.io/)
+- Inspired by the git worktree workflow
+
+---
+
+## Support
+
+If you find `wt` useful, please:
+
+- Star the repository on GitHub
+- Share it with other developers
+- Report bugs and request features
+- Contribute code or documentation
+
+---
+
+## Links
+
+- **Homepage**: https://github.com/yourusername/wt
+- **Documentation**: https://wt.readthedocs.io
+- **PyPI**: https://pypi.org/project/wt/
+- **Issues**: https://github.com/yourusername/wt/issues
+- **Discussions**: https://github.com/yourusername/wt/discussions
+
+---
+
+<div align="center">
+
+**Made with ❤️ by developers, for developers**
+
+</div>

@@ -1,0 +1,401 @@
+/* Stunning TCSS Styling for wt - Git Worktree Manager TUI
+ * Featuring Nord, Gruvbox, and Monokai inspired themes
+ * Modern, beautiful, and highly functional design
+ */
+
+/* ===== GLOBAL STYLES ===== */
+Screen {
+    background: $surface;
+}
+
+/* ===== HEADER ===== */
+Header {
+    dock: top;
+    height: 3;
+    background: $primary;
+    color: $text;
+    text-style: bold;
+}
+
+/* ===== FOOTER ===== */
+Footer {
+    dock: bottom;
+    height: 1;
+    background: $primary-darken-1;
+}
+
+Footer > .footer--key {
+    background: $primary;
+    color: $text;
+}
+
+Footer > .footer--key-text {
+    color: $text-muted;
+}
+
+/* ===== STATUS BAR ===== */
+#status-bar {
+    dock: bottom;
+    height: 1;
+    background: $primary-darken-2;
+    color: $text;
+    padding: 0 1;
+}
+
+/* ===== MAIN CONTAINER ===== */
+#main-container {
+    padding: 1 2;
+    height: 100%;
+}
+
+#repo-label {
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+    padding: 0 1;
+}
+
+/* ===== DATA TABLE ===== */
+DataTable {
+    height: 100%;
+    border: solid $primary;
+    background: $surface;
+}
+
+DataTable > .datatable--header {
+    background: $primary;
+    color: $text;
+    text-style: bold;
+}
+
+DataTable > .datatable--cursor {
+    background: $accent;
+    color: $text;
+}
+
+DataTable > .datatable--hover {
+    background: $panel;
+}
+
+DataTable > .datatable--fixed {
+    background: $surface;
+}
+
+DataTable:focus > .datatable--cursor {
+    background: $accent;
+    text-style: bold;
+}
+
+/* ===== MODAL DIALOGS ===== */
+/* Confirm Dialog */
+#confirm-dialog {
+    width: 60;
+    height: 13;
+    border: thick $primary;
+    background: $surface;
+    padding: 1 2;
+}
+
+#confirm-title {
+    text-align: center;
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+    width: 100%;
+}
+
+#confirm-message {
+    text-align: center;
+    margin-bottom: 2;
+    width: 100%;
+    padding: 0 2;
+}
+
+#confirm-buttons {
+    align: center middle;
+    width: 100%;
+    height: 3;
+}
+
+#confirm-buttons > Button {
+    margin: 0 1;
+}
+
+/* Create Worktree Dialog */
+#create-dialog {
+    width: 70;
+    height: 23;
+    border: thick $primary;
+    background: $surface;
+    padding: 1 2;
+}
+
+#create-title {
+    text-align: center;
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+    width: 100%;
+}
+
+#create-form {
+    width: 100%;
+    padding: 0 2;
+}
+
+#create-form > Label {
+    margin-top: 1;
+    margin-bottom: 0;
+    color: $text;
+}
+
+#create-form > Input {
+    margin-bottom: 1;
+    border: solid $primary;
+    background: $panel;
+}
+
+#create-form > Input:focus {
+    border: solid $accent;
+}
+
+#create-error {
+    text-align: center;
+    margin-top: 1;
+    min-height: 1;
+}
+
+#create-buttons {
+    align: center middle;
+    width: 100%;
+    height: 3;
+    margin-top: 1;
+}
+
+#create-buttons > Button {
+    margin: 0 1;
+}
+
+/* ===== BUTTONS ===== */
+Button {
+    min-width: 12;
+    height: 3;
+}
+
+Button:hover {
+    text-style: bold;
+}
+
+Button:focus {
+    text-style: bold;
+}
+
+/* ===== INPUTS ===== */
+Input {
+    border: solid $primary;
+    background: $panel;
+    color: $text;
+    padding: 0 1;
+}
+
+Input:focus {
+    border: solid $accent;
+}
+
+Input.-invalid {
+    border: solid $error;
+}
+
+/* ===== LABELS ===== */
+Label {
+    color: $text;
+}
+
+/* ===== CONTAINERS ===== */
+Container {
+    background: $surface;
+}
+
+Horizontal {
+    height: auto;
+}
+
+Vertical {
+    width: 100%;
+}
+
+/* ===== NORD THEME (Default) ===== */
+/* Nord color palette inspired by the Arctic
+ * Cool, elegant, and easy on the eyes
+ */
+App {
+    /* Primary colors */
+    $primary: #5e81ac;
+    $primary-darken-1: #4c688a;
+    $primary-darken-2: #3b5168;
+
+    /* Surface colors */
+    $surface: #2e3440;
+    $panel: #3b4252;
+    $boost: #434c5e;
+
+    /* Accent colors */
+    $accent: #88c0d0;
+    $accent-darken-1: #6fa8b8;
+
+    /* Semantic colors */
+    $success: #a3be8c;
+    $success-darken-1: #8fa878;
+    $warning: #ebcb8b;
+    $warning-darken-1: #d4b878;
+    $error: #bf616a;
+    $error-darken-1: #a54f58;
+
+    /* Text colors */
+    $text: #eceff4;
+    $text-muted: #d8dee9;
+    $text-disabled: #4c566a;
+}
+
+/* ===== GRUVBOX THEME ===== */
+/* Uncomment to use Gruvbox theme
+ * Warm, retro-inspired color scheme
+ */
+/*
+App.-gruvbox {
+    $primary: #458588;
+    $primary-darken-1: #3a6f74;
+    $primary-darken-2: #2f5a5f;
+
+    $surface: #282828;
+    $panel: #3c3836;
+    $boost: #504945;
+
+    $accent: #83a598;
+    $accent-darken-1: #6f8c83;
+
+    $success: #b8bb26;
+    $success-darken-1: #98971a;
+    $warning: #fabd2f;
+    $warning-darken-1: #d79921;
+    $error: #fb4934;
+    $error-darken-1: #cc241d;
+
+    $text: #ebdbb2;
+    $text-muted: #d5c4a1;
+    $text-disabled: #665c54;
+}
+*/
+
+/* ===== MONOKAI THEME ===== */
+/* Uncomment to use Monokai theme
+ * Vibrant, high-contrast color scheme
+ */
+/*
+App.-monokai {
+    $primary: #66d9ef;
+    $primary-darken-1: #52b3c7;
+    $primary-darken-2: #3e8c9f;
+
+    $surface: #272822;
+    $panel: #3e3d32;
+    $boost: #49483e;
+
+    $accent: #a6e22e;
+    $accent-darken-1: #8bc025;
+
+    $success: #a6e22e;
+    $success-darken-1: #8bc025;
+    $warning: #e6db74;
+    $warning-darken-1: #c9b95f;
+    $error: #f92672;
+    $error-darken-1: #d11f5c;
+
+    $text: #f8f8f2;
+    $text-muted: #ccccbb;
+    $text-disabled: #75715e;
+}
+*/
+
+/* ===== TOKYO NIGHT THEME (Bonus) ===== */
+/* Uncomment to use Tokyo Night theme
+ * Modern, dark theme with purple/blue accents
+ */
+/*
+App.-tokyo {
+    $primary: #7aa2f7;
+    $primary-darken-1: #5e87d6;
+    $primary-darken-2: #486cb5;
+
+    $surface: #1a1b26;
+    $panel: #24283b;
+    $boost: #414868;
+
+    $accent: #bb9af7;
+    $accent-darken-1: #9d7fd6;
+
+    $success: #9ece6a;
+    $success-darken-1: #85b657;
+    $warning: #e0af68;
+    $warning-darken-1: #c79854;
+    $error: #f7768e;
+    $error-darken-1: #d65f78;
+
+    $text: #c0caf5;
+    $text-muted: #a9b1d6;
+    $text-disabled: #565f89;
+}
+*/
+
+/* ===== ANIMATIONS & TRANSITIONS ===== */
+* {
+    transition: background 200ms, color 200ms, border 200ms;
+}
+
+Button:hover {
+    transition: background 100ms;
+}
+
+DataTable > .datatable--cursor {
+    transition: background 150ms;
+}
+
+/* ===== SCROLLBARS ===== */
+Vertical > ScrollbarVertical {
+    background: $surface;
+    color: $primary;
+}
+
+Horizontal > ScrollbarHorizontal {
+    background: $surface;
+    color: $primary;
+}
+
+/* ===== FOCUS STYLES ===== */
+*:focus {
+    border: solid $accent;
+}
+
+/* ===== DISABLED STYLES ===== */
+*:disabled {
+    opacity: 0.5;
+    color: $text-disabled;
+}
+
+Button:disabled {
+    background: $panel;
+    color: $text-disabled;
+}
+
+/* ===== LOADING INDICATOR ===== */
+LoadingIndicator {
+    color: $accent;
+}
+
+/* ===== TOOLTIPS ===== */
+Tooltip {
+    background: $panel;
+    color: $text;
+    border: solid $primary;
+    padding: 0 1;
+}
