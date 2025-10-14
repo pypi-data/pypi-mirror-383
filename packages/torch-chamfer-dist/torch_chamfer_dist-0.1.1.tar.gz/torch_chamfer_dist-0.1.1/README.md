@@ -1,0 +1,73 @@
+# torch-chamfer-dist
+
+`torch-chamfer-dist` provides a fast Chamfer distance implementation for PyTorch. On macOS with
+Metal/MPS it runs kd-tree nearest-neighbour queries directly on the GPU; elsewhere it falls back to
+an optimized CPU kd-tree. Autograd support is built in.
+
+## Installation
+
+```bash
+pip install torch-chamfer-dist
+```
+
+The provided wheel targets macOS 13+ (arm64 and x86_64). On other platforms the CPU backend is
+selected automatically.
+
+## Quick start
+
+```python
+import torch
+import chamfer
+
+# Create two point clouds on the desired device ("mps" for Metal, "cpu" otherwise)
+a = torch.rand(5_000, 3, device="mps")
+b = torch.rand(5_000, 3, device="mps")
+
+# Nearest neighbours via kd-tree
+dist_idx, dist_sq = chamfer.closest_points(a, b)
+
+# Chamfer distance with gradients
+loss = chamfer.chamfer_distance(a, b)
+loss.backward()
+```
+
+The device of the inputs determines the backend. When both tensors live on MPS the Metal kernel is
+used; otherwise a CPU kd-tree path runs. Gradients are computed on the same device without host
+roundtrips.
+
+## Benchmarks
+
+The repository ships a benchmark script comparing brute-force, CPU kd-tree, and Metal kd-tree
+implementations. Example (20k points per cloud on an M2 Pro):
+
+```
+Method      | Forward           | Backward
+------------+-------------------+------------------
+Brute force | 0.885 s           | 1.829 s
+KD-tree CPU | 0.139 s (6.39x)   | 0.269 s (6.79x)
+KD-tree MPS | 0.008 s (115.31x) | 0.012 s (147.63x)
+```
+
+Run the benchmark locally:
+
+```bash
+PYTHONPATH=. python benchmarks/benchmark_chamfer.py --n 20000 --chunk 4096 --repeat 3
+```
+
+Set `CHAMFER_PROFILE=1` to emit per-stage timings (tree build, kernel wait, etc.).
+
+## Development
+
+- Install dependencies: `pip install torch nanobind pytest build`.
+- Run tests: `python -m pytest`.
+- Build wheel: `python -m build`.
+
+### Publishing to PyPI
+
+```bash
+python -m pip install --upgrade build twine
+python -m build
+python -m twine upload dist/*
+```
+
+Remember to bump the version in `pyproject.toml` before tagging and uploading a release.
