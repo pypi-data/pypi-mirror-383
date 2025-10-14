@@ -1,0 +1,321 @@
+Metadata-Version: 2.4
+Name: xiaoshiai-hub
+Version: 0.1.0
+Summary: Python SDK for XiaoShi AI Hub
+Home-page: https://github.com/poxiaoyun/XiaoShi-Moha
+Author: XiaoShi AI
+Author-email: XiaoShi AI <support@xiaoshiai.cn>
+License: Apache-2.0
+Project-URL: Homepage, https://github.com/poxiaoyun/XiaoShi-Moha
+Project-URL: Documentation, https://github.com/poxiaoyun/XiaoShi-Moha/tree/main/python-sdk
+Project-URL: Repository, https://github.com/poxiaoyun/XiaoShi-Moha
+Project-URL: Issues, https://github.com/poxiaoyun/XiaoShi-Moha/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.20.0
+Requires-Dist: tqdm>=4.62.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=22.0; extra == "dev"
+Requires-Dist: flake8>=4.0; extra == "dev"
+Requires-Dist: mypy>=0.950; extra == "dev"
+Requires-Dist: build>=0.8.0; extra == "dev"
+Requires-Dist: twine>=4.0.0; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# XiaoShi AI Hub Python SDK
+
+Python SDK for interacting with XiaoShi AI Hub repositories. This library provides a simple and intuitive interface for downloading models and datasets from XiaoShi AI Hub, similar to the Hugging Face Hub API.
+
+## Installation
+
+```bash
+pip install xiaoshiai-hub
+```
+
+Or install from source:
+
+```bash
+cd python-sdk
+pip install -e .
+```
+
+## Features
+
+- ✅ **Download single files or entire repositories**
+- ✅ **Progress bars** (like Hugging Face Hub) for download tracking
+- ✅ **Pattern-based filtering** with allow/ignore patterns
+- ✅ **Multiple authentication methods** (username/password, token)
+- ✅ **Environment variable configuration** for flexible Hub URL setup
+- ✅ **Caching support** for efficient reuse
+- ✅ **Type hints** for better IDE support
+
+## Quick Start
+
+### Download a Single File
+
+```python
+from xiaoshiai_hub import hf_hub_download
+
+# Download a single file
+file_path = hf_hub_download(
+    repo_id="demo/demo",
+    filename="config.yaml",
+    repo_type="models",  # or "datasets"
+    username="your-username",
+    password="your-password",
+)
+
+print(f"File downloaded to: {file_path}")
+```
+
+### Download Entire Repository
+
+```python
+from xiaoshiai_hub import snapshot_download
+
+# Download entire repository
+repo_path = snapshot_download(
+    repo_id="demo/demo",
+    repo_type="models",
+    username="your-username",
+    password="your-password",
+)
+
+print(f"Repository downloaded to: {repo_path}")
+```
+
+### Download with Filters
+
+```python
+from xiaoshiai_hub import snapshot_download
+
+# Download only YAML files, ignoring .git files
+repo_path = snapshot_download(
+    repo_id="demo/demo",
+    repo_type="models",
+    allow_patterns=["*.yaml", "*.yml"],
+    ignore_patterns=[".git*"],
+    username="your-username",
+    password="your-password",
+)
+```
+
+## Advanced Usage
+
+### Using the Client Directly
+
+```python
+from xiaoshiai_hub import HubClient
+
+# Create a client
+client = HubClient(
+    base_url="https://rune.develop.xiaoshiai.cn/api/moha",
+    username="your-username",
+    password="your-password",
+)
+
+# Get repository information
+repo_info = client.get_repository_info(
+    organization="demo",
+    repo_type="models",
+    repo_name="demo",
+)
+print(f"Repository: {repo_info.name}")
+print(f"Default branch: {repo_info.default_branch}")
+
+# List branches and tags
+refs = client.get_repository_refs(
+    organization="demo",
+    repo_type="models",
+    repo_name="demo",
+)
+for ref in refs:
+    print(f"{ref.type}: {ref.name} ({ref.hash})")
+
+# Get repository content
+content = client.get_repository_content(
+    organization="demo",
+    repo_type="models",
+    repo_name="demo",
+    branch="main",
+    path="",  # root directory
+)
+
+# List files
+if content.entries:
+    for entry in content.entries:
+        print(f"{entry.type}: {entry.path} ({entry.size} bytes)")
+
+# Download a specific file
+client.download_file(
+    organization="demo",
+    repo_type="models",
+    repo_name="demo",
+    branch="main",
+    file_path="config.yaml",
+    local_path="./config.yaml",
+)
+```
+
+### Authentication
+
+The SDK supports multiple authentication methods:
+
+#### Username and Password
+
+```python
+from xiaoshiai_hub import HubClient
+
+client = HubClient(
+    username="your-username",
+    password="your-password",
+)
+```
+
+#### Token-based Authentication
+
+```python
+from xiaoshiai_hub import HubClient
+
+client = HubClient(
+    token="your-api-token",
+)
+```
+
+### Custom Base URL
+
+```python
+from xiaoshiai_hub import snapshot_download
+
+repo_path = snapshot_download(
+    repo_id="demo/demo",
+    base_url="https://your-custom-hub.example.com/api/moha",
+    username="your-username",
+    password="your-password",
+)
+```
+
+### Specify Revision (Branch/Tag)
+
+```python
+from xiaoshiai_hub import snapshot_download
+
+# Download from a specific branch
+repo_path = snapshot_download(
+    repo_id="demo/demo",
+    revision="develop",
+    username="your-username",
+    password="your-password",
+)
+```
+
+### Cache Directory
+
+```python
+from xiaoshiai_hub import snapshot_download
+
+# Use a custom cache directory
+repo_path = snapshot_download(
+    repo_id="demo/demo",
+    cache_dir="~/.cache/xiaoshiai",
+    username="your-username",
+    password="your-password",
+)
+```
+
+## API Reference
+
+### Functions
+
+#### `hf_hub_download()`
+
+Download a single file from a repository.
+
+**Parameters:**
+- `repo_id` (str): Repository ID in format "organization/repo_name"
+- `filename` (str): Path to the file in the repository
+- `repo_type` (str, optional): "models" or "datasets" (default: "models")
+- `revision` (str, optional): Branch/tag/commit to download from
+- `cache_dir` (str | Path, optional): Directory to cache files
+- `local_dir` (str | Path, optional): Directory to save the file
+- `base_url` (str, optional): Base URL of the Hub API
+- `username` (str, optional): Username for authentication
+- `password` (str, optional): Password for authentication
+- `token` (str, optional): Token for authentication
+
+**Returns:** Path to the downloaded file
+
+#### `snapshot_download()`
+
+Download an entire repository snapshot.
+
+**Parameters:**
+- `repo_id` (str): Repository ID in format "organization/repo_name"
+- `repo_type` (str, optional): "models" or "datasets" (default: "models")
+- `revision` (str, optional): Branch/tag/commit to download from
+- `cache_dir` (str | Path, optional): Directory to cache files
+- `local_dir` (str | Path, optional): Directory to save files
+- `allow_patterns` (str | List[str], optional): Patterns to allow (e.g., "*.yaml")
+- `ignore_patterns` (str | List[str], optional): Patterns to ignore (e.g., ".git*")
+- `base_url` (str, optional): Base URL of the Hub API
+- `username` (str, optional): Username for authentication
+- `password` (str, optional): Password for authentication
+- `token` (str, optional): Token for authentication
+- `verbose` (bool, optional): Print progress messages (default: True)
+
+**Returns:** Path to the downloaded repository
+
+### Classes
+
+#### `HubClient`
+
+Main client for interacting with the Hub API.
+
+**Methods:**
+- `get_repository_info(organization, repo_type, repo_name)`: Get repository information
+- `get_repository_refs(organization, repo_type, repo_name)`: List branches and tags
+- `get_repository_content(organization, repo_type, repo_name, branch, path)`: Get content at path
+- `download_file(organization, repo_type, repo_name, branch, file_path, local_path)`: Download a file
+
+## API Endpoints
+
+The SDK uses the following API endpoints:
+
+1. **Repository Info**: `GET /organizations/{org}/{type}/{repo}`
+2. **Repository Refs**: `GET /organizations/{org}/{type}/{repo}/refs`
+3. **Repository Content**: `GET /organizations/{org}/{type}/{repo}/contents/{branch}/{path}`
+4. **File Download**: `GET /organizations/{org}/{type}/{repo}/resolve/{branch}/{file}`
+
+## Examples
+
+See the `examples/` directory for more examples:
+
+- `examples/download_single_file.py`: Download a single file
+- `examples/download_repository.py`: Download entire repository
+- `examples/download_with_filters.py`: Download with pattern filters
+- `examples/list_repository_content.py`: List repository contents
+
+## License
+
+Apache License 2.0
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
