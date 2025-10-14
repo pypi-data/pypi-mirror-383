@@ -1,0 +1,69 @@
+name: deploy
+on:
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+jobs:
+  build-wheels:
+    name: Make ${{ matrix.os }} wheels
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build wheels
+      uses: pypa/cibuildwheel@6a41245b42fcb325223b8793746f10456ed07436 # v2.23.2
+      env:
+        CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
+        CIBW_BUILD: cp37-* cp38-* cp39-* cp310-*
+        CIBW_SKIP: '*musllinux*'
+        CIBW_ARCHS: native
+        CIBW_BUILD_FRONTEND: build
+        CIBW_TEST_COMMAND: python {project}/TESTS/unitTests.py
+          # cross-compilation for Apple Silicon:
+          # https://cibuildwheel.readthedocs.io/en/stable/faq/#how-to-cross-compile
+        CIBW_ARCHS_MACOS: x86_64 arm64
+
+    - name: Upload wheel as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: artifact-${{ matrix.os }}-wheel
+        path: ./**/*.whl
+
+  build-sdist:
+    name: Make source distribution
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - run: pipx run build --sdist
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: artifact-source-dist
+        path: ./**/dist/*.tar.gz
+
+  deploy:
+    needs: [build-wheels, build-sdist]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+    - name: Copy artifacts to dist/ folder
+      run: |
+        find . -name 'artifact-*' -exec unzip '{}' \;
+        mkdir -p dist/
+        find . -name '*.tar.gz' -exec mv '{}' dist/ \;
+        find . -name '*.whl' -exec mv '{}' dist/ \;
+    - name: Publish package to test pypi
+      uses: pypa/gh-action-pypi-publish@v1.13.0
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
