@@ -1,0 +1,33 @@
+Metadata-Version: 2.4
+Name: mdpilot
+Version: 0.0.1
+Summary: MDPilot — Molecular Dynamics Processing Informatics Library Operations & Tools
+Project-URL: Homepage, https://pypi.org/project/mdpilot/
+Project-URL: Documentation, https://pypi.org/project/mdpilot/
+Author: Kyriakos Georgiou
+License: MIT
+License-File: LICENSE
+Keywords: biomolecules,computational-chemistry,drug-discovery,interactions,md,molecular-dynamics,simulation,trajectory-analysis
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Topic :: Scientific/Engineering :: Chemistry
+Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+
+# MDPilot
+
+**MDPilot** (Molecular Dynamics Processing Informatics Library Operations & Tools) is a Python toolkit for **molecular dynamics (MD) simulations**, **biomolecular modeling**, and **trajectory analysis**.
+
+> This is an initial placeholder release to reserve the project name and provide a minimal, working CLI.  
+> Roadmap: system setup, parameterization pipelines, simulation runners, and advanced analysis modules.
+
+## Install
+```bash
+
+pip install mdpilot
+
