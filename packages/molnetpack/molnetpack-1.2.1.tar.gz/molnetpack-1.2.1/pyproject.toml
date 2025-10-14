@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molnetpack"
+version = "1.2.1"
+authors = [
+    { name = "Yuhui Hong" },
+    { name = "Sujun Li" },
+    { name = "Christopher J Welch" },
+    { name = "Shane Tichy" },
+    { name = "Yuzhen Ye" },
+    { name = "Haixu Tang" }
+]
+maintainers = [
+    { name = "Yuhui Hong", email = "yuhhong@iu.edu" }
+]
+description = "3DMolMS: prediction of tandem mass spectra from 3D molecular conformations"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "absl-py",
+    "beautifulsoup4",
+    "filelock",
+    "gdown",
+    "grpcio",
+    "importlib-metadata",
+    "lxml",
+    "markdown",
+    "markupsafe",
+    "molmass",
+    "numpy",
+    "pandas",
+    "protobuf",
+    "pysocks",
+    "pyteomics",
+    "soupsieve",
+    "tensorboard",
+    "PyYAML",
+    "rdkit",
+    "matplotlib",
+    "pillow"
+]
+
+[project.urls]
+Homepage = "https://github.com/JosieHong/3DMolMS/"
+Issues = "https://github.com/JosieHong/3DMolMS/issues"
+Changelog = "https://github.com/JosieHong/3DMolMS/blob/main/CHANGE_LOG.md"
+
+[tool.setuptools.package-data]
+"molnetpack" = ["molnetpack/config/*.yml"]
