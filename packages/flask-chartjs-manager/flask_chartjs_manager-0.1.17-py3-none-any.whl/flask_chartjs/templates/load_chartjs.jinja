@@ -1,0 +1,5 @@
+{% if local_path %}
+<script src="{{ url_for('static', filename=local_path) }}"></script>
+{% else %}
+<script {% if csp_nonce_callback %} nonce="{{ csp_nonce_callback() }}" {% endif %} src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endif %}
