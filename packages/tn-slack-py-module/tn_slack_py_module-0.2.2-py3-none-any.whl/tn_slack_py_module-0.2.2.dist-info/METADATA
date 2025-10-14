@@ -1,0 +1,266 @@
+Metadata-Version: 2.4
+Name: tn-slack-py-module
+Version: 0.2.2
+Summary: An adaptation for slack
+Project-URL: Homepage, https://github.com/thinknimble/tn-slack-py-module
+Project-URL: Repository, https://github.com/thinknimble/tn-slack-py-module
+Project-URL: Issues, https://github.com/thinknimble/tn-slack-py-module/issues
+Author-email: Pari <pari@threeleafcoder.com>
+License: MIT
+License-File: LICENSE
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: requests>=2.32.0
+Requires-Dist: slack-sdk>=3.32.0
+Requires-Dist: slackblocks>=1.1.0
+Requires-Dist: typing-extensions>=4.0.0
+Description-Content-Type: text/markdown
+
+# TNSlack - Modern Slack App Builder for Python
+
+[![CI](https://github.com/thinknimble/tn-slack-py-module/actions/workflows/ci.yml/badge.svg)](https://github.com/thinknimble/tn-slack-py-module/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/thinknimble/tn-slack-py-module/branch/main/graph/badge.svg)](https://codecov.io/gh/thinknimble/tn-slack-py-module)
+[![PyPI version](https://badge.fury.io/py/tn-slack-py-module.svg)](https://badge.fury.io/py/tn-slack-py-module)
+[![Python Support](https://img.shields.io/pypi/pyversions/tn-slack-py-module.svg)](https://pypi.org/project/tn-slack-py-module/)
+
+A modern, type-safe Slack app builder for Python that makes building Slack apps faster and more maintainable. Built on top of the official Slack SDK with a router-based architecture and comprehensive async support.
+
+## Features
+
+- 🚀 **Modern Python**: Full type hints, async/await support, Python 3.10+
+- 🔒 **Type Safe**: Complete type safety with mypy support
+- 🎯 **Router Pattern**: Clean, organized interaction handling
+- ⚡ **Official Slack SDK**: Built on the official Slack SDK for Python
+- 🧱 **Block Builder**: Intuitive Block Kit component builder
+- 📦 **No Dependencies**: Minimal external dependencies
+- 🧪 **Well Tested**: Comprehensive test suite with 95%+ coverage
+- 📚 **Great Docs**: Clear documentation and examples
+
+## Installation
+
+```bash
+pip install tn-slack-py-module
+```
+
+For development:
+
+```bash
+pip install tn-slack-py-module[dev]
+```
+
+## Quick Start
+
+### Basic App Setup
+
+```python
+from tnslack import SlackApp
+
+# Create app instance  
+app = SlackApp(
+    client_id="your_client_id",
+    client_secret="your_client_secret", 
+    signing_secret="your_signing_secret",
+    bot_scopes=["chat:write", "commands"]
+)
+
+# Register a button handler
+@app.register_route("block_actions", name="hello_button")
+def handle_hello_button(payload, params):
+    return {
+        "text": f"Hello {payload['user']['name']}!"
+    }
+
+# Process incoming interactions
+def handle_slack_event(request):
+    # Verify request authenticity
+    if not app.authenticate_incoming_request(request.body, request.headers):
+        return {"error": "Invalid signature"}, 401
+    
+    # Parse payload and route to handler
+    payload = json.loads(request.form["payload"])
+    response = app.slack_interaction_consumer(payload)
+    return response
+```
+
+### Using Block Builder
+
+```python
+from tnslack import BlockBuilder
+
+builder = BlockBuilder()
+
+# Create interactive components
+blocks = [
+    builder.header_block("Welcome to TNSlack!"),
+    builder.simple_section_block("Click the button below:"),
+    builder.section_with_button_block(
+        button_label="Say Hello",
+        button_value="hello_clicked", 
+        section_text="Interactive demo:",
+        action_id="hello_button"
+    ),
+    builder.divider_block()
+]
+
+# Send message with blocks
+app.send_channel_message(
+    channel="#general",
+    access_token="xoxb-your-bot-token",
+    text="Fallback text",
+    block_set=blocks
+)
+```
+
+### Async Support
+
+```python
+from tnslack import AsyncSlackApp
+
+async_app = AsyncSlackApp(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    signing_secret="your_signing_secret"
+)
+
+# Async route handlers
+@async_app.register_route("block_actions", name="async_button")
+async def handle_async_button(payload, params):
+    # Perform async operations
+    user_info = await async_app.async_get_user_info(
+        user_id=payload["user"]["id"],
+        access_token="xoxb-your-bot-token"
+    )
+    
+    return {
+        "text": f"Hello {user_info['user']['real_name']}!"
+    }
+
+# Process interactions asynchronously
+async def handle_slack_event_async(request):
+    payload = json.loads(request.form["payload"])
+    response = await async_app.async_slack_interaction_consumer(payload)
+    return response
+```
+
+### Block Sets with Context Validation
+
+```python
+from tnslack.decorators import block_set
+
+@block_set(required_context=["user_id", "user_name"])
+def user_profile_blocks(context):
+    builder = BlockBuilder()
+    return [
+        builder.header_block(f"Profile: {context['user_name']}"),
+        builder.simple_section_block(f"User ID: {context['user_id']}"),
+        # ... more blocks
+    ]
+
+# Register and use block set
+app.register_block_set(user_profile_blocks)
+
+# Use with context
+blocks = app.get_block_set("user_profile_blocks", {
+    "user_id": "U123456",
+    "user_name": "John Doe"
+})
+```
+
+## Architecture
+
+TNSlack uses a router-based architecture that makes it easy to organize your Slack app's interactions:
+
+```
+SlackApp
+├── Route Registration (by interaction type)
+│   ├── block_actions
+│   ├── view_submission  
+│   ├── view_closed
+│   └── block_suggestion
+├── Block Set Management
+│   └── Reusable UI components
+├── OAuth Flow Support
+└── Official Slack SDK Integration
+```
+
+## Route Types
+
+| Route Type | Description | Example Use Case |
+|------------|-------------|------------------|
+| `block_actions` | Button clicks, select menus | Interactive buttons, dropdowns |
+| `view_submission` | Modal form submissions | Form processing, data collection |
+| `view_closed` | Modal/home tab closed | Cleanup, analytics |
+| `block_suggestion` | External select options | Dynamic dropdowns, search |
+
+## Examples
+
+Check out the `examples/` directory for complete working examples:
+
+- [Basic Bot](examples/basic_bot.py) - Simple button interactions
+- [Modal Forms](examples/modal_forms.py) - Form handling with validation
+- [Async Bot](examples/async_bot.py) - Full async/await example
+- [Django Integration](examples/django_integration.py) - Django app example
+- [FastAPI Integration](examples/fastapi_integration.py) - FastAPI app example
+
+## Development
+
+### Setup
+
+```bash
+git clone https://github.com/thinknimble/tn-slack-py-module.git
+cd tn-slack-py-module
+pip install -e ".[dev]"
+pre-commit install
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Type Checking
+
+```bash
+mypy src/tnslack
+```
+
+### Linting and Formatting
+
+```bash
+ruff check .
+ruff format .
+```
+
+### Key Changes
+
+- Removed singleton pattern - use regular instantiation
+- Added type hints throughout
+- Replaced custom HTTP client with official Slack SDK
+- Added async support
+- Modernized error handling
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+## Support
+
+- 📖 [Documentation](https://tn-slack-py-module.readthedocs.io/)
+- 🐛 [Issue Tracker](https://github.com/thinknimble/tn-slack-py-module/issues)
+- 💬 [Discussions](https://github.com/thinknimble/tn-slack-py-module/discussions)
