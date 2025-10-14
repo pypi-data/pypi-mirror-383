@@ -1,0 +1,17 @@
+Django>=3.2
+requests>=2.20.0
+python-dateutil>=2.7.0
+
+[api]
+djangorestframework>=3.13.0
+
+[dev]
+pytest>=6.0
+pytest-django>=4.0
+coverage>=5.0
+black>=21.0
+flake8>=3.8
+
+[mysql]
+mysqlclient>=2.0.0
+django-mysql>=4.5.0
