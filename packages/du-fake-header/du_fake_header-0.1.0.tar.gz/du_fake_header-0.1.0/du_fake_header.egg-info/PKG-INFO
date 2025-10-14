@@ -1,0 +1,175 @@
+Metadata-Version: 2.4
+Name: du-fake-header
+Version: 0.1.0
+Summary: 生成随机但真实的 HTTP 请求头，支持 Chrome、Edge、Firefox、Safari 浏览器
+Author: dyz
+License: MIT
+Keywords: http,headers,fake,user-agent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pydantic>=2.12.0
+Dynamic: license-file
+
+# du-fake-header
+
+一个用于生成随机但真实的 HTTP 请求头的 Python 库，支持 Chrome、Edge、Firefox、Safari 浏览器。
+
+## 特性
+
+- 🌍 **多浏览器支持**: Chrome, Edge, Firefox, Safari
+- 💻 **多操作系统**: Windows, macOS, Linux
+- 🔄 **随机版本**: 自动从真实浏览器版本中随机选择
+- 🔍 **Client Hints 支持**: Chromium 系浏览器自动生成 Client Hints
+- ⚙️ **正确排序**: 按照真实浏览器的头部顺序输出
+- 🛡️ **参数验证**: 防止无效的浏览器/操作系统组合
+
+## 安装
+
+```bash
+pip install du-fake-header
+# 或使用UV
+uv add du-fake-header
+```
+
+## 快速开始
+
+### 基本使用
+
+```python
+from du_fake_header import FakeHeader
+
+# 初始化生成器
+header_gen = FakeHeader(os='Windows', browser='Chrome')
+
+# 生成随机头部
+header = header_gen.random()
+
+# 使用 requests
+import requests
+response = requests.get('https://example.com', headers=header_gen.to_dict())
+
+```
+
+### 支持的浏览器和操作系统
+
+| 浏览器 | Windows | macOS | Linux |
+|----------|---------|-------|-------|
+| Chrome   | ✓       | ✓     | ✓     |
+| Edge     | ✓       | ✗     | ✗     |
+| Firefox  | ✓       | ✓     | ✓     |
+| Safari   | ✗       | ✓     | ✗     |
+
+### 详织示例
+
+```python
+from du_fake_header import FakeHeader
+
+# 不同浏览器的使用
+browsers_and_os = [
+    ('Chrome', 'Windows'),
+    ('Firefox', 'Linux'),
+    ('Safari', 'macOS'),
+    ('Edge', 'Windows')
+]
+
+for browser, os_name in browsers_and_os:
+    gen = FakeHeader(browser=browser, os=os_name)
+    header = gen.random(referer='https://www.google.com')
+    
+    print(f"\n=== {browser} on {os_name} ===")
+    print(f"User-Agent: {header.user_agent}")
+    
+    # 获取字典格式（用于 requests）
+    headers_dict = header.to_dict()
+    print(f"Headers count: {len(headers_dict)}")
+```
+
+
+## API 参考
+
+### FakeHeader 类
+
+```python
+class FakeHeader:
+    def __init__(self, os: str = "Windows", browser: str = "Chrome")
+```
+
+**参数:**
+- `os`: 操作系统名称 (`"Windows"`, `"macOS"`, `"Linux"`)
+- `browser`: 浏览器名称 (`"Chrome"`, `"Edge"`, `"Firefox"`, `"Safari"`)
+
+**方法:**
+
+#### `random(referer=None) -> Header`
+生成随机 HTTP 头部。
+
+**参数:**
+- `referer` (optional): 自定义 Referer 头部值
+
+**返回:** `Header` 对象
+
+#### `to_dict(header=None) -> Dict[str, str]`
+返回适用于 `requests` 库的字典格式头部。
+
+### Header 类
+
+```python
+class Header(BaseModel):
+    user_agent: str
+    referer: Optional[str] = None
+    accept: str
+    accept_language: str
+    accept_encoding: str
+    # ... 更多字段
+```
+
+**方法:**
+
+#### `to_dict() -> Dict[str, str]`
+返回所有非空头部的字典。
+
+## 生成的头部字段
+
+### 基本头部
+- `User-Agent`: 浏览器标识
+- `Accept`: 可接受的内容类型
+- `Accept-Language`: 语言偏好
+- `Accept-Encoding`: 编码支持
+- `Connection`: 连接类型
+- `Upgrade-Insecure-Requests`: HTTPS 升级请求
+
+### Fetch 元数据头部
+- `Sec-Fetch-Site`: 请求来源站点
+- `Sec-Fetch-Mode`: 请求模式
+- `Sec-Fetch-User`: 用户启动
+- `Sec-Fetch-Dest`: 请求目标
+
+### Client Hints（Chromium 浏览器）
+- `Sec-CH-UA`: 浏览器品牌和版本
+- `Sec-CH-UA-Mobile`: 是否移动设备
+- `Sec-CH-UA-Platform`: 操作系统平台
+
+### 可选头部
+- `Referer`: 来源页面 URL
+
+## 注意事项
+
+1. **浏览器限制**: Safari 仅支持 macOS，Edge 仅支持 Windows
+2. **版本更新**: 使用的浏览器版本数据库定期更新，保持时效性
+3. **头部顺序**: 不同浏览器的头部顺序不同，本库会自动处理
+4. **Client Hints**: 只有 Chromium 系浏览器（Chrome/Edge）才会生成 Client Hints
+
+## 许可证
+
+MIT License
+
+## 更新日志
+
+### v0.1.0 (2024-10-10)
+- 初始发布
+- 支持 Chrome、Edge、Firefox、Safari 四种浏览器
+- 支持 Windows、macOS、Linux 操作系统
+- 支持 Client Hints 生成
+- 支持 requests 和 httpx 格式输出
+- 完整的参数验证和错误处理

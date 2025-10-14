@@ -1,0 +1,14 @@
+[project]
+name = "du-fake-header"
+version = "0.1.0"
+description = "生成随机但真实的 HTTP 请求头，支持 Chrome、Edge、Firefox、Safari 浏览器"
+readme = "README.md"
+authors = [
+    { name = "dyz" }
+]
+license = { text = "MIT" }
+keywords = ["http", "headers", "fake", "user-agent"]
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.12.0",
+]
