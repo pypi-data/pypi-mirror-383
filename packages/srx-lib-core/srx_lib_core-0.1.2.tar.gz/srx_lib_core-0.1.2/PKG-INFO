@@ -1,0 +1,88 @@
+Metadata-Version: 2.4
+Name: srx-lib-core
+Version: 0.1.2
+Summary: Core utilities for SRX services: logging, settings, FastAPI app factory
+Author-email: SRX <dev@srx.id>
+Requires-Python: >=3.12
+Requires-Dist: fastapi>=0.115.8
+Requires-Dist: loguru>=0.7.2
+Requires-Dist: pydantic-settings>=2.7.1
+Requires-Dist: pydantic>=2.10.6
+Requires-Dist: uvicorn[standard]>=0.34.0
+Description-Content-Type: text/markdown
+
+# srx-lib-core
+
+Core utilities for SRX Python services. Small, generic helpers you can reuse across FastAPI-based microservices.
+
+What it includes:
+- Logging setup with loguru (`get_logger`, `setup_logger`)
+- Base settings class with Pydantic Settings
+- FastAPI app factory with sensible defaults (CORS, exception handling, health route)
+
+## Install
+
+PyPI (public):
+
+- `pip install srx-lib-core`
+
+Using uv (pyproject):
+
+```
+[project]
+dependencies = ["srx-lib-core>=0.1.0"]
+```
+
+## Usage
+
+Logging:
+
+```
+from srx_lib_core import get_logger
+logger = get_logger(__name__)
+logger.info("hello")
+```
+
+Settings:
+
+```
+from srx_lib_core import BaseServiceSettings
+
+class Settings(BaseServiceSettings):
+    OPENAI_API_KEY: str | None = None
+
+settings = Settings()  # loads from .env by default
+```
+
+FastAPI app factory:
+
+```
+from fastapi import APIRouter
+from srx_lib_core import create_app
+
+router = APIRouter()
+
+@router.get("/health")
+def health():
+    return {"status": "ok"}
+
+app = create_app(title="my-service", routers=[router])
+```
+
+## Environment Variables
+
+- `LOG_LEVEL` (default: `INFO`)
+- `LOG_FILE` (optional path)
+- `ENVIRONMENT` (default: `development`)
+- `CORS_ORIGIN` (comma-separated origins; default empty)
+
+## Release
+
+This repo ships a GitHub Actions workflow that publishes to GitHub Packages on tags `v*`.
+
+- Create a tag: `git tag v0.1.0 && git push --tags`
+- The workflow uses `GITHUB_TOKEN` with `packages:write`.
+
+## License
+
+Proprietary © SRX
