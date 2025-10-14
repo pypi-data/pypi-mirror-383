@@ -1,0 +1,87 @@
+Metadata-Version: 2.4
+Name: pymupdf4llm-enchanced-mcp
+Version: 0.1.0
+Summary: 基于 PyMuPDF4LLM 和 Tiktoken 的 PDF 解析与分块 MCP 服务器
+License-File: LICENSE
+Requires-Python: >=3.13
+Requires-Dist: pymupdf4llm>=0.0.27
+Requires-Dist: tiktoken>=0.12.0
+Description-Content-Type: text/markdown
+
+# PyMuPDF4LLM Enhanced MCP
+
+基于 PyMuPDF4LLM 和 Tiktoken 的 PDF 解析与分块 MCP 服务器。
+
+## 功能特性
+
+- 🔍 PDF 转 Markdown 格式
+- 📊 基于 Token 的智能分块（使用 Tiktoken o200k_base）
+- 💾 SHA256 哈希缓存机制
+- 🔄 可配置的块重叠
+- 📡 完整 MCP 协议支持
+
+## Claude Code 配置
+
+```bash
+claude mcp add -s local pymupdf4llm-enhanced pymupdf4llm-enchanced-mcp
+```
+
+## 使用方法
+
+### parse_pdf - 解析 PDF
+
+将 PDF 转换为 Markdown 并分块。
+
+```python
+parse_pdf(
+    file_path="/path/to/document.pdf",
+    chunk_size_tokens=2000,
+    chunk_overlap_tokens=200
+)
+# 返回: {"chunks_count": 15, "cached": false}
+```
+
+### read_chunk - 读取分块
+
+从缓存读取指定分块。
+
+```python
+read_chunk(
+    file_path="/path/to/document.pdf",
+    chunk_index=0
+)
+# 返回: {"chunk_index": 0, "content": "...", "file_path": "..."}
+```
+
+## 工作原理
+
+1. 计算 PDF 文件的 SHA256 哈希值
+2. 转换为 Markdown 并按 Token 数分块
+3. 缓存到 `.pymupdf4llm-enchanced-mcp/` 目录
+4. 文件变更时自动重建缓存
+
+## 使用场景
+
+- **大型文档分析**：处理长篇论文、技术手册
+- **RAG 系统**：为检索增强生成准备文档块
+- **批量处理**：高效处理多个相同文档的查询
+
+## 最佳实践
+
+- **块大小**：根据 LLM 上下文窗口设置（1000-3000 tokens）
+- **重叠率**：建议 10-15% 保持上下文连贯性
+- **缓存管理**：定期清理旧缓存释放空间
+
+## 常见问题
+
+**Q: 缓存占用过大**
+A: 删除 `.pymupdf4llm-enchanced-mcp/` 目录
+
+**Q: PDF 返回空内容**
+A: 检查 PDF 是否损坏或需要 OCR
+
+## 相关链接
+
+- [MCP 协议](https://modelcontextprotocol.io/)
+- [PyMuPDF4LLM](https://github.com/pymupdf/PyMuPDF4LLM)
+- [Tiktoken](https://github.com/openai/tiktoken)
