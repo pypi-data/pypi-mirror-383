@@ -1,0 +1,68 @@
+[tool.poetry]
+name = "pfip"
+version = "0.1.24"
+description = ""
+authors = ["panshi team"]
+readme = "README.md"
+
+packages = [
+    { include = "pfip" }
+]
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "default"
+
+[[tool.poetry.source]]
+name = "dplus"
+url = "http://192.168.3.3:8081/repository/pypi-hosted/"
+priority = "supplemental"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-docx = "^1.1.2"
+pandas = "^2.2.2"
+requests = "^2.32.3"
+numpy = "^1.26.4"
+panshi2task = { version = "^0.2.1", source = "dplus" }
+tqdm = "^4.66.4"
+panshi-base = { version = "^0.1.18", source = "dplus" }
+pymupdf = "^1.24.7" #pdf
+openpyxl = "^3.1.5" #处理Excel的
+xlrd = "^2.0.1"  #03版excel解析
+python-pptx = "^0.6.23"
+html2text = "^2024.2.26"
+beautifulsoup4 = "^4.12.3"
+pypdf2 = "^3.0.1"
+shapely = "^2.0.5"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.2.2"
+reportlab = "^4.2.2"
+
+[tool.coverage.run]
+source = ["pfip"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:"
+]
+
+[tool.pytest.ini_options]
+cache_dir = "tests/.pytest_cache"
+addopts = "-v -s --ignore ./tests/ignore "
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+    "ignore::UserWarning",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
