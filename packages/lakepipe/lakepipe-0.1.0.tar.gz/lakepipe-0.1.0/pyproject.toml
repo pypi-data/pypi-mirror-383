@@ -1,0 +1,61 @@
+[project]
+name = "lakepipe"
+version = "0.1.0"
+description = "Modern data transfer for cloud data lakes - High-performance pipelines via object storage"
+readme = "README.md"
+authors = [
+    { name = "Md. Rakibul Hasan" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "rich>=13.0",
+    "typer>=0.12.0",
+    "jinja2>=3.1.0",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+]
+keywords = ["data-engineering", "etl", "data-pipeline", "data-lake", "sqoop", "teradata", "hive"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "black>=24.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8",
+]
+airflow = [
+    "apache-airflow>=2.8.0",
+]
+sources = [
+    "sqlalchemy>=2.0",  # For JDBC sources
+]
+all = [
+    "lakepipe[dev,airflow,sources]",
+]
+
+[project.scripts]
+lakepipe = "lakepipe.cli.main:app"
+
+[project.urls]
+Homepage = "https://github.com/pesnik/lakepipe"
+Documentation = "https://lakepipe.readthedocs.io"
+Repository = "https://github.com/pesnik/lakepipe"
+Issues = "https://github.com/pesnik/lakepipe/issues"
+
+[build-system]
+requires = ["uv_build>=0.9.1,<0.10.0"]
+build-backend = "uv_build"
