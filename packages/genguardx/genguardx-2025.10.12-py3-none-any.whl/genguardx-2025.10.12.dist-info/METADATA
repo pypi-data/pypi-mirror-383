@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: genguardx
+Version: 2025.10.12
+Project-URL: Homepage, https://ggx.corridorplatforms.com
+Project-URL: Documentation, https://ggx-docs.corridorplatforms.com
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: python-dateutil
+Requires-Dist: plotly>=4.0
+Requires-Dist: pydantic
+Requires-Dist: typing-extensions
+Requires-Dist: numpy
+Requires-Dist: pandas
+
+# GenGuardX Python SDK
+
+A Python SDK to interact with the GenGuardX Platform from Corridor Platforms.
