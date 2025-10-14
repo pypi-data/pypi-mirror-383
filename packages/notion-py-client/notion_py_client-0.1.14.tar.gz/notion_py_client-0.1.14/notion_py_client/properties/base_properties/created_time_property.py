@@ -1,0 +1,23 @@
+from typing import Literal
+
+from pydantic import Field, StrictStr
+
+from ._base_property import BaseProperty, NotionPropertyType
+
+
+class CreatedTimeProperty(BaseProperty[Literal[NotionPropertyType.CREATED_TIME]]):
+    """Notionのcreated_timeプロパティ"""
+
+    type: Literal[NotionPropertyType.CREATED_TIME] = Field(
+        NotionPropertyType.CREATED_TIME, description="プロパティタイプ"
+    )
+
+    created_time: StrictStr = Field(..., description="作成日時（ISO 8601形式）")
+
+    def get_display_value(self) -> str:
+        """作成日時を取得
+
+        Returns:
+            StrictStr | None: 作成日時（未設定の場合はnull）
+        """
+        return self.created_time
