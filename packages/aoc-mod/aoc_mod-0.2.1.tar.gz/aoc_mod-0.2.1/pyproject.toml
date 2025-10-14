@@ -1,0 +1,58 @@
+[project]
+name = "aoc_mod"
+version = "0.2.1"
+description = "A library for Advent of Code containing utilities to use while solving problems!"
+authors = [{ name = "David Eyrich" }]
+requires-python = ">=3.11"
+readme = "README.md"
+dependencies = [
+    "requests",
+    "markdownify",
+    "pytest (>=8.4.2,<9.0.0)",
+    "requests-html (>=0.10.0,<0.11.0)",
+    "beautifulsoup4 (>=4.14.2,<5.0.0)",
+    "sphinx (>=8.2.3,<9.0.0)",
+    "sphinx-autoapi (>=3.6.1,<4.0.0)",
+    "sphinxcontrib-programoutput (>=0.18,<0.19)",
+    "myst-parser (>=4.0.1,<5.0.0)",
+    "bandit (>=1.8.6,<2.0.0)",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+]
+
+[tool.poetry]
+packages = [{ include = "aoc_mod", from = "src" }]
+
+[tool.poetry.extras]
+docx = ["Sphinx", "sphinx_rtd_theme", "sphinxcontrib-napoleon"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project.scripts]
+aoc-mod = "aoc_mod.interactive:interactive"
+
+[project.urls]
+homepage = "https://aoc-mod.readthedocs.io/en/latest/"
+changelog = "https://github.com/cosmos1255/aoc_mod/blob/main/CHANGELOG.md"
+issues = "https://github.com/cosmos1255/aoc_mod/issues"
+repository = "https://github.com/cosmos1255/aoc_mod"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[dependency-groups]
+dev = ["ruff (>=0.13.3,<0.14.0)"]
+docs = [
+    "sphinx (>=8.2.3,<9.0.0)",
+    "sphinx-autoapi (>=3.6.1,<4.0.0)",
+    "sphinxcontrib-programoutput (>=0.18,<0.19)",
+    "myst-parser (>=4.0.1,<5.0.0)",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
