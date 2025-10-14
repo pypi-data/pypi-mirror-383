@@ -1,0 +1,6 @@
+include inmanta_plugins/mitogen/setup.cfg
+include inmanta_plugins/mitogen/py.typed
+include inmanta_mitogen/py.typed
+recursive-include inmanta_plugins/mitogen/model *.cf
+graft inmanta_plugins/mitogen/files
+graft inmanta_plugins/mitogen/templates
