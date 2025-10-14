@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "databatch-lib"
+version = "0.1.2"
+description = "A simple Hello World Python library"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+  { name = "Sankararao Majji", email = "sankararao.majji@verisk.com" }
+]
+keywords = ["data", "load", "batch", "opensearch"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/helloworld-lib"
+"Bug Tracker" = "https://github.com/yourusername/helloworld-lib/issues"
