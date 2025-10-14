@@ -1,0 +1,35 @@
+Metadata-Version: 2.2
+Name: hanabi-learning-environment-mahesh
+Version: 0.0.2
+Summary: Learning environment for the game of Hanabi
+Keywords: hanabi,reinforcement-learning,game,ai
+Author-Email: DeepMind <mram18900@gmail.com>
+License: Apache-2.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: C++
+Project-URL: Homepage, https://github.com/deepmind/hanabi-learning-environment
+Project-URL: Repository, https://github.com/deepmind/hanabi-learning-environment
+Requires-Python: >=3.11
+Requires-Dist: cffi
+Description-Content-Type: text/markdown
+
+This is not an officially supported Google product.
+
+hanabi\_learning\_environment is a research platform for Hanabi experiments. The file rl\_env.py provides an RL environment using an API similar to OpenAI Gym. A lower level game interface is provided in pyhanabi.py for non-RL methods like Monte Carlo tree search.
+
+### Getting started
+Install the learning environment:
+```
+sudo apt-get install g++            # if you don't already have a CXX compiler
+sudo apt-get install python-pip     # if you don't already have pip
+pip install .                       # or pip install git+repo_url to install directly from github
+```
+Run the examples:
+```
+pip install numpy                   # game_example.py uses numpy
+python examples/rl_env_example.py   # Runs RL episodes
+python examples/game_example.py     # Plays a game using the lower level interface
+```

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["scikit-build-core", "cmake", "ninja"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "hanabi-learning-environment-mahesh"
+version = "0.0.2"
+description = "Learning environment for the game of Hanabi"
+authors = [{name = "DeepMind", email = "mram18900@gmail.com"}]
+license = {text = "Apache-2.0"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["cffi"]
+keywords = ["hanabi", "reinforcement-learning", "game", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+]
+
+[project.urls]
+Homepage = "https://github.com/deepmind/hanabi-learning-environment"
+Repository = "https://github.com/deepmind/hanabi-learning-environment"
