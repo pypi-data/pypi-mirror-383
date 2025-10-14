@@ -1,0 +1,68 @@
+Metadata-Version: 2.4
+Name: gridwiz_analytics
+Version: 0.1.0
+Summary: Data analysis utilities for GridWiz (extracted from notebook)
+Project-URL: Homepage, https://example.com/gridwiz
+Author: GridWiz Team
+License: MIT
+License-File: LICENSE
+Keywords: analysis,analytics,data,gridwiz
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Requires-Python: >=3.8
+Requires-Dist: matplotlib<3.8,>=3.7
+Requires-Dist: numpy<2.0,>=1.24
+Requires-Dist: openpyxl>=3.1
+Requires-Dist: pandas<2.2,>=2.0
+Description-Content-Type: text/markdown
+
+# gridwiz_analytics
+
+Utilities to analyze GridWiz e-bike data from Excel files. **You provide the file at call-time** (e.g., `July.xlsx`).
+
+## Install
+```bash
+pip install .
+# or build first:
+python -m build && pip install dist/*.whl
+```
+
+## Usage
+```python
+from gridwiz_analytics import (
+    RevenueTrendAnalyzer, PeakUsageAnalyzer,
+    HourlyPeakAnalyzer, BikeUsageAnalyzer,
+    DailyRevenueAnalyzer, DailyRidingAnalyzer
+)
+
+# Revenue per parking spot (read Excel when you instantiate)
+rev = RevenueTrendAnalyzer("July.xlsx")
+print(rev.total_revenue_by_spot())
+rev.plot_revenue_by_spot(selected_spots=[
+    "Gridwiz Parking Area","Fakultas Teknik","Fakultas Kedokteran"
+])
+
+# Peak usage by day for selected spots
+peak = PeakUsageAnalyzer("Agustus.xlsx")
+peak.plot_daily_peak_usage(["Islamic Center"])
+
+# Hourly usage for top-N spots
+hourly = HourlyPeakAnalyzer("august.xlsx")
+hourly.plot_hourly_usage_top_spots(from_spots=["Islamic Center","UTTARA"], top_n=5)
+
+# Total usage counts (filtered list)
+bike = BikeUsageAnalyzer("data_july.xlsx")
+bike.plot_usage([
+    "Gridwiz Parking Area","Fakultas Teknik","UPT Perpustakaan","Rektorat"
+])
+
+# Daily revenue per spot (wide date range filled with zeros)
+daily_rev = DailyRevenueAnalyzer("16-26.xlsx")
+daily_rev.plot_daily_revenue(["Gridwiz Parking Area","Fakultas Teknik"])
+
+# Daily riding counts per spot
+daily_ride = DailyRidingAnalyzer("16-26.xlsx")
+daily_ride.plot_daily_riding(["Islamic Center","UTTARA"], title="Daily Riding Partnership")
+```
