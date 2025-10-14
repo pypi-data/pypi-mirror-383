@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pystress-no-gil"
+version = "0.1.0"
+description = "High-performance, free-threaded Python HTTP load tester with rich HTML reports and true parallelism"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "psutil>=5.9.0",
+  "urllib3>=2.0.0",
+]
+authors = [{ name = "Hammad Abbasi", email = "hammad.ulhaq@empowerid.com" }]
+maintainers = [{ name = "Hammad Abbasi", email = "hammad.ulhaq@empowerid.com" }]
+license = { text = "MIT" }
+keywords = ["load testing", "performance", "HTTP", "benchmark", "stress test", "free-threaded", "python 3.14", "no-gil", "parallel", "benchmarking"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Internet :: WWW/HTTP",
+]
+
+[project.urls]
+Homepage = "https://github.com/hammadabbasi/PyStress"
+Repository = "https://github.com/hammadabbasi/PyStress.git"
+Issues = "https://github.com/hammadabbasi/PyStress/issues"
+Documentation = "https://github.com/hammadabbasi/PyStress#readme"
+Changelog = "https://github.com/hammadabbasi/PyStress/blob/main/CHANGELOG.md"
+
+[project.scripts]
+pystress = "pystress.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
+
+
