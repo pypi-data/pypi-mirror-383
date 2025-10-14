@@ -1,0 +1,11 @@
+llm>=0.26
+ollama>=0.6.0
+pydantic>=2
+
+[lint]
+ruff
+
+[test]
+pytest
+pytest-asyncio
+pytest-mock

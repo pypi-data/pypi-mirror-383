@@ -1,0 +1,29 @@
+[project]
+name = "llm-ollama"
+version = "0.15.0"
+description = "LLM plugin providing access to models running on an Ollama server"
+readme = "README.md"
+authors = [{ name = "Sergey Alexandrov" }]
+license = { text = "Apache-2.0" }
+classifiers = ["License :: OSI Approved :: Apache Software License"]
+dependencies = ["llm>=0.26", "ollama>=0.6.0", "pydantic>=2"]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/taketwo/llm-ollama"
+Changelog = "https://github.com/taketwo/llm-ollama/releases"
+Issues = "https://github.com/taketwo/llm-ollama/issues"
+CI = "https://github.com/taketwo/llm-ollama/actions"
+
+[project.entry-points.llm]
+ollama = "llm_ollama"
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-asyncio", "pytest-mock"]
+lint = ["ruff"]
+
+[tool.setuptools.packages.find]
+include = ["llm_ollama*"]
+
+[dependency-groups]
+dev = ["typing-extensions>=4.15.0"]
