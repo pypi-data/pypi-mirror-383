@@ -1,0 +1,6 @@
+[zc.buildout]
+app = z3c.recipe.dev.app:AppSetup
+mkdir = z3c.recipe.dev.mkdir:MkdirSetup
+mkfile = z3c.recipe.dev.mkfile:MkfileSetup
+script = z3c.recipe.dev.script:ScriptSetup
+

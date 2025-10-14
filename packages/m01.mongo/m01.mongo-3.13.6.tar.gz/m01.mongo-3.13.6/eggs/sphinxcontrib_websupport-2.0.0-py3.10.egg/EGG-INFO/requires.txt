@@ -1,0 +1,15 @@
+Sphinx>=5
+jinja2
+sphinxcontrib-serializinghtml
+
+[lint]
+mypy
+ruff==0.5.5
+types-docutils
+
+[test]
+pytest
+
+[whoosh]
+sqlalchemy
+whoosh
