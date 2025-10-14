@@ -1,0 +1,126 @@
+{
+    "config_version": "0.0.1",
+    "etl_directory": "./etl/migman",
+    "local_database": "./etl/migman/migman_etl.duckdb",
+    "extract": {
+        "extract_active": true,
+        "inforcom": {
+            "active": false,
+            "odbc_connstr": "Driver={SQL Server};Server=your_server;Database=your_database;UID=your_username;PWD=your_password;",
+            "chunk_size": 10000,
+            "timeout": 300,
+            "table_prefix": "INFOR.",
+            "tables": {
+                "RELAB": {
+                    "description": "Work operations / routing relations",
+                    "big_data": true,
+                    "active": true
+                },
+                "RELAC": {
+                    "description": "Customer account relations",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELACD": {
+                    "description": "Customer account details",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELACK": {
+                    "description": "Customer classification / categories",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELACP": {
+                    "description": "Customer price lists",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELACX": {
+                    "description": "Customer extensions / additional attributes",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELADRESSE": {
+                    "description": "Address master data (customers/suppliers)",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELANSCH": {
+                    "description": "Contact persons",
+                    "big_data": true,
+                    "active": true
+                },
+                "RELFA": {
+                    "description": "Invoice documents (type A)",
+                    "big_data": true,
+                    "active": true
+                },
+                "RELFB": {
+                    "description": "Credit notes / invoice cancellations (type B)",
+                    "big_data": true,
+                    "active": true
+                },
+                "RELFI": {
+                    "description": "Financial information",
+                    "big_data": true,
+                    "active": true
+                },
+                "RELFIRMA": {
+                    "description": "Company master data",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELFS": {
+                    "description": "Financial master data",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELGB": {
+                    "description": "Business units / divisions",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELKOMM": {
+                    "description": "Communication data (phone, email, fax)",
+                    "big_data": true,
+                    "active": true
+                },
+                "RELPERSON": {
+                    "description": "Person master data / employees",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELWMSMDATADEFLOCATION": {
+                    "description": "Warehouse location definitions",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELZTGK": {
+                    "description": "Time accounts (working time, cost centers)",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELZTLT": {
+                    "description": "Time performance records (activities, tasks)",
+                    "big_data": false,
+                    "active": true
+                },
+                "RELZTNUM": {
+                    "description": "Time booking numbers / time entries",
+                    "big_data": false,
+                    "active": true
+                }
+            }
+        }
+    },
+    "transform": {
+        "transform_active": true,
+        "joins": {
+            "active": false
+        }
+    },
+    "load": {
+        "load_active": true
+    }
+}
