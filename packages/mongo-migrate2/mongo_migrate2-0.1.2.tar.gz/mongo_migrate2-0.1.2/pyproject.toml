@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=56.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mongo_migrate2"
+version = "0.1.2"
+authors = [
+  { name="Martinbndr", email="55140357+martinbndr@users.noreply.github.com" },
+]
+license = { file = "LICENSE" }
+description = "Migrate mongodb seamlessly with python and mongo-migrate. Supports migration creation, upgrade, and downgrade"
+readme = "README.md"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    'Intended Audience :: Developers',
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Database",
+]
+
+keywords = ["mongodb", "migration", "mongodb migration", "database", "automation"]
+dependencies = ["pymongo", 'tomli; python_version < "3.11"']
+requires-python = ">=3.7"
+
+[project.urls]
+"Repository" = "https://github.com/martinbndr/mongo-migrate"
+"Bug Tracker" = "https://github.com/martinbndr/mongo-migrate/issues"
+"Blog" = "https://rahulgeorge.hashnode.dev/migrate-mongodb-data-seamlessly-with-mongo-migrate-and-python"
+
+[project.scripts]
+mongo-migrate = "mongo_migrate.migration_cli:main"
+
