@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartestate"
+version = "0.3.3"
+description = "Django site for real estate brokers"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Belal Ibrahim", email = "belal.ibrahim@proton.me" }
+]
+dependencies = [
+  "Django (>=5.2.6,>=5.1.12,>=4.2.24)",
+  "datetime",
+  "Pillow",
+  "django-cookie-consent>=0.3.2",
+  "djangorestframework",
+  "django-widget-tweaks",
+  "django-modeltranslation",
+  "environs",
+  "mysqlclient",
+  # TODO: whitenoise is added as a workaround for serving
+  # staticfiles. Once the infrastructure is improved,
+  # it needs to be removed again.
+  "whitenoise",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Web Environment",
+  "Framework :: Django",
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: Apache Software License",
+]
+
+[tool.setuptools]
+packages = ["smartestate"]
+
+[tool.setuptools.package-data]
+"smartestate" = ["**/*.html", "**/*.css", "**/*.js", "**/*.json", "**/*.txt", "**/*.po", "**/*.mo"]
+
+[project.urls]
+Homepage = "https://github.com/belal-i/smartestate"
+Repository = "https://github.com/belal-i/smartestate"
