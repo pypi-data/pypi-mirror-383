@@ -1,0 +1,70 @@
+Metadata-Version: 2.4
+Name: natural-selector
+Version: 0.1.0
+Summary: Natural language HTML selector engine
+Author-email: Steve Wang <stevewang.at.work@gmail.com>
+License: MIT
+Keywords: selector,dom,natural-language,browser-automation,html
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: tiktoken>=0.5.0
+Requires-Dist: numpy>=1.24.0
+Provides-Extra: default-embedder
+Requires-Dist: sentence-transformers>=2.2.0; extra == "default-embedder"
+Provides-Extra: openai
+Requires-Dist: openai>=1.0.0; extra == "openai"
+Requires-Dist: python-dotenv>=1.0.0; extra == "openai"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Dynamic: license-file
+
+# Natural Selector
+
+⚠️ **Under Active Development - Not Production Ready**
+
+Natural language browser automation. Query DOM elements using plain English.
+
+## Quick Example
+
+```python
+from natural_selector import NaturalSelector
+from natural_selector.integrations import OpenAILLM
+
+# Create selector
+selector = NaturalSelector(llm=OpenAILLM())
+
+# Query with natural language
+xpaths = selector.select(cdp_snapshot, "search button")
+# Returns: ['(//input[@name="btnK"])[1]']
+```
+
+## How it Works
+
+1. Capture DOM via Chrome DevTools Protocol
+2. Filter invisible/non-semantic elements
+3. Create embeddings and semantic search
+4. LLM identifies elements from context
+5. Generate guaranteed unique XPath selectors
+
+## Features
+
+- Natural language queries
+- Guaranteed unique XPath selectors
+- Automatic filtering of hidden elements
+- Customizable LLMs and embedders
+
+## Status
+
+🚧 **In Development** - Testing phase, API may change
