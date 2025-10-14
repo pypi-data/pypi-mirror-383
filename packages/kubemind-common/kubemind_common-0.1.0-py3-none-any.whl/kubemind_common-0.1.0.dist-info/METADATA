@@ -1,0 +1,234 @@
+Metadata-Version: 2.4
+Name: kubemind-common
+Version: 0.1.0
+Summary: Shared utilities, contracts, and middleware for KubeMind services
+Project-URL: Homepage, https://github.com/kubemind-ai/kubemind-common
+Project-URL: Repository, https://github.com/kubemind-ai/kubemind-common.git
+Author: KubeMind Team
+License: MIT License
+        
+        Copyright (c) 2024 KubeMind
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE
+Keywords: kubemind,kubernetes,microservices,pydantic,utils
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Typing :: Typed
+Requires-Python: >=3.12
+Requires-Dist: httpx<0.28.0,>=0.27.2
+Requires-Dist: jinja2<4.0.0,>=3.1.4
+Requires-Dist: prometheus-client<0.22.0,>=0.21.0
+Requires-Dist: pydantic-settings<3.0.0,>=2.6.0
+Requires-Dist: pydantic<3.0.0,>=2.9.2
+Requires-Dist: redis<6.0.0,>=5.2.0
+Requires-Dist: tenacity<10.0.0,>=9.0.0
+Provides-Extra: auth
+Requires-Dist: python-jose[cryptography]<4.0.0,>=3.3.0; extra == 'auth'
+Provides-Extra: celery
+Requires-Dist: celery<6.0.0,>=5.3.0; extra == 'celery'
+Provides-Extra: db
+Requires-Dist: asyncpg<1.0.0,>=0.29.0; extra == 'db'
+Requires-Dist: sqlalchemy<3.0.0,>=2.0.0; extra == 'db'
+Provides-Extra: dev
+Requires-Dist: build<2.0.0,>=1.2.1; extra == 'dev'
+Requires-Dist: pytest-asyncio<1.0.0,>=0.24.0; extra == 'dev'
+Requires-Dist: pytest<9.0.0,>=8.3.3; extra == 'dev'
+Requires-Dist: requests<3.0.0,>=2.32.3; extra == 'dev'
+Requires-Dist: twine<6.0.0,>=5.1.1; extra == 'dev'
+Provides-Extra: fastapi
+Requires-Dist: fastapi<1.0.0,>=0.115.0; extra == 'fastapi'
+Requires-Dist: starlette<1.0.0,>=0.40.0; extra == 'fastapi'
+Provides-Extra: otel
+Requires-Dist: opentelemetry-api<2.0.0,>=1.25.0; extra == 'otel'
+Requires-Dist: opentelemetry-instrumentation<1.0.0,>=0.46b0; extra == 'otel'
+Requires-Dist: opentelemetry-sdk<2.0.0,>=1.25.0; extra == 'otel'
+Description-Content-Type: text/markdown
+
+# KubeMind Common Library
+
+Shared Python library for all KubeMind services.
+
+## Overview
+
+`kubemind-common` provides shared functionality across all KubeMind services:
+- Configuration management
+- Logging setup with correlation IDs
+- Middleware (request ID, rate limiting, error handling)
+- Contracts (Pydantic models for events, playbooks, triggers)
+- HTTP client with retries
+- Redis client and utilities
+- Database utilities
+- Security utilities (JWT, HMAC)
+- Metrics instrumentation
+- Kubernetes utilities
+
+## Contributor Guide
+
+See [Repository Guidelines](AGENTS.md) for structure, workflows, and review expectations.
+
+## Installation
+
+- From PyPI:
+
+```bash
+pip install kubemind-common
+```
+
+- With extras (examples):
+
+```bash
+pip install "kubemind-common[fastapi]"
+pip install "kubemind-common[db]"
+pip install "kubemind-common[auth]"
+```
+
+- In a monorepo (editable install):
+
+```bash
+pip install -e ../kubemind-common
+```
+
+## Development
+
+```bash
+pip install -e .[dev]
+```
+
+Running the test suite and building artefacts are managed through the bundled Makefile:
+
+```bash
+make test   # run pytest after a clean build directory
+make build  # produce wheel and sdist under dist/
+make check  # twine check on the build outputs
+```
+
+## Publishing
+
+1. Export a `PYPI_TOKEN` with upload permissions (username is always `__token__`).
+2. Run `make publish` which will rebuild, validate and upload using Twine.
+3. Tag the release (`git tag vX.Y.Z && git push --tags`) so downstream services can pin versions.
+
+## Usage
+
+### Configuration
+
+```python
+from kubemind_common.config.base import BaseServiceSettings
+
+settings = BaseServiceSettings()
+```
+
+### Logging
+
+```python
+from kubemind_common.logging.setup import setup_logging
+
+setup_logging(level="INFO", format="json")
+```
+
+### HTTP Client
+
+```python
+from kubemind_common.http.client import create_http_client, http_request
+
+async with create_http_client() as client:
+    response = await http_request(client, "GET", "https://api.example.com")
+```
+
+### Kubernetes
+
+```python
+from kubemind_common.k8s.client import create_k8s_client
+
+k8s = create_k8s_client(in_cluster=False)
+pods = k8s.core_v1_api.list_pod_for_all_namespaces()
+```
+
+### Contracts
+
+```python
+from kubemind_common.contracts.events import Event
+from kubemind_common.contracts.playbooks import PlaybookSpec
+
+event = Event(
+    id="evt-123",
+    source="kubernetes",
+    type="pod_crash",
+    timestamp="2025-10-12T17:00:00Z"
+)
+```
+
+## Project Structure
+
+- `src/kubemind_common/` — library code
+  - `config/`, `logging/`, `middleware/`, `contracts/`, `http/`, `redis/`, `db/`, `security/`, `metrics/`, `k8s/`, `utils/`, etc.
+- `tests/` — unit and integration tests
+- `docs/` — documentation (see `docs/index.md`)
+- `examples/` — runnable usage examples
+- `.github/workflows/` — CI/CD and publishing
+
+## Development
+
+```bash
+# Create a virtual environment and install in editable mode
+python -m venv .venv && . .venv/bin/activate
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Type checking (if configured)
+mypy src/kubemind_common/
+
+# Linting (if configured)
+ruff check .
+```
+
+## Build & Publish
+
+This project uses modern PEP 621 metadata with Hatchling.
+
+- Local build:
+
+```bash
+python -m pip install --upgrade build
+python -m build
+```
+
+- Trusted Publishing via GitHub Actions:
+  - Configure the PyPI project to trust this repository (PyPI → Management → Publishing → Trusted Publishers).
+  - Tag a release `vX.Y.Z` to publish to PyPI.
+  - Tag a pre-release like `vX.Y.Z-rc1` to publish to TestPyPI.
+  - Or run the `Publish` workflow manually and choose `pypi` or `testpypi`.
+
+## Versioning
+
+This library follows semantic versioning. Services should pin compatible versions:
+
+```toml
+kubemind-common = "^0.2.0"
+```
+
+## Documentation
+
+See `docs/index.md` for module documentation and examples.
