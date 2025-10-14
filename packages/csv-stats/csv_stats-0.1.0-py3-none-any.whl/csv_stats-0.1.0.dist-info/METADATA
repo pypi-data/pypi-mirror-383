@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: csv-stats
+Version: 0.1.0
+Summary: A Python package for the life sciences to conduct hypothesis testing from CSV files.
+Author-email: Mitchell Tillman <mtillman14@gmail.com>
+Maintainer-email: Mitchell Tillman <mtillman14@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/mtillman14/csv-stats
+Project-URL: Documentation, https://github.com/mtillman14/csv-stats
+Project-URL: Repository, https://github.com/mtillman14/csv-stats
+Project-URL: Issues, https://github.com/mtillman14/csv-stats/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Science/Research
+Classifier: Development Status :: 3 - Alpha
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=2.3.3
+Requires-Dist: pingouin>=0.5.5
+Requires-Dist: scipy>=1.16.2
+Requires-Dist: statsmodels>=0.14.5
+
+# csv-stats
+Python package for rapid hypothesis testing on CSV files with data in long table format, which are common in the life sciences.
