@@ -1,0 +1,36 @@
+[package]
+name = "mrkle"
+edition = "2024"
+description = """A fast and flexible Merkle Tree library."""
+readme = "README.md"
+repository = "https://github.com/LVivona/mrkle"
+publish = true
+version = { workspace = true }
+keywords = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+
+[dependencies]
+faster-hex = { workspace = true }
+crypto = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+text_trees = { workspace = true }
+hashbrown = { workspace = true }
+
+
+[dev-dependencies]
+sha1 = { workspace = true }
+sha2 = { workspace = true }
+sha3 = { workspace = true }
+serde_json = { workspace = true }
+bincode = { workspace = true }
+
+[features]
+default = ["std"]
+std = ["thiserror/std"]
+alloc = []
+serde = ["serde/alloc"]
+
+[package.metadata.docs.rs]
+rustdoc-args = ["--html-in-header", "./docs/katex.html"]
