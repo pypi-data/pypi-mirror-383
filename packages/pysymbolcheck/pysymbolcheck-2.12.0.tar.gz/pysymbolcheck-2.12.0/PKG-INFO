@@ -1,0 +1,114 @@
+Metadata-Version: 2.4
+Name: pysymbolcheck
+Version: 2.12.0
+Summary: ELF symbol check
+Maintainer-email: Konrad Weihmann <kweihmann@outlook.com>
+License-Expression: BSD-2-Clause
+Project-URL: homepage, https://github.com/priv-kweihmann/pysymbolcheck
+Project-URL: repository, https://github.com/priv-kweihmann/pysymbolcheck.git
+Project-URL: bugtracker, https://github.com/priv-kweihmann/pysymbolcheck/issues
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jsonmerge~=1.9
+Requires-Dist: pyelftools==0.32
+Provides-Extra: dev
+Requires-Dist: Flake8-pyproject==1.2.3; extra == "dev"
+Requires-Dist: bump-my-version==1.2.4; extra == "dev"
+Requires-Dist: build==1.3.0; extra == "dev"
+Requires-Dist: dlint==0.16.0; extra == "dev"
+Requires-Dist: flake8==7.3.0; extra == "dev"
+Requires-Dist: flake8-2020==1.8.1; extra == "dev"
+Requires-Dist: flake8-broken-line==1.0.0; extra == "dev"
+Requires-Dist: flake8-bugbear==24.12.12; extra == "dev"
+Requires-Dist: flake8-builtins==3.0.0; extra == "dev"
+Requires-Dist: flake8-coding==1.3.2; extra == "dev"
+Requires-Dist: flake8-commas==4.0.0; extra == "dev"
+Requires-Dist: flake8-comprehensions==3.17.0; extra == "dev"
+Requires-Dist: flake8-debugger==4.1.2; extra == "dev"
+Requires-Dist: flake8-docstrings==1.7.0; extra == "dev"
+Requires-Dist: flake8-eradicate==1.5.0; extra == "dev"
+Requires-Dist: flake8-executable==2.1.3; extra == "dev"
+Requires-Dist: flake8-fixme==1.1.1; extra == "dev"
+Requires-Dist: flake8-isort==6.1.2; extra == "dev"
+Requires-Dist: flake8-mutable==1.2.0; extra == "dev"
+Requires-Dist: flake8-pep3101==2.1.0; extra == "dev"
+Requires-Dist: flake8-print==5.0.0; extra == "dev"
+Requires-Dist: flake8-quotes==3.4.0; extra == "dev"
+Requires-Dist: flake8-requirements==2.3.0; extra == "dev"
+Requires-Dist: flake8-variables-names==0.0.6; extra == "dev"
+Requires-Dist: twine==6.2.0; extra == "dev"
+Requires-Dist: wheel~=0.45; extra == "dev"
+Dynamic: license-file
+
+# Purpose
+
+This tool does check compiled elf-files (and all dependencies) against given rules.
+Objectives are
+
+* check for discouraged functions (e.g. strcpy)
+* check for combinations of symbols (e.g. mutex and pthreads)
+
+## Usage
+
+```shell
+usage: pysymbolcheck [-h] [--libpath LIBPATH] rules file
+
+Eval symbols of a binary against given rules
+
+positional arguments:
+  rules              Path to a rule file
+  file               File to parse
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --libpath LIBPATH  ":" separated path to lookup libraries
+```
+
+## Rule file format
+
+a rule file consists of a json-array, like this
+
+```json
+[]
+```
+
+within this __n__ element of the following can be added
+
+```json
+{ "severity": "error", "id": "A_Unique_ID", "msg": "some message", "rule", "<rule>" }
+```
+
+for __severity__ it is advised to use only **info**, **warning** or **error**
+
+## Rule definition
+
+A rule can consist of any logical combined operation such as
+
+```text
+((A && B) || (C && D )) && !E
+```
+
+to get the needed information following keywords are implemented
+
+| keyword     |  variables  |                                                          purpose |            example |
+| ----------- | :---------: | ---------------------------------------------------------------: | -----------------: |
+| AVAILABLE() | symbol-name | check if a symbol is defined in the binary or any referenced lib | AVAILABLE(strncpy) |
+| USED()      | symbol-name |                  check if a symbol is used by some binary or lib |      USED(strncpy) |
+| SIZE()      | symbol-name |                                get the size in bytes of a symbol |      SIZE(strncpy) |
+| TYPE()      | symbol-name |                                get the type in bytes of a symbol |      TYPE(strncpy) |
+| &&          |    n.a.     |                                                      logical and |             A && B |
+| \|\|        |    n.a.     |                                                       logical or |          A \|\| B  |
+| !           |    n.a.     |                                                     not operator |                 !A |
