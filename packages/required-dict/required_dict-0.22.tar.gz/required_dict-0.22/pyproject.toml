@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=77.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "required_dict"
+version = "0.22"
+description = "An easy-to-user dictionary validation tool, good for use-cases like POST API data validation."
+authors = [{ name="Stephen Hilton", email="stephen@familyhilton.com" }]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+keywords = ["python","validation","dictionary","dict"]
+dependencies = []
+
+[tool.setuptools.packages]
+find = { where = ["./src"], include = ["required_dict.py"] }  
