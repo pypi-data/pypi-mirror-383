@@ -1,0 +1,32 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 3306,
+    "user": "your_username",
+    "password": "your_password",
+    "database": "your_database",
+    "charset": "utf8mb4",
+    "autocommit": true
+  },
+  "socket": {
+    "default_host": "127.0.0.1",
+    "default_port": 8080,
+    "timeout": 30,
+    "buffer_size": 2048,
+    "req_type": "tcp",
+    "req_method": "queue"
+  },
+  "serial": {
+    "default_port": "/dev/ttyUSB0",
+    "default_baudrate": 115200,
+    "timeout": 2,
+    "send_delay": 0.1,
+    "rx_tx_model": [1, 1]
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s: %(message)s",
+    "file_logging": true,
+    "log_file": "aylib.log"
+  }
+}
