@@ -1,0 +1,21 @@
+include LICENSE
+include README.md
+include CONTRIBUTING.md
+include pyproject.toml
+include CMakeLists.txt
+include setup.py
+
+# Include source files that exist
+recursive-include src/core *.hpp
+recursive-include src/python *.cpp *.py
+recursive-include tests *.py
+
+# Include build files
+include conftest.py
+
+# Exclude files and directories
+global-exclude .gitignore
+global-exclude .github/*
+global-exclude __pycache__/*
+global-exclude *.py[co]
+global-exclude .DS_Store

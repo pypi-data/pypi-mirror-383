@@ -1,0 +1,172 @@
+<p align="center">
+    <a href="https://github.com/ohmyarthur/aiofiles-x">
+        <img src="https://raw.githubusercontent.com/ohmyarthur/aiofiles-x/master/docs/media/aiofiles-xlogo.png"
+             alt="aiofiles-x" width="128">
+    </a>
+    <br>
+    <b>High-Performance Async File I/O for Python</b>
+    <br>
+    <a href="https://github.com/ohmyarthur/aiofiles-x">
+        Homepage
+    </a>
+    •
+    <a href="https://ohmyarthur.github.io/aiofiles-x">
+        Documentation
+    </a>
+    •
+    <a href="https://github.com/ohmyarthur/aiofiles-x/blob/master/changelogs/CHANGELOG.md">
+        News
+    </a>
+</p>
+
+## aiofiles-x
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![C++23](https://img.shields.io/badge/C++-23-blue.svg)](https://en.cppreference.com/w/cpp/23)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+> Elegant, modern and high-performance async file I/O library for Python
+
+```python
+import asyncio
+import aiofiles
+
+async def main():
+    async with aiofiles.open('file.txt', 'w') as f:
+        await f.write('Hello from aiofiles-x!')
+
+    async with aiofiles.open('file.txt', 'r') as f:
+        content = await f.read()
+        print(content)
+
+asyncio.run(main())
+```
+
+**aiofiles-x** is a modern, elegant and high-performance async file I/O library for Python. It is a C++23
+reimplementation of [aiofiles](https://github.com/Tinche/aiofiles) with 100% API compatibility, providing
+**up to 3.79× faster** small file reads, **3.41× faster** concurrent operations, and **2.08× faster**
+medium file operations (100KB) while maintaining the same simple and intuitive interface.
+
+⚠️ **Note**: Performance results may vary depending on hardware specifications, operating system, and workload patterns.
+
+### Key Features
+
+- **Ready**: Install aiofiles-x with pip and start building your applications right away.
+- **Easy**: Simple and intuitive API that's fully compatible with the original aiofiles.
+- **Elegant**: Clean async/await syntax that integrates seamlessly with asyncio.
+- **Fast**: Powered by C++23 backend for maximum performance and efficiency.
+- **Type-hinted**: Fully type-annotated for excellent editor support and type checking.
+- **Async**: Fully asynchronous file operations without blocking the event loop.
+- **Compatible**: 100% API compatible with aiofiles - drop-in replacement ready.
+
+### Installing
+
+Stable version
+
+```bash
+pip install aiofiles-x
+```
+
+From GitHub release
+
+```bash
+pip install https://github.com/ohmyarthur/aiofiles-x/releases/download/v1.0.4/aiofiles_x-1.0.4.tar.gz
+```
+
+## API Reference
+
+### Core Operations
+
+```python
+import aiofiles
+
+# File operations
+async with aiofiles.open('file.txt', 'r') as f:
+    data = await f.read()
+    await f.write(data)
+    await f.seek(0)
+    line = await f.readline()
+    async for line in f:
+        process(line)
+
+# Temp files
+async with aiofiles.tempfile.NamedTemporaryFile('w+') as tmp:
+    await tmp.write('temp data')
+
+# OS operations
+await aiofiles.os.remove('file.txt')
+await aiofiles.os.mkdir('directory')
+files = await aiofiles.os.listdir('.')
+```
+
+### Supported Methods
+
+- `read()`, `readall()`, `read1()`, `readinto()`, `readline()`, `readlines()`
+- `write()`, `writelines()`
+- `seek()`, `tell()`, `truncate()`, `flush()`
+- `close()`, `isatty()`, `seekable()`, `writable()`
+- All `aiofiles.os` and `aiofiles.tempfile` operations
+
+## Build from Source
+
+```bash
+git clone https://github.com/ohmyarthur/aiofiles-x.git
+cd aiofiles-x
+pip install .
+```
+
+**Requirements**: Python 3.10+, C++23 compiler (GCC 12+, Clang 15+), CMake 3.20+
+
+### Manual Development
+
+```bash
+# Install dev dependencies
+pip install -e ".[dev]"
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run tests
+pytest tests/unit -v
+
+# Run benchmarks
+pytest tests/benchmarks/benchmark_performance.py --benchmark-only
+
+# Code quality checks
+make lint          # Check code style
+make format        # Auto-format code
+make pre-commit-run  # Run all checks
+```
+
+### Pre-commit Hooks
+
+This project uses [pre-commit](https://pre-commit.com/) for code quality:
+
+- **Python**: `black`, `ruff`, `mypy`
+- **C++**: `clang-format`
+- **Security**: `bandit`, `detect-secrets`
+- **Commits**: Conventional commit format
+- **Docs**: `markdownlint`
+
+```bash
+# Install hooks
+pre-commit install
+
+# Run manually
+pre-commit run --all-files
+```
+
+### Resources
+
+- Check out the [documentation](https://ohmyarthur.github.io/aiofiles-x) to learn more about aiofiles-x,
+  get started right away and discover more in-depth material for building your applications.
+- Visit the [changelog](https://github.com/ohmyarthur/aiofiles-x/blob/master/changelogs/CHANGELOG.md) and stay
+  tuned for news, updates and announcements.
+
+## License
+
+[![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)
+
+aiofiles-x is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
+
+**Inspired by**: [aiofiles](https://github.com/Tinche/aiofiles) (Apache 2.0)
