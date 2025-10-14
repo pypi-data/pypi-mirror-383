@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm>=8.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dftly"
+dynamic = ["version"]
+authors = [
+  { name="Matthew McDermott", email="mattmcdermott8@gmail.com" },
+]
+description = "dftly (pronounced deftly) is a simple library for a safe, expressive, config-file friendly, and readable DSL for encoding simple dataframe operations."
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["PyYAML", "lark", "python-dateutil"]
+
+[dependency-groups]
+dev = [
+  "pre-commit<4", "ruff", "pytest", "pytest-cov", "pretty-print-directory"
+] # Add your development (lint, test) dependencies here
+
+[tool.setuptools_scm]
+
+[project.optional-dependencies]
+polars = ["polars~=1.33.0"]
+
+[project.urls]
+Homepage = "https://github.com/mmcdermott/dftly"
+Issues = "https://github.com/mmcdermott/dftly/issues"
+
+[tool.pytest.ini_options]
+addopts = "--doctest-glob=README.md"
