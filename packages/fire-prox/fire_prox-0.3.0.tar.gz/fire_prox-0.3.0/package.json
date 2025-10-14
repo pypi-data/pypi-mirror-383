@@ -1,0 +1,17 @@
+{
+  "name": "fire-prox",
+  "version": "0.3.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./test.sh",
+    "developer-emulator": "firebase emulators:start --config firebase.developer.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.14.0",
+  "dependencies": {
+    "firebase-tools": "^14.19.1"
+  }
+}

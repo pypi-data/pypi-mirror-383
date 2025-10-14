@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(uv run:*)",
+      "Bash(awk:*)",
+      "Bash(./test.sh:*)",
+      "Bash(chmod:*)",
+      "Bash(./nb.sh)",
+      "Bash(./nb.sh:*)",
+      "Bash(./test_notebooks.sh:*)",
+      "Bash(python3:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(ruff check:*)",
+      "WebSearch",
+      "WebFetch(domain:firebase.google.com)",
+      "WebFetch(domain:extensions.dev)",
+      "WebFetch(domain:github.com)",
+      "Bash(pnpm exec firebase emulators:exec:*)",
+      "Bash(pytest:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

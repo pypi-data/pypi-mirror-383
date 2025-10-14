@@ -1,0 +1,55 @@
+site_name: fire-prox
+site_description: Prototyping focused acceleration layer for Firestore
+site_author: Nehal Patel
+repo_url: https://github.com/habemus-papadum/fire-prox
+repo_name: fire-prox
+
+theme:
+  name: "material"
+  palette:
+    primary: blue grey
+
+nav:
+  - Home: index.md
+  - Demos:
+    - Phase 1 Demo Sync: demos/phase1/sync.ipynb
+    - Phase 1 Demo Async: demos/phase1/async.ipynb
+    - Phase 2 Demo (Sync & Async): demos/phase2/demo.ipynb
+    - Phase 2.5 Demo Query Builder: demos/phase2_5/demo.ipynb
+    - Phase 3 Demo: demos/phase3/demo.ipynb
+    - Topics:
+      - Pagination: demos/topics/pagination.ipynb
+      - Dates and Timestamps: demos/topics/dates_and_timestamps.ipynb
+      - Document References: demos/topics/document_references.ipynb
+      - Vector Embeddings: demos/topics/vector_embeddings.ipynb
+      - Transactions: demos/topics/transactions.ipynb
+      - Projections: demos/topics/projections.ipynb
+      - On Snapshot Listeners: demos/topics/on_snapshot.ipynb
+  - Architecture: Architectural_Blueprint.md
+  - Implementation Log: Implementation_Log.md
+  - API: reference.md
+  - Roadmap: STATUS.md
+  - Claude Code Sessions: 
+    - 2025-10-12 22:19 (6m): sessionslogs/2025-10-12_22-19-45_00b3f532.md
+    - 2025-10-12 21:01 (1h 11m): sessionslogs/2025-10-12_21-01-57_d1bd7a8c.md
+    - 2025-10-12 20:01 (31m): sessionslogs/2025-10-12_20-01-30_eff21584.md
+    - 2025-10-12 17:48 (2h 9m): sessionslogs/2025-10-12_17-48-27_9284470f.md
+    - 2025-10-11 20:31 (21h 13m): sessionslogs/2025-10-11_20-31-41_bd3b5c04.md
+    - Architectural Session: DesignDoc.md
+    # Add logs here as they are created
+
+
+# If you'd like to specify a separate docs directory, you can do so here
+docs_dir: docs
+
+# Plugins to enable
+plugins:
+  - search
+  - mkdocs-jupyter
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_submodules: true

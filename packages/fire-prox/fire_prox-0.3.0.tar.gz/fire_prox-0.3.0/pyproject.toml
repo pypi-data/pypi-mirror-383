@@ -1,0 +1,76 @@
+[project]
+name = "fire-prox"
+version = "0.3.0"
+description = "Fast prototyping for FireStore"
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = ["firestore", "firebase"]
+authors = [
+    { name = "Nehal Patel", email = "nehal@alum.mit.edu" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-firestore>=2.21.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/habemus-papadum/fire-prox"
+Repository = "https://github.com/habemus-papadum/fire-prox"
+Documentation = "https://github.com/habemus-papadum/fire-prox"
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "hatch>=1.14.2",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    "pytest-asyncio>=0.25.0",
+    "ruff>=0.14.0",
+    "mkdocs>=1.6.1",
+    "mkdocstrings>=0.30.1",
+    "mkdocstrings-python>=1.18.2",
+    "mkdocs-material>=9.6.21",
+    "jupyter>=1.1.1",
+    "mkdocs-jupyter>=0.25.1",
+    "python-dotenv>=1.1.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["src/fire_prox"]
+relative_files = true
+omit = [
+    "*/tests/*",
+    "*/testing.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
+precision = 2
+show_missing = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+exclude = [
+]
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = [
+]
+
