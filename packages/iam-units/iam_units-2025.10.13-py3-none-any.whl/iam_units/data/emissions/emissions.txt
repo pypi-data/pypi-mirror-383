@@ -1,0 +1,19 @@
+# Dummy base unit used for GWP conversions of [mass] -> [_GWP] -> [mass].
+# This unit has no physical meaning and should not be used on its own.
+
+_gwp = [_GWP]
+
+# The reference species, CO2, has a conversion factor of 1.
+
+a_CO2 = 1.0
+
+# Define:
+# - Equivalents, e.g. a_CO2e = a_CO2.
+# - Conversion factors for each species, with NaN values. pint requires
+#   that this is done before setting context-specific values.
+
+@import species.txt
+
+# Define contexts for each set of metrics
+
+@import metrics.txt
