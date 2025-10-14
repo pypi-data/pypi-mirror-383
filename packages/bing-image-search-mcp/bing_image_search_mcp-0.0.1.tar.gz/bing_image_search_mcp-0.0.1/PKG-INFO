@@ -1,0 +1,74 @@
+Metadata-Version: 2.4
+Name: bing-image-search-mcp
+Version: 0.0.1
+Summary: Bing Image Search MCP Server without Access Keys, Provides Bing Image Search Results to AI Agents
+Author-email: aihubadmin@126.com
+License: MIT License
+Project-URL: Homepage, https://www.deepnlp.org/store/ai-agent/mcp-server
+Project-URL: Repository, https://github.com/AI-Agent-Hub/AI-Agent-Marketplace
+Keywords: Bing Search,Bing Image Search,MCP,API,AI Agent
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: mcp[cli]>=1.9.4
+Requires-Dist: requests>=2.17.0
+
+# bing-image-search-mcp
+
+
+MCP Server of Bing Web Search With No Access Key Requested
+
+This MCP server is a mcp wrapper of pypi package Bing Image Search Web URL (https://github.com/AI-Hub-Admin/bing-image-search-mcp) which easy to use Bing Image Search APIs.
+
+
+# Features
+
+
+# Install
+```
+pip install bing-image-search-mcp
+```
+
+
+# MCP Integration
+```
+{
+    "mcpServers": {
+        "bing-image-search-mcp": {
+            "command": "uv",
+            "args": ["--directory", "/path_to_folder/finance-agent-mcp-server/src/finance-agent-mcp-server", "run", "server.py"]
+        }
+    }
+}
+```
+
+
+```
+{
+    "mcpServers": {
+        "bing-image-search-mcp": {
+            "command": "uv",
+            "args": ["--directory", "/path_to_folder/finance-agent-mcp-server/src/finance-agent-mcp-server", "run", "server.py"]
+        }
+    }
+}
+```
+
+{
+    "mcpServers": {
+        "bing-image-search-mcp": {
+            "command": "uvx",
+            "args": ["your-package-entrypoint-name"] 
+        }
+    }
+}
+
+
+
+## 本地: 
+uv --directory /path_to_folder/finance-agent-mcp-server/src/finance-agent-mcp-server run server.py
+

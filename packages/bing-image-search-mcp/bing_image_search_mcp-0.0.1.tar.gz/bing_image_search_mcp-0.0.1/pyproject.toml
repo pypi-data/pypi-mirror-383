@@ -1,0 +1,30 @@
+[project]
+name = "bing-image-search-mcp"
+version = "0.0.1"
+description = "Bing Image Search MCP Server without Access Keys, Provides Bing Image Search Results to AI Agents"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.9.4",
+    "requests>=2.17.0"
+]
+authors = [
+    { email = "aihubadmin@126.com" }
+]
+license = { text = "MIT License" }
+keywords = ["Bing Search", "Bing Image Search", "MCP", "API", "AI Agent"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License"
+]
+
+[project.urls]
+Homepage = "https://www.deepnlp.org/store/ai-agent/mcp-server"
+Repository = "https://github.com/AI-Agent-Hub/AI-Agent-Marketplace"
+
+
+[project.scripts]
+bing-image-search-mcp = "bing_image_search_mcp.server:main"
