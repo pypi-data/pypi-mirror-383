@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sensorthings.org/datastreams.json",
+  "title": "Datastreams Schema",
+  "description": "Generic validation schema for SensorThings API Datastream entities",
+  "x-version": "1.0.0",
+  "x-entityType": "Datastreams",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "description",
+    "unitOfMeasurement",
+    "observationType"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Datastream name is mandatory",
+      "x-errorMessage": "Datastream must have a name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Datastream description is mandatory",
+      "x-errorMessage": "Datastream must have a description"
+    },
+    "unitOfMeasurement": {
+      "type": "object",
+      "required": [
+        "name",
+        "symbol",
+        "definition"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unit name",
+          "x-errorMessage": "Unit name is required"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Unit symbol",
+          "x-errorMessage": "Unit symbol is required"
+        },
+        "definition": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to unit definition",
+          "x-errorMessage": "Unit definition must be a valid URI"
+        }
+      },
+      "description": "Unit of measurement for observations",
+      "x-errorMessage": "Unit of measurement is required"
+    },
+    "observationType": {
+      "type": "string",
+      "format": "uri",
+      "description": "Type of observation (URI reference)",
+      "x-errorMessage": "Observation type must be a valid URI"
+    },
+    "observedArea": {
+      "type": "object",
+      "description": "Geographic area of observations",
+      "x-severity": "warning"
+    },
+    "phenomenonTime": {
+      "type": "string",
+      "description": "Time period of observations",
+      "x-severity": "warning"
+    },
+    "resultTime": {
+      "type": "string",
+      "description": "Time period when results were generated",
+      "x-severity": "warning"
+    }
+  }
+}

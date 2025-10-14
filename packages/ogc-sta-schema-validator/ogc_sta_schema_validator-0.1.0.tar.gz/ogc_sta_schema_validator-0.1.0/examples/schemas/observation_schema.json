@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sensorthings.org/observations.json",
+  "title": "Observations Schema",
+  "description": "Generic validation schema for SensorThings API Observation entities",
+  "x-version": "1.0.0",
+  "x-entityType": "Observations",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "phenomenonTime",
+    "result"
+  ],
+  "properties": {
+    "phenomenonTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when observation was made (ISO 8601)",
+      "x-errorMessage": "Phenomenon time must be in ISO 8601 format"
+    },
+    "result": {
+      "description": "Observation result value",
+      "x-errorMessage": "Result is required"
+    },
+    "resultTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when result was produced (ISO 8601)",
+      "x-errorMessage": "Result time must be in ISO 8601 format",
+      "x-severity": "warning"
+    },
+    "resultQuality": {
+      "description": "Quality indicator for the observation",
+      "x-severity": "warning"
+    },
+    "validTime": {
+      "type": "string",
+      "description": "Period for which result is valid",
+      "x-severity": "warning"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Additional parameters for the observation",
+      "properties": {
+        "qualityFlag": {
+          "type": "string",
+          "enum": ["good", "suspect", "bad", "unknown"],
+          "description": "Quality assessment flag",
+          "x-errorMessage": "Quality flag must be one of: good, suspect, bad, unknown"
+        },
+        "uncertainty": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Measurement uncertainty percentage",
+          "x-errorMessage": "Uncertainty must be between 0 and 100"
+        },
+        "validationLevel": {
+          "type": "string",
+          "enum": ["raw", "validated", "quality_controlled", "verified"],
+          "description": "Data validation level",
+          "x-errorMessage": "Validation level must be one of: raw, validated, quality_controlled, verified"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

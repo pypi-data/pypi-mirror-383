@@ -1,0 +1,50 @@
+# Demo Configuration for OGC SensorThings API Schema Validator
+# This configuration is optimized for the Docker Compose demo environment
+
+# Server configuration - points to the FROST-Server in Docker Compose
+server:
+  url: "http://frost-server:8080/FROST-Server/v1.1"
+  timeout: 30
+
+  # No authentication needed for demo
+  auth:
+    method: "none"
+
+# Validation settings - optimized for demo
+validation:
+  batch_size: 50
+  stop_on_error: false  # Continue validation even if errors are found
+  include_warnings: true
+
+# Schema settings - use example schemas
+schemas:
+  default_path: "./examples/schemas"
+  auto_discover: true
+
+# Output settings - verbose output for demo
+output:
+  format: "console"
+  file: null
+  verbose: true
+  include_valid_entities: true  # Show both valid and invalid for demo
+
+# Logging configuration
+logging:
+  level: "INFO"
+  file: null
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Entity-specific settings for demo
+entity_settings:
+  Things:
+    batch_size: 50
+    schema_file: "thing_schema.json"
+  Sensors:
+    batch_size: 50
+    schema_file: "sensor_schema.json"
+  Observations:
+    batch_size: 50
+    schema_file: "observation_schema.json"
+  Datastreams:
+    batch_size: 50
+    schema_file: "datastream_schema.json"

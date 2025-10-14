@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sensorthings.org/sensors.json",
+  "title": "Sensors Schema",
+  "description": "Generic validation schema for SensorThings API Sensor entities",
+  "x-version": "1.0.0",
+  "x-entityType": "Sensors",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "description",
+    "encodingType",
+    "metadata"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Sensor name is mandatory",
+      "x-errorMessage": "Sensor must have a name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Sensor description is mandatory",
+      "x-errorMessage": "Sensor must have a description"
+    },
+    "encodingType": {
+      "type": "string",
+      "description": "Type of encoding used for the metadata",
+      "x-errorMessage": "Encoding type is required"
+    },
+    "metadata": {
+      "description": "Detailed description of the sensor or link to datasheet",
+      "x-errorMessage": "Metadata is required"
+    },
+    "properties": {
+      "type": "object",
+      "description": "Custom properties object for additional metadata",
+      "properties": {
+        "manufacturer": {
+          "type": "string",
+          "description": "Manufacturer name",
+          "x-severity": "warning"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model identifier",
+          "x-severity": "warning"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "Serial number of the sensor",
+          "x-severity": "warning"
+        },
+        "calibrationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last calibration date in ISO 8601 format",
+          "x-severity": "warning"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

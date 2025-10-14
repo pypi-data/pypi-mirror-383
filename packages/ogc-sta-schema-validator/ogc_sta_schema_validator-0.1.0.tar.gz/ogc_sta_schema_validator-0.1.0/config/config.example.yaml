@@ -1,0 +1,122 @@
+# OGC SensorThings API Schema Validator Configuration
+# Copy this file to config.yaml and customize for your environment
+#
+# MULTI-SOURCE CONFIGURATION:
+# This file is the base configuration. You can override any value using:
+#   1. CLI arguments (highest priority) - e.g., --server-url http://example.com
+#   2. Environment variables - e.g., VALIDATOR_SERVER__URL=http://example.com
+#   3. This YAML file (lowest priority)
+#
+# Environment variable naming: VALIDATOR_<SECTION>__<KEY>
+# Example: VALIDATOR_SERVER__TIMEOUT=60 overrides server.timeout below
+#
+# See .env.example for all available environment variables
+# See README.md for complete documentation
+
+# Server configuration
+# Env vars: VALIDATOR_SERVER__URL, VALIDATOR_SERVER__TIMEOUT
+server:
+  url: "http://localhost:8080/FROST-Server/v1.1"
+  timeout: 30
+
+  # Authentication configuration
+  # Multiple authentication methods are supported:
+  # Env vars: VALIDATOR_SERVER__AUTH__METHOD, etc.
+
+  # 1. No authentication (default)
+  auth:
+    method: "none"
+
+  # 2. HTTP Basic Authentication
+  # RECOMMENDED: Use environment variables for credentials instead of hardcoding here!
+  # export VALIDATOR_SERVER__AUTH__USERNAME="your-username"
+  # export VALIDATOR_SERVER__AUTH__PASSWORD="your-password"
+  # auth:
+  #   method: "basic"
+  #   username: "your-username"
+  #   password: "your-password"
+
+  # 3. Bearer Token Authentication
+  # RECOMMENDED: Use environment variable VALIDATOR_SERVER__AUTH__TOKEN
+  # auth:
+  #   method: "token"
+  #   token: "your-bearer-token-here"
+
+  # 4. Keycloak OIDC Authentication (Resource Owner Password Credentials)
+  # RECOMMENDED: Use environment variables for sensitive values
+  # auth:
+  #   method: "keycloak"
+  #   server_url: "https://your-keycloak-server.com/"
+  #   realm: "your-realm"
+  #   client_id: "your-client-id"
+  #   client_secret: "your-client-secret"
+  #   username: "your-username"
+  #   password: "your-password"
+
+# Validation settings
+# Env vars: VALIDATOR_VALIDATION__BATCH_SIZE, VALIDATOR_VALIDATION__STOP_ON_ERROR, etc.
+validation:
+  batch_size: 100
+  stop_on_error: false
+  include_warnings: true
+
+# Schema settings
+# Env vars: VALIDATOR_SCHEMAS__DEFAULT_PATH, VALIDATOR_SCHEMAS__AUTO_DISCOVER
+schemas:
+  default_path: "./schemas"
+  auto_discover: true
+
+# Output settings
+# Env vars: VALIDATOR_OUTPUT__FORMAT, VALIDATOR_OUTPUT__VERBOSE, etc.
+output:
+  format: "console"  # console, json, csv
+  file: null
+  verbose: true
+  include_valid_entities: false
+
+# Logging configuration
+# Env vars: VALIDATOR_LOGGING__LEVEL, VALIDATOR_LOGGING__FILE
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: null  # Log to file if specified
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Continuous validation settings
+# Env vars: VALIDATOR_CONTINUOUS__INTERVAL, VALIDATOR_CONTINUOUS__MAX_ENTITIES_PER_RUN, etc.
+continuous:
+  enabled: false
+  interval: 1800  # seconds (30 minutes)
+  entity_types: ["Things", "Sensors", "Observations"]
+  max_entities_per_run: 1000
+
+# Entity-specific settings
+# Customize batch sizes, schema files, and filters for each entity type
+# Env var format: VALIDATOR_ENTITY_SETTINGS__<ENTITY_TYPE>__<SETTING>
+# Example: VALIDATOR_ENTITY_SETTINGS__THINGS__BATCH_SIZE=50
+entity_settings:
+  Things:
+    batch_size: 50
+    schema_file: "thing_schema.json"
+  Sensors:
+    batch_size: 100
+    schema_file: "sensor_schema.json"
+  Observations:
+    batch_size: 200
+    schema_file: "observation_schema.json"
+    # Example: Filter to only recent observations
+    # filter: "phenomenonTime gt 2024-01-01T00:00:00Z"
+  Datastreams:
+    batch_size: 100
+    schema_file: "datastream_schema.json"
+  Locations:
+    batch_size: 50
+    schema_file: "location_schema.json"
+  ObservedProperties:
+    batch_size: 100
+    schema_file: "observedproperty_schema.json"
+  FeatureOfInterest:
+    batch_size: 100
+    schema_file: "featureofinterest_schema.json"
+  HistoricalLocations:
+    batch_size: 100
+    schema_file: "historicallocation_schema.json"

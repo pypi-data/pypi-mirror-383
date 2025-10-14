@@ -1,0 +1,216 @@
+{
+  "sample_entities": {
+    "thing_valid": {
+      "@iot.id": 1,
+      "name": "Temperature Sensor Station A",
+      "description": "Outdoor temperature monitoring station in Building A",
+      "properties": {
+        "building": "Building A",
+        "floor": 1,
+        "room": "A123",
+        "status": "active",
+        "installationDate": "2024-01-15T10:00:00Z",
+        "location": {
+          "coordinates": [8.4037, 49.0069, 115.5]
+        },
+        "metadata": {
+          "owner": "Facilities Management",
+          "contact": "facilities@example.com"
+        },
+        "tags": ["outdoor", "temperature", "weather"]
+      }
+    },
+    "thing_invalid": {
+      "@iot.id": 2,
+      "description": "Temperature sensor without name",
+      "properties": {
+        "building": 123,
+        "floor": "first",
+        "room": "invalid-room-format",
+        "status": "unknown_status",
+        "installationDate": "not-a-date",
+        "location": {
+          "coordinates": [8.4037]
+        },
+        "metadata": {
+          "contact": "invalid-email"
+        },
+        "tags": "should-be-array"
+      }
+    },
+    "sensor_valid": {
+      "@iot.id": 10,
+      "name": "DHT22 Temperature Humidity Sensor",
+      "description": "Digital temperature and humidity sensor",
+      "encodingType": "application/pdf",
+      "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+      "properties": {
+        "manufacturer": "Aosong Electronics",
+        "model": "DHT22",
+        "serialNumber": "DHT22001234",
+        "firmwareVersion": "1.2.3",
+        "accuracy": 2.0,
+        "resolution": 0.1,
+        "range": {
+          "min": -40,
+          "max": 80
+        },
+        "calibrationDate": "2024-01-10T09:00:00Z",
+        "nextCalibrationDate": "2025-01-10T09:00:00Z",
+        "status": "operational",
+        "powerConsumption": 2.5,
+        "communicationProtocol": "HTTP"
+      }
+    },
+    "sensor_invalid": {
+      "@iot.id": 11,
+      "description": "Sensor without name",
+      "encodingType": "application/pdf",
+      "properties": {
+        "manufacturer": 12345,
+        "serialNumber": "invalid",
+        "firmwareVersion": "1.2",
+        "accuracy": 150,
+        "range": {
+          "min": "not-a-number",
+          "max": "also-not-a-number"
+        },
+        "calibrationDate": "invalid-date",
+        "status": "unknown_status",
+        "powerConsumption": -5,
+        "communicationProtocol": "UnknownProtocol"
+      }
+    },
+    "observation_valid": {
+      "@iot.id": 100,
+      "phenomenonTime": "2024-09-22T10:00:00Z",
+      "result": 23.5,
+      "resultTime": "2024-09-22T10:00:05Z",
+      "properties": {
+        "qualityFlag": "good",
+        "uncertainty": 2.5,
+        "validationLevel": "validated",
+        "dataSource": "sensor_001",
+        "processingMethod": "automatic",
+        "outlierFlag": false,
+        "calibrationApplied": true,
+        "correctionFactor": 1.02,
+        "detectionLimit": 0.1,
+        "measurementRange": {
+          "min": -20,
+          "max": 50
+        },
+        "samplingRate": 60,
+        "aggregationMethod": "instantaneous",
+        "coordinates": [8.4037, 49.0069, 115.5]
+      }
+    },
+    "observation_invalid": {
+      "@iot.id": 101,
+      "result": 25.8,
+      "properties": {
+        "qualityFlag": "invalid_flag",
+        "uncertainty": 150,
+        "validationLevel": "unknown_level",
+        "processingMethod": "unknown_method",
+        "outlierFlag": "not-boolean",
+        "calibrationApplied": "not-boolean",
+        "correctionFactor": "not-a-number",
+        "detectionLimit": "not-a-number",
+        "measurementRange": {
+          "min": "not-a-number",
+          "max": "not-a-number"
+        },
+        "samplingRate": -10,
+        "aggregationMethod": "unknown_method",
+        "coordinates": [8.4037]
+      }
+    },
+    "datastream_valid": {
+      "@iot.id": 50,
+      "name": "Temperature Measurements",
+      "description": "Hourly temperature measurements from DHT22 sensor",
+      "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+      "unitOfMeasurement": {
+        "name": "degree Celsius",
+        "symbol": "°C",
+        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius"
+      },
+      "properties": {
+        "measurementType": "continuous",
+        "dataQuality": "operational",
+        "samplingFrequency": "1 hour",
+        "expectedRange": {
+          "min": -10,
+          "max": 40
+        },
+        "precision": 0.1,
+        "resolution": 0.1,
+        "responseTime": "2 seconds",
+        "dataRetention": "5 years",
+        "processingLevel": "L1",
+        "qualityControl": {
+          "automated": true,
+          "manual": false
+        },
+        "aggregation": {
+          "temporal": "1h",
+          "method": "mean"
+        }
+      }
+    },
+    "datastream_invalid": {
+      "@iot.id": 51,
+      "description": "Datastream without name",
+      "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+      "properties": {
+        "measurementType": "unknown_type",
+        "dataQuality": "unknown_quality",
+        "expectedRange": {
+          "min": "not-a-number",
+          "max": "not-a-number"
+        },
+        "precision": "not-a-number",
+        "resolution": "not-a-number",
+        "processingLevel": "L99",
+        "qualityControl": {
+          "automated": "not-boolean",
+          "manual": "not-boolean"
+        },
+        "aggregation": {
+          "temporal": "unknown_interval",
+          "method": "unknown_method"
+        }
+      }
+    }
+  },
+  "test_scenarios": {
+    "all_valid": {
+      "description": "All entities should pass validation",
+      "entities": [
+        "thing_valid",
+        "sensor_valid",
+        "observation_valid",
+        "datastream_valid"
+      ]
+    },
+    "all_invalid": {
+      "description": "All entities should fail validation",
+      "entities": [
+        "thing_invalid",
+        "sensor_invalid",
+        "observation_invalid",
+        "datastream_invalid"
+      ]
+    },
+    "mixed": {
+      "description": "Mix of valid and invalid entities",
+      "entities": [
+        "thing_valid",
+        "sensor_invalid",
+        "observation_valid",
+        "datastream_invalid"
+      ]
+    }
+  }
+}

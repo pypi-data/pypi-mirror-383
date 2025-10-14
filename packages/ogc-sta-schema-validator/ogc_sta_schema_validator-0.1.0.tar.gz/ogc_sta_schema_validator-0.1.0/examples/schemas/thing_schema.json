@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.sensorthings.org/things.json",
+  "title": "Things Schema",
+  "description": "Generic validation schema for SensorThings API Thing entities",
+  "x-version": "1.0.0",
+  "x-entityType": "Things",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "description"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Thing name is mandatory",
+      "x-errorMessage": "Thing must have a name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Thing description is mandatory",
+      "x-errorMessage": "Thing must have a description"
+    },
+    "properties": {
+      "type": "object",
+      "description": "Custom properties object for additional metadata",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive",
+            "maintenance"
+          ],
+          "description": "Operational status of the Thing",
+          "x-errorMessage": "Status must be one of: active, inactive, maintenance"
+        },
+        "installationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Installation date in ISO 8601 format",
+          "x-errorMessage": "Installation date must be in ISO 8601 format"
+        },
+        "lastUpdate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp in ISO 8601 format",
+          "x-severity": "warning"
+        },
+        "location": {
+          "type": "string",
+          "description": "Human-readable location description",
+          "x-severity": "warning"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner or operator of the Thing",
+          "x-severity": "warning"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

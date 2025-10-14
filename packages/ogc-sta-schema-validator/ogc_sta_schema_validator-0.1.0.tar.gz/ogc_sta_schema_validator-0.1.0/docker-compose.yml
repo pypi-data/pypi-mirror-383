@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database for FROST-Server
+  frost-db:
+    image: postgis/postgis:15-3.3-alpine
+    container_name: frost-db
+    environment:
+      - POSTGRES_DB=sensorthings
+      - POSTGRES_USER=sensorthings
+      - POSTGRES_PASSWORD=ChangeMe
+    volumes:
+      - frost-db-data:/var/lib/postgresql/data
+    networks:
+      - sensorthings-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sensorthings"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # FROST-Server for demo
+  frost-server:
+    image: fraunhoferiosb/frost-server:latest
+    container_name: frost-server
+    environment:
+      - serviceRootUrl=http://localhost:8080/FROST-Server
+      - http_cors_enable=true
+      - persistence_db_driver=org.postgresql.Driver
+      - persistence_db_url=jdbc:postgresql://frost-db:5432/sensorthings
+      - persistence_db_username=sensorthings
+      - persistence_db_password=ChangeMe
+      - persistence_autoUpdateDatabase=true
+    ports:
+      - "8080:8080"
+    depends_on:
+      frost-db:
+        condition: service_healthy
+    networks:
+      - sensorthings-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/FROST-Server/v1.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  # Data provisioning service - populates FROST-Server with demo data
+  frost-provisioner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frost-provisioner
+    command: python /app/examples/scripts/provision_demo_data.py
+    environment:
+      - FROST_SERVER_URL=http://frost-server:8080/FROST-Server/v1.1
+    depends_on:
+      frost-server:
+        condition: service_healthy
+    networks:
+      - sensorthings-network
+    restart: "no"  # Run once only
+
+  # Validator service - runs validation after data is provisioned
+  validator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ogc-sta-schema-validator:latest
+    container_name: ogc-sta-schema-validator
+    command: >
+      sh -c "
+      echo '========================================' &&
+      echo 'Waiting for provisioner to finish...' &&
+      echo '========================================' &&
+      sleep 20 &&
+      echo '' &&
+      echo '========================================' &&
+      echo 'Running validation on demo data...' &&
+      echo '========================================' &&
+      echo '' &&
+      python -m src.cli --config config/config.demo.yaml validate-all --entity-types Things --entity-types Sensors --entity-types Observations --entity-types Datastreams --include-valid
+      "
+    environment:
+      - VALIDATOR_SERVER__URL=http://frost-server:8080/FROST-Server/v1.1
+      - VALIDATOR_SERVER__TIMEOUT=30
+      - VALIDATOR_VALIDATION__BATCH_SIZE=50
+      - VALIDATOR_VALIDATION__STOP_ON_ERROR=false
+      - VALIDATOR_OUTPUT__FORMAT=console
+      - VALIDATOR_OUTPUT__INCLUDE_VALID_ENTITIES=true
+      - VALIDATOR_LOGGING__LEVEL=INFO
+    volumes:
+      - ./config/config.demo.yaml:/app/config/config.demo.yaml:ro
+      - ./output:/app/output
+    networks:
+      - sensorthings-network
+    depends_on:
+      frost-server:
+        condition: service_healthy
+      frost-provisioner:
+        condition: service_completed_successfully
+    restart: "no"  # Run once for demo
+
+networks:
+  sensorthings-network:
+    driver: bridge
+
+volumes:
+  frost-db-data:
