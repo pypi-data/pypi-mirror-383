@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=65", "wheel", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vector-cache-memory"
+description = "Python client for VectorCache Go DB server"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "Abhishek Maurya", email = "abhishekmaurya.official@gmail.com" }
+]
+dependencies = [
+  "requests>=2.30.0",
+  "setuptools_scm>=7.1"
+]
+urls = { "Homepage" = "https://github.com/vector-cache/vector-cache" }
+dynamic = ["version"]
+
+[tool.setuptools]
+packages = ["vector_cache"]
+include-package-data = true
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "no-local-version"

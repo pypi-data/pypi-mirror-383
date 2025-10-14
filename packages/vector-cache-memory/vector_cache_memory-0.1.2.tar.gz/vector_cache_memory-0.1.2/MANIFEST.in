@@ -1,0 +1,15 @@
+# MANIFEST.in
+
+# Include Python source
+recursive-include vector_cache *.py
+include README.md
+
+# Include binaries (if any)
+recursive-include vector_cache/bin *
+
+# Exclude Go source and build artifacts
+global-exclude *.go
+global-exclude go.mod
+global-exclude go.sum
+global-exclude *.test
+global-exclude *.exe
