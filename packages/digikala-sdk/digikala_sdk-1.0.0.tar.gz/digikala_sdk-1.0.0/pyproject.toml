@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "digikala-sdk"
+version = "1.0.0"
+description = "Asynchronous Python SDK for Digikala API"
+readme = "README.md"
+authors = [
+    {name = "Digikala SDK Team", email = "sdk@digikala.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: AsyncIO",
+    "Framework :: FastAPI",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "httpx>=0.24.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "respx>=0.20.0",
+    "pytest-cov>=4.0.0",
+]
+fastapi = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+]
+cache = [
+    "aiocache>=0.12.0",
+]
+ratelimit = [
+    "aiolimiter>=1.1.0",
+]
+full = [
+    "aiocache>=0.12.0",
+    "aiolimiter>=1.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/digikala/digikala-sdk"
+Documentation = "https://docs.digikala.com/sdk"
+Repository = "https://github.com/digikala/digikala-sdk"
+Issues = "https://github.com/digikala/digikala-sdk/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]

@@ -1,0 +1,13 @@
+# Core dependencies
+httpx>=0.24.0
+pydantic>=2.0.0
+
+# Development dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+respx>=0.20.0
+pytest-cov>=4.0.0
+
+# Optional dependencies for FastAPI integration
+fastapi>=0.100.0
+uvicorn>=0.23.0

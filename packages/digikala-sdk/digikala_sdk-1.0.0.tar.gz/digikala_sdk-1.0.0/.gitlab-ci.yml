@@ -1,0 +1,22 @@
+image: docker.basalam.dev/python:3.12
+
+stages:
+  - deploy
+
+deploy_production:
+  stage: deploy
+  variables:
+    TWINE_USERNAME: $PYPI_USERNAME
+    TWINE_PASSWORD: $PYPI_PASSWORD
+
+  before_script:
+    - pip install --upgrade pip
+    - pip install --upgrade setuptools
+
+  script:
+    - pip install --upgrade twine
+    - python setup.py sdist
+    - twine upload --repository-url $PYPI_REPOSITORY_URL dist/* --verbose
+
+  only:
+    - tags
