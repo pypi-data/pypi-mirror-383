@@ -1,0 +1,63 @@
+Metadata-Version: 2.4
+Name: apbuilder
+Version: 0.0.1
+Summary: Atmospheric Profile Builder (APBuilder)
+Author-email: Raul Viera-Mercado <vieramercado1@llnl.gov>, Keehoon Kim <kim48@llnl.gov>
+Project-URL: changelog, https://github.com/llnl/apbuilder
+Project-URL: homepage, https://github.com/llnl/apbuilder
+Project-URL: documentation, https://github.com/llnl/apbuilder
+Project-URL: repository, https://github.com/llnl/apbuilder
+Keywords: atmosphere,climate,forecast,grib2,models,weather
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Atmospheric Science
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyyaml~=6.0
+Requires-Dist: herbie-data~=2025.7.0
+Requires-Dist: pygmt~=0.12
+Requires-Dist: matplotlib~=3.9.0
+Requires-Dist: prettytable~=3.11
+Requires-Dist: scipy~=1.15.1
+Provides-Extra: dev
+Requires-Dist: build; extra == "dev"
+Requires-Dist: virtualenv; extra == "dev"
+Requires-Dist: setuptools-scm; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: mkdocs~=1.6.0; extra == "docs"
+Requires-Dist: mkdocstrings[python]~=0.25.1; extra == "docs"
+Requires-Dist: mkdocs-print-site-plugin~=2.8; extra == "docs"
+Provides-Extra: test
+Requires-Dist: pytest~=8.2.2; extra == "test"
+Requires-Dist: pytest-cov~=5.0.0; extra == "test"
+Requires-Dist: Pillow~=10.4.0; extra == "test"
+Dynamic: license-file
+
+# Atmospheric Profile Builder (APBuilder)
+
+The APBuilder is a tool to create [AC2Dr](https://github.com/LLNL/AC2Dr) atmosphere profiles by
+downloading a weather model and making transformations to generate the 1D or 2D binary profile.
+The binary profile is used as an input to AC2Dr.
+
+## More Info
+
+For more information, please check the `docs` directory or visit the
+following [documentation page.](https://github.com/llnl/apbuilder/)
+
+## License
+
+See LICENSE and NOTICE files for details.
+
+```text
+LLNL-CODE-2012226
+```

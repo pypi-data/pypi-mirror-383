@@ -1,0 +1,9 @@
+services:
+  apbuilder:
+    volumes:
+      - type: bind
+        source: <data-source>
+        target: /home/apbuilder/apbuilder
+      - type: bind
+        source: <cacert-source>
+        target: /home/apbuilder/cacert.pem
