@@ -1,0 +1,74 @@
+[project]
+name = "TripWire"
+description = "Environment variable schema"
+
+[variables.DEBUG]
+type = "bool"
+required = true
+default = false
+description = "Example: Debug mode"
+
+[variables.HELPER_TEXT]
+type = "string"
+required = true
+default = "\"This is some helper text\""
+
+[variables.DB_HOST]
+type = "string"
+required = true
+default = "localhost"
+
+[variables.DB_PORT]
+type = "int"
+required = true
+default = 5432
+
+[variables.DB_USER]
+type = "string"
+required = true
+default = "username"
+
+[variables.DB_PASSWORD]
+type = "string"
+required = true
+secret = true
+
+[variables.API_TOKEN]
+type = "string"
+required = true
+secret = true
+
+[variables.EXPOSE]
+type = "bool"
+required = true
+default = false
+
+[variables.CREDENTIALS]
+type = "string"
+required = true
+secret = true
+
+[variables.SECRET_KEY]
+type = "string"
+required = true
+secret = true
+
+[variables.LOG_LEVEL]
+type = "string"
+required = true
+default = "info"
+
+[variables.OUTPUT_DIR]
+type = "string"
+required = true
+default = "./output"
+
+[variables.MAX_RETRIES]
+type = "int"
+required = true
+default = 3
+
+[variables.TIMEOUT]
+type = "int"
+required = true
+default = 30
