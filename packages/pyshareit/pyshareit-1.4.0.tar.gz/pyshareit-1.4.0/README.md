@@ -1,0 +1,47 @@
+# pyshareit: Ultra-Fast P2P File Sharing
+
+pyshareit is a command-line tool for peer-to-peer file sharing that is fast, secure, and easy to use. Built with Python, it provides a simple terminal interface for discovering devices on your local network and transferring files of any size directly between them.
+
+## Key Features
+
+* **High-Speed Transfers**: Utilizes the QUIC protocol over UDP for transfer speeds significantly faster than traditional methods like FTP or HTTP.
+* **No File Size Limits**: Engineered to stream and handle files of any size, from kilobytes to terabytes.
+* **Automatic Device Discovery**: Uses mDNS (Bonjour) to automatically find other users on your local network without needing to manage IP addresses.
+* **Simple Terminal Interface**: Features a clean, single-screen interface. Sending a file is as simple as selecting a peer and dragging the file into the terminal window.
+* **Zero Configuration**: On first launch, it automatically generates the necessary security certificates. No manual setup is required.
+* **Cross-Platform**: Runs on Linux, macOS, and Windows, wherever Python is supported.
+
+---
+
+## Installation
+
+> **Prerequisite**: Python 3.9 or higher is required.
+
+To install pyshareit, run the following command:
+
+```bash
+pip install pyshareit
+```
+
+## How to Run
+
+After installation, run the following command in your terminal:
+
+```bash
+shareit
+```
+
+The application will launch, automatically generate security keys if it's the first run, and start discovering other devices on your network.
+
+## Instructions for Use
+
+1. **Launch the Application**: Run the `shareit` command in your terminal.
+2. **Discover Peers**: The application will automatically start broadcasting its presence and listening for other users. Discovered devices will appear in the top table.
+3. **Select a Target**: Use the arrow keys to navigate the table and select the device you want to send a file to. The status log at the bottom will confirm your selection.
+4. **Send a File**: Drag a file from your desktop or file manager and drop it directly onto the terminal window where pyshareit is running. The transfer will start immediately.
+5. **Receive a File**: The application is always listening for incoming files. When another user sends you a file, it will be saved automatically in the same directory from which you launched the application.
+6. **Quit**: Press `q` to shut down the application gracefully.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 or later. See the LICENSE file for details.
