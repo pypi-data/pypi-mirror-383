@@ -1,0 +1,13 @@
+aind-data-schema>=2.0
+pydantic<2.12,>=2.7
+pydantic-settings
+tzlocal
+
+[dev]
+black
+coverage
+flake8
+interrogate
+isort
+Sphinx
+furo
