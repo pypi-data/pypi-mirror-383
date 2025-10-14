@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  civie-chatbot:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: civie-chatbot-api-dev
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    env_file:
+      - .env
+    volumes:
+      # Mount the application code for development hot-reload
+      - .:/app
+      # Persist static files
+      - static_files:/app/static
+      # Persist temporary PDF files  
+      - temp_pdfs:/app/temp_pdfs
+      # Persist logs directory
+      - logs_data:/app/logs
+    restart: unless-stopped
+    networks:
+      - civie-network
+    # Override CMD for development with hot-reload
+    command: ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--log-level", "debug"]
+    # Health check for development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Development resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+volumes:
+  static_files:
+    driver: local
+  temp_pdfs:
+    driver: local
+  logs_data:
+    driver: local
+
+networks:
+  civie-network:
+    driver: bridge
+    name: civie-dev-network
