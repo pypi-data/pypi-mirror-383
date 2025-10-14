@@ -1,0 +1,11 @@
+# CLI Dependencies for isA Agent
+# Install with: pip install -r requirements-cli.txt
+
+# HTTP Client
+httpx>=0.25.0
+
+# Rich Console UI
+rich>=13.0.0
+
+# Basic requests for compatibility
+requests>=2.25.0
