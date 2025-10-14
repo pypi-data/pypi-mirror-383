@@ -1,0 +1,44 @@
+{% extends "base_view.html" %}
+{% load widget_tweaks %}
+
+{% block title %} meliza-lab : locations {% endblock %}
+
+{% block content %}
+<h2>Locations</h2>
+
+{% for room_group in room_groups %}
+<hr/>
+<h3>{{ room_group.room|default:"No Room" }}</h3>
+
+<p>{{ room_group.room.description }}</p>
+<dl class="dl-horizontal">
+  
+</dl>
+    
+<table class="table table-striped table-condensed">
+  <thead>
+    <th>Cage</th>
+    <th>Animals</th>
+    <th>Eggs</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    {% for location in room_group.locations %}
+        <tr>
+          <td><a href="{{ location.get_absolute_url }}">{{ location.name }}</a></td>
+          <td>{{ location.animal_count }}</td>
+	  <td>{{ location.egg_count }}</td>
+	  <td>{{ location.description }}</td>
+        </tr>
+	{% endfor %}
+    <tr class="info">
+      <td><strong>Total</strong></td>
+      <td><strong>{{ room_group.total_animals }}</strong></td>
+      <td><strong>{{ room_group.total_eggs }}</strong></td>
+      <td></td>
+    </tr>      
+  </tbody>
+</table>
+
+{% endfor %}
+{% endblock %}
