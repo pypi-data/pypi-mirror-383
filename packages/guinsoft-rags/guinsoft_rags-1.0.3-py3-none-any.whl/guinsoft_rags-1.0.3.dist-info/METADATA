@@ -1,0 +1,76 @@
+Metadata-Version: 2.4
+Name: guinsoft_rags
+Version: 1.0.3
+Summary: guinsoft_rags
+Author: guinsoft
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: datasets
+Requires-Dist: tiktoken
+Requires-Dist: langchain
+Requires-Dist: openai>1
+Requires-Dist: pysbd>=0.3.4
+Requires-Dist: nest-asyncio
+Requires-Dist: sentence-transformers; extra == "all"
+Dynamic: author
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-dist
+Dynamic: summary
+
+# 桂软guinsoft_rags
+
+## 打包为 whl
+### 安装打包工具（若未安装）
+* pip install setuptools wheel
+
+### 打包（生成dist目录，内含新whl文件）
+* python setup.py bdist_wheel
+
+## 验证
+### 安装新包
+* pip install dist/guinsoft_rags-1.0.3-py3-none-any.whl
+
+###  验证功能（如导入包并执行测试代码）
+* python -c "import guinsoft_rags; print(guinsoft_rags.__version__)"
+
+
+
+## 快速开始
+安装包
+```bash
+pip install -e .
+```
+
+评分
+```python
+import httpx
+from datasets import Dataset
+from langchain_openai import ChatOpenAI
+from guinsoft_ragas import evaluate
+from guinsoft_ragas.llms.langchain import LangchainLLM
+from guinsoft_ragas.metrics import AnswerCorrectnessGuinsoft
+
+data_samples = {
+    'question': ['When was the first super bowl?', 'Who won the most super bowls?'],
+    'answer': [
+        'The first superbowl was held on Jan 15, 1967',
+        'The most super bowls have been won by The New England Patriots',
+    ],
+    'ground_truths': [
+        ['The first superbowl was held on January 15, 1967.'],
+        ['The New England Patriots have won the Super Bowl a record six times'],
+    ],
+}
+_llm = ChatOpenAI(model="qwen3-max",
+                  api_key="sk-xxxxx",
+                  base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                  temperature=temperature,
+)
+llm = LangchainLLM(_llm)
+answer_correctness_guinsoft = AnswerCorrectnessGuinsoft(llm=llm)
+
+dataset = Dataset.from_dict(data_samples)
+score = evaluate(dataset, metrics=[answer_correctness_guinsoft])
+print(score.to_pandas())
+```
