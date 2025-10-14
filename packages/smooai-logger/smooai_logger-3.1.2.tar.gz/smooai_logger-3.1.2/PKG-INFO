@@ -1,0 +1,49 @@
+Metadata-Version: 2.4
+Name: smooai-logger
+Version: 3.1.2
+Summary: Context-aware structured logging utilities for Python that mirror the @smooai/logger toolkit.
+Project-URL: Homepage, https://github.com/SmooAI/logger
+Project-URL: Repository, https://github.com/SmooAI/logger
+Project-URL: Issues, https://github.com/SmooAI/logger/issues
+Author-email: SmooAI <brent@smooai.com>
+License: MIT
+Keywords: aws,logging,observability,smooai,structured-logging
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.12
+Requires-Dist: colorist>=1.5.2
+Requires-Dist: pendulum>=3.0.0
+Requires-Dist: pydantic-extra-types>=2.0.0
+Requires-Dist: pydantic>=2.7.0
+Requires-Dist: rich>=13.0.0
+Description-Content-Type: text/markdown
+
+# smooai-logger
+
+Python port of the SmooAI contextual logger with AWS and HTTP awareness.
+
+## Usage
+
+```python
+from smooai_logger import AwsServerLogger
+
+logger = AwsServerLogger()
+logger.info({"event": "hello"}, "app:start")
+```
+
+## Development
+
+```bash
+uv run poe install-dev
+uv run pytest
+uv run poe lint
+uv run poe lint:fix   # optional fixer
+uv run poe format
+uv run poe typecheck
+uv run poe build
+```
+
+Set `UV_PUBLISH_TOKEN` before running `uv run poe publish` to upload to PyPI.
