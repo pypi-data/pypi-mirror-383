@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: pydantic-graph-persistence
+Version: 0.1.0
+Summary: Nice persistence abstractions for pydantic-graph
+Project-URL: Homepage, https://github.com/vduseev/pydantic-graph-persistence
+Project-URL: Documentation, https://github.com/vduseev/pydantic-graph-persistence
+Project-URL: Repository, https://github.com/vduseev/pydantic-graph-persistence
+Project-URL: Issues, https://github.com/vduseev/pydantic-graph-persistence/issues
+Author-email: vduseev <vagiz@duseev.com>
+Maintainer-email: vduseev <vagiz@duseev.com>
+License-Expression: Apache-2.0
+License-File: LICENSE
+Keywords: database,graph,persistence,pydantic,pydantic-graph
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Programming Language :: Python :: 3.15
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Requires-Dist: pydantic-graph>=0.3.1
+Description-Content-Type: text/markdown
+
+# pydantic-graph-persistence
+
+Persistence for the [`pydantic-graph`](https://pypi.org/project/pydantic-graph/) library.
+
+Implement the persistence however you want by defining just 2 methods.
