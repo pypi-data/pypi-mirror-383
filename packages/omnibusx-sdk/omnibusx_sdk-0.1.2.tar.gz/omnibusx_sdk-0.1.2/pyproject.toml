@@ -1,0 +1,23 @@
+[project]
+name = "omnibusx-sdk"
+version = "0.1.2"
+description = ""
+authors = [
+    {name = "Huy Nguyen",email = "huy@omnibusx.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "httpx (>=0.28.1,<0.29.0)",
+    "pydantic (>=2.11.7,<3.0.0)"
+]
+
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.12.7"
+pylint = "^3.3.7"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
