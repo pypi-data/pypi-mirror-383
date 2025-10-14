@@ -1,0 +1,157 @@
+GoSound
+一个简单易用的 Python 音效播放库，专为游戏和应用程序设计。
+
+特性
+🎵 支持多种音效播放方式（pygame、winsound、系统音效）
+
+🔄 自动选择最佳可用音效方案
+
+🎮 内置丰富的游戏音效配置
+
+🚀 异步播放，不阻塞主程序
+
+📱 跨平台支持（Windows、macOS、Linux）
+
+🔧 简单易用的 API
+
+安装
+bash
+pip install GoSound
+快速开始
+基本使用
+python
+import gosound
+
+# 播放内置音效
+gosound.play("click")
+gosound.play("jump")
+gosound.play("explosion")
+
+# 使用特定音量
+gosound.play("coin", volume=0.8)
+命令行使用
+bash
+# 播放音效
+gosound click
+gosound jump --volume 0.8
+
+# 查看可用音效
+gosound --list
+
+# 查看系统状态
+gosound --status
+API 参考
+主要函数
+play(sound_name, volume=None) - 播放指定音效
+
+load_sound(sound_name, file_path) - 加载自定义音效文件
+
+add_sound_config(sound_name, config) - 添加或修改音效配置
+
+get_sound_manager() - 获取音效管理器实例
+
+内置音效
+音效名称	描述	类型
+click	点击音效	蜂鸣
+move	移动音效	蜂鸣
+select	选择音效	蜂鸣
+jump	跳跃音效	蜂鸣
+shoot	射击音效	蜂鸣
+explosion	爆炸音效	蜂鸣
+coin	金币音效	蜂鸣
+powerup	强化音效	蜂鸣
+game_start	游戏开始	蜂鸣
+game_over	游戏结束	蜂鸣
+victory	胜利音效	蜂鸣
+level_up	升级音效	蜂鸣
+error	错误提示	蜂鸣
+notification	通知音效	蜂鸣
+高级用法
+使用音效管理器
+python
+from gosound import get_sound_manager
+
+manager = get_sound_manager()
+
+# 查看系统状态
+status = manager.get_status()
+print(status)
+
+# 添加自定义音效
+manager.add_sound("custom", {
+    "type": "beep",
+    "frequency": 1500,
+    "duration": 200,
+    "volume": 0.5
+})
+
+# 加载音效文件（仅支持 pygame）
+manager.load_sound_file("explosion", "sounds/explosion.wav")
+自定义音效配置
+python
+import gosound
+
+# 添加自定义音效
+gosound.add_sound_config("laser", {
+    "type": "beep",
+    "frequency": 2000,
+    "duration": 50,
+    "volume": 0.6
+})
+
+# 播放自定义音效
+gosound.play("laser")
+禁用音效
+python
+from gosound import get_sound_manager
+
+manager = get_sound_manager()
+manager.set_enabled(False)  # 禁用所有音效
+系统要求
+Python 3.7+
+
+可选依赖：
+
+pygame - 提供最佳音效体验
+
+winsound - Windows 系统内置（仅 Windows）
+
+故障排除
+常见问题
+q没有声音？
+
+a检查系统音量
+
+确认 pygame 已正确安装：pip install pygame
+
+运行 gosound --status 查看音效系统状态
+
+q命令行工具无法使用？
+
+a重新安装包：pip install --force-reinstall GoSound
+
+检查 PATH 环境变量
+
+q音效文件加载失败？
+
+确认文件路径正确
+
+确认文件格式受支持（wav, ogg 等）
+
+需要 pygame 支持
+
+获取帮助
+python
+import gosound
+
+# 查看系统状态
+manager = gosound.get_sound_manager()
+print(manager.get_status())
+许可证
+MIT License
+
+作者
+王子毅
+
+开始使用： pip install GoSound
+
