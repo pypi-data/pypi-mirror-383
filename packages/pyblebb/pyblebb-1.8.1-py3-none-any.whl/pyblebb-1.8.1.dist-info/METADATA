@@ -1,0 +1,58 @@
+Metadata-Version: 2.4
+Name: pyblebb
+Version: 1.8.1
+Summary: A Python Library For BitBlock
+Home-page: http://www.moyalab.com
+Download-URL: https://www.moyalab.com
+Author: devdio
+Author-email: devdio.kei@gmail.com
+License: GNU GPLv3
+Keywords: Bitblock,Cocoboard,BBCar,Cocotics
+Classifier: Intended Audience :: Education
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Education
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: bleak==0.22.3
+Requires-Dist: nest-asyncio==1.6.0
+Requires-Dist: termcolor
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: download-url
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Python Library for Bitblock Board
+
+```python
+from bitblock import *
+
+address = "48:27:E2:38:39:81"
+board = Bitblock(address)
+ret = board.connect()
+
+
+rccar = board.rccar_init()
+
+for i in range(10):
+    rccar.move_forward(100)
+    wait(1000)
+    rccar.stop()
+    rccar.move_backward(100)
+    wait(1000)
+    rccar.stop()
+```
+  
+## 튜토리얼 페이지
+
+-   [pyBitblock Tutorial](https://github.com/devdio/Bitblock_Tutorial/wiki)
