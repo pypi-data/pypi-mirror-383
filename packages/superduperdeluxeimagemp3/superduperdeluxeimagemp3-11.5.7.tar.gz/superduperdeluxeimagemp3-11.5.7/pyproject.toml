@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "superduperdeluxeimagemp3"
+version = "11.5.7"
+description = "Ceremonial MP3 conversion and playlist helper tools"
+authors = [
+    { name = "D. Saahishnu Ram", email = "elsa371123@outlook.com" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.7"
+dependencies = [
+    'yt-dlp',
+    'pillow',
+    'moviepy',
+]
+
+[project.scripts]
+SDDIMP3 = "SDDIMP3.SDDIMP3:main"
+SDDIMP3playlisthelper = "SDDIMP3.SDDIMP3playlisthelper:main"
