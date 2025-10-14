@@ -1,0 +1,160 @@
+Metadata-Version: 2.4
+Name: pyGallica
+Version: 0.1.0
+Summary: Lightweight Python wrapper for Gallica (BnF) SRU & IIIF.
+Project-URL: Homepage, https://github.com/your-username/pyGallica
+Project-URL: Issues, https://github.com/your-username/pyGallica/issues
+Author-email: Your Name <you@example.com>
+License: MIT
+License-File: LICENSE
+Requires-Python: >=3.10
+Requires-Dist: httpx<1.0,>=0.27
+Provides-Extra: pandas
+Requires-Dist: pandas>=2.0; extra == 'pandas'
+Description-Content-Type: text/markdown
+
+# pyGallica
+
+[![PyPI version](https://img.shields.io/pypi/v/pyGallica.svg)](https://pypi.org/project/pyGallica/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pyGallica.svg)](https://pypi.org/project/pyGallica/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/maxcasado/pyGallica/actions/workflows/ci.yml/badge.svg)](https://github.com/maxcasado/pyGallica/actions/workflows/ci.yml)
+
+**pyGallica** est un wrapper Python léger pour l’API **SRU** et **IIIF** de Gallica (BnF).
+Il fournit :
+- un client HTTP (basé sur `httpx`) avec retries,
+- des helpers **CQL** pour construire des requêtes,
+- un itérateur de **recherche paginée**,
+- un parseur **XML → objets Python / JSON / DataFrame**,
+- et quelques utilitaires IIIF (manifest, vignettes, pages).
+
+> ⚠️ Respectez les CGU de Gallica (quotas, réutilisation, attribution). Ce projet n’est ni affilié ni supporté par la BnF.
+
+---
+
+## Installation
+
+```bash
+# depuis la racine du repo
+pip install -e ".[pandas]"
+# ou sans pandas
+pip install -e .
+
+Python 3.10+ recommandé.
+Exemples d’usage
+Recherche SRU simple (paginée)
+
+from pyGallica import GallicaClient, build_cql, search_iter
+
+cli = GallicaClient(user_agent="pyGallica/0.1")
+
+# Exemple : cartes/images sur "Paris" vers 1900
+q = build_cql(title="Paris", doc_type="image", date="1900")
+
+records = list(search_iter(cli, free_cql=q, page_size=50, limit=150))
+print(f"Fetched {len(records)} records")
+print(records[0].ark, records[0].title)
+
+Conversion en JSON / DataFrame
+
+from pyGallica import records_to_json, records_to_dataframe
+
+js = records_to_json(records)
+print(js[0])
+
+# DataFrame (si pandas installé)
+df = records_to_dataframe(records)
+print(df.head())
+
+IIIF : manifest & vignettes
+
+from pyGallica import GallicaClient
+
+cli = GallicaClient()
+ark = "ark:/12148/btv1b1234567z"
+
+manifest = cli.get_manifest(ark)
+pages = cli.list_pages_from_manifest(manifest)
+print(f"{len(pages)} pages")
+
+thumb = cli.get_thumbnail(ark, page=1, max_width=300)
+with open("thumb.jpg", "wb") as f:
+    f.write(thumb)
+
+Concepts clés
+
+    SRU : recherche via CQL (dc.title, dc.creator, dc.date, dc.type, dc.language, dc.subject, …).
+    Helpers fournis : cql_all, cql_any, cql_and, cql_or, build_cql.
+
+    Pagination : basée sur startRecord, maximumRecords et nextRecordPosition.
+    Utilisez search_iter() pour streamer les résultats.
+
+    IIIF : récupération de manifest.json, listing des pages et tuiles images.
+
+API de haut niveau (sélection)
+
+from pyGallica import (
+  GallicaClient, validate_ark,
+  build_cql, cql_all, cql_any, cql_and, cql_or,
+  search_iter, search_all,
+  parse_sru_xml, records_to_json, records_to_dataframe,
+  SRURecord, SRUResult,
+  GallicaError, GallicaHTTPError, GallicaAPIError, GallicaParseError,
+)
+
+Développement
+Installer les dépendances
+
+python -m pip install -U pip setuptools wheel
+pip install -e ".[pandas]" pytest ruff black
+
+Lancer les tests
+
+pytest -q
+
+Lint & format
+
+ruff check .
+black --check .
+# ou formatage
+black .
+
+Compatibilité & limites
+
+    L’API SRU de Gallica est hétérogène : certains enregistrements utilisent <oai_dc:dc>, d’autres un conteneur <dc> simple. Le parseur est tolérant et lit les dc:* depuis recordData.
+
+    dc:identifier peut contenir un ARK ou une URL complète : pyGallica tente d’extraire l’ARK (ark:/...) quand c’est pertinent.
+
+Licence
+
+MIT – voir LICENSE
+
+.
+Pensez à créditer Gallica / BnF et à respecter leurs conditions d’utilisation.
+
+
+---
+
+### `LICENSE` (MIT)
+```text
+MIT License
+
+Copyright (c) 2025 Your Name
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyGallica"
+version = "0.1.0"
+description = "Lightweight Python wrapper for Gallica (BnF) SRU & IIIF."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Your Name", email = "you@example.com" }]
+dependencies = ["httpx>=0.27,<1.0"]
+
+[project.optional-dependencies]
+pandas = ["pandas>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/your-username/pyGallica"
+Issues = "https://github.com/your-username/pyGallica/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pyGallica"]  # <-- IMPORTANT
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "pyGallica/**",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+  "tests/**"
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "UP"]
