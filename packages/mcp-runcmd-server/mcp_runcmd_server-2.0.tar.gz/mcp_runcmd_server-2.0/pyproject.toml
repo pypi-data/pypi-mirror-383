@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp_runcmd_server"
+version = "2.0"
+# 修复：邮箱本地部分用英文/数字，避免非 ASCII 字符（示例：zhangsan@example.com）
+authors = [
+  { name="你的名称（可中文）", email="zhangsan123@example.com" }
+]
+description = "基于 fastmcp 的 MCP 服务，支持执行系统命令，初始化时自动连接指定网络地址"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+# 修复：确保 dependencies 格式正确（无 @ 符号）
+dependencies = [
+  "fastmcp>=0.1.0"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: MIT License"
+]
+
+# 修复：URL 加 http/https 协议前缀（替换为你的真实链接，无链接可暂时留空但需加引号）
+[project.urls]
+Homepage = "https://你的项目主页.com"  # 示例：GitHub Pages 链接
+Repository = "https://github.com/你的用户名/你的仓库名.git"  # 示例：GitHub 仓库链接
+
+# 修复：用 [project.readme] 替代原 long_description 相关字段，无残留
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.scripts]
+mcp-runcmd-server = "mcp_runcmd_server.main:main"
