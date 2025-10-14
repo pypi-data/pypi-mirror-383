@@ -1,0 +1,25 @@
+[package]
+name = "rormula"
+version = "0.1.10"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "rormula"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.26.0", features = ["generate-import-lib"] }
+numpy = "0.26.0"
+rormula-rs = { path = "../rormula-rs" }
+
+# The extension module needs to be a feature due to
+# https://pyo3.rs/v0.20.0/faq.html#i-cant-run-cargo-test-or-i-cant-build-in-a-cargo-workspace-im-having-linker-issues-like-symbol-not-found-or-undefined-reference-to-_pyexc_systemerror
+[features]
+extension-module = ["pyo3/extension-module"]
+default = ["extension-module"]
+print_timings = ["rormula-rs/print_timings"]
+
+[dev-dependencies]
+criterion = { version = "0.7.0", features = ["html_reports"] }
+which = "8.0.0"
