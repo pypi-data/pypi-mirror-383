@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_participate_complete"] }}{% endblock %}
+{% block content %}
+<section class="panel success">
+  <h2>{{ texts["complete_heading"] }}</h2>
+  <p>{{ texts["complete_paragraph"] }}</p>
+  <a class="button" href="{{ path_for('participate_start') }}">{{ texts["start_new_session"] }}</a>
+</section>
+{% endblock %}
