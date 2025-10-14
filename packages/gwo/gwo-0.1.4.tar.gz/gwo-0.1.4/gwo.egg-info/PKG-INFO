@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: gwo
+Version: 0.1.4
+Summary: a damn fine wrapper for reverse-enginered gwo api
+Home-page: https://github.com/Reb0rnEnder/GWOApi
+Author: RebornEnder
+Author-email: contact@dotbend.xyz
+License: LICENCE
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+## GWOApi
+Really **cool** module for interacting with gdaĹ„skie wydawnictwo oĹ›wiatowe's apps
+> Uses only 3 external packages
+
+```bash
+> pip install -U gwo
+```
+
+## Usage
+```python
+import asyncio
+from GWO import GWOApi
+
+async def main():
+    client: GWOApi = await GWOApi.login("example", "password123")
+    print(client.user)
+
+asyncio.run(main())
+```
+
+> We use analytics but don't worry, they're anonymous
