@@ -1,0 +1,25 @@
+import setuptools
+
+setuptools.setup(
+    name="generalized-geography",
+    use_scm_version=True,
+
+    version="0.0.13",
+    author="Hyomin",
+    author_email="miamiq0000@gmail.com",
+    description="Generalized Geography Game Solver",
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url="https://github.com/singrum/generalized-geography",
+    install_requires=['networkx', 'matplotlib'],
+    packages=setuptools.find_packages(),
+    keywords=['generalized geography', 'word chain', 'game', 'graph theory'],
+    classifiers=[
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+    ],
+    setup_requires=["wheel", "setuptools_scm"],
+    python_requires='>=3.6',
+)
