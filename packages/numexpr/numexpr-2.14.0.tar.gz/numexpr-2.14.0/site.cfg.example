@@ -1,0 +1,19 @@
+# if setup does not find the MKL or does not use the configuration, copy this
+# file to "site.cfg" and edit the paths according to your installation of the
+# Intel MKL.
+
+# Example for Intel(R) OneAPI MKL 2025 on Linux
+# When compiling (with e.g. `pip install -e. -v`), first do a:
+# $ source /opt/intel/oneapi/setvars.sh >/dev/null 2>&1 || true
+# [mkl]
+# include_dirs = /opt/intel/oneapi/mkl/latest/include
+# library_dirs = /opt/intel/oneapi/mkl/latest/lib/intel64
+# libraries = mkl_rt
+
+
+# Example for Intel(R) oneAPI MKL on Windows x64
+# Please note that the valid os.pathsep is ';' on Windows and ':' on Linux
+[mkl]
+include_dirs=C:/Program Files (x86)/Intel/oneAPI/mkl/latest/include
+library_dirs=C:/Program Files (x86)/Intel/oneAPI/mkl/latest/lib/intel64
+libraries=mkl_rt
