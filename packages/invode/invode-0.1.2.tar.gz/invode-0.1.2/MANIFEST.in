@@ -1,0 +1,11 @@
+include README.md LICENSE
+recursive-include invode/data *.csv *.mat *.txt
+# exclude large or dev-only stuff
+prune docs
+prune case_studies
+prune legacy
+prune dist
+prune build
+prune *.egg-info
+
+global-exclude *.py[cod] __pycache__ *.so *.dylib
