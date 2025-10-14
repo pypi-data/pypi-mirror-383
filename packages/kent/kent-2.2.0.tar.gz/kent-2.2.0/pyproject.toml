@@ -1,0 +1,108 @@
+[project]
+name = "kent"
+description = "Fake Sentry service for debugging and integration tests"
+version = "2.2.0"
+readme = "README.rst"
+keywords = ["sentry", "integration service", "test"]
+authors = [{name = "Will Kahn-Greene"}]
+license = {text = "MPLv2"}
+requires-python = ">=3.10"
+dependencies = ["flask>3"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+urls.Homepage = "https://github.com/mozilla-services/kent/"
+urls.Source = "https://github.com/mozilla-services/kent/"
+urls.Issues = "https://github.com/mozilla-services/kent/issues"
+
+[project.scripts]
+kent-server = "kent.cli_server:main"
+kent-testpost = "kent.cli_testpost:main"
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "pytest",
+    "requests",
+    "ruff",
+    "sentry-sdk",
+    "setuptools",
+    "tox",
+    "tox-gh-actions",
+    "tox-uv",
+    "twine",
+]
+
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# Enable pycodestyle (E), pyflakes (F), and bugbear (B) rules
+select = ["E", "F", "B"]
+ignore = ["E501"]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore:::babel[.*]",
+    "ignore:::jinja2[.*]",
+    "ignore:::yaml[.*]",
+    # Sphinx 4.2.0 uses distutils and it's deprecated in 3.10
+    "ignore::DeprecationWarning:sphinx"
+]
+
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+isolated_build = True
+envlist =
+    py310
+    py310-lint
+    py311
+    py312
+    py313
+    py314
+uv_python_preference = only-managed
+
+[gh-actions]
+python =
+    3.10: py310
+    3.11: py311
+    3.12: py312
+    3.13: py313
+    3.14: py314
+
+[testenv]
+extras = dev
+commands = pytest {posargs} tests/
+
+[testenv:py310-lint]
+allowlist_externals = ruff
+basepython = python3.10
+changedir = {toxinidir}
+commands =
+    ruff format --check bin src tests
+    ruff check bin src tests
+"""
