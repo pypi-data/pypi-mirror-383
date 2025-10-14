@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+
+requires-python = ">=3.8"
+
+name = "xy_argparse"
+
+authors = [{ name = "余洋", email = "yuyangit.0515@qq.com" }]
+description = "xy_argparse 模块"
+
+dynamic = ["version"]
+
+classifiers = ["Programming Language :: Python :: 3.8"]
+
+dependencies = ["setuptools","wheel"]
+
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["./"]
+include = ["xy_argparse"]
+namespaces = false
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
