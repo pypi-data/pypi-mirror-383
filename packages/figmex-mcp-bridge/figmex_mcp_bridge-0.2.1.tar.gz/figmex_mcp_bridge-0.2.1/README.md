@@ -1,0 +1,246 @@
+<div align="center">
+
+# Figmex MCP Bridge
+
+[GitHub](https://github.com/stnwlls/Figmex-MCP-Bridge) · [Email](mailto:hello@austinwells.dev)
+
+</div>
+
+Figmex MCP Bridge is a small Python service that Codex CLI launches automatically. It speaks the Model Context Protocol (MCP), forwards tool calls to the [Figmex Figma plugin](https://github.com/stnwlls/Figmex-MCP) over a localhost WebSocket, and streams document events back to Codex.
+
+Use this package when you want an AI agent (Codex, Action Transformers, etc.) to edit a live Figma file without leaving your editor.
+
+---
+
+## 1. Quick Start (Codex CLI + Figma)
+
+1. **Install the bridge**
+
+   ```bash
+   python3 -m pip install figmex-mcp-bridge
+   ```
+
+   > To update an existing installation, run:
+   > ```
+   > python3 -m pip install --upgrade figmex-mcp-bridge
+   > ```
+
+   The executable is typically installed in `~/Library/Python/<version>/bin` on macOS, or `%APPDATA%\Python\Python311\Scripts` on Windows (for user installs).  
+   If it’s not found after installation, ensure that this directory is included in your system’s PATH.  
+   On Linux, the equivalent path is usually `~/.local/bin`.
+
+2. **Configure Codex CLI**
+
+   Append to your Codex CLI config.toml file:
+
+   ```toml
+   [mcp_servers.figmex]
+   command = "figmex-mcp-bridge"
+   args = ["serve", "--log-level", "INFO"]
+   startup_timeout_sec = 30
+   tool_timeout_sec = 60
+   ```
+
+   If Codex CLI cannot find the executable, locate it using the appropriate command for your system:
+
+   **macOS/Linux:**
+   ```bash
+   which figmex-mcp-bridge
+   ```
+
+   **Windows:**
+   ```powershell
+   where figmex-mcp-bridge
+   ```
+
+   Then replace the `command` value above with the full path returned.
+
+   > **Note:** Codex CLI does not need to be run from the same directory as the Figmex MCP Bridge package.  
+   > As long as the `command` value in your `config.toml` points to a valid executable (either in your system PATH or via an absolute path), Codex can launch the bridge from **any** working directory.
+
+   (You can also generate this snippet via `figmex-mcp-bridge config --name figmex`.)
+
+3. **Install and load the Figma plugin**
+
+   You can install the plugin directly from the Figma Community page by searching for **“Figmex MCP”** in the Figma plugin browser.  
+   - In Figma Desktop or Web, open the top menu and choose **Plugins → Browse Plugins in Community**.  
+   - In the search bar, type **Figmex MCP** and click **Install**.  
+   - After installing, the plugin will appear under **Plugins → Figmex MCP**, where you can launch it as usual.  
+
+   > **Note:** At this time, the plugin is not yet available on the Figma Community page. Until it is published, follow the development installation method below.
+
+   To set up the plugin manually during development or while it’s not yet available in the Figma Community, follow these steps:
+
+   - Clone [stnwlls/Figmex-MCP](https://github.com/stnwlls/Figmex-MCP).
+   - Run `npm install && npm run build`.
+   - In Figma Desktop, choose **Plugins → Development → Import plugin from manifest…** and select the `manifest.json` file from that repository.
+   - Launch the plugin. It will attempt to connect to `ws://127.0.0.1:8787`.
+
+4. **Start Codex CLI**
+
+   Codex will spin up the bridge automatically. When the plugin UI reports “Connected”, you can ask Codex to run commands such as:
+
+   ```bash
+   codex> Using Figmex, create a rectangle at x=80, y=160 sized 120x120 with a blue fill.
+   ```
+
+   The CLI calls the MCP tools behind the scenes (`list_figma_commands`, `describe_figma_commands`, `invoke_figma_command`) and relays results back to the plugin.
+
+---
+
+## 2. MCP Tools Exposed by the Bridge
+
+The bridge exposes a small, stable surface area to Codex via the MCP **tools** listed below. These tools proxy directly to the Figmex plugin over a localhost WebSocket and return the plugin’s JSON-RPC results unchanged (errors included). Argument names are normalised where helpful (e.g. `params`→`args`, `nodeId`→`id`, `nodeIds`→`ids`).
+
+| Tool | What it returns | Notes |
+| ---- | ---------------- | ----- |
+| `figmex.list_figma_commands` | An array of command descriptors: `{ name, title?, group?, requiresSelection?, notes? }`. | Populated from the plugin’s bootstrap payload when the plugin connects. Use this to enumerate available commands. |
+| `figmex.describe_figma_commands` | A map keyed by command name with detailed schemas: `{ args: {...}, selection: {...}?, notes? }`. | Provides argument names, types, optional/required flags, and any selection constraints described by the plugin. |
+| `figmex.invoke_figma_command` | The raw JSON-RPC result from the plugin for the invoked command. | Accepts multiple input shapes (see examples). Will pass through plugin-side errors with `code` and `message` as provided.
+
+### Request/Response shapes
+
+**List**
+```json
+{
+  "tool": "figmex.list_figma_commands",
+  "params": {}
+}
+```
+→ returns:
+```json
+[
+  { "name": "create-rectangle", "requiresSelection": false },
+  { "name": "create-text", "requiresSelection": false },
+  { "name": "set-selection", "requiresSelection": true }
+]
+```
+
+**Describe**
+```json
+{
+  "tool": "figmex.describe_figma_commands",
+  "params": { "commands": ["create-text", "set-selection"] }
+}
+```
+→ returns (example excerpt):
+```json
+{
+  "create-text": {
+    "args": {
+      "characters": { "type": "string", "required": true },
+      "x": { "type": "number" },
+      "y": { "type": "number" },
+      "fontName": { "type": "object", "properties": { "family": {"type":"string"}, "style": {"type":"string"} } }
+    },
+    "notes": "Creates a text node; include a valid font when setting text."
+  },
+  "set-selection": {
+    "args": { "ids": { "type": "array", "items": {"type":"string"}, "required": true } },
+    "selection": { "expects": "nodes exist in current file" }
+  }
+}
+```
+
+**Invoke** (three accepted forms)
+1) Object with `args`:
+```json
+{
+  "tool": "figmex.invoke_figma_command",
+  "params": { "command": "create-text", "args": { "characters": "Hello", "x": 80, "y": 160 } }
+}
+```
+2) Object with `params` (alias of `args`):
+```json
+{
+  "tool": "figmex.invoke_figma_command",
+  "params": { "command": "create-rectangle", "params": { "width": 120, "height": 120, "x": 80, "y": 160 } }
+}
+```
+3) Bare command name (no arguments):
+```json
+{
+  "tool": "figmex.invoke_figma_command",
+  "params": { "command": "get-selection" }
+}
+```
+→ returns: the plugin’s result payload, for example
+```json
+{ "ok": true, "result": { "id": "123:45", "type": "TEXT" } }
+```
+
+### Behaviours & guarantees
+- **Pass-through results**: Success and error payloads are forwarded verbatim from the Figmex plugin.
+- **Argument normalisation**: The bridge accepts either `args` or `params`. Common aliases like `nodeId`/`nodeIds` are mapped to `id`/`ids`.
+- **Selection-sensitive commands**: If a command requires a current selection, ensure the correct nodes are selected first (e.g. call `set-selection`).
+- **Timeouts**: Tool calls observe the timeouts configured in your Codex config (`startup_timeout_sec`, `tool_timeout_sec`).
+
+---
+
+## 3. Under the Hood
+
+1. The plugin ↔ bridge transport is **WebSocket-only** on `ws://127.0.0.1:8787`. The optional `serve-http` command exposes a parallel HTTP interface for inspection and testing, but the plugin still connects to the bridge via WebSocket.
+2. When the plugin bootstraps it sends a command-definition payload describing each command, argument, and optional notes.
+3. The bridge persists this metadata, exposes it through the MCP tools above, and relays JSON-RPC requests/responses **over the WebSocket channel** between Codex and the plugin.
+4. Document change events (selection/document snapshots) are streamed back to Codex as JSON-RPC notifications.
+
+---
+
+
+## 4. Offline Use or Local Setup
+
+For offline use or local setup, you can clone the repository:
+
+```bash
+git clone https://github.com/stnwlls/Figmex-MCP-Bridge.git
+cd Figmex-MCP-Bridge
+python3 -m pip install -e .
+```
+This installs the bridge locally so it can run without needing PyPI or an internet connection.
+
+> **Tip:** If you just want to install it normally, use:  
+>  
+> **python3 -m pip install figmex-mcp-bridge**
+
+---
+
+## 5. Troubleshooting & Support
+
+If the bridge doesn’t seem to connect, here are a few quick checks:
+
+| Issue | Quick Fix |
+| ------ | ---------- |
+| **Bridge not connecting** | Make sure Figma Desktop is open with the **Figmex MCP** plugin running. The plugin will show a green “Connected…” message once the bridge is active. Any errors will be outputted to the plugin's console. |
+| **Codex CLI opens but doesn’t connect** | The Codex CLI automatically starts the bridge process. If it can’t connect, check that the `figmex-mcp-bridge` executable is in your PATH (`which figmex-mcp-bridge` on macOS/Linux or `where figmex-mcp-bridge` on Windows). You can also replace the `command` value in your `config.toml` file with the full path returned by that command. |
+| **Permission denied when running the bridge** | If running a local build, you may need to set execute permissions: `chmod +x ~/.local/bin/figmex-mcp-bridge` (or your install path). This is usually not required for PyPI installs. |
+| **Connection dropped mid-session** | Close and relaunch both the Figma plugin and the Codex CLI. The bridge will automatically reconnect when both are active. |
+| **Still not working?** | Ensure no other process is using port `8787`, or change it with `--port <new-port>`. |
+
+If you’re still having trouble:
+- Reach out to [hello@austinwells.dev](mailto:hello@austinwells.dev)  
+- Ask ChatGPT for help troubleshooting your setup  
+- Or submit a pull request to improve the project, fix bugs, or add features on [GitHub](https://github.com/stnwlls/Figmex-MCP-Bridge)
+
+---
+
+**Logging:**  
+For detailed logs, start the bridge manually with:
+```bash
+figmex-mcp-bridge serve --log-level DEBUG
+```
+
+---
+
+## 6. Support & Links
+
+- Bridge repository: [https://github.com/stnwlls/Figmex-MCP-Bridge](https://github.com/stnwlls/Figmex-MCP-Bridge)
+- Figma plugin: [https://github.com/stnwlls/Figmex-MCP](https://github.com/stnwlls/Figmex-MCP)
+- Email: [hello@austinwells.dev](mailto:hello@austinwells.dev)
+
+Please open an issue or reach out via email if you need help getting up and running.
+
+---
+
+## 7. License
+
+Released under the MIT License. See [LICENSE](LICENSE) for full terms.
