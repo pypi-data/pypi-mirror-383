@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: DPConCFil
+Version: 0.0.5
+Summary: A collection of filament identification and analysis algorithms
+Home-page: https://github.com/JiangYuTS/DPConCFil
+Author: ['Jiang Yu']
+Author-email: yujiang@pmo.ac.cn
+Keywords: astrophysics,DPConCFil,filaments
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.6
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: astropy
+Requires-Dist: scikit-learn
+Requires-Dist: scikit-image
+Requires-Dist: networkx
+Requires-Dist: pandas
+Requires-Dist: tqdm
+Requires-Dist: FacetClumps
+Requires-Dist: radfil
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
