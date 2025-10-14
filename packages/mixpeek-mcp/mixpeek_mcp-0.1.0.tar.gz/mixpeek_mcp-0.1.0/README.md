@@ -1,0 +1,72 @@
+## Mixpeek MCP Server (Python)
+
+A lightweight, production-friendly Model Context Protocol (MCP) server for Mixpeek that:
+
+- Auto-loads Mixpeek's OpenAPI spec and exposes endpoints as MCP tools
+- Supports local and hosted use (bring-your-own API key)
+- Injects `Authorization` and `X-Namespace` headers
+- Includes rate limits, timeouts, and redacted logs
+- Ships with Docker and simple configuration
+
+### Quickstart
+
+1) Install
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+2) Configure (env or your MCP client secret store)
+
+```bash
+cp env.sample .env
+# edit as needed
+```
+
+Env vars:
+
+- `MIXPEEK_API_KEY`: Your Mixpeek API key (optional if endpoints don't require auth)
+- `MIXPEEK_API_BASE`: Default `https://api.mixpeek.com` (or `https://server-xb24.onrender.com` for testing)
+- `MIXPEEK_OPENAPI_URL`: Defaults to `<API_BASE>/openapi.json` (or `/docs/openapi.json`)
+- `MIXPEEK_NAMESPACE`: Optional namespace value to send via `X-Namespace`
+- `MCP_RATE_MAX_CALLS`: Default `20` per `MCP_RATE_PER_SECONDS`
+- `MCP_RATE_PER_SECONDS`: Default `10`
+- `MCP_CONNECT_TIMEOUT`: Default `5`
+- `MCP_READ_TIMEOUT`: Default `30`
+
+3) Run locally (stdio)
+
+```bash
+python server.py
+```
+
+Your MCP client (e.g., Claude Desktop) can attach to this server via stdio.
+
+### Docker
+
+```bash
+docker build -t mixpeek-mcp:latest .
+docker run --rm -it \
+  -e MIXPEEK_API_KEY=sk_... \
+  -e MIXPEEK_NAMESPACE=your_namespace \
+  mixpeek-mcp:latest
+```
+
+### How it works
+
+- Loads OpenAPI spec and maps GET/POST JSON endpoints to tools using `operationId`
+- Tool arguments accept top-level query parameters or a `query`/`body` envelope
+- Forwards requests to Mixpeek with configured headers
+- Provides small allowlist (configurable) and redacts secrets in logs
+
+### References
+
+- Mixpeek docs: `https://docs.mixpeek.com/overview/introduction`
+- Mixpeek OpenAPI: `https://server-xb24.onrender.com/docs/openapi.json`
+
+### Notes
+
+- For production hosting, front with HTTPS, add SSO/session issuance, per-tenant rate limits, and audit logs without bodies/headers. Keep the local stdio server as the default, hosted as optional.
+
+
