@@ -1,0 +1,16 @@
+# Include build configuration files
+include CMakeLists.txt
+include pyproject.toml
+include README.md
+
+# Include C++ source code
+include shmx_py.cpp
+
+# Include header files - copy to src subdirectory
+recursive-include src *.h
+
+# Include Python package files
+recursive-include shmx *.py *.pyi py.typed
+
+# Exclude compiled files and caches
+global-exclude *.pyc *.pyo *.pyd __pycache__

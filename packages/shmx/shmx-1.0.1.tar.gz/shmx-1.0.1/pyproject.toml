@@ -1,0 +1,38 @@
+[project]
+name = "shmx"
+version = "1.0.1"
+description = "High-performance shared-memory IPC for frame streaming"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "SHMX Contributors"}
+]
+readme = "README.md"
+keywords = ["ipc", "shared-memory", "high-performance", "streaming", "frame"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: C++",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel", "cmake>=3.15"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = [""]
+include = ["shmx*"]
+
+[tool.setuptools.package-data]
+shmx = ["*.pyi", "py.typed"]
