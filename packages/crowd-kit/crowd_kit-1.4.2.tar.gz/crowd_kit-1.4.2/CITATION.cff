@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: If you use this software, please cite the article from preferred-citation.
+title: Crowd-Kit
+type: software
+authors:
+- family-names: Ustalov
+  given-names: Dmitry
+  orcid: "https://orcid.org/0000-0002-9979-2188"
+- family-names: Pavlichenko
+  given-names: Nikita
+  orcid: "https://orcid.org/0000-0002-7330-393X"
+- given-names: Boris
+  family-names: Tseitlin
+  orcid: "https://orcid.org/0000-0001-8553-4260"
+repository-code: "https://github.com/Toloka/crowd-kit"
+url: "https://crowd-kit.readthedocs.io/"
+repository-artifact: "https://pypi.org/project/crowd-kit/"
+keywords:
+- Python
+- crowdsourcing
+- data labeling
+- answer aggregation
+- truth inference
+- learning from crowds
+- machine learning
+- quality control
+- data quality
+license: Apache-2.0
+preferred-citation:
+  type: article
+  authors:
+  - family-names: Ustalov
+    given-names: Dmitry
+    orcid: "https://orcid.org/0000-0002-9979-2188"
+  - family-names: Pavlichenko
+    given-names: Nikita
+    orcid: "https://orcid.org/0000-0002-7330-393X"
+  - given-names: Boris
+    family-names: Tseitlin
+    orcid: "https://orcid.org/0000-0001-8553-4260"
+  title: "Learning from Crowds with Crowd-Kit"
+  year: 2024
+  journal: Journal of Open Source Software
+  volume: 9
+  issue: 96
+  start: 6227
+  end: 6227
+  doi: "10.21105/joss.06227"
+  issn: 2475-9066
+  identifiers:
+  - type: other
+    value: "arXiv:2109.08584"
+    description: The ArXiv preprint of the paper
