@@ -1,0 +1,903 @@
+# TestZeus CLI
+
+A powerful command-line interface for the TestZeus testing platform.
+
+## Installation
+
+```bash
+pip install testzeus-cli
+```
+
+## Authentication
+
+Before using the CLI, you need to authenticate with the TestZeus platform:
+
+```bash
+testzeus login
+```
+
+You will be prompted to enter your email and password. Your credentials are securely stored in your system's keyring.
+
+```bash
+testzeus login --profile dev
+```
+
+Authentication automatically detects and stores your tenant information, which will be used for all subsequent commands.
+
+### Auth Commands
+
+| Command | Description |
+|---------|-------------|
+| `login` | Authenticate with TestZeus |
+| `logout` | Log out and remove stored credentials |
+| `whoami` | Display current authentication status |
+
+## Global Options
+
+The following options can be used with any command:
+
+| Option | Description |
+|--------|-------------|
+| `--profile` | Configuration profile to use (default: "default") |
+| `--api-url` | Custom TestZeus API URL |
+| `--verbose` | Enable verbose output |
+| `--format` | Output format: json, table, or yaml (default: table) |
+
+## Managing Tests
+
+### List Tests
+
+```bash
+testzeus tests list
+```
+
+Filter test list with key-value pairs:
+```bash
+testzeus tests list --filters status=draft
+```
+
+Sort and expand related entities:
+```bash
+testzeus tests list --sort created --expand tags,test_data
+```
+
+### Get Test Details
+
+```bash
+testzeus tests get <test-id>
+testzeus tests get <test-id> --expand tags,test_data
+```
+
+### Create Test
+
+Create a test with text-based features:
+
+```bash
+testzeus tests create --name "My Test" --feature "Feature: Test something"
+```
+
+Create a test with features from a file:
+
+```bash
+testzeus tests create --name "My Test" --feature-file ./features.txt
+```
+
+Additional options:
+```bash
+testzeus tests create --name "My Test" --feature-file ./features.txt --status ready --data data_id1 --data data_id2 --tags tag1 --tags tag2 --environment env_id --execution-mode strict
+```
+
+### Update Test
+
+Update test name:
+
+```bash
+testzeus tests update <test-id> --name "New Name"
+```
+
+Update test features from text:
+
+```bash
+testzeus tests update <test-id> --feature "Updated feature content"
+```
+
+Update test features from a file:
+
+```bash
+testzeus tests update <test-id> --feature-file ./updated_features.txt
+```
+
+Update other properties:
+```bash
+testzeus tests update <test-id> --status ready --data data_id1 --tags tag1 --environment env_id
+```
+
+### Delete Test
+
+```bash
+testzeus tests delete <test-id>
+```
+
+## Test Runs
+
+### List Test Runs
+
+```bash
+testzeus test-runs list
+```
+
+Filter runs by status:
+
+```bash
+testzeus test-runs list --filters status=running
+```
+
+### Get Test Run Details
+
+```bash
+testzeus test-runs get <run-id>
+```
+
+Get expanded details including all outputs and steps:
+
+```bash
+testzeus test-runs get-expanded <run-id>
+```
+
+### Watch Test Run Progress
+
+```bash
+testzeus test-runs watch <run-id>
+testzeus test-runs watch <run-id> --interval 10
+```
+
+### Get Test Run Status
+
+```bash
+testzeus test-runs status <run-id>
+```
+
+### Download Test Run Attachments
+
+```bash
+testzeus test-runs download-attachments <run-id>
+testzeus test-runs download-attachments <run-id> --output-dir ./my-attachments
+```
+
+## Test Data
+
+### List Test Data
+
+```bash
+testzeus test-data list
+```
+
+Filter by type:
+```bash
+testzeus test-data list --filters type=test
+```
+
+### Get Test Data Details
+
+```bash
+testzeus test-data get <data-id>
+testzeus test-data get <data-id> --expand related_entities
+```
+
+### Create Test Data
+
+Create with inline content:
+
+```bash
+testzeus test-data create --name "Test Data 1" --data "{\"key\":\"value\"}"
+```
+
+Create with data from a file:
+
+```bash
+testzeus test-data create --name "Test Data" --data-file ./data.json
+```
+
+Additional options:
+```bash
+testzeus test-data create --name "Test Data" --type test --status ready --data-file ./data.json
+```
+
+### Update Test Data
+
+Update name and other properties:
+
+```bash
+testzeus test-data update <data-id> --name "New Data Name" --type updated --status ready
+```
+
+Update data content from text:
+
+```bash
+testzeus test-data update <data-id> --data "{\"key\":\"updated\"}"
+```
+
+Update data content from a file:
+
+```bash
+testzeus test-data update <data-id> --data-file ./updated_data.json
+```
+
+### Delete Test Data
+
+```bash
+testzeus test-data delete <data-id>
+```
+
+### File Management for Test Data
+
+Upload a file to test data:
+
+```bash
+testzeus test-data upload-file <data-id> <file-path>
+```
+
+Delete all files from test data:
+
+```bash
+testzeus test-data delete-all-files <data-id>
+```
+
+## Environments
+
+### List Environments
+
+```bash
+testzeus environments list
+```
+
+Filter environments:
+```bash
+testzeus environments list --filters status=ready
+```
+
+### Get Environment Details
+
+```bash
+testzeus environments get <env-id>
+testzeus environments get <env-id> --expand related_entities
+```
+
+### Create Environment
+
+Create with inline data:
+
+```bash
+testzeus environments create --name "Test Environment" --data "{\"key\":\"value\"}"
+```
+
+Create with data from a file:
+
+```bash
+testzeus environments create --name "Test Environment" --data-file ./env_data.json
+```
+
+Additional options:
+```bash
+testzeus environments create --name "Test Environment" --status ready --data-file ./env_data.json --tags "tag1,tag2"
+```
+
+### Update Environment
+
+Update environment properties:
+
+```bash
+testzeus environments update <env-id> --name "New Name" --status ready
+```
+
+Update environment data:
+
+```bash
+testzeus environments update <env-id> --data "{\"key\":\"updated\"}"
+testzeus environments update <env-id> --data-file ./updated_env_data.json
+```
+
+### Delete Environment
+
+```bash
+testzeus environments delete <env-id>
+```
+
+### File Management for Environments
+
+Upload a file to environment:
+
+```bash
+testzeus environments upload-file <env-id> <file-path>
+```
+
+Remove a file from environment:
+
+```bash
+testzeus environments remove-file <env-id> <file-path>
+```
+
+Delete all files from environment:
+
+```bash
+testzeus environments delete-all-files <env-id>
+```
+
+## Tags
+
+### List Tags
+
+```bash
+testzeus tags list
+```
+
+Filter tags:
+```bash
+testzeus tags list --filters name=test
+```
+
+### Get Tag Details
+
+```bash
+testzeus tags get <tag-id>
+```
+
+### Create Tag
+
+```bash
+testzeus tags create --name "test-tag" --value "test-value"
+```
+
+Create tag without value:
+
+```bash
+testzeus tags create --name "simple-tag"
+```
+
+### Update Tag
+
+```bash
+testzeus tags update <tag-id> --name "new-name" --value "new-value"
+```
+
+### Delete Tag
+
+```bash
+testzeus tags delete <tag-name>
+```
+
+## Test Report Schedules
+
+Test report schedules allow you to create automated test execution schedules with various filtering options and notification configurations.
+
+### List Test Report Schedules
+
+```bash
+testzeus schedule list
+```
+
+Filter and paginate:
+```bash
+testzeus schedule list --filters is_active=true --page 1 --per-page 20
+```
+
+### Get Test Report Schedule Details
+
+```bash
+testzeus schedule get <schedule-id>
+```
+
+### Create Test Report Schedule
+
+Create a basic schedule with cron expression:
+
+```bash
+testzeus schedule create --name "nightly-reports" --cron-expression "0 0 * * *"
+```
+
+Create a schedule with time intervals (alternative to cron):
+
+```bash
+testzeus schedule create \
+  --name "daily-reports" \
+  --filter-time-intervals "2025-01-01 00:00:00,2025-01-01 01:00:00" \
+  --is-active true
+```
+
+Create a comprehensive schedule with comma-separated filters:
+
+```bash
+testzeus schedule create \
+  --name "regression-reports" \
+  --is-active true \
+  --cron-expression "0 2 * * 1-5" \
+  --filter-name-pattern "regression_*" \
+  --filter-tags "tag1,tag2,tag3" \
+  --filter-env "env1,env2" \
+  --filter-test-data "data1,data2" \
+  --notification-channels "channel1,channel2"
+```
+
+**Important validation rules:**
+- Use either `--cron-expression` OR `--filter-time-intervals` (not both)
+- Use either `--filter-tags` OR `--filter-tag-pattern` (not both)  
+- Use either `--filter-env` OR `--filter-env-pattern` (not both)
+- Use either `--filter-test-data` OR `--filter-test-data-pattern` (not both)
+
+### Update Test Report Schedule
+
+Update schedule with new cron expression:
+
+```bash
+testzeus schedule update <schedule-id> \
+  --name "updated-schedule" \
+  --cron-expression "0 3 * * *" \
+  --is-active true
+```
+
+Update with comma-separated filters:
+
+```bash
+testzeus schedule update <schedule-id> \
+  --filter-tags "newtag1,newtag2" \
+  --notification-channels "newchannel1,newchannel2"
+```
+
+Update with time intervals:
+
+```bash
+testzeus schedule update <schedule-id> \
+  --filter-time-intervals "2025-01-02 10:00:00,2025-01-02 11:00:00"
+```
+
+### Delete Test Report Schedule
+
+```bash
+testzeus schedule delete <schedule-id>
+```
+
+## Notification Channels
+
+Notification channels manage how test results and reports are delivered to your team.
+
+### List Notification Channels
+
+```bash
+testzeus notification list
+```
+
+### Get Notification Channel Details
+
+```bash
+testzeus notification get <channel-id>
+```
+
+### Create Notification Channel
+
+Create a basic email notification channel:
+
+```bash
+testzeus notification create \
+  --name "qa-team" \
+  --emails "qa@example.com,team-lead@example.com" \
+  --is-active true
+```
+
+Create a notification channel with webhooks:
+
+```bash
+testzeus notification create \
+  --name "prod-alerts" \
+  --emails "ops@example.com,admin@example.com" \
+  --webhooks "https://hooks.example.com/webhook1,https://hooks.example.com/webhook2" \
+  --is-active true \
+  --is-default true
+```
+
+### Update Notification Channel
+
+Update channel properties:
+
+```bash
+testzeus notification update <channel-id> --name "updated-channel" --is-active true
+```
+
+Update emails and webhooks:
+
+```bash
+testzeus notification update <channel-id> \
+  --emails "new@example.com,team@example.com" \
+  --webhooks "https://new.webhook.com,https://backup.webhook.com"
+```
+
+### Delete Notification Channel
+
+```bash
+testzeus notification delete <channel-id>
+```
+
+## Extensions
+
+Extensions allow you to extend TestZeus functionality with custom data and responses.
+
+### List Extensions
+
+```bash
+testzeus extension list
+```
+
+### Get Extension Details
+
+```bash
+testzeus extension get <extension-id>
+```
+
+### Create Extension
+
+Create with inline data:
+
+```bash
+testzeus extension create \
+  --name "custom-validator" \
+  --data-content "validation logic here"
+```
+
+Create with data from file:
+
+```bash
+testzeus extension create \
+  --name "custom-script" \
+  --data-file ./script.py
+```
+
+### Delete Extension
+
+```bash
+testzeus extension delete <extension-id>
+```
+
+## AI Test Generator
+
+AI Test Generator helps create test cases automatically using AI-powered analysis.
+
+### List AI Test Generators
+
+```bash
+testzeus testcase-generator list
+```
+
+### Get AI Test Generator Details
+
+```bash
+testzeus testcase-generator get <generator-id>
+```
+
+### Create AI Test Generator
+
+Create with minimal required parameters:
+
+```bash
+testzeus testcase-generator create \
+  --test-id <test-id> \
+  --user-prompt "Generate comprehensive test cases for login functionality"
+```
+
+Create with custom parameters:
+
+```bash
+testzeus testcase-generator create \
+  --test-id <test-id> \
+  --user-prompt "Generate test cases for payment processing" \
+  --reasoning-effort high \
+  --num-testcases 10 \
+  --test-data data1 --test-data data2 \
+  --environment env_id
+```
+
+Create with prompts from files:
+
+```bash
+testzeus testcase-generator create \
+  --test-id <test-id> \
+  --test-feature-file ./feature.txt \
+  --user-prompt-file ./prompt.txt \
+  --reasoning-effort medium \
+  --num-testcases 5
+```
+
+**Required Parameters:**
+- `--test-id`: Test ID to generate for (required)
+- `--user-prompt`: User prompt for AI generation (required, or use `--user-prompt-file`)
+
+**Default Values:**
+- `--reasoning-effort`: `low` (options: low, medium, high)
+- `--num-testcases`: `3` (range: 1-20)
+- `submit`: automatically set to `true`
+
+### Delete AI Test Generator
+
+```bash
+testzeus testcase-generator delete <generator-id>
+```
+
+## Test Run Groups
+
+Test run groups allow you to organize and execute multiple tests together as a cohesive unit. This is useful for running test suites, regression tests, or any collection of tests that should be executed together.
+
+### List Test Run Groups
+
+```bash
+testzeus test-run-group list
+```
+
+Filter and paginate:
+```bash
+testzeus test-run-group list --filters status=completed --page 1 --per-page 20
+```
+
+Sort and expand related entities:
+```bash
+testzeus test-run-group list --sort created --expand tags,test_ids,environment
+```
+
+### Get Test Run Group Details
+
+```bash
+testzeus test-run-group get <group-id>
+testzeus test-run-group get <group-id> --expand tags,test_ids,environment
+```
+
+### Execute Test Run Group
+
+Execute a test run group with specific test IDs:
+
+```bash
+testzeus test-run-group execute --name "regression-suite" --test-ids "test1,test2,test3"
+```
+
+Execute a test run group with tags:
+
+```bash
+testzeus test-run-group execute --name "smoke-suite" --tags "smoke,critical"
+```
+
+Execute a comprehensive test run group:
+
+```bash
+testzeus test-run-group execute \
+  --name "smoke-tests" \
+  --execution-mode strict \
+  --test-ids "test_id_1,test_id_2,test_id_3" \
+  --environment env_id \
+  --notification-channels "channel_id_1,channel_id_2"
+```
+
+**Required Parameters:**
+- `--name`: Test run group name (required)
+- Either `--test-ids` OR `--tags` (required, but not both)
+
+**Validation Rules:**
+- Use either `--test-ids` OR `--tags` (not both)
+- At least one test ID or tag must be provided
+
+**Default Values:**
+- `--execution-mode`: `lenient` (options: lenient, strict)
+
+### Delete Test Run Group
+
+```bash
+testzeus test-run-group delete <group-id>
+```
+
+### Cancel Test Run Group
+
+Cancel a running test run group:
+
+```bash
+testzeus test-run-group cancel <group-id>
+```
+
+### Get Test Run Group Status
+
+Get detailed status information:
+
+```bash
+testzeus test-run-group get-status <group-id>
+```
+
+This returns status information including:
+- Overall group status
+- CTRF report status
+- Individual test run statuses
+- Timestamps
+
+### Download Test Run Group Report
+
+Download report in PDF format (default):
+
+```bash
+testzeus test-run-group download-report <group-id>
+```
+
+Download report in specific format:
+
+```bash
+testzeus test-run-group download-report <group-id> --format ctrf
+testzeus test-run-group download-report <group-id> --format csv --output-dir ./reports
+```
+
+**Available Formats:**
+- `pdf` (default) - PDF report
+- `ctrf` - CTRF JSON format
+- `csv` - CSV data export
+- `zip` - ZIP archive with all formats
+
+**Options:**
+- `--output-dir`: Output directory (default: downloads)
+- `--format`: Report format (default: pdf)
+
+### Download Test Run Group Attachments
+
+Download all attachments for all test runs in a test run group:
+
+```bash
+testzeus test-run-group download-attachments <group-id>
+```
+
+Download attachments to custom directory:
+
+```bash
+testzeus test-run-group download-attachments <group-id> --output-dir ./test-artifacts
+```
+
+This command creates a hierarchical directory structure:
+```
+downloads/
+└── <test-run-group-name>/
+    ├── <test-run-1-name>/
+    │   ├── attachment1.pdf
+    │   ├── attachment2.log
+    │   └── ...
+    ├── <test-run-2-name>/
+    │   ├── attachment3.png
+    │   └── ...
+    └── ...
+```
+
+**Features:**
+- Downloads attachments from all test runs in the group
+- Automatically organizes files by test run
+- Shows progress and summary statistics
+- Continues processing if individual downloads fail
+- Supports verbose output for detailed breakdown
+
+**Options:**
+- `--output-dir`: Base directory to save attachments (default: downloads)
+
+## Configuration
+
+The CLI stores configuration and credentials in your user's config directory. Different profiles can be used to manage multiple TestZeus environments.
+
+Default configuration location:
+- Linux/Mac: `~/.testzeus/config.yaml`
+- Windows: `%APPDATA%\testzeus\config.yaml`
+
+Passwords are securely stored in your system's keyring.
+
+## Examples
+
+### Complete Workflow
+
+```bash
+# Login to TestZeus
+testzeus login
+
+# Create test data
+testzeus test-data create --name "User Data" --data "{\"username\":\"testuser\"}" 
+
+# Create a new test with features from a file
+testzeus tests create --name "Login Test" --feature-file ./features/login.feature --data <test_data_id>
+
+# Execute tests using test run groups
+testzeus test-run-group execute --name "Login Tests" --test-ids <test_id>
+
+# Watch the test run group progress
+testzeus test-run-group get-status <test_run_group_id>
+
+# Download test report
+testzeus test-run-group download-report <test_run_group_id> --format pdf
+
+# Download all attachments from the test runs
+testzeus test-run-group download-attachments <test_run_group_id> --output-dir ./results
+```
+
+### Working with Environments
+
+```bash
+# Create an environment with data
+testzeus environments create --name "Production Environment" --data-file ./prod_config.json --status ready
+
+# Upload additional files to the environment
+testzeus environments upload-file <env-id> ./additional_config.yaml
+
+# Create a test that uses the environment
+testzeus tests create --name "Production Test" --feature-file ./test.feature --environment <env-id>
+```
+
+### Managing Tags
+
+```bash
+# Create tags for organizing tests
+testzeus tags create --name "regression" --value "suite"
+testzeus tags create --name "priority" --value "high"
+
+# Create a test with tags
+testzeus tests create --name "Critical Test" --feature-file ./critical.feature --tags tag1 --tags tag2
+```
+
+### Working with Test Run Groups
+
+```bash
+# Execute a test run group with specific test IDs
+testzeus test-run-group execute \
+  --name "nightly-regression" \
+  --execution-mode strict \
+  --test-ids "test_id_1,test_id_2,test_id_3" \
+  --environment env_id
+
+# Check the status
+testzeus test-run-group get-status <group-id>
+
+# Download the test report
+testzeus test-run-group download-report <group-id> --format pdf
+
+# Download all attachments from test runs
+testzeus test-run-group download-attachments <group-id> --output-dir ./artifacts
+
+# Cancel a running group if needed
+testzeus test-run-group cancel <group-id>
+
+# Delete the group when done
+testzeus test-run-group delete <group-id>
+```
+
+## Error Handling
+
+When an error occurs, the CLI will display an error message. For more detailed information, run any command with the `--verbose` flag:
+
+```bash
+testzeus tests list --verbose
+```
+
+## Output Formats
+
+The CLI supports multiple output formats:
+
+- `table`: Human-readable tabular format (default)
+- `json`: JSON format for programmatic usage
+- `yaml`: YAML format
+
+Example:
+```bash
+testzeus tests list --format json
+```
+
+## Development and Contribution
+
+To contribute to the TestZeus CLI, fork the repository and install development dependencies:
+
+```bash
+pip install -e ".[dev]"
+```
+
+### Release Process
+
+The TestZeus CLI uses GitHub Actions for automated releases to PyPI. To create a release:
+
+1. Use the Makefile's release target: `make release`
+2. This will:
+   - Prompt for version bump type (patch, minor, major)
+   - Update the version in pyproject.toml
+   - Commit and create a git tag
+   - Push changes and tags to GitHub
+3. The tag push will automatically trigger the GitHub Actions publish workflow 
