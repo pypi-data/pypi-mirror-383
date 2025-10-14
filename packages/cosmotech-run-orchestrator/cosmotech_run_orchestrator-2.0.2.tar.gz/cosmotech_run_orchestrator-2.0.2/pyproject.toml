@@ -1,0 +1,71 @@
+[metadata]
+licence_files = ["LICENSE"]
+
+[project]
+name = "cosmotech-run-orchestrator"
+authors = [{ name = "Cosmo Tech", email = "platform@cosmotech.com" }]
+description = "Orchestration suite for Cosmotech Run Templates"
+urls.Homepage = "https://www.cosmotech.com"
+urls.Source = "https://github.com/Cosmo-Tech/run-orchestrator"
+urls.Documentation = "https://cosmo-tech.github.io/run-orchestrator/"
+dynamic = ["version", "dependencies", "optional-dependencies"]
+readme = {file = "README.md", content-type = "text/markdown"}
+
+[project.scripts]
+csm-orc = "cosmotech.csm_orc.main:main"
+"entrypoint.py" = "cosmotech.csm_orc.entrypoint:entrypoint_command"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = "--cov-report term-missing:skip-covered --cov=cosmotech.orchestrator"
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | generated
+  | __pycache__
+)/
+'''
+
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+package-data."*" = [
+  "requirements.txt",
+  "requirements.doc.txt",
+  "requirements.test.txt",
+  "requirements.dev.txt",
+  "requirements.extra.txt",
+  "requirements.all.txt"
+]
+zip-safe = false
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cosmotech.*"]
+
+[tool.setuptools.dynamic]
+version.attr = "cosmotech.orchestrator.__version__"
+dependencies.file = "requirements.txt"
+optional-dependencies.doc.file = "requirements.doc.txt"
+optional-dependencies.test.file = "requirements.test.txt"
+optional-dependencies.dev.file = "requirements.dev.txt"
+optional-dependencies.extra.file = "requirements.extra.txt"
+optional-dependencies.all.file = "requirements.all.txt"
