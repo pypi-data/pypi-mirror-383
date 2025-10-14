@@ -1,0 +1,63 @@
+{
+  "mcpServers": {
+    "datasage-dev": {
+      "disabled": false,
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.p6plab_datasage.server", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage",
+      "env": {
+        "DATASAGE_PATHS": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage/examples/mock-data"
+      }
+    },
+    "datasage-local": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["--from", "./dist/p6plab_datasage-1.0.2-py3-none-any.whl", "p6plab-datasage", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage",
+      "env": {
+        "DATASAGE_PATHS": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage/examples/mock-data"
+      }
+    },
+    "datasage-test": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["--index", "https://test.pypi.org/simple/", "--index-strategy", "unsafe-best-match", "p6plab-datasage@1.0.2", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage",
+      "env": {
+        "DATASAGE_PATHS": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage/examples/mock-data"
+      }
+    },
+    "datasage": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["p6plab-datasage", "--config", "examples/datasage.yaml"],
+      "cwd": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage",
+      "env": {
+        "DATASAGE_PATHS": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage/examples/mock-data"
+      }
+    },
+    "datasage-env": {
+      "disabled": true,
+      "command": "uvx",
+      "args": ["p6plab-datasage"],
+      "env": {
+        "DATASAGE_NAME": "DataSage Environment Config",
+        "DATASAGE_DESCRIPTION": "Governance documentation server configured via environment variables",
+        "DATASAGE_PATHS": "/Users/sawitmee/Code/aws-workshop/draft/kiro-workshop-from-idea-to-production/utilities/mcp-DataSage/examples/mock-data",
+        "DATASAGE_MAX_DEPTH": "10",
+        "DATASAGE_MAX_FILE_SIZE": "10485760",
+        "DATASAGE_TEXT_DETECTION": "auto",
+        "DATASAGE_EXCLUDED_EXTENSIONS": ".exe,.bin,.jpg,.png,.pdf,.zip,.tar,.gz",
+        "DATASAGE_SEARCH_MAX_RESULTS": "50",
+        "DATASAGE_TOOL_SEARCH_DESC": "Search governance documentation by content or filename",
+        "DATASAGE_TOOL_GET_PAGE_DESC": "Retrieve governance document content",
+        "DATASAGE_TOOL_GET_PAGE_CHILDREN_DESC": "List governance practice directories and documents",
+        "DATASAGE_FUZZY_THRESHOLD": "0.8",
+        "DATASAGE_ENABLE_REGEX": "true",
+        "DATASAGE_INDEX_CONTENT": "true",
+        "DATASAGE_ENABLE_SEMANTIC": "true",
+        "DATASAGE_SEMANTIC_MODEL": "paraphrase-MiniLM-L3-v2"
+      }
+    }
+  }
+}
