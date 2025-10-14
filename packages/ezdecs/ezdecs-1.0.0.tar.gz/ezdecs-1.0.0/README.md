@@ -1,0 +1,138 @@
+# ezdecs: Some decorators that simplify Python code
+Wanna time your code execution easily? Don't wanna spend too much time on input validation? Maybe ezdecs can help!
+
+## timer(): Timing execution
+
+By adding `@timer` before a function, it times the function when the function is called.
+
+```python
+from ezdecs import *
+@timer
+def f():
+    print('Hello, world!')
+    return 3
+print(f())
+'''
+Example output:
+Hello, world!
+(3, 6.939999999966417e-05)
+'''
+```
+
+## noexcept() and cexcept(): Silence exceptions
+
+Using the decorator `@noexcept`, any exception raised is silenced.
+```python
+from ezdecs import *
+@noexcept
+def divide(a,b):
+    return a/b
+print(divide(9,3)) # 3.0
+print(divide(1,0)) # None
+```
+
+If you still wanna know what exception is raised, use `@cexcept`.
+```python
+from ezdecs import *
+@cexcept
+def divide(a,b):
+    return a/b
+print(divide(9,3)) # (3.0, None)
+print(divide(1,0)) # (None, ZeroDivisionError('division by zero'))
+```
+
+## tnexcept(): Retry when an exception occurs
+By using `@tnexcept`, the function is repeated until no exception occurs. This is especially useful for input validation
+and retrying.
+
+For example, instead of writing:
+```python
+def read_number():
+    while 1:
+        try:
+            result=int(input('Please enter a number: '))
+        except:
+            pass
+        else:
+            return result
+print(read_number())
+```
+All you have to write is:
+```python
+from ezdecs import *
+@tnexcept
+def read_number():
+    return int(input('Please enter a number: '))
+print(read_number())
+'''
+Example interaction:
+Please enter a number: a
+Please enter a number: 3.14
+Please enter a number: 3
+3
+'''
+```
+
+The keyword argument `handler` allows printing custom error messages when encountering invalid input by raising `AssertionError`.
+
+```python
+from ezdecs import *
+@tnexcept(handler=print)
+def enter_password():
+    psw=input('Please enter password: ')
+    assert psw=="123","Incorrect password."
+enter_password()
+print('Correct!')
+'''
+Example interaction:
+Please enter password: a
+Incorrect password.
+Please enter password: 1234
+Incorrect password.
+Please enter password: 123
+Correct!
+'''
+```
+
+For documentation on other decorators see docstring.
+
+## Aliases
+In order to shorten code, every decorator has a two-character alias:
+```text
+TM=timer
+NE=noexcept
+CE=cexcept
+BL=block
+NL=nolog
+TE=tnexcept
+RP=repeat
+FE=foreach
+```
+
+## Problems with recursion
+Sometimes using these decorators on recursive functions may cause problems.
+
+The following is an attempt to time a recursive Fibonacci function:
+```python
+from ezdecs import *
+@TM
+def f(n):
+    if n<2:
+        return n
+    return f(n-1)+f(n-2)
+print(f(5))
+```
+Instead of the time and result, a complex nested tuple is returned. That's because after being wrapped by the decorator, 
+`f` now returns a tuple instead of an integer.
+
+To make it work correctly, the `__wrapped__` attribute can be used to retrieve the unwrapped function:
+```python
+from ezdecs import *
+@TM
+def f(n):
+    if n<2:
+        return n
+    fw=f.__wrapped__
+    return fw(n-1)+fw(n-2)
+print(f(5))
+```
