@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gridwiz_analytics"
+version = "0.1.0"
+description = "Data analysis utilities for GridWiz (extracted from notebook)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [{name = "GridWiz Team"}]
+keywords = ["data","analysis","gridwiz","analytics"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+dependencies = [
+  "pandas>=2.0,<2.2",
+  "numpy>=1.24,<2.0",
+  "matplotlib>=3.7,<3.8",
+  "openpyxl>=3.1"
+]
+
+[project.urls]
+Homepage = "https://example.com/gridwiz"
