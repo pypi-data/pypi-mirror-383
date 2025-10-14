@@ -1,0 +1,142 @@
+Metadata-Version: 2.3
+Name: lakepipe
+Version: 0.1.0
+Summary: Modern data transfer for cloud data lakes - High-performance pipelines via object storage
+Keywords: data-engineering,etl,data-pipeline,data-lake,sqoop,teradata,hive
+Author: Md. Rakibul Hasan
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Database
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: pydantic>=2.0
+Requires-Dist: rich>=13.0
+Requires-Dist: typer>=0.12.0
+Requires-Dist: jinja2>=3.1.0
+Requires-Dist: pandas>=2.0
+Requires-Dist: pyarrow>=14.0
+Requires-Dist: apache-airflow>=2.8.0 ; extra == 'airflow'
+Requires-Dist: lakepipe[dev,airflow,sources] ; extra == 'all'
+Requires-Dist: pytest>=8.0 ; extra == 'dev'
+Requires-Dist: pytest-cov>=4.1 ; extra == 'dev'
+Requires-Dist: black>=24.0 ; extra == 'dev'
+Requires-Dist: ruff>=0.3.0 ; extra == 'dev'
+Requires-Dist: mypy>=1.8 ; extra == 'dev'
+Requires-Dist: sqlalchemy>=2.0 ; extra == 'sources'
+Requires-Python: >=3.10
+Project-URL: Documentation, https://lakepipe.readthedocs.io
+Project-URL: Homepage, https://github.com/pesnik/lakepipe
+Project-URL: Issues, https://github.com/pesnik/lakepipe/issues
+Project-URL: Repository, https://github.com/pesnik/lakepipe
+Provides-Extra: airflow
+Provides-Extra: all
+Provides-Extra: dev
+Provides-Extra: sources
+Description-Content-Type: text/markdown
+
+# LakePipe
+
+**Modern data transfer for cloud data lakes**
+
+LakePipe is a high-performance data pipeline framework for moving data between data lakes and warehouses via object storage. Think of it as **Sqoop for the cloud era** - optimized for modern cloud architectures with vendor-specific bulk loaders.
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+
+## Why LakePipe?
+
+- **Cloud-native**: Uses object storage (S3/GCS/Azure/OBS) as intermediate layer
+- **Fast**: Leverages vendor-optimized bulk loaders (TPT, Snowpipe, BigQuery Storage API)
+- **Observable**: Real-time progress, validation, and actionable error messages
+- **Flexible**: YAML configs, Python SDK, or CLI - your choice
+- **Extensible**: Plugin architecture for sources, targets, and transformations
+
+## Quick Start
+
+### Installation
+
+```bash
+pip install lakepipe
+```
+
+### Simple Transfer
+
+```yaml
+# lakepipe.yml
+version: 1.0
+name: my_pipeline
+
+source:
+  type: hive
+  database: my_db
+  table: my_table
+  partition_by: date
+
+storage:
+  type: s3
+  bucket: my-bucket
+  path: /staging
+
+target:
+  type: teradata
+  host: td-host
+  database: target_db
+  table: target_table
+  loader: tpt
+
+validation:
+  row_count:
+    enabled: true
+    max_variance: 0.01
+```
+
+```bash
+lakepipe run lakepipe.yml --params date=2025-01-15
+```
+
+## Documentation
+
+- [Getting Started](docs/getting-started.md)
+- [Examples](examples/)
+
+## Supported Connectors
+
+### Sources
+- Hive (beeline)
+- PostgreSQL (planned)
+- MySQL (planned)
+- MongoDB (planned)
+
+### Storage
+- S3 (AWS)
+- GCS (Google Cloud)
+- Azure Blob Storage
+- OBS (Huawei Cloud)
+
+### Targets
+- Teradata (TPT)
+- Snowflake (planned)
+- BigQuery (planned)
+- Redshift (planned)
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## License
+
+Apache License 2.0 - See [LICENSE](LICENSE) for details.
+
+## Acknowledgments
+
+Inspired by Apache Sqoop, built for the cloud era.
+
+---
+
+**Author**: Md. Rakibul Hasan
+**Status**: Alpha - Active Development
