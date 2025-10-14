@@ -1,0 +1,511 @@
+# structlog-opinionated
+
+Opinionated structlog configuration for asyncio servers.
+
+## Overview
+
+`structlog-opinionated` provides a pre-configured, production-ready setup for [structlog](https://www.structlog.org/) tailored specifically for long-running asyncio servers. It prescribes conventions and sensible defaults to get you up and running quickly with structured logging and provides tooling needed as complexity scales.
+
+**Using with AI Coding Agents:** [USAGE_SUMMARY.md](USAGE_SUMMARY.md) contains a highly compacted usage guide, suitable for AI Agents with minimal context window usage. Append it to your AI Coding Agent's instructions or use the below instruction to ensure the latest version is read:
+
+```markdown
+**Important:** This project uses structlog-opinionated for logging. Always read https://github.com/saurabhdas/structlog-opinionated/blob/main/USAGE_SUMMARY.md before writing any code.
+```
+
+## Features
+
+- **Enhanced Context Management API**: Clean logger interface with `.bind()`, `.context()`, and `.attach()` methods (builds on structlog's `bound_contextvars`)
+- **Asyncio-optimized**: Configured for use with async/await patterns
+- **Production-ready**: Sensible defaults for production environments
+- **Smart output detection**: Auto-selects JSON or colored console output based on TTY detection
+- **Structured exception logging**: Exceptions captured as queryable JSON with stack frames
+- **Call-site tracking**: Automatic relative file paths and line numbers in every log
+- **Scoped context binding**: Easy context management for request tracking across async boundaries with automatic cleanup
+- **File logging**: Optional timestamped JSONL file output
+- **Module-specific debugging**: Enable debug logging for specific modules
+- **Environment variables**: Configure via environment variables or .env files
+- **Type-safe**: Full type hints for better IDE support
+- **Zero-config**: Works out of the box with sensible defaults
+
+## Installation
+
+```bash
+uv add structlog-opinionated
+```
+
+Or with pip:
+
+```bash
+pip install structlog-opinionated
+```
+
+## Quick Start
+
+```python
+import structlog_opinionated
+
+# Get a logger instance (setup is automatic!)
+logger = structlog_opinionated.get_logger(__name__)
+
+# Add permanent bindings - .bind() returns NEW logger, so reassign!
+logger = logger.bind(service="api", version="1.0")
+
+# Temporary scoped bindings with auto-cleanup
+with logger.context(request_id="req_123", user_id=42):
+    logger.info("Processing request", action="create")
+    # Logs include: service, version, request_id, user_id, action
+
+    # Attach more context mid-block as needed
+    logger.attach(validation_step="schema")
+    logger.info("Validating input")
+    # Logs include: service, version, request_id, user_id, validation_step
+
+# request_id, user_id, and validation_step all automatically removed
+logger.info("Request completed")
+# Logs include: service, version only
+```
+
+## Why This Library? Enhanced Context Management
+
+While structlog provides excellent building blocks like `bound_contextvars()`, `bind_contextvars()`, and `unbind_contextvars()`, this library provides a more ergonomic, logger-centric API with additional capabilities:
+
+### What structlog Provides
+
+```python
+import structlog
+
+# Option 1: Use bound_contextvars context manager
+with structlog.contextvars.bound_contextvars(request_id="123"):
+    logger.info("processing")  # Has request_id
+
+    # Problem: bound_contextvars doesn't clean up mid-block additions
+    structlog.contextvars.bind_contextvars(step="validation")
+    logger.info("validating")  # Has request_id, step
+
+# request_id cleaned up, but step persists (leaked!)
+logger.info("done")  # Still has step
+
+# Option 2: Manual token management
+tokens = structlog.contextvars.bind_contextvars(request_id="123")
+try:
+    logger.info("processing")
+finally:
+    structlog.contextvars.reset_contextvars(**tokens)  # Verbose cleanup
+```
+
+### What This Library Adds
+
+**1. Logger-Centric API** - Context management is a method on the logger object:
+```python
+logger = get_logger(__name__)
+
+# More intuitive: context is part of the logger
+with logger.context(request_id="123"):
+    logger.info("processing")
+```
+
+**2. The `.attach()` Method** - Add context mid-block with automatic cleanup:
+```python
+with logger.context(request_id="123"):
+    logger.info("starting")
+
+    # Attach more context - automatically cleaned up when context exits!
+    logger.attach(step="validation", input_size=1024)
+    logger.info("validating")  # Has request_id, step, input_size
+
+# ALL variables cleaned up automatically (request_id, step, input_size)
+logger.info("done")  # Clean slate
+```
+
+**3. Proper Nested Context Restoration**:
+```python
+with logger.context(operation="outer", depth=1):
+    logger.info("outer")  # operation="outer", depth=1
+
+    with logger.context(operation="inner", depth=2):
+        logger.info("inner")  # operation="inner", depth=2
+
+    logger.info("back")  # Restored to operation="outer", depth=1
+```
+
+### Summary: Three Context Methods
+
+| Method | Scope | Returns | Use Case |
+|--------|-------|---------|----------|
+| `.bind(**kw)` | Permanent | New logger | Application/function-level context |
+| `.context(**kw)` | Block scope | None | Operation-scoped temporary context |
+| `.attach(**kw)` | Current context block | None | Add context mid-operation |
+
+**Key Insight**: `.context()` + `.attach()` together provide a complete solution for scoped context management with automatic cleanup, building on structlog's `bound_contextvars()` but handling the `.attach()` use case that `bound_contextvars()` doesn't address.
+
+## Configuration
+
+**Note:** Configuration happens automatically on the first call to `get_logger()`. You only need to call `setup()` explicitly if you want to customize the configuration before getting a logger.
+
+### Output Modes
+
+The library automatically detects the environment and chooses the appropriate output format:
+
+- **Interactive terminal (TTY)**: Colored console output for human readability
+- **Piped/redirected/production**: JSON output for log aggregation
+- **File logging**: Always uses JSON format (JSONL)
+
+You can override the TTY detection with `force_json=True`.
+
+Configure via code or environment variables:
+
+### Programmatic Configuration
+
+```python
+from structlog_opinionated import LogConfig, setup, get_logger
+
+# Option 1: Explicit setup with custom config (call before any call to get_logger)
+#           This is rarely used because setup must be called before importing other modules which may log
+config = LogConfig(
+    level="DEBUG",
+    debug={"main": True, "harness.processor": True},
+    force_json=False,
+    file_prefix="/var/log/myapp",  # Enable file logging
+)
+setup(config)
+logger = get_logger(__name__)
+
+# Option 2: Just use environment variables and let auto-setup handle it
+# export LOG_LEVEL=DEBUG
+# export LOG_FILE_PREFIX=/var/log/myapp
+logger = get_logger(__name__)  # Auto-setup with env config
+```
+
+### Environment Variables
+
+All configuration options can be set via environment variables with the `LOG_` prefix:
+
+```bash
+export LOG_LEVEL=DEBUG
+export LOG_DEBUG__MAIN=1
+export LOG_DEBUG__HARNESS_PROCESSOR=1
+export LOG_FORCE_JSON=true
+export LOG_FILE_PREFIX=/var/log/myapp
+```
+
+You can also use a `.env` file in your project root:
+
+```bash
+# .env
+LOG_LEVEL=INFO
+LOG_DEBUG__MAIN=1
+LOG_DEBUG__API_HANDLER=1
+LOG_FILE_PREFIX=/var/log/myapp
+```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `level` | str | `"INFO"` | Minimum log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) |
+| `debug` | dict | `{}` | Module-specific debug logging (e.g., `LOG_DEBUG__MAIN=1`) |
+| `force_json` | bool | `False` | Force JSON output even in TTY/console environments |
+| `file_prefix` | str \| None | `None` | File prefix for JSONL log files (e.g., `/var/log/myapp` creates `/var/log/myapp_2025-10-09_11-30-45.jsonl`) |
+
+### Module-Specific Debug Logging
+
+The `debug` configuration allows you to enable debug-level logging for specific modules without changing the global log level. This is useful for debugging specific parts of your application in production.
+
+**Using Environment Variables:**
+```bash
+# Enable debug logging for the "main" module
+export LOG_DEBUG__MAIN=1
+
+# Enable debug logging for the "harness.processor" module
+# Note: Use single underscores to represent dots in module names
+export LOG_DEBUG__HARNESS_PROCESSOR=1
+```
+
+**Pattern Matching:**
+The debug filter uses **substring matching**, not exact matching. This makes it easy to enable debug logging for entire module hierarchies:
+
+- `LOG_DEBUG__API=1` enables debug for `api`, `api.handler`, `myapp.api.handler`, etc.
+- `LOG_DEBUG__MAIN=1` enables debug for `main`, `main.worker`, `app.main`, etc.
+- `LOG_DEBUG__HARNESS=1` enables debug for all modules containing "harness" (`harness.processor`, `app.harness`, etc.)
+
+**Using Code:**
+```python
+config = LogConfig(
+    level="INFO",  # Global level is INFO
+    debug={
+        "main": True,
+        "harness.processor": True,
+    }
+)
+```
+
+## Context Management
+
+Context variables persist across async boundaries and are automatically included in all log messages.
+
+### Three Ways to Add Context
+
+The logger provides three mechanisms for adding context, each optimized for different use cases:
+
+#### `.bind()` - Returns New Logger with Permanent Bindings
+
+**IMPORTANT**: `.bind()` does NOT modify the logger. It returns a **new** logger instance with additional context. This is an immutable/functional approach.
+
+```python
+import structlog_opinionated
+
+structlog_opinionated.setup()
+
+# Start with base logger
+logger = structlog_opinionated.get_logger(__name__)
+
+# .bind() returns a NEW logger - reassign the variable
+logger = logger.bind(service="api", version="1.0")
+logger.info("Event 1")  # Includes service, version
+
+# Chain multiple bindings by reassigning
+logger = logger.bind(environment="production")
+logger.info("Event 2")  # Includes service, version, environment
+
+# Pass logger around - each function can add its own bindings
+def handle_request(logger, request_id):
+    # Create request-specific logger (new instance)
+    logger = logger.bind(request_id=request_id)
+    logger.info("Processing")  # Includes all parent bindings + request_id
+    return logger
+
+logger = handle_request(logger, "req_123")
+logger.info("Done")  # Still has request_id
+```
+
+#### `.context()` - Temporary Scoped Bindings with Auto-Cleanup
+
+Use for operation-scoped context that should be automatically cleaned up:
+
+```python
+# Temporary bindings - automatically removed on exit
+with logger.context(operation="validate", input_size=1024):
+    logger.info("Starting validation")  # Includes operation, input_size
+    await some_async_operation()  # Context persists across await
+    logger.info("Validation complete")  # Still includes operation, input_size
+# operation and input_size automatically removed
+
+logger.info("Next operation")  # Only permanent bindings from .bind()
+
+# Nested contexts work correctly with value restoration
+with logger.context(operation="outer", depth=1):
+    logger.info("Outer")  # operation="outer", depth=1
+    with logger.context(operation="inner", depth=2):
+        logger.info("Inner")  # operation="inner", depth=2
+    logger.info("Back to outer")  # Restored: operation="outer", depth=1
+```
+
+#### `.attach()` - Add Context Mid-Block with Auto-Cleanup
+
+Use when you need to add context partway through a `.context()` block. Attached values are automatically cleaned up when the enclosing `.context()` exits:
+
+```python
+with logger.context(request_id="req_123", user_id=42):
+    logger.info("Request started")
+    # Logs: request_id, user_id
+
+    # Conditionally attach more context mid-block
+    if needs_validation:
+        logger.attach(validation_step="email", validator="regex")
+        logger.info("Validating email")
+        # Logs: request_id, user_id, validation_step, validator
+
+    # Attach can be called multiple times
+    logger.attach(stage="processing", progress=50)
+    logger.info("Processing halfway")
+    # Logs: request_id, user_id, validation_step, validator, stage, progress
+
+# ALL attached variables cleaned up automatically
+logger.info("Request complete")
+# Logs: only permanent .bind() context (if any)
+```
+
+**When to use `.attach()` vs `.context()`:**
+- Use `.context()` when you know the context upfront at the start of a block
+- Use `.attach()` when context becomes available conditionally or mid-operation
+- Both clean up automatically when the `.context()` block exits
+
+**Note:** `.attach()` can be called outside a `.context()` block, but then it behaves like `structlog.contextvars.bind_contextvars()` - the context persists until manually unbound or cleaned up by a future `.context()` exit.
+
+#### Combining `.bind()`, `.context()`, and `.attach()`
+
+```python
+# Application-level permanent bindings
+logger = get_logger(__name__)
+logger = logger.bind(service="api", version="1.0")
+
+def process_task(logger, task_id):
+    # Function-level permanent binding (new logger instance)
+    logger = logger.bind(task_id=task_id)
+
+    # Operation-level temporary bindings
+    with logger.context(status="processing"):
+        logger.info("Task started")
+        # Logs: service, version, task_id, status
+
+        # Attach context as it becomes available
+        logger.attach(step="validation")
+        result = validate_task()
+        # Logs: service, version, task_id, status, step
+
+        logger.attach(step="execution", input_hash=hash(result))
+        execute_task(result)
+        # Logs: service, version, task_id, status, step="execution", input_hash
+
+    logger.info("Task completed")
+    # Logs: service, version, task_id
+    # (status, step, input_hash all cleaned up)
+
+    return logger  # Return the task-bound logger if needed
+
+logger = process_task(logger, "task_789")
+```
+
+## Advanced Features
+
+### Stack Traces for Debugging
+
+You can include the current call stack in your logs using the `stack_info` parameter. This is useful for debugging to see how execution reached a particular log statement, without needing an exception to occur.
+
+```python
+logger = structlog_opinionated.get_logger(__name__)
+
+def complex_operation():
+    # Include call stack to understand execution flow
+    logger.info("Checkpoint reached", stack_info=True, step=3)
+```
+
+The log will include the full call stack showing the path of execution that led to this log statement. This is particularly useful when debugging complex async workflows or understanding unexpected code paths in production.
+
+**Note:** Stack traces add significant overhead and verbosity - use sparingly and primarily for debugging specific issues.
+
+### Exception Logging
+
+Exceptions are automatically captured and formatted as structured data when using `exc_info=True` or the `.exception()` method:
+
+```python
+try:
+    result = risky_operation()
+except ValueError as e:
+    logger.error("Operation failed", exc_info=True, operation="risky")
+    # Or use the convenience method:
+    logger.exception("Operation failed", operation="risky")
+```
+
+Exception data includes:
+- **exc_type**: Exception class name (e.g., "ValueError")
+- **exc_value**: Exception message
+- **frames**: List of stack frames with filename, line number, function name, and local variables
+
+This structured format makes it easy to query and analyze exceptions in log aggregation tools.
+
+### Automatic Callsite Tracking with Relative Paths
+
+Every log message automatically includes callsite information showing where the log was created. This information is captured and formatted as a single `callsite` field combining pathname and line number:
+
+**Format:** `relative/path/to/file.py:line_number`
+
+**Key features:**
+- **Relative paths**: Paths are relative to your current working directory (typically your project root), reducing clutter
+- **Combined format**: Single field instead of separate pathname/lineno fields
+- **Always available**: Automatically added to every log message (JSON and console)
+- **Fallback handling**: Uses absolute path if file is outside the working directory
+
+**Example JSON output:**
+```json
+{
+  "event": "Processing request",
+  "level": "info",
+  "callsite": "src/api/handler.py:45",
+  "request_id": "req_123"
+}
+```
+
+**Example console output (vertical mode):**
+```
+14:23:45.123 [INF] Processing request            [__main__]
+                   request_id=req_123
+                   [src/api/handler.py:45]
+```
+
+This reduces log clutter compared to full absolute paths while still providing all the information you need to locate the source of each log message. The relative path makes it easy to jump directly to the file in your editor.
+
+**Callsite in exceptions:**
+The callsite shows where you *logged* the exception, not where the exception was raised. For the exception's origin and full stack trace, use the structured `exception` field data.
+
+### Vertical Console Output
+
+The vertical console renderer is the default console output mode, optimized for readability during development and debugging. It displays log messages with:
+
+- **Abbreviated log levels**: `[INF]`, `[WAR]`, `[ERR]`, `[DBG]`, `[CRI]` for quick visual scanning
+- **Colorized output**: Different colors for log levels, keys, values, and logger names
+- **Vertical key-value layout**: Each field on its own line with consistent indentation
+- **Event message truncation**: Long messages truncated to 30 characters with full text preserved in `full_event` field
+- **Callsite display**: Relative file path and line number shown in brackets on the last line
+
+This format prioritizes readability over compactness, making it ideal for development environments where you need to quickly scan and understand log output.
+
+![Vertical Console Output](etc/vertical_logger_screenshot.png)
+
+## Development
+
+This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
+
+```bash
+# Install dependencies
+uv sync
+
+# Run tests
+uv run pytest
+
+# Format code
+uv run ruff format
+
+# Lint code
+uv run ruff check
+```
+
+### Viewing Output Examples
+
+To see live examples of the console output formatting, you can run the test programs directly:
+
+```bash
+# View basic console output with context
+uv run python tests/test_programs/context_simple.py
+
+# View nested context examples
+uv run python tests/test_programs/context_nested.py
+
+# View exception formatting with Rich tracebacks
+uv run python tests/test_programs/exception_basic.py
+
+# View vertical console renderer
+uv run python tests/test_programs/vertical_console_basic.py
+
+# View .attach() method examples
+uv run python tests/test_programs/context_attach_basic.py
+
+# View JSON output (force JSON mode)
+LOG_FORCE_JSON=true uv run python tests/test_programs/context_nested.py
+
+# View console output (force console mode)
+LOG_FORCE_CONSOLE=true uv run python tests/test_programs/stdlib_together.py
+```
+
+These test programs demonstrate various features including:
+- Colored console output with different log levels
+- Exception formatting with Rich tracebacks
+- Context management with `.bind()`, `.context()`, and `.attach()`
+- Vertical console renderer with rightmost column layout
+- JSON output formatting
+
+All test programs are located in `tests/test_programs/` and can be run directly to see the actual output formatting.
+
+## License
+
+MIT
