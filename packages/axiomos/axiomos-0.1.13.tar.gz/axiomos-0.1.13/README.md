@@ -1,0 +1,96 @@
+# AXIOMOS — Public Showcase (Minimal)
+[PyPI](https://pypi.org/project/axiomos/) • [GitHub](https://github.com/Aidenkuro10/axiomos-vitrine)  
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
+> 🔒 Public showcase build — demonstrates the critical path: **AXIR JSON → CPU/OpenCL execution → numeric verification**.  
+> The private core (optimizers, advanced kernels, schedulers, trust layer) remains **under NDA**.
+
+## Why AXIOMOS (Vision)
+Modern AI stacks are fragmented. **AXIR** (Axiomos IR) is a **universal, hardware-agnostic IR** for:
+- **Portability** — compile once, run on CPU, GPU, accelerators.
+- **Determinism & Reproducibility** — numerically verifiable parity across backends.
+- **Trust** — measurable parity today; cryptographic provenance/signatures in the private build.
+- **Longevity** — a stable IR beyond today’s frameworks and vendor APIs.
+
+This public showcase is intentionally minimal: it proves **AXIR JSON → multi-backend execution → verification** without revealing the private core.
+
+---
+
+## Quickstart (works outside the repo)
+
+### 1) Create a fresh env & install
+**Windows (PowerShell)**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install axiomos
+# Optional: OpenCL support (requires vendor drivers)
+pip install "axiomos[opencl]"
+
+macOS / Linux
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install axiomos
+# Optional: OpenCL support (requires vendor drivers)
+pip install "axiomos[opencl]"
+
+2) Environment check
+axiomos-doctor
+
+3) Quick demo (auto-generates a fixture)
+axiomos-demo
+
+This creates examples/demo_vector_add.axir.json and runs a CPU ↔ OPENCL check.
+If no OpenCL runtime is available, it falls back to OPENCL(cpu-fallback) and still verifies parity.
+
+4) Optional tiny latency smoke test
+axiomos-smoke --size 512 --warmup 3 --repeat 30 --seed 0
+
+If you cloned the repo (extra fixtures)
+python make_fixtures.py
+
+Creates:
+
+examples/
+ ├─ vector_add_small.axir.json
+ └─ softmax2d_small.axir.json
+
+Verify examples (repo fixtures)
+# CPU ↔ CPU (Hello AXIR)
+axiomos-verify examples/vector_add_small.axir.json --buffer hC --backend-a cpu --backend-b cpu --seed 0
+
+# CPU ↔ OpenCL (Softmax 8×8)
+python -m axiomos.verify examples/softmax2d_small.axir.json --buffer hY --backend-a cpu --backend-b opencl --seed 0
+If pyopencl + drivers are present → label OPENCL(…) and the device path is used.
+
+Otherwise → OPENCL(cpu-fallback).
+
+Output includes: SHAPES, max_abs_err, ALLCLOSE (atol=1e-6, rtol=1e-5), CPU time, OPENCL time.
+Note: OpenCL path = public minimal backend (not optimized).
+
+(Optional) PyTorch → AXIR mini-demo
+
+pip install torch
+python pytorch_to_axir.py
+python -m axiomos.verify examples/pytorch_softmax.axir.json --buffer hY --backend-a cpu --backend-b opencl --seed 0
+What this proves (today)
+Portability — the same .axir.json runs on CPU and OpenCL (if present).
+
+Verifiability — strict numeric parity (allclose, max_abs_err) with shapes & timings.
+
+Reproducibility — seedable runs and versioned fixtures.
+
+Operable UX — install, run, verify in minutes; no private code exposure.
+
+What’s intentionally not here
+Private optimizer passes, schedulers, and advanced kernels.
+
+Full operator coverage and vendor-tuned implementations.
+
+Cryptographic provenance & signature pipeline (available in private build).
+
+➡️ For the full demo (under NDA), please contact us.
+
+License
+MIT (for this public showcase only). The full runtime remains proprietary.
