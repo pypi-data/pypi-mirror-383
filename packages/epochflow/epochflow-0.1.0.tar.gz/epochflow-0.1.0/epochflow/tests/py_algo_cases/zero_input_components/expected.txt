@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {"id": "adx_val", "type": "adx", "params": {"period": 14}},
+    {"id": "vwap_val", "type": "vwap", "params": {}},
+    {"id": "number_0", "type": "number", "params": {"value": 25}},
+    {"id": "gt_0", "type": "gt", "params": {}}
+  ],
+  "edges": [
+    {"source": "adx_val", "source_handle": "result", "target": "gt_0", "target_handle": "SLOT0"},
+    {"source": "number_0", "source_handle": "result", "target": "gt_0", "target_handle": "SLOT1"}
+  ]
+}

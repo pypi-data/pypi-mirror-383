@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "node_1",
+      "type": "sql_query_2",
+      "params": {
+        "sql": "SELECT AVG(close) AS output0, MAX(close) AS output1, timestamp FROM input"
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "node_1",
+      "source_handle": "output0",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "node_1",
+      "source_handle": "output1",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "node_1",
+      "target_handle": "SLOT"
+    }
+  ]
+}

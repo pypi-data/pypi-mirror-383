@@ -1,0 +1,207 @@
+{
+  "nodes": [
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "ifexp_0",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "ifexp_1",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "ifexp_2",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "logical_or_0",
+      "type": "logical_or",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 30
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 70
+      }
+    },
+    {
+      "id": "rsi_val",
+      "type": "rsi",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    },
+    {
+      "id": "text_0",
+      "type": "text",
+      "params": {
+        "value": "Oversold"
+      }
+    },
+    {
+      "id": "text_1",
+      "type": "text",
+      "params": {
+        "value": "Normal"
+      }
+    },
+    {
+      "id": "text_2",
+      "type": "text",
+      "params": {
+        "value": "Overbought"
+      }
+    },
+    {
+      "id": "text_3",
+      "type": "text",
+      "params": {
+        "value": ""
+      }
+    },
+    {
+      "id": "text_4",
+      "type": "text",
+      "params": {
+        "value": "Active"
+      }
+    },
+    {
+      "id": "text_5",
+      "type": "text",
+      "params": {
+        "value": "Inactive"
+      }
+    },
+    {
+      "id": "text_6",
+      "type": "text",
+      "params": {
+        "value": "Trading"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "ifexp_1",
+      "target_handle": "condition"
+    },
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "logical_or_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "logical_or_0",
+      "source_handle": "result",
+      "target": "ifexp_2",
+      "target_handle": "condition"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "condition"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "logical_or_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "rsi_val",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "rsi_val",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "rsi_val",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "text_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "true"
+    },
+    {
+      "source": "text_1",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "false"
+    },
+    {
+      "source": "text_2",
+      "source_handle": "result",
+      "target": "ifexp_1",
+      "target_handle": "true"
+    },
+    {
+      "source": "text_3",
+      "source_handle": "result",
+      "target": "ifexp_1",
+      "target_handle": "false"
+    },
+    {
+      "source": "text_4",
+      "source_handle": "result",
+      "target": "ifexp_2",
+      "target_handle": "true"
+    },
+    {
+      "source": "text_5",
+      "source_handle": "result",
+      "target": "ifexp_2",
+      "target_handle": "false"
+    }
+  ]
+}

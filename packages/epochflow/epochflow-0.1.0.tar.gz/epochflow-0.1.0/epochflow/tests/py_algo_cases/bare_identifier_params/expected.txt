@@ -1,0 +1,28 @@
+{
+  "nodes": [
+    {
+      "id": "london",
+      "type": "sessions",
+      "params": {
+        "session_type": "London"
+      },
+      "timeframe": "1H"
+    },
+    {
+      "id": "ny_src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H",
+      "session": "NewYork"
+    },
+    {
+      "id": "sessions_0",
+      "type": "sessions",
+      "params": {
+        "session": "NewYork"
+      },
+      "timeframe": "1H"
+    }
+  ],
+  "edges": []
+}

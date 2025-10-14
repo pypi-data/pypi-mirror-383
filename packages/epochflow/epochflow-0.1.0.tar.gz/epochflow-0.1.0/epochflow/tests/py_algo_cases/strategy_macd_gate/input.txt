@@ -1,0 +1,4 @@
+src = market_data_source(timeframe="1H")
+mac = macd(12,26,9)(src.c)
+enter = mac.macd > mac.macd_signal
+trade_signal_executor()(enter_long=enter)

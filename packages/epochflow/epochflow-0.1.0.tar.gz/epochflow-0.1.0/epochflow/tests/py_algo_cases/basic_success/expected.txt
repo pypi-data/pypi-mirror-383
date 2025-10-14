@@ -1,0 +1,66 @@
+{
+  "nodes": [
+    {
+      "id": "cross",
+      "type": "crossover",
+      "params": {}
+    },
+    {
+      "id": "ema20",
+      "type": "ema",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "ema50",
+      "type": "ema",
+      "params": {
+        "period": 50
+      }
+    },
+    {
+      "id": "node_4",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    }
+  ],
+  "edges": [
+    {
+      "source": "cross",
+      "source_handle": "result",
+      "target": "node_4",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "ema20",
+      "source_handle": "result",
+      "target": "cross",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "ema50",
+      "source_handle": "result",
+      "target": "cross",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "ema20",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "ema50",
+      "target_handle": "SLOT"
+    }
+  ]
+}

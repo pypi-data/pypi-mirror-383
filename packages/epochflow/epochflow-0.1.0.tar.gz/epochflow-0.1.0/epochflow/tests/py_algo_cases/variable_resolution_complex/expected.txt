@@ -1,0 +1,335 @@
+{
+  "nodes": [
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "15Min"
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 20
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 0.005
+      }
+    },
+    {
+      "id": "number_2",
+      "type": "number",
+      "params": {
+        "value": 0.5
+      }
+    },
+    {
+      "id": "upper_resistance",
+      "type": "max",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "lower_support",
+      "type": "min",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "sub_0",
+      "type": "sub",
+      "params": {}
+    },
+    {
+      "id": "price_stddev",
+      "type": "stddev",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "avg_price",
+      "type": "sma",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "div_0",
+      "type": "div",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "logical_and_0",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "lte_0",
+      "type": "lte",
+      "params": {}
+    },
+    {
+      "id": "logical_and_1",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "gte_0",
+      "type": "gte",
+      "params": {}
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "add_0",
+      "type": "add",
+      "params": {}
+    },
+    {
+      "id": "mul_0",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "lt_1",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "sub_1",
+      "type": "sub",
+      "params": {}
+    },
+    {
+      "id": "mul_1",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "node_21",
+      "type": "trade_signal_executor",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "src",
+      "source_handle": "h",
+      "target": "upper_resistance",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "l",
+      "target": "lower_support",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "upper_resistance",
+      "source_handle": "result",
+      "target": "sub_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "lower_support",
+      "source_handle": "result",
+      "target": "sub_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "price_stddev",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "avg_price",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "price_stddev",
+      "source_handle": "result",
+      "target": "div_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "avg_price",
+      "source_handle": "result",
+      "target": "div_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "div_0",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lte_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "lower_support",
+      "source_handle": "result",
+      "target": "lte_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "lte_0",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gte_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "upper_resistance",
+      "source_handle": "result",
+      "target": "gte_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "gte_0",
+      "source_handle": "result",
+      "target": "logical_and_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "logical_and_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "sub_0",
+      "source_handle": "result",
+      "target": "mul_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_2",
+      "source_handle": "result",
+      "target": "mul_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "upper_resistance",
+      "source_handle": "result",
+      "target": "add_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "mul_0",
+      "source_handle": "result",
+      "target": "add_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "add_0",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "sub_0",
+      "source_handle": "result",
+      "target": "mul_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_2",
+      "source_handle": "result",
+      "target": "mul_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "lower_support",
+      "source_handle": "result",
+      "target": "sub_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "mul_1",
+      "source_handle": "result",
+      "target": "sub_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "sub_1",
+      "source_handle": "result",
+      "target": "lt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "logical_and_0",
+      "source_handle": "result",
+      "target": "node_21",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "logical_and_1",
+      "source_handle": "result",
+      "target": "node_21",
+      "target_handle": "enter_short"
+    },
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "node_21",
+      "target_handle": "exit_long"
+    },
+    {
+      "source": "lt_1",
+      "source_handle": "result",
+      "target": "node_21",
+      "target_handle": "exit_short"
+    }
+  ]
+}

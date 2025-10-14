@@ -1,0 +1,106 @@
+{
+  "nodes": [
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "node_2",
+      "type": "sql_query_2",
+      "params": {
+        "sql": "SELECT 1 AS output0, 2 AS output1, timestamp FROM input"
+      }
+    },
+    {
+      "id": "node_3",
+      "type": "sql_query_2",
+      "params": {
+        "sql": "SELECT 3 AS output0, 4 AS output1, timestamp FROM input"
+      }
+    },
+    {
+      "id": "node_4",
+      "type": "sql_query_2",
+      "params": {
+        "sql": "SELECT 5 AS output0, 6 AS output1, timestamp FROM input"
+      }
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 0
+      }
+    },
+    {
+      "id": "rsi_val",
+      "type": "rsi",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1D"
+    }
+  ],
+  "edges": [
+    {
+      "source": "node_2",
+      "source_handle": "output0",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "rsi_val",
+      "source_handle": "result",
+      "target": "node_2",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "rsi_val",
+      "source_handle": "result",
+      "target": "node_3",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "rsi_val",
+      "source_handle": "result",
+      "target": "node_4",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "node_2",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "node_3",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "node_4",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "rsi_val",
+      "target_handle": "SLOT"
+    }
+  ]
+}

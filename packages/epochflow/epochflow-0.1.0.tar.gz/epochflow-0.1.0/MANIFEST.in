@@ -1,0 +1,20 @@
+# Include documentation files
+include README.md
+include LICENSE
+include STANDALONE_USAGE.md
+
+# Include package data
+recursive-include epochflow *.py
+recursive-include epochflow/tests *.txt
+
+# Exclude compiled Python files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude *.so
+global-exclude .DS_Store
+
+# Exclude development files
+exclude .gitignore
+exclude pyproject.toml
+recursive-exclude * .git*

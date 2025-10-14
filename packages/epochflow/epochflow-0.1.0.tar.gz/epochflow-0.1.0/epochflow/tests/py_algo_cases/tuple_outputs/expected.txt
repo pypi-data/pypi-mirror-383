@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "node_1",
+      "type": "bbands",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "15min"
+    },
+    {
+      "id": "width",
+      "type": "bband_width",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "node_1",
+      "source_handle": "bbands_lower",
+      "target": "width",
+      "target_handle": "bbands_lower"
+    },
+    {
+      "source": "node_1",
+      "source_handle": "bbands_middle",
+      "target": "width",
+      "target_handle": "bbands_middle"
+    },
+    {
+      "source": "node_1",
+      "source_handle": "bbands_upper",
+      "target": "width",
+      "target_handle": "bbands_upper"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "node_1",
+      "target_handle": "SLOT"
+    }
+  ]
+}

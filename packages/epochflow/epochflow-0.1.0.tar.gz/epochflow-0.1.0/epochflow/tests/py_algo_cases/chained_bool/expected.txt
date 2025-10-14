@@ -1,0 +1,108 @@
+{
+  "nodes": [
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_1",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_2",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "logical_and_0",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "logical_and_1",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "node_4",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    }
+  ],
+  "edges": [
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_1",
+      "source_handle": "result",
+      "target": "logical_and_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_2",
+      "source_handle": "result",
+      "target": "logical_and_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "logical_and_0",
+      "source_handle": "result",
+      "target": "node_4",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "logical_and_1",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_2",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "h",
+      "target": "gt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "l",
+      "target": "gt_2",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    }
+  ]
+}

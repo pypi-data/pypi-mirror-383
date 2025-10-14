@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    {"id": "src", "type": "market_data_source", "timeframe": "1D", "params": {}},
+    {"id": "ema20", "type": "ema", "params": {"period": 20}},
+    {"id": "ema50", "type": "ema", "params": {"period": 50}},
+    {"id": "sma100", "type": "sma", "params": {"period": 100}},
+    {"id": "sma200", "type": "sma", "params": {"period": 200}},
+    {"id": "node_5", "type": "lines_chart_report", "params": {"title": "Moving Averages"}}
+  ],
+  "edges": [
+    {"source": "src", "source_handle": "c", "target": "ema20", "target_handle": "SLOT"},
+    {"source": "src", "source_handle": "c", "target": "ema50", "target_handle": "SLOT"},
+    {"source": "src", "source_handle": "c", "target": "sma100", "target_handle": "SLOT"},
+    {"source": "src", "source_handle": "c", "target": "sma200", "target_handle": "SLOT"},
+    {"source": "ema20", "source_handle": "result", "target": "node_5", "target_handle": "SLOT"},
+    {"source": "ema50", "source_handle": "result", "target": "node_5", "target_handle": "SLOT"},
+    {"source": "sma100", "source_handle": "result", "target": "node_5", "target_handle": "SLOT"},
+    {"source": "sma200", "source_handle": "result", "target": "node_5", "target_handle": "SLOT"}
+  ]
+}

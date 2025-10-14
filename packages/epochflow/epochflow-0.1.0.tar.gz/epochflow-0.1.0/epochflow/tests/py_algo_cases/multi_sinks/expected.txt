@@ -1,0 +1,89 @@
+{
+  "nodes": [
+    {
+      "id": "cross",
+      "type": "crossover",
+      "params": {}
+    },
+    {
+      "id": "fast",
+      "type": "ema",
+      "params": {
+        "period": 10
+      }
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "node_4",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "slow",
+      "type": "ema",
+      "params": {
+        "period": 30
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    }
+  ],
+  "edges": [
+    {
+      "source": "cross",
+      "source_handle": "result",
+      "target": "node_4",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "fast",
+      "source_handle": "result",
+      "target": "cross",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "fast",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "node_4",
+      "target_handle": "enter_short"
+    },
+    {
+      "source": "slow",
+      "source_handle": "result",
+      "target": "cross",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "slow",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "fast",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "slow",
+      "target_handle": "SLOT"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "nodes": [
+    {
+      "id": "add_0",
+      "type": "add",
+      "params": {}
+    },
+    {
+      "id": "bool_to_num_cast_0",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_1",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "node_8",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 100
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 1
+      }
+    },
+    {
+      "id": "number_2",
+      "type": "number",
+      "params": {
+        "value": 0
+      }
+    },
+    {
+      "id": "number_3",
+      "type": "number",
+      "params": {
+        "value": 101
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1D"
+    }
+  ],
+  "edges": [
+    {
+      "source": "add_0",
+      "source_handle": "result",
+      "target": "gt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "bool_to_num_cast_0",
+      "source_handle": "result",
+      "target": "add_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "bool_to_num_cast_0",
+      "target_handle": "condition"
+    },
+    {
+      "source": "gt_1",
+      "source_handle": "result",
+      "target": "node_8",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "bool_to_num_cast_0",
+      "target_handle": "true"
+    },
+    {
+      "source": "number_2",
+      "source_handle": "result",
+      "target": "bool_to_num_cast_0",
+      "target_handle": "false"
+    },
+    {
+      "source": "number_3",
+      "source_handle": "result",
+      "target": "gt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "add_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    }
+  ]
+}

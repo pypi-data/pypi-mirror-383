@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "id": "bool_false_0",
+      "type": "bool_false",
+      "params": {}
+    },
+    {
+      "id": "ifexp_0",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "node_7",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 70
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 30
+      }
+    },
+    {
+      "id": "over",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "rsi_node",
+      "type": "rsi",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    },
+    {
+      "id": "under",
+      "type": "lt",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "bool_false_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "false"
+    },
+    {
+      "source": "ifexp_0",
+      "source_handle": "result",
+      "target": "node_7",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "over",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "under",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "over",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "true"
+    },
+    {
+      "source": "rsi_node",
+      "source_handle": "result",
+      "target": "over",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "rsi_node",
+      "source_handle": "result",
+      "target": "under",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "rsi_node",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "under",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "condition"
+    }
+  ]
+}

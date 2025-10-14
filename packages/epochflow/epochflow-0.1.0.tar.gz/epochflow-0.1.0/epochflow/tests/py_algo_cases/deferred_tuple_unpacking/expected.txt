@@ -1,0 +1,60 @@
+{
+  "nodes": [
+    {
+      "id": "bb_result",
+      "type": "bbands",
+      "params": {
+        "period": 20,
+        "stddev": 2
+      }
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1D"
+    }
+  ],
+  "edges": [
+    {
+      "source": "bb_result",
+      "source_handle": "bbands_lower",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "bb_result",
+      "source_handle": "bbands_upper",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "bb_result",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    }
+  ]
+}
