@@ -1,0 +1,282 @@
+# Nexus Delta SDK v2.1.0
+
+[![PyPI version](https://badge.fury.io/py/nexusdelta-sdk.svg)](https://pypi.org/project/nexusdelta-sdk/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+The official Python SDK for the Nexus Delta AI Agent Marketplace, now enhanced with **multi-model AI orchestration** supporting Grok (xAI), Gemini (Google), and Jules hyper-orchestrator.
+
+## 🚀 What's New in v2.1.0
+
+- **Multi-Model AI Orchestration** - Intelligent routing between Grok, Gemini, and Jules
+- **Hyper-Scale Content Generation** - Jules integration with 60 concurrent session capacity
+- **Command-Line Interface** - CLI tools for AI queries and orchestration
+- **Context-Aware Routing** - Automatic model selection based on task type and context
+- **Backward Compatibility** - All existing SDK features preserved
+
+## 📦 Installation
+
+```bash
+pip install nexusdelta-sdk
+
+# For AI features (optional)
+pip install nexusdelta-sdk[ai]
+
+# For development
+pip install nexusdelta-sdk[dev]
+```
+
+## 🔑 Quick Start
+
+### Basic Usage (Agent Marketplace)
+
+```python
+from nexusdelta_sdk import NexusDeltaSDK
+
+# Initialize with Firebase token
+sdk = NexusDeltaSDK(api_key="your_firebase_id_token")
+
+# Search for agents
+agents = sdk.search_agents("data processing")
+for agent in agents:
+    print(f"- {agent['name']}: {agent['purpose']}")
+
+# Execute a tool
+result = sdk.execute_tool(
+    agent_id="agent_abc123",
+    tool_name="process_data",
+    payload={"data": [1, 2, 3]}
+)
+```
+
+### Multi-Model AI Orchestration
+
+```python
+from nexusdelta_sdk import NexusDeltaSDK, MultiModelOrchestrator
+
+# Initialize SDK
+sdk = NexusDeltaSDK(api_key="your_token")
+
+# Create multi-model agent
+agent = sdk.create_multi_model_agent(
+    "AICodeAssistant",
+    "Multi-model coding assistant",
+    ["grok", "gemini", "jules"]
+)
+
+# Intelligent query routing
+result = sdk.orchestrate_ai_query(
+    "Write a Python function to calculate fibonacci numbers"
+)
+print(f"Model used: {result['model']}")
+print(f"Response: {result['response']}")
+
+# Direct model access
+grok_result = sdk.orchestrate_ai_query(
+    "Explain quantum computing",
+    model="grok"
+)
+
+gemini_result = sdk.orchestrate_ai_query(
+    "Generate API documentation",
+    model="gemini"
+)
+
+# GitHub-aware content generation (routes to Jules)
+jules_result = sdk.orchestrate_ai_query(
+    "Generate project documentation",
+    context="github.com/microsoft/vscode"
+)
+```
+
+### Command Line Interface
+
+```bash
+# Check SDK status
+nexusdelta-cli status
+
+# Query with automatic routing
+nexusdelta-cli query "Write a Python function to reverse a string"
+
+# Query specific model
+nexusdelta-cli query --model grok "Explain how neural networks work"
+
+# Query with GitHub context
+nexusdelta-cli query --context "github.com/user/repo" "Generate API docs"
+
+# List model capabilities
+nexusdelta-cli models
+
+# Test API key configuration
+nexusdelta-cli test-keys
+```
+
+## 🔧 Configuration
+
+### API Keys Setup
+
+Set environment variables for AI model access:
+
+```bash
+export XAI_API_KEY="your-xai-api-key"        # For Grok
+export GEMINI_API_KEY="your-gemini-api-key"  # For Gemini
+export JULES_API_KEY="your-jules-api-key"    # For Jules
+```
+
+### Firebase Authentication
+
+Get your Firebase ID token for agent marketplace access:
+
+```python
+import firebase_admin
+from firebase_admin import auth
+
+# Initialize Firebase
+firebase_admin.initialize_app()
+
+# Get ID token
+user = auth.get_user("user_id")
+id_token = user.custom_claims.get("id_token")  # Or however you store it
+```
+
+## 🎯 Model Capabilities
+
+| Model | Best For | Key Features |
+|-------|----------|--------------|
+| **Grok (xAI)** | Reasoning, Analysis | General AI, Problem Solving, Explanations |
+| **Gemini (Google)** | Code Generation, Creative Writing | Programming, Text Analysis, Content Creation |
+| **Jules (Google)** | Content Generation with Context | GitHub Integration, Project Planning, Documentation |
+
+### Intelligent Routing
+
+The SDK automatically routes tasks to the best model:
+
+- **Code/Script Generation** → Gemini
+- **Reasoning/Analysis** → Grok
+- **GitHub Context** → Jules
+- **Creative Writing** → Gemini
+- **General Tasks** → Grok
+
+## 📚 Advanced Usage
+
+### Custom Multi-Model Orchestrator
+
+```python
+from nexusdelta_sdk import MultiModelOrchestrator
+
+# Create standalone orchestrator
+orchestrator = MultiModelOrchestrator(
+    grok_key="your_grok_key",
+    gemini_key="your_gemini_key",
+    jules_key="your_jules_key"
+)
+
+# Manual routing
+model = orchestrator.route_task_to_model("Write a function", "code task")
+print(f"Best model: {model}")  # Output: gemini
+
+# Direct queries
+result = orchestrator.query_grok("Explain recursion")
+result = orchestrator.query_gemini("Generate HTML template")
+result = orchestrator.query_jules("Document this API", "github.com/user/repo")
+```
+
+### Agent Registration with Multi-Model Support
+
+```python
+# Register agent with multi-model capabilities
+agent_card = {
+    "name": "MultiModelAssistant",
+    "purpose": "AI assistant with multiple model support",
+    "category": "ai_assistant",
+    "model": "multi_model_orchestrator",
+    "tools": [
+        {
+            "id": "orchestrate_query",
+            "name": "AI Query Orchestration",
+            "description": "Route queries to appropriate AI models",
+            "parameters": {
+                "prompt": {"type": "string", "description": "The query"},
+                "context": {"type": "string", "description": "Context for routing"}
+            }
+        }
+    ],
+    "metadata": {
+        "supported_models": ["grok", "gemini", "jules"],
+        "routing_intelligence": True
+    }
+}
+
+response = sdk.register_agent(agent_card)
+```
+
+## 🔍 API Reference
+
+### NexusDeltaSDK
+
+#### Core Methods
+- `register_agent(agent_card)` - Register new agent
+- `search_agents(query, category, vetted_only)` - Search marketplace
+- `get_agent(agent_id)` - Get agent details
+- `execute_tool(agent_id, tool_name, payload)` - Execute agent tool
+- `health_check()` - Check system status
+
+#### Multi-Model Methods
+- `create_multi_model_agent(name, purpose, models)` - Create multi-model agent
+- `orchestrate_ai_query(prompt, context, model, **params)` - AI query orchestration
+- `get_model_capabilities()` - Get available model capabilities
+
+### MultiModelOrchestrator
+
+- `orchestrate_query(prompt, context, **params)` - Auto-route query
+- `route_task_to_model(task, context)` - Determine best model
+- `query_grok(prompt, **params)` - Direct Grok query
+- `query_gemini(prompt, **params)` - Direct Gemini query
+- `query_jules(prompt, repo_context)` - Direct Jules query
+
+## 🏗️ Architecture
+
+```
+Nexus Delta SDK v2.1.0
+├── Core SDK (Agent Marketplace)
+│   ├── Agent registration & discovery
+│   ├── Tool execution
+│   └── Firebase integration
+├── Multi-Model AI Orchestration
+│   ├── Intelligent routing engine
+│   ├── Model integrations (Grok, Gemini, Jules)
+│   └── Context-aware processing
+└── CLI Tools
+    ├── Command-line interface
+    ├── Status monitoring
+    └── API key management
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- [PyPI Package](https://pypi.org/project/nexusdelta-sdk/)
+- [GitHub Repository](https://github.com/oogalieboogalie/Nexus-Delta-SDK)
+- [Documentation](https://nexusdelta-sdk.readthedocs.io/)
+- [Nexus Delta Marketplace](https://nexus-delta.web.app)
+
+## 🆘 Support
+
+- 📧 Email: team@nexusdelta.ai
+- 🐛 Issues: [GitHub Issues](https://github.com/oogalieboogalie/Nexus-Delta-SDK/issues)
+- 💬 Discord: [Nexus Delta Community](https://discord.gg/nexusdelta)
+
+---
+
+**Built with ❤️ by the Nexus Delta Team**
