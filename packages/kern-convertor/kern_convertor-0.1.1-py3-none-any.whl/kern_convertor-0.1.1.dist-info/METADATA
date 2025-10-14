@@ -1,0 +1,82 @@
+Metadata-Version: 2.4
+Name: kern-convertor
+Version: 0.1.1
+Summary: Python script to convert font kerning data from Adobe fea format to UFO plist format and vice-versa
+Author-email: Anirban Mitra <mitra_anirban@yahoo.co.in>
+License-Expression: FSFAP
+Project-URL: Homepage, https://github.com/mitradranirban/kern-convertor
+Project-URL: Repository, https://github.com/mitradranirban/kern-convertor
+Keywords: fonts,typography,opentype,features
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENCE
+Requires-Dist: fonttools>=4.0.0
+Dynamic: license-file
+
+# kern-convertor
+kern-convertor is a Python utility for converting kerning data in AFDKO features.fea format into UFO-compatible groups.plist and kerning.plist files.
+
+## Features
+* Converts AFDKO-style kerning features into UFO-format kerning and group files for direct use in font editors or build processes.​
+
+* Command-line interface for batch processing kerning data from feature files.​
+
+* The fea2kern.py script provides the ability to convert UFO-format groups.plist and kerning.plist files back into Adobe FEA (features) syntax.
+
+
+## Installation
+Install via pip from PyPI:
+
+```
+pip install kern-convertor
+```
+## Usage
+After installation, kern-convertor provides command-line scripts to generate kerning and group files from Adobe Feature File and vice-versa :
+### Convert Adobe Feature file to UFO plist format
+To convert a features file to groups.plist:
+
+```
+kern-groups features.fea groups.plist
+```
+To convert kerning pairs to kerning.plist:
+
+```
+kern-convertor features.fea kerning.plist
+```
+Replace features.fea with the path to your AFDKO features file. Output .plist files can be copied into the appropriate UFO font directory.​
+
+#### Example
+To convert your kerning feature file and save the outputs in the current directory:
+```
+kern-groups path/to/features.fea groups.plist
+kern-convertor path/to/features.fea kerning.plist
+```
+### Convert kerning data in ufo plist format to Adobe Fea format
+
+fea2kern script converts existing UFO groups.plist and kerning.plist files to a FEA features format file.
+
+Command
+
+`fea2kern path/to/groups.plist path/to/kerning.plist output.fea`
+
+The first argument is the path to groups.plist
+
+The second argument is the path to kerning.plist
+
+The third argument is the output .fea filename
+
+#### Example
+To generate an Adobe FEA kerning feature from UFO data:
+
+```
+fea2kern groups.plist kerning.plist features.fea
+```
+This command writes an AFDKO FEA kerning feature, reconstructed from the groups.plist and kerning.plist files, to features.fea.
+
+## Requirements
+This tool requires Python 3.7 or later. Any additional dependencies will be installed automatically via pip.​
+
+## License
+See the LICENSE file for licensing details.
+
+ 
