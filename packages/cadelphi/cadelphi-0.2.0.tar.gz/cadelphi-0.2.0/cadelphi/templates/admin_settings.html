@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_admin_settings"] }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <header class="panel-header">
+    <h2>{{ texts["settings_heading"] }}</h2>
+    <div class="actions">
+      <a class="button secondary" href="{{ path_for('admin_dashboard') }}">{{ texts["button_back_to_dashboard"] }}</a>
+    </div>
+  </header>
+  <form method="post" class="form-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <label>{{ texts["selection_strategy_label"] }}
+      <select name="selection_strategy">
+        {% for strategy in strategies %}
+          <option value="{{ strategy.value }}" {% if settings and settings.selection_strategy == strategy %}selected{% endif %}>{{ strategy_labels[strategy.value] }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>{{ texts["new_admin_password_label"] }}
+      <input type="password" name="new_password" minlength="8" />
+      <small>{{ texts["password_hint"] }}</small>
+    </label>
+    <button type="submit" class="button primary">{{ texts["button_save_changes"] }}</button>
+  </form>
+</section>
+{% endblock %}
