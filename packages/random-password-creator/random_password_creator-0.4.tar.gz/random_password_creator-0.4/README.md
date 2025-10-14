@@ -1,0 +1,95 @@
+# RandomPasswordCreator
+
+A simple command-line tool to generate random and secure passwords using the Python Standard Library
+
+---
+
+## Features
+
+- Generates random passwords directly from the command line
+- Customizable password **length** and **quantity**
+- Designed for Windows
+
+---
+
+## Quick Start
+
+### 1. Add to System Path
+
+To use `RandomPasswordCreator` from any terminal window:
+
+1. Locate the file `create_password.bat`
+2. Add its folder path to the **Windows "Path" system environment variable**
+3. Replace `<path_to_RandomPasswordCreator.py>` in `create_passoword.bat` with the path to the `RandomPasswordCreator.py` module
+4. Open a command prompt and type `create_password`. It should print a random password
+
+---
+
+### 2. Usage
+
+**Arguments:**
+
+- `-n`: controls how many passwords to return  
+- `-l`: controls the length of the passwords  
+- `-o`: controls the characters to omit from the passwords
+- `-j`: outputs passwords only made up of letters and numbers
+- `-a`: controls the characters to add to the passwords
+
+Help message:
+
+```
+create_password -h
+```
+Default command:
+```
+create_password
+```
+-n argument usage:
+
+```
+create_password -n 5
+```
+-l argument usage:
+
+```
+create_password -l 20
+```
+-o argument usage:
+
+```
+create_password -o *+d
+```
+-j argument usage:
+
+```
+create_password -j
+```
+-a argument usage:
+
+```
+create_password -a !"£$%/()=?
+```
+using all arguments:
+
+```
+create_password -n 4 -l 15 -o *+d -j -a !\"£$%/()=
+```
+
+---
+
+
+## Changelog
+
+### [DEV]
+
+[0000.004] Added the -a argument and removed the -i argument [2025/10/13]\
+[0000.003] Added the -j argument [2025/10/04]\
+[0000.002] Added the -i argument [2025/09/23]\
+[0000.001] First version [2025/09/15]
+
+### [MAIN]
+
+[0000.004] Added the -a argument and removed the -i argument [2025/10/13]\
+[0000.003] Added the -j argument [2025/10/04]\
+[0000.002] Added the -i argument [2025/09/23]\
+[0000.001] First version [2025/09/15]
