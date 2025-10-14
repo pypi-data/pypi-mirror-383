@@ -1,0 +1,12 @@
+[paths]
+source = dataset_creator
+
+[run]
+branch = false
+source = dataset_creator
+parallel = false
+
+[report]
+show_missing = true
+precision = 2
+omit = *migrations*
