@@ -1,0 +1,16 @@
+scipy>=1.11.0
+pandas>=1.0.0
+matplotlib>=3.0.0
+numpy>=1.18.0
+scikit-learn>=1.6.0
+
+[dev]
+pytest>=6.0
+pytest-cov>=2.0
+black>=22.0
+flake8>=4.0
+isort>=5.0
+
+[test]
+pytest>=6.0
+pytest-cov>=2.0
