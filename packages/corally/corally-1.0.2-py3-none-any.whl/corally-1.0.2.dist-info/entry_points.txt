@@ -1,0 +1,5 @@
+[console_scripts]
+corally = corally.cli.main:main_cli
+corally-calc = corally.cli.calculator:calculator_cli
+corally-currency = corally.cli.currency:currency_cli
+corally-gui = corally.gui.launcher:launch_gui
