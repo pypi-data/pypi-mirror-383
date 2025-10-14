@@ -1,0 +1,100 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: pytest on ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        submodules: 'recursive'
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
+    - name: Install requirements (Python 3)
+      run: pip install -r requirements/ci.txt -r requirements/dev.txt
+    - name: Install pdfly
+      if: matrix.python-version != '3.8'
+      run: pip install .
+    - name: Install pdfly using the minimal versions of the dependencies
+      if: matrix.python-version == '3.8'
+      run: |
+        # We ensure that those minimal versions remain compatible:
+        sed -i '/dependencies = \[/,/\]/s/>=/==/' pyproject.toml
+        pip install .
+
+    - name: Run tests
+      run: pytest -vv
+
+  codestyle:
+    name: Check code style issues
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        submodules: 'recursive'
+    - name: Cache Downloaded Files
+      id: cache-downloaded-files
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: '**/tests/pdf_cache/*'
+        key: cache-downloaded-files
+
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
+    - name: Install requirements
+      run: pip install -r requirements/ci.txt
+    - name: Install pdfly
+      run: pip install .
+
+    - name: Lint with black
+      run: black --check --extend-exclude sample-files .
+    - name: Lint with mypy
+      run: mypy . --ignore-missing-imports --exclude build
+    - name: Test with ruff
+      run: ruff check pdfly/
+
+    - name: Spell Check Repo
+      uses: crate-ci/typos@80c8a4945eec0f6d464eaf9e65ed98ef085283d1 # v1.38.1
+
+  package:
+    name: Build & verify package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: ${{env.PYTHON_LATEST}}
+
+      - run: python -m pip install flit check-wheel-contents
+      - run: flit build
+      - run: ls -l dist
+      - run: check-wheel-contents dist/*.whl
+
+      - name: Test installing package
+        run: python -m pip install .
+
+      - name: Test running installed package
+        working-directory: /tmp
+        run: python -c "import pdfly;print(pdfly.__version__)"

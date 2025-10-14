@@ -1,0 +1,44 @@
+name: Create a GitHub release page
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Create git tag"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Create a GitHub release page
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Prepare variables
+        id: prepare_variables
+        run: |
+          git fetch --tags --force
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
+          echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "tag_body<<$EOF" >> "$GITHUB_ENV"
+          git --no-pager tag -l "${latest_tag}" --format='%(contents:body)' >> "$GITHUB_ENV"
+          echo "$EOF" >> "$GITHUB_ENV"
+
+      - name: Create GitHub Release 🚀
+        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090 # v2.4.1
+        with:
+          tag_name: ${{ env.latest_tag }}
+          name: Version ${{ env.latest_tag }}, ${{ env.date }}
+          draft: false
+          prerelease: false
+          body: ${{ env.tag_body }}
