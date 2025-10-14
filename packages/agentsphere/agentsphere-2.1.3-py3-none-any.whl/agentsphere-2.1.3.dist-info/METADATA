@@ -1,0 +1,62 @@
+Metadata-Version: 2.4
+Name: agentsphere
+Version: 2.1.3
+Summary: Agentsphere SDK that give agents cloud environments
+License: MIT
+License-File: LICENSE
+Author: agentsphere
+Requires-Python: >=3.9,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: attrs (>=23.2.0)
+Requires-Dist: dockerfile-parse (>=2.0.1,<3.0.0)
+Requires-Dist: httpcore (>=1.0.5,<2.0.0)
+Requires-Dist: httpx (>=0.27.0,<1.0.0)
+Requires-Dist: packaging (>=24.1)
+Requires-Dist: protobuf (>=4.21.0)
+Requires-Dist: python-dateutil (>=2.8.2)
+Requires-Dist: typing-extensions (>=4.1.0)
+Project-URL: Bug Tracker, https://github.com/isoftstone-data-intelligence-ai/AgentSphere-Python-SDK/issues
+Project-URL: Homepage, https://agentsphere.run/
+Project-URL: Repository, https://github.com/isoftstone-data-intelligence-ai/AgentSphere-Python-SDK
+Description-Content-Type: text/markdown
+
+## What is Agentsphere?
+[Agentsphere](https://www.agentsphere.run/) is an open-source infrastructure that allows you to run AI-generated code in secure isolated sandboxes in the cloud. To start and control sandboxes, use our [JavaScript SDK](https://www.npmjs.com/package/agentsphere-js) or [Python SDK](https://pypi.org/project/agentsphere).
+
+## Run your first Sandbox
+
+### 1. Install SDK
+
+```
+pip install agentsphere-code-interpreter
+```
+
+### 2. Get your Agentsphere API key
+1. Sign up to Agentsphere [here](https://www.agentsphere.run).
+2. Get your API key [here](https://www.agentsphere.run/apikey).
+3. Set environment variable with your API key
+```
+AGENTSPHERE_API_KEY= ***
+```
+
+### 3. Execute code with code interpreter inside Sandbox
+
+```py
+from agentsphere import Sandbox
+
+with Sandbox.create() as sandbox:
+    sandbox.run_code("x = 1")
+    execution = sandbox.run_code("x+=1; x")
+    print(execution.text)  # outputs 2
+```
+
+### 4. Check docs
+Visit [Agentsphere documentation](https://www.agentsphere.run/docs/home).
+
