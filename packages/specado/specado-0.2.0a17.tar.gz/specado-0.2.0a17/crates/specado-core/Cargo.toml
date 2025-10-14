@@ -1,0 +1,40 @@
+[package]
+name = "specado-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+publish = false
+readme = "README.md"
+
+[features]
+default = []
+hot-reload = []
+audit-logging = ["uuid", "regex", "time"]
+
+[dependencies]
+specado-schemas.workspace = true
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde_yaml.workspace = true
+reqwest.workspace = true
+thiserror.workspace = true
+async-trait.workspace = true
+tracing.workspace = true
+serde_json_path.workspace = true
+once_cell.workspace = true
+uuid = { version = "1.10", features = ["v4"], optional = true }
+regex = { version = "1.11", default-features = false, features = ["std"], optional = true }
+time = { version = "0.3.36", features = ["formatting", "macros"], optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+criterion = "0.5"
+httpmock = "0.7"
+tempfile = "3.10"
+
+[[bench]]
+name = "translation"
+harness = false
