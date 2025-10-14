@@ -1,0 +1,43 @@
+[project]
+name = "tenauth"
+version = "0.1.3"
+description = "Add your description here"
+requires-python = ">=3.12"
+readme = "README.md"
+dependencies = [
+    "fastapi>=0.119.0",
+    "httpx>=0.28.1",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.21",
+    "pydantic>=2.12.0",
+    "sqlmodel>=0.0.27",
+]
+
+[project.urls]
+Homepage = "https://thwolter.github.io/tenauth/"
+Repository = "https://github.com/thwolter/tenauth.git"
+Documentation = "https://thwolter.github.io/tenauth/"
+Issues = "https://github.com/thwolter/tenauth/issues/"
+
+[tool.setuptools.package-dir]
+    "" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["tenauth*", "your_app_package*"]
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "uv"
+update_changelog_on_bump = true
+major_version_zero = true
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+    "pyrefly>=0.36.2",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+]
