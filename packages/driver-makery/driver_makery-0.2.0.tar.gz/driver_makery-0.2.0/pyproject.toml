@@ -1,0 +1,11 @@
+[project]
+name = "driver-makery"         # PyPI 패키지 이름 (유니크한지 확인)
+version = "0.2.0"
+description = "PDF→텍스트→분할→Gemini→C 헤더 생성 파이프라인"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+license = { text = "MIT" }
+
+[project.scripts]
+drivermakery = "driver_makery.cli:main"   # ⇐ CLI 엔트리포인트(정확히 'drivermakery')
