@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyGSK"
+version = "0.1.1"
+description = "Generalized Spectral Kurtosis Toolkit"
+authors = [
+    { name = "Gelu M. Nita" }
+]
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {text = "MIT"}
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib"
+]
+
+[tool.setuptools.packages.find]
+include = ["pyGSK", "cli"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "build",
+    "twine"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/SUNCAST-org/pyGSK"
+"Source" = "https://github.com/SUNCAST-org/pyGSK"
+"Bug Tracker" = "https://github.com/SUNCAST-org/pyGSK/issues"
+
+[tool.bumpver]
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+current_version = "0.1.1"
+commit_message = "bump version {old_version} → {new_version}"
+tag_message = "Release {new_version}"
+tag_scope = "default"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'version = "{version}"',
+]
+"README.md" = [
+    "{version}",
+]
+
+"src/pygsk/__init__.py" = [
+    '__version__ = "{version}"',
+]
