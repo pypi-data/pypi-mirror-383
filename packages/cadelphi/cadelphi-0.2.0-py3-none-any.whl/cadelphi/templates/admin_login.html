@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_admin_login"] }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>{{ texts["admin_login_heading"] }}</h2>
+  {% if error_message %}
+  <div class="alert error">{{ error_message }}</div>
+  {% endif %}
+  <form method="post" class="form-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <label>{{ texts["username_label"] }}
+      <input type="text" name="username" required />
+    </label>
+    <label>{{ texts["password_label"] }}
+      <input type="password" name="password" required />
+    </label>
+    <button type="submit" class="button primary">{{ texts["button_sign_in"] }}</button>
+  </form>
+</section>
+{% endblock %}
