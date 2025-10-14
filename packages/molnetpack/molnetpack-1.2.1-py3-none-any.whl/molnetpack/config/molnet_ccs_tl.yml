@@ -1,0 +1,22 @@
+model:
+  in_dim: 21
+  add_num: 5
+  max_atom_num: 300
+  batch_size: 32
+  emb_dim: 2048 
+  k: 5
+  dropout: 0.1
+  encode_layers: [64, 64, 128, 256, 512, 1024]
+  decode_layers: [1024, 512, 256, 128, 32]
+
+train:
+  epochs: 200
+  batch_size: 32
+  num_workers: 0
+  lr: 0.0001
+
+test:
+  local_path: './check_point/molnet_ccs_etkdgv3_tl.pt'
+  github_release_url: 'https://github.com/JosieHong/3DMolMS/releases/download/v1.2.0/molnet_ccs_etkdgv3_tl.zip'
+
+  
