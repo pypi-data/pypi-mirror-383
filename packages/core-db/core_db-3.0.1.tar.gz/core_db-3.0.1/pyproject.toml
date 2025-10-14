@@ -1,0 +1,109 @@
+# Other project metadata fields as specified in:
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "core-db"
+description = "This project/library contains common elements and clients related to database engines..."
+version = "3.0.1"
+
+authors = [
+    {name = "Alejandro Cora González", email = "alek.cora.glez@gmail.com"}
+]
+
+maintainers = [
+    {name = "Alejandro Cora González"}
+]
+
+requires-python = ">=3.9"
+license = "MIT"
+readme = "README.rst"
+
+classifiers = [
+    # Classifiers -> https://pypi.org/classifiers/
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13"
+]
+
+dependencies = [
+    "core-etl>=3.0.0",
+    "core-mixins>=2.2.2",
+]
+
+[tool.setuptools]
+packages = [
+    "core_db",
+    "core_db.engines",
+    "core_db.etls",
+    "core_db.interfaces"
+]
+
+[project.optional-dependencies]
+all = [
+    "PyMySQL>=1.1.1",
+    "psycopg>=3.2.3",
+    "psycopg-binary>=3.2.3",
+    "oracledb>=2.5.0",
+    "pyodbc>=5.2.0",
+    "pymongo>=4.6.0",
+    "ibm-db>=3.2.3",
+    "snowflake-connector-python>=3.13.1"
+]
+
+dev = [
+    "core-dev-tools>=1.0.1",
+    "core-tests>=2.0.3",
+    "types-ibm-db>=3.2.3.20241212",
+]
+
+mysql = [
+    "PyMySQL>=1.1.1"
+]
+
+postgres = [
+    "psycopg>=3.2.3",
+    "psycopg-binary>=3.2.3",
+]
+
+oracle = [
+    "oracledb>=2.5.0",
+]
+
+mssql = [
+    "pyodbc>=5.2.0",
+]
+
+mongo = [
+    "pymongo>=4.6.0",
+]
+
+snowflake = [
+    "snowflake-connector-python>=3.13.1",
+]
+
+db2 = [
+    "ibm-db>=3.2.3",
+]
+
+[project.urls]
+Homepage = "https://gitlab.com/bytecode-solutions/core/core-db"
+Repository = "https://gitlab.com/bytecode-solutions/core/core-db"
+Documentation = "https://core-db.readthedocs.io/en/latest/"
+Issues = "https://gitlab.com/bytecode-solutions/core/core-db/-/issues"
+Changelog = "https://gitlab.com/bytecode-solutions/core/core-db/-/blob/master/CHANGELOG.md"
+
+[tool.setuptools.package-data]
+"core_db" = ["py.typed"]
