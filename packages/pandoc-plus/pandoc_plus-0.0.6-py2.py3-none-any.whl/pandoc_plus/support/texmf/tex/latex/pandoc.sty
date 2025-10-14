@@ -1,0 +1,53 @@
+\tolerance=10000
+
+\providecommand\myfigurealignment{H}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{extsizes}
+\usepackage{longtable}
+\usepackage{booktabs}
+  
+\usepackage{ifthen}
+\ifthenelse{\isundefined{\MyOverlayText}}{}{
+  \usepackage{draftwatermark}
+  \SetWatermarkText{\MyOverlayText}
+}
+
+\usepackage{framed}
+\usepackage{graphicx}
+\graphicspath{{graphics/}{images/}{figures/}}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\usepackage{xcolor}
+
+%\usepackage{listings}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{mathtools}
+
+%\usepackage{tensor}
+%\newcommand{\prepost}[5]{\tensor*[^{#1}_{#2}]{#3}{^{#4}_{#5}}}
+%\newcommand{\rotationmatrix}[2]{\prepost{#1}{}{\mathbf{R}}{#2}{}}
+
+
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[\myfigurealignment]
+} {
+    \endorigfigure
+}
+
+\usepackage[super,numbers,sort&compress,sectionbib]{natbib}
+%\usepackage{natbib}
+%\usepackage[numbers,sort]{natbib}
+%\usepackage[authoryear,sort]{natbib}

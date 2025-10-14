@@ -1,0 +1,34 @@
+\providecommand\mycolorlinks{true}
+\providecommand\mylinkcolor{blue}
+\providecommand\myurlcolor{blue}
+\providecommand\mycitecolor{blue}
+\providecommand\myanchorcolor{blue}
+\providecommand\myurlstyle{same}
+\providecommand\mycompiler{pdftex}
+
+\usepackage[\mycompiler,unicode=true,
+    %pdfauthor={\myauthors},
+    %pdftitle={\mytitle},
+    pdfborder={0 0 0},
+    colorlinks=\mycolorlinks,
+    linkcolor = \mylinkcolor,
+    urlcolor  = \myurlcolor,
+    citecolor = \mycitecolor,
+    anchorcolor = \myanchorcolor,	
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksopenlevel=2,
+    bookmarksnumbered=true,
+    %pdfpagelayout=OneColumn,
+    pdfpagelayout=SinglePage,
+    %pdfpagelayout=TwoColumnLeft,
+    %pdfpagelayout=TwoPageLeft,
+    hyperfootnotes=false,
+    pdfpagemode=UseNone,
+    %pdfpagemode=FullScreen,
+    %pdftoolbar=false,
+    pdftoolbar=true,
+]{hyperref}
+
+% Ensure consistency in the footer
+\urlstyle{\myurlstyle{sf}}

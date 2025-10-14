@@ -1,0 +1,21 @@
+---
+header-includes:
+ - '\usetheme{metropolis}'
+ - '\makeatletter'
+ - '\beamer@ignorenonframefalse'
+ - '\makeatother'
+institute: "Arizona State University"
+theme: "metropolis"
+colortheme: "beaver"
+fonttheme: "professionalfonts"
+fontsize: 12pt
+urlcolor: red
+linkstyle: bold
+aspectratio: 43
+#titlepage-note: |
+#  This is a the note that goes on the title page. This talk is to be 
+#  given at Doing DH.
+#logo: ../../../assets/fulton.png
+#section-titles: false
+toc: false
+---

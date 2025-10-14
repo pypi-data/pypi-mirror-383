@@ -1,0 +1,117 @@
+\providecommand\myborder{1in}
+\providecommand\myuniversitylogo{institution-logo}
+%\providecommand\myclasslogo{class_logo}
+\providecommand\myfootertext{This is a test}
+\providecommand\myspacing{1}
+\providecommand\myparskip{0.5em}
+\providecommand\myparindent{0em}
+\providecommand\myheaderskip{0.5em}
+\providecommand\mypagenumber{1}
+%\providecommand\mytitle{}
+%\providecommand\mysubtitle{}
+
+\providecommand\mycolorlinks{true}
+\providecommand\mylinkcolor{blue}
+\providecommand\myurlcolor{blue}
+\providecommand\mycitecolor{blue}
+\providecommand\myanchorcolor{blue}
+\providecommand\myurlstyle{sf}
+
+\providecommand\mycompiler{xetex}
+
+\usepackage[no-math]{fontspec}    
+\defaultfontfeatures{Ligatures=TeX}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\usepackage{xcolor}
+\definecolor{crimson}{RGB}{152,30,50}
+\definecolor{gray}{HTML}{5e6a71}
+\definecolor{ASU_Maroon}{HTML}{8C1D40}
+\definecolor{ASU_Gold}{HTML}{FFC627}
+\definecolor{Black}{HTML}{000000}
+\definecolor{White}{HTML}{FFFFFF}
+% Measurements are taken directly from the guide
+\usepackage[top=2in,left=1in,bottom=1in,right=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[absolute]{textpos}
+\usepackage{ifthen}
+%\usepackage{soul}
+
+% --- For placement of the horizontal line
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+%\raggedright
+\pagestyle{empty}
+
+\providecommand\liney{1in}
+
+\providecommand\headerx{1in}
+\providecommand\headerabove{.95in}
+\providecommand\headerbelow{1.05in}
+
+\providecommand\footerx{.5in}
+\providecommand\footery{10.25in}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\headrule}{}
+\fancyhead{}
+\fancyhead[L]{
+\begin{textblock*}{6.5in}[0,1](\headerx,\headerabove)
+  \ifthenelse{\isundefined{\myclasslogo}}{}{\includegraphics[height=.5in]{\myclasslogo}}
+  \ifthenelse{\isundefined{\myclassname}}{}{{\Huge{\textbf{\sffamily{\myclassname}}}}}
+\end{textblock*}
+}
+\fancyhead[R]{
+  \begin{textblock*}{6.5in}[0,1](\headerx,\headerabove)
+    \includegraphics[height=.5in]{\myuniversitylogo}
+  \end{textblock*}
+}
+
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[C]{
+  \ifthenelse{\equal{\mypagenumber}{1}}{\arabic{page}\\}{} 
+  \ifthenelse{\isundefined{\mycopyright}}{}{{\scriptsize Copyright \textcopyright \the\year\ \mycopyright. \normalsize \\}} 
+  {\scriptsize THIS CONTENT IS PROTECTED AND MAY NOT BE SHARED, UPLOADED, SOLD, OR DISTRIBUTED.}
+}
+
+\AtBeginDocument{
+  \ifthenelse{\isundefined{\mytitle}}{}{\begin{center}\huge{\textbf{\sffamily{\mytitle \\}}}\end{center}}
+  \ifthenelse{\isundefined{\mysubtitle}}{}{\begin{center}\Large{\textbf{\normalfont{\mysubtitle \\}}} \end{center}}
+}
+
+\AtEndDocument{}
+
+\usepackage{titlesec}
+
+\titleformat{\section}{\normalfont\bfseries\Large}{\thesection}{1em}{}[\vspace{-.25em}\titlerule\vspace{.25em}]
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[runin]{\normalfont\itshape\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}[runin]{\normalfont\itshape}{\thesubparagraph}{1em}{}
+
+\titlespacing{\section}{0em}{\myheaderskip}{0em}
+\titlespacing{\subsection}{0em}{\myheaderskip}{0em}
+\titlespacing{\subsubsection}{0em}{0em}{0em}
+\titlespacing{\paragraph}{0em}{0em}{2em}
+\titlespacing{\subparagraph}{0em}{0em}{2em}
+
+%\raggedright
+
+\usepackage{hyperref_common}
+
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{\myspacing}
+
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\setlength{\parskip}{\myparskip}
+\setlength{\parindent}{\myparindent}
+
