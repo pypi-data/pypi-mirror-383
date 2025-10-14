@@ -1,0 +1,95 @@
+Metadata-Version: 2.4
+Name: timeframes
+Version: 1.0.0
+Summary: Lightweight validation framework for time series forecasting.
+Author: Andrew R. Garcia
+License: MIT
+Project-URL: Homepage, https://github.com/andrewrgarcia/timeframes
+Project-URL: Repository, https://github.com/andrewrgarcia/timeframes
+Project-URL: Issues, https://github.com/andrewrgarcia/timeframes/issues
+Project-URL: Documentation, https://chatgpt.com/g/g-68ec3fa47a808191afbe09cbd63ab611-timeframesgpt-v1-0
+Keywords: time series,validation,backtesting,forecasting,walkforward
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Libraries
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: scikit-learn>=1.4
+Dynamic: license-file
+
+# Timeframes
+
+**A lightweight framework for time series validation and evaluation.**  
+Timeframes provides simple and efficient tools for splitting, validating, and backtesting forecasting models — without unnecessary dependencies or boilerplate.
+
+---
+
+## 🧠 Need help?
+
+Try **[TimeframesGPT](https://chatgpt.com/g/g-68ec3fa47a808191afbe09cbd63ab611-timeframesgpt-v1-0)** —
+a specialized assistant trained on the full Timeframes codices.
+
+---
+
+
+## Installation
+
+```bash
+pip install timeframes
+```
+---
+
+
+
+## Quick Example
+
+```python
+import timeframes as ts
+from sklearn.linear_model import LinearRegression
+
+# Example data
+X, y = ts.load_example("air_passengers")
+
+# Split into train, validation, and test
+train, val, test = ts.split(X, ratios=(0.7, 0.2, 0.1))
+
+# Validate using walk-forward cross-validation
+model = LinearRegression()
+report = ts.validate(model, X, y, method="walkforward", mode="expanding", folds=5)
+
+print(report)
+# {'mae': 0.213, 'rmse': 0.322, 'smape': 3.9}
+```
+
+---
+
+## Features
+
+* **Minimal** — depends only on NumPy and pandas.
+* **Consistent** — unified API for all validation methods.
+* **Flexible** — works with any model exposing `.fit()` / `.predict()`.
+* **Transparent** — every function returns clear, reproducible outputs.
+
+---
+
+## Supported Methods
+
+| Function        | Description                                        |
+| --------------- | -------------------------------------------------- |
+| `ts.split()`    | Single train/validation/test split                 |
+| `ts.validate()` | Cross-validation (walk-forward or temporal K-Fold) |
+| `ts.backtest()` | Out-of-sample testing                              |
+| `ts.evaluate()` | Metric evaluation (MAE, RMSE, sMAPE, rMAE)         |
+
+
+---
+
+## License
+
+MIT License © 2025 [Andrew R. Garcia](https://github.com/andrewrgarcia)
