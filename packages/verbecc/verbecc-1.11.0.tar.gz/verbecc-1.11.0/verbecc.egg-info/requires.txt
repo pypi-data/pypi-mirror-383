@@ -1,0 +1,20 @@
+cython>=3.1.4
+lxml>=6.0.2
+lxml-stubs>=0.5.1
+
+[:python_version < "3.13"]
+importlib_resources==6.4.5
+numpy==1.6.1
+scikit-learn==1.6.1
+scipy==1.13.1
+
+[:python_version == "3.13"]
+scipy==1.14.1
+
+[:python_version >= "3.13"]
+importlib_resources==6.5.2
+numpy==2.3.3
+scikit-learn==1.7.2
+
+[:python_version >= "3.14"]
+scipy==1.16.1
