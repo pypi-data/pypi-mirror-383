@@ -1,0 +1,113 @@
+Metadata-Version: 2.4
+Name: defensive_network
+Version: 0.0.7
+Summary: Implementation of defensive passing networks for football (soccer) analytics.
+Author-email: Jonas Bischofberger <jonas.bischofberger@univie.ac.at>, Runqing Ma <runqing.ma@univie.ac.at>
+License: MIT License
+        
+        Copyright (c) 2024 Jonas Bischofberger, Runqing Ma
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Repository, https://github.com/jonas-bischofberger/defensive-network
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: accessible-space
+Requires-Dist: kloppy
+Requires-Dist: matplotlib
+Requires-Dist: mplsoccer
+Requires-Dist: networkx
+Requires-Dist: numpy
+Requires-Dist: openpyxl
+Requires-Dist: pandas
+Requires-Dist: pytest
+Requires-Dist: python-slugify
+Requires-Dist: scikit-learn
+Requires-Dist: scipy
+Requires-Dist: seaborn
+Requires-Dist: selenium
+Requires-Dist: statsbombpy
+Requires-Dist: streamlit
+Requires-Dist: streamlit-profiler
+Requires-Dist: tqdm
+Requires-Dist: webdriver-manager
+Requires-Dist: wfork-streamlit-profiler
+Requires-Dist: patsy
+Requires-Dist: statsmodels
+Requires-Dist: opencv-python
+Requires-Dist: requests
+Requires-Dist: beautifulsoup4
+Requires-Dist: pandera[pandas]
+Requires-Dist: shapely
+Requires-Dist: google-api-python-client
+Requires-Dist: google-auth-httplib2
+Requires-Dist: google-auth-oauthlib
+Requires-Dist: memory-profiler
+Requires-Dist: pingouin
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+Requires-Dist: setuptools; extra == "dev"
+Requires-Dist: tox; extra == "dev"
+Dynamic: license-file
+
+## Folder structure
+
+- defensive_network/: 
+  - assets/: All files that are not code, e.g. xT weights
+  - models/: All analytics models such as expected threat, expected receiver, involvement, tracking-event synchronization, formations, ...
+  - parse/: To access data.
+  - tests/: Tests to ensure reliability of the code (use pytest to run)
+  - utility/: Various helper functions.
+- old/: Old files we don't need anymore (but keep them just in case)
+- scripts/: Various Streamlit dashboards and Python scripts to analyse the data
+- secrets/: Token etc. for accessing Google Drive
+
+
+## Installation
+
+1. Clone the repository:
+
+```
+git clone https://github.com/jonas-bischofberger/defensive-network
+cd defensive-network
+```
+
+2. Create and activate a virtual environment (optional but recommended):
+
+```
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
+
+3. Install the required packages:
+```
+pip install -r requirements.txt
+```
+
+4. Run some analysis script!
+
+```
+streamlit run scripts/explore/Explore_defensive_network.py
+streamlit run scripts/xt_statsbomb_correlation.py
+streamlit run scripts/responsibility_and_google_drive.py
+```
