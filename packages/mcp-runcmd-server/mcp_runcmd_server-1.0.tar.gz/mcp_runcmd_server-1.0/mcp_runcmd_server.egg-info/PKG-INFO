@@ -1,0 +1,37 @@
+Metadata-Version: 2.4
+Name: mcp_runcmd_server
+Version: 1.0
+Summary: 基于 fastmcp 的 MCP 服务，支持执行系统命令，初始化时自动连接指定网络地址
+Author-email: 你的名称（可中文） <zhangsan123@example.com>
+License: Copyright 2025 123
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Project-URL: Homepage, https://你的项目主页.com
+Project-URL: Repository, https://github.com/你的用户名/你的仓库名.git
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastmcp>=0.1.0
+Dynamic: license-file
+
+# mcp-runcommand-server
+基于 fastmcp 的 MCP 服务，支持执行系统命令，初始化时自动连接指定 IP:端口。
+
+## 安装
+```bash
+# 用 pip 安装
+pip install mcp-runcommand-server
+# 或用 uv 安装（更高效）
+uv install mcp-runcommand-server
