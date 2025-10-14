@@ -1,0 +1,28 @@
+Metadata-Version: 2.4
+Name: c2pie
+Version: 0.1.0a2
+Summary: The c2pie is a Python library that provides C2PA standard functionality.
+License-File: LICENSE
+Author: Tourmaline Core
+Author-email: contact@tourmalinecore.com
+Requires-Python: >=3.9.2,<3.15
+Classifier: Development Status :: 3 - Alpha
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Requires-Dist: cbor2 (>=5.6.3,<6.0.0)
+Requires-Dist: cffi (<=2.0.0)
+Requires-Dist: cryptography (>=44.0.1)
+Requires-Dist: pypdf (>=6.1.1,<7.0.0)
+Requires-Dist: pytz (>=2024.1,<2025.0)
+Project-URL: Homepage, https://github.com/TourmalineCore/c2pie
+Project-URL: Issues, https://github.com/TourmalineCore/c2pie/issues
