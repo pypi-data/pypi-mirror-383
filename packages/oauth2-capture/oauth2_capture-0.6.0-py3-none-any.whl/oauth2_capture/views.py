@@ -1,0 +1,147 @@
+import logging
+import secrets
+
+from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import QuerySet
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, ListView
+
+from oauth2_capture.models import OAuthToken
+from oauth2_capture.services.oauth2 import OAuth2ProviderFactory
+
+logger = logging.getLogger(__name__)
+
+
+def oauth2_callback(request: HttpRequest, provider: str) -> HttpResponse:
+    """Finalize the Oauth2 flow, which is called by the OAuth2 provider after the user has authorized the app.
+
+    Args:
+        request (HttpRequest): The request object.
+        provider (str): The OAuth2 provider name.
+
+    Returns:
+        HttpResponse: The response object
+
+    """
+    try:
+        oauth2_provider = OAuth2ProviderFactory.get_provider(provider)
+    except ValueError as e:
+        return HttpResponse(str(e), status=400)
+
+    # Verify OAuth state parameter to prevent CSRF attacks
+    received_state = request.GET.get("state")
+    session_state_key = f"{provider}_oauth_state"
+    stored_state = request.session.get(session_state_key)
+
+    if not received_state or not stored_state or received_state != stored_state:
+        logger.warning(
+            f"OAuth state verification failed for {provider}. Received: {received_state}, Expected: {stored_state}"
+        )
+        return HttpResponse("Invalid OAuth state. Possible CSRF attack.", status=400)
+    # Clear the state from session after successful verification
+    del request.session[session_state_key]
+
+    # Check if user denied authorization
+    error = request.GET.get("error")
+    if error:
+        error_description = request.GET.get("error_description", "Authorization denied by user")
+        logger.info(f"OAuth authorization denied for {provider}: {error_description}")
+        return HttpResponse(f"Authorization denied: {error_description}", status=400)
+
+    code = request.GET.get("code")
+    if not code:
+        logger.error(f"No authorization code received for {provider}")
+        return HttpResponse("No authorization code received from provider", status=400)
+
+    # Some OAuth providers (e.g., Google/YouTube) require HTTPS redirect URIs
+    # Set FORCE_HTTPS_REDIRECT=true in environment when using such providers
+    if settings.FORCE_HTTPS_REDIRECT:
+        redirect_uri = f"https://{request.get_host()}/oauth2_capture/{provider}/callback/"
+    else:
+        redirect_uri = request.build_absolute_uri(f"/oauth2_capture/{provider}/callback/")
+
+    token_data = oauth2_provider.exchange_code_for_token(code, redirect_uri, request)
+
+    msg = f"Token data: {token_data}"
+    logger.debug(msg)
+
+    access_token = token_data.get("access_token")
+
+    if access_token:
+        user_info = oauth2_provider.get_user_info(access_token)
+
+        # Use cascading ID strategy: YouTube channel ID -> Google user ID (sub) -> fallback
+        user_id = user_info.get("id")
+        if not user_id:
+            logger.warning(f"No user ID found for {provider}, using fallback ID")
+            user_id = f"{provider}_user_{request.user.id}"
+
+        oauth_token, created = OAuthToken.objects.get_or_create(
+            provider=provider,
+            user_id=user_id,
+            owner=request.user,
+        )
+        oauth2_provider.update_token(oauth_token, token_data, user_info)
+
+        return HttpResponse(f"{provider.capitalize()} account connected successfully.")
+
+    return HttpResponse(f"Failed to connect {provider.capitalize()} account.", status=400)
+
+
+def initiate_oauth2(request: HttpRequest, provider: str) -> HttpResponse:
+    """Initiate the OAuth2 flow, which redirects the user to the OAuth2 provider's authorization page.
+
+    Args:
+        request (HttpRequest): The request object.
+        provider (str): The OAuth2 provider name.
+
+    Returns:
+        HttpResponse: The response object
+
+    """
+    try:
+        oauth2_provider = OAuth2ProviderFactory.get_provider(provider)
+    except ValueError as e:
+        return HttpResponse(str(e), status=400)
+
+    state = secrets.token_urlsafe(32)
+
+    # Some OAuth providers (e.g., Google/YouTube) require HTTPS redirect URIs
+    # Set FORCE_HTTPS_REDIRECT=true in environment when using such providers
+    if settings.FORCE_HTTPS_REDIRECT:
+        redirect_uri = f"https://{request.get_host()}/oauth2_capture/{provider}/callback/"
+    else:
+        redirect_uri = request.build_absolute_uri(f"/oauth2_capture/{provider}/callback/")
+
+    auth_url = oauth2_provider.get_authorization_url(state, redirect_uri, request)
+
+    # Store state in session for later verification
+    request.session[f"{provider}_oauth_state"] = state
+
+    logger.debug("Redirecting to %s", auth_url)
+    return redirect(auth_url)
+
+
+class DeleteOAuthTokenView(LoginRequiredMixin, DeleteView):
+    """View for deleting an OAuth token."""
+
+    model = OAuthToken
+    success_url = reverse_lazy("oauth2_capture:list")
+
+    def get_queryset(self) -> QuerySet:
+        """Return the queryset of OAuth tokens owned by the current user."""
+        return super().get_queryset().filter(owner=self.request.user)
+
+
+class OAuthListView(LoginRequiredMixin, ListView):
+    """View to list all the OAuth2 connections."""
+
+    model = OAuthToken
+    context_object_name = "connections"
+
+    def get_queryset(self) -> QuerySet:
+        """Get the queryset of OAuth2 connections."""
+        return self.request.user.oauth_tokens.all()
