@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comping"
+version = "0.1.1"
+description = "MLOps concept drift detection & adaptation library"
+authors = [{ name = "Comping AI Team", email = "gj.kim@comping.ai" }]
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.8"
+
+dependencies = [
+    "numpy>=1.20.0",
+    "pandas>=1.3.0",
+    "scikit-learn>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://comping.ai"
+Repository = "https://github.com/technometrics/comping"
