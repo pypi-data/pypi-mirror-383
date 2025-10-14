@@ -1,0 +1,277 @@
+# Elephant Gun 🐘🔫
+
+*A local-first CLI for hybrid SQL + semantic search on PostgreSQL.*
+
+Elephant Gun lets you query your existing PostgreSQL tables with a mix of:
+
+* **Structured filters (SQL)** — e.g., `created_at < 30 days`
+* **Semantic search (pgvector + embeddings)** — e.g., “things that look like trouble”
+* **Natural language time parsing** — e.g., “last week”, “since 2024-01-01”
+
+No external APIs, no servers.
+Everything runs locally on your Postgres + Python.
+
+---
+
+## ✨ Features
+
+* CLI commands for setup, embedding, and querying
+* **Schema scanning** — Auto-discover tables and suggest text templates
+* **Natural language time parsing** — Understands “last week”, “since 2024-01-01”, etc.
+* pgvector integration (cosine similarity search)
+* Sentence-transformers embeddings
+* **Hybrid search** — Combines semantic similarity with lexical ranking
+* **Multi-table search** — Query across all configured tables with RRF ranking
+* **Local-first** — Your data never leaves your database
+
+---
+
+## 🚀 Quickstart (Recommended path)
+
+### 🐍 1. Install (via PyPI)
+
+#### Option A: **pipx (recommended)**
+
+```bash
+brew install pipx
+pipx ensurepath
+pipx install elephant-gun
+```
+
+#### Option B: **Virtual environment**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install elephant-gun
+```
+
+> ⚠️ **macOS (Homebrew Python)**:
+> System Python is “externally managed” (PEP 668).
+> Please use **pipx** or a **virtual environment** instead of `pip install --user`.
+
+---
+
+### 🐘 2. Start PostgreSQL with pgvector
+
+The easiest way is using Docker:
+
+```bash
+docker run --name pg-vec -p 5433:5432 \
+  -e POSTGRES_PASSWORD=postgres \
+  -d pgvector/pgvector:pg14
+
+export DATABASE_URL="postgresql://postgres:postgres@localhost:5433/postgres"
+```
+
+---
+
+### ⚙️ 3. Create your sample table
+
+```bash
+psql "$DATABASE_URL" <<'SQL'
+CREATE TABLE IF NOT EXISTS reviews (
+  id BIGSERIAL PRIMARY KEY,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  title TEXT,
+  body  TEXT,
+  deleted_at TIMESTAMPTZ
+);
+INSERT INTO reviews (title, body) VALUES
+('Refund requested', 'Customer reports double charge and asks for refund'),
+('Great service', 'Loved the dashboard and support response time'),
+('Chargeback received', 'Bank notified chargeback due to fraud suspicion');
+SQL
+```
+
+---
+
+### 🧩 4. Create your config file
+
+`elephant_gun.yaml` (place in your working directory):
+
+```yaml
+embed_dim: 768
+model: sentence-transformers/all-mpnet-base-v2
+
+targets:
+  - table: reviews
+    key: id
+    text_template: "title || ' ' || body"
+    time_column: "created_at"
+    filters:
+      - "deleted_at IS NULL"
+```
+
+---
+
+### ⚡ 5. Run commands
+
+```bash
+# Enable pgvector extension
+elephant-gun ensure-ext
+
+# Initialize embedding column + index
+elephant-gun init
+
+# Embed rows into vectors
+elephant-gun embed --table reviews
+
+# Query semantically (auto time parsing)
+elephant-gun query --table reviews --q "refund issues last 30 days"
+```
+
+✅ Example output:
+
+```
+[1] sim01=0.747 lex=0.076  Refund requested Customer reports double charge and asks for refund
+[3] sim01=0.651 lex=0.000  Chargeback received Bank notified chargeback due to fraud suspicion
+[2] sim01=0.580 lex=0.000  Great service Loved the dashboard and support response time
+```
+
+---
+
+## 🧠 CLI Commands
+
+**Main commands:**
+
+```bash
+elephant-gun scan              # Scan DB schema and suggest text templates
+elephant-gun ensure-ext        # CREATE EXTENSION vector
+elephant-gun init              # Add embedding column + index
+elephant-gun embed --table T   # Embed rows into vectors
+elephant-gun query --table T --q "text" [options]
+```
+
+**Query options:**
+
+```bash
+--table T          # Target table (omit to search all tables)
+--q "text"         # Natural language query (required)
+--days N           # Manual time filter (optional - auto-parsing preferred)
+--limit M          # Max results (default: 20)
+--min-sim X        # Minimum similarity score (0.0–1.0)
+--dry-run          # Show SQL without executing
+--per-table-limit  # Results per table in multi-table mode (default: 50)
+```
+
+**Automatic time parsing:**
+Understands:
+
+```
+"last 7 days", "past 2 weeks", "last month",
+"this week", "yesterday", "since 2024-01-01", "2024-01-01..2024-01-31"
+```
+
+**Alias:**
+
+```bash
+egun    # short alias for elephant-gun
+```
+
+---
+
+## 🔍 Schema Scanning
+
+Automatically discovers tables and suggests optimal `text_template` for embedding.
+
+```bash
+elephant-gun scan
+# → writes profiles/current/schema.yaml
+```
+
+**What it does:**
+
+* Finds text and time columns
+* Suggests SQL expressions like `title || ' ' || body`
+* Previews first few rows for inspection
+
+---
+
+## 🛠 Requirements
+
+* Python 3.9+
+* PostgreSQL 14+ with `pgvector` extension
+* Docker (optional but easiest for setup)
+
+---
+
+## 🧪 Example Multi-table Query
+
+Once multiple targets are defined in `elephant_gun.yaml`:
+
+```bash
+elephant-gun query --q "refund complaints this week" --limit 20
+```
+
+→ Automatically merges results from all tables using **RRF ranking** (semantic + lexical fusion).
+
+---
+
+## 🔬 Fine-tuning (Optional)
+
+If you want to adapt Elephant Gun’s embeddings to your own domain:
+
+### 1. Prepare training data
+
+`train/data/train.csv`:
+
+| query             | text                               | label |
+| ----------------- | ---------------------------------- | ----- |
+| positive feedback | Great service, loved the dashboard | 1     |
+| refund dispute    | Customer claims double charge      | 0     |
+| fraud issues      | Chargeback received due to fraud   | 1     |
+
+### 2. Fine-tune locally
+
+```bash
+cd train
+python train_st.py
+```
+
+→ Outputs `train/models/eg-miniLM-finetuned/`
+
+### 3. Use fine-tuned model
+
+Update your config:
+
+```yaml
+model: train/models/eg-miniLM-finetuned
+embed_dim: 384
+```
+
+Re-embed your data:
+
+```bash
+elephant-gun embed --table reviews
+```
+
+---
+
+## 🧩 Troubleshooting
+
+| Symptom                                     | Fix                                                                                                                                                                                                    |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `FileNotFoundError: elephant_gun.yaml`      | Make sure the config file exists in the current directory                                                                                                                                              |
+| `embedded 0`                                | All rows already have embeddings (`embedding IS NULL` none left)                                                                                                                                       |
+| `psycopg[binary]` conflict on install       | Use constraint workaround:<br>`printf "psycopg==3.2.10\npsycopg-binary==3.2.10\n" > /tmp/eg_constraints.txt`<br>`PIP_CONSTRAINT=/tmp/eg_constraints.txt pipx install --python python3.12 elephant-gun` |
+| macOS says “externally managed environment” | Use pipx or venv instead of system pip                                                                                                                                                                 |
+
+---
+
+## 🔖 Uninstall
+
+```bash
+pipx uninstall elephant-gun
+# or
+pip uninstall elephant-gun
+```
+
+---
+
+## 📦 Release Info
+
+* **PyPI:** [https://pypi.org/project/elephant-gun/](https://pypi.org/project/elephant-gun/)
+* **Source:** [https://github.com/tomoharutsutsumi/elephant-gun](https://github.com/tomoharutsutsumi/elephant-gun)
+* **License:** MIT
