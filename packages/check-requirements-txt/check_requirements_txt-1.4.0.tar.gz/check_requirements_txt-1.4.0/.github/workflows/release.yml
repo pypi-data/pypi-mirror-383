@@ -1,0 +1,245 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.2.3, leave empty to use current version)'
+        required: false
+        type: string
+      create_tag:
+        description: 'Create and push git tag'
+        required: false
+        default: true
+        type: boolean
+      publish_pypi:
+        description: 'Publish to PyPI'
+        required: false
+        default: true
+        type: boolean
+      create_github_release:
+        description: 'Create GitHub Release'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write  # Required for creating releases and tags
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+    - uses: actions/checkout@v5
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Cache Hatch environments
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.local/share/hatch
+          ~/.cache/hatch
+        key: hatch-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          hatch-${{ runner.os }}-${{ matrix.python-version }}-
+          hatch-${{ runner.os }}-
+
+    - name: Install hatch
+      run: pip install hatch
+
+    - name: Install dependencies
+      run: |
+        hatch env create default
+        hatch env create lint
+
+    - name: Run tests
+      run: hatch run test
+
+    - name: Run linting
+      run: hatch run lint:all
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0  # Fetch all history for version tagging
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+        cache: 'pip'
+
+    - name: Install hatch
+      run: pip install hatch
+
+    - name: Update version if specified
+      if: ${{ github.event.inputs.version != '' }}
+      run: |
+        hatch version ${{ github.event.inputs.version }}
+        echo "Updated version to ${{ github.event.inputs.version }}"
+
+    - name: Create and push tag
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.create_tag == 'true' && github.event.inputs.version != '' }}
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a "v${VERSION}" -m "Release v${VERSION}"
+        git push origin "v${VERSION}"
+        echo "Created and pushed tag v${VERSION}"
+
+    - name: Build package
+      run: hatch build
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/
+
+  publish-pypi:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_pypi == 'true') }}
+    environment:
+      name: pypi
+      url: https://pypi.org/p/check-requirements-txt
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v5
+      with:
+        name: dist
+        path: dist/
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ always() && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.create_github_release == 'true')) && needs.build.result == 'success' }}
+    permissions:
+      contents: write  # Required for creating releases
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0  # Fetch all history for changelog generation
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+        cache: 'pip'
+
+    - name: Cache Hatch environments
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.local/share/hatch
+          ~/.cache/hatch
+        key: hatch-${{ runner.os }}-3.12-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          hatch-${{ runner.os }}-3.12-
+          hatch-${{ runner.os }}-
+
+    - name: Install hatch
+      run: pip install hatch
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v5
+      with:
+        name: dist
+        path: dist/
+
+    - name: Extract version
+      id: get_version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          # Manual trigger - use input version or get from hatch
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION=$(hatch version)
+          fi
+          TAG="v${VERSION}"
+        else
+          # Tag push - extract from ref
+          VERSION=${GITHUB_REF#refs/tags/v}
+          TAG=${GITHUB_REF#refs/tags/}
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
+        echo "Version: $VERSION, Tag: $TAG"
+
+    - name: Ensure tag exists
+      run: |
+        TAG="${{ steps.get_version.outputs.tag }}"
+        # Check if tag exists
+        if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+          echo "Tag $TAG does not exist, creating it..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+          echo "Created and pushed tag $TAG"
+        else
+          echo "Tag $TAG already exists"
+        fi
+
+    - name: Generate changelog
+      id: changelog
+      run: |
+        TAG="${{ steps.get_version.outputs.tag }}"
+        # Get the previous tag
+        PREV_TAG=$(git describe --tags --abbrev=0 "$TAG^" 2>/dev/null || echo "")
+
+        if [ -z "$PREV_TAG" ]; then
+          # First release, get all commits
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+        else
+          # Get commits since previous tag
+          CHANGELOG=$(git log ${PREV_TAG}..${TAG} --pretty=format:"- %s (%h)" --no-merges)
+        fi
+
+        # Save changelog to file
+        echo "$CHANGELOG" > changelog.txt
+
+        # Also save to output (escape newlines for GitHub Actions)
+        {
+          echo 'changelog<<EOF'
+          echo "$CHANGELOG"
+          echo 'EOF'
+        } >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.get_version.outputs.tag }}
+        name: Release ${{ steps.get_version.outputs.tag }}
+        body_path: changelog.txt
+        files: dist/*
+        draft: false
+        prerelease: false
+        generate_release_notes: true  # Auto-generate release notes from PRs
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
