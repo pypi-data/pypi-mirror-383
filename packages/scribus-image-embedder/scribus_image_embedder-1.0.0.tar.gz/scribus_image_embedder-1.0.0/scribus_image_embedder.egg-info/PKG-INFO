@@ -1,0 +1,177 @@
+Metadata-Version: 2.4
+Name: scribus-image-embedder
+Version: 1.0.0
+Summary: Embed linked images inline into Scribus .sla files (images only)
+Author: Afueth Thomas
+License: MIT
+Project-URL: Homepage, https://github.com/afueth/scribus-image-embedder
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Multimedia :: Graphics
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Pillow>=8.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Dynamic: license-file
+
+# Scribus Image Embedder
+
+Embed **linked images** inline into Scribus `.sla` files using the same qCompress format Scribus understands.  
+**Images only** (JPG/PNG/TIFF/GIF/BMP). No PDF embedding.
+
+---
+
+## Why?
+
+Scribus layouts often reference external image files via `PFILE="..."`. If you move the `.sla` to a new machine or send it to someone else, links can break. This tool reads the `.sla`, finds **image frames** (`PTYPE="2"`), and embeds the raw image bytes into the document so it becomes self-contained.
+
+---
+
+## Install
+
+### Windows (app-like via pipx — recommended for non-Python users)
+```powershell
+pip install --user pipx
+pipx ensurepath
+pipx install scribus-image-embedder
+
+Any OS (classic pip)
+
+pip install scribus-image-embedder
+
+Usage
+
+scribus-embed /path/to/input.sla -o /path/to/output_embedded.sla
+
+Windows examples
+
+scribus-embed "C:\Layouts\page1.sla" -o "C:\Layouts\page1_embedded.sla"
+
+What it does
+
+    Finds image frames (PTYPE="2") that still point to files via PFILE=....
+
+    Reads the image bytes, qCompresses them (4-byte big-endian length + zlib).
+
+    Stores the data as both an ImageData attribute and an <ImageData>...</ImageData> child node.
+
+    Removes PFILE and other linking attributes so the file stands alone.
+
+Quick verification (without opening Scribus)
+
+On Windows PowerShell:
+
+# Should output some lines if images were embedded
+Select-String -Path "C:\Layouts\page1_embedded.sla" -Pattern '<ImageData>' | Select-Object -First 5
+
+# Should output nothing if all links were removed
+Select-String -Path "C:\Layouts\page1_embedded.sla" -Pattern 'PFILE='
+
+On Linux/macOS:
+
+grep -n '<ImageData>' /path/to/page1_embedded.sla | head
+grep -n 'PFILE=' /path/to/page1_embedded.sla
+
+Supported formats
+
+    JPEG/JPG, PNG, TIFF, GIF, BMP (handled via Pillow
+
+    ).
+
+    Width/height detection is best-effort; embedding still works even if detection fails.
+
+Requirements
+
+    Python 3.10+
+
+    Pillow 8.0.0+
+
+Notes & Limitations
+
+    Only image frames (PTYPE="2") are processed.
+
+    Existing inline data (if any) is replaced with fresh embeds.
+
+    The output file is larger (contains image bytes).
+
+    PDF embedding is intentionally not supported in this package.
+
+Troubleshooting
+
+    scribus-embed not found
+    Ensure your virtual environment is activated, or run:
+
+    python -m scribus_image_embedder.cli --help
+
+    Pillow error / exotic image
+    The tool still embeds raw bytes; width/height in logs may show as 0×0. Scribus should still open the result.
+
+    Images still show as linked
+    Open the embedded .sla in a text editor. For an image frame:
+
+        There should be no PFILE="...".
+
+        There should be isInlineImage="1" and an <ImageData>...</ImageData> node.
+
+Local development
+
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+scribus-embed --help
+
+Run a test:
+
+scribus-embed "C:\path\to\layout.sla" -o "C:\path\to\layout_embedded.sla"
+
+Build & Publish
+Build
+
+python -m pip install --upgrade build twine
+python -m build
+twine check dist\*
+
+TestPyPI (recommended)
+
+$Env:TWINE_USERNAME="__token__"
+$Env:TWINE_PASSWORD="pypi-TESTPYPI_TOKEN"
+twine upload --repository testpypi dist\*
+
+# fresh venv to simulate end-user install
+py -3 -m venv .venv-test
+.\.venv-test\Scripts\Activate.ps1
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple scribus-image-embedder
+scribus-embed --help
+
+Publish to PyPI
+
+$Env:TWINE_USERNAME="__token__"
+$Env:TWINE_PASSWORD="pypi-PYPI_TOKEN"
+twine upload dist\*
+
+If you need to re-upload, bump the version in pyproject.toml (e.g., 1.0.1) and rebuild.
+FAQ
+
+Q: Does this modify my input file?
+A: No. A new output .sla is written; the source isn’t changed.
+
+Q: Can it embed SVG or PDF?
+A: Not in this package. It’s for images only.
+
+Q: Which Scribus versions are compatible?
+A: The output uses the inline qCompress format Scribus understands (tested with 1.5+ series). If you hit a version-specific quirk, open an issue.
+License
+
+MIT © Afueth Thomas
+
+
+That’ll keep your build clean, your CLI discoverable, and your docs friendly—especially for Windows users.
