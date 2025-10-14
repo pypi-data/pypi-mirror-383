@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_participate_start"] }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>{{ texts["participation_form_heading"] }}</h2>
+  <p>{{ texts["participation_form_intro"] }}</p>
+  <form method="post" class="form-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <label>{{ texts["label_name_optional"] }}
+      <input type="text" name="name" maxlength="255" />
+    </label>
+    <label>{{ texts["label_topic"] }}
+      <select name="topic_id" required>
+        {% for topic in topics %}
+        <option value="{{ topic.id }}">{{ topic.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>{{ texts["label_argument_optional"] }}
+      <textarea name="argument_text" rows="4" maxlength="2000" placeholder="{{ texts['argument_placeholder'] }}"></textarea>
+    </label>
+    <button type="submit" class="button primary">{{ texts["start_session_button"] }}</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_home"] }}{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h2>{{ texts["hero_heading"] }}</h2>
+    <p>{{ texts["hero_paragraph"] }}</p>
+    <div class="cta-group">
+      <a class="button primary" href="{{ path_for('participate_start') }}">{{ texts["hero_button"] }}</a>
+      <a class="button secondary" href="{{ path_for('admin_login_page') }}">{{ texts["nav_admin"] }}</a>
+    </div>
+  </div>
+  <div class="card accent-card">
+    <h3>{{ texts["features_heading"] }}</h3>
+    <p>{{ texts["feature_rating"] }}</p>
+    <p>{{ texts["feature_admin"] }}</p>
+  </div>
+</section>
+<section class="panel accent">
+  <h3>{{ texts["features_heading"] }}</h3>
+  <ul class="feature-grid">
+    <li class="feature-item">
+      <span class="feature-icon">🎯</span>
+      <p>{{ texts["feature_adaptive_selection"] }}</p>
+    </li>
+    <li class="feature-item">
+      <span class="feature-icon">🗂️</span>
+      <p>{{ texts["feature_storage"] }}</p>
+    </li>
+    <li class="feature-item">
+      <span class="feature-icon">🛡️</span>
+      <p>{{ texts["feature_admin"] }}</p>
+    </li>
+    <li class="feature-item">
+      <span class="feature-icon">⭐</span>
+      <p>{{ texts["feature_rating"] }}</p>
+    </li>
+  </ul>
+</section>
+<section>
+  <h3>{{ texts["active_topics"] }}</h3>
+  {% if topics %}
+  <div class="card-grid">
+    {% for topic in topics %}
+    <article class="card">
+      <h4>{{ topic.title }}</h4>
+      <p>{{ topic.description or "" }}</p>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>{{ texts["no_topics"] }}</p>
+  {% endif %}
+</section>
+{% endblock %}
