@@ -1,0 +1,15 @@
+[project]
+name = "maestro-python"
+version = "1.0.3"
+authors = [
+  { name="Arda Tasci", email="arda.tasci@taski-ai.com"},
+]
+description = "Client API proxy for TaskiAI's Maestro."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.28.1",
+]
+[project.urls]
+Issues = "https://github.com/TaskiAI/maestro-python/issues" 
+Homepage = "https://github.com/TaskiAI/maestro-python/"
