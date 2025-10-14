@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "public_api_types.proto"; 
+
+message APIDown {
+    oneof down{
+        BaseCommand base_command = 1;
+        LinearLiftCommand linear_lift_command = 2;
+        ArmCommand arm_command = 3;
+        RotateLiftCommand rotate_lift_command = 4;
+        ReportFrequency set_report_frequency = 5;
+        HandCommand hand_command = 6;
+    }
+}
