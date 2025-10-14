@@ -1,0 +1,11 @@
+MDAnalysis>=2.8.0
+dask[dataframe]>=2024.1.0
+distributed>=2024.1.0
+numpy>=1.23
+pandas>=1.5
+loguru
+
+[tests]
+pytest>=7
+pytest-xdist>=3
+numpy
