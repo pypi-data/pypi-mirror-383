@@ -1,0 +1,104 @@
+# delta_rest_api_india
+
+A simple Python wrapper for **Delta Exchange (India)** REST API — allows trading on both **Testnet** and **Production** environments.
+
+---
+
+## 🌐 Create an Account
+👉 [Testnet (India)](https://testnet.delta.exchange)
+
+---
+
+## 📦 Installation
+```bash
+pip install delta-rest-api-india
+```
+
+---
+
+## 🚀 Quick Start
+
+```python
+import delta-rest-api-india as delta_algo
+
+# --- API Configuration ---
+api_key = ""          # Your API key
+api_secret = ""       # Your API secret
+price = ""            # Needed for LIMIT orders (default is MARKET)
+SL = ""               # Stop Loss (for bracket orders)
+TP = ""               # Take Profit (for bracket orders)
+LOT = ""              # Quantity
+side = ""             # BUY / SELL
+product_symbol = ""   # Example: BTCUSD / ETHUSD
+product_id = ""       # Example: BTCUSD = 27, ETHUSD = 3136
+base_url = ""         # Use either PROD or TESTNET URL
+timeframe = ""        # Chart timeframe
+symbol = ''           # e.g FOR ETH ETH/USDT and BTC BTC/USDT 
+lookback =            # Number of candles to load   
+ema_value =           # EMA VALUE e.g 10 or 22 
+ma_value =           # MA VALUE e.g 10 or 22 
+```
+
+---
+
+## 🌍 Base URLs
+
+| Environment | URL |
+|--------------|-----|
+| **Production (India)** | `https://api.india.delta.exchange` |
+| **Testnet (India)** | `https://cdn-ind.testnet.deltaex.org` |
+
+---
+
+## 🧩 API Methods
+
+### ➕ Place a Bracket Order
+```python
+delta_algo.PLACE_BRACKET_ORDER(
+    api_key, api_secret, price, SL, TP, LOT, side,
+    product_symbol, product_id, base_url
+)
+```
+
+### 💰 Place a Normal Order
+```python
+delta_algo.PLACE_ORDER(
+    api_key, api_secret, price, LOT, side, product_id, base_url
+)
+```
+
+### 💵 Check Balance
+```python
+delta_algo.BALANCE_CHECK(api_key, api_secret, base_url)
+```
+
+### 📈 Get Current Price
+```python
+delta_algo.CURRENT_PRICE(product_symbol)
+```
+### 📈 Get EMA Price
+```python
+delta_algo.EMA(symbol, lookback, timeframe, ema_value)
+```
+### 📈 Get MOVING AVERAGE Price
+```python
+delta_algo.MOVING_AVG(symbol, lookback, timeframe, ma_value)
+```
+### 📈 Get EMA AND MOVING AVERAGE CROSSOVER
+```python
+delta_algo.EMA_MA_CROSSOVER(symbol, lookback, timeframe, ma_value, ema_value)
+```
+---
+
+## 🧠 Upcoming Features (Next Version)
+- RSI (Relative Strength Index)
+- Support & Resistance Detection
+- HAMMER CANDEL Detection
+- ATR BASE SL AND TP
+- VOLUME Detection
+
+
+---
+
+## 📬 Contact 
+📧 **shashankjoshi61@yahoo.com**
