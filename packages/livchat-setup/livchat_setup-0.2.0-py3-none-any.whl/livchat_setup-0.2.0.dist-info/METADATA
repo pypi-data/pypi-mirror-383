@@ -1,0 +1,94 @@
+Metadata-Version: 2.4
+Name: livchat-setup
+Version: 0.2.0
+Summary: Automated server setup and application deployment system with AI control via MCP (v0.2.0: DNS-first architecture)
+Home-page: https://github.com/pedrohnas/livchat-setup
+Author: Pedro Nascimento
+Author-email: team@livchat.ai
+Project-URL: Bug Reports, https://github.com/pedrohnas/livchat-setup/issues
+Project-URL: Source, https://github.com/pedrohnas/livchat-setup
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: System :: Systems Administration
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: hcloud>=1.35.0
+Requires-Dist: ansible-core>=2.16.0
+Requires-Dist: ansible-runner>=2.3.0
+Requires-Dist: cryptography>=41.0.0
+Requires-Dist: jsondiff>=2.2.0
+Requires-Dist: httpx>=0.25.0
+Requires-Dist: tenacity>=8.0.0
+Requires-Dist: cloudflare>=3.0.0
+Requires-Dist: jsonschema>=4.0.0
+Requires-Dist: fastapi>=0.104.0
+Requires-Dist: uvicorn[standard]>=0.24.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.11.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: pytest-timeout>=2.1.0; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# LivChat Setup
+
+Automated server setup and application deployment system with AI integration via MCP.
+
+## Features
+
+- 🚀 Automated VPS creation and setup
+- 🐳 Docker Swarm orchestration
+- 📦 Application dependency management
+- 🔐 Secure credential management
+- 🤖 AI control via Model Context Protocol (MCP)
+- ☁️ Multi-cloud provider support (starting with Hetzner)
+
+## Installation
+
+```bash
+pip install livchat-setup
+```
+
+## Quick Start
+
+```python
+from livchat import LivChatSetup
+
+# Initialize
+setup = LivChatSetup()
+setup.init()
+
+# Configure provider
+setup.configure_provider("hetzner", token="your-token")
+
+# Create server
+server = setup.create_server("prod-01", "cx21", "nbg1")
+print(f"Server created: {server['ip']}")
+```
+
+## Documentation
+
+See [DESIGN.md](DESIGN.md) for architecture details and [plans/](plans/) for implementation plans.
+
+## License
+
+MIT
