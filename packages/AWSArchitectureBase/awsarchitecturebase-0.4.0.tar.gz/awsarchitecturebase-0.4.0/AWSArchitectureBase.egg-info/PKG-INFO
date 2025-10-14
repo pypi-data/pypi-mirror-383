@@ -1,0 +1,55 @@
+Metadata-Version: 2.4
+Name: AWSArchitectureBase
+Version: 0.4.0
+Summary: Buzzerboy Architecture Standard for Buzzerboy Based Architectures
+Home-page: https://www.buzzerboy.com/
+Author: Buzzerboy Inc
+Author-email: Buzzerboy Inc <info@buzzerboy.com>
+Project-URL: Homepage, https://www.buzzerboy.com/
+Project-URL: Issues, https://dev.azure.com/buzzerboyinc/buzzerboy
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: build
+Requires-Dist: twine
+Requires-Dist: bump2version
+Requires-Dist: cdktf<1.0,>=0.17.0
+Requires-Dist: constructs<11.0,>=10.0.0
+Requires-Dist: cdktf-cdktf-provider-aws>=12.0.0
+Requires-Dist: cdktf-cdktf-provider-random>=8.0.0
+Requires-Dist: toml
+Requires-Dist: pipenv
+Requires-Dist: boto3>=1.26.0
+Requires-Dist: botocore>=1.29.0
+Requires-Dist: BuzzerboyArchetype
+Requires-Dist: toml
+Requires-Dist: pipenv
+Requires-Dist: boto3>=1.26.0
+Requires-Dist: botocore>=1.29.0
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+
+# Introduction 
+TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+
+# Getting Started
+TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
+1.	Installation process
+2.	Software dependencies
+3.	Latest releases
+4.	API references
+
+# Build and Test
+TODO: Describe and show how to build your code and run the tests. 
+
+# Contribute
+TODO: Explain how other users and developers can contribute to make your code better. 
+
+If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
+- [ASP.NET Core](https://github.com/aspnet/Home)
+- [Visual Studio Code](https://github.com/Microsoft/vscode)
+- [Chakra Core](https://github.com/Microsoft/ChakraCore)
