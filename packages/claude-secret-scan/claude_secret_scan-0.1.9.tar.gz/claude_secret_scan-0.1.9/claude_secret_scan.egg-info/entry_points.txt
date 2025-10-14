@@ -1,0 +1,3 @@
+[console_scripts]
+claude-secret-scan = plugins.secrets_scanner.hooks.secrets_scanner_hook:console_main_claude
+cursor-secret-scan = plugins.secrets_scanner.hooks.secrets_scanner_hook:console_main_cursor
