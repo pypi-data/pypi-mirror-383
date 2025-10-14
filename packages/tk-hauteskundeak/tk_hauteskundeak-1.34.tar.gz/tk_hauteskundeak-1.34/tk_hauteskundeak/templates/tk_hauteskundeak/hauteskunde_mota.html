@@ -1,0 +1,63 @@
+{% load tk_math %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-10 ">
+            <h1 itemprop="headline" class="mt-3 mb-4">{{object.izena}}</h1>
+
+        {% if tokiak.count == 1 %}
+            <div class="d-inline h5 btn  " id="dropdownMenuLink"  >{{tokia.izena}} </div>
+
+        {% else %}
+            <p>
+                <button class="d-inline h5 btn" type="button" data-toggle="collapse" data-target="#tk-hauteskundeak-menua" aria-expanded="false" aria-controls="tk-hauteskundeak-menua">
+                    {{tokia.izena}} &nbsp;&nbsp;&nbsp;<small><span class="oi oi-caret-bottom"></span></small>
+                </button>
+              </p>
+              <div class="collapse" id="tk-hauteskundeak-menua">
+                <div class="row">
+
+                    {% tokiak_in_cols tokiak as tokiak_cols %}
+
+                    {% for col in tokiak_cols %}
+                        <div class="col-12 col-md  {% if not forloop.first %}border-left{% endif %} ">
+                                {% for this_tokia in col.tokiak %}
+                                <a class="nav-link {% if this_tokia == tokia %} disabled {% endif %}"
+                                    href="{% url "hauteskundeak_hauteskunde_mota_tokia" object.slug this_tokia.slug %}">{{this_tokia.izena}}</a>
+                                {% endfor %}
+                        </div>
+                    {% endfor %}
+
+
+                </div>
+              </div>        
+        {% endif %}
+
+        <hr />            
+
+
+        </div>
+        {% if object.irudia %}
+        <div class="col-md-2 d-none d-sm-block">
+            <span class="mt-3 float-right">
+                <img src="{{object.irudia.get_tokikom_375x211_url}}" class="rounded float-left"
+                    alt="Hauteskunde mota irudia" width="200" />
+            </span>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            {% include "tk_hauteskundeak/include/hauteskunde_mota_botoak_grafikoa.html" with hauteskundeak=hauteskundeak taula=taula_graph mota=object %}
+            {% include "tk_hauteskundeak/include/hauteskunde_mota_botoak.html" with hauteskundeak=hauteskundeak taula=taula_table tokia=tokia %}
+        </div>
+    </div>
+    <h3 class="mt-3">Fitxak</h3>
+    {% include "tk_hauteskundeak/include/hauteskunde_fitxak.html" with hauteskundeak=hauteskundeak %}
+
+    {% include "tk_hauteskundeak/include/hauteskunde_oharrak.html" with oharrak=oharrak %}
+
+</div>
+
+</div>
+</div>

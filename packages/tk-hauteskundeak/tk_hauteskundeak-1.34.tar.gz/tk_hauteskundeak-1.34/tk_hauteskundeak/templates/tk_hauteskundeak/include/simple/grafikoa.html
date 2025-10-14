@@ -1,0 +1,82 @@
+<div id="botoakgraph-{{ hauteskundea.izena|slugify }}-{{ tokia.izena|slugify }}"
+     style="width: {{ width }};
+            height: {{ height }};
+            margin: 0 auto"></div>
+<script type="text/javascript">
+
+
+{% include "tk_hauteskundeak/include/highchart/setoptions.js" %}
+Highcharts.chart('botoakgraph-{{hauteskundea.izena|slugify}}-{{tokia.izena|slugify}}', {
+    {% include "tk_hauteskundeak/include/highchart/menuoptions.js" %}
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: '{{hauteskundea.izena}} - {{tokia.izena}}'
+    },
+    subtitle: {
+        text: 'Boto kopurua{% if info %} - Eskrutinioa: %{{info.info.eskrutinioa}}{% endif %}'
+    },
+    xAxis: {
+        categories: [{% for alderdia in taula %}{%if alderdia.alderdia__show_in_graphs%}
+        '{{alderdia.alderdia__akronimoa}}'{% if forloop.last %} {% else%},{% endif %}{% endif %}{% endfor %}],
+        title: {
+            text: null
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Boto kopurua',
+            align: 'middle'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    tooltip: {
+        valueSuffix: ' boto'
+    },
+    plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        shadow: true,
+        enabled: false
+    },
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: '{{object.izena}}',
+        data: [{% for alderdia in taula %}
+        {%if alderdia.alderdia__show_in_graphs%}
+        {
+           y: {{alderdia.botoak|default:"null"}},
+           color: hexToRgbOpacityTxt('{{alderdia.alderdia__kolorea|default:"#000000;"}}',1)
+        }{% if forloop.last %} {% else%},{% endif %}
+        {% endif %}
+        {% endfor %}],
+        groupPadding: 0.1,
+        pointPadding: 0,
+        color: 'rgba(0, 0, 0, 1)'
+    }]
+
+
+});
+
+
+</script>

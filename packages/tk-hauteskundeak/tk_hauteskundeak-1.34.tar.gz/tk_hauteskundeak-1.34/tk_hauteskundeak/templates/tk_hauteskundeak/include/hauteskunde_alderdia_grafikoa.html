@@ -1,0 +1,78 @@
+{%load l10n%}
+<div id="botoakgraph" style="width: 100%;height: 600px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+var dashStyles = [
+    'Solid',
+    'Dot',
+    'Dash',
+    'DashDot',
+    'ShortDash',
+    'ShortDot',
+    'ShortDashDot',
+    'ShortDashDotDot',
+    'LongDash',
+    'LongDashDot',
+    'LongDashDotDot'
+];
+
+{% include "tk_hauteskundeak/include/highchart/setoptions.js" %}
+Highcharts.chart('botoakgraph', {
+    {% include "tk_hauteskundeak/include/highchart/menuoptions.js" %}
+
+    chart: {
+        type: 'spline'
+    },
+
+    title: {
+        text: '{{alderdia.akronimoa}} - {{tokia.izena}}'
+    },
+    subtitle: {
+        text: 'Boto kopurua'
+    },
+    xAxis: {
+        type: 'datetime',
+
+        title: {
+            text: 'Data'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Boto kopurua'
+        },
+        min: 0
+    },
+    tooltip: {
+        headerFormat: '{series.name} {point.x:%Y/%m}<br>',
+        pointFormat: '<b>{point.y}</b>'
+    },
+
+    plotOptions: {
+        spline: {
+            marker: {
+                enabled: true,
+                radius: 6
+                },
+            lineWidth: 4
+        }
+    },
+
+    series: [
+        {% for mota in taula_motak%}
+        {
+        name: "{{mota.mota.izena}}",
+        color: "{{alderdia.kolorea}}",
+        dashStyle: dashStyles[{{forloop.counter0}}],
+        data: [
+        {% for hautes in mota.datuak %}
+            [Date.UTC({{hautes.eguna|date:"Y"}}, {{hautes.eguna|date:"n"}}, {{hautes.eguna|date:"j"}}), {{hautes.botoak|default:"null"|unlocalize}}]
+                {% if forloop.last %} {% else%},{% endif %}
+        {% endfor %}
+        ]
+        } {% if forloop.last %} {% else%},{% endif %}
+        {% endfor %}
+]
+});
+
+</script>

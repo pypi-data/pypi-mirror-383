@@ -1,0 +1,67 @@
+{%load l10n%}
+
+<div id="eserlekuakgraph-{{object.izena|slugify}}-{{tokia.izena|slugify}}" style="width: 100%; margin: 0 auto"></div>
+
+
+<script type="text/javascript">
+
+var pieColors = [{% for alderdia in taula %}'{{alderdia.kolorea}}'{% if forloop.last %}{% else %},{% endif %}{% endfor %}];
+
+{% include "tk_hauteskundeak/include/highchart/setoptions.js" %}
+Highcharts.chart('eserlekuakgraph-{{object.izena|slugify}}-{{tokia.izena|slugify}}', {
+    {% include "tk_hauteskundeak/include/highchart/menuoptions.js" %}
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+
+    title: {
+        useHTML: true,
+        text: '<div style="text-align:center">{{object.izena}}<br/>{{tokia.izena}}</div>'
+    },
+    subtitle: {
+        text: 'Eserlekuak'
+    },
+
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                format: '{point.txt}',
+                style: {
+                    color: 'white',
+                    fontSize: '120%'
+                },
+                formatter: function(){
+                    return this.y;
+                },
+            },
+            colors: pieColors,
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%'],
+            size: '150%',
+
+        }
+    },
+    series: [{
+            type: 'pie',
+            name: 'Eserlekuak',
+            innerSize: '30%',
+            borderWidth:0,            
+            data: [
+            {% for alderdia in taula %}{% if alderdia.jarlekuak_0%}
+            {name:'{{alderdia.akronimoa|escapejs}}',y:{{alderdia.jarlekuak_0}},txt:'{{alderdia.akronimoa|escapejs}} ({{alderdia.jarlekuak_0}})'},
+            {% endif %}
+            {% endfor %}
+            ],
+
+        }]
+});
+
+</script>

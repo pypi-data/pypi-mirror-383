@@ -1,0 +1,8 @@
+{% load imagehtml %}
+{% if pk %}
+{% with photo=pk|getphoto %}
+{% if photo %}
+<img src="{{photo.get_tokikom_100x75_url}}" class="rounded" alt="Alderdiaren logoa" width="40">
+{% endif %}
+{% endwith%}
+{% endif %}

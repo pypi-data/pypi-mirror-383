@@ -1,0 +1,28 @@
+{% load tk_math humanize %}
+{% if tokiak.count == 1 %}
+    <div class="d-inline h5 btn  " id="dropdownMenuLink">{{ tokia.izena }}</div>
+{% else %}
+    <p>
+        <button class="d-inline h5 btn"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample">
+            {{ tokia.izena }} &nbsp;&nbsp;&nbsp;<small><span class="oi oi-caret-bottom"></span></small>
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="row">
+            {% tokiak_in_cols tokiak as tokiak_cols %}
+            {% for col in tokiak_cols %}
+                <div class="col-12 col-md-2 {% if not forloop.first %}border-left{% endif %}">
+                    {% for this_tokia in col.tokiak %}
+                        <a class="nav-link {% if this_tokia == tokia %}disabled{% endif %}"
+                           href="{% url link_url slug1 slug2 slug3 %}">{{ this_tokia.izena }}</a>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

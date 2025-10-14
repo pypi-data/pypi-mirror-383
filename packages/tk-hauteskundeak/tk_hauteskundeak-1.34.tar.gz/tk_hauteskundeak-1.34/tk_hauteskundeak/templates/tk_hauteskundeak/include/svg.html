@@ -1,0 +1,64 @@
+{% comment %}
+
+OSM-eko mugak svg formatura ateratzeko, hemendik egitea onena:
+https://wambachers-osm.website/boundaries/
+
+Banan-bana egin behar, jakina.
+
+{% endcomment %}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svgmap" viewBox="0 0 500 500" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" x="0" contentScriptType="text/ecmascript" y="0" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" version="1.0">
+   <style xml:space="preserve"><![CDATA[
+.map {
+         stroke:            black;
+         stroke-width:      2;
+         fill:              #E1DDD7;
+}
+.boundary {
+         stroke-linejoin:   round;
+         stroke-linecap:    round;
+         stroke:            white;
+         stroke-width:      3;
+         fill:              #F1fffe;
+}
+]]></style>
+   <g id="Map">
+      {% for herria in herriak %}
+        <g class="boundary" id="{{herria.tokia.slug}}"  style="fill: {{herria.irabazlea.kolorea }}" data-toggle="tooltip" class="cursor-hand" data-placement="top" title="" data-original-title="tooltip" aria-describedby="tooltip335193">
+            <title>{{herria.tokia.izena}} - {{herria.irabazlea.akronimoa}}</title>
+            <path name="{{herria.tokia.izena}}" d="{{herria.tokia.boundary_svg}}" localname="{{herria.tokia.slug}}" id="{{herria.tokia.pk}}" ></path>
+         </g>
+      {% endfor %}
+
+
+   </g>
+</svg>
+
+{%if request.user.is_staff%}{%endif%}
+<a href="javascript:void(0);" id="downloadSVG" class="small">Jaitsi mapa svg formatuan</a>
+
+
+
+<script type="text/javascript">
+
+function downloadSVGAsText() {
+
+      const svg = document.querySelector('#svgmap');
+      const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
+      const a = document.createElement('a');
+      const e = new MouseEvent('click');
+      a.download = 'download.svg';
+      a.href = 'data:image/svg+xml;base64,' + base64doc;
+      a.dispatchEvent(e);
+}
+
+const downloadSVG = document.querySelector('#downloadSVG');
+
+downloadSVG.addEventListener('click', downloadSVGAsText);
+
+</script>
+
+{% comment %}
+svg created by exportBoundaries21
+{% endcomment %}

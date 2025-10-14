@@ -1,0 +1,103 @@
+{% extends "tk_hauteskundeak/base.html" %}
+{% load pagination_tags humanize %}
+
+{% block azpiheader %}Hauteskundeak{% endblock %}
+{% block azpiheader_link %}{%url 'hauteskundeak_home'%}{% endblock %}
+{% block title%}Hauteskundeak{% endblock %}
+
+
+
+{%block content%}
+
+<div class="row">
+  <div class="col-12">
+    <h1 class="mt-3 mb-4">{{kp.title}}</h1>
+    <p class="lead">{{kp.desc|safe}}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h2>Azken hauteskundeak</h2>
+  </div>
+</div>
+<div class="row">
+  {% for hauteskundea in hauteskundeak %}
+  <div class="col-sm-3">
+
+    <div class="card ">
+      <a href="{% url "hauteskundeak_hauteskundea" hauteskundea.slug %}">
+        <img src="{{hauteskundea.irudia.get_tokikom_735x413_url}}" class="rounded" alt="Hauteskundearen irudia"
+          lass="card-img-top" alt="..."></a>
+      <div class="card-body">
+        <h5 class="card-title"><a
+            href="{% url "hauteskundeak_hauteskundea" hauteskundea.slug %}">{{hauteskundea.izena}}</a></h5>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-12 text-right ">
+    <p><a href="{% url "hauteskundeak_hauteskundeak_list" %}">&raquo;&raquo; Hauteskunde guztien zerrenda</a></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="tk-light p-3">
+      <h3 class="my-3">Hauteskunde motak </h3>
+
+      {% for mota in motak %}
+      <div class="media">
+        <img src="{{mota.irudia.get_tokikom_100x75_url}}" class="mr-3" alt="Motaren irudia" />
+        <div class="media-body">
+          <h5 class="mt-0 mb-1"><a href="{% url "hauteskundeak_hauteskunde_mota" mota.slug %}">{{mota.izena}}</a>
+          </h5>
+          {% comment %}
+          &raquo;&raquo;
+          {% for hauteskundea in mota.get_hauteskundeak %}
+          <a class="d-inline"
+            href="{% url "hauteskundeak_hauteskundea" hauteskundea.slug %}">{{hauteskundea.eguna|date:"Y"}}</a>{% if forloop.last %}{% else%},
+          {% endif %}
+          {% endfor %}<br />
+          &raquo;&raquo; <a class="d-inline" href="{% url "hauteskundeak_hauteskunde_mota" mota.slug %}">Guztiak</a>
+          {% endcomment %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+  <div class="col-md-6">
+
+    <div class="tk-light p-3">
+      <h3 class="my-3">Alderdi nagusiak</h3>
+      <div class="row">
+        {% for alderdia in alderdiak %}
+        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 ">
+          <div class="tk-alderdia">
+            <img src="{{alderdia.logoa.get_tokikom_100x75_url}}" class="mr-3" alt="Alderdiaren logoa" />
+            <h5 class="mt-0 mb-1"><a href="{% url "hauteskundeak_alderdia" alderdia.slug %}">{{alderdia.akronimoa}}</a>
+            </h5>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+      <p class="text-right"><a href="{% url "hauteskundeak_alderdiak_list" %}">&raquo;&raquo; Alderdi guztien
+          zerrenda</a></p>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% include "tk_hauteskundeak/include/hauteskunde_alderaketa.html" with hauteskundeak=hauteskunde_guztiak hauteskundea=None tokia=tokia%}
+
+
+</div>
+</div>
+{%endblock%}

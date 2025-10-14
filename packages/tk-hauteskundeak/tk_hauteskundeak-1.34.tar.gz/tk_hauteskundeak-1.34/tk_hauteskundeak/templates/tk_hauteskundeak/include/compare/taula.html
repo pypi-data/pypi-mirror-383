@@ -1,0 +1,62 @@
+{% load humanize %}
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table table-striped ">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Alderdia</th>
+                <th class="text-center">{{ hauteskundea.izen_motza }}</th>
+                <th class="text-center">{{ hauteskundea2.izen_motza }}</th>
+                <th class="text-center">
+                    <abbr title="Diferentzia">Dif</abbr>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alderdia in taula %}
+                <tr>
+                    <td class="text-center min">
+                        {% include "tk_hauteskundeak/include/alderdia/logoaid.html" with pk=alderdia.alderdia__logoa %}
+                    </td>
+                    <td class="text-left">
+                        {% if alderdia.alderdia__show_in_page %}
+                            <a href="{% url "hauteskundeak_alderdia_tokia" alderdia.alderdia__slug tokia.slug %}">
+                            {{ alderdia.alderdia__akronimoa }}</a>
+                        {% else %}
+                            {{ alderdia.alderdia__akronimoa }}
+                        {% endif %}
+                    </td>
+                    <td class="text-right">
+                        {{ alderdia.botoak|intcomma|default:'-' }}
+                        <br />
+                        <small>
+                            {% if alderdia.botoak %}
+                                %{{ alderdia.ehunekoa|floatformat:2|default:'-' }}
+                                <br />
+                            {% endif %}
+                            {% if alderdia.jarlekuak %}<strong>({{ alderdia.jarlekuak|default:'-' }})</strong>{% endif %}
+                        </small>
+                    </td>
+                    <td class="text-right">
+                        {{ alderdia.botoak2|intcomma|default:'-' }}
+                        <br />
+                        <small>
+                            {% if alderdia.botoak2 %}
+                                %{{ alderdia.ehunekoa2|floatformat:2|default:'-' }}
+                                <br />
+                            {% endif %}
+                            {% if alderdia.jarlekuak2 %}<strong>({{ alderdia.jarlekuak2|default:'-' }})</strong>{% endif %}
+                        </small>
+                    </td>
+                    <td class="text-right">
+                        {% if alderdia.botoakdif %}
+                            {{ alderdia.botoakdif }}
+                            <br />
+                            <small>(%{{ alderdia.ehunekoadif|floatformat:2|default:'' }})</small>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

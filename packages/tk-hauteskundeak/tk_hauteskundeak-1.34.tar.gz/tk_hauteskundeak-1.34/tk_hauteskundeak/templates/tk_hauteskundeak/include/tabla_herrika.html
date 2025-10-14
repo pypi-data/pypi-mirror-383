@@ -1,0 +1,79 @@
+{% if herriak_taulan_mozteko %}
+
+
+<div class="row">
+<div class="col-12 col-md-6">
+    <div class="table-responsive">
+        <table id="emaitza-taula" class="table table-striped ">
+            <thead>
+                <tr>
+                    <th>Herria</th>
+                    <th>Irabazlea</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for herria in herriak %}
+
+                {% if forloop.counter0 == herriak_taulan_mozteko %}
+
+            </tbody></table></div></div>
+            <div class="col-12 col-md-6 ">
+
+                <div class="table-responsive">
+                    <table id="emaitza-taula" class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th>Herria</th>
+                                <th>Irabazlea</th>
+                             {%if portada%}<th>Eskrutinioa</th>{%endif%}
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                {% endif %}
+
+                <tr>
+                    <td><a href="{% url 'hauteskundeak_hauteskundea_tokia' hauteskundea.slug herria.tokia.slug %}">
+                        {{herria.tokia.izena}}</a>
+                    </td>
+                    <td>{{herria.irabazlea.akronimoa}}</td>
+                    {%if portada%}<td>% {{herria.eskrutinioa}}</td>{%endif%}
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</div>
+</div>
+
+
+{% else %}
+
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table table-striped ">
+        <thead>
+            <tr>
+                <th>Herria</th>
+                <th>Irabazlea</th>
+                {%if portada%}<th>Eskrutinioa</th>{%endif%}
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for herria in herriak %}
+            <tr>
+                <td><a
+                        href="{% url "hauteskundeak_hauteskundea_tokia" hauteskundea.slug herria.tokia.slug %}">{{herria.tokia.izena}}</a>
+                </td>
+                <td>{{herria.irabazlea.akronimoa}}</td>
+                {%if portada%} <td> % {{herria.eskrutinioa}}</td>{%endif%}
+
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

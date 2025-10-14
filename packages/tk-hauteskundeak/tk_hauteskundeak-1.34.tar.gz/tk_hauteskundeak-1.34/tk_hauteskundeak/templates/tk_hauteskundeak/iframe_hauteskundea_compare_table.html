@@ -1,0 +1,8 @@
+{%extends "tk_hauteskundeak/iframe_base.html"%}
+
+{%block content%}
+
+{% if info %}<p>Eskrutinioa: %{{info.info.eskrutinioa}}{% endif %}
+{% include "tk_hauteskundeak/include/compare/taula.html" with hauteskundea=hauteskundea hauteskundea2=hauteskundea2 taula=info.taula tokia=tokia %}
+
+{%endblock%}

@@ -1,0 +1,47 @@
+{% load tk_math humanize%}
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table table-striped ">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                {% for hauteskundea in hauteskundeak %}
+                <th class="text-center">{{hauteskundea.eguna|date:"Y"}}</th>
+                {% endfor %}
+                {% if diferentzia %}
+                <th class="text-center">Diferentzia</th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for alderdia in taula %}
+            <tr>
+                <td class="text-center min">
+                    {% include "tk_hauteskundeak/include/alderdia/logoa.html" with alderdia=alderdia %}
+                </td>
+                <td class="text-left">
+                    {%if alderdia.show_in_page%}
+                    <a href="{% url "hauteskundeak_alderdia_tokia" alderdia.slug tokia.slug %}">
+                        {{alderdia.akronimoa}}</a>
+                    {%else%}
+                    {{alderdia.akronimoa}}
+                    {%endif%}</td>
+                {% for hauteskundea in hauteskundeak %}
+                {% with botoak=alderdia|get_botoak:forloop.counter0 %}
+                <td class="text-right">{{botoak|default:'-'|intcomma}}<br />
+                    <small>
+                        {{alderdia|get_ehunekoa:forloop.counter0}}<br /><strong>{{alderdia|get_jarlekuak:forloop.counter0}}</strong>
+                    </small>
+
+                </td>
+
+                {% endwith%}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+</div>

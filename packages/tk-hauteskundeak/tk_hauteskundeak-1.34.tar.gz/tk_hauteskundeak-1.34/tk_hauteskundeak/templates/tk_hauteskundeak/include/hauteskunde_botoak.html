@@ -1,0 +1,33 @@
+{%load humanize%}
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table table-striped ">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="text-center">Alderdia</th>
+                {% for hauteskundea in hauteskundeak %}
+                <th class="text-center">{{hauteskundea.izen_motza}}</th>
+                {% endfor %}
+                {% if diferentzia %}
+                <th class="text-center">Diferentzia</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for ema in emaitza %}
+            <tr>
+                <td class="text-center"></td>
+                <td class="text-left">{{ema.alderdia.izena}}</td>
+                {% for botoa in ema.botoak %}
+                <td class="text-right">{{botoa|default:"-"}}</td>
+                {% endfor %}
+
+                {% endfor %}
+                {% if diferentzia %}
+                <td class="text-right"></td>
+                {% endif %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>

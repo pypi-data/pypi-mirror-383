@@ -1,0 +1,35 @@
+<div class="row my-4">
+        <div class="col-12">
+                <div class="tk-light p-3">
+                        <h2>Alderaketa</h2>
+                        {% if hauteskundea %}
+                        <p>Alderatu hauteskunde honen datuak beste batetkin</p>
+                        {% else %}
+                        <p>Alderatu hauteskunde biren arteko datuak</p>
+                        {% endif %}
+
+                        <form class="form-inline" action="{% url 'hauteskundeak_redirect_to_compare' %}" method="GET">
+                                <input type="hidden" value="{{tokia.slug}}" id="tokia_slug" name="tokia_slug" />
+
+                                {% if hauteskundea %}
+                                <input type="hidden" value="{{hauteskundea.slug}}" id="slug1" name="slug1" />
+                                {% else %}
+                                <select class="custom-select my-1 mr-sm-2" id="slug1" name="slug1">
+                                        <option selected value="">Aukeratu hauteskunde bat</option>
+                                        {% for hauteskundea in hauteskundeak %}
+                                        <option value="{{hauteskundea.slug}}">{{hauteskundea.izena}}</option>
+                                        {% endfor %}
+                                </select>
+                                {% endif %}
+                                <select class="custom-select my-1 mr-sm-2" id="slug2" name="slug2">
+                                        <option selected value="">Aukeratu bigarren hauteskundea</option>
+                                        {% for hauteskundea in hauteskundeak %}
+                                        <option value="{{hauteskundea.slug}}">{{hauteskundea.izena}}</option>
+                                        {% endfor %}
+                                </select>
+
+                                <button type="submit" class="btn btn-primary mb-2">EGIN ALDERAKETA</button>
+                        </form>
+                </div>
+        </div>
+</div>

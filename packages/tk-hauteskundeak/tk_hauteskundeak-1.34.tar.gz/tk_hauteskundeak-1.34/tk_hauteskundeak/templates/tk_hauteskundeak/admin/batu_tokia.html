@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<p><strong>Zer herritara eraman nahi dituzu honen datuak?</strong></p>
+Aukeratutako tokia(k): {% for t in tokia %}{{t.izena}}{% endfor %}<br />
+Nora eraman (aukeratu): 
+
+<form action="" method="post">
+    {% csrf_token %}
+
+  <select name="toki_berria" id="toki_berria">
+    {% for tokia in tokiak %}
+    <option value="{{tokia.pk}}">{{tokia.izena}}</option>
+    {% endfor %}
+  </select>
+
+  {% for t in tokia %}
+  <input type="hidden" name="_selected_action" value="{{ t.pk }}" />
+  {% endfor %}
+
+    <br />
+  <input type="hidden" name="action" value="batu_tokia" />    
+  <input type="submit" name="apply" value="Batu tokia"/>    
+
+</form>
+
+{% endblock %}

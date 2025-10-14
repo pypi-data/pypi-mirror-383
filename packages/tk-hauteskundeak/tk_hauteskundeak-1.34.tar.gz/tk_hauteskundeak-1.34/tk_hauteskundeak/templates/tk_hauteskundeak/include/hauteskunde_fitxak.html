@@ -1,0 +1,102 @@
+{% load tk_math%}{% load humanize%}
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table">
+        <tbody>
+            <tr>
+                <th class="erdi">Hauteskundea</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right"><a
+                        href="{% url "hauteskundeak_hauteskundea_tokia" hauteskundea.slug tokia.slug %}">{{hauteskundea.izen_motza}}</a>
+                </td>
+                {% endfor %}
+
+            </tr>
+
+
+            <tr>
+                <th class="erdi">Eguna</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">{{hauteskundea.eguna|date:"Y/m/d"}}</td>
+                {% endfor %}
+
+            </tr>
+
+            <tr>
+                <th class="erdi">Errolda</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">{{hauteskundea.errolda|intcomma}}</td>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <th class="erdi">Eskrutinioa</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">% {{hauteskundea.eskrutinioa|intcomma}}</td>
+                {% endfor %}
+
+            </tr>
+
+            <tr>
+                <th class="erdi">Boto-emaileak</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">{{hauteskundea.boto_emaileak|intcomma}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th class="erdi">Abstentzioa</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">
+                    {% comment %}
+                    {{hauteskundea.errolda|get_abstentzioa:hauteskundea.boto_emaileak}}<br />
+                    <small>
+                        {% if hauteskundea.boto_emaileak %}%
+                        {{hauteskundea.errolda|divide_abstentzioa:hauteskundea.boto_emaileak|floatformat:2}}{% else %}-{% endif %}
+                    </small>
+                    {% endcomment %}
+                    {% if hauteskundea.boto_emaileak %}%
+                    {{hauteskundea.errolda|divide_abstentzioa:hauteskundea.boto_emaileak|floatformat:2}}{% else %}-{% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th class="erdi">Baliogabeak</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">{{hauteskundea.baliogabeak|intcomma}} <small>(%{{hauteskundea.get_baliogabeak_ehunekotan|floatformat:2}})</small>
+                    {% comment %}
+                    <br />
+                    <small>
+                        {% if hauteskundea.baliogabeak %}%
+                        {{hauteskundea.baliogabeak|divide:hauteskundea.boto_emaileak|floatformat:2}}{% else %}-{% endif %}
+                    </small>
+                    {% endcomment %}
+                </td>
+                {% endfor %}
+
+            </tr>
+            <tr>
+                <th class="erdi">Zuriak</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">{{hauteskundea.zuriak|intcomma}}  <small>(%{{hauteskundea.get_zuriak_ehunekotan|floatformat:2}})</small>
+                    {% comment %}
+                    <br />
+                    <small>
+                        {% if hauteskundea.zuriak %}%
+                        {{hauteskundea.zuriak|divide:hauteskundea.boto_emaileak|floatformat:2}}{% else %}-{% endif %}
+                    </small>
+                    {% endcomment %}
+                </td>
+                {% endfor %}
+
+            </tr>
+            <tr>
+            <tr>
+                <th class="erdi">Hautagai-zerrenden botoak</th>
+                {% for hauteskundea in hauteskundeak %}
+                <td class="text-right">{{hauteskundea.botoak|intcomma}}</td>
+                {% endfor %}
+
+            </tr>
+
+        </tbody>
+    </table>
+</div>

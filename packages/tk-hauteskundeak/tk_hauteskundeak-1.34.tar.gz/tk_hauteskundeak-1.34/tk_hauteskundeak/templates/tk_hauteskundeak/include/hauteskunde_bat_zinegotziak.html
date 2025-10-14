@@ -1,0 +1,26 @@
+{%load l10n static %}
+<div class="row">
+
+    {% for zinegotzia in zinegotziak %}
+
+    <div class="col-6 col-md-2">
+        <div class="card">
+            <div class="card-header" style="background-color: {{zinegotzia.alderdia.kolorea}}">
+                {{zinegotzia.alderdia.akronimoa|truncatechars:10}}
+            </div>
+            {% if zinegotzia.get_photo %}
+            <img src="{{zinegotzia.get_photo.get_tokikom_375x375_url}}" class="rounded float-left" alt="Zinegotziaren argazkia" />
+            {% else %}
+            <img src="{% static 'img/concilour-noimage.jpg' %}" class="rounded float-left" alt="Zinegotziaren argazkia" />
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{zinegotzia.izena}}</h5>
+                {% if zinegotzia.desc %}<p>{{zinegotzia.desc}}</p>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+</div>

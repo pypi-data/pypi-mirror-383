@@ -1,0 +1,77 @@
+{% load humanize tk_math %}
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table">
+        <tbody>
+            <tr>
+                <th class="erdi">Hauteskundea</th>
+                <td class="text-right">
+                    <a href="{% url "hauteskundeak_hauteskundea_tokia" hauteskundea.slug tokia.slug %}">{{ hauteskundea.izen_motza }}</a>
+                </td>
+                <td class="text-right">
+                    <a href="{% url "hauteskundeak_hauteskundea_tokia" hauteskundea2.slug tokia.slug %}">{{ hauteskundea2.izen_motza }}</a>
+                </td>
+            </tr>
+            <tr>
+                <th class="erdi">Eguna</th>
+                <td class="text-right">{{ hauteskundea.eguna|date:"Y/m/d" }}</td>
+                <td class="text-right">{{ hauteskundea2.eguna|date:"Y/m/d" }}</td>
+            </tr>
+            <tr>
+                <th class="erdi">Errolda</th>
+                <td class="text-right">{{ info.errolda|intcomma }}</td>
+                <td class="text-right">{{ info2.errolda|intcomma }}</td>
+            </tr>
+            <tr>
+                <th class="erdi">Eskrutinioa</th>
+                <td class="text-right">%{{ info.eskrutinioa|intcomma }}</td>
+                <td class="text-right">%{{ info2.eskrutinioa|intcomma }}</td>
+            </tr>
+            <tr>
+                <th class="erdi">Boto-emaileak</th>
+                <td class="text-right">{{ info.boto_emaileak|intcomma }}</td>
+                <td class="text-right">{{ info2.boto_emaileak|intcomma }}</td>
+            </tr>
+            <tr>
+                <th class="erdi">Abstentzioa</th>
+                <td class="text-right">
+                    {% if info.boto_emaileak %}
+                        %{{ info.errolda|divide_abstentzioa:info.boto_emaileak|floatformat:2 }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td class="text-right">
+                    {% if info2.boto_emaileak %}
+                        %{{ info2.errolda|divide_abstentzioa:info2.boto_emaileak|floatformat:2 }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class="erdi">Baliogabeak</th>
+                <td class="text-right">
+                    {{ info.baliogabeak|intcomma }} <small>(%{{ info.get_baliogabeak_ehunekotan|floatformat:2 }})</small>
+                </td>
+                <td class="text-right">
+                    {{ info2.baliogabeak|intcomma }} <small>(%{{ info2.get_baliogabeak_ehunekotan|floatformat:2 }})</small>
+                </td>
+            </tr>
+            <tr>
+                <th class="erdi">Zuriak</th>
+                <td class="text-right">
+                    {{ info.zuriak|intcomma }} <small>(%{{ info.get_zuriak_ehunekotan|floatformat:2 }})</small>
+                </td>
+                <td class="text-right">
+                    {{ info2.zuriak|intcomma }} <small>(%{{ info2.get_zuriak_ehunekotan|floatformat:2 }})</small>
+                </td>
+            </tr>
+            <tr>
+                <tr>
+                    <th class="erdi">Hautagai-zerrenden botoak</th>
+                    <td class="text-right">{{ info.alderdien_botoak|intcomma }}</td>
+                    <td class="text-right">{{ info2.alderdien_botoak|intcomma }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

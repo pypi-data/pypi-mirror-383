@@ -1,0 +1,141 @@
+from django.urls import path, re_path
+from django.views.decorators.cache import cache_page
+
+from .views import (
+    IndexView,
+    HauteskundeaView,
+    HauteskundeaCompareView,
+    HauteskundeMotaView,
+    HauteskundeAlderdiaView,
+    HauteskundeAlderdiakListView,
+    HauteskundeListView,
+    RedirectToCompareView,
+    HauteskundeaIframeView,
+    CacheHauteskundea,
+    CacheHauteskundeaMota,
+    CacheHauteskundeaCompare,
+    HauteskundeaSimpleView,
+    HauteskundeaSimpleCompareView,
+)
+
+
+from .api_views import (
+    HauteskundeaSimpleApiView,
+    HauteskundeaSVGApiView,
+    HauteskundeaTokiaView,
+    HauteskundeaAlderdiaView,
+    AlderdiakView,
+    HauteskundeaSimpleApiViewTokiak,
+    HauteskundeaIrabazleakTokia,
+)
+from django.views.generic import TemplateView
+
+
+urlpatterns = [
+    path("", IndexView.as_view(), name="hauteskundeak_home"),
+    path(
+        "redirect_to_compare",
+        RedirectToCompareView.as_view(),
+        name="hauteskundeak_redirect_to_compare",
+    ),
+    re_path(
+        r"^mota-(?P<slug>[\w\d\-]+)$",
+        CacheHauteskundeaMota.as_view(),
+        name="hauteskundeak_hauteskunde_mota",
+    ),
+    re_path(
+        r"^mota-(?P<slug>[\w\d\-]+)/(?P<slug_tokia>[\w\d\-]+)$",
+        CacheHauteskundeaMota.as_view(),
+        name="hauteskundeak_hauteskunde_mota_tokia",
+    ),
+    re_path(
+        r"^alderdiak-(?P<slug_tokia>[\w\d\-]+)$",
+        HauteskundeAlderdiakListView.as_view(),
+        name="hauteskundeak_alderdiak_list_tokia",
+    ),
+    path(
+        "alderdiak",
+        HauteskundeAlderdiakListView.as_view(),
+        name="hauteskundeak_alderdiak_list",
+    ),
+    re_path(
+        r"^alderdiak/(?P<slug>[\w\d\-]+)$",
+        HauteskundeAlderdiaView.as_view(),
+        name="hauteskundeak_alderdia",
+    ),
+    re_path(
+        r"^alderdiak/(?P<slug>[\w\d\-]+)/(?P<slug_tokia>[\w\d\-]+)$",
+        HauteskundeAlderdiaView.as_view(),
+        name="hauteskundeak_alderdia_tokia",
+    ),
+    re_path(
+        r"^guztiak-(?P<slug_tokia>[\w\d\-]+)$",
+        HauteskundeListView.as_view(),
+        name="hauteskundeak_hauteskundeak_list_tokia",
+    ),
+    path(
+        "guztiak",
+        HauteskundeListView.as_view(),
+        name="hauteskundeak_hauteskundeak_list",
+    ),
+    path(
+        "iframe-<int:pk>",
+        HauteskundeaIframeView.as_view(),
+        name="hauteskundeak_hauteskundea_iframe",
+    ),
+    re_path(
+        r"^(?P<slug>[\w\d\-]+)-vs-(?P<slug2>[\w\d\-]+)$",
+        HauteskundeaSimpleCompareView.as_view(),
+        name="hauteskundeak_hauteskundea_compare",
+    ),
+    re_path(
+        r"^(?P<slug>[\w\d\-]+)-vs-(?P<slug2>[\w\d\-]+)/(?P<slug_tokia>[\w\d\-]+)",
+        HauteskundeaSimpleCompareView.as_view(),
+        name="hauteskundeak_hauteskundea_compare_tokia",
+    ),
+    re_path(
+        r"^(?P<slug>[\w\d\-]+)$",
+        HauteskundeaSimpleView.as_view(),
+        name="hauteskundeak_hauteskundea",
+    ),
+    re_path(
+        r"^(?P<slug>[\w\d\-]+)/(?P<slug_tokia>[\w\d\-]+)$",
+        HauteskundeaSimpleView.as_view(),
+        name="hauteskundeak_hauteskundea_tokia",
+    ),
+    path(
+        "<slug:slug>/toki-guztiak/api/",
+        cache_page(60 * 5)(HauteskundeaSimpleApiViewTokiak.as_view()),
+        name="hauteskundeak_hauteskundea_tokia_api",
+    ),
+    path(
+        "<slug:slug>/<slug:slug_tokia>/api/",
+        HauteskundeaSimpleApiView.as_view(),
+        name="hauteskundeak_hauteskundea_tokia_api",
+    ),
+    path(
+        "<slug:slug>/<slug:slug_tokia>/api/mapa/",
+        HauteskundeaSVGApiView.as_view(),
+        name="hauteskundeak_hauteskundea_tokia_api_mapa",
+    ),
+    path(
+        "<slug:slug>/<slug:slug_tokia>/api/irabazleak/",
+        HauteskundeaIrabazleakTokia.as_view(),
+        name="hauteskundeak_hauteskundea_tokia_api_irabazleak",
+    ),
+    path(
+        "<slug:slug>/api/tokiak/",
+        HauteskundeaTokiaView.as_view(),
+        name="hauteskundeak_hauteskundea_tokia",
+    ),
+    path(
+        "<slug:slug>/api/alderdiak_guztiak/",
+        AlderdiakView.as_view(),
+        name="hauteskundeak_hauteskundea_alderdia",
+    ),
+    path(
+        "<slug:slug>/api/alderdia/<slug:slug_alderdia>/",
+        HauteskundeaAlderdiaView.as_view(),
+        name="hauteskundeak_hauteskundea_alderdia",
+    ),
+]

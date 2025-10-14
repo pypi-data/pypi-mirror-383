@@ -1,0 +1,22 @@
+{%extends "tk_hauteskundeak/iframe_base.html"%}
+
+{%block content%}
+{% if info %}<p>Eskrutinioa: %{{info.info.eskrutinioa}}{% endif %}
+
+{% if iframe_type == 'graph' %}
+    {% include "tk_hauteskundeak/include/hauteskunde_bat_botoak_grafikoa.html" with hauteskundeak=hauteskundeak taula=taula_graph object=object width=width height=height %}
+{% endif %}
+
+{% if iframe_type == 'table' %}
+    {% include "tk_hauteskundeak/include/hauteskunde_emaitzak.html" with has_jarlekuak=has_jarlekuak taula=taula hauteskundeak=hauteskundeak %}
+{% endif %}
+
+{% if iframe_type == 'pie' %}
+    {% include "tk_hauteskundeak/include/hauteskunde_bat_eserlekuak_grafikoa.html" with taula=taula hauteskundeak=hauteskundeak width=width height=height %}
+{% endif %}
+
+{% if iframe_type == 'map' %}
+    {% include "tk_hauteskundeak/include/svg.html" with hauteskundea=object herriak=herriak %}
+{% endif %}
+
+{%endblock%}

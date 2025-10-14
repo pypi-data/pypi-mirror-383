@@ -1,0 +1,99 @@
+{% extends "tk_hauteskundeak/base.html" %}
+{% load tk_math %}
+{% block content %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-10 ">
+                <h1 itemprop="headline" class="mt-3 mb-4">{{ object.izena }}</h1>
+                {% if tokiak.count == 1 %}
+                    <div class="d-inline h5 btn  " id="dropdownMenuLink">{{ tokia.izena }}</div>
+                {% else %}
+                    <p>
+                        <button class="d-inline h5 btn"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#tk-hauteskundeak-menua"
+                                aria-expanded="false"
+                                aria-controls="tk-hauteskundeak-menua">
+                            {{ tokia.izena }} &nbsp;&nbsp;&nbsp;<small><span class="oi oi-caret-bottom"></span></small>
+                        </button>
+                    </p>
+                    <div class="collapse" id="tk-hauteskundeak-menua">
+                        <div class="row">
+                            {% tokiak_in_cols tokiak as tokiak_cols %}
+                            {% for col in tokiak_cols %}
+                                <div class="col-12 col-md {% if not forloop.first %}border-left{% endif %}">
+                                    {% for this_tokia in col.tokiak %}
+                                        <a class="nav-link {% if this_tokia == tokia %}disabled{% endif %}"
+                                           href="{% url "hauteskundeak_hauteskundea_tokia" object.slug this_tokia.slug %}">{{ this_tokia.izena }}</a>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                <hr />
+            </div>
+            {% if object.irudia %}
+                <div class="col-md-2 d-none d-sm-block">
+                    <span class="mt-3 float-right">
+                        <img src="{{ object.irudia.get_tokikom_375x211_url }}"
+                             class="rounded float-left"
+                             alt="Hauteskunde honen irudia"
+                             width="200" />
+                    </span>
+                </div>
+            {% endif %}
+            <div class="col-md-12"></div>
+        </div>
+        {% if info.emaitzak_bai %}
+            <div class="row">
+                <div class="col-md">
+                    {% include "tk_hauteskundeak/include/simple/grafikoa.html" with hauteskundea=hauteskundea tokia=tokia taula=info.grafikoa %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <h2 class="mt-4">Emaitzak</h2>
+                    <p>Eskrutinioa: %{{ info.info.eskrutinioa }}</p>
+                    {% include "tk_hauteskundeak/include/simple/taula.html" with hauteskundea=hauteskundea tokia=tokia taula=info.taula has_jarlekuak=info.has_jarlekuak %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    {% if info.has_jarlekuak %}
+                        <h2 class="mt-4">Eserlekuak</h2>
+                        {% include "tk_hauteskundeak/include/simple/grafikoa_pie.html" with hauteskundea=hauteskundea tokia=tokia taula=info.grafikoa2 %}
+                    {% endif %}
+                    {% if zinegotziak %}
+                        <h2 class="mt-4">Zinegotziak</h2>
+                        {% include "tk_hauteskundeak/include/hauteskunde_bat_zinegotziak.html" with zinegotziak=zinegotziak %}
+                    {% endif %}
+                    {% if info.show_herriak %}
+                        <h2 class="mt-4">Herriz herri</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% include "tk_hauteskundeak/include/tabla_herrika.html" with hauteskundea=object herriak=herriak herriak_taulan_mozteko=herriak_taulan_mozteko %}
+                            </div>
+                            <div class="col-md-6 text-right">
+                                {% include "tk_hauteskundeak/include/svg.html" with hauteskundea=object herriak=herriak %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <h2>Fitxa</h2>
+                    {% include "tk_hauteskundeak/include/simple/fitxa.html" with hauteskundea=hauteskundea info=info.info %}
+                </div>
+            </div>
+            {% include "tk_hauteskundeak/include/hauteskunde_oharrak.html" with oharrak=oharrak %}
+            {% include "tk_hauteskundeak/include/hauteskunde_alderaketa.html" with hauteskundeak=hauteskunde_guztiak hauteskundea=object tokia=tokia %}
+        {% else %}
+            <div class="row">
+                <div class="col-md">
+                    <p class="lead">Ez dago daturik!</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}

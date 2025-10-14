@@ -1,0 +1,35 @@
+{% load tk_math humanize%}
+{% load l10n %}
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table table-striped ">
+        <thead>
+            <tr>
+                <th>Hauteskundea</th>
+                <th>Botoak</th>
+                <th><abbr title="Ehunekoa (%)">Ehun.</abbr></th>
+                <th><abbr title="Eserlekuak">Eser.</abbr></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hautes in taula %}
+            {% if hautes.botoak_guztira %}
+            <tr>
+                <td><a
+                    href="{% url "hauteskundeak_hauteskundea_tokia" hautes.slug tokia.slug %}">{{hautes.izena}}</a></td>
+                <td class="text-right">
+                    {{hautes.botoak|default:'-'|intcomma}}
+                </td>
+                <td class="text-right">
+                    {% if hautes.botoak %}
+                    %{{hautes.ehunekoa|floatformat:2}}
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td class="text-right">{{hautes.eserlekuak|default:'-'}}</td>
+            </tr>
+            {% endif%}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

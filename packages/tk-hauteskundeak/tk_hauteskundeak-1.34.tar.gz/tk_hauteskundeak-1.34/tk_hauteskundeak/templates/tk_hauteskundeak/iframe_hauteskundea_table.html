@@ -1,0 +1,7 @@
+{%extends "tk_hauteskundeak/iframe_base.html"%}
+
+{%block content%}
+
+{% if info %}<p>Eskrutinioa: %{{info.info.eskrutinioa}}{% endif %}
+{% include "tk_hauteskundeak/include/simple/taula.html" with hauteskundea=hauteskundea tokia=tokia taula=info.taula has_jarlekuak=info.has_jarlekuak %}
+{%endblock%}

@@ -1,0 +1,95 @@
+
+{%extends "tk_hauteskundeak/base.html"%}
+{% load humanize tk_math %}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+                <div class="row mb-4">
+                        <div class="col-md-10 ">
+                            <h1 itemprop="headline" class="mt-3 mb-4">Alderdiak</h1>
+
+                            {% if tokiak.count == 1 %}
+                                <div class="d-inline h5 btn  " id="dropdownMenuLink"  >{{tokia.izena}} </div>
+                
+                            {% else %}
+                                <p>
+                                    <button class="d-inline h5 btn" type="button" data-toggle="collapse" data-target="#tk-hauteskundeak-menua" aria-expanded="false" aria-controls="tk-hauteskundeak-menua">
+                                        {{tokia.izena}} &nbsp;&nbsp;&nbsp;<small><span class="oi oi-caret-bottom"></span></small>
+                                    </button>
+                                  </p>
+                                  <div class="collapse" id="tk-hauteskundeak-menua">
+                                    <div class="row">
+                    
+                                        {% tokiak_in_cols tokiak as tokiak_cols %}
+                    
+                                        {% for col in tokiak_cols %}
+                                            <div class="col-12 col-md  {% if not forloop.first %}border-left{% endif %} ">
+                                                    {% for this_tokia in col.tokiak %}
+                                                    <a class="nav-link {% if this_tokia == tokia %} disabled {% endif %}"
+                                                        href="{% url "hauteskundeak_alderdiak_list_tokia"  this_tokia.slug %}">{{this_tokia.izena}}</a>
+                                                    {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                    
+                    
+                                    </div>
+                                  </div>    
+
+                            {% endif %}
+                
+                            <hr />
+
+                        </div>
+                
+                    </div>
+            
+            <div class="row">
+                <div class="col-md">
+
+                <div class="table-responsive">
+                <table id="emaitza-taula" class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Alderdia</th>
+                            <th class="text-center">Botoak azkenekoan</th>
+                            <th class="text-center">Botoak guztira</th>                            
+                            <th class="text-center">Hauteskunde kopurua</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alderdia in alderdiak %}
+                        <tr>
+                        <td class="text-center min">
+                            {% include "tk_hauteskundeak/include/alderdia/logoa.html" with alderdia=alderdia  %}
+                        </td>
+                        <td class="text-left">
+                                {%if alderdia.show_in_page%}
+            
+                                <a href="{% url "hauteskundeak_alderdia_tokia" alderdia.slug tokia.slug %}">
+                                    {{alderdia.akronimoa}}</a>
+                                {%else%}
+                                {{alderdia.akronimoa}}
+                                {%endif%}                        </td>
+            
+                        <td class="text-right">{{alderdia.botoak_azkena|default:'-'|intcomma}}</td>                        
+                        <td class="text-right">{{alderdia.guztira|default:'-'|intcomma}}</td>
+                        <td class="text-right">{{alderdia.kopurua|default:"-"}}</td>
+                        </tr>
+                        {% endfor %}
+            
+                    </tbody>
+                </table>
+                </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,40 @@
+{% load humanize %}
+
+<div class="table-responsive">
+    <table id="emaitza-taula" class="table table-striped ">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Alderdia</th>
+                <th class="text-center">Botoak</th>
+                <th class="text-center"><abbr title="Ehunekoa (%)">Ehun.</abbr></th>
+                {% if has_jarlekuak%}<th class="text-center"><abbr title="Eserlekuak">Eser.</abbr></th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for alderdia in taula %}
+            <tr>
+                <td class="text-center min">
+                    {% include "tk_hauteskundeak/include/alderdia/logoaid.html" with pk=alderdia.alderdia__logoa %}
+                </td>
+                <td class="text-left">
+                    {%if alderdia.alderdia__show_in_page%}
+                    <a href="{% url "hauteskundeak_alderdia_tokia" alderdia.alderdia__slug tokia.slug %}">
+                        {{alderdia.alderdia__akronimoa}}</a>
+                    {%else%}
+                    {{alderdia.alderdia__akronimoa}}
+                    {%endif%}</td>
+
+                <td class="text-right">{{alderdia.botoak|intcomma|default:'-'}}</td>
+                <td class="text-right">%{{alderdia.ehunekoa|floatformat:2|default:'-'}}</td>
+                {% if has_jarlekuak%}
+                <td class="text-right">{{alderdia.jarlekuak}}</td>
+                {% endif %}
+
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+</div>

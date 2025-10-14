@@ -1,0 +1,8 @@
+{%extends "tk_hauteskundeak/iframe_base.html"%}
+
+{%block content%}
+
+{% include "tk_hauteskundeak/include/svg.html" with hauteskundea=object herriak=herriak %}
+{% if info %}<p>Eskrutinioa: %{{info.info.eskrutinioa}}</p>{% endif %}
+
+{%endblock%}

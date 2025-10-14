@@ -1,0 +1,14 @@
+{% if oharrak %}
+<div class="row">
+    <div class="col-md">
+        <div class="tk-light p-3">
+            <h4>Oharrak:</h4>
+            <ul>
+                {% for oharra in oharrak %}
+                <li><i>* {{oharra.oharrak}}</i></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,74 @@
+{% load tk_math %}{%load l10n%}
+<div id="botoakgraph" style="width: 100%;height: 600px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+
+{% include "tk_hauteskundeak/include/highchart/setoptions.js" %}
+Highcharts.chart('botoakgraph', {
+    {% include "tk_hauteskundeak/include/highchart/menuoptions.js" %}
+
+    chart: {
+        type: 'spline'
+    },
+    title: {
+        text: '{{mota.izena}} - {{tokia.izena}}'
+    },
+    subtitle: {
+        text: 'Boto kopurua'
+    },
+    xAxis: {
+        type: 'datetime',
+
+        title: {
+            text: ''
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Boto kopurua'
+        },
+        min: 0
+    },
+    tooltip: {
+        headerFormat: '{series.name} {point.x:%Y/%m}<br>',
+        pointFormat: '<b>{point.y}</b>'
+    },
+
+    plotOptions: {
+        spline: {
+            marker: {
+                enabled: true,
+                radius: 6
+                },
+            lineWidth: 4
+        }
+    },
+
+    //colors: ['#6CF', '#39F', '#06C', '#036', '#000'],
+
+    // Define the data points. All series have a dummy year
+    // of 1970/71 in order to be compared on the same x axis. Note
+    // that in JavaScript, months start at 0 for January, 1 for February etc.
+    series: [
+        {% for alderdia in taula %}
+
+        {% if alderdia.show_in_graphs %}
+
+        {
+        name: "{{alderdia.akronimoa|escapejs}}",
+        color: "{{alderdia.kolorea}}",
+        data: [
+        {% for hautes in hauteskundeak %}
+            [Date.UTC({{hautes.eguna|date:"Y"}}, {{hautes.eguna|date:"n"}}, {{hautes.eguna|date:"j"}}),{{alderdia|get_botoak:forloop.counter0|default:'null'|unlocalize}}]
+            {% if forloop.last %} {% else%},{% endif %}
+        {% endfor %}
+        ]
+        }
+        {% if forloop.last %} {% else%},{% endif %}
+        {%endif%}
+        {% endfor %}
+
+]
+});
+
+</script>

@@ -1,0 +1,13 @@
+{%extends "tk_hauteskundeak/homecard/base.html"%}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+
+        {% include "tk_hauteskundeak/include/tabla_herrika.html" with hauteskundea=object herriak=herriak %}
+    </div>
+    <div class="col-md-6 text-right">
+        {% include "tk_hauteskundeak/include/svg.html" with hauteskundea=object herriak=herriak %}
+    </div>
+</div>
+{% endblock %}
