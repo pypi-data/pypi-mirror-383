@@ -1,0 +1,857 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}   % basic math
+\usepackage{graphicx}  % images
+\usepackage{float}     % floating image support
+\usepackage{listings}  % code input
+\usepackage{color}     % colors
+\usepackage[super,comma]{natbib}    % citing
+\usepackage[T1]{fontenc}      % fonts
+\usepackage[utf8]{inputenc}   % fonts
+\usepackage{titling}   % title control
+\usepackage{microtype}
+\usepackage{bm}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=.9in]{geometry}
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{indentfirst}
+\usepackage[affil-it]{authblk}
+\usepackage{enumitem}
+\usepackage{scrextend}
+
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\bibliographystyle{unsrtnat}
+\renewcommand{\bibname}{References}
+
+% standard code colors
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% setup for python language
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{dkgreen},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Generalized multiparticle Mie theory (GMMT)}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Particle interactions in the GMMT}
+\subsection{Vector spherical harmonic functions}
+
+The generalized multiparticle Mie theory (GMMT) is outlined, following Xu's work. \cite{xu1995electromagnetic}
+The vector spherical harmonic (VSH) functions are a complete basis set of the vector wave equations
+\begin{align}
+    \begin{split}
+        \nabla \times \nabla \times \boldsymbol{E} &= k^2 \boldsymbol{E} \\
+        \nabla \times \nabla \times \boldsymbol{H} &= k^2 \boldsymbol{H}
+    \end{split}
+\end{align}
+They are defined as
+\begin{align}
+    \begin{split}
+        \boldsymbol{N}_{mn1}^{(J)} &= 
+        \boldsymbol{\hat r} n(n+1) P_n^m(\theta) \frac{z_n^{(J)}(kr)}{kr}e^{im\phi} \\
+        &\quad + \frac{1}{kr} \left[ \boldsymbol{\hat \theta} \tau_{mn}(\theta) + \boldsymbol{\hat \phi} i\pi_{mn}(\theta) \right]
+        \frac{d}{dr} \left[ rz_n^{(J)}(kr)e^{im\phi} \right] \\
+        \boldsymbol{N}_{mn2}^{(J)} &= \big[
+        \boldsymbol{\hat \theta} i\pi_{mn}(\theta) 
+       -\boldsymbol{\hat \phi} \tau_{mn}(\theta) \big] z_n^{(J)}(kr) e^{im\phi} 
+    \end{split}
+\label{eqn:vsh_definition}
+\end{align}
+where $J= 1,2,3,4$. The radial functions $z_n^{(J)}$ are
+\begin{align}
+\begin{split}
+    \begin{aligned}
+        z_n^{(1)}(x) &= j_n(x)  \qquad&  z_n^{(3)}(x) &= h_n^{(1)}(x) = j_n(x) + iy_n(x)
+    \end{aligned}\\
+    \begin{aligned}
+        z_n^{(2)}(x) &= y_n(x)  \qquad&  z_n^{(4)}(x) &= h_n^{(2)}(x) = j_n(x) - iy_n(x)
+    \end{aligned}
+\end{split}
+\end{align}
+where $j_n$, $y_n$ are the spherical Bessel functions of the first and second kind, and $h_n^{(1)}$, $h_n^{(2)}$ are the spherical Hankel functions of the first and second kind.
+The angular functions $\pi_{mn}$ and $\tau_{mn}$ are
+\begin{align}
+\pi_{mn}(\theta) &= \frac{m}{\sin\theta} P_n^m(\cos\theta) \\
+\tau_{mn}(\theta) &= \frac{d}{d\theta} P_n^m(\cos\theta) 
+\end{align}
+The associated Legendre polynomials $P_n^m$ are defined without the Condon-Shortley phase, i.e.\
+\begin{equation}
+P_n^m(x) = (1 - x^2)^{m/2} \frac{d^m}{dx^m} P_n(x)
+\end{equation}
+
+The VSHs are an orthogonal (but not orthonormal) set when integrated over a closed surface $\Omega$
+\begin{align}
+\begin{split}
+    \langle \boldsymbol{N}_{mn1}^{(J)}, \boldsymbol{N}_{m^\prime n^\prime 1}^{(J)} \rangle
+    &= \int_\Omega \boldsymbol{N}_{mn1}^{(J)} \cdot \boldsymbol{N}_{m^\prime n^\prime 1}^{(J)*} \;d\Omega \\
+    &= \delta_{mm^\prime}\delta_{nn^\prime}4\pi \frac{n(n+1)(n+m)!}{(2n+1)(n-m)!}
+      \left[ \frac{\left|z_n^{(J)}(kr) + krz_n^{(J)\prime}(kr)\right|^2 + n(n+1) \left|z_n^{(J)}(kr)\right|^2 }{(kr)^2} \right] \\
+    \langle \boldsymbol{N}_{mn2}^{(J)}, \boldsymbol{N}_{m^\prime n^\prime 2}^{(J)} \rangle
+    &= \int_\Omega \boldsymbol{N}_{mn2}^{(J)} \cdot \boldsymbol{N}_{m^\prime n^\prime 2}^{(J)*} \;d\Omega
+    = \delta_{mm^\prime}\delta_{nn^\prime}4\pi \frac{n(n+1)(n+m)!}{(2n+1)(n-m)!} |z_n^{(J)}(kr)|^2 \\
+    \langle \boldsymbol{N}_{mn1}^{(J)}, \boldsymbol{N}_{m^\prime n^\prime 2}^{(J)} \rangle
+    &= \int_\Omega \boldsymbol{N}_{mn1}^{(J)} \cdot \boldsymbol{N}_{m^\prime n^\prime 2}^{(J)*} \;d\Omega = 0
+\end{split}
+\end{align}
+
+The table below outlines the physical interpretation of the VSHs
+\begin{center}
+ \begin{tabular}{|l l|} 
+ \hline
+ \textbf{Entity} & \textbf{Physical interpretation}  \\ [0.5ex] 
+ \hline\hline
+ $\bm{N}_{mn1}$ & electric (TM) modes \\ 
+ $\bm{N}_{mn2}$ & magnetic (TE) modes \\ 
+ \hline
+ $n$ & multipolar order (1: dipole, 2: quadrupole, etc.) \\
+ $m$ & azimuthal order (from $-n$ to $n$) \\
+ \hline
+ $J=1$ & propagating incident mode \\ 
+ $J=2$ & counter-propagating incident mode \\ 
+ $J=3$ & spherically outgoing mode \\ 
+ $J=4$ & spherically ingoing mode \\
+ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Field expansions}
+The source, incident, scattered, and interior electric and magnetic fields of particle $j$ can be expanded in terms of the VSHs.
+The incident field includes the source field plus the incident field from all other particles in the system.
+
+\hfill
+
+\textit{Electric field}
+\begin{subequations}
+\begin{align}
+    \boldsymbol{E}_\text{src}^j &= - \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    iE_{mn} p_{mnr}^{j,\text{src}} \boldsymbol{N}_{mnr}^{(1)} \\
+    \boldsymbol{E}_\text{inc}^j &= - \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    iE_{mn} p_{mnr}^{j,\text{inc}} \boldsymbol{N}_{mnr}^{(1)} \\
+    \boldsymbol{E}_\text{scat}^j &= \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    iE_{mn} p_{mnr}^{j,\text{scat}} \boldsymbol{N}_{mnr}^{(3)} \\
+    \boldsymbol{E}_\text{int}^j &= - \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    iE_{mn} p_{mnr}^{j,\text{int}} \boldsymbol{N}_{mnr}^{(1)}
+\end{align}
+\label{eqn:electric_field_expansion}
+\end{subequations}
+
+\textit{Magnetic field}
+\begin{subequations}
+\begin{align}
+    \boldsymbol{H}_\text{src}^j &= - \sqrt{\frac{\varepsilon_b}{\mu_b}} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    E_{mn} p_{mn\bar r}^{j,\text{src}} \boldsymbol{N}_{mnr}^{(1)} \\
+    \boldsymbol{H}_\text{inc}^j &= - \sqrt{\frac{\varepsilon_b}{\mu_b}} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    E_{mn} p_{mn\bar r}^{j,\text{inc}} \boldsymbol{N}_{mnr}^{(1)} \\
+    \boldsymbol{H}_\text{scat}^j &= \sqrt{\frac{\varepsilon_b}{\mu_b}} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    E_{mn} p_{mn\bar r}^{j,\text{scat}} \boldsymbol{N}_{mnr}^{(3)} \\
+    \boldsymbol{H}_\text{int}^j &= - \sqrt{\frac{\varepsilon^j}{\mu^j}} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sum_{r=1}^2
+    E_{mn} p_{mn\bar r}^{j,\text{int}} \boldsymbol{N}_{mnr}^{(1)}
+\end{align}
+\label{eqn:magnetic_field_expansion}
+\end{subequations}
+where $\bar r = 3-r$ and $E_{mn}$ is a normalization factor
+\begin{equation}
+    E_{mn} = i^n \sqrt{\frac{(2n+1)(n-m)!}{n(n+1)(n+m)!}}
+\end{equation}
+
+\subsection{VSH translation coefficients}
+The VSH functions computed in one coordinate system ($\bm{r}_l$) can be converted to a different coordinate system ($\bm{r}_j$) by use of the translation coefficient $\widetilde{A}_{mnruvs}^{jl}$
+\begin{equation}
+    \bm{N}_{mnr}^{(J)}(k\bm{r}_j) = \sum_{v=1}^\infty \sum_{u=-v}^{u=v} \sum_{s=1}^2
+    \widetilde{A}_{mnruvs}^{(J)jl} \bm{N}_{uvs}^{(1)}(k\bm{r}_l)
+    \label{eqn:VSHW_translation}
+\end{equation}
+Here, the fields being translated from are incident fields (hence $J=1$), and the fields being translated to can correspond to any $J$ value.
+If $J=1$, $\widetilde{A}$ translates incident fields to scattered fields, and if $J=3$, $\widetilde{A}$ translates incident fields to incident fields.
+Explicit formula for the translation coefficients can be found elsewhere. \cite{Xu_1998}
+
+From the field expansions, \cref{eqn:electric_field_expansion}, the VSH translation coefficients can be used to relate the incident expansion coefficients of particle $l$ to the expansion coefficients around particle $j$,
+\begin{equation}
+    p_{mnr}^{j,(J)} = f^{(J)}\sum_{v=1}^\infty \sum_{u=-v}^{u=v} \sum_{s=1}^2
+    A_{mnruvs}^{(J)jl} p_{uvs}^{l,\text{inc}}
+    \label{eqn:VSHW_translation_normalized}
+\end{equation}
+where $A_{mnruvs}^{(J)jl}$ are the \emph{normalized} translation coefficients
+\begin{equation}
+    A_{mnruvs}^{(J)jl} = \frac{E_{uv}}{E_{mn}} \widetilde{A}_{mnruvs}^{(J)jl}
+\end{equation}
+and $f^{(J)}$ is a $\pm 1$ sign term
+\begin{equation}
+    f^{(J)} =
+    \begin{cases}
+        +1 \qquad \text{if } J = 3 \\
+        -1 \qquad \text{otherwise}
+    \end{cases}
+    \label{eqn:outgoing_factor}
+\end{equation}
+The translation coefficients have the following useful symmetry relationships \cite{hovenier1996light}
+\begin{subequations}
+    \label{eqn:vsh_symmetry}
+    \begin{align}
+        A_{mnruvs}^{ij} &= (-1)^{n+v+r+s} A_{mnruvs}^{ji} \\
+                        &= (-1)^{n+v+m+u} A_{-uvs-mnr}^{ji} \\
+                        &= (-1)^{m+u}[A_{uvsmnr}^{ji}]^* \label{eqn:vsh_symmetry_special} \footnotemark
+    \end{align}
+\end{subequations}
+\footnotetext{
+The conjugate in \cref{eqn:vsh_symmetry_special} applies to everything but the radial function $z_n^{(J)}$ appearing in the sum found in the definition of $A^{ij}$.
+If $J=1$ or $J=2$ and the medium is non-absorbing, this exception can be ignored since $z_n$ is real.
+}
+
+\subsection{VSH rotation coefficients}
+The rotation of the expansion coefficients is given by the Wigner-D matrix
+\begin{equation}
+    p_{mnr}^\prime = D_{ms}^{n}(\hat q) p_{mns}
+\end{equation}
+where $\hat q$ represents the rotation.
+
+\subsection{T-matrix formulation}
+\newcommand{\tmatrix}{\mathcal{T}}
+The T-matrix of particle $j$, $\tmatrix_{mnruvs}^j$, relates the incident expansion coefficients to the scattered expansion coefficients for an arbitrary, non-spherical particle.
+To simplify the index notation, a multi-index is used to denote a given mode, i.e.\ $\alpha = (m,n,r)$.
+Greek letters are used to represent a multi-index.
+Furthermore, Einstein notation is used so that repeated multi-indices are always summed over.
+Then the T-matrix is defined as
+\begin{equation}
+    p_\alpha^{j,\text{scat}} = \tmatrix_{\alpha\beta}^j p_\beta^{j,\text{inc}}
+\label{eqn:tmatrix_defintion}
+\end{equation}
+If the particle is a sphere, then the T-matrix is diagonal,
+\begin{equation}
+    \tmatrix_{\alpha\beta}^j = t_{rn}^j \delta_{\alpha\beta}
+\label{eqn:tmatrix_sphere}
+\end{equation}
+where $t_{1n}^j = a_n^j$ and $t_{2n}^j = b_n^j$ are the classical Mie theory coefficients of the $j$th sphere.\cite{bohren2008absorption}
+
+Once a particle's T-matrix is known, it does not have to be recomputed for a new orientation of the particle, provided the geometrical and material properties of the particle remain the same.
+Given a particle T-matrix in one coordinate system, the T-matrix in a rotated coordinate system is
+\begin{equation}
+    \tmatrix_{m^\prime nr u^\prime vs}^\prime = D_{m^\prime m}^n(\hat q) \lbrack D_{u^\prime u}^v(\hat q) \rbrack^* \tmatrix_{mnruvs}
+\end{equation}
+
+A particle also has an \emph{internal} T-matrix, $\tmatrix^\text{int}$, that relates the internal expansion coefficients to the incident coefficients
+\begin{equation}
+    p_\alpha^{j,\text{int}} = \tmatrix_{\alpha\beta}^{j,\text{int}} p_\beta^{j,\text{inc}}
+\label{eqn:tmatrix_internal_defintion}
+\end{equation}
+
+
+\subsection{Interaction equations}
+The interaction equation among $N$ particles can be written as
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}} = 
+    p_{\alpha}^{j,\text{src}} -
+    A_{\alpha \beta}^{(3)jl}
+    \tmatrix_{\beta \gamma}^l
+    p_{\gamma}^{l,\text{inc}}
+\label{eqn:particle_interactions}
+\end{equation}
+More explicitly, dropping the Einstein summation rule:
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}} = 
+    p_{\alpha}^{j,\text{src}} -
+    \sum_{l \neq j}^{(1,N)}
+    \sum_{\beta} \sum_{\gamma}
+    A_{\alpha \beta}^{(3)jl}
+    \tmatrix_{\beta \gamma}^l
+    p_{\gamma}^{l,\text{inc}}
+\end{equation}
+Even more explicitly, the multi-index can be unraveled:
+\begin{equation}
+    p_{mnr}^{j,\text{inc}} = 
+    p_{mnr}^{j,\text{src}} -
+    \sum_{l \neq j}^{(1,N)}\sum_{v=1}^{L_\text{max}} \sum_{u=-v}^{v}
+    \sum_{s=1}^{2}
+    \sum_{v^\prime=1}^{L_\text{max}} \sum_{u^\prime=-v^\prime}^{v^\prime}
+    \sum_{s^\prime=1}^{2}
+    A_{mnruvs}^{(3)jl}
+    \tmatrix_{uvsu^\prime v^\prime s^\prime}^l
+    p_{u^\prime v^\prime s^\prime}^{l,\text{inc}}
+\end{equation}
+If the system consists entirely of spheres, then using \cref{eqn:tmatrix_sphere}, the interaction equation becomes
+\begin{equation}
+    p_{mnr}^{j,\text{inc}} = p_{mn}^{j,\text{src}}  -  \sum_{l \neq j}^{(1,N)}\sum_{v=1}^{L_\text{max}} \sum_{u=-v}^{v} \sum_{s=1}^2
+    A_{mnruvs}^{(3)jl} t_{sv}^l p_{uvs}^{l,\text{inc}}
+    \label{eqn:sphere_interations}
+\end{equation}
+
+Whether the cluster is composed solely of spheres or more generally non-spherical particles, the interaction equation is always of the form
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}} = 
+    p_{\alpha}^{j,\text{src}} -
+    \tmatrix_{\alpha \beta}^{jl}
+    p_{\beta}^{l,\text{inc}}
+\end{equation}
+where $\tmatrix_{\alpha \beta}^{jl}$ is the \emph{inverse particle aggregate T-matrix}.
+By setting $p_\alpha^{j,\text{inc}} = \delta_{\alpha\beta} \delta_{jl} p_\beta^{l,\text{inc}}$, the interaction equation can be rewritten in the standard form for linear systems, $[A]x=b$,
+\begin{equation}
+    \left[ \delta_{\alpha\beta} \delta_{jl}
+    + \tmatrix_{\alpha \beta}^{jl} \right]
+    p_{\beta}^{l,\text{inc}} =
+    p_{\alpha}^{j,\text{src}}
+\end{equation}
+
+\subsection{Interactions with a substrate}
+The interactions of the particles with the interface of a substrate can be included in the GMMT.
+This is done by simultaneously matching the boundary conditions on the surface of the particles (using VSHW functions) and on the interface (using a plane wave expansion). \cite{mackowski2008exact}
+We introduce a reflection matrix $\widetilde{R}_{\alpha\beta}^{jl}$ from particle $l$ to $j$, similar to that of direct translations in \cref{eqn:VSHW_translation}
+\begin{equation}
+    \bm{N}_{\alpha}^{(3),\text{ref}}(k\bm{r}_j) = 
+    \widetilde{R}_{\alpha\beta}^{jl} \bm{N}_{\beta}^{(1)}(k\bm{r}_l)
+    \label{eqn:VSHW_reflection_translation}
+\end{equation}
+This equation relates the scattered, reflected VSHW functions in terms of incident VSHW functions around a different coordinate system.
+Expressions for the $\widetilde{R}_{\alpha\beta}^{jl}$ matrix in terms of substrate material and particle location is provided elsewhere. \cite{mackowski2008exact}
+
+As before, these reflection coefficients are normalized to relate to the expansion coefficients
+\begin{equation}
+    p_{\alpha}^{j,\text{ref,scat}} = f^{(J)}\sum_{v=1}^\infty \sum_{u=-v}^{u=v} \sum_{s=1}^2
+    R_{\alpha\beta}^{(J)jl} p_{\beta}^{l,\text{inc}}
+    \label{eqn:VSHW_reflection_translation_normalized}
+\end{equation}
+The interaction equations then become
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}}= 
+    p_{\alpha}^{j,\text{src}} + p_{\alpha}^{j,\text{src,ref}}  -
+    \left( A_{\alpha \beta}^{(3)jl} + R_{\alpha \beta}^{jl} \right)
+    \tmatrix_{\beta \gamma}^l
+    p_{\gamma}^{l,\text{inc}}
+\label{eqn:particle_interactions_substrate}
+\end{equation}
+where $p_{\alpha}^{j,\text{src,ref}}$ are the expansion coefficients of the source reflected off of the substrate.
+
+This approach can be extended to multiple substrates (layered media) \cite{egel2014dipole}.
+It can also be extended to non-spherical particles very close to the substrate where the Rayleigh hypothesis fails. \cite{egel2016light}
+\section{Symmetries}
+Symmetries in the system can be used to reduce the total number of interaction equations.
+It is important to remember that not only do the particles have to satisfy a given symmetry (their position, size, orientation, and material), but that the incident source field must also satisfy it.
+In many cases, a phase factor must be included with a given symmetry depending on the incident field.
+For example, if the incident field is $x$-polarized and the mirror is in the $yz$ plane, the mirrored fields will be $-x$-polarized.
+This can be corrected by including a $\pi$ phase factor in the mirror symmetry (multiplying by $-1$).
+On the other hand, if the incident field is right-hand-circularly polarized and a mirror symmetry is imposed, the mirrored fields will be left-hand-circularly polarized.
+This cannot be corrected by using a phase factor.
+
+\subsection{Translational symmetry (periodic boundary conditions)}
+If the unit cell consists of a single particle,
+\begin{equation}
+    p_{\alpha}^{\text{inc}} = 
+    p_{\alpha}^{\text{src}} -
+    \Phi^l
+    A_{\alpha \beta}^{(3)0l}
+    \tmatrix_{\beta \gamma}
+    p_{\gamma}^{\text{inc}}
+\end{equation}
+where $l$ enumerates the unit cells and $\Phi^l$ is a phase factor.
+For a plane wave with a given $\bm{k}$ vector, $\Phi^l = \exp(-i\bm{k} \cdot \bm{r}^l)$.
+If the unit cell consists of $N$ particles, let $l$ enumerate the positions of the unit cell and $j$ enumerate the positions of the particles relative to the unit cell position
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}} = 
+    p_{\alpha}^{j,\text{src}} -
+    \Phi^l
+    A_{\alpha \beta}^{(3)j 0}
+    A_{\beta \gamma}^{(3)0l}
+    A_{\gamma \delta}^{(3)l j^\prime}
+    \tmatrix_{\delta \epsilon}^{j^\prime}
+    p_{\epsilon}^{j^\prime,\text{inc}}
+\end{equation}
+Since three VSHW translations are performed (one to the center of the unit cell, one to the origin, and one back to a particle), this approach comes with a loss of information.
+This loss of information can be avoided by performing the translation directly, at the cost performance
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}} = 
+    p_{\alpha}^{j,\text{src}} -
+    \Phi^{j^\prime}
+    A_{\alpha \beta}^{(3)j j^\prime}
+    \tmatrix_{\beta \gamma}^{j^\prime}
+    p_{\gamma}^{j^\prime,\text{inc}}
+\end{equation}
+
+\subsection{Mirror symmetry}
+Suppose that there is a mirror plane that passes through the origin and has a normal vector of $\bm{\hat x}$, $\bm{\hat y}$, or $\bm{\hat z}$.
+Each particle at position $\bm{r}^j$ then has a corresponding mirror particle at position $\bm{r}^{\prime j}$.
+By symmetry, the expansion coefficients of the mirror particle are related to those of the original particle
+\begin{equation}
+    p^{\prime j,\text{inc}}_{mnr} = \Phi (-1)^{r+1} p^{j,\text{inc}}_{-mnr}
+    \label{eqn:mirror_symmetry}
+\end{equation}
+i.e.\ the mirror negates the azimuthal index $m$ and negates the TM modes ($r=2$).
+
+\subsection{Rotational symmetry}
+Suppose the system has a discrete rotational symmetry of order $R$.
+If a particle exists at position $r^{j1}$, then the symmetric particles are at position $r^{jr}$, where $r = 2..R$.
+By symmetry,
+\begin{equation}
+    p^{jr,\text{inc}}_{mnr} = D_{mun}(\theta_r) p^{j1,\text{inc}}_{mur}
+    \label{eqn:rotational_symmetry}
+\end{equation}
+Note that this requires the polarization of the light to be circular.
+
+\section{Cluster properties}
+
+\subsection{Cluster coefficients and cluster T-matrix}
+The expansion coefficients of the entire cluster, $p_{\alpha}^{\text{cluster}}$, are computed by translating the individual particle coefficients $p_{\alpha}^{j,\text{scat}}$ to the origin $\bm{r_0}$
+
+\begin{equation}
+    p_{\alpha}^{\text{cluster}} = 
+    A_{\alpha \beta}^{(1)0j}
+    p_{\beta}^{j,\text{scat}}
+\label{eqn:cluster_coefficients}
+\end{equation}
+Note that $J=1$ in the translation coefficient since the translation is from the scattered fields around one origin to the scattered fields around a different origin.
+
+The \emph{inverse particle aggregate T-matrix} is defined by 
+\begin{equation}
+    \tmatrix_{\alpha\beta}^{jl} =
+    A_{\alpha \gamma}^{(3)jl}
+    \tmatrix_{\gamma \beta}^l
+\label{eqn:particle_aggregate_tmatrix}
+\end{equation}
+and the interaction equation becomes
+\begin{equation}
+    p_{\alpha}^{j,\text{inc}} = 
+    p_{\alpha}^{j,\text{src}} -
+    \tmatrix_{\alpha \beta}^{jl}
+    p_{\beta}^{l,\text{inc}}
+\end{equation}
+
+The \emph{cluster T-matrix} is defined such that
+\begin{equation}
+    p_\alpha^{\text{cluster}} = \tmatrix_{\alpha\beta}^{\text{cluster}} p_\beta^{0,\text{src}}
+\label{eqn:cluster_tmatrix}
+\end{equation}
+That is, the cluster T-matrix treats the system of particles as if it were a single scattering object, hiding the internal details.
+
+\subsection{Cross-sections}
+
+The cross-sections can be computed via two methods: one that uses the cluster coefficients $p_\alpha^\text{cluster}$ and one that uses the individual particle coefficients $p_\alpha^j$.
+
+\hfill
+
+\textit{Cross-sections via individual particle coefficients}
+\begin{subequations}
+\begin{align}
+    C_\text{abs} &= \frac{4\pi}{k^2} \sum_{j=1}^N \sum_{\alpha}
+    \text{Re} \left\{(p_\alpha^{j,\text{inc}})^* p_\alpha^{j,\text{scat}} \right\} 
+        - |p_\alpha^{j,\text{scat}}|^2\\
+    C_\text{ext} &= \frac{4\pi}{k^2} \sum_{j=1}^N \sum_{\alpha}
+    \text{Re} \left\{(p_\alpha^{j,\text{src}})^* p_\alpha^{j,\text{scat}} \right\} \\
+    C_\text{scat} &= C_\text{ext} - C_\text{abs}
+\end{align}
+\label{eqn:cross_sections}
+\end{subequations}
+This approach is the most efficient way to compute the total cross-sections.
+Each term in the absorption/extinction cross-section sum can be interpreted as the absorption/extinction of that individual particle due to a given mode $\alpha$.
+
+\hfill
+
+\textit{Cross-sections via cluster coefficients} \cite{xu1995electromagnetic}
+\begin{subequations}
+\begin{align}
+    C_\text{scat} &= \frac{4\pi}{k^2} \sum_{\alpha}
+        |p_{\alpha}^\text{cluster}|^2 \\
+    C_\text{ext} &= \frac{4\pi}{k^2} \sum_{\alpha}
+    \text{Re} \left\{ (p_\alpha^{0,\text{src}})^* p_\alpha^\text{cluster} \right\} \\
+    C_\text{abs} &= C_\text{ext} - C_\text{scat}
+\end{align}
+\end{subequations}
+This approach has a benefit in its interpretation.
+Each term in the scattering sum corresponds to the multipolar scattering of the  $\alpha$ mode, so that the scattering from the entire cluster can be identified as electric or magnetic in nature, dipole, quadrupole, etc.
+These equations should typically be avoided in calculating total cross-sections since there is a loss of information in using the cluster coefficients and they may not converge.
+
+All of these cross-sections have units of (area)$\times$(electric field)$^2$.
+If the source is a plane wave of amplitude $E_0$, then these cross-sections should be normalized by $E_0^2$.
+For non-plane wave sources, the cross-sections should be normalized depending on the convention being used, typically an averaged intensity over some area:
+\begin{equation}
+    E_0^2 = \frac{1}{A} \int_A \boldsymbol{S}(\boldsymbol{r}) 
+    \cdot \bm{\hat n} \;dA
+\end{equation}
+where $\bm{S} = \frac{1}{2} \bm{E} \times \bm{H^*}$ is the Poynting vector.
+For instance, the area $A$ may be a circular aperture (power striking a structure) or all of space (total power of the source, provided it is finite).
+
+\subsection{Force and torque}
+\newcommand{\mst}{\langle \boldsymbol{T} \rangle}
+
+The time-average force $\langle \bm{F} \rangle$ and torque $\langle \bm{\tau} \rangle$ on a particle can be determined by integrating the Maxwell stress tensor $\mst$ over a closed surface surrounding the particle:
+\begin{subequations}
+\begin{align}
+    \mst &= \frac{1}{2} \text{Re} \left[ \varepsilon_b  \boldsymbol{E} \otimes \boldsymbol{E^*} + \mu_b \boldsymbol{H} \otimes \boldsymbol{H^*}
+    - \frac{1}{2}(\varepsilon_b E^2 + \mu_b H^2)\boldsymbol{I} \right] \\
+    \langle \boldsymbol{F} \rangle &= \oint_\Omega \mst \cdot d \boldsymbol{\Omega} \\
+    \langle \boldsymbol{\tau} \rangle &= \oint_\Omega \boldsymbol{r} \times \mst \cdot d \boldsymbol{\Omega}
+\end{align}
+\end{subequations}
+where $\bm{I}$ is a 3x3 identitiy matrix and $\otimes$ is the vector outer product.
+
+The electric and magnetic fields around particle $j$ can be calculated using the field expansions, \cref{eqn:electric_field_expansion,eqn:magnetic_field_expansion}.
+The integration for the time-averaged force can then be carried out analytically in the far-field, resulting in a sum over the particle expansion coefficients. \cite{barton1989theoretical}
+For these equations, it is helpful to denote
+$a_{mn} = p_{mn1}^{j,\text{inc}}$,
+$b_{mn} = p_{mn2}^{j,\text{inc}}$,
+$p_{mn} = p_{mn1}^{j,\text{scat}}$, and
+$q_{mn} = p_{mn2}^{j,\text{scat}}$. 
+Then, the force is given by
+\begin{subequations}
+\begin{align}
+\begin{split}
+    F_x + iF_y =& \frac{\pi}{k^2} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \frac{1}{n+1}\bigg\{
+          \frac{\sqrt{(n+m+1)(n-m)}}{n}\frac{\varepsilon_b}{\mu_b}
+          \bigg[2a_{mn}b_{m+1n}^*  - a_{mn}q_{m+1n}^* \\ 
+        & - p_{mn} b_{m+1n}^* + 2b_{mn}a_{m+1n}^* - b_{mn}p_{m+1n}^* - q_{mn}a_{m+1n}^*  \bigg] \\
+        & - \sqrt{\frac{(n+m+2)(n+m+1)n(n+2)}{(2n+3)(2n+1)}}
+        \bigg[ 2 \varepsilon_b a_{mn}a_{m+1n+1}^* - \varepsilon_b a_{mn}p_{m+1n+1}^* \\
+        & - \varepsilon_b p_{mn}a_{m+1n+1}^* + 2 \frac{\varepsilon_b}{\mu_b} b_{mn}b_{m+1n+1}^* - \frac{\varepsilon_b}{\mu_b} b_{mn}q_{m+1n+1}^* - \frac{\varepsilon_b}{\mu_b} q_{mn}b_{m+1n+1}^*\bigg] \\
+        & + \sqrt{\frac{(n-m+1)(n-m+2)n(n+2)}{(2n+3)(2n+1)}}
+        \bigg[ 2 \varepsilon_b a_{m-1n+1}a_{mn}^* - \varepsilon_b a_{m-1n+1}p_{mn}^* \\
+        & - \varepsilon_b p_{m-1n+1}a_{mn}^* + 2 \frac{\varepsilon_b}{\mu_b} b_{m-1n+1}b_{mn}^* - \frac{\varepsilon_b}{\mu_b} b_{m-1n+1}q_{mn}^* - \frac{\varepsilon_b}{\mu_b} q_{m-1n+1}b_{mn}^*\bigg]
+        \bigg\}
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+    F_z =& -\frac{2\pi}{k^2} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \frac{1}{n+1}\text{Re}\bigg\{
+          \frac{m}{n} \frac{\varepsilon_b}{\mu_b}
+          \bigg[ 2a_{mn}b_{mn}^* - a_{mn}q_{mn}^* - p_{mn}b_{mn}^* \bigg] \\
+        & + \sqrt{\frac{(n-m+1)(n+m+1)n(n+2)}{(2n+3)(2n+1)}}
+        \bigg[ 2 \varepsilon_b a_{mn+1}a_{mn}^* - \varepsilon_b a_{mn+1}p_{mn}^* - \varepsilon_b p_{mn+1}a_{mn}^* \\
+        & + 2 \frac{\varepsilon_b}{\mu_b} b_{mn+1}b_{mn}^* - \frac{\varepsilon_b}{\mu_b} b_{mn+1}q_{mn}^* - \frac{\varepsilon_b}{\mu_b} q_{mn+1}b_{mn}^*
+        \bigg] \bigg\}
+\end{split}
+\end{align}
+\end{subequations}
+Similarly, the torque can be integrated analytically,
+\begin{subequations}
+\begin{align}
+\begin{split}
+    \tau_x =& \frac{2\pi}{k^3} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sqrt{(n-m)(n+m+1)} \; \text{Re} \bigg\{
+            \varepsilon_b a_{mn}a_{m+1n}^* + \mu_b b_{mn}b_{m+1n}^* \\
+            & - \frac{1}{2} \bigg[ \varepsilon_b a_{m+1n}p_{mn}^* + \varepsilon_b a_{mn}p_{m+1n}^*
+            + \mu_b b_{m+1n}q_{mn}^* + \mu_b b_{mn}q_{m+1n}^*\bigg] \bigg\}
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+    \tau_y =& \frac{2\pi}{k^3} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \sqrt{(n-m)(n+m+1)} \; \text{Im} \bigg\{
+            \varepsilon_b a_{mn}a_{m+1n}^* + \mu_b b_{mn}b_{m+1n}^* \\
+            & + \frac{1}{2} \bigg[ \varepsilon_b a_{m+1n}p_{mn}^* - \varepsilon_b a_{mn}p_{m+1n}^*
+            + \mu_b b_{m+1n}q_{mn}^* - \mu_b b_{mn}q_{m+1n}^*\bigg] \bigg\}
+\end{split}
+\end{align}
+
+\begin{align}
+\begin{split}
+    \tau_z =& -\frac{2\pi}{k^3} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} m \bigg\{
+          \varepsilon_b |a_{mn}|^2 + \mu_b |b_{mn}|^2 - \text{Re} \bigg[
+              \varepsilon_b a_{mn}p_{mn}^* + \mu_b b_{mn}q_{mn}^*\bigg] \bigg\}
+\end{split}
+\end{align}
+\end{subequations}
+
+\subsection{Far-field expansions}
+
+In the far-field, the VSH functions take on a simplified form from their exact expression in \cref{eqn:vsh_definition}.
+The radial component of $\bm{N}$ vanishes and the spherical Bessel functions approach an asymptotic form.
+For spherically outgoing modes, the spherical Hankel function of the first kind is $h_n^{(1)}(kr) \simeq i^{-n-1} e^{ikr}/(kr)$ as $kr \rightarrow \infty$.
+
+Given a set of scattering expansion coefficients $q_{mnr}$, the far fields can be expanded over a single sum of the multipolar modes:
+\begin{align}
+\begin{split}
+    E_{\text{scat},\theta}(\theta,\phi) &= i\frac{e^{ikr}}{kr} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n}
+    (-i)^nE_{mn} \big[q_{mn1}\tau_{mn}(\cos\theta) + q_{mn2}\pi_{mn}(\cos\theta)\big] e^{im\phi} \\
+    E_{\text{scat},\phi}(\theta,\phi) &= -\frac{e^{ikr}}{kr} \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n}
+    (-i)^nE_{mn} \big[q_{mn1}\pi_{mn}(\cos\theta) + q_{mn2}\tau_{mn}(\cos\theta)\big] e^{im\phi} \\
+\end{split}
+\end{align}
+One option is to set $q_{mnr} = p_{mnr}^\text{cluster}$, the cluster expansion coefficients.
+This approach comes with a loss of information, but has the physical interpretation that each term in the sum can be attributed to the far-fields of a given multipolar mode.
+To avoid the loss of information, a sum over particle pairs can be performed \cite{Xu_1997}
+\begin{equation}
+    q_{\alpha}(\theta, \phi) = \sum_{l=1}^N \sum_{j=1}^N \sum_\beta 
+                 \exp \left[i(\bm{\hat k} - \bm{\hat r}) \cdot \bm{r}^l\right]
+                 \exp \left[i \bm{\hat k} \cdot (\bm{r}^l - \bm{r}^j) \right]
+                 \tmatrix_{\alpha \beta}^{lj} p_{\beta}^\text{j,\text{inc}}
+\end{equation}
+where the expansion coefficients now depend on the angular position.
+
+\subsection{Orientation-averaged properties}
+
+\section{Source decomposition}
+To solve the particle interaction equation, \cref{eqn:particle_interactions}, the expansion coefficients of the source field must be known at each particle.
+Given the electric fields of the incident source, $\boldsymbol{E}^\text{src}(\boldsymbol{r})$, the source can be decomposed into expansion coefficients by integration around particle $j$
+\begin{equation}
+    p_{mnr}^{j,\text{src}} = i\cfrac{\int_\Omega \boldsymbol{E}^\text{src} \cdot \boldsymbol{N}_{mnr}^{(1)*} \; d\Omega}
+    {E_{mn} \langle \boldsymbol{N}_{mnr}^{(1)},\boldsymbol{N}_{mnr}^{(1)} \rangle} \\
+\end{equation}
+where $\Omega$ is a closed surface around particle $j$.
+
+For a plane wave, this decomposition can be carried out analytically.
+The direction of the incident $\bm{k}$ vector can be described by the two spherical angles $\theta$ and $\phi$.
+A linear polarization of the plane wave is either TM ($\bm{\hat \theta}$) or TE ($\bm{\hat \phi}$).
+Elliptically polarized light is then a complex-valued linear combination of TM and TE polarizations.
+\begin{align}
+\begin{split}
+p_{mn}^{j,\text{src}} &= E_0 i^{-n} E_{mn} \tau_{mn}(\cos \alpha) \exp(-im\beta) \exp(i\bm{k} \cdot \bm{r}_j) \\
+q_{mn}^{j,\text{src}} &= E_0 i^{-n} E_{mn} \pi_{mn}(\cos \alpha) \exp(-im\beta) \exp(i\bm{k} \cdot \bm{r}_j)
+\end{split}
+\end{align}
+
+
+\subsection{Far-field integration}
+\subsection{Near-field point matching}
+\subsection{Focused beams}
+
+\subsection{Reflection off of an interface}
+
+\section{Efficient numerical implementation}
+\subsection{T-matrix evaluation}
+The T-matrix can be numerically evaluated using the so-called extended boundary condition method (EBCM). \cite{waterman1965matrix, barber1975scattering, mishchenko1996t}
+In this method, the expansion coefficients are related to one another by the equivalence principle
+\begin{align}
+\begin{split}
+    p^\text{inc}_\alpha &= iQ^{31}_{\alpha\beta} p^\text{int}_\beta \\
+    p^\text{scat}_\alpha &= -iQ^{11}_{\alpha\beta} p^\text{int}_\beta
+\end{split}
+\end{align}
+where the $Q$ matrices are given by integrals of the VSHW functions over the particle's surface
+\begin{equation}
+    Q_{\alpha \beta}^{pq} = -f^{(p)}\frac{ik_m^2}{\pi} 
+    \left[ \int_S (d\bm{S} \times \bm{N}_{\beta}^{(q)}(k\bm{r})) \cdot \bm{N}_{\hat\alpha}^{(p)}(k_m \bm{r})
+       + \sqrt{\frac{\varepsilon}{\varepsilon_m}}\int_S (d\bm{S} \times \bm{N}_{\hat\beta}^{(q)}(k\bm{r})) \cdot \bm{N}_{\alpha}^{(p)}(k_m \bm{r}) \right]
+\end{equation}
+where $f^{(p)}$ is defined in \cref{eqn:outgoing_factor} and the index notation $\hat \alpha$ means to swap electric and magnetic mode indices, i.e. if $\alpha = (m, n, r)$, then $\hat \alpha = (m, n, 3-r)$.
+The T-matrices are then determined
+\begin{align}
+    \tmatrix_{\alpha\beta} &= -Q^{11}_{\alpha\gamma} \left[ Q^{31}_{\gamma\beta} \right]^{-1} \\
+    \tmatrix_{\alpha\beta}^\text{int} &= -i\left[ Q^{31}_{\alpha\beta} \right]^{-1}
+\end{align}
+\subsection{Evaluation of VSH transition coefficients}
+\subsection{VSH rotation-translation-rotation algorithm}
+\subsection{Matrix-free iterative solver}
+\subsection{Preconditioner based on spatial locality}
+\subsection{Parallel execution}
+
+\section{Other conventions}
+A different convention for the field expansions used in other work \cite{barton1989theoretical} is presented here.
+These field expansions were used to evaluate analytic expressions for the force and torque.
+
+\hfill
+
+\textit{Electric field}
+\begin{subequations}
+\begin{align}
+\begin{split}
+    \boldsymbol{E}_\text{inc}^j = \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \bigg\{
+    \boldsymbol{\hat r}\frac{1}{r^2} &\bigg[ n(n+1) p_{mn}^j \psi_n(kr) Y_{nm}(\theta,\phi) \bigg] \\
+    +\; \boldsymbol{\hat \theta}\frac{k}{r} &\left[ p_{mn}^j \psi_n^\prime(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi)
+    - \frac{m}{\sqrt{\varepsilon_b}} q_{mn}^j \psi_n(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta} \right] \\
+    +\; \boldsymbol{\hat \phi}\frac{k}{r} &\left[ im p_{mn}^j \psi_n^\prime(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta}
+    - \frac{i}{\sqrt{\varepsilon_b}} q_{mn}^j \psi_n(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi) \right] \bigg\}
+\end{split}
+\end{align}
+\begin{align}
+\begin{split}
+    \boldsymbol{E}_\text{scat}^j = \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \bigg\{
+    \boldsymbol{\hat r}\frac{1}{r^2} &\bigg[ n(n+1) a_{mn}^j \xi_n^{(1)}(kr) Y_{nm}(\theta,\phi) \bigg] \\
+    +\; \boldsymbol{\hat \theta}\frac{k}{r} &\left[ a_{mn}^j \xi_n^{(1)\prime}(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi)
+    - \frac{m}{\sqrt{\varepsilon_b}} b_{mn}^j \xi_n^{(1)}(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta} \right] \\
+    +\; \boldsymbol{\hat \phi}\frac{k}{r} &\left[ im a_{mn}^j \xi_n^{(1)\prime}(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta}
+    - \frac{i}{\sqrt{\varepsilon_b}} b_{mn}^j \xi_n^{(1)}(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi) \right] \bigg\}
+\end{split}
+\end{align}
+\end{subequations}
+
+\textit{Magnetic field}
+\begin{subequations}
+\begin{align}
+\begin{split}
+    \boldsymbol{H}_\text{inc}^j = \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \bigg\{
+    \boldsymbol{\hat r}\frac{1}{r^2} &\bigg[ n(n+1) q_{mn}^j \psi_n(kr) Y_{nm}(\theta,\phi) \bigg] \\
+    +\; \boldsymbol{\hat \theta}\frac{k}{r} &\left[ q_{mn}^j \psi_n^\prime(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi)
+    + m\sqrt{\varepsilon_b} p_{mn}^j \psi_n(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta} \right] \\
+    +\; \boldsymbol{\hat \phi}\frac{k}{r} &\left[ im q_{mn}^j \psi_n^\prime(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta}
+    + i\sqrt{\varepsilon_b} p_{mn}^j \psi_n(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi) \right] \bigg\}
+\end{split}
+\end{align}
+\begin{align}
+\begin{split}
+    \boldsymbol{H}_\text{scat}^j = \sum_{n=1}^{N_\text{max}} \sum_{m=-n}^{n} \bigg\{
+    \boldsymbol{\hat r}\frac{1}{r^2} &\bigg[ n(n+1) b_{mn}^j \xi_n^{(1)}(kr) Y_{nm}(\theta,\phi) \bigg] \\
+    +\; \boldsymbol{\hat \theta}\frac{k}{r} &\left[ n_{mn}^j \xi^{(1)\prime}(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi)
+    + m\sqrt{\varepsilon_b} a_{mn}^j \xi_n^{(1)}(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta} \right] \\
+    +\; \boldsymbol{\hat \phi}\frac{k}{r} &\left[ im b_{mn}^j \xi_n^{(1)\prime}(kr) \frac{Y_{nm}(\theta,\phi)}{\sin\theta}
+    + i\sqrt{\varepsilon_b} a_{mn}^j \xi_n^{(1)}(kr) \frac{\partial}{\partial \theta} Y_{nm}(\theta,\phi) \right] \bigg\}
+\end{split}
+\end{align}
+\end{subequations}
+where $\xi_n^{(1)} = \psi_n - i \chi_n$, $\psi_n$, $\chi_n$ are the Riccati-Bessel function of the first and second kind, and $Y_{nm}$ are the spherical harmonics
+\begin{align}
+\begin{split}
+    \psi_n(x) &= xj_n(x) \\
+    \chi_n(x) &= -xy_n(x) \\
+    \xi_n^{(1)}(x) &= x[j_n(x) + iy_n(x)] = xh_n^{(1)}(x) \\
+    Y_{nm}(\theta, \phi) &= \sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}} P_n^m(\cos \theta) e^{im\phi}
+\end{split}
+\end{align}
+
+Denoting the coefficients of our convention $\bar a_n$, $\bar b_n$, $\bar p_{mn}$, $\bar q_{mn}$, $\bar a_{mn}$, $\bar b_{mn}$, the two conventions are related by
+\begin{align}
+\begin{split}
+    \bar a_{n} &= - a_{n} \\
+    \bar b_{n} &= - b_{n} \\
+    \bar p_{mn} &= \frac{k^2}{i^{n-1}}\sqrt{\frac{n(n+1)}{4\pi}} p_{mn} \\
+    \bar q_{mn} &= -\frac{k^2}{i^n}\sqrt{\frac{\mu_b}{\varepsilon_b} \frac{n(n+1)}{4\pi}} q_{mn} \\
+    \bar a_{mn} &= -\frac{k^2}{i^{n-1}}\sqrt{\frac{n(n+1)}{4\pi}} a_{mn} \\
+    \bar b_{mn} &= \frac{k^2}{i^n}\sqrt{\frac{\mu_b}{\varepsilon_b} \frac{n(n+1)}{4\pi}} b_{mn}
+\end{split}
+\end{align}
+Another convention uses a different value for the $E_{mn}$ normalization values \cite{xu1995electromagnetic}
+\begin{equation}
+    E_{mn} = |E_0|i^n \frac{2n+1}{n(n+1)}
+\end{equation}
+where $|E_0|$ is the amplitude of the source field.
+We have chosen to absorb this amplitude into the $a$, $b$, $p$, and $q$ coefficients.
+
+\section{MiePy: a GMMT Python library}
+
+\subsection{Installation}
+\noindent
+Install required dependencies:
+\begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+    \item \href{https://cmake.org/install/}{CMake} (C++ build system)
+    \item \href{http://eigen.tuxfamily.org/index.php?title=Main_Page}{Eigen} (C++ linear algebra library)
+    \item \href{https://www.gnu.org/software/gsl/}{GNU Scientific Library (GSL)}
+\item GCC and GFORTRAN
+\item Python 3 and pip
+\end{itemize}
+Run the commands:
+\begin{lstlisting}
+git clone https://johnapark@bitbucket.org/johnapark/miepy.git --recurse-submodules
+cd miepy
+pip install . -e --user     # build and install
+pytest tests                # run tests
+\end{lstlisting}
+
+\subsection{Example script}
+
+Example Python code using MiePy
+\begin{lstlisting}
+    import miepy
+    nm = 1e-9
+
+    # define material and source
+    Ag = miepy.materials.Ag()
+    source = miepy.sources.plane_wave(polarization=[1,0])
+
+    # build an Ag dimer with radii 50nm separated by 600nm in the x-direction
+    dimer = miepy.sphere_cluster(position=[[300*nm,0,0], [-300*nm,0,0]],
+                                    radius=50*nm,
+                                    material=Ag,
+                                    source=source,
+                                    wavelength=800*nm,
+                                    lmax=2)
+
+    # obtain the cross-sections
+    scat, absorb, extinct = dimer.cross_sections()
+
+    # obtain the force and torque on the right particle
+    F = dimer.force_on_particle(0)
+    T = dimer.torque_on_particle(0)
+\end{lstlisting}
+
+\subsection{Target features}
+
+\begin{itemize}
+    \item[] \textbf{version 0.3} (released)
+        \begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+            \item 30$\times$ performance for larger clusters
+            \item T-matrix formulation for non-spherical particles
+            \item Plane-waves and beams can have arbitrary direction and polarization
+        \end{itemize}
+    \item[] \textbf{version 0.4}
+        \begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+            \item C++ implementation with OpenMP parallelization and Python bindings (using pybind11)
+            \item Periodic boundary conditions (1D and 2D)
+            \item Symmetry relationships (mirror, discrete rotation)
+            \item Additional performance: 
+                        (i) A/B remainging symmetries, 
+                        (iv) no T-matrix recomputation for identical geometries
+                        (v) transition from [2, rmax] $\rightarrow$ [rmax] shape
+                    \item Save solution so that it can be reloaded
+            \item Any changes to T-matrix/sources
+        \end{itemize}
+    \item[] \textbf{version 0.5}
+        \begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+            \item Additional functions: 
+                       (i) cluster T-matrix,
+                       (ii) S-matrix, Mueller/Jones matrix,
+                       (iii) spin vs. orbital torque,
+                       (iv) local density of states,
+                       (v) energy and momentum density
+            \item Performance:
+                        (i) lmax per particle,
+                        (ii) cluster T-matrix re-usage with many sources
+                        (iii) computing A/B for all modes using upwards recursion/symmetries
+            \item ``unpolarized'' light
+            \item Average over orientations calculations
+            \item Scene visualization (3D)
+            \item Prettier output for main classes using \_\_repr\_\_
+            \item Existing TODO items
+            \item Improved documentation, examples, tests, and tutorial/introduction for quick start
+        \end{itemize}
+    \item[] \textbf{future}
+        \begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+            \item Substrates, layered substrates
+            \item Beyond the Rayleigh hypothesis for non-spherical particle interactions
+            \item More T-matrix options:
+                        (i) non-axisymmetric particles, Gaussian spheres/cylinders, layered spheres/spheroids, etc.
+                        (ii) chiral materials,
+                        (iii) anisotropic materials (expand definition of material class)
+                    \item Valid field expansion in circumscribing spheres (possibly using discrete sources)
+            \item 3D periodic boundary conditions
+            \item Band diagram calculations
+            \item Performance:
+                      (i) MPI/GPU parallelization
+                      (ii) matrix-free solver and rotation-translation-rotation (RTR) coupling method,
+                      (iii) approximation for long-range interactions in large systems,
+                      (iv) preconditioner for iterative matrix solver based on spatial locality,
+                      (v) grid aggregation + FFT to obtain $\mathcal{O}(N \log N$) performance
+            \item Time-domain via IFFT
+        \end{itemize}
+\end{itemize}
+
+\bibliography{generalized_mie_theory}
+
+\end{document}

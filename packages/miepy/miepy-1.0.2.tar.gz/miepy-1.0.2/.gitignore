@@ -1,0 +1,85 @@
+*.pyc
+*.sw*
+__pycache__
+todo.txt
+*.pdf
+*.png
+*.html
+
+# data files
+*.h5
+*.dat
+*.npy
+*.mp4
+
+# nfmds
+src/miepy/tmatrix/nfmds/fem
+src/miepy/tmatrix/nfmds/input
+src/miepy/tmatrix/nfmds/tmatrix
+
+# setup files
+build
+dist
+*.egg-info
+
+# material database
+src/miepy/materials/database
+
+# misc example folders
+examples/compare
+examples/temp
+examples/old
+examples/time
+
+# misc tests folders
+examples/tests/fdtd_compare
+examples/tests/monitor_radius
+examples/tests/zero
+examples/tests/absorption
+play/
+
+# vscode
+settings.json
+tags
+
+# latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.bbl
+*.blg
+*.out
+*.toc
+
+# pytest
+.pytest_cache
+
+# compiled files
+*.o
+*.mod
+
+# tmatrix objects
+miepy/tmatrix/nfmds/fem
+miepy/tmatrix/nfmds/input
+miepy/tmatrix/nfmds/old
+miepy/tmatrix/nfmds/tmatrix
+miepy/tmatrix/nfmds/tmatrix_extended
+miepy/bin/tmatrix
+miepy/bin/tmatrix_extended
+
+# c++ code
+*.so
+
+# wheel building
+.build_wheels/eigen3
+.build_wheels/gsl-2.6
+.build_wheels/wheelhouse
+
+# temp folder and files
+temp
+temp.py
+
+# claude
+.claude
