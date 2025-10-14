@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blobjugglerpy"
+authors = [{ name = "Emir Cem Gezer", email = "emircem.gezer@gmail.com" }]
+description = "Export ROS2 rosbag2 to CSV in PlotJuggler style or per-topic"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+dynamic = ["version", "dependencies"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: OS Independent",
+]
+
+keywords = ["ROS2", "rosbag2", "CSV", "PlotJuggler", "robotics", "logging"]
+
+[project.urls]
+Homepage = "https://github.com/incebellipipo/blobjugglerpy"
+Repository = "https://github.com/incebellipipo/blobjugglerpy.git"
+Documentation = "https://incebellipipo.github.io/blobjugglerpy/"
+Issues = "https://github.com/incebellipipo/blobjugglerpy/issues"
+Source = "https://github.com/incebellipipo/blobjugglerpy"
+
+[project.scripts]
+blobjugglerpy = "blobjugglerpy.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.package-data]
+
+[tool.setuptools_scm]
+# Derive version from git tags (e.g., v0.1.0). Post-release scheme adds .postN for commits after a tag.
+version_scheme = "post-release"
