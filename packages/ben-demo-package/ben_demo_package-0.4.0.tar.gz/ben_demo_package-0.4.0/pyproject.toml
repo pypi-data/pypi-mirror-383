@@ -1,0 +1,19 @@
+[project]
+name = "ben-demo-package"
+version = "0.4.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Ben", email = "bennyp2494@gmail.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "scipy>=1.13.1",
+]
+
+[project.scripts]
+qstats_yay = "ben_demo_package: design_stats_test_UI"
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
