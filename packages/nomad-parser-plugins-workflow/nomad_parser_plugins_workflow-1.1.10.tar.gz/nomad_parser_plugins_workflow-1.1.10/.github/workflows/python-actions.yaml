@@ -1,0 +1,87 @@
+name: install-and-test-workflow
+
+on: [push]
+
+env:
+  REGISTRY: ghcr.io
+  UV_VERSION: 0.7
+  PYTHON_VERSION: 3.12
+
+permissions:
+  contents: write
+  packages: write
+  attestations: write
+  id-token: write
+
+jobs:
+  install-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    # - name: Start containers
+    #   run: |
+    #     docker compose up -d --quiet-pull
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        version: ${{ env.UV_VERSION }}
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        uv sync --all-extras
+
+    - name: mypy
+      run: |
+        uv run python -m mypy --ignore-missing-imports --follow-imports=silent --no-strict-optional *parsers tests
+    - name: Test with pytest
+      run: |
+        uv run python -m coverage run -m pytest -sv tests
+    - name: Submit to coveralls
+      continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        coveralls --service=github
+  build-and-install:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Build the package
+      run: |
+        pip install --upgrade pip
+        pip install build
+        python -m build --sdist
+    - name: Install the package
+      run: |
+        pip install dist/*.tar.gz --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
+  ruff-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: "check ."
+
+  ruff-formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: "format ."

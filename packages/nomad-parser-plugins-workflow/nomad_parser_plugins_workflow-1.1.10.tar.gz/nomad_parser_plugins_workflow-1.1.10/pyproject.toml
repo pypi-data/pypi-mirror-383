@@ -1,0 +1,111 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nomad-parser-plugins-workflow"
+dynamic = ["version"]
+description = "Collection of NOMAD parsers for workflow engines."
+readme = "README.md"
+authors = [{ name = "The NOMAD Authors" }]
+license = { file = "LICENSE" }
+dependencies = [
+    "nomad-lab[infrastructure]>=1.3.13",
+    "nomad-schema-plugin-simulation-workflow>=1.0.1",
+    "nomad-schema-plugin-run>=1.0.1",
+    "lxml>=5.2",
+    "asr==0.4.1",
+    "xarray>=0.20.1",
+    "phonopy>=2.35,<=2.38",
+    "h5py>=3.11.0",
+    "pydantic>=1.10.8",
+    "netcdf4",
+    "h5netcdf"
+]
+
+[project.urls]
+homepage = "https://github.com/nomad-coe/workflow-parsers"
+
+[tool.uv]
+extra-index-url = [
+  "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple",
+]
+
+[project.optional-dependencies]
+tests = [
+    "astroid==2.11.7",
+    'mypy>=1.15',
+    'pytest>= 5.3.0, <8',
+    'pytest-timeout>=1.4.2',
+    'pytest-cov>=2.7.1',
+    'ruff>=0.6',
+    'typing-extensions>=4.12',
+    'coverage',
+    'coveralls',
+    'types-PyYAML',
+]
+
+[tool.ruff]
+include = ["workflowparsers/*.py", "tests/*.py"]
+lint.select = [
+    "E", # pycodestyle
+    "W", # pycodestyle
+    "PL", # pylint
+]
+lint.ignore = [
+    "E501", # Line too long ({width} > {limit} characters)
+    "E701", # Multiple statements on one line (colon)
+    "E731", # Do not assign a lambda expression, use a def
+    "E402",  # Module level import not at top of file
+    "PLR0911", # Too many return statements
+    "PLR0912", # Too many branches
+    "PLR0913", # Too many arguments in function definition
+    "PLR0915", # Too many statements
+    "PLR2004", # Magic value used instead of constant
+    "PLW0603", # Using the global statement
+    "PLW2901", # redefined-loop-name
+    "PLR1714", # consider-using-in
+    "PLR5501", # else-if-used
+]
+lint.fixable = ["ALL"]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+[tool.ruff.format]
+# use single quotes for strings.
+quote-style = "single"
+
+# indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[tool.setuptools.packages.find]
+include = ["workflowparsers*"]
+
+[tool.setuptools_scm]
+
+[project.entry-points.'nomad.plugin']
+aflowparser = "workflowparsers:aflow_parser_entry_point"
+asrparser = "workflowparsers:asr_parser_entry_point"
+atomateparser = "workflowparsers:atomate_parser_entry_point"
+elasticparser = "workflowparsers:elastic_parser_entry_point"
+fhivibesparser = "workflowparsers:fhivibes_parser_entry_point"
+lobsterparser = "workflowparsers:lobster_parser_entry_point"
+phonopyparser = "workflowparsers:phonopy_parser_entry_point"
+quantum_espresso_epwparser = "workflowparsers:quantum_espresso_epw_parser_entry_point"
+quantum_espresso_phononparser = "workflowparsers:quantum_espresso_phonon_parser_entry_point"
+quantum_espresso_xspectraparser = "workflowparsers:quantum_espresso_xspectra_parser_entry_point"
+
+[tool.mypy]
+strict = false
+ignore_missing_imports = true
+follow_imports = "silent"
+no_strict_optional = true
+disable_error_code = "import, annotation-unchecked"
