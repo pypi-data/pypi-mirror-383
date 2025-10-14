@@ -1,0 +1,97 @@
+# pyproject.toml
+[build-system]
+requires = [
+    "setuptools>=80",
+    "setuptools-scm>=8"
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "ksc"
+description = "A command line tool and python library for documenting and describing keyboard shortcuts."
+readme = "README.md"
+authors = [
+    {name = "Jared Crapo", email = "jared@kotfu.net"},
+]
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+keywords = ["keyboard shortcut", "documentation", "command line"]
+requires-python = ">=3.10"
+dependencies = ["rich"]
+dynamic = ["version"]
+
+
+[dependency-groups]
+dev = [
+    "build",
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+    "codecov",
+    "ruff",
+    "invoke",
+]
+
+
+[project.scripts]
+ksc = "ksc.__main__:main"
+
+
+[project.urls]
+homepage = "https://github.com/kotfu/ksc"
+
+
+[tool.setuptools_scm]
+# empty section is the equivilent of setuptools_scm=True in setup.py
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[tool.setuptools.package-data]
+ksc = ["py.typed"]
+
+
+[[tool.uv.index]]
+name = "test-pypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
+
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
