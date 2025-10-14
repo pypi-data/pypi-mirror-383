@@ -1,0 +1,12 @@
+python-dateutil
+
+[daemon]
+python-daemon==2.1.2
+
+[sftp]
+paramiko
+pycrypto
+
+[twitter]
+python-twitter>=3.0
+oauth2

@@ -1,0 +1,8 @@
+[console_scripts]
+pywws-hourly = pywws.hourly:main
+pywws-livelog = pywws.livelog:main
+pywws-livelog-daemon = pywws.livelogdaemon:main
+pywws-reprocess = pywws.reprocess:main
+pywws-setweatherstation = pywws.setweatherstation:main
+pywws-testweatherstation = pywws.testweatherstation:main
+pywws-version = pywws.version:main
