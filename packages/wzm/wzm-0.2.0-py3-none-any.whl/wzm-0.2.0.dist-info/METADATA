@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: wzm
+Version: 0.2.0
+Summary: A typed demo SDK with rich docstrings and a minimal HTTP client.
+Author-email: Demo <demo@example.com>
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=1.5
+Requires-Dist: requests>=2.31
+Requires-Dist: typing-extensions>=4.8
+
+# wzm (demo)
+
+一个最小但有类型提示的 Python SDK Demo。
+
+## 安装（打包后）
+```bash
+pip install wzm   # 若被占用请更换发行名
+```
