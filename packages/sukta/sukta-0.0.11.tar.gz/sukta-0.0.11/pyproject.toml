@@ -1,0 +1,59 @@
+[project]
+name = "sukta"
+version = "0.0.11"
+description = "Personalized CLU and experiment tracking utility"
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENCSE"]
+authors = [
+    { name = "Arjun Krishna", email = "arjunkris96@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "aim",
+    "cloudpickle",
+    "dacite",
+    "jsonargparse",
+    "matplotlib",
+    "pandas",
+    "python-benedict[yaml]",
+    "rich",
+]
+[project.optional-dependencies]
+dev = [
+    "bumpver",
+    "build",
+    "ruff",
+    "twine",
+    "pre-commit",
+    "pytest",
+]
+jax = [
+    "jax",
+    "jaxtyping",
+    "equinox",
+    "orbax-checkpoint",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.bumpver]
+current_version = "0.0.11"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bumpver: update {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"', 
+    'version = "{version}"',
+]
+"src/sukta/__init__.py" = [
+    '__version__ = "{version}"'
+]
