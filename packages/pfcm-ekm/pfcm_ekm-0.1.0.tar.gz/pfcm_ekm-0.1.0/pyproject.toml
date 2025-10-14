@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pfcm-ekm"
+version = "0.1.0"
+description = "PFCM (Possibilistic Fuzzy C-Means) and EKM (Equilibrium K-Means) in one clustering package"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Fajar", email = "muhfajarags@gmail.com" }]
+keywords = ["clustering", "kmeans", "fuzzy", "pfcm", "ekm", "imbalanced"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis"
+]
+
+dependencies = [
+    "numpy>=1.21",
+    "scikit-learn>=1.1"
+]
+
+[project.optional-dependencies]
+accel = ["numba>=0.57"]
+
+[project.urls]
+Homepage = "https://github.com/muhfajarags/Sumber-Kode-PFCM-dan-EKM"
+Repository = "https://github.com/muhfajarags/Sumber-Kode-PFCM-dan-EKM"
+Issues = "https://github.com/muhfajarags/Sumber-Kode-PFCM-dan-EKM/issues"
+
+[tool.setuptools.packages.find]
+include = ["pfcm_ekm"]
+exclude = ["tests*", "examples*"]
