@@ -1,0 +1,94 @@
+[build-system]
+# Minimum requirements for the build system to execute.
+requires =[
+  "setuptools>=64",
+  "setuptools_scm>=8",
+  "wheel",
+  "cmake>=3.24",
+  "conan",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'brille'
+dynamic = ["version"]
+authors = [
+  {name = "Gregory Tucker"},
+  {name = "Duc Le"},
+  {name = "Rebecca Fair"}
+]
+maintainers = [
+  {name = "Gregory Tucker", email = "gregory.tucker@ess.eu"},
+]
+description='Irreducible Brillouin zone symmetry and interpolation.'
+readme = {file="README.md", content-type="text/markdown"}
+license="AGPL-3.0-or-later"
+license-files=["COPYING", "lib/*/LICEN[CS]E*"]
+requires-python = ">=3.10"
+classifiers=[
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Operating System :: Microsoft :: Windows :: Windows 10",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS :: MacOS X",
+  "Programming Language :: C++",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+  'numpy',
+]
+
+[project.optional-dependencies]
+plotting = ['matplotlib>=2.2.0', ]
+vis = ['pyglet>=1.5.27', 'vispy>=0.12.1', ]
+
+[project.urls]
+Homepage = "https://github.com/brille"
+Documentation = "https://brille.github.io"
+Respository = "https://github.com/brille/brille.git"
+Issues = "https://github.com/brille/brille/issues"
+
+[tool.setuptools.packages.find]
+include = ["brille*"]
+namespaces = false
+
+[tool.setuptools_scm]
+
+[tool.cibuildwheel]
+archs = ["auto64"]
+test-requires = ["numpy", "pytest"]
+test-command = "pytest {package}/wrap/tests"
+build-verbosity = 1
+skip = ["cp38-*", "cp39-*"]  # pypy builds no longer on by default
+
+# GitHub Actions + cibuildwheel + delvewheel leads to memory access errors that are not present
+# for cibuildwheel with or without delvewheel (but without GitHub Actions).
+# TODO Investigate the possibility of specifying 'good' sources of vcomp140.dll and msvcp140.dll
+# On a virtual machine these were located at
+# c:\windows\system32\vcomp140.dll and
+# c:\program files\microsoft visual studio\2022\community\vc\tools\msvc\14.40.38807\bin\hostx64\64\msvcp140.dll
+#
+# [tool.cibuildwheel.windows]
+# before-build = "pip install delvewheel"
+# repair-wheel-command = "delvewheel repair -w {dest_dir} -v {wheel}"
+
+[tool.ruff]
+line-length = 88
+extend-exclude = [
+  "docs/tutorials/*",  # some tutorial python files are referernced by line number, so do not reformat automatically
+  "profile/euphonic/*",  # out-of-date Euphoic profiling scripts
+]
+
+[tool.ruff.lint]
+extend-select = [
+  "UP",  # pyupgrade
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
