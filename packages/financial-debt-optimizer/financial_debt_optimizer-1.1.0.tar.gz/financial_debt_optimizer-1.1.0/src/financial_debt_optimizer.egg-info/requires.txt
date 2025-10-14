@@ -1,0 +1,16 @@
+pandas
+numpy
+xlsxwriter
+openpyxl
+click
+matplotlib
+
+[dev]
+pytest>=6.2.5
+black>=21.5b2
+pylint>=2.8.2
+mypy>=0.910
+
+[test]
+pytest>=6.2.5
+pytest-cov>=2.12.0
