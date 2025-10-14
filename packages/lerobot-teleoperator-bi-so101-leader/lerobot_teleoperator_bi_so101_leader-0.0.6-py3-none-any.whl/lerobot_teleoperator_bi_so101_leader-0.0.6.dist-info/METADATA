@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: lerobot_teleoperator_bi_so101_leader
+Version: 0.0.6
+Summary: LeRobot so101 bimanual integration package
+Author-email: Aarsh Mittal <aarshm2@illinois.edu>, Keshav Badrinath <keshavb3@illinois.edu>, Leo Lin <leolin3@illinois.edu>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/SIGRobotics-UIUC/lerobot_teleoperator_bi_so101_leader
+Project-URL: Bug Tracker, https://github.com/SIGRobotics-UIUC/lerobot_teleoperator_bi_so101_leader/issues
+Project-URL: Documentation, https://github.com/SIGRobotics-UIUC/lerobot_teleoperator_bi_so101_leader#readme
+Project-URL: Source Code, https://github.com/SIGRobotics-UIUC/lerobot_teleoperator_bi_so101_leader
+Keywords: robotics,lerobot,bimanual,so101,xlerobot
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: lerobot
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: license-file
+
+# lerobot_robot_bi_so101_leader
