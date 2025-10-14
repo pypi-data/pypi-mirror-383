@@ -1,0 +1,15 @@
+# python
+**/__pycache__
+
+# maturin
+python/**/*.so
+/target
+/dist
+
+# coverage
+/.coverage*
+/coverage.xml
+
+# mkdocs
+/site
+

@@ -1,0 +1,123 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "tabeline"
+description = "A data frame and data grammar library"
+authors = [ { name = "David Hagen", email = "david@drhagen.com" } ]
+license = "MIT"
+readme = "README.md"
+keywords = ["dataframe", "datatable", "datagrammar", "dplyr"]
+requires-python = ">=3.10,<4.0"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11", 
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Rust",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dynamic = ["version"]
+
+dependencies = [
+    "parsita == 2.*",
+]
+
+[project.urls]
+Documentation = "https://tabeline.drhagen.com"
+Repository = "https://github.com/drhagen/tabeline"
+
+[project.optional-dependencies]
+pandas = [
+    "pandas == 2.*",
+    "numpy",
+    "pyarrow == 21.*",
+]
+
+polars = [
+    "polars == 1.*",
+    "pyarrow == 21.*",
+]
+
+[dependency-groups]
+nox = [
+    "nox",
+]
+
+test = [
+    "pytest == 8.*",
+    "coverage",
+]
+
+lint = [
+    "ruff == 0.8.*",
+]
+
+docs = [
+    "mkdocs-material == 9.*",
+]
+
+[tool.uv]
+default-groups = "all"
+
+[tool.maturin]
+python-source = "python"
+module-name = "tabeline._tabeline"
+features = ["pyo3/extension-module"]
+
+[tool.pytest.ini_options]
+addopts = ["--strict-config", "--strict-markers"]
+xfail_strict = true
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+branch = true
+source = ["tabeline"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING",
+    "@overload",
+]
+
+[tool.coverage.paths]
+source = [
+    "python/",
+    "**/site-packages/",
+]
+
+[tool.ruff]
+src = ["python", "tests"]
+line-length = 99
+
+[tool.ruff.lint]
+extend-select = [
+    "I", # isort
+    "N", # pep8-naming
+    "RUF", # ruff
+    "B", # flake8-bugbear
+    "N", # flake8-broken-line
+    "C4", # flake8-comprehensions
+    "PIE", # flake8-pie
+    "PT", # flake8-pytest-style
+    "PTH", # flake8-use-pathlib
+    "ERA", # flake8-eradicate
+]
+# F821: undefined-name; Parsita triggers this, but code coverage will catch it
+# B905: zip-without-explicit-strict; strict not available in Python 3.9
+extend-ignore = ["F821", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+# F401: unused-import; Allow unused imports in __init__.py files
+"__init__.py" = ["F401"]
