@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "botcity-maestro-client"
+version = "1.0.0"
+description = "A lightweight Python SDK for interacting with the BotCity Maestro API v2."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Ausier", email = "ausierneto@gmail.com"}
+]
+keywords = ["botcity", "maestro", "automation", "sdk", "api", "client"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+dependencies = [
+    "requests>=2.32.5"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/AusierNeto/maestro-sdk"
+"Documentation" = "https://github.com/AusierNeto/maestro-sdk"
+"Source" = "https://github.com/AusierNeto/maestro-sdk"
+"Issues" = "https://github.com/AusierNeto/maestro-sdk/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["maestro_client*"]
