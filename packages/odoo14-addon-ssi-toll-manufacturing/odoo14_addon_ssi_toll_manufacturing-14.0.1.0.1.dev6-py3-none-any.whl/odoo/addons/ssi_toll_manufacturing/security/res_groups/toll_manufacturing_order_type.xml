@@ -1,0 +1,16 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="toll_manufacturing_order_type_configurator_group" model="res.groups">
+        <field name="name">toll_manufacturing_order_type</field>
+        <field
+            name="category_id"
+            ref="ssi_mrp_production.manufacture_configurator_module_category"
+        />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+</odoo>

@@ -1,0 +1,132 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="toll_manufacturing_acceptance_all_access" model="ir.model.access">
+        <field name="name">toll_manufacturing_acceptance - all</field>
+        <field name="model_id" ref="model_toll_manufacturing_acceptance" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+    <record id="toll_manufacturing_acceptance_user_access" model="ir.model.access">
+        <field name="name">toll_manufacturing_acceptance - user</field>
+        <field name="model_id" ref="model_toll_manufacturing_acceptance" />
+        <field
+            name="group_id"
+            ref="ssi_toll_manufacturing.toll_manufacturing_acceptance_user_group"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <record
+        id="toll_manufacturing_acceptance_customer_supplied_raw_material_all_access"
+        model="ir.model.access"
+    >
+        <field
+            name="name"
+        >toll_manufacturing_acceptance.customer_supplied_raw_material - all</field>
+        <field
+            name="model_id"
+            ref="model_toll_manufacturing_acceptance_customer_supplied_raw_material"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+    <record
+        id="toll_manufacturing_acceptance_customer_supplied_raw_material_user_access"
+        model="ir.model.access"
+    >
+        <field
+            name="name"
+        >toll_manufacturing_acceptance.customer_supplied_raw_material - user</field>
+        <field
+            name="model_id"
+            ref="model_toll_manufacturing_acceptance_customer_supplied_raw_material"
+        />
+        <field
+            name="group_id"
+            ref="ssi_toll_manufacturing.toll_manufacturing_acceptance_user_group"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <record
+        id="toll_manufacturing_acceptance_supplier_procured_raw_material_all_access"
+        model="ir.model.access"
+    >
+        <field
+            name="name"
+        >toll_manufacturing_acceptance.supplier_procured_raw_material - all</field>
+        <field
+            name="model_id"
+            ref="model_toll_manufacturing_acceptance_supplier_procured_raw_material"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+    <record
+        id="toll_manufacturing_acceptance_supplier_procured_raw_material_user_access"
+        model="ir.model.access"
+    >
+        <field
+            name="name"
+        >toll_manufacturing_acceptance.supplier_procured_raw_material - user</field>
+        <field
+            name="model_id"
+            ref="model_toll_manufacturing_acceptance_supplier_procured_raw_material"
+        />
+        <field
+            name="group_id"
+            ref="ssi_toll_manufacturing.toll_manufacturing_acceptance_user_group"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <record
+        id="toll_manufacturing_acceptance_processing_fee_all_access"
+        model="ir.model.access"
+    >
+        <field name="name">toll_manufacturing_acceptance.processing_fee - all</field>
+        <field
+            name="model_id"
+            ref="model_toll_manufacturing_acceptance_processing_fee"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+    <record
+        id="toll_manufacturing_acceptance_processing_fee_user_access"
+        model="ir.model.access"
+    >
+        <field name="name">toll_manufacturing_acceptance.processing_fee - user</field>
+        <field
+            name="model_id"
+            ref="model_toll_manufacturing_acceptance_processing_fee"
+        />
+        <field
+            name="group_id"
+            ref="ssi_toll_manufacturing.toll_manufacturing_acceptance_user_group"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+</odoo>

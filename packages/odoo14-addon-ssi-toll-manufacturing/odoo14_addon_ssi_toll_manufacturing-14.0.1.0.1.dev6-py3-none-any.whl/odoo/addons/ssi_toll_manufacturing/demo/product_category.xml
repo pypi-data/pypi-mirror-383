@@ -1,0 +1,31 @@
+<odoo>
+    <data noupdate="0">
+
+        <!-- Root Category -->
+        <record id="cat_makloon" model="product.category">
+            <field name="name">Makloon</field>
+        </record>
+
+        <!-- Subcategories -->
+        <record id="cat_fg_fashion" model="product.category">
+            <field name="name">FG – Fashion</field>
+            <field name="parent_id" ref="ssi_toll_manufacturing.cat_makloon" />
+        </record>
+
+        <record id="cat_fim" model="product.category">
+            <field name="name">FIM – Customer-Supplied (Raw Materials)</field>
+            <field name="parent_id" ref="ssi_toll_manufacturing.cat_makloon" />
+        </record>
+
+        <record id="cat_reimb" model="product.category">
+            <field name="name">Reimbursable Materials</field>
+            <field name="parent_id" ref="ssi_toll_manufacturing.cat_makloon" />
+        </record>
+
+        <record id="cat_services" model="product.category">
+            <field name="name">Toll Services</field>
+            <field name="parent_id" ref="ssi_toll_manufacturing.cat_makloon" />
+        </record>
+
+    </data>
+</odoo>

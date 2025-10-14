@@ -1,0 +1,31 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record
+        id="approval_template_toll_manufacturing_acceptance"
+        model="approval.template"
+    >
+        <field name="name">Standard</field>
+        <field name="model_id" ref="model_toll_manufacturing_acceptance" />
+        <field name="sequence" eval="100" />
+        <field name="computation_method">use_python</field>
+        <field name="python_code">result = True</field>
+        <field name="validate_sequence" eval="1" />
+    </record>
+
+    <record
+        id="approval_template_detail_toll_manufacturing_acceptance"
+        model="approval.template_detail"
+    >
+        <field
+            name="template_id"
+            ref="approval_template_toll_manufacturing_acceptance"
+        />
+        <field name="approver_selection_method">use_group</field>
+        <field
+            name="approver_group_ids"
+            eval="[(6,0,[ref('ssi_toll_manufacturing.toll_manufacturing_acceptance_validator_group')])]"
+        />
+    </record>
+</odoo>

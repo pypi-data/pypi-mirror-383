@@ -1,0 +1,562 @@
+<!-- ssi_toll_manufacturing/data/product_product.xml -->
+<odoo>
+    <data noupdate="0">
+
+        <!-- =========================
+             Finished Goods (FG)
+        ========================== -->
+        <record id="prd_fg_ts_180" model="product.product">
+            <field name="name">T-Shirt 180gsm Combed (S–XL)</field>
+            <field name="default_code">FG-TS-001</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fg_fashion" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="sale_ok" eval="True" />
+            <field name="purchase_ok" eval="False" />
+            <field name="list_price">75000.0</field>
+            <field name="standard_price">45000.0</field>
+        </record>
+
+        <record id="prd_fg_jeans_12oz" model="product.product">
+            <field name="name">Denim Jeans 12oz (28–36)</field>
+            <field name="default_code">FG-DJ-001</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fg_fashion" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="sale_ok" eval="True" />
+            <field name="purchase_ok" eval="False" />
+            <field name="list_price">250000.0</field>
+            <field name="standard_price">150000.0</field>
+        </record>
+
+        <record id="prd_fg_hoodie_280" model="product.product">
+            <field name="name">Hoodie Fleece 280gsm (S–XL)</field>
+            <field name="default_code">FG-HD-001</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fg_fashion" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="sale_ok" eval="True" />
+            <field name="purchase_ok" eval="False" />
+            <field name="list_price">220000.0</field>
+            <field name="standard_price">130000.0</field>
+        </record>
+
+        <!-- =========================
+             Free Issue Materials (FIM) – Customer-Supplied
+             (sale_ok/purchase_ok = False; nilai biayanya bukan dibeli dari makloon)
+        ========================== -->
+
+        <record id="prd_rm_fim_cotton180" model="product.product">
+            <field name="name">Kain Cotton Combed 180gsm (FIM)</field>
+            <field name="default_code">RM-TS-FAB</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_kgm" />
+            <field name="uom_po_id" ref="uom.product_uom_kgm" />
+            <field
+                name="description_picking"
+            >Untuk FG: T-Shirt | Kebutuhan/Batch: 380 kg | Termasuk waste 5%</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_thread27" model="product.product">
+            <field name="name">Benang Polyester Tex27 (FIM)</field>
+            <field name="default_code">RM-TS-THR</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: T-Shirt | Kebutuhan/Batch: 40 cone</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_label_set" model="product.product">
+            <field name="name">Label Size + Main Label (FIM)</field>
+            <field name="default_code">RM-TS-LAB</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: T-Shirt | Kebutuhan/Batch: 1.000 set</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_hangtag_set" model="product.product">
+            <field name="name">Hangtag + Tali (FIM)</field>
+            <field name="default_code">RM-TS-HTG</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: T-Shirt | Kebutuhan/Batch: 1.000 set</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_polybag" model="product.product">
+            <field name="name">Polybag OPP 20×30 (FIM)</field>
+            <field name="default_code">RM-TS-PBG</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: T-Shirt | Kebutuhan/Batch: 1.000 pcs</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_denim12oz" model="product.product">
+            <field name="name">Kain Denim 12oz (FIM)</field>
+            <field name="default_code">RM-DJ-DEN</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_meter" />
+            <field name="uom_po_id" ref="uom.product_uom_meter" />
+            <field
+                name="description_picking"
+            >Untuk FG: Jeans | Kebutuhan/Batch: 1.050 m | Termasuk waste 7%</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_zipper_ykk5" model="product.product">
+            <field name="name">Zipper YKK #5 (FIM)</field>
+            <field name="default_code">RM-DJ-ZIP</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: Jeans | Kebutuhan/Batch: 500 pcs</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_btn_rivet_set" model="product.product">
+            <field name="name">Kancing Jeans + Rivet (FIM)</field>
+            <field name="default_code">RM-DJ-BTN</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: Jeans | Kebutuhan/Batch: 500 set</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_patch_label" model="product.product">
+            <field name="name">Patch/Label Kulit (FIM)</field>
+            <field name="default_code">RM-DJ-LBL</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: Jeans | Kebutuhan/Batch: 500 pcs</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_fleece280" model="product.product">
+            <field name="name">Kain Fleece 280gsm (FIM)</field>
+            <field name="default_code">RM-HD-FLC</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_kgm" />
+            <field name="uom_po_id" ref="uom.product_uom_kgm" />
+            <field
+                name="description_picking"
+            >Untuk FG: Hoodie | Kebutuhan/Batch: 320 kg | Termasuk waste 6%</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_rib_cuff" model="product.product">
+            <field name="name">Rib Cuff &amp; Hem (FIM)</field>
+            <field name="default_code">RM-HD-RIB</field>
+            <field name="type">product</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_meter" />
+            <field name="uom_po_id" ref="uom.product_uom_meter" />
+            <field
+                name="description_picking"
+            >Untuk FG: Hoodie | Kebutuhan/Batch: 300 m</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_drawstring" model="product.product">
+            <field name="name">Drawstring Hoodie (FIM)</field>
+            <field name="default_code">RM-HD-STR</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: Hoodie | Kebutuhan/Batch: 400 pcs</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <record id="prd_rm_fim_mastercarton" model="product.product">
+            <field name="name">Dus Kirim (Master Carton) (FIM)</field>
+            <field name="default_code">RM-CMN-BOX</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_fim" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field
+                name="description_picking"
+            >Untuk FG: Semua | Kebutuhan/Batch: 50 pcs | 20 pcs/box (T-Shirt) / 10 pcs (Jeans/Hoodie)</field>
+            <field name="sale_ok" eval="False" />
+            <field name="purchase_ok" eval="False" />
+        </record>
+
+        <!-- =========================
+             Reimbursable Materials (dibeli makloon, ditagihkan)
+        ========================== -->
+        <record id="prd_rm_reimb_polybag" model="product.product">
+            <field name="name">Polybag OPP 20×30 (Reimbursable)</field>
+            <field name="default_code">RM-RB-PBG</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_reimb" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">350.0</field>
+        </record>
+
+        <record id="prd_rm_reimb_thread27" model="product.product">
+            <field name="name">Benang Umum Tex27 (Reimbursable)</field>
+            <field name="default_code">RM-RB-THR</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_reimb" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">7500.0</field>
+        </record>
+
+        <record id="prd_rm_reimb_mastercarton" model="product.product">
+            <field name="name">Master Carton 5-ply (Reimbursable)</field>
+            <field name="default_code">RM-RB-BOX</field>
+            <field name="type">consu</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_reimb" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">8500.0</field>
+        </record>
+
+        <!-- =========================
+             Toll Services (dibeli sebagai jasa)
+        ========================== -->
+        <record id="prd_svc_toll_ts" model="product.product">
+            <field name="name">Jasa Toll Processing – T-Shirt (per pcs)</field>
+            <field name="default_code">SVC-TOLL-TS</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">13578.0</field>
+        </record>
+
+        <record id="prd_svc_toll_jeans" model="product.product">
+            <field name="name">Jasa Toll Processing – Jeans (per pcs)</field>
+            <field name="default_code">SVC-TOLL-DJ</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">27913.0</field>
+        </record>
+
+        <record id="prd_svc_toll_hoodie" model="product.product">
+            <field name="name">Jasa Toll Processing – Hoodie (per pcs)</field>
+            <field name="default_code">SVC-TOLL-HD</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">21153.0</field>
+        </record>
+
+        <record id="prd_svc_setup_batch" model="product.product">
+            <field name="name">Setup/Changeover per Batch</field>
+            <field name="default_code">SVC-SETUP</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">400000.0</field>
+        </record>
+
+        <record id="prd_svc_qc_audit" model="product.product">
+            <field name="name">QC Audit per Batch</field>
+            <field name="default_code">SVC-QC</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">600000.0</field>
+        </record>
+
+        <record id="prd_svc_warehousing_day" model="product.product">
+            <field name="name">Warehousing Produk Jadi (per hari)</field>
+            <field name="default_code">SVC-WH-DAY</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">150000.0</field>
+        </record>
+
+        <!-- =========================
+             A. T-Shirt 180gsm (FG-TS-001) — Batch 1.000 pcs
+        ========================== -->
+        <record id="prd_svc_ts_cutting" model="product.product">
+            <field
+                name="name"
+            >Processing – T-Shirt – Cutting (marker &amp; spread)</field>
+            <field name="default_code">SVC-TS-CUT</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <!-- Biaya per unit FG -->
+            <field name="standard_price">1080.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 600/min | Qty/Unit: 1,8 menit | Biaya/Unit: Rp 1.080 | Estimasi batch (1.000 pcs): Rp 1.080.000</field>
+        </record>
+
+        <record id="prd_svc_ts_sewing" model="product.product">
+            <field
+                name="name"
+            >Processing – T-Shirt – Sewing (overlock + coverstitch)</field>
+            <field name="default_code">SVC-TS-SEW</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">4500.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 600/min | Qty/Unit: 7,5 menit | Biaya/Unit: Rp 4.500 | Estimasi batch (1.000 pcs): Rp 4.500.000</field>
+        </record>
+
+        <record id="prd_svc_ts_finishing" model="product.product">
+            <field
+                name="name"
+            >Processing – T-Shirt – Finishing (trimming, QC inline)</field>
+            <field name="default_code">SVC-TS-FIN</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">720.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 600/min | Qty/Unit: 1,2 menit | Biaya/Unit: Rp 720 | Estimasi batch (1.000 pcs): Rp 720.000</field>
+        </record>
+
+        <record id="prd_svc_ts_packing" model="product.product">
+            <field
+                name="name"
+            >Processing – T-Shirt – Packing (label, hangtag, polybag)</field>
+            <field name="default_code">SVC-TS-PACK</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">480.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 600/min | Qty/Unit: 0,8 menit | Biaya/Unit: Rp 480 | Estimasi batch (1.000 pcs): Rp 480.000</field>
+        </record>
+
+        <record id="prd_svc_ts_qc_final" model="product.product">
+            <field
+                name="name"
+            >Processing – T-Shirt – QC Final (AQL, prorata/unit)</field>
+            <field name="default_code">SVC-TS-QC</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">300.0</field>
+            <field
+                name="description_picking"
+            >Basis: prorata | Biaya/Unit: Rp 300 | Estimasi batch (1.000 pcs): Rp 300.000</field>
+        </record>
+
+        <!-- =========================
+             B. Denim Jeans 12oz (FG-DJ-001) — Batch 500 pcs
+        ========================== -->
+        <record id="prd_svc_dj_cutting" model="product.product">
+            <field name="name">Processing – Jeans – Cutting (marker 5-pocket)</field>
+            <field name="default_code">SVC-DJ-CUT</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">2100.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 700/min | Qty/Unit: 3,0 menit | Biaya/Unit: Rp 2.100 | Estimasi batch (500 pcs): Rp 1.050.000</field>
+        </record>
+
+        <record id="prd_svc_dj_sewing" model="product.product">
+            <field name="name">Processing – Jeans – Sewing (assembly + bartack)</field>
+            <field name="default_code">SVC-DJ-SEW</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">10500.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 700/min | Qty/Unit: 15,0 menit | Biaya/Unit: Rp 10.500 | Estimasi batch (500 pcs): Rp 5.250.000</field>
+        </record>
+
+        <record id="prd_svc_dj_attach_hw" model="product.product">
+            <field name="name">Processing – Jeans – Attach Zipper &amp; Hardware</field>
+            <field name="default_code">SVC-DJ-HW</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">1400.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 700/min | Qty/Unit: 2,0 menit | Biaya/Unit: Rp 1.400 | Estimasi batch (500 pcs): Rp 700.000</field>
+        </record>
+
+        <record id="prd_svc_dj_finishing" model="product.product">
+            <field name="name">Processing – Jeans – Finishing &amp; Pressing</field>
+            <field name="default_code">SVC-DJ-FIN</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">1050.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 700/min | Qty/Unit: 1,5 menit | Biaya/Unit: Rp 1.050 | Estimasi batch (500 pcs): Rp 525.000</field>
+        </record>
+
+        <record id="prd_svc_dj_qc_final" model="product.product">
+            <field name="name">Processing – Jeans – QC Final (AQL, prorata/unit)</field>
+            <field name="default_code">SVC-DJ-QC</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">500.0</field>
+            <field
+                name="description_picking"
+            >Basis: prorata | Biaya/Unit: Rp 500 | Estimasi batch (500 pcs): Rp 250.000</field>
+        </record>
+
+        <!-- =========================
+             C. Hoodie Fleece 280gsm (FG-HD-001) — Batch 400 pcs
+        ========================== -->
+        <record id="prd_svc_hd_cutting" model="product.product">
+            <field name="name">Processing – Hoodie – Cutting (body + rib)</field>
+            <field name="default_code">SVC-HD-CUT</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">1625.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 650/min | Qty/Unit: 2,5 menit | Biaya/Unit: Rp 1.625 | Estimasi batch (400 pcs): Rp 650.000</field>
+        </record>
+
+        <record id="prd_svc_hd_sewing" model="product.product">
+            <field name="name">Processing – Hoodie – Sewing (hood, pocket, rib)</field>
+            <field name="default_code">SVC-HD-SEW</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">7800.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 650/min | Qty/Unit: 12,0 menit | Biaya/Unit: Rp 7.800 | Estimasi batch (400 pcs): Rp 3.120.000</field>
+        </record>
+
+        <record id="prd_svc_hd_eyelet" model="product.product">
+            <field
+                name="name"
+            >Processing – Hoodie – Eyelet &amp; Drawstring Install</field>
+            <field name="default_code">SVC-HD-EYELET</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">780.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 650/min | Qty/Unit: 1,2 menit | Biaya/Unit: Rp 780 | Estimasi batch (400 pcs): Rp 312.000</field>
+        </record>
+
+        <record id="prd_svc_hd_finishing" model="product.product">
+            <field name="name">Processing – Hoodie – Finishing &amp; Steaming</field>
+            <field name="default_code">SVC-HD-FIN</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">780.0</field>
+            <field
+                name="description_picking"
+            >Basis: menit | Tarif: 650/min | Qty/Unit: 1,2 menit | Biaya/Unit: Rp 780 | Estimasi batch (400 pcs): Rp 312.000</field>
+        </record>
+
+        <record id="prd_svc_hd_qc_final" model="product.product">
+            <field
+                name="name"
+            >Processing – Hoodie – QC Final (AQL, prorata/unit)</field>
+            <field name="default_code">SVC-HD-QC</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="ssi_toll_manufacturing.cat_services" />
+            <field name="uom_id" ref="uom.product_uom_unit" />
+            <field name="uom_po_id" ref="uom.product_uom_unit" />
+            <field name="purchase_ok" eval="True" />
+            <field name="standard_price">450.0</field>
+            <field
+                name="description_picking"
+            >Basis: prorata | Biaya/Unit: Rp 450 | Estimasi batch (400 pcs): Rp 180.000</field>
+        </record>
+
+    </data>
+</odoo>

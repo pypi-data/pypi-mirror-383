@@ -1,0 +1,58 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="toll_manufacturing_order_internal_user_rule" model="ir.rule">
+        <field name="name">toll_manufacturing_order - Internal User</field>
+        <field name="model_id" ref="model_toll_manufacturing_order" />
+        <field name="groups" eval="[(6, 0, [ref('base.group_user')])]" />
+        <field name="domain_force">[("user_id","=",user.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+    <record id="toll_manufacturing_order_company_rule" model="ir.rule">
+        <field
+            name="name"
+        >toll_manufacturing_order - Responsible to company data</field>
+        <field name="model_id" ref="model_toll_manufacturing_order" />
+        <field
+            name="groups"
+            eval="[(6, 0, [ref('ssi_toll_manufacturing.toll_manufacturing_order_company_group')])]"
+        />
+        <field name="domain_force">[("company_id","=",user.company_id.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+    <record id="toll_manufacturing_order_child_company_rule" model="ir.rule">
+        <field
+            name="name"
+        >toll_manufacturing_order - Responsible to company and all child companies data</field>
+        <field name="model_id" ref="model_toll_manufacturing_order" />
+        <field
+            name="groups"
+            eval="[(6, 0, [ref('ssi_toll_manufacturing.toll_manufacturing_order_child_company_group')])]"
+        />
+        <field name="domain_force">[("company_id","in",user.company_ids.ids)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+    <record id="toll_manufacturing_order_all_rule" model="ir.rule">
+        <field name="name">toll_manufacturing_order - Responsible to all data</field>
+        <field name="model_id" ref="model_toll_manufacturing_order" />
+        <field
+            name="groups"
+            eval="[(6, 0, [ref('ssi_toll_manufacturing.toll_manufacturing_order_all')])]"
+        />
+        <field name="domain_force">[(1,"=",1)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+</odoo>

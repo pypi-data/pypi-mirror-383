@@ -1,0 +1,19 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="toll_manufacturing_order_workflow" model="ir.module.category">
+        <field name="name">Toll Manufacturing Order</field>
+        <field
+            name="parent_id"
+            ref="ssi_mrp_production.manufacture_workflow_module_category"
+        />
+    </record>
+    <record id="toll_manufacturing_order_data_ownership" model="ir.module.category">
+        <field name="name">Toll Manufacturing Order</field>
+        <field
+            name="parent_id"
+            ref="ssi_mrp_production.manufacture_data_ownership_module_category"
+        />
+    </record>
+</odoo>

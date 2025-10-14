@@ -1,0 +1,116 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <!-- Search View -->
+    <record id="batch_toll_manufacturing_acceptance_view_search" model="ir.ui.view">
+        <field name="name">batch_toll_manufacturing_acceptance - search</field>
+        <field name="model">batch_toll_manufacturing_acceptance</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_search"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data>
+            </data>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="batch_toll_manufacturing_acceptance_view_tree" model="ir.ui.view">
+        <field name="name">batch_toll_manufacturing_acceptance - tree</field>
+        <field name="model">batch_toll_manufacturing_acceptance</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_tree"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="date" />
+                    <field name="batch_id" string="# Batch TMO" />
+                    <field name="partner_id" />
+                    <field name="contact_partner_id" />
+                    <field name="currency_id" invisible="1" />
+                    <field
+                        name="amount_supplier_procured_raw_material"
+                        optional="hide"
+                        string="Supplier Procured Raw Material"
+                        sum="Total Supplier Procured Raw Material"
+                    />
+                    <field
+                        name="amount_processing_fee"
+                        optional="hide"
+                        string="Processing Fee"
+                        sum="Total Processing Fee"
+                    />
+                    <field name="amount_untaxed" string="Untaxed" sum="Total Untaxed" />
+                    <field name="amount_tax" string="Tax" sum="Total Tax" />
+                    <field name="amount_total" string="Total" sum="Total" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="batch_toll_manufacturing_acceptance_view_form" model="ir.ui.view">
+        <field name="name">batch_toll_manufacturing_acceptance - form</field>
+        <field name="model">batch_toll_manufacturing_acceptance</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_form"
+        />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="batch_id" string="# Batch TMO" />
+                    <field name="partner_id" />
+                    <field name="contact_partner_id" />
+                </xpath>
+                <xpath expr="//group[@name='header_right']" position="inside">
+                    <field name="date" />
+                </xpath>
+                <xpath expr="//page[1]" position="before">
+                    <page name="acceptance" string="Acceptances">
+                        <field name="acceptance_ids" />
+                    </page>
+                </xpath>
+                <xpath expr="//group[@name='footer_left']" position="inside">
+                    <separator string="Total Bill" />
+                    <field
+                        name="amount_supplier_procured_raw_material"
+                        string="Supplier Procured Raw Material"
+                    />
+                    <field name="amount_processing_fee" string="Processing Fee" />
+                    <field name="amount_untaxed" string="Untaxed" />
+                    <field name="amount_tax" string="Tax" />
+                    <field name="amount_total" string="Total" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record
+        id="batch_toll_manufacturing_acceptance_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Batch Toll Manufacturing Acceptances</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">batch_toll_manufacturing_acceptance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem
+        id="batch_toll_manufacturing_acceptance_menu"
+        name="Batch Acceptances"
+        action="batch_toll_manufacturing_acceptance_action"
+        groups="ssi_toll_manufacturing.batch_toll_manufacturing_acceptance_viewer_group"
+        parent="menu_toll_manufacturing_header"
+        sequence="30"
+    />
+</odoo>

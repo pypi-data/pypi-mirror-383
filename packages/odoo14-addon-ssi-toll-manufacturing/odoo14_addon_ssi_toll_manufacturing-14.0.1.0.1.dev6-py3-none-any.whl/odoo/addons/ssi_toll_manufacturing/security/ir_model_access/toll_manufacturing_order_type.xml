@@ -1,0 +1,29 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="toll_manufacturing_order_type_access_all" model="ir.model.access">
+        <field name="name">Toll Manufacturing Order Type - all</field>
+        <field name="model_id" ref="model_toll_manufacturing_order_type" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record
+        id="toll_manufacturing_order_type_access_configurator"
+        model="ir.model.access"
+    >
+        <field name="name">Toll Manufacturing Order Type - configurator</field>
+        <field name="model_id" ref="model_toll_manufacturing_order_type" />
+        <field
+            name="group_id"
+            ref="ssi_toll_manufacturing.toll_manufacturing_order_type_configurator_group"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+</odoo>

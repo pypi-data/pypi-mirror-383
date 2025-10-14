@@ -1,0 +1,383 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <!-- Search View -->
+    <record id="toll_manufacturing_order_view_search" model="ir.ui.view">
+        <field name="name">toll_manufacturing_order - search</field>
+        <field name="model">toll_manufacturing_order</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_search"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data>
+            </data>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="toll_manufacturing_order_view_tree" model="ir.ui.view">
+        <field name="name">toll_manufacturing_order - tree</field>
+        <field name="model">toll_manufacturing_order</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_tree"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="date" />
+                    <field name="partner_id" />
+                    <field name="contact_partner_id" optional="hide" />
+                    <field name="type_id" />
+                    <field name="product_id" />
+                    <field name="uom_quantity" />
+                    <field name="qty_accepted" />
+                    <field name="qty_diff" />
+                    <field name="uom_id" />
+                    <field name="currency_id" invisible="1" />
+                    <field
+                        name="amount_supplier_procured_raw_material"
+                        optional="hide"
+                        string="Supplier Procured Raw Material"
+                        sum="Total Supplier Procured Raw Material"
+                    />
+                    <field
+                        name="amount_processing_fee"
+                        optional="hide"
+                        string="Processing Fee"
+                        sum="Total Processing Fee"
+                    />
+                    <field name="amount_untaxed" string="Untaxed" sum="Total Untaxed" />
+                    <field name="amount_tax" string="Tax" sum="Total Tax" />
+                    <field name="amount_total" string="Total" sum="Total" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="toll_manufacturing_order_view_form" model="ir.ui.view">
+        <field name="name">toll_manufacturing_order - form</field>
+        <field name="model">toll_manufacturing_order</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_form"
+        />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="batch_id" domain="[('state','=','draft')]" />
+                    <field name="type_id" />
+                    <field name="partner_id" widget="many2one_avatar" />
+                    <field
+                        name="allowed_contact_ids"
+                        widget="many2many_tags"
+                        invisible="1"
+                    />
+                    <field
+                        name="contact_partner_id"
+                        widget="many2one_avatar"
+                        domain="[('id','in',allowed_contact_ids)]"
+                    />
+                </xpath>
+                <xpath expr="//group[@name='header_right']" position="inside">
+                    <field name="date" />
+                    <field name="currency_id" />
+                    <field name="product_id" />
+                    <field
+                        name="allowed_uom_ids"
+                        widget="many2many_tags"
+                        invisible="1"
+                    />
+                    <label for="uom_quantity" string="Quantity" />
+                    <div>
+                        <field name="uom_quantity" class="oe_inline" />
+                        <field
+                            name="uom_id"
+                            domain="[('id','in',allowed_uom_ids)]"
+                            class="oe_inline"
+                        />
+                    </div>
+                    <field name="quantity" invisible="1" />
+                </xpath>
+                <xpath expr="//page[1]" position="before">
+                    <page name="raw_material" string="Raw Materials">
+                        <separator string="Customer Supplied" />
+                        <field name="customer_supplied_raw_material_ids">
+                            <tree>
+                                <field name="product_id" />
+                                <field name="name" />
+                                <field name="uom_quantity" />
+                                <field name="uom_id" />
+                            </tree>
+                            <form>
+                                <field
+                                    name="allowed_uom_ids"
+                                    widget="many2many_tags"
+                                    invisible="1"
+                                />
+                                <group name="detail_1" colspan="4" col="2">
+                                    <group name="detail_1_1" colspan="1" col="2">
+                                        <field name="product_id" />
+                                        <field name="name" />
+                                    </group>
+                                    <group name="detail_1_1" colspan="1" col="2">
+                                        <label for="uom_quantity" />
+                                        <div>
+                                            <field name="uom_quantity" />
+                                            <field
+                                                name="uom_id"
+                                                domain="[('id','in',allowed_uom_ids)]"
+                                                attrs="{'required':[('product_id','!=',False)]}"
+                                                class="oe_inline"
+                                            />
+                                        </div>
+                                        <field name="quantity" invisible="1" />
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                        <separator string="Supplier Procured" />
+                        <field name="supplier_procured_raw_material_ids">
+                            <tree>
+                                <field name="currency_id" invisible="1" />
+                                <field name="product_id" />
+                                <field name="usage_id" optional="hide" />
+                                <field name="account_id" optional="hide" />
+                                <field name="name" />
+                                <field name="analytic_account_id" optional="show" />
+                                <field name="price_unit" />
+                                <field name="uom_quantity" />
+                                <field name="uom_id" />
+                                <field name="price_subtotal" />
+                            </tree>
+                            <form>
+                                <field name="currency_id" invisible="1" />
+                                <field
+                                    name="allowed_uom_ids"
+                                    widget="many2many_tags"
+                                    invisible="1"
+                                />
+                                <group name="detail_1" colspan="4" col="2">
+                                    <group name="detail_1_1" colspan="1" col="2">
+                                        <field name="product_id" />
+                                        <field name="name" />
+                                        <field name="usage_id" />
+                                        <field name="account_id" />
+                                        <field name="analytic_account_id" />
+                                    </group>
+                                    <group name="detail_1_1" colspan="1" col="2">
+                                        <field name="pricelist_id" />
+                                        <label for="uom_quantity" />
+                                        <div>
+                                            <field name="uom_quantity" />
+                                            <field
+                                                name="uom_id"
+                                                domain="[('id','in',allowed_uom_ids)]"
+                                                attrs="{'required':[('product_id','!=',False)]}"
+                                                class="oe_inline"
+                                            />
+                                        </div>
+                                        <field name="quantity" invisible="1" />
+                                        <field name="price_unit" />
+                                        <field name="price_subtotal" />
+                                    </group>
+                                </group>
+                                <notebook>
+                                    <page
+                                        name="standard_price"
+                                        string="Standard Price"
+                                        attrs="{'invisible':[('pricelist_id','=',False)]}"
+                                    >
+                                        <group
+                                            name="standard_price"
+                                            colspan="4"
+                                            col="2"
+                                        >
+                                            <group
+                                                name="standard_price_1"
+                                                string="Price Unit"
+                                                colspan="1"
+                                                col="2"
+                                            >
+                                                <field
+                                                    name="standard_price_unit"
+                                                    string="Sarndard"
+                                                />
+                                                <field
+                                                    name="standard_price_unit_diff"
+                                                    string="Diff."
+                                                />
+                                            </group>
+                                            <group
+                                                name="standard_price_2"
+                                                string="Price Subtotal"
+                                                colspan="1"
+                                                col="2"
+                                            >
+                                                <field
+                                                    name="standard_price_subtotal"
+                                                    string="Standard"
+                                                />
+                                                <field
+                                                    name="standard_price_subtotal_diff"
+                                                    string="Diff."
+                                                />
+                                            </group>
+                                        </group>
+                                    </page>
+                                </notebook>
+                            </form>
+                        </field>
+                    </page>
+                    <page name="processing_fee" string="Processing Fee">
+                        <field
+                            name="processing_fee_ids"
+                            context="{'default_currency_id': currency_id}"
+                        >
+                            <tree>
+                                <field name="currency_id" invisible="1" />
+                                <field name="product_id" />
+                                <field name="usage_id" optional="hide" />
+                                <field name="account_id" optional="hide" />
+                                <field name="name" />
+                                <field name="analytic_account_id" optional="show" />
+                                <field name="price_unit" />
+                                <field name="uom_quantity" />
+                                <field name="uom_id" />
+                                <field name="price_subtotal" />
+                            </tree>
+                            <form>
+                                <field name="currency_id" invisible="1" />
+                                <field
+                                    name="allowed_uom_ids"
+                                    widget="many2many_tags"
+                                    invisible="1"
+                                />
+                                <group name="detail_1" colspan="4" col="2">
+                                    <group name="detail_1_1" colspan="1" col="2">
+                                        <field name="product_id" />
+                                        <field name="name" />
+                                        <field name="usage_id" />
+                                        <field name="account_id" />
+                                        <field name="analytic_account_id" />
+                                    </group>
+                                    <group name="detail_1_1" colspan="1" col="2">
+                                        <field name="pricelist_id" />
+                                        <label for="uom_quantity" />
+                                        <div>
+                                            <field name="uom_quantity" />
+                                            <field
+                                                name="uom_id"
+                                                domain="[('id','in',allowed_uom_ids)]"
+                                                attrs="{'required':[('product_id','!=',False)]}"
+                                                class="oe_inline"
+                                            />
+                                        </div>
+                                        <field name="quantity" invisible="1" />
+                                        <field name="price_unit" />
+                                        <field name="price_subtotal" />
+                                    </group>
+                                </group>
+                                <notebook>
+                                    <page
+                                        name="standard_price"
+                                        string="Standard Price"
+                                        attrs="{'invisible':[('pricelist_id','=',False)]}"
+                                    >
+                                        <group
+                                            name="standard_price"
+                                            colspan="4"
+                                            col="2"
+                                        >
+                                            <group
+                                                name="standard_price_1"
+                                                string="Price Unit"
+                                                colspan="1"
+                                                col="2"
+                                            >
+                                                <field
+                                                    name="standard_price_unit"
+                                                    string="Sarndard"
+                                                />
+                                                <field
+                                                    name="standard_price_unit_diff"
+                                                    string="Diff."
+                                                />
+                                            </group>
+                                            <group
+                                                name="standard_price_2"
+                                                string="Price Subtotal"
+                                                colspan="1"
+                                                col="2"
+                                            >
+                                                <field
+                                                    name="standard_price_subtotal"
+                                                    string="Standard"
+                                                />
+                                                <field
+                                                    name="standard_price_subtotal_diff"
+                                                    string="Diff."
+                                                />
+                                            </group>
+                                        </group>
+                                    </page>
+                                </notebook>
+                            </form>
+                        </field>
+                    </page>
+                    <page name="acceptance" string="Acceptances">
+                        <field name="acceptance_ids" />
+                        <group
+                            name="acceptance_summary"
+                            string="Summary"
+                            colspan="4"
+                            col="2"
+                        >
+                            <group name="acceptance_summary_1" colspan="1" col="2">
+                                <field name="qty_accepted" />
+                                <field name="qty_diff" />
+                            </group>
+                            <group name="acceptance_summary_2" colspan="1" col="2">
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//group[@name='footer_left']" position="inside">
+                    <separator string="Total Bill" />
+                    <field
+                        name="amount_supplier_procured_raw_material"
+                        string="Supplier Procured Raw Material"
+                    />
+                    <field name="amount_processing_fee" string="Processing Fee" />
+                    <field name="amount_untaxed" string="Untaxed" />
+                    <field name="amount_tax" string="Tax" />
+                    <field name="amount_total" string="Total" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="toll_manufacturing_order_action" model="ir.actions.act_window">
+        <field name="name">Toll Manufacturing Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">toll_manufacturing_order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem
+        id="toll_manufacturing_order_menu"
+        name="Orders"
+        action="toll_manufacturing_order_action"
+        groups="ssi_toll_manufacturing.toll_manufacturing_order_viewer_group"
+        parent="menu_toll_manufacturing_header"
+        sequence="20"
+    />
+</odoo>
