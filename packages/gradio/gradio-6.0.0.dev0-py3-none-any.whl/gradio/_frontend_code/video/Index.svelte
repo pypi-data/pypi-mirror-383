@@ -1,0 +1,204 @@
+<svelte:options accessors={true} />
+
+<script lang="ts">
+	import type { Gradio, ShareData } from "@gradio/utils";
+
+	import type { FileData } from "@gradio/client";
+	import { Block, UploadText } from "@gradio/atoms";
+	import StaticVideo from "./shared/VideoPreview.svelte";
+	import Video from "./shared/InteractiveVideo.svelte";
+	import { StatusTracker } from "@gradio/statustracker";
+	import type { LoadingStatus } from "@gradio/statustracker";
+	import type { WebcamOptions } from "./shared/utils";
+	export let elem_id = "";
+	export let elem_classes: string[] = [];
+	export let visible: boolean | "hidden" = true;
+	export let value: null | FileData = null;
+	let old_value: null | FileData = null;
+	export let subtitles: null | FileData = null;
+
+	export let label: string;
+	export let sources:
+		| ["webcam"]
+		| ["upload"]
+		| ["webcam", "upload"]
+		| ["upload", "webcam"];
+	export let root: string;
+	export let show_label: boolean;
+	export let loading_status: LoadingStatus;
+	export let height: number | undefined;
+	export let width: number | undefined;
+
+	export let container = false;
+	export let scale: number | null = null;
+	export let min_width: number | undefined = undefined;
+	export let autoplay = false;
+	export let buttons: string[] | null = null;
+	export let gradio: Gradio<{
+		change: never;
+		clear: never;
+		play: never;
+		pause: never;
+		upload: never;
+		stop: never;
+		end: never;
+		start_recording: never;
+		stop_recording: never;
+		share: ShareData;
+		error: string;
+		warning: string;
+		clear_status: LoadingStatus;
+	}>;
+	export let interactive: boolean;
+	export let webcam_options: WebcamOptions;
+	export let include_audio: boolean;
+	export let loop = false;
+	export let input_ready: boolean;
+	let uploading = false;
+	$: input_ready = !uploading;
+	let active_source: "webcam" | "upload";
+
+	let initial_value: FileData | null = null;
+
+	$: if (value && initial_value === null) {
+		initial_value = value;
+	}
+
+	const handle_reset_value = (): void => {
+		if (initial_value === null || value === initial_value) {
+			return;
+		}
+
+		value = initial_value;
+	};
+
+	$: if (sources && !active_source) {
+		active_source = sources[0];
+	}
+
+	let dragging = false;
+
+	$: {
+		if (JSON.stringify(value) !== JSON.stringify(old_value)) {
+			old_value = value;
+			gradio.dispatch("change");
+		}
+	}
+
+	function handle_change({ detail }: CustomEvent<FileData | null>): void {
+		if (detail != null) {
+			value = detail;
+		} else {
+			value = null;
+		}
+	}
+
+	function handle_error({ detail }: CustomEvent<string>): void {
+		const [level, status] = detail.includes("Invalid file type")
+			? ["warning", "complete"]
+			: ["error", "error"];
+		loading_status = loading_status || {};
+		loading_status.status = status as LoadingStatus["status"];
+		loading_status.message = detail;
+		gradio.dispatch(level as "error" | "warning", detail);
+	}
+</script>
+
+{#if !interactive}
+	<Block
+		{visible}
+		variant={value === null && active_source === "upload" ? "dashed" : "solid"}
+		border_mode={dragging ? "focus" : "base"}
+		padding={false}
+		{elem_id}
+		{elem_classes}
+		{height}
+		{width}
+		{container}
+		{scale}
+		{min_width}
+		allow_overflow={false}
+	>
+		<StatusTracker
+			autoscroll={gradio.autoscroll}
+			i18n={gradio.i18n}
+			{...loading_status}
+			on:clear_status={() => gradio.dispatch("clear_status", loading_status)}
+		/>
+
+		<StaticVideo
+			{value}
+			subtitle={subtitles}
+			{label}
+			{show_label}
+			{autoplay}
+			{loop}
+			show_share_button={buttons?.includes("share") ?? true}
+			show_download_button={buttons?.includes("download") ?? true}
+			on:play={() => gradio.dispatch("play")}
+			on:pause={() => gradio.dispatch("pause")}
+			on:stop={() => gradio.dispatch("stop")}
+			on:end={() => gradio.dispatch("end")}
+			on:share={({ detail }) => gradio.dispatch("share", detail)}
+			on:error={({ detail }) => gradio.dispatch("error", detail)}
+			i18n={gradio.i18n}
+			upload={(...args) => gradio.client.upload(...args)}
+		/>
+	</Block>
+{:else}
+	<Block
+		{visible}
+		variant={value === null && active_source === "upload" ? "dashed" : "solid"}
+		border_mode={dragging ? "focus" : "base"}
+		padding={false}
+		{elem_id}
+		{elem_classes}
+		{height}
+		{width}
+		{container}
+		{scale}
+		{min_width}
+		allow_overflow={false}
+	>
+		<StatusTracker
+			autoscroll={gradio.autoscroll}
+			i18n={gradio.i18n}
+			{...loading_status}
+			on:clear_status={() => gradio.dispatch("clear_status", loading_status)}
+		/>
+
+		<Video
+			{value}
+			subtitle={subtitles}
+			on:change={handle_change}
+			on:drag={({ detail }) => (dragging = detail)}
+			on:error={handle_error}
+			bind:uploading
+			{label}
+			{show_label}
+			show_download_button={buttons?.includes("download") ?? false}
+			{sources}
+			{active_source}
+			{webcam_options}
+			{include_audio}
+			{autoplay}
+			{root}
+			{loop}
+			{handle_reset_value}
+			on:clear={() => gradio.dispatch("clear")}
+			on:play={() => gradio.dispatch("play")}
+			on:pause={() => gradio.dispatch("pause")}
+			on:upload={() => gradio.dispatch("upload")}
+			on:stop={() => gradio.dispatch("stop")}
+			on:end={() => gradio.dispatch("end")}
+			on:start_recording={() => gradio.dispatch("start_recording")}
+			on:stop_recording={() => gradio.dispatch("stop_recording")}
+			i18n={gradio.i18n}
+			max_file_size={gradio.max_file_size}
+			upload={(...args) => gradio.client.upload(...args)}
+			stream_handler={(...args) => gradio.client.stream(...args)}
+		>
+			<UploadText i18n={gradio.i18n} type="video" />
+		</Video>
+	</Block>
+{/if}
