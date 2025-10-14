@@ -1,0 +1,25 @@
+[project]
+name = "svg-water-quality-generator"
+dynamic = ["version"]
+description = "专用于从水质监测数据生成SVG热力图的独立Python库"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chardet>=5.2.0",
+    "matplotlib>=3.10.3",
+    "numpy>=2.3.1",
+    "pandas>=2.3.1",
+    "pillow>=11.3.0",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.4",
+    "scipy>=1.16.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "src/_version.py"
+version_scheme = "python-simplified-semver"
+local_scheme = "no-local-version"
