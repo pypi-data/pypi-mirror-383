@@ -1,0 +1,132 @@
+# Randchain
+
+Randchain is a Python library for building intelligent decision trees and sequential processing chains powered by Large Language Models (LLMs). It simplifies the creation of automated workflows that can make decisions and execute actions based on natural language inputs.
+
+## Features
+
+- **Decision Tree Classification**: Create dynamic decision trees that use LLMs to classify inputs and follow predefined paths
+- **Sequential Processing**: Build chains of processing layers that transform inputs through multiple steps
+- **LLM Integration**: Support for Ollama and OpenAI models
+- **Output Actions**: Built-in support for sending emails, WhatsApp messages, and writing to files
+- **Modular Design**: Clean separation into decision_tree and sequential modules
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/pydevpk/randchain.git
+cd randchain
+```
+
+2. Make sure you have Python>=3.10 and created environment for it.
+
+3. Set up environment variables in a `.env` file:
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+sender_email=your_email@example.com
+password=your_app_password
+account_sid=your_twilio_account_sid
+auth_token=your_twilio_auth_token
+from_number=whatsapp:+1234567890
+to_number=whatsapp:+0987654321
+```
+
+## Modules
+
+### decision_tree
+
+The decision_tree module provides classes for building LLM-powered decision trees.
+
+#### Key Classes:
+- **LLM**: Wrapper for LLM interactions with Ollama or OpenAI
+- **DTCliassifier**: A node in the decision tree that makes decisions using LLMs
+
+#### Usage:
+```python
+from decision_tree import DTCliassifier, LLM
+
+# Create a decision node
+decision_node = DTCliassifier(
+    "MyAgent",
+    LLM("Ollama", "qwen2.5:latest", "Your prompt here")
+)
+
+# Make a decision
+result = decision_node.decide("User query here")
+```
+
+### sequential
+
+The sequential module allows you to create chains of processing layers.
+
+#### Key Classes:
+- **Layer**: Represents a single processing step with configurable inputs and outputs
+- **Sequential**: Manages a sequence of layers that process inputs progressively
+
+#### Usage:
+```python
+from sequential import Layer, Sequential
+
+chain = Sequential([
+    Layer(my_function, whatsapp_config=whatsapp_config),
+    Layer(another_function)
+])
+
+result = chain.run(["input1", "input2"])
+
+Note: First layer takes input from provided list of inputs, then next layers will take input from previous layer's output.
+```
+
+## Configuration
+
+Use the config.py classes to set up communication channels:
+
+```python
+from core.config import EmailConfig, Whatsappconfig
+
+email_config = EmailConfig(
+    sender_email="sender@example.com",
+    password="password",
+    recipient_email="recipient@example.com",
+    subject="Automated Message"
+)
+
+whatsapp_config = Whatsappconfig(
+    account_sid="your_account_sid",
+    auth_token="your_auth_token",
+    from_number="whatsapp:+1234567890",
+    to_number="whatsapp:+0987654321"
+)
+```
+
+## Utilities
+
+The utils module provides helper functions:
+- `send_email()`: Send emails using SMTP
+- `send_whatsapp()`: Send WhatsApp messages via Twilio
+- `txt_writer()`: Write text to files
+- `output_conversion()`: Convert outputs to desired types
+
+## Testing
+
+Run the test suite:
+```bash
+python test.py
+```
+
+The test demonstrates an insurance eligibility system using a decision tree combined with sequential processing for WhatsApp notifications.
+
+## Dependencies
+
+- ollama
+- openai
+- twilio
+- python-dotenv
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.

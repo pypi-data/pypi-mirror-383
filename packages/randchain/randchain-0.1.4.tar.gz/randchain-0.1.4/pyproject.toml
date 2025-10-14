@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "randchain"
+version = "0.1.4"
+description = "A flexible Python library for building randomized sequential and decision-tree based chains."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "licence" }
+
+authors = [
+    { name = "Pradeep Kumar Yadav", email = "pydev.pk@gmail.com" }
+]
+
+keywords = ["random", "chain", "decision", "sequence", "ai", "python"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://github.com/pydevpk/randchain"
+Repository = "https://github.com/pydevpk/randchain"
+Issues = "https://github.com/pydevpk/randchain/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sequential*", "decision_tree*", "randchain_core*"]
