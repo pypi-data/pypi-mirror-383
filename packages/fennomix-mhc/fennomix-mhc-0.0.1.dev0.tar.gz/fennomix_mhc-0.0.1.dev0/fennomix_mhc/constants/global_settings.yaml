@@ -1,0 +1,21 @@
+# CONST CONFIG
+FENNOMIXMHC_HOME: "~/fennomix-mhc"
+peptide_model: "pept_model_v20240819.pt"
+mhc_model: "mhc_model_v20240819.pt"
+mhc_embedding: "mhc_embeds_v20240819.pkl"
+
+peptide_model_pseudo: "pept_model_pseudo_v20250730.pt"
+mhc_model_pseudo: "mhc_model_pseudo_v20250730.pt"
+mhc_embedding_pseudo: "mhc_embeds_pseudo_v20250730.pkl"
+
+background_fasta: "background.fasta"
+download_url: "https://fennomix.lab.westlake.edu.cn/resource/mhc/model/"
+
+log_file_name: "fennomix_mhc.log"
+log_level: "info"
+log_level_options:
+  - "debug"
+  - "info"
+  - "warning"
+  - "error"
+  - "critical"
