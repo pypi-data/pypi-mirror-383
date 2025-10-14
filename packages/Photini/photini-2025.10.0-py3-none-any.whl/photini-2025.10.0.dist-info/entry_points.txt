@@ -1,0 +1,6 @@
+[console_scripts]
+photini-configure = photini.scripts:configure
+photini-post-install = photini.scripts:post_install
+
+[gui_scripts]
+photini = photini.editor:main
