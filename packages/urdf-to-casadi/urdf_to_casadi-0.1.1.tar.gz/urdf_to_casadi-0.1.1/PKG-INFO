@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: urdf-to-casadi
+Version: 0.1.1
+Summary: Module for tuning a chain in a URDF to a casadi function. Fork of urdf2casadi by Mathias Hauan Arbo (maharbo).
+Author-email: Jon Goikoetxea <jon.goikoetxea.m@gmail.com>
+License-File: LICENSE
+Requires-Python: >=3.11
+Requires-Dist: casadi>=3.7.2
+Requires-Dist: lxml>=6.0.2
+Requires-Dist: numpy>=2.3.3
+Requires-Dist: pyproject-toml>=0.1.0
+Requires-Dist: pyyaml>=6.0.3
+Requires-Dist: urdfdom-py
+Description-Content-Type: text/markdown
+
+# urdf_to_casadi
+
+This is a fork with more recent library versions of [urdf2casadi](https://github.com/mahaarbo/urdf2casadi).

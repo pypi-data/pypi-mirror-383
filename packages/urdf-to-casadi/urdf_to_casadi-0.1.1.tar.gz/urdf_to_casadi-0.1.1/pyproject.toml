@@ -1,0 +1,32 @@
+[project]
+name = "urdf-to-casadi"
+version = "0.1.1"
+description = "Module for tuning a chain in a URDF to a casadi function. Fork of urdf2casadi by Mathias Hauan Arbo (maharbo)."
+readme = "README.md"
+authors = [
+    { name = "Jon Goikoetxea", email = "jon.goikoetxea.m@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "casadi>=3.7.2",
+    "lxml>=6.0.2",
+    "numpy>=2.3.3",
+    "pyproject-toml>=0.1.0",
+    "pyyaml>=6.0.3",
+    "urdfdom-py",
+]
+
+[project.scripts]
+urdf_to_casadi = "urdf_to_casadi:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+urdfdom-py = { git = "https://github.com/ros/urdf_parser_py" }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
