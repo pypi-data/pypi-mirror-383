@@ -1,0 +1,119 @@
+Metadata-Version: 2.4
+Name: docuprox
+Version: 0.1.1
+Summary: A Python package to interact with DocuProx API
+License: MIT License
+        
+        Copyright (c) 2025 Docuprox
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/docuprox/docuprox-python-lib
+Project-URL: Repository, https://github.com/docuprox/docuprox-python-lib
+Project-URL: Issues, https://github.com/docuprox/docuprox-python-lib/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Dynamic: license-file
+
+# DocuProx Package
+
+A Python package to interact with the DocuProx API for processing documents using templates.
+
+## Installation
+
+```bash
+pip install docuprox
+```
+
+## Configuration
+
+Create a `.env` file in your project root with your API credentials:
+
+```env
+DOCUPROX_API_URL=https://api.docuprox.com/v1
+DOCUPROX_API_KEY=your-api-key-here
+```
+
+Or set environment variables directly:
+
+```bash
+export DOCUPROX_API_URL=https://api.docuprox.com/v1
+export DOCUPROX_API_KEY=your-api-key-here
+```
+
+## Usage
+
+```python
+from docuprox import Docuprox
+
+# Initialize the client (API key required, can be set via DOCUPROX_API_KEY env var)
+client = Docuprox(api_key="your-api-key-here")  # Uses default URL: https://api.docuprox.com/v1
+
+# Or set custom URL and API key
+client = Docuprox(api_url="https://your-custom-api.com/v1", api_key="your-api-key-here")
+
+# Or use environment variables (recommended for production)
+# Set DOCUPROX_API_URL and DOCUPROX_API_KEY environment variables
+client = Docuprox()  # Will use env vars or defaults
+
+# Process a file with a template (sends as multipart/form-data)
+template_id = "your-template-uuid-here"
+result = client.processfile("path/to/your/file.pdf", template_id)
+print(result)
+
+# Process base64 data with a template (sends as JSON)
+base64_string = "your_base64_encoded_data_here"
+result = client.processbase64(base64_string, template_id)
+print(result)
+```
+
+## API
+
+### Docuprox(api_url)
+
+- `api_url`: The base URL of the DocuProx API.
+
+### processfile(file_path, template_id)
+
+Processes a file by reading it, encoding to base64, and sending to the `/process` endpoint with the specified template.
+
+- `file_path`: Path to the file to process.
+- `template_id`: UUID string of the template to use for processing.
+- Returns: JSON response from the API containing document data.
+- Raises: `ValueError` if file not found or API error.
+
+### processbase64(base64_data, template_id)
+
+Processes a base64 encoded string by sending it to the `/process` endpoint with the specified template.
+
+- `base64_data`: Base64 encoded string of the image/document.
+- `template_id`: UUID string of the template to use for processing.
+- Returns: JSON response from the API containing document data.
+- Raises: `ValueError` if API error.
