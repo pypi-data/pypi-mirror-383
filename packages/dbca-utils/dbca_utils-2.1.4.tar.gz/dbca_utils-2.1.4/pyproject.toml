@@ -1,0 +1,71 @@
+[project]
+name = "dbca-utils"
+version = "2.1.4"
+description = "Utilities for DBCA Django apps"
+authors = [
+    { name = "Rocky Chen", email = "rocky.chen@dbca.wa.gov.au" },
+    { name = "Ashley Felton", email = "ashley.felton@dbca.wa.gov.au" },
+]
+readme = "README.md"
+license = "Apache-2.0"
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.2",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "django>=4.2,<6",
+    "markupsafe==3.0.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/dbca-wa/dbca-utils"
+Repository = "https://github.com/dbca-wa/dbca-utils.git"
+Changelog = "https://github.com/dbca-wa/dbca-utils/blob/master/CHANGELOG.md"
+GitHub = "https://github.com/dbca-wa/dbca-utils"
+
+[dependency-groups]
+dev = [
+    "pytest-django>=4.11.1",
+    "pytest-sugar>=1.1.1",
+    "tox>=4.31.0",
+    "tox-uv>=1.29.0",
+]
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = ". src"
+python_files = "tests.py test_*.py"
+
+[tool.ruff]
+line-length = 140
+indent-width = 4
+
+[tool.ruff.lint]
+ignore = [
+    "E265",
+    "E501",
+    "E722",
+]
