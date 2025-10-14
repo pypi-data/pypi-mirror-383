@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools"] #>=42
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ebm"
+dynamic = ["version"]
+description = "A project for energy usage modeling"
+readme = "README.md"
+authors = [
+    { name = "Lars Petrusson", email = "lfep@nve.no" },
+    { name = "Ketil Nordstad", email = "kenord@nve.no" }
+]
+requires-python = ">= 3.11"
+dependencies = [
+    "loguru", 
+    "numpy", 
+    "openpyxl", 
+    "pandas", 
+    "python-dotenv", 
+    "rich",
+    "pandera==0.20.4",
+    "XlsxWriter",
+    "pywin32 ; platform_system == 'Windows'",
+]
+[project.optional-dependencies]
+test = ["pytest"]
+build = ["build"]
+dev = ["ebm[test]", "ebm[build]", 'ruff', 'ruff-lsp']
+docs = ['sphinx', 'sphinx-rtd-theme', 'sphinx-autodoc-typehints', 'numpydoc', 'sphinx-tabs']
+tqdm = ['tqdm', 'XlsxWriter']
+[project.urls]
+Homepage = "https://www.nve.no/"
+Documentation = "https://nve.github.io/ebm-docs"
+Repository = "https://github.com/NVE/ebm"
+
+[tool.setuptools]
+packages = ['ebm', 'ebm.model', 'ebm.services', 'ebm.cmd', 'ebm.data']
+include-package-data = true
+[project.scripts]
+ebm = "ebm.__main__:main"
+ebm-calibrate = "ebm.cmd.calibrate_excel_com_io:main"
+[tool.setuptools.dynamic]
+version = {attr = "ebm.__version__.version"}
+
+[tool.setuptools.package-data]
+mypackage = ["*.csv"]
+[tool.pytest.ini_options]
+pythonpath = "."
+testpaths = ["tests"]
