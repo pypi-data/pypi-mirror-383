@@ -1,0 +1,433 @@
+# SnapInfra - AI-Powered Infrastructure Code Generator
+
+[![PyPI version](https://badge.fury.io/py/snapinfra.svg)](https://badge.fury.io/py/snapinfra)
+[![Downloads](https://pepy.tech/badge/snapinfra)](https://pepy.tech/project/snapinfra)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI](https://github.com/manojmaheshwarjg/rhinoback/workflows/CI/badge.svg)](https://github.com/manojmaheshwarjg/rhinoback/actions)
+
+> **Snap your infrastructure into existence with AI-powered code generation**
+
+SnapInfra is a revolutionary command-line tool that transforms natural language descriptions into production-ready infrastructure code. Powered by cutting-edge Large Language Models (LLMs), it generates Terraform, Kubernetes manifests, Docker configurations, CloudFormation templates, and architectural diagrams in seconds.
+
+## Why SnapInfra?
+
+- **10x Faster Development**: Generate complex infrastructure in minutes, not hours
+- **Multiple AI Providers**: OpenAI, AWS Bedrock, Groq, Ollama, and more
+- **Production-Ready**: Best practices built-in with security and scalability
+- **Interactive Refinement**: Chat-based iteration to perfect your infrastructure
+- **Rich Documentation**: Auto-generated docs and architecture diagrams
+- **Universal Platform**: Works on Windows, macOS, and Linux
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+- [Current Features](#current-features)
+- [Usage Examples](#usage-examples)
+- [Architecture](#architecture)
+- [Supported Providers](#supported-providers)
+- [Roadmap](#roadmap)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
+### Via pip (Recommended)
+```bash
+pip install snapinfra
+```
+
+### Via pipx (Isolated installation)
+```bash
+pipx install snapinfra
+```
+
+### From Source
+```bash
+git clone https://github.com/gofireflyio/snapinfra.git
+cd snapinfra
+pip install -e .
+```
+
+## Quick Start
+
+**Get up and running in under 2 minutes:**
+
+### 1. Install SnapInfra
+```bash
+pip install snapinfra
+```
+
+### 2. Set your API key
+```bash
+# Free Groq API (recommended for beginners)
+export GROQ_API_KEY="your-groq-api-key"
+
+# Or OpenAI
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+### 3. Generate your first infrastructure
+```bash
+# Create AWS VPC with Terraform
+snapinfra "terraform for AWS VPC with public and private subnets"
+
+# Kubernetes deployment
+snapinfra "kubernetes deployment for nginx with load balancer"
+
+# Docker setup
+snapinfra "docker-compose for React app with PostgreSQL"
+```
+
+**That's it!** SnapInfra will generate production-ready code with explanations and best practices.
+
+## Configuration
+
+SnapInfra uses a TOML configuration file to manage multiple LLM providers and their settings.
+
+### Configuration File Location
+- **Linux/Unix**: `~/.config/snapinfra/snapinfra.toml`
+- **Windows**: `%APPDATA%/snapinfra/snapinfra.toml`
+- **macOS**: `~/Library/Application Support/snapinfra/snapinfra.toml`
+
+### Example Configuration
+```toml
+default_backend = "openai"
+
+[backends.openai]
+type = "openai"
+api_key = "$OPENAI_API_KEY"
+default_model = "gpt-4"
+
+[backends.azure_openai]
+type = "openai"
+url = "https://your-tenant.openai.azure.com/openai/deployments/your-deployment"
+api_key = "$AZURE_OPENAI_API_KEY"
+api_version = "2023-05-15"
+default_model = "gpt-4"
+
+[backends.aws_bedrock]
+type = "bedrock"
+aws_profile = "default"
+aws_region = "us-east-1"
+default_model = "amazon.titan-text-express-v1"
+
+[backends.local_ollama]
+type = "ollama"
+url = "http://localhost:11434/api"
+default_model = "mistral:latest"
+```
+
+## What Makes SnapInfra Special?
+
+### AI-First Architecture
+- **Multi-Provider Support**: OpenAI, Azure OpenAI, AWS Bedrock, Groq, Ollama
+- **Smart Model Selection**: Automatically chooses the best model for your task
+- **Context-Aware**: Understands your infrastructure requirements and constraints
+- **Conversation Mode**: Iterative refinement through natural language chat
+
+### Developer Experience
+- **Rich Terminal Interface**: Beautiful syntax highlighting and formatting
+- **Multiple Output Formats**: Code-only, documentation, or combined output
+- **File Operations**: Smart file naming and organization
+- **Clipboard Integration**: One-click copy to clipboard
+- **Cross-Platform**: Identical experience on Windows, macOS, and Linux
+
+### Infrastructure-as-Code Generation
+- **Terraform**: AWS, Azure, GCP, and multi-cloud setups
+- **Kubernetes**: Deployments, services, ingress, and RBAC configurations
+- **Docker**: Production-ready Dockerfiles and docker-compose stacks
+- **CloudFormation**: AWS native templates with advanced features
+- **Ansible**: Configuration management and automation playbooks
+- **Helm Charts**: Kubernetes application packaging
+- **Pulumi**: Infrastructure in TypeScript, Python, Go, and C#
+
+### Enterprise-Grade Features
+- **Multi-Environment Support**: Separate configs for dev, staging, production
+- **Security First**: API keys via environment variables, no plain-text storage
+- **Error Recovery**: Intelligent retry logic and detailed error messages
+- **Performance Optimized**: Async operations and request caching
+- **Extensible**: Plugin architecture for custom providers and templates
+
+## Real-World Examples
+
+### Cloud Infrastructure
+```bash
+# Complete AWS 3-tier architecture
+snapinfra "terraform for AWS 3-tier web application with:
+- VPC with public and private subnets
+- Application Load Balancer
+- Auto Scaling Groups
+- RDS Multi-AZ database
+- CloudWatch monitoring"
+
+# Serverless data pipeline
+snapinfra "AWS serverless architecture with API Gateway, Lambda, DynamoDB"
+
+# Multi-cloud setup
+snapinfra "hybrid infrastructure spanning AWS and Azure with VPN connectivity"
+```
+
+### Kubernetes Platforms
+```bash
+# Microservices platform
+snapinfra "kubernetes microservices platform with service mesh, monitoring"
+
+# Database deployment
+snapinfra "kubernetes mongodb replica set with persistent volumes and backups"
+
+# Complete application stack
+snapinfra "k8s deployment for React frontend, Node.js API, Redis, and Postgres"
+```
+
+### Development Environments
+```bash
+# Full-stack development
+snapinfra "docker-compose for full-stack development with hot reload"
+
+# Production-ready containers
+snapinfra "multi-stage dockerfile for Node.js with security scanning"
+
+# CI/CD pipeline
+snapinfra "GitHub Actions workflow for containerized application deployment"
+```
+
+### Power User Commands
+```bash
+# Use specific AI provider and model
+snapinfra -b groq -m "meta-llama/llama-4-scout-17b-16e-instruct" \
+  "complex microservices architecture"
+
+# Generate with architecture diagrams
+snapinfra "AWS infrastructure with Mermaid architecture diagrams"
+
+# Save code and documentation separately
+snapinfra -o main.tf -r README.md "production EKS cluster setup"
+
+# Batch generation for multiple environments
+snapinfra -q "terraform modules for dev, staging, prod environments"
+
+# List all available models
+snapinfra --list-models
+```
+
+### Interactive Refinement
+```bash
+# Start with basic request
+snapinfra "terraform for AWS Lambda"
+
+# SnapInfra generates code and offers options:
+# → Continue chatting to refine
+# → Save to files
+# → Copy to clipboard
+# → Generate documentation
+
+# Example refinement conversation:
+# You: "Add API Gateway and DynamoDB"
+# You: "Include CloudWatch alarms"
+# You: "Make it multi-region"
+```
+
+## Architecture
+
+### Core Components
+
+#### CLI Layer (`snapinfra.cli`)
+- **Click-based CLI**: Modern command-line interface with rich help
+- **Rich Integration**: Beautiful terminal output with syntax highlighting
+- **Interactive Prompts**: User-friendly input validation and guidance
+
+#### Configuration Management (`snapinfra.config`)
+- **TOML Parsing**: Robust configuration file handling with validation
+- **Environment Variables**: Secure credential management
+- **Multi-Backend**: Support for multiple named configurations
+
+#### Backend Abstraction (`snapinfra.backends`)
+- **Provider Interface**: Unified API for all LLM providers
+- **Async Implementation**: Non-blocking operations with proper error handling
+- **Extensible Design**: Easy addition of new LLM providers
+
+#### Type System (`snapinfra.types`)
+- **Pydantic Models**: Strong typing with runtime validation
+- **Abstract Interfaces**: Clean separation of concerns
+- **Custom Exceptions**: Detailed error classification and handling
+
+## AI Provider Support
+
+### Groq (Lightning Fast)
+- **Speed**: Ultra-fast inference with sub-second response times
+- **Models**: Llama 3.1, Llama 4 Scout, Mixtral, Gemma
+- **Free Tier**: Generous free usage limits
+- **Best For**: Rapid prototyping and development
+
+### OpenAI / Azure OpenAI
+- **Models**: GPT-4o, GPT-4, GPT-3.5-turbo, and latest releases
+- **Features**: Advanced reasoning, complex architecture planning
+- **Best For**: Production deployments and complex infrastructure
+
+### AWS Bedrock
+- **Models**: Claude 3, Amazon Titan, AI21 Jurassic, Cohere Command
+- **Integration**: Native AWS services integration
+- **Best For**: Enterprise AWS environments
+
+### Ollama (Privacy-First)
+- **Models**: Llama 3.1, Mistral, CodeLlama, and 50+ models
+- **Privacy**: Complete local processing, no data leaves your machine
+- **Best For**: Sensitive environments and offline usage
+
+## Roadmap
+
+### Version 1.1 (Q1 2025)
+- **Enhanced Output Formats**
+  - YAML configuration generation
+  - JSON schema validation
+  - Multi-file project scaffolding
+
+- **Provider Expansions**
+  - Anthropic Claude direct API support
+  - Cohere API integration
+  - Hugging Face Inference API support
+
+### Version 1.2 (Q2 2025)
+- **Template System**
+  - Reusable template library
+  - Custom template creation and sharing
+  - Template versioning and management
+
+- **Advanced Configuration**
+  - Per-project configuration files
+  - Configuration inheritance
+  - Environment-specific overrides
+
+### Version 1.3 (Q3 2025)
+- **Technical Architecture Diagrams**
+  - **React Flow Canvas Generator**: Interactive diagram creation with drag-and-drop interface
+  - **Architecture Visualization**: Automatic generation of system architecture diagrams from infrastructure code
+  - **Component Mapping**: Visual representation of infrastructure relationships and dependencies
+  - **Export Capabilities**: PNG, SVG, and PDF output formats
+  - **Collaboration Features**: Real-time editing and sharing capabilities
+
+- **Code Analysis and Optimization**
+  - Infrastructure code analysis and recommendations
+  - Security best practices validation
+  - Cost optimization suggestions
+
+### Version 1.4 (Q4 2025)
+- **Integration Ecosystem**
+  - VS Code extension with inline generation
+  - GitHub Actions integration
+  - CI/CD pipeline templates
+
+- **Web Interface**
+  - Browser-based GUI for non-technical users
+  - Project management and history
+  - Team collaboration features
+
+### Version 2.0 (2026)
+- **Multi-Modal Support**
+  - Image-to-infrastructure generation
+  - Architecture diagram parsing and code generation
+  - Voice command interface
+
+- **Enterprise Features**
+  - SSO integration (SAML, OIDC)
+  - Audit logging and compliance reporting
+  - Multi-tenant deployment support
+
+## Development
+
+### Setup Development Environment
+```bash
+git clone https://github.com/manojmaheshwarjg/rhinoback.git
+cd snapinfra
+
+# Install with development dependencies
+pip install -e ".[dev,test,docs]"
+
+# Run tests
+pytest
+
+# Format code
+make format
+
+# Run full CI pipeline
+make ci
+```
+
+### Project Structure
+```
+snapinfra/
+├── src/snapinfra/           # Main package
+│   ├── cli/                 # Command-line interface
+│   ├── config/              # Configuration management
+│   ├── backends/            # LLM provider implementations
+│   ├── types/               # Type definitions and models
+│   └── utils/               # Utility functions
+├── tests/                   # Test suite
+├── docs/                    # Documentation
+├── pyproject.toml           # Package configuration
+└── Makefile                 # Development commands
+```
+
+### Available Commands
+```bash
+make help          # Show all available commands
+make install       # Install package
+make test          # Run tests with coverage
+make lint          # Run linting checks
+make format        # Format code
+make build         # Build distribution packages
+make docker        # Build Docker image
+```
+
+## Contributing
+
+We welcome contributions from the community! Please see our contributing guidelines for details on:
+
+- Code standards and formatting
+- Testing requirements
+- Documentation updates
+- Feature request process
+- Bug report procedures
+
+### Development Workflow
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes with tests
+4. Ensure all tests pass (`make test`)
+5. Format code (`make format`)
+6. Commit changes (`git commit -m 'Add amazing feature'`)
+7. Push to branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+## License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+## Community & Support
+
+- **GitHub Issues**: [Report bugs and request features](https://github.com/manojmaheshwarjg/rhinoback/issues)
+- **Discussions**: [Join the community](https://github.com/manojmaheshwarjg/rhinoback/discussions)
+- **Examples**: Browse the [examples directory](examples/) for inspiration
+- **Documentation**: Check out our [comprehensive guides](docs/)
+
+## Show Your Support
+
+If SnapInfra helps you build better infrastructure faster, please:
+
+- Give us a star on [GitHub](https://github.com/manojmaheshwarjg/rhinoback)
+- Share your creations with the community
+- Contribute examples and improvements
+
+---
+
+<div align="center">
+
+**SnapInfra** - Snap your infrastructure into existence with AI-powered code generation.
+
+*Built with passion by developers, for developers.*
+
+</div>
