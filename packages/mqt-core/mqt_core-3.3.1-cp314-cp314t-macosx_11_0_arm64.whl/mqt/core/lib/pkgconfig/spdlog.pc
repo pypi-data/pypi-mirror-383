@@ -1,0 +1,13 @@
+prefix=/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/tmps90xf1cu/wheel/platlib/mqt/core
+exec_prefix=${prefix}
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+
+Name: libspdlog
+Description: Fast C++ logging library.
+URL: https://github.com/gabime/spdlog
+Version: 1.15.3
+CFlags: -I${includedir} -DSPDLOG_COMPILED_LIB
+Libs: -L${libdir} -lspdlog -pthread
+Requires: 
+
