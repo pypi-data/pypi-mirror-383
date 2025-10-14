@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=45.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "db-connector-tool"  # 修改为唯一名称
+version = "0.0.4"
+description = "跨平台数据库连接管理工具"
+authors = [
+    {name = "wangquanqing", email = "wangquanqing1636@sina.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["database", "connection", "manager", "orm", "sqlalchemy", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "cryptography>=41.0.0",
+    "tomli-w>=1.0.0",
+    "sqlalchemy>=2.0.0",
+    "oracledb>=2.0.0",
+    "psycopg>=3.0.0",
+    "pymysql>=1.1.0",
+    "pymssql>=2.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "twine>=4.0.0",
+    "build>=0.10.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+cli = [
+    "click>=8.0.0",
+    "rich>=13.0.0",
+]
+
+# 修改CLI入口点名称
+[project.scripts]
+db-connector = "db_connector.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/wangquanqing/db-connector-project"
+Repository = "https://github.com/wangquanqing/db-connector-project"
+Documentation = "https://db-connector-tool.readthedocs.io"
+"Issue Tracker" = "https://github.com/wangquanqing/db-connector-project/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["db_connector*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py313']
