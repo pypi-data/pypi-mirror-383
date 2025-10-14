@@ -1,0 +1,1 @@
+CUSTOM_ADMIN_DEFAULT_APP_LABEL = "django_custom_admin_pages"
