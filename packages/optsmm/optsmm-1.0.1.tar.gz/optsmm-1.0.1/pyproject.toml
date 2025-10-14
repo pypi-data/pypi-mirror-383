@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=42","wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optsmm"
+version = "1.0.1"
+description = "Asynchronous package for using the optSMM API"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name="faidyy", email="faidyy@vk.com"}]
+license = {text="MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
