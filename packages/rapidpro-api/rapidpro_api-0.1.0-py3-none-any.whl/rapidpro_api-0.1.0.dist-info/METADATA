@@ -1,0 +1,95 @@
+Metadata-Version: 2.4
+Name: rapidpro-api
+Version: 0.1.0
+Summary: A library for extracting and transforming data from RapidPro
+Home-page: https://github.com/unicef/magasin-primero-paquet
+Author: merlos
+Author-email: merlos@users.github.com
+Keywords: rapidpro,data extraction,data transformation,rapidpro-api
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: rapidpro-python==2.17.0
+Requires-Dist: python-slugify==8.0.4
+Requires-Dist: requests==2.32.3
+Requires-Dist: pandas==2.2.3
+Requires-Dist: polars==1.30.0
+Requires-Dist: fsspec==2025.3.2
+Requires-Dist: pyarrow==18.1.0
+Requires-Dist: adlfs==2024.12.0
+Requires-Dist: deltalake==0.25.5
+Provides-Extra: dev
+Requires-Dist: pytest==8.3.5; extra == "dev"
+Requires-Dist: pytest-cov==6.1.1; extra == "dev"
+Requires-Dist: pytest-mock==3.15.1; extra == "dev"
+Requires-Dist: flake8==7.3.0; extra == "dev"
+Requires-Dist: black==25.9.0; extra == "dev"
+Requires-Dist: isort==7.0.0; extra == "dev"
+Requires-Dist: mypy==1.18.2; extra == "dev"
+Requires-Dist: sphinx==8.2.3; extra == "dev"
+Requires-Dist: sphinx_rtd_theme==3.0.2; extra == "dev"
+Requires-Dist: requests-mock==1.12.1; extra == "dev"
+Requires-Dist: freezegun==1.5.1; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# RapidPro API Data analysis library 
+
+This is a Python library for interacting with the RapidPro API. This library focuses in extracting data from one or multiple RapidPro workspaces and saving it in ready to analyze datasets from RapidPro workspaces. 
+
+It is thought to be run in data pipelines.
+
+
+
+### Installation
+
+pip install rapidpro-api
+
+
+### Development
+
+First clone the repository:
+
+```bash
+git clone https://github.com/unicef/magasin-rapidpro-paquet 
+```
+
+Then create a virtual environment and install the dependencies:
+
+```bash
+cd rapidpro-api
+python3 -m venv venv
+source venv/bin/activate
+pip install -e .[dev]
+
+```
+
+## Running the tests
+
+```bash
+pytest
+```
+To run the tests with coverage, you can use the following command:
+
+```bash
+pytest --cov=rapidpro_api
+```
+
+To run the tests with coverage and see which lines are missing, you can use the following command:
+```bash
+pytest --cov=rapidpro_api --cov-report=term-missing
+```
+
+## License
+Apache2 license. See [LICENSE](LICENSE) for details.
