@@ -1,0 +1,21 @@
+# Temel proje dosyaları
+include setup.py
+include README.md
+include LICENSE
+
+# Ana kaynak kodu
+recursive-include dockai *.py
+
+# Plugin dosyaları
+recursive-include dockai/plugins *.py *.json *.sql
+
+# Gereksiz / hassas dosyaları hariç tut
+exclude *.env
+exclude *.yml
+exclude *.yaml
+exclude Dockerfile
+exclude docker-compose.yml
+exclude Makefile
+exclude *.log
+exclude __pycache__
+exclude *.db
