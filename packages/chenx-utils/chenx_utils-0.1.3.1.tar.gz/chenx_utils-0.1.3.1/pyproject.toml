@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling==1.26.3"]
+build-backend = "hatchling.build"
+
+[project]
+name = "chenx_utils"
+version = "0.1.3.1"
+authors = [
+  { name="Daniel Chen", email="cdmstrong123@gmail.com"},
+]
+description = "chenx_utils is a package for eos to yidongyun "
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+        "aiohttp",
+        "requests",
+        "boto3==1.35.92",
+        "pydantic",
+        "redis",
+        "pydantic_core",
+        "pyrender"
+    ]
+
+[project.urls]
+"Homepage" = "https://github.com/cdmstrong"
+
+[tool.setuptools.packages.find]
+where = ["chenx_utils"]  # 查找src目录下的包
