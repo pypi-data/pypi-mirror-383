@@ -1,0 +1,356 @@
+# subhikshaImputeX
+
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![PyPI](https://img.shields.io/badge/pypi-0.1.0-blue)](https://pypi.org/)
+
+**Automatic missing value imputation with intelligent per-column strategy selection.**
+
+subhikshaImputeX is a production-ready Python library that automatically detects and applies the best imputation method for each column in your dataset using cross-validation.
+
+## 🎯 Key Features
+
+✅ **Automatic Strategy Selection** - Tests multiple imputation methods per column and selects the best  
+✅ **Multiple Strategies** - Mean, Median, Mode, KNN, Regression, Forward Fill  
+✅ **Cross-Validation** - Evaluates accuracy using known values before imputation  
+✅ **Correlation Detection** - Identifies relationships between features for smarter imputation  
+✅ **Transparent Reporting** - Shows what strategy was chosen and why  
+✅ **Lightweight** - Only depends on NumPy, Pandas, and Scikit-learn  
+✅ **Per-Column Flexibility** - Different strategies for different columns  
+✅ **Type-Aware** - Handles numeric and categorical data appropriately  
+
+## 📦 Installation
+
+### From PyPI (recommended)
+```bash
+pip install subhikshaImputeX
+```
+
+### From source
+```bash
+git clone https://github.com/subi2404/subhikshaImputeX.git
+cd subhikshaImputeX
+pip install -e .
+```
+
+### Development setup
+```bash
+pip install -e ".[dev]"
+```
+
+## 🚀 Quick Start
+
+### Basic Usage
+
+```python
+import pandas as pd
+from subhikshaImputeX import SmartImputer
+
+# Load data with missing values
+df = pd.read_csv('data.csv')
+
+# Create and fit imputer
+imputer = SmartImputer(evaluation=True, verbose=True)
+df_clean = imputer.fit_transform(df)
+
+# Print report
+imputer.print_report()
+```
+
+### Advanced Usage
+
+```python
+from subhikshaImputeX import SmartImputer
+
+# Custom configuration
+imputer = SmartImputer(
+    strategy='auto',              # Auto-select best strategy per column
+    evaluation=True,              # Evaluate strategies via cross-validation
+    n_splits=5,                   # 5-fold cross-validation
+    detect_correlations=True,     # Detect feature correlations
+    verbose=True,                 # Print progress
+    random_state=42               # Reproducibility
+)
+
+# Fit on training data
+imputer.fit(df_train)
+
+# Transform train and test
+df_train_clean = imputer.transform(df_train)
+df_test_clean = imputer.transform(df_test)
+
+# Get detailed report
+report = imputer.get_report()
+print(report)
+```
+
+### Using Specific Strategies
+
+```python
+from subhikshaImputeX import SmartImputer
+
+# Use only mean imputation
+imputer = SmartImputer(strategy='mean')
+df_clean = imputer.fit_transform(df)
+
+# Available strategies: 'mean', 'median', 'mode', 'knn', 'regression', 'forward_fill'
+```
+
+### Manual Strategy Selection
+
+```python
+from subhikshaImputeX import (
+    MeanImputer, 
+    KNNImputation, 
+    RegressionImputer
+)
+
+# Use custom strategy directly
+imputer = MeanImputer()
+imputer.fit(df['column'])
+df['column'] = imputer.transform(df['column'])
+```
+
+## 📊 Available Strategies
+
+| Strategy | Type | Best For | Pros | Cons |
+|----------|------|----------|------|------|
+| **Mean** | Numeric | Quick baseline | Fast, simple | Loses variance |
+| **Median** | Numeric | Robust imputation | Handles outliers | Less variance |
+| **Mode** | Categorical | Most frequent | Interpretable | Information loss |
+| **KNN** | Both | Local patterns | Considers similarity | Slow on large data |
+| **Regression** | Numeric | Feature relationships | Preserves correlations | Assumes linearity |
+| **Forward Fill** | Time series | Sequential data | Context-aware | Assumes order |
+
+## 🔍 How It Works
+
+### 1. Automatic Strategy Selection
+For each column with missing values:
+- Identifies data type (numeric or categorical)
+- Selects applicable strategies
+- Evaluates each using cross-validation
+- Chooses best performer
+
+### 2. Cross-Validation Evaluation
+- Randomly masks known values
+- Applies strategy to predict masked values
+- Compares predictions to true values
+- Calculates RMSE (numeric) or accuracy (categorical)
+- Repeats across multiple splits
+
+### 3. Correlation Detection
+- Identifies relationships between features
+- Prioritizes correlated features for regression/KNN
+- Provides feature importance ranking
+
+## 📈 Performance
+
+### Evaluation Metrics
+
+**Numeric Columns:**
+- Uses RMSE (Root Mean Squared Error)
+- Lower RMSE = Better imputation
+
+**Categorical Columns:**
+- Uses Accuracy
+- Higher accuracy = Better imputation
+
+### Cross-Validation
+- Default: 5-fold cross-validation
+- Configurable via `n_splits` parameter
+- Prevents overfitting to training data
+
+## 💡 Examples
+
+### Example 1: Auto Imputation with Report
+
+```python
+import pandas as pd
+from subhikshaImputeX import SmartImputer
+import numpy as np
+
+# Create sample data
+df = pd.DataFrame({
+    'age': [25, np.nan, 35, 45, np.nan, 30],
+    'income': [50000, 60000, np.nan, 80000, 90000, np.nan],
+    'category': ['A', 'B', np.nan, 'A', 'C', 'B']
+})
+
+print("Before imputation:")
+print(df)
+print("\nMissing values:")
+print(df.isnull().sum())
+
+# Impute
+imputer = SmartImputer(evaluation=True, verbose=True)
+df_clean = imputer.fit_transform(df)
+
+print("\n\nAfter imputation:")
+print(df_clean)
+
+# Report
+imputer.print_report()
+```
+
+### Example 2: Train-Test Split
+
+```python
+import pandas as pd
+from subhikshaImputeX import SmartImputer
+
+# Load data
+df = pd.read_csv('data.csv')
+
+# Split
+train = df.iloc[:800]
+test = df.iloc[800:]
+
+# Fit on train, transform both
+imputer = SmartImputer(evaluation=True)
+imputer.fit(train)
+
+train_clean = imputer.transform(train)
+test_clean = imputer.transform(test)
+
+# Use for model training
+from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier()
+model.fit(train_clean.drop('target', axis=1), train_clean['target'])
+```
+
+### Example 3: Correlation Analysis
+
+```python
+from subhikshaImputeX import CorrelationDetector
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+# Detect correlations
+detector = CorrelationDetector(min_correlation=0.5)
+correlations = detector.detect(df)
+
+print("Strong correlations:")
+for col, corrs in correlations.items():
+    print(f"\n{col}:")
+    for corr_col, corr_val in corrs[:3]:  # Top 3
+        print(f"  {corr_col}: {corr_val:.3f}")
+
+# Visualize (requires matplotlib, seaborn)
+# detector.plot_correlation_heatmap()
+```
+
+## 🔧 Configuration
+
+### SmartImputer Parameters
+
+```python
+SmartImputer(
+    strategy='auto',              # Strategy selection mode
+                                  # Options: 'auto', 'mean', 'median', 'mode', 'knn', 'regression', 'forward_fill'
+    
+    evaluation=True,              # Enable cross-validation evaluation
+    
+    n_splits=5,                   # Number of CV folds for evaluation
+    
+    detect_correlations=True,     # Detect feature correlations
+    
+    verbose=True,                 # Print progress and results
+    
+    random_state=42               # Random seed for reproducibility
+)
+```
+
+## 📋 API Reference
+
+### SmartImputer
+
+**Methods:**
+- `fit(X)` - Fit on training data
+- `transform(X)` - Apply imputation
+- `fit_transform(X)` - Fit and transform
+- `get_report()` - Get imputation report (dict)
+- `print_report()` - Print formatted report
+
+### CorrelationDetector
+
+**Methods:**
+- `detect(df)` - Find correlations
+- `get_correlated_features(column, top_n=3)` - Get correlated features
+- `get_correlation_pairs()` - Get all correlation pairs
+- `get_feature_importance_for_imputation(column, df)` - Rank features
+- `plot_correlation_heatmap()` - Visualize correlations
+
+### Individual Strategies
+
+All strategies follow the scikit-learn API:
+- `fit(series, X=None)`
+- `transform(series)`
+- `fit_transform(series, X=None)`
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`pytest tests/`)
+5. Commit changes (`git commit -m 'Add amazing feature'`)
+6. Push to branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Development Setup
+
+```bash
+git clone https://github.com/subi2404/subhikshaImputeX.git
+cd subhikshaImputeX
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -e ".[dev]"
+pytest tests/
+```
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+pytest tests/                    # Run all tests
+pytest tests/ -v                 # Verbose output
+pytest tests/ --cov              # With coverage report
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙋 Support
+
+- **Issues**: [GitHub Issues](https://github.com/subi2404/subhikshaImputeX/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/subi2404/subhikshaImputeX/discussions)
+- **Email**: subhiksha2404@gmail.com
+
+## 📚 References
+
+- Scikit-learn Documentation: https://scikit-learn.org/
+- Pandas Documentation: https://pandas.pydata.org/
+- Missing Data Handling: https://en.wikipedia.org/wiki/Missing_data
+
+## 🎓 Citation
+
+If you use subhikshaImputeX in academic research, please cite:
+
+```bibtex
+@software{subhikshaImputeX2025,
+  title=subhikshaImputeX: Automatic Missing Value Imputation,
+  author=Subhiksha_Anandhan,
+  year=2025,
+  url={https://github.com/subi2404/subhikshaImputeX}
+}
+```
+
+---
+
+**Made with ❤️ by Subhiksha_Anandhan**
