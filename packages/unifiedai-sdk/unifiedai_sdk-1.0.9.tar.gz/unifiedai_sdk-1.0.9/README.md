@@ -1,0 +1,233 @@
+# UnifiedAI SDK
+
+OpenAI-compatible Python SDK unifying multiple providers (Cerebras, AWS Bedrock) with Solo and Comparison modes, strict models, and built‑in telemetry.
+
+## Highlights
+- **OpenAI-compatible API**: `UnifiedAI().chat.completions.create(...)` (sync) and `AsyncUnifiedAI` (async)
+- **Multi-Provider Support**: Cerebras and AWS Bedrock (extensible architecture)
+- **Dual Modes**: Solo execution or side-by-side Comparison
+- **Rich Metrics**: Duration, TTFB, tokens/sec, provider-specific timing
+- **Observability**: Structured logs, Prometheus metrics, OpenTelemetry tracing hooks
+- **Flexible Credentials**: Pass at client construction or use environment variables
+
+## Install
+From PyPI (core):
+```bash
+pip install unifiedai-sdk
+```
+
+Optional extras:
+```bash
+# AWS Bedrock support (requires boto3)
+pip install "unifiedai-sdk[bedrock]"
+
+# HTTP/2 support for httpx
+pip install "unifiedai-sdk[http2]"
+```
+
+From GitHub (optional):
+```bash
+pip install git+https://github.com/<your-org-or-user>/<your-repo>.git#subdirectory=cerebras
+```
+
+## Usage
+
+### Sync (scripts/CLI)
+
+**Cerebras Example:**
+```python
+from unifiedai import UnifiedAI
+
+client = UnifiedAI(
+    provider="cerebras",
+    model="llama3.1-8b",
+    credentials={"api_key": "csk-..."},  # or set CEREBRAS_KEY in env
+)
+resp = client.chat.completions.create(
+    messages=[{"role": "user", "content": "Hello"}]
+)
+print(resp.choices[0].message["content"])
+print(f"Tokens: {resp.usage.total_tokens}")
+```
+
+**Bedrock Example:**
+```python
+from unifiedai import UnifiedAI
+
+client = UnifiedAI(
+    provider="bedrock",
+    model="qwen.qwen3-32b-v1:0",
+    credentials={
+        "aws_access_key_id": "...",
+        "aws_secret_access_key": "...",
+        "region_name": "us-east-1"
+    }
+)
+resp = client.chat.completions.create(
+    messages=[{"role": "user", "content": "Hello"}]
+)
+print(resp.choices[0].message["content"])
+```
+
+### Async (web backends)
+```python
+from unifiedai import AsyncUnifiedAI
+
+async with AsyncUnifiedAI(provider="cerebras", model="llama3") as client:
+    resp = await client.chat.completions.create(
+        messages=[{"role": "user", "content": "Hello"}]
+    )
+```
+
+### Streaming (async)
+```python
+async with AsyncUnifiedAI(provider="cerebras", model="llama3") as client:
+    async for chunk in client.chat.completions.stream(
+        messages=[{"role": "user", "content": "Stream this"}]
+    ):
+        print(chunk.delta.get("content", ""), end="")
+```
+
+### Comparison (two providers)
+
+**Option 1: Shared Model ID (when both providers use same identifier)**
+```python
+from unifiedai import AsyncUnifiedAI
+
+async with AsyncUnifiedAI(credentials_by_provider={...}) as client:
+    result = await client.chat.completions.compare(
+        providers=["cerebras", "bedrock"],
+        model="llama3.1-8b",  # Same ID for both providers
+        messages=[{"role": "user", "content": "Capital of France?"}]
+    )
+    print(f"Winner: {result.winner}")
+```
+
+**Option 2: Per-Provider Models (when model IDs differ)**
+```python
+# Example: Same Llama 3.1 8B model, different IDs per provider
+result = await client.chat.completions.compare(
+    providers=["cerebras", "bedrock"],
+    models={
+        "cerebras": "llama3.1-8b",
+        "bedrock": "meta.llama3-1-8b-instruct-v1:0"  # Bedrock uses different ID
+    },
+    messages=[{"role": "user", "content": "Explain quantum computing."}]
+)
+```
+
+**Synchronous Comparison (for scripts/CLI):**
+```python
+from unifiedai import UnifiedAI
+
+client = UnifiedAI(credentials_by_provider={...})
+
+result = client.chat.completions.compare(
+    providers=["cerebras", "bedrock"],
+    models={
+        "cerebras": "llama3.1-8b",
+        "bedrock": "meta.llama3-1-8b-instruct-v1:0"
+    },
+    messages=[{"role": "user", "content": "Hello"}]
+)
+
+print(f"Winner: {result.winner}")
+print(f"Cerebras ({result.provider_a.model}): {result.provider_a.metrics.duration_ms:.2f}ms")
+print(f"Bedrock ({result.provider_b.model}): {result.provider_b.metrics.duration_ms:.2f}ms")
+```
+
+## Credentials
+
+### Cerebras
+Set environment variable or pass credentials:
+```python
+# Environment variable
+export CEREBRAS_KEY="csk-..."
+
+# Or pass directly
+client = UnifiedAI(
+    provider="cerebras",
+    credentials={"api_key": "csk-..."}
+)
+```
+
+### AWS Bedrock
+Set AWS credentials via environment or pass directly:
+```python
+# Environment variables
+export AWS_ACCESS_KEY_ID="..."
+export AWS_SECRET_ACCESS_KEY="..."
+export AWS_REGION="us-east-1"
+
+# Or pass directly
+client = AsyncUnifiedAI(
+    provider="bedrock",
+    credentials={
+        "aws_access_key_id": "...",
+        "aws_secret_access_key": "...",
+        "region_name": "us-east-1"
+    }
+)
+```
+
+### Multi-Provider (Comparison Mode)
+```python
+client = AsyncUnifiedAI(
+    credentials_by_provider={
+        "cerebras": {"api_key": "csk-..."},
+        "bedrock": {
+            "aws_access_key_id": "...",
+            "aws_secret_access_key": "...",
+            "region_name": "us-east-1"
+        }
+    }
+)
+```
+
+**Precedence**: Direct credentials > Environment variables > IAM roles (for Bedrock)
+
+## FastAPI demo (Swagger UI)
+```bash
+uvicorn apps.chat.backend:app --reload --port 8000
+# Swagger UI: http://localhost:8000/docs
+```
+
+## Supported Models
+
+### Cerebras
+- `llama3.1-8b` - Llama 3.1 8B
+- `llama3.1-70b` - Llama 3.1 70B
+- `qwen-3-32b` - Qwen 3 32B
+
+### AWS Bedrock
+- `qwen.qwen3-32b-v1:0` - Qwen 3 32B
+- `anthropic.claude-3-haiku-20240307-v1:0` - Claude 3 Haiku (fastest)
+- `anthropic.claude-3-sonnet-20240229-v1:0` - Claude 3 Sonnet
+- `anthropic.claude-3-5-sonnet-20240620-v1:0` - Claude 3.5 Sonnet
+- `meta.llama3-70b-instruct-v1:0` - Llama 3 70B
+
+**Note**: Some Bedrock models require requesting access through the AWS Bedrock console.
+
+## Response Metrics
+
+All responses include comprehensive metrics:
+- `duration_ms`: Total SDK round-trip time
+- `ttfb_ms`: Time to first byte
+- `round_trip_time_s`: Total time in seconds
+- `inference_time_s`: Provider-reported inference time
+- `output_tokens_per_sec`: Output generation speed
+- `total_tokens_per_sec`: Overall token throughput
+
+## Project Structure
+- `src/unifiedai/`: SDK implementation
+  - `_client.py`, `_async_client.py`: Public API clients
+  - `adapters/`: Provider implementations (Cerebras, Bedrock)
+  - `models/`: Pydantic data models
+  - `core/`: Comparison orchestration
+  - `metrics/`: Prometheus metrics
+- `examples/`: Usage examples (solo, streaming, comparison, Bedrock)
+- `apps/chat/`: Demo FastAPI backend with comparison UI
+- `tests/`: Unit and integration tests
+
+## License
+MIT
