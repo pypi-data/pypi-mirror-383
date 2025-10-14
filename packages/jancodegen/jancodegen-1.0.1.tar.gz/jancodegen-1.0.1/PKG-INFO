@@ -1,0 +1,123 @@
+Metadata-Version: 2.4
+Name: jancodegen
+Version: 1.0.1
+Summary: A Python package for generating random JAN codes and related product identification codes with valid check digits
+Home-page: https://github.com/kientt137/jancodegen
+Author: Tran Trung Kien
+Author-email: kientt13.7@gmail.com
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-python
+Dynamic: summary
+
+# JAN Code Generator
+
+[![PyPI version]( https://img.shields.io/badge/pypi-1.0.1-blue)](https://pypi.org/project/jancodegen/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A Python package for generating random JAN (Japanese Article Number) codes and related product identification codes with valid check digits.
+
+The check digit calculation follows the standard GS1 algorithm as documented on the [GS1 Japan website](https://www.gs1jp.org/code/jan/check_digit.html).
+
+## Features
+
+- Generate random GTIN-13 codes
+- Generate random GTIN-8 codes
+- Generate random GTIN-14 codes
+- Generate random UPC-12 codes
+- Generate random SSCC-18 codes
+- Generate random GRAI-14 codes
+- All codes include automatically calculated valid check digits
+- Pure Python implementation with no external dependencies
+
+## Installation
+
+Install from PyPI:
+
+```bash
+pip install jancodegen
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/kientt137/jancodegen.git
+cd jancodegen
+pip install .
+```
+
+## Usage
+
+### Basic Usage
+
+```python
+from jancodegen import jan
+
+# Generate different types of codes
+gtin13 = jan.random_gtin_13()    # Returns a 13-digit GTIN-13 code
+gtin8 = jan.random_gtin_8()      # Returns an 8-digit GTIN-8 code
+gtin14 = jan.random_gtin_14()    # Returns a 14-digit GTIN-14 code
+upc12 = jan.random_upc_12()      # Returns a 12-digit UPC-12 code
+sscc18 = jan.random_sscc_18()    # Returns an 18-digit SSCC-18 code
+grai14 = jan.random_grai_14()    # Returns a 14-digit GRAI-14 code
+
+print(f"GTIN-13: {gtin13}")
+print(f"GTIN-8: {gtin8}")
+```
+
+### Advanced Usage
+
+```python
+import jancodegen.jan as jan
+
+# Generate multiple codes
+codes = [jan.random_gtin_13() for _ in range(5)]
+for code in codes:
+    print(code)
+```
+
+## Code Formats
+
+| Format | Length | Description | Prefix |
+|--------|--------|-------------|---------|
+| GTIN-13 | 13 digits | Global Trade Item Number | None |
+| GTIN-8 | 8 digits | Global Trade Item Number (short) | None |
+| GTIN-14 | 14 digits | Global Trade Item Number (carton) | Starts with '1' |
+| UPC-12 | 12 digits | Universal Product Code | None |
+| SSCC-18 | 18 digits | Serial Shipping Container Code | Starts with '0' |
+| GRAI-14 | 14 digits | Global Returnable Asset Identifier | Starts with '0' |
+
+All generated codes include valid check digits calculated using the standard GS1 algorithm.
+
+## Requirements
+
+- Python 3.7 or higher
+- No external dependencies required
+
+## Development
+
+### Running Tests
+
+```bash
+pip install pytest
+python -m pytest tests/
+```
+
+### Building the Package
+
+```bash
+python setup.py sdist bdist_wheel
+```
+
+## License
+
+This project is licensed under the MIT License
+
+## Issues
+
+If you find any bugs or have suggestions for improvements, please open an issue on GitHub.
