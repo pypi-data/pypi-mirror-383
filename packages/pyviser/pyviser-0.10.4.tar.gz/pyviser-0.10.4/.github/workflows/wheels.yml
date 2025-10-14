@@ -1,0 +1,112 @@
+name: Build and Publish Wheels
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-14]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install maturin
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21.0
+        env:
+          # Skip PyPy, musllinux, and i686 builds
+          CIBW_SKIP: "pp* *-musllinux* *i686"
+          # Build for Python 3.9-3.13 (all currently supported versions)
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-*"
+          # Explicitly set architectures per OS (native only for macOS to avoid cross-compilation)
+          CIBW_ARCHS_LINUX: "x86_64"
+          CIBW_ARCHS_WINDOWS: "AMD64"
+          CIBW_ARCHS_MACOS: "native"
+          # Maturin handles Rust installation and building
+          CIBW_BUILD_FRONTEND: "build"
+          # Use manylinux2014 for better compatibility
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
+          # Install system dependencies before building
+          CIBW_BEFORE_ALL_LINUX: |
+            yum install -y libX11-devel wayland-devel alsa-lib-devel systemd-devel libxkbcommon-devel ||
+            (apt-get update && apt-get install -y libx11-dev libwayland-dev libasound2-dev libudev-dev libxkbcommon-dev)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build-sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+          
+      - name: Build source distribution
+        run: python -m build --sdist
+        
+      - name: Upload sdist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+
+  publish-to-pypi:
+    name: Publish Python 🐍 distribution 📦 to PyPI
+    needs: [build-wheels, build-sdist]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pyviser
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+          
+      - name: Organize distributions
+        run: |
+          mkdir -p final_dist
+          find dist -name "*.whl" -exec mv {} final_dist/ \;
+          find dist -name "*.tar.gz" -exec mv {} final_dist/ \;
+          ls -la final_dist/
+          
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: final_dist/

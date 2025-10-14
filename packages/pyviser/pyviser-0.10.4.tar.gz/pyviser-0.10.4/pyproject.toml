@@ -1,0 +1,28 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "pyviser"
+version = "0.10.4"
+description = "RLViser - Rocket League replay visualizer"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "RLViser Contributors"},
+]
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Programming Language :: Rust",
+]
+
+[tool.maturin]
+# This is a pure Rust binary with no Python bindings
+bindings = "bin"
+# Strip symbols for smaller binaries
+strip = true
