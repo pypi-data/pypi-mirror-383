@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: ocpi-client
+Version: 0.1.0
+Summary: OCPI client
+Keywords: OCPI
+Author: Leon
+License-Expression: MIT
+License-File: LICENSE
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Programming Language :: Python :: 3.15
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Project-URL: homepage, https://github.com/OCPI-Python/ocpi-client
+Project-URL: source, https://github.com/OCPI-Python/ocpi-client.git
+Project-URL: issues, https://github.com/OCPI-Python/ocpi-client/issues
+Project-URL: changelog, https://github.com/OCPI-Python/ocpi-client/blob/master/CHANGELOG.md
+Project-URL: funding, https://github.com/OCPI-Python/ocpi-client
+Requires-Python: >=3.10
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: ocpi-pydantic>=0.8.0
+Description-Content-Type: text/markdown
+
+# OCPI Client
+
+[OCPI](https://evroaming.org/ocpi/) client based on HTTPX, currently supporting OCPI 2.2.1.
+
+
+## Usage
+
+Here is a quick example of how to use the models to create an OCPI `Location` object.
+
+```python
+import ocpi_client
+
+ocpi_client.put_loccation(...)
+```
