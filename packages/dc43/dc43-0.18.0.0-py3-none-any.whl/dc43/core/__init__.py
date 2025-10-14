@@ -1,0 +1,53 @@
+"""Compatibility facade for core helpers exposed from dc43-service-backends."""
+
+from __future__ import annotations
+
+from dc43_service_backends.core import (  # noqa: F401 re-export
+    BITOL_SCHEMA_URL,
+    ODCS_REQUIRED,
+    ODPS_REQUIRED,
+    SemVer,
+    as_odcs_dict,
+    build_odcs,
+    contract_identity,
+    custom_properties_dict,
+    ensure_version,
+    field_map,
+    fingerprint,
+    list_properties,
+    normalise_custom_properties,
+    odcs_package_version,
+    to_model,
+    DataProductInputPort,
+    DataProductOutputPort,
+    OpenDataProduct,
+    as_odps_product_dict,
+    evolve_odps_to_draft,
+    next_odps_draft_version,
+    to_odps_model,
+)
+
+__all__ = [
+    "BITOL_SCHEMA_URL",
+    "ODCS_REQUIRED",
+    "ODPS_REQUIRED",
+    "SemVer",
+    "as_odcs_dict",
+    "build_odcs",
+    "contract_identity",
+    "custom_properties_dict",
+    "ensure_version",
+    "field_map",
+    "fingerprint",
+    "list_properties",
+    "normalise_custom_properties",
+    "odcs_package_version",
+    "to_model",
+    "DataProductInputPort",
+    "DataProductOutputPort",
+    "OpenDataProduct",
+    "as_odps_product_dict",
+    "evolve_odps_to_draft",
+    "next_odps_draft_version",
+    "to_odps_model",
+]
