@@ -1,0 +1,102 @@
+Metadata-Version: 2.4
+Name: lucqa-tools
+Version: 1.0.2
+Summary: Suite de herramientas para desarrollo con Kubernetes y conversores Base64
+Home-page: https://github.com/lucqa-it/app-developer-tools
+Author: Lucqa Development Team
+Author-email: Lucqa Development Team <dev@lucqa.com>
+License: MIT
+Project-URL: Homepage, https://github.com/lucqa/lucqa-tools
+Project-URL: Repository, https://github.com/lucqa/lucqa-tools
+Project-URL: Documentation, https://github.com/lucqa/lucqa-tools/wiki
+Project-URL: Bug Tracker, https://github.com/lucqa/lucqa-tools/issues
+Keywords: kubernetes,base64,converter,tools,gui
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: User Interfaces
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: customtkinter>=5.2.0
+Requires-Dist: tkinter-tooltip>=2.1.0
+Requires-Dist: kubernetes>=28.1.0
+Requires-Dist: Pillow>=10.0.0
+Requires-Dist: PyPDF2>=3.0.1
+Requires-Dist: reportlab>=4.0.4
+Requires-Dist: base64io>=1.0.3
+Requires-Dist: python-dateutil>=2.8.2
+Requires-Dist: requests>=2.31.0
+Requires-Dist: urllib3>=2.0.4
+Requires-Dist: pytest>=7.4.0
+Requires-Dist: black>=23.7.0
+Requires-Dist: flake8>=6.0.0
+Provides-Extra: pdf
+Requires-Dist: PyPDF2>=3.0.1; extra == "pdf"
+Requires-Dist: reportlab>=4.0.4; extra == "pdf"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: black>=23.7.0; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+Provides-Extra: all
+Requires-Dist: PyPDF2>=3.0.1; extra == "all"
+Requires-Dist: reportlab>=4.0.4; extra == "all"
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
+# Lucqa Tools
+
+Suite de herramientas para desarrollo con interfaz gráfica moderna.
+
+## 🚀 Características
+
+- **Kubernetes Log Viewer**: Visualiza y gestiona logs de pods en clusters de Kubernetes
+- **Conversor Base64**: Codifica y decodifica texto en formato Base64
+- **Conversor de Imágenes**: Convierte imágenes a/desde Base64 (próximamente)
+- **Conversor de PDF**: Convierte archivos PDF a/desde Base64 (próximamente)
+
+## 📦 Instalación
+
+### Desde PyPI (cuando esté disponible)
+```bash
+pip install lucqa-tools
+```
+
+### Desde código fuente
+```bash
+git clone <repository-url>
+cd lucqa-tools
+pip install -e .
+```
+
+### Compilar wheel
+```bash
+python setup.py bdist_wheel
+pip install dist/lucqa_tools-1.0.0-py3-none-any.whl
+```
+
+## 🎯 Uso
+
+### Como aplicación
+```bash
+lucqa-tools
+```
+
+### Como módulo Python
+```python
+from lucqa_tools import MainApp
+
+app = MainApp()
+app.run()
+```
+
+## 🛠️ Desarrollo
+
+### Estructura del proyecto
