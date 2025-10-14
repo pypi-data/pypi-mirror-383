@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}{{ page.get_seo_title }}{% endblock %}
+{% block meta_description %}{{ page.get_meta_description }}{% endblock %}
+
+{% block seo_meta_tags %}
+    {% include 'components/_seo_meta.html' with object=page %}
+{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="container-fluid mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        {% if page.parent_page %}
+        <li class="breadcrumb-item"><a href="{{ page.parent_page.get_absolute_url }}">{{ page.parent_page.get_breadcrumb_title }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active" aria-current="page">{{ page.get_breadcrumb_title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <article class="page-content">
+        <header>
+            <h1>{{ page.get_h1_tag }}</h1>
+        </header>
+
+        <div class="page-body mt-4">
+            {{ page.content|safe }}
+        </div>
+
+        {% if page.child_pages.all %}
+        <nav class="child-pages mt-5">
+            <h2>Related Pages</h2>
+            <ul class="list-group">
+                {% for child in page.child_pages.all %}
+                {% if child.is_active and child.is_published %}
+                <li class="list-group-item">
+                    <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+                    {% if child.short_description %}
+                    <p class="text-muted mb-0">{{ child.short_description }}</p>
+                    {% endif %}
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        <footer class="page-footer mt-5 text-muted small">
+            <p>Last updated: {{ page.updated_at|date:"F j, Y" }}</p>
+        </footer>
+    </article>
+</div>
+{% endblock %}

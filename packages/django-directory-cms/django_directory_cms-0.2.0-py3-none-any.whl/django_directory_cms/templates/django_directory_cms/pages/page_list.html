@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta_title %}Pages{% endblock %}
+{% block meta_description %}Browse all available pages on our site.{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="container-fluid mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Pages</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>All Pages</h1>
+
+    {% if pages %}
+    <div class="list-group mt-4">
+        {% for page in pages %}
+        <a href="{{ page.get_absolute_url }}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ page.title }}</h5>
+            </div>
+            {% if page.meta_description %}
+            <p class="mb-1">{{ page.get_meta_description }}</p>
+            {% endif %}
+            <small class="text-muted">Last updated: {{ page.updated_at|date:"F j, Y" }}</small>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info mt-4">
+        No pages available at this time.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
