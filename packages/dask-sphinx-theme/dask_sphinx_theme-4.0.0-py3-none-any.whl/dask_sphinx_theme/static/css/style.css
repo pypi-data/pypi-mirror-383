@@ -1,0 +1,285 @@
+@import "../styles/sphinx-book-theme.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700");
+
+:root {
+  /* Main colors */
+  --yellow: #ffc11e;
+  --white: #fff;
+  --blue: #1f5aff;
+  --dark-blue: #183d72;
+  --light-grey: #f6f6f6;
+  --grey: #33363d;
+  --dark-grey: #262326;
+  --black: #080815;
+  --green: #17955c;
+  --salmon: #fc6e6b;
+  --red: #ef1161;
+  --purple: #f61fff;
+  --pst-color-text-base: var(--black);
+  --pst-color-navbar-link: var(--yellow);
+  --pst-color-link: var(--black);
+  --pst-color-link-hover: var(--yellow);
+  --pst-color-inline-code: var(--salmon);
+
+  /* Font Family */
+  --pst-font-family-base-system: Inter;
+  --pst-font-family-monospace-system: Inconsolata;
+  --pst-font-family-base: var(--pst-font-family-base-system);
+  --pst-font-family-heading: var(--pst-font-family-base);
+  --pst-font-family-monospace: var(--pst-font-family-monospace-system);
+}
+
+code {
+  color: var(--salmon);
+  font-family: var(--pst-font-family-monospace);
+  font-size: 16px !important;
+}
+
+body {
+  background-image: url("../images/background-grid.svg");
+  background-repeat: repeat;
+  padding-top: calc(var(--pst-header-height));
+  background-color: var(--pst-color-background);
+  font-family: var(--pst-font-family-base);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--sd-color-primary-bg-text);
+}
+
+main {
+  background-color: var(--pst-color-background);
+}
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl {
+  max-width: 1600px;
+  margin-left: inherit;
+  background-color: var(--pst-color-background);
+}
+
+@media (min-width: 1600px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl {
+    max-width: 85%;
+  }
+}
+
+.bd-sidebar {
+  /* max-width: 350px; */
+}
+
+.prev-next-bottom {
+  display: none;
+}
+
+/* reference links */
+
+main.bd-content #main-content a {
+  color: var(--pst-color-link);
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-underline-offset: 3px;
+}
+
+main.bd-content #main-content a:hover {
+  color: var(--pst-color-link-hover);
+}
+
+/* don't create a second scrollbar
+see github.com/dask/dask-sphinx-theme/issues/74 */
+.overflow-auto {
+  overflow: visible !important;
+}
+
+/* navigation pane - left sidebar */
+
+.navbar-brand {
+  display: none;
+}
+
+#site-navigation {
+  background: var(--light-grey);
+  background-image: url("../images/background-grid.svg");
+  margin-top: 4em;
+}
+
+#site-navigation nav ul.nav li a {
+  padding-left: 2%;
+  color: var(--sd-color-primary-bg-text);
+  text-decoration: none;
+}
+
+#site-navigation nav ul.nav ul li a {
+  color: var(--sd-color-primary-bg-text);
+}
+
+#site-navigation nav ul.nav a:hover {
+  color: var(--sd-color-primary-bg-text);
+  font-weight: 700;
+  border-left: 2px solid var(--sd-color-primary-bg-text);
+}
+
+/* #site-navigation nav ul.nav li a:active {
+    border-left: 2px solid var(--yellow)
+} */
+
+#site-navigation nav ul.nav li.active > a {
+  border-left: 2px solid var(--yellow);
+}
+
+#site-navigation nav.bd-links p.caption {
+  font-size: var(--pst-sidebar-caption-font-size);
+  text-transform: uppercase;
+  font-family: var(--pst-font-family-base);
+  font-weight: 700;
+  position: relative;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+  color: var(--sd-color-primary-bg-text);
+}
+
+#site-navigation div.navbar_extra_footer {
+  color: vvar(--sd-color-primary-bg-text);
+  padding-bottom: 3em;
+  margin-bottom: 0;
+}
+
+footer .footer-item {
+  float: left;
+  margin-right: 1rem;
+}
+
+/* table on contents (right sidebar) */
+.bd-toc .toc-entry a {
+  color: var(--sd-color-primary-bg-text);
+  text-decoration: none;
+}
+
+.bd-toc nav li.active > a.active {
+  font-family: var(--pst-font-family-base);
+  font-weight: 700;
+  border-left: 2px solid var(--yellow);
+}
+
+.topbar,
+.topbar-contents,
+.topbar-main {
+  height: 3em;
+}
+
+.fixed-top {
+  top: 4em;
+}
+
+div.navbar-brand-box {
+  padding-top: 0;
+}
+
+main.bd-content {
+  padding-top: 6em !important;
+}
+
+/* top bar */
+
+.dask-nav {
+  background-color: var(--black);
+  height: var(--pst-header-height);
+  display: block;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 2100;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding: 0;
+}
+
+.dask-nav ul {
+  background-color: var(--dark-grey);
+  padding: 0;
+  margin-bottom: 0;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.dask-nav ul > li {
+  display: inline-block;
+  position: relative;
+  transition: 0.3s;
+  text-align: left;
+  padding: 0.5em 2rem 0.5em 2rem;
+}
+
+.dask-nav ul > li > a {
+  color: white;
+  text-decoration: none;
+}
+
+.dask-nav ul > li > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--yellow);
+}
+
+.dask-nav .logo {
+  width: 275px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .dask-nav .logo {
+    width: 100%;
+  }
+
+  #site-navigation.collapse.show {
+    margin-top: 7em;
+  }
+}
+
+.dask-nav img {
+  height: 3em;
+}
+
+ul.navbar-nav:hover li {
+  opacity: 0.5;
+  transition: var(--transition);
+}
+
+ul.navbar-nav li.nav-item:hover {
+  opacity: 1 !important;
+  transition: var(--transition);
+}
+
+ul.current.nav.bd-sidenav
+  li.toctree-l1.current.active
+  a.current.reference.internal {
+  font-weight: inherit;
+}
+
+.toc-entry > .nav-link.active {
+  font-family: var(--pst-font-family-base);
+  font-weight: inherit;
+}
+
+.sphinx-tabs {
+  max-width: 100%;
+}
+
+/* See https://github.com/dask/dask/issues/8236 */
+.classifier::before {
+  content: ": ";
+}
