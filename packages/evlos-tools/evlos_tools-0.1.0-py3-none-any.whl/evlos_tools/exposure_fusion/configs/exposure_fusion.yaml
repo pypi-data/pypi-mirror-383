@@ -1,0 +1,23 @@
+model:
+  # Required by ONNX and TensorRT builders
+  type: MertensFusionGrayscale
+  input_names: ['burst_images']
+  output_names: ['fused_image']
+  input_shapes:
+    burst_images: [4, 1, 15000, 4096]
+  input_dtypes:
+    burst_images: float32
+  # Custom model parameters
+  exposure_times: [175.0, 88.0, 55.0, 30.0]
+  contrast_weight: 1.0
+  exposure_weight: 1.0
+  n_levels: 10
+  exposure_sigma: 0.2
+
+deploy:
+  onnx:
+    opset_version: 20
+    onnx_save_dir: src/exposure_fusion/resources/onnx
+  trt:
+    compile_mode: quick_compile
+    trt_save_dir: src/exposure_fusion/resources/engines
