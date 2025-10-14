@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "jibit"
+version = "1.2.4"
+description = "python tool for jbit.ir apis"
+authors = ["s7eed <s7eed.b@gmail.com>"]
+readme = "README.md"
+packages = [{include = "jibit", from = "src"}]
+license = "MIT"
+homepage = "https://github.com/s7eed/jibit"
+repository = "https://github.com/s7eed/jibit"
+documentation = "https://github.com/s7eed/jibit#readme"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+aiohttp = ">=3.8,<4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0"
+pytest-asyncio = "^0.21"
+mypy = "^1.5"
+black = "^24.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: real test case"
+]
