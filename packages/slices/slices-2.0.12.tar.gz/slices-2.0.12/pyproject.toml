@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slices"
+version = "2.0.12"
+authors = [{name = "Hang Xiao", email = "xiaohang07@live.cn"}]
+requires-python = ">=3.9"
+dependencies = [
+    "setuptools>=18.0",
+    "m3gnet==0.2.4",
+    "smact==2.5.5",
+]
+
+[tool.setuptools.package-data]
+slices = [
+    "nlopt.h",
+    "xtb_noring_nooutput_nostdout_noCN",
+    "MP-2021.2.8-EFS/checkpoint",
+    "MP-2021.2.8-EFS/m3gnet.data-00000-of-00001",
+    "MP-2021.2.8-EFS/m3gnet.index",
+    "MP-2021.2.8-EFS/m3gnet.json"
+]
