@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+test.*
+
+# Checkpoints and logs
+*.engine
+*.onnx
+*.trt
+
+# Image files
+*.png
+*.jpg
+*.jpeg
+*.bmp

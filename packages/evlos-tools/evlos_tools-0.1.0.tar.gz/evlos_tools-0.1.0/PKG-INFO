@@ -1,0 +1,35 @@
+Metadata-Version: 2.4
+Name: evlos-tools
+Version: 0.1.0
+Summary: Add your description here
+Author-email: Arif <arif@evlos.ai>
+Requires-Python: <3.12,>=3.11
+Requires-Dist: einops
+Requires-Dist: imutils
+Requires-Dist: kornia
+Requires-Dist: loguru
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Requires-Dist: onnx
+Requires-Dist: onnxruntime-gpu
+Requires-Dist: opencv-python
+Requires-Dist: pycolmap
+Requires-Dist: pycuda
+Requires-Dist: pyyaml
+Requires-Dist: scikit-learn
+Requires-Dist: tensorrt==10.13.3.9
+Requires-Dist: torch>=2.8.0
+Requires-Dist: torchvision
+Description-Content-Type: text/markdown
+
+# Evlos-Tools
+
+### Common config
+1. trt: compile_mode: [quick_compile / quick_inference]
+    * Use quick_compile for testing and use quick_inference for latency check and production
+
+### exposure_fusion
+Refer exposure_fusion README.md for usage
+
+### template_matcher
+Refer template_matcher README.md for usage
