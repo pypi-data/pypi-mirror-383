@@ -1,0 +1,101 @@
+Metadata-Version: 2.4
+Name: manuscript-ocr
+Version: 0.1.8
+Summary: Manuscript
+Home-page: https://github.com/konstantinkozhin/manuscript-ocr
+Author: 
+Author-email: sherstpasha99@gmail.com
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: torch<2.8.0,>=1.11.0
+Requires-Dist: torchvision<0.23.0,>=0.12.0
+Requires-Dist: torchaudio<2.8.0,>=0.11.0
+Requires-Dist: numpy<2.3.0,>=1.21.0
+Requires-Dist: opencv-python<5.0.0,>=4.5.0
+Requires-Dist: Pillow>=9.0.0
+Requires-Dist: shapely<3.0.0,>=1.8.0
+Requires-Dist: numba<1.0.0,>=0.56.0
+Requires-Dist: pydantic<3.0.0,>=2.0.0
+Requires-Dist: gdown<6.0.0,>=4.4.0
+Requires-Dist: scikit-image<1.0.0,>=0.19.0
+Requires-Dist: torch-optimizer<1.0.0,>=0.1.0
+Requires-Dist: tensorboard<3.0.0,>=2.8.0
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+## Installation
+
+### Для пользователей
+```bash
+pip install manuscript-ocr
+```
+
+### Для разработчиков
+```bash
+pip install -r requirements-dev.txt
+```
+
+> **Примечание**: `requirements-dev.txt` включает GPU версию PyTorch, инструменты тестирования, форматирования и сборки.
+
+### GPU поддержка
+Если вы пользователь и хотите GPU поддержку:
+```bash
+pip install manuscript-ocr
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 --force-reinstall
+```
+
+**Проверка GPU:**
+```python
+import torch
+print(f"CUDA доступна: {torch.cuda.is_available()}")
+```
+
+## Usage Example
+
+```python
+from PIL import Image
+from manuscript.detectors import EASTInfer
+
+# Инициализация
+det = EASTInfer(score_thresh=0.9)
+
+# Инфер с визуализацией
+page, vis_image = det.infer(r"example\ocr_example_image.jpg", vis=True)
+
+print(page)
+
+# Покажет картинку с наложенными боксами
+Image.fromarray(vis_image).show()
+
+# Или сохранить результат на диск:
+Image.fromarray(vis_image).save(r"example\ocr_example_image_infer.png")
+```
+
+### Результат
+
+Текстовые блоки будут выведены в консоль, например:
+
+```
+Page(blocks=[Block(words=[Word(polygon=[(874.1005, 909.1005), (966.8995, 909.1005), (966.8995, 956.8995), (874.1005, 956.8995)]),
+                          Word(polygon=[(849.1234, 810.5678), … ])])])
+```
+
+А визуализация сохранится в файл `example/ocr_example_image_infer.png`:
+
+![OCR Inference Result](example/ocr_example_image_infer.png)
+
