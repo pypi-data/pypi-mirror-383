@@ -1,0 +1,58 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Dict, List, Union, Optional
+from typing_extensions import TypeAlias
+
+from ..shared import ownership
+from ..._models import BaseModel
+from ..task_result import TaskResult
+from ..group_result import GroupResult
+from ..shared.date_range import DateRange
+
+__all__ = ["EvaluationResultSearch", "Ownership"]
+
+Ownership: TypeAlias = Union[ownership.Ownership, List[ownership.Ownership]]
+
+
+class EvaluationResultSearch(BaseModel):
+    created_at: Optional[DateRange] = None
+
+    custom_fields: Union[Dict[str, object], List[Dict[str, object]], None] = None
+
+    description: Union[str, List[str], None] = None
+
+    files_url: Union[str, List[str], None] = None
+
+    groups: Union[Dict[str, GroupResult], List[Dict[str, GroupResult]], None] = None
+
+    job: Union[str, List[str], None] = None
+
+    namespace: Union[str, List[str], None] = None
+
+    ownership: Optional[Ownership] = None
+    """Information about ownership of an entity.
+
+    If the entity is a namespace, the `access_policies` will typically apply to all
+    entities inside the namespace.
+    """
+
+    project: Union[str, List[str], None] = None
+
+    tasks: Union[Dict[str, TaskResult], List[Dict[str, TaskResult]], None] = None
+
+    updated_at: Optional[DateRange] = None

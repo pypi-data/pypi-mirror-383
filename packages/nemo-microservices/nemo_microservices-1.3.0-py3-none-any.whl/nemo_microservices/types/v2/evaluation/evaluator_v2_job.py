@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Dict, Optional
+
+from ...._models import BaseModel
+from .evaluation_job_input_v2 import EvaluationJobInputV2
+
+__all__ = ["EvaluatorV2Job"]
+
+
+class EvaluatorV2Job(BaseModel):
+    name: str
+
+    spec: EvaluationJobInputV2
+
+    id: Optional[str] = None
+
+    created_at: Optional[str] = None
+
+    custom_fields: Optional[Dict[str, object]] = None
+
+    description: Optional[str] = None
+
+    error_details: Optional[Dict[str, object]] = None
+
+    namespace: Optional[str] = None
+
+    ownership: Optional[Dict[str, object]] = None
+
+    project: Optional[str] = None
+
+    status: Optional[str] = None
+
+    status_details: Optional[Dict[str, object]] = None
+
+    updated_at: Optional[str] = None
