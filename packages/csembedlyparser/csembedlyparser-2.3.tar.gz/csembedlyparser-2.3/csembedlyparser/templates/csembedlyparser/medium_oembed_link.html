@@ -1,0 +1,18 @@
+{% block preview_content %}
+  {% if obj.oembed_thumbnail_url %}
+    <div id="link_thumbnail">
+      <img src="{{ obj.oembed_thumbnail_url }}"
+           alt="{{ obj.title }} thumbnail image" />
+    </div>
+  {% endif %}
+  {{ obj.oembed_html|safe }}
+  <p>
+    <a href="{{ obj.original_url }}">{{ obj.oembed_title|safe }}</a> |
+    <img src="{{ obj.favicon }}"
+         width="15"
+         height="15"
+         alt="favicon"
+         class="favicon" />
+    <a href="{{ obj.original_url }}">{{ obj.domain }}</a>
+  </p>
+{% endblock preview_content %}

@@ -1,0 +1,12 @@
+{% block new_content %}
+<h3><a href="{{obj.original_url}}">{{obj.title|safe}}</a></h3>
+<p class="data">
+<img src="{{obj.favicon}}" width="15" height="15" alt="favicon" class="favicon" />
+<a href="{{obj.original_url}}">{{obj.domain}}</a></p>
+{% if obj.photo %}
+<p><img src="{{obj.photo.get_display_url}}" /><br />
+{{obj.desc}}</p>
+{% else %}
+<p>{{obj.desc}}</p>
+{% endif %}
+{% endblock %}

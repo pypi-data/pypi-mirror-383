@@ -1,0 +1,6 @@
+{% block new_content %}
+{{obj.oembed_html|safe}}
+<p><a href="{{obj.original_url}}">{{obj.oembed_title|safe}}</a> | 
+<img src="{{obj.favicon}}" width="15" height="15" alt="favicon" class="favicon" />
+<a href="{{obj.original_url}}">{{obj.domain}}</a></p>
+{% endblock %}
