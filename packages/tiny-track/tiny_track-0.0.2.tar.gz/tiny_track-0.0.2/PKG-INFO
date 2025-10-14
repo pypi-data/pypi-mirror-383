@@ -1,0 +1,60 @@
+Metadata-Version: 2.4
+Name: tiny-track
+Version: 0.0.2
+Summary: tiny-track: a minimalist, MLFlow-compatible experiment tracking library
+Author-email: Ivan Danylenko <kowd.pauuh@gmail.com>
+License: Apache-2.0
+Project-URL: Homepage, https://github.com/Kowd-PauUh
+Project-URL: Repository, https://github.com/Kowd-PauUh/tiny-track
+Keywords: mlops,experiment tracking,machine learning,logging
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pybind11
+Dynamic: license-file
+
+# tiny-track
+
+A minimalist, MLFlow-compatible, header-only C++ experiment tracking library with Python bindings.
+
+
+## Usage
+
+Logging via Python API:
+
+```python
+from ttrack.ttrack_cpp import LocalLogger, get_experiments
+
+# start run
+logger = LocalLogger(
+    logging_dir='mlruns',                  # set your logging dir name (default used by mlflow is "mlruns")
+    experiment_name='My experiment name',  # set your experiment name
+    run_name='My run name',                # set your run name
+    source=__file__,
+)
+
+# add tags
+logger.add_tag(key='myTagName', value='myTagValue')
+
+# add params
+logger.log_param(key='myParamName', value='myParamValue')
+
+# log metrics
+for i in range(10):
+    logger.log_metric(key='myMetric', value=i**2, step=i+1)
+```
