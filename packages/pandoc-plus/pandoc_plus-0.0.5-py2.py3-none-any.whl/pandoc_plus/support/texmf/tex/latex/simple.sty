@@ -1,0 +1,119 @@
+\providecommand\myborder{1in}
+\providecommand\myspacing{1}
+\providecommand\myparskip{1em}
+\providecommand\myparindent{0em}
+\providecommand\myheaderskip{1em}
+\providecommand\myfont{Open Sans}
+\providecommand\mysansfont{Open Sans}
+\providecommand\mypagenumber{0}
+
+\providecommand\mycolorlinks{true}
+\providecommand\mylinkcolor{blue}
+\providecommand\myurlcolor{blue}
+\providecommand\mycitecolor{blue}
+\providecommand\myanchorcolor{blue}
+\providecommand\myurlstyle{same}
+
+\providecommand\mycompiler{xetex}
+
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{\myfont}
+\setsansfont{\mysansfont}
+
+\usepackage[top=\myborder,left=\myborder,bottom=\myborder,right=\myborder]{geometry}
+\usepackage{graphicx}
+
+\usepackage{lipsum}
+
+\pagestyle{plain}
+
+\usepackage{titlesec}
+
+%\titleformat{\section}{\normalfont\bfseries\Large}{\thesection}{1em}{}
+%\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+%\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+%\titleformat{\paragraph}[runin]{\normalfont\itshape\bfseries}{\theparagraph}{1em}{}
+%\titleformat{\subparagraph}[runin]{\normalfont\itshape}{\thesubparagraph}{1em}{}
+
+\newcommand{\MakeMyTitle}[1]{
+\begin{center}
+{\LARGE{\textbf{\sffamily{#1}}}}
+\end{center}}
+
+\titleformat{\section}{\sffamily\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\sffamily\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\sffamily\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[runin]{\sffamily\itshape\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}[runin]{\sffamily\itshape}{\thesubparagraph}{1em}{}
+
+\titlespacing{\title}{0em}{\myheaderskip}{0em}
+\titlespacing{\section}{0em}{\myheaderskip}{0em}
+\titlespacing{\subsection}{0em}{\myheaderskip}{0em}
+\titlespacing{\subsubsection}{0em}{0em}{0em}
+\titlespacing{\paragraph}{0em}{0em}{2em}
+\titlespacing{\subparagraph}{0em}{0em}{2em}
+
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{\myspacing}
+
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+%------------------
+%Page Layout
+%\columnsep: gap between columns
+%\topmargin: gap above header
+%\topskip: between header and text
+%\textheight: height of main text
+%\textwidth: width of text
+%\oddsidemargin: odd page left margin
+%\evensidemargin : even page left margin
+
+%Paragraphs
+%\parindent: indentation of paragraphs
+%\parskip: gap between paragraphs
+
+%Floats (tables and figures)
+%\floatsep: space left between floats.
+%\textfloatsep: space between last top float or first bottom float and the text.
+%\intextsep : space left on top and bottom of an in-text float.
+%\dbltextfloatsep is \textfloatsep for 2 column output.
+%\dblfloatsep is \floatsep for 2 column output.
+%\abovecaptionskip: space above caption
+%\belowcaptionskip: space below caption
+
+%Maths
+%\abovedisplayskip: space before maths
+%\belowdisplayskip: space after maths
+%\arraycolsep: gap between columns of an array
+
+%Lists
+%\topsep: space between first item and preceding paragraph.
+%\partopsep: extra space added to \topsep when environment starts a new paragraph.
+%\itemsep: space between successive items.
+%------------------
+%USE
+%\setlength{\belowcaptionskip}{0em}
+%------------------
+\setlength{\parindent}{\myparindent}
+\setlength{\parskip}{\myparskip}
+\setlength{\parindent}{\myparindent}
+
+
+\usepackage{hyperref_common}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[C]{
+\ifthenelse{\isundefined{\myheadertext}}{}{\myheadertext}
+}
+\renewcommand{\headrule}{}
+\fancyfoot{}
+\fancyfoot[C]{
+  \ifthenelse{\isundefined{\myfootertext}}{}{\myfootertext\\}
+  \ifthenelse{\isundefined{\mycopyright}}{}{\scriptsize \textcopyright \the\year\ \mycopyright\normalsize \\ }
+  \ifthenelse{\equal{\mypagenumber}{1}}{\arabic{page}}{}
+}

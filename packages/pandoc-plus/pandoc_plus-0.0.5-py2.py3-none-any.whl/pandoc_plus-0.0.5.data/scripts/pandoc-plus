@@ -1,0 +1,119 @@
+#!python
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 22 16:06:40 2019
+
+@author: daukes
+"""
+import os
+import yaml
+import sys
+import subprocess
+import glob
+import sys
+import pandoc_plus
+
+module = sys.modules['pandoc_plus']
+initfile = module.__file__
+project_path = initfile.split(os.path.sep)
+project_path = os.path.sep.join(project_path[:-1])
+pandoc_dir = os.path.join(project_path,'support')
+
+s = os.path.abspath(os.path.normpath(os.path.expanduser('~/mytex')))+'//:'+os.path.join(project_path,'support','texmf')+'//:'
+os.environ["TEXINPUTS"] = s
+
+def process_file(path,output_extension,template,merge,tables,reference_links):
+
+    output_extension = output_extension.strip()
+    input_files = []
+    for item in path:
+        input_file_exp = item.strip()
+
+        print('input: ',input_file_exp,', output extension: ', output_extension)
+
+        input_files.extend(glob.glob(input_file_exp))
+        # for input_file in input_files:
+
+    input_file_string = '"'+'" "'.join(input_files)+'"'
+    input_name,input_extension = os.path.splitext(input_files[0])
+
+    template = template.strip()
+
+    print('input: ',input_file_exp,', output extension: ', output_extension,', template: ',template)
+
+    # input_files = glob.glob(input_file_exp)
+    
+    #print(input_extension,extractstring)
+    
+    extractstring = ''
+    #print(input_extension,extractstring)
+    if merge:
+        process_internal(input_file_string,input_name,input_extension,output_extension,template)
+    else:
+        for input_file in input_files:
+            input_name,input_extension = os.path.splitext(input_file)
+            process_internal(input_file,input_name,input_extension,output_extension,template,tables,reference_links)
+
+def process_internal(input_file_string,input_name,input_extension,output_extension,template,tables,reference_links):
+
+    input_extension = input_extension[1:].lower()
+    if  (input_extension == "docx") or (input_extension == "odt"):
+        extract_dir = input_name+'_media'
+        extractstring = '--extract-media="./'+extract_dir+'" '
+    else:
+        extractstring = ''
+
+    if reference_links:
+        reference_links_string = '--reference-links '
+    else:
+        reference_links_string = ''
+        
+        
+    if output_extension == 'pdf':
+        s='pandoc -s -t latex+smart --citeproc --data-dir='+pandoc_dir+' --template='+template+'.tex --pdf-engine=xelatex '+extractstring+'--wrap=none --reference-links -o "'+input_name+'.'+ output_extension+'" "'+input_file_string+'"'
+    elif output_extension == 'docx':
+        s='pandoc -s --reference-doc='+pandoc_dir+'/'+template+'.docx -o "'+input_name+'.'+output_extension+'" "'+input_file_string+'"'
+    elif output_extension == 'odt':
+        s='pandoc -s --reference-doc='+pandoc_dir+'/'+template+'.odt -o "'+input_name+'.'+output_extension+'" "'+input_file_string+'"'
+    elif output_extension == 'tex':
+        s='pandoc -s -t latex+smart --natbib --data-dir='+pandoc_dir+' --template='+template+'.tex --pdf-engine=xelatex '+extractstring+'--wrap=none --reference-links -o "'+input_name+'.'+ output_extension+'" "'+input_file_string+'"'
+    elif output_extension =='md':
+        if tables=='simple':
+            s='pandoc -s --wrap=none  '+reference_links_string +extractstring+' --markdown-headings=atx -t markdown-raw_html-bracketed_spans-native_spans-native_divs+fenced_divs-grid_tables-multiline_tables-simple_tables+pipe_tables -o "'+input_name+'.'+ output_extension+'" "'+input_file_string+'"'
+        else:
+            s='pandoc -s --wrap=none  '+reference_links_string +extractstring+' --markdown-headings=atx -t markdown-raw_html-bracketed_spans-native_spans-native_divs+fenced_divs -o "'+input_name+'.'+ output_extension+'" "'+input_file_string+'"'
+
+    # s = 'echo $TEXINPUTS && '+ s
+    
+    print(s)
+    result = subprocess.run(s,shell = True,check = True,capture_output=False)
+    return 
+        
+if __name__=='__main__':
+    
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('path',metavar='path',type=str,help='path', default = None,nargs='+')
+    parser.add_argument('-o',dest='output_extension',default = None)
+    parser.add_argument('-t',dest='template',default = None)
+    parser.add_argument('-m','--merge',dest='merge',action='store_true', default = False)
+    parser.add_argument('-r','--reference-links',dest='reference_links',action='store_true', default = False)
+    parser.add_argument('--tables',dest='tables',default = None)
+    args = parser.parse_args()
+    
+    
+    path = [os.path.normpath(os.path.expanduser(item)) for item in args.path]
+
+    # import argparse
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('-i',dest='input',default = None)
+    # parser.add_argument('-o',dest='output_extension',default = None)
+    # parser.add_argument('-t',dest='template',default = None)
+    # args = parser.parse_args()
+
+    # input_file = sys.argv[1]
+    # output_extension = sys.argv[2]
+    # template = sys.argv[3]
+
+    result = process_file(path,args.output_extension,args.template,args.merge,args.tables,args.reference_links)
+

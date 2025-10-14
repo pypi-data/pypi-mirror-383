@@ -1,0 +1,91 @@
+\providecommand\mycolorlinks{false}
+\providecommand\mylinkcolor{blue}
+\providecommand\myurlcolor{blue}
+\providecommand\mycitecolor{blue}
+\providecommand\myanchorcolor{blue}
+\providecommand\myurlstyle{sf}
+\providecommand\myfont{FreeSerif}
+\providecommand\mysansfont{Open Sans}
+\providecommand\myspacing{1}
+\providecommand\myparskip{1em}
+\providecommand\myparindent{0em}
+
+\providecommand\mycompiler{xetex}
+
+
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{\myfont}
+\setsansfont{\mysansfont}
+
+% Define  official colors
+
+\providecommand\myborder{1in}
+
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\usepackage{xcolor}
+%\definecolor{crimson}{RGB}{152,30,50}
+\definecolor{gray}{HTML}{5e6a71}
+\definecolor{ASU_Maroon}{HTML}{8C1D40}
+\definecolor{ASU_Gold}{HTML}{FFC627}
+\definecolor{Black}{HTML}{000000}
+
+% Measurements are taken directly from the guide
+\usepackage[top=2in,left=\myborder,bottom=1.5in,right=\myborder,headheight=.75in,headsep = .75in,footskip=.25in]{geometry}
+\usepackage{graphicx}
+\usepackage[absolute]{textpos}
+\usepackage{ifthen}
+%\usepackage{soul}
+\usepackage{hyperref_common}
+
+% --- For placement of the horizontal line
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\providecommand\liney{1in}
+\providecommand\headerx{1in}
+\providecommand\headerabove{.95in}
+\providecommand\headerbelow{1.05in}
+\providecommand\footerx{.5in}
+\providecommand\footery{10.25in}
+
+\providecommand\signaturefile{signature.png}
+
+%\providecommand\footertext{Daniel M. Aukes, Ph.D.\\Associate Professor\\Ira A. Fulton Schools Of Engineering\\Arizona State University}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead{}
+\fancyhead[L]{
+%\includegraphics[height=.75in]{institution-logo}
+\begin{textblock*}{6.5in}[0,1](\headerx,1.25in)%2-.25
+\includegraphics[height=.66in]{institution-logo}
+\end{textblock*}
+}
+
+\fancyhead[R]{\raggedleft \color{gray} \fontsize{9pt}{9pt}\sffamily
+Daniel M. Aukes, Ph.D.\\Associate Professor\\The School of Manufacturing Systems and Networks\\Ira A. Fulton Schools Of Engineering\\Arizona State University}
+
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[C]{\color{gray}\fontsize{8pt}{8pt}\sffamily
+\includegraphics[height=.25in]{my-logo}\\
+6075 S. Innovation Way W, Room 152, Mesa, AZ 85212\\
++1-650-353-1241 (mobile) \ \textbullet \ \url{danaukes@asu.edu} \ \textbullet \ \url{http://idealab.asu.edu}}
+
+%\AtBeginDocument{}
+
+\AtEndDocument{
+	\ifthenelse{\isundefined{\includesignature}}{\bigskip\bigskip}{\vspace{-.25in}\noindent \includegraphics[height=1in]{\signaturefile}\\Daniel M. Aukes}
+}
+
+\setcounter{secnumdepth}{0}
+
+%\raggedright
+
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{\myspacing}
+\setlength{\parskip}{\myparskip}
+\setlength{\parindent}{\myparindent}

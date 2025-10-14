@@ -1,0 +1,92 @@
+#!python
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 22 16:06:40 2019
+
+@author: daukes
+"""
+import os
+import yaml
+import sys
+import subprocess
+import glob
+import sys
+import pandoc_plus
+
+module = sys.modules['pandoc_plus']
+initfile = module.__file__
+# project_path = '/'.join(os.path.normpath(initfile).split(os.path.sep)[:-3])
+module_path = '/'.join(os.path.normpath(initfile).split(os.path.sep)[:-1])
+support_path = '/'.join([module_path,'support'])
+revealjs_path = 'file:///' + '/'.join([support_path,'node_modules','reveal.js'])
+mathjax_path = 'file:///'+'/'.join([support_path,'node_modules','mathjax','es5','tex-chtml-full.js'])
+
+s = os.path.abspath(os.path.normpath(os.path.expanduser('~/mytex')))+'//:'+os.path.join(module_path,'support','texmf')+'//:'
+os.environ["TEXINPUTS"] = s
+
+def process_file(path,output_extension,theme,self_contained=False):
+
+
+    output_extension = output_extension.strip()
+    input_files = []
+    for item in path:
+        input_file_exp = item.strip()
+
+        print('input: ',input_file_exp,', output extension: ', output_extension)
+
+        input_files.extend(sorted(glob.glob(input_file_exp)))
+        # for input_file in input_files:
+    
+    input_file_string = '"'+'" "'.join(input_files)+'"'
+    input_name,dummy = os.path.splitext(input_files[0])
+    
+    
+    if output_extension in ['pdf','tex']:
+        s='pandoc '+support_path+'/beamer_default.yaml -V titlegraphic="'+support_path+'/fulton.png'+'" -s -t beamer --pdf-engine=xelatex --slide-level=2 -o "'+input_name+'.'+output_extension+'" '+input_file_string 
+        
+    elif output_extension in ['revealjs']:
+
+        if theme is not None:
+            theme_string = '--variable theme="'+theme+'" '
+        else:
+            theme_string = ''
+
+        if self_contained:
+            self_contained_string = '--self-contained '
+        else:
+            self_contained_string = ''
+
+        s='pandoc -s --highlight-style zenburn --mathjax="'+mathjax_path+'" '+self_contained_string+'-t '+output_extension+' --slide-level=2 '+theme_string+'-V revealjs-url="'+revealjs_path+'" -o "'+input_name+'.html" '+input_file_string 
+
+    elif output_extension =='pptx':
+        s='pandoc -s --slide-level=2 -o "'+input_name+'.'+ output_extension+'" '+input_file_string 
+    
+    print(s)
+    result = subprocess.run(s,shell = True,check = True,capture_output=True)
+    return result
+    
+if __name__=='__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('path',metavar='path',type=str,help='path', default = None,nargs='+')
+
+    parser.add_argument('-i',dest='incremental',action='store_true', default = False)
+    parser.add_argument('-o',dest='output_extension',default = 'revealjs')
+    parser.add_argument('-d','--debug',dest='debug',action='store_true', default = False)
+    parser.add_argument('-s','--self-contained',dest='self_contained',action='store_true', default = False)
+    parser.add_argument('-t','--theme',dest='theme', default = None)
+
+    # parser.add_argument('-t',dest='template',default = None)
+    args = parser.parse_args()
+
+    # input_file = sys.argv[1]
+    # output_extension = sys.argv[2]
+    
+    path = [os.path.normpath(os.path.expanduser(item)) for item in args.path]
+    
+    if args.debug:
+        print('path: ',path)
+        print('output_extension: ',args.output_extension)
+
+    result = process_file(path,args.output_extension,args.theme,args.self_contained)
+
