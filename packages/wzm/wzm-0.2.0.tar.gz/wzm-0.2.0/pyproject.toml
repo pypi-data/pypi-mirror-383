@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wzm"
+version = "0.2.0"
+description = "A typed demo SDK with rich docstrings and a minimal HTTP client."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{ name = "Demo", email = "demo@example.com" }]
+dependencies = ["pandas>=1.5", "requests>=2.31", "typing-extensions>=4.8"]
+
+[project.scripts]
+wzm = "wzm.cli:main"
+
+[tool.setuptools.package-data]
+"wzm" = ["py.typed"]
