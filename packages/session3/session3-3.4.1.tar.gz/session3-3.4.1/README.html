@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Session3: Persistent Session Management for Quixote 3.6+</title>
+    <meta charset="utf-8" />
+    <meta content="R; J; Ladyman; (based; upon; session2; by; C; Titus; Brown; and; Mike; Orr)" name="authors" />
+    <meta content="it@file-away.co.uk" name="Email" />
+    <meta content="MIT (http://www.opensource.org/licenses/mit-license.php)" name="License" />
+    <meta content="3-4.1 released October 2025" name="version" />
+    <meta content="Only the file-storage mechanism (DirectorySessionStore) is working with Quixote 3.0+ Now allows later versions of Quixote" name="status" />
+</head>
+<body>
+    <section id="session3-persistent-session-management-for-quixote-3-6">
+        <h1>Session3: Persistent Session Management for Quixote 3.6+</h1>
+        <aside id="contents" class="topic contents">
+            <h1>Contents</h1>
+            <ul>
+                <li><a href="#introduction">Introduction</a>
+                    <ul>
+                        <li><a href="#road-map">Road-map</a></li>
+                    </ul>
+                </li>
+                <li><a href="#getting-session3">Getting Session3</a>
+                    <ul>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#documentation">Documentation</a></li>
+                    </ul>
+                </li>
+                <li><a href="#using-session3">Using session3</a></li>
+                <li><a href="#features">Features</a>
+                    <ul>
+                        <li><a href="#interactive-testing">Interactive Testing</a></li>
+                        <li><a href="#fcntl-caution"><code>fcntl</code> Caution</a></li>
+                        <li><a href="#changes-from-session2">Changes from Session2</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p><a href="https://github.com/nascheme/quixote">Quixote</a> is a Python Web application framework. It comes with an in-memory session manager, which works but is incompatible with multi-process servers (SCGI, CGI, etc) — it also (by design) forgets the sessions when the Publisher quits. <a href="https://github.com/rojalator/session3">Session3</a> providing a new session manager class and a simple back-end storage API to allow persistence for sessions. <a id="footnote-reference-1" class="footnote_reference" href="#previousversion">3</a></p>
+            <p>Session3 version 3.4.0 provides a fully functional <a id="footnote-reference-2" class="footnote_reference" href="#limited">1</a> persistent storage back-end for use with Quixote 3.6.0 and above (also see <a href="#road-map">Road-map</a> below, for later version notes):-</p>
+            <dl>
+                <dt><a href="https://rojalator.github.io/session3/literate/session3/store/DirectorySessionStore.html">DirectorySessionStore</a> (<a href="https://rojalator.github.io/session3/session3.store.DirectorySessionStore.html">DirectorySessionStoreAPI</a>)</dt>
+                <dd>
+                    <p>Store each pickled session in a file in the designated directory. The filename is the session ID. Uses <code>fcntl</code> file locking.</p>
+                    <pre>DirectorySessionStore(directory)</pre>
+                </dd>
+            </dl>
+            <p>This package includes a refactored <a href="https://rojalator.github.io/session3/literate/session3/SessionManager.html">SessionManager</a> (<a href="https://rojalator.github.io/session3/session3.SessionManager.SessionManager.html">SessionManagerAPI</a>) that makes it easy to develop additional back ends along with a simplified Session class (no <code>.is_dirty</code> method). It supports the usual <code>.user</code>, <code>.set_user()</code> and <code>.has_info()</code> attributes and you can also set your own attributes which will be saved.</p>
+            <p>It’s quite likely that the session stores can be adapted for use with other Web frameworks; let us know if you do this so we can link to you and / or include helpful code in the package.</p>
+            <section id="road-map">
+                <h3>Road-map</h3>
+                <p>Quixote 3.1.x added BaseSessionManager and SessionStore classes requiring Session3 to be updated at some point.</p>
+            </section>
+        </section>
+        <section id="getting-session3">
+            <h2>Getting Session3</h2>
+            <section id="installation">
+                <h3>Installation</h3>
+                <p>Session3 can be installed via pip (<code>pip3 install session3</code>). Alternatively (or if you also want the documentation) download and unpack the tar.gz file and install the normal Python way (<code>python3
+setup.py install</code>). Note that Session3 requires Quixote 3.6 or greater — this is also available via pip or from <a href="https://github.com/nascheme/quixote">Quixote</a>’s repository.</p>
+            </section>
+            <section id="documentation">
+                <h3>Documentation</h3>
+                <p><a href="https://rojalator.github.io/session3/moduleIndex.html">API documentation</a> is available as is <a href="https://rojalator.github.io/session3/literate/">Literate Programming documentation</a> — either read it on-line or extract it from the tar.gz file.</p>
+            </section>
+        </section>
+        <section id="using-session3">
+            <h2>Using session3</h2>
+            <p>You need a <em>store</em>, a <em>manager</em> and then you need to tell Quixote’s <em>publisher</em> to use them both: in your <cite>create_publisher()</cite> function, place the following code:</p>
+            <pre># create the session store.
+from session3.store.DirectorySessionStore import DirectorySessionStore
+from session3.SessionManager import SessionManager
+
+# create the session manager.
+store = DirectorySessionStore(path.expanduser(some_location), create=True)
+session_manager = SessionManager(store)
+
+# create the publisher.
+from quixote.publish import Publisher
+publisher = Publisher(..., session_manager.session_manager)</pre>
+            <p>Each session store has different initialization requirements:<a id="footnote-reference-3" class="footnote_reference" href="#limited">1</a> see the <a href="https://rojalator.github.io/session3/moduleIndex.html">API documentation</a> or the <a href="https://rojalator.github.io/session3/literate/">literate programming documentation</a> for more information.</p>
+        </section>
+        <section id="features">
+            <h2>Features</h2>
+            <p>All session3 stores have the following methods, which are called by the session manager:-</p>
+            <p><code>.load_session</code>, <code>.save_session</code>, <code>.delete_session</code>, <code>.has_session</code>.</p>
+            <p>They also have these convenience methods:-</p>
+            <dl>
+                <dt><code>.setup()</code>:</dt>
+                <dd>initializes the store.</dd>
+                <dt><code>.delete_old_sessions(minutes)</code>:</dt>
+                <dd>deletes sessions that haven’t been modified for N minutes. This is meant for your application maintenance program; e.g., a daily cron job.</dd>
+                <dt><code>.iter_sessions()</code>:</dt>
+                <dd>Return an iterable of (id, session) for all sessions in the store. This is for admin applications that want to browse the sessions. The DirectorySession will raise a <em>NotImplementedError</em> <a id="footnote-reference-4" class="footnote_reference" href="#wasinsession2">2</a>.</dd>
+            </dl>
+            <p>All stores have <code>.is_multiprocess_safe</code> and <code>.is_thread_safe</code> attributes. An application can check these flags and abort if configured inappropriately. The flags are defined as follows:-</p>
+            <ul>
+                <li>DirectorySessionStore is multiprocess safe because it uses <code>fcntl</code> file locking. This limits its use to POSIX. See the fcntl caution below. It may be thread safe because it always locks-unlocks within the same method, but we don’t know for sure so the attribute is false. <a id="footnote-reference-5" class="footnote_reference" href="#limited">1</a></li>
+            </ul>
+            <section id="interactive-testing">
+                <h3>Interactive Testing</h3>
+                <p>Session3 comes with an interactive web test application. To run the web demo, cd to the <strong>test/</strong> directory in the application source and run:</p>
+                <pre>$ test_session3.py directory</pre>
+                <p>Point your web browser to <a href="http://localhost:8080/">http://localhost:8080/</a> and play around. You can use <code>--host=hostname</code> and <code>--port=N</code> to bind to a different hostname or port. You can also just run ‘test_session3.py’ with no command-line arguments for help.</p>
+                <p>Press ctrl-C to quit the demo (or command-C on the Mac, or ctrl-Break on Windows).</p>
+                <p>The directory ‘twill-tests’ contains several tests that verify the behavior of ‘test_session3.py’. To run them, you need to install <a href="https://github.com/twill-tools/twill">TwillTools</a> and <a href="https://nose.readthedocs.io/en/latest/">nose</a> . Then just execute ‘nosetests’ in the top directory.</p>
+                <p>The tests do not test persistence or multithreading yet and were merely copied over from the python2 code.</p>
+            </section>
+            <section id="fcntl-caution">
+                <h3><code>fcntl</code> Caution</h3>
+                <p>On Mac OS X when using PTL, import <code>fcntl</code> <em>before</em> enabling PTL. Otherwise the import hook may load the deprecated FCNTL.py instead due to the Mac’s case-insensitive filesystem, which will cause errors down the road. This was supposedly fixed in Python 2.4, which doesn’t have FCNTL.py.</p>
+            </section>
+            <section id="changes-from-session2">
+                <h3>Changes from Session2</h3>
+                <p>Since Session2 was released a number of packages that were referred to in the documentation (and the source) have either ceased to exist or moved into maintenance mode and Session3 itself is solely for Python 3.</p>
+                <blockquote>
+                    <ul>
+                        <li><a href="https://nose.readthedocs.io/en/latest/">Nose</a> is in maintenance mode</li>
+                        <li>The original web-site for <a href="https://pypi.org/project/twill/">Twill</a> has disappeared. Existing Twill code appears to be Python 2 only. There is a new version at <a href="https://github.com/twill-tools/twill">TwillTools</a></li>
+                    </ul>
+                </blockquote>
+                <hr />
+                <table id="limited" class="footnote">
+                    <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td>Note that only <a href="https://rojalator.github.io/session3/literate/session3/store/DirectorySessionStore.html">DirectorySessionStore</a> is working for version 3.4</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="wasinsession2" class="footnote">
+                    <tbody>
+                        <tr>
+                            <th>2</th>
+                            <td>For the Session2 code, this <em>was</em> implemented but <em>only</em> for MySQL</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="previousversion" class="footnote">
+                    <tbody>
+                        <tr>
+                            <th>3</th>
+                            <td>Session3 is based upon the previous Session2 code (designed for, unsurprisingly, Quixote 2)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+        <footer>Generated on: 2025-10-13 09:50 UTC. Generated by <a href="https://docutils.sourceforge.io/">Docutils</a> from <a href="https://docutils.sourceforge.io/rst.html">reStructuredText</a> source. </footer>
+    </section>
+</body>
+</html>
