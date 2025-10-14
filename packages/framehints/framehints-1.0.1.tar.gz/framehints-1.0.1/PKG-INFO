@@ -1,0 +1,72 @@
+Metadata-Version: 2.4
+Name: framehints
+Version: 1.0.1
+Author-email: lutrarutra <lutrarutra@pm.me>
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: numpy>=2.2
+Requires-Dist: interop>=1.5
+Requires-Dist: pandas>=2.3
+Dynamic: license-file
+
+# framehints
+Simple library (decorator & function) for validating Pandas Dataframes structure
+
+## Installation
+`pip install git+https://github.com/lutrarutra/framehints`
+
+## Usage
+```python
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+import numpy as np
+import pandas as pd
+
+import framehints as fh
+
+@dataclass
+class CustomClass():
+    field1: int
+    field2: str
+
+schema = {
+    "name": str,
+    "value": float,
+    "date": datetime | None,
+    "path": Path | str,
+    "data": np.ndarray | list | None,
+    "custom": CustomClass,
+    "column_that_doesnt_exists": int  # This column is optional, so it won't raise an error if it's missing
+}
+
+# Usage with function decorator
+@fh.pdvalidate({"df": schema}, optional_columns={"df": ["column_that_doesnt_exists"]})
+def your_function(df: pd.DataFrame):
+    return df.shape
+
+
+df = pd.DataFrame({
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'value': [1.0, 2.5, 2.2],
+    'date': [datetime.now(), datetime.now(), None],
+    "path": [Path("/tmp"), Path("/var"), "/home"],
+    "data": [np.zeros([1, 2]), None, [1,2,3]],
+    "custom": [CustomClass(1, "a"), CustomClass(2, "b"), CustomClass(2, "b")]
+})
+
+try:
+    your_function(df)
+    print("1. DataFrame is valid.")
+except TypeError as e:
+    print(e)
+
+
+# or usage with function
+try:
+    df = fh.validate_df(df, schema, optional_columns=["column_that_doesnt_exists"])
+    print("2. DataFrame is valid.")
+except TypeError as e:
+    print(e)
+```
