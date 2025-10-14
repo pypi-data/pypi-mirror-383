@@ -1,0 +1,22 @@
+From Implicit to Explicit definition of container constraints (#1333)
+
+# Description
+
+Up until this PR we had implicit configuration of `requires` and
+`uniqueness` container constraint, where especially the first constraint
+type (set via `Containers` sheet) did not allow for custom user defined
+ids. In this PR we enable explicit definition of containers, where from
+now onwards stating type of constraint is required. Backward
+compatibility with implicit definition of constraints is still possible.
+
+## Bump
+
+- [ ] Patch
+- [x] Minor
+- [ ] Skip
+
+## Changelog
+### Added
+
+- Explicit configuration of container constraints, specifically
+container ids
