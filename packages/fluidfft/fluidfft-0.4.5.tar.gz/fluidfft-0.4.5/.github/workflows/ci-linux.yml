@@ -1,0 +1,61 @@
+name: CI-linux
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+
+    - name: apt install
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make libfftw3-dev libfftw3-mpi-dev \
+          libhdf5-openmpi-dev openmpi-bin libopenmpi-dev \
+          libopenblas-dev
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install nox pdm
+        # cython is for coverage
+        python -m pip install coverage cython
+
+    - name: Run sequential tests with nox
+      run: |
+        nox --session "tests(with_cov=True, with_mpi=False)"
+        mv .coverage/coverage.xml coverage_without_mpi.xml
+
+    - name: Run parallel tests with nox
+      run: |
+        nox --session "tests(with_cov=True, with_mpi=True)"
+        mv .coverage/coverage.xml coverage_with_mpi.xml
+
+    - name: Produce coverage xml
+      run: |
+        coverage xml
+
+    - name: Upload coverage to codecov
+      if: ${{ success() }}
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: false # optional (default = false)
+        verbose: true # optional (default = false)
+        files: coverage_without_mpi.xml,coverage_with_mpi.xml

@@ -1,0 +1,3 @@
+- The version with explicit loops as fast (even slighly faster) as Fortran!
+
+- The version without explicit loops is twice slower...

@@ -1,0 +1,154 @@
+
+[build-system]
+requires = ["meson-python", "numpy", "transonic>=0.6.4", "pythran>=0.9.7"]
+build-backend = 'mesonpy'
+
+[project]
+name = "fluidfft"
+version = "0.4.5"
+description = "Efficient and easy Fast Fourier Transform (FFT) for Python."
+authors = [
+    {name = "Pierre Augier", email = "pierre.augier@legi.cnrs.fr"},
+]
+dependencies = [
+    "fluiddyn >= 0.2.3",
+    "transonic >= 0.6.4",
+]
+requires-python = ">= 3.11"
+readme = "README.md"
+license = "CeCILL-1.0"
+license-files = ["LICENSE.txt"]
+keywords = [
+    "Fast Fourier Transform",
+    "FFT",
+    "spectral code",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: C",
+    "Programming Language :: Cython",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+]
+
+[project.urls]
+Homepage = "https://foss.heptapod.net/fluiddyn/fluidfft"
+
+[project.optional-dependencies]
+pyfftw = ["pyfftw >= 0.10.4"]
+dask = ["dask"]
+mpi = ["mpi4py"]
+fftw = ["fluidfft-fftw"]
+mpi-with-fftw = ["fluidfft-mpi_with_fftw"]
+fftwmpi = ["fluidfft-fftwmpi"]
+pfft = ["fluidfft-pfft"]
+p3dfft = ["fluidfft-p3dfft"]
+
+[project.scripts]
+fluidfft-bench = "fluidfft.bench:run"
+fluidfft-bench-analysis = "fluidfft.bench_analysis:run"
+fluidfft-get-methods = "fluidfft.cli_get_methods:main"
+
+[project.entry-points."fluidfft.plugins"]
+"fft2d.with_pyfftw" = "fluidfft.fft2d.with_pyfftw"
+"fft3d.with_pyfftw" = "fluidfft.fft3d.with_pyfftw"
+"fft2d.with_dask" = "fluidfft.fft2d.with_dask"
+
+[tool.pdm]
+distribution = true
+package-dir = "src"
+ignore_package_warnings = ["ipython"]
+
+[tool.pdm.dev-dependencies]
+build = ["meson-python", "ninja", "numpy", "transonic>=0.6.0", "pythran>=0.9.7"]
+
+test = [
+    "pytest",
+    "coverage[toml]",
+    "pytest-cov",
+    "cython", # needed at run time for coverage
+    # needed to build the plugins
+    "pip",
+    "flit_core",
+    "-e fluidfft-builder @ file:///${PROJECT_ROOT}/plugins/fluidfft-builder",
+]
+dev = ["ipython"]
+doc = [
+    "sphinx",
+    "sphinx_copybutton",
+    "sphinx_rtd_theme",
+    "jupyter",
+    "myst-nb",
+    "numpydoc",
+    "pandas",
+    "pyfftw",
+    # needed to create the dummy modules
+    "flit_core",
+    "-e fluidfft-builder @ file:///${PROJECT_ROOT}/plugins/fluidfft-builder",
+]
+lint = ["black", "pylint"]
+
+[tool.pdm.scripts]
+pre_install = "nox -s create-fake-modules"
+black = 'black -l 82 src doc plugins tests --exclude "/(__pythran__|__python__|__numba__|build|doc/_build|\.ipynb_checkpoints/*)/"'
+black_check = 'black --check -l 82 src doc plugins tests --exclude "/(__pythran__|__python__|__numba__|build|doc/_build|\.ipynb_checkpoints/*)/"'
+lint = {shell="pylint -rn --rcfile=pylintrc --jobs=$(nproc) src doc tests plugins --exit-zero"}
+validate_code = {composite = ["black_check", "lint"]}
+
+[tool.pdm.resolution]
+excludes = ["fluidfft-fftw", "fluidfft-mpi_with_fftw", "fluidfft-fftwmpi", "fluidfft-pfft", "fluidfft-p3dfft"]
+
+[tool.pdm.options]
+lock = ["-G", "pyfftw", "-G", "dask", "-G", "mpi"]
+sync = ["--no-isolation"]
+install = ["--no-isolation"]
+
+[tool.coverage.run]
+source = [
+  "./src/fluidfft",
+  "./plugins/fluidfft-fftw",
+  "./plugins/fluidfft-fftwmpi",
+  "./plugins/fluidfft-mpi_with_fftw",
+]
+data_file = ".coverage/coverage"
+omit = [
+    "*/try_*.py",
+    "*/_old_*.py",
+    "**/__pythran__/*.py",
+    "**/__python__/*.py",
+    "**/__numba__/*.py",
+    "src/fluidfft/fft2d/fake_mod_fft2d_for_doc.py",
+    "src/fluidfft/fft3d/fake_mod_fft3d_for_doc.py",
+]
+plugins = ["Cython.Coverage"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "if __name__ == .__main__.:",
+    "if \"sphinx\" in sys.modules:",
+    "raise ValueError",
+    "raise NotImplementedError",
+    "raise ImportError",
+    "except KeyError:",
+    "except ImportError:",
+    "except AttributeError:",
+    "except NotImplementedError:",
+]
+
+[tool.coverage.html]
+directory = ".coverage"
+
+[tool.coverage.xml]
+output = ".coverage/coverage.xml"
+
+[tool.black]
+line-length = 82
