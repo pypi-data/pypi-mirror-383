@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: edustudio
+Version: 1.1.7
+Summary: a Unified and Templatized Framework for Student Assessment Models
+Home-page: https://github.com/HFUT-LEC/EduStudio
+Author: HFUT-LEC
+Author-email: lmcRS.hfut@gmail.com
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=1.10.0
+Requires-Dist: numpy>=1.17.2
+Requires-Dist: scipy>=1.6.0
+Requires-Dist: pandas>=1.0.5
+Requires-Dist: tqdm>=4.48.2
+Requires-Dist: scikit_learn>=0.23.2
+Requires-Dist: pyyaml>=5.1.0
+Requires-Dist: tensorboard>=2.5.0
+Requires-Dist: requests>=2.27.1
+Requires-Dist: pytz>=2022.1
+Requires-Dist: matplotlib>=3.5.1
+Requires-Dist: deepdiff>=6.3.1
+Requires-Dist: networkx>=2.8
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+EduStudio is a Unified and Templatized Framework for Student Assessment Models including Cognitive Diagnosis(CD) and Knowledge Tracing(KT) based on Pytorch.
