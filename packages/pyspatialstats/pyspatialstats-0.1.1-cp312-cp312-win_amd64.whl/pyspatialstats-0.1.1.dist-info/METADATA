@@ -1,0 +1,75 @@
+Metadata-Version: 2.4
+Name: pyspatialstats
+Version: 0.1.1
+Author-email: Jasper Roebroek <roebroek.jasper@gmail.com>
+License: MIT
+Project-URL: repository, https://github.com/jasperroebroek/pyspatialstats
+Project-URL: documentation, https://pyspatialstats.readthedocs.io/en/latest/index.html
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=2.2.1
+Requires-Dist: joblib
+Requires-Dist: pandas
+Requires-Dist: scipy
+Provides-Extra: documentation
+Requires-Dist: sphinx; extra == "documentation"
+Requires-Dist: sphinx_rtd_theme; extra == "documentation"
+Requires-Dist: numpydoc; extra == "documentation"
+Requires-Dist: jupyter; extra == "documentation"
+Requires-Dist: matplotlib; extra == "documentation"
+Requires-Dist: rasterio; extra == "documentation"
+Provides-Extra: develop
+Requires-Dist: cython; extra == "develop"
+Requires-Dist: sphinx; extra == "develop"
+Requires-Dist: sphinx_rtd_theme; extra == "develop"
+Requires-Dist: numpydoc; extra == "develop"
+Requires-Dist: jupyter; extra == "develop"
+Requires-Dist: matplotlib; extra == "develop"
+Requires-Dist: pytest; extra == "develop"
+Requires-Dist: joblib; extra == "develop"
+Requires-Dist: statsmodels; extra == "develop"
+Requires-Dist: rasterio; extra == "develop"
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: statsmodels; extra == "test"
+Requires-Dist: scikit-learn; extra == "test"
+Requires-Dist: xarray; extra == "test"
+Dynamic: license-file
+
+[![Documentation Status](https://readthedocs.org/projects/pyspatialstats/badge/?version=latest)](https://pyspatialstats.readthedocs.io/en/latest/?badge=latest)
+
+This module provides spatial statistics for python, that runs without the installation of extensive GIS packages.
+
+The package implements three different categories of spatial statistics:
+- focal statistics, which are calculated as a moving window over input rasters (2D)
+- grouped statistics, which calculates the statistics based on zonal (xD)
+- zonal statistics, which calculates the statistics for each stratum and reapplies it to the index data (xD).
+
+Furthermore, this package provides functionality to implement your own focal statistics functions, based on the 
+mechanisms of a rolling window (xD).
+
+# Installation
+
+The package can be installed with conda:
+
+```
+conda install --channel conda-forge pyspatialstats
+```
+
+# Usage example
+
+Focal mean of a 100x100 random numpy array.
+
+```
+from pyspatialstats.focal import focal_mean
+import numpy as np
+
+x = np.random.rand(100, 100)
+fm = focal_mean(x, window=5)
+```
+
+# Important links
+
+- API reference: https://pyspatialstats.readthedocs.io/en/latest/api.html
+- Documentation: https://pyspatialstats.readthedocs.io/en/latest/index.html
