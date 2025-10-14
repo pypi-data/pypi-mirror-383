@@ -1,0 +1,54 @@
+[project]
+name = "easy-ai18n"
+version = "1.1.0"
+description = "Simple and Elegant Python3 Internationalization (i18n) Tool"
+requires-python = ">=3.12"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "梓澪", email = "zilingmio@gmail.com" }
+]
+dependencies = [
+    "googletrans",
+    "instructor",
+    "loguru",
+    "python-dotenv",
+    "pyyaml",
+    "tenacity",
+    "tqdm",
+]
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.0",
+]
+
+[project.urls]
+Repository = "https://github.com/z-mio/easy-ai18n"
+Issues = "https://github.com/z-mio/easy-ai18n/issues"
+
+[tool.ruff]
+line-length = 140
+exclude = [
+    "tests",
+]
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle 错误检查
+    "W", # pycodestyle 警告检查
+    "F", # pyflakes 错误检查
+    "I", # isort 导入排序
+    "B", # flake8-bugbear 常见错误检查
+    "C4", # flake8-comprehensions 列表/字典推导式检查
+    "UP", # pyupgrade 自动升级语法
+]
+ignore = [
+    "B008", # 不在参数默认值中执行函数调用
+    "C901", # 函数复杂度过高
+]
+
