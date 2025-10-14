@@ -1,0 +1,11 @@
+datasets>=2.0.0
+Pillow>=8.0.0
+
+[dev]
+pytest>=7.0
+black>=22.0
+flake8>=4.0
+
+[visualization]
+matplotlib>=3.5.0
+seaborn>=0.11.0
