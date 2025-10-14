@@ -1,0 +1,111 @@
+[project]
+name = "izifizi"
+version = "1.0.0b0"
+description = "Python package for physics lab experiments"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+compare-tags = [
+    "packaging>=25.0",
+    "tomli>=2.3.0",
+]
+dev = [
+    "pre-commit>=4.3.0",
+]
+docs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-literate-nav>=0.6.2",
+    "mkdocs-material>=9.6.21",
+    "mkdocstrings-python>=1.18.2",
+    "mkdocstrings[python]>=0.30.1",
+]
+lint = [
+    "mypy>=1.18.2",
+    "pytest-mypy-plugins>=3.2.0",
+    "ruff>=0.14.0",
+]
+test = [
+    "coverage>=7.10.7",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.mypy]
+explicit_package_bases = true
+exclude = ["generated.*", "scripts/*"]
+cache_dir = "./.cache/mypy"
+pretty = true
+strict = true
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disable_error_code = []
+
+[tool.ruff]
+cache-dir = "./.cache/ruff"
+exclude = ["generated*.py"]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "A",
+    "ANN",
+    "ARG",
+    "ASYNC",
+    "B",
+    "COM",
+    "C4",
+    "C90",
+    "D",
+    "E",
+    "ERA",
+    "F",
+    "I",
+    "LOG",
+    "N",
+    "PL",
+    "PT",
+    "PTH",
+    "Q",
+    "RUF",
+    "S",
+    "TC",
+    "TD",
+    "TRY",
+    "SIM",
+    "W",
+]
+ignore = [
+    "COM812",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D203",
+    "D212",
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"test_*.py" = ["S101"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
