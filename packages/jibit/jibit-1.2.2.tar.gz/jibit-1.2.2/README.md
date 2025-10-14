@@ -1,0 +1,144 @@
+# API Documentation
+
+This project interfaces with the Jibit API and provides several functions for interacting with the platform. Below are the details for each function, including inputs, outputs, and purpose.
+
+### Example usage of token generation and fetching card-to-IBAN info:
+
+```python
+service = JibitService(api_key="YOUR_API_KEY", secret_key="YOUR_SECRET_KEY")
+
+# Generate tokens
+tokens = await service.generate_token()
+
+# Fetch IBAN information for a card
+card_info, new_tokens = await service.card_to_iban(card_number="1234567890", tokens=tokens)
+
+# Print IBAN info
+print(card_info)
+```
+## Methods
+
+### 1. **Generate Token**
+- **`generate_token()`**
+  - **Purpose**: Fetches access and refresh tokens from the Jibit API.
+  - **Inputs**: None.
+  - **Outputs**: Returns an instance of `JibitTokens` containing `access_token` and `refresh_token`.
+
+---
+
+### 2. **Refresh Token**
+- **`refresh_token(tokens: JibitTokens)`**
+  - **Purpose**: Refreshes the tokens when the current ones have expired or are invalid.
+  - **Inputs**:
+    - `tokens`: An instance of `JibitTokens` containing the current `access_token` and `refresh_token`.
+  - **Outputs**: A new instance of `JibitTokens` with refreshed access and refresh tokens.
+
+---
+
+### 3. **Card to IBAN**
+- **`card_to_iban(card_number: str, tokens: Optional[JibitTokens])`**
+  - **Purpose**: Converts a card number to an IBAN using the Jibit API.
+  - **Inputs**:
+    - `card_number`: The card number to be converted to IBAN.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - A `JibitCard` instance with the IBAN info.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 4. **Match IBAN to National Code**
+- **`match_iban_to_national(tokens: Optional[JibitTokens], iban: str, national: str, birth_date: str)`**
+  - **Purpose**: Matches the IBAN to the national code and birth date.
+  - **Inputs**:
+    - `iban`: The IBAN to be matched.
+    - `national`: The national code.
+    - `birth_date`: The birth date in the format `yyyy-MM-dd`.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - `matched`: A boolean indicating whether the IBAN matches the national code and birth date.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 5. **Postal Code to Address**
+- **`postal_to_address(tokens: Optional[JibitTokens], postal_code: str)`**
+  - **Purpose**: Converts a postal code to detailed address information.
+  - **Inputs**:
+    - `postal_code`: The postal code to be converted to address information.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - An `AddressInfo` instance with the parsed address.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 6. **Identity Similarity Check**
+- **`identity_similarity(tokens: Optional[JibitTokens], national_code: str, birth_date: str, first_name: str, last_name: str, full_name: str, father_name: str)`**
+  - **Purpose**: Compares personal information for similarity between the provided data and Jibit’s records.
+  - **Inputs**:
+    - `national_code`: The national code.
+    - `birth_date`: The birth date in the format `yyyy-MM-dd`.
+    - `first_name`: The first name.
+    - `last_name`: The last name.
+    - `full_name`: The full name.
+    - `father_name`: The father’s name.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - An `IdentitySimilarity` instance with similarity percentages for each field.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 7. **Foreigner Identity Info**
+- **`identity_foreigners(tokens: Optional[JibitTokens], fida: str)`**
+  - **Purpose**: Retrieves identity information for a foreigner based on their FIDA number.
+  - **Inputs**:
+    - `fida`: The foreigner identity number.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - A `ForeignerIdentityInfo` instance with detailed information about the foreigner.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 8. **Corporation Identity Info**
+- **`identity_corporation(tokens: Optional[JibitTokens], code: str)`**
+  - **Purpose**: Retrieves identity information for a corporation based on its code.
+  - **Inputs**:
+    - `code`: The corporation identity code.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - A `CorporationIdentityInfo` instance with detailed information about the corporation.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 9. **Military Service Qualification**
+- **`military_qualification_info(tokens: Optional[JibitTokens], national_code: str)`**
+  - **Purpose**: Retrieves military service qualification information for an individual based on their national code.
+  - **Inputs**:
+    - `national_code`: The national code.
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - A `militaryServiceQualificationInfo` instance with the military qualification status.
+      - `new_tokens`: New tokens if they were refreshed.
+
+---
+
+### 10. **Account Balances**
+- **`account_balances(tokens: Optional[JibitTokens])`**
+  - **Purpose**: Retrieves the balances of accounts associated with the authenticated user.
+  - **Inputs**:
+    - `tokens`: The current `JibitTokens` for authentication (optional).
+  - **Outputs**:
+    - A tuple containing:
+      - A list of `Balance` instances representing account balances.
+      - `new_tokens`: New tokens if they were refreshed.
