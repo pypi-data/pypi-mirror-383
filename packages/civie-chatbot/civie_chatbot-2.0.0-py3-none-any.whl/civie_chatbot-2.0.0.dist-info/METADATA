@@ -1,0 +1,415 @@
+Metadata-Version: 2.4
+Name: civie-chatbot
+Version: 2.0.0
+Summary: A comprehensive chatbot API with RAG capabilities, document ingestion, and customer support features
+Home-page: https://github.com/civie/civie-chatbot
+Author: Civie Team
+Author-email: support@civie.com
+Project-URL: Bug Tracker, https://github.com/civie/civie-chatbot/issues
+Project-URL: Documentation, https://docs.civie.com
+Project-URL: Source Code, https://github.com/civie/civie-chatbot
+Keywords: chatbot,fastapi,rag,llm,ai,machine-learning,natural-language-processing,customer-support,document-ingestion,vector-database,embeddings,langchain,openai
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Internet :: WWW/HTTP :: HTTP Servers
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Classifier: Framework :: FastAPI
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohappyeyeballs==2.6.1
+Requires-Dist: aiohttp==3.12.14
+Requires-Dist: aiosignal==1.4.0
+Requires-Dist: aiosqlite==0.21.0
+Requires-Dist: annotated-types==0.7.0
+Requires-Dist: anyio==4.9.0
+Requires-Dist: attrs==25.3.0
+Requires-Dist: banks==2.2.0
+Requires-Dist: beautifulsoup4==4.13.4
+Requires-Dist: boto3==1.39.13
+Requires-Dist: botocore==1.39.13
+Requires-Dist: certifi==2025.7.14
+Requires-Dist: cffi==1.17.1
+Requires-Dist: charset-normalizer==3.4.2
+Requires-Dist: click==8.2.1
+Requires-Dist: colorama==0.4.6
+Requires-Dist: cryptography==45.0.5
+Requires-Dist: dataclasses-json==0.6.7
+Requires-Dist: defusedxml==0.7.1
+Requires-Dist: Deprecated==1.2.18
+Requires-Dist: dirtyjson==1.0.8
+Requires-Dist: distro==1.9.0
+Requires-Dist: dnspython==2.7.0
+Requires-Dist: dotenv==0.9.9
+Requires-Dist: fastapi==0.116.1
+Requires-Dist: filetype==1.2.0
+Requires-Dist: frozenlist==1.7.0
+Requires-Dist: fsspec==2025.7.0
+Requires-Dist: greenlet==3.2.3
+Requires-Dist: griffe==1.8.0
+Requires-Dist: grpcio==1.73.1
+Requires-Dist: h11==0.16.0
+Requires-Dist: h2==4.2.0
+Requires-Dist: hpack==4.1.0
+Requires-Dist: httpcore==1.0.9
+Requires-Dist: httpx==0.28.1
+Requires-Dist: httpx-sse==0.4.1
+Requires-Dist: hyperframe==6.1.0
+Requires-Dist: idna==3.10
+Requires-Dist: Jinja2==3.1.6
+Requires-Dist: jiter==0.10.0
+Requires-Dist: jmespath==1.0.1
+Requires-Dist: joblib==1.5.1
+Requires-Dist: jsonpatch==1.33
+Requires-Dist: jsonpointer==3.0.0
+Requires-Dist: langchain==0.3.26
+Requires-Dist: langchain-community==0.3.27
+Requires-Dist: langchain-core==0.3.70
+Requires-Dist: langchain-qdrant==0.2.0
+Requires-Dist: langchain-text-splitters==0.3.8
+Requires-Dist: langgraph==0.5.4
+Requires-Dist: langgraph-checkpoint==2.1.1
+Requires-Dist: langgraph-prebuilt==0.5.2
+Requires-Dist: langgraph-sdk==0.1.74
+Requires-Dist: langsmith==0.4.8
+Requires-Dist: llama-cloud==0.1.32
+Requires-Dist: llama-cloud-services==0.6.43
+Requires-Dist: llama-index==0.12.52
+Requires-Dist: llama-index-agent-openai==0.4.12
+Requires-Dist: llama-index-cli==0.4.4
+Requires-Dist: llama-index-core==0.12.52.post1
+Requires-Dist: llama-index-embeddings-openai==0.3.1
+Requires-Dist: llama-index-indices-managed-llama-cloud==0.7.10
+Requires-Dist: llama-index-instrumentation==0.3.0
+Requires-Dist: llama-index-llms-openai==0.4.7
+Requires-Dist: llama-index-multi-modal-llms-openai==0.5.3
+Requires-Dist: llama-index-program-openai==0.3.2
+Requires-Dist: llama-index-question-gen-openai==0.3.1
+Requires-Dist: llama-index-readers-file==0.4.11
+Requires-Dist: llama-index-readers-llama-parse==0.4.0
+Requires-Dist: llama-index-workflows==1.2.0
+Requires-Dist: llama-parse==0.6.43
+Requires-Dist: MarkupSafe==3.0.2
+Requires-Dist: marshmallow==3.26.1
+Requires-Dist: multidict==6.6.3
+Requires-Dist: mypy_extensions==1.1.0
+Requires-Dist: nest-asyncio==1.6.0
+Requires-Dist: networkx==3.5
+Requires-Dist: nltk==3.9.1
+Requires-Dist: numpy==2.3.1
+Requires-Dist: openai==1.97.1
+Requires-Dist: orjson==3.11.0
+Requires-Dist: ormsgpack==1.10.0
+Requires-Dist: packaging==25.0
+Requires-Dist: pandas==2.2.3
+Requires-Dist: pdfminer.six==20250506
+Requires-Dist: pdfplumber==0.11.7
+Requires-Dist: pillow==11.3.0
+Requires-Dist: platformdirs==4.3.8
+Requires-Dist: portalocker==3.2.0
+Requires-Dist: propcache==0.3.2
+Requires-Dist: protobuf==6.31.1
+Requires-Dist: pycparser==2.22
+Requires-Dist: pydantic==2.11.7
+Requires-Dist: pydantic-settings==2.10.1
+Requires-Dist: pydantic_core==2.33.2
+Requires-Dist: pymongo==4.13.2
+Requires-Dist: PyMuPDF==1.26.0
+Requires-Dist: pypdf==5.8.0
+Requires-Dist: pypdfium2==4.30.0
+Requires-Dist: python-dateutil==2.9.0.post0
+Requires-Dist: python-dotenv==1.1.1
+Requires-Dist: python-multipart==0.0.20
+Requires-Dist: pytz==2025.2
+Requires-Dist: PyYAML==6.0.2
+Requires-Dist: qdrant-client==1.15.0
+Requires-Dist: regex==2024.11.6
+Requires-Dist: requests==2.32.4
+Requires-Dist: requests-toolbelt==1.0.0
+Requires-Dist: s3transfer==0.13.1
+Requires-Dist: setuptools==80.9.0
+Requires-Dist: six==1.17.0
+Requires-Dist: sniffio==1.3.1
+Requires-Dist: soupsieve==2.7
+Requires-Dist: SQLAlchemy==2.0.41
+Requires-Dist: starlette==0.47.2
+Requires-Dist: striprtf==0.0.26
+Requires-Dist: tenacity==9.1.2
+Requires-Dist: tiktoken==0.9.0
+Requires-Dist: tqdm==4.67.1
+Requires-Dist: typing-inspect==0.9.0
+Requires-Dist: typing-inspection==0.4.1
+Requires-Dist: typing_extensions==4.14.1
+Requires-Dist: tzdata==2025.2
+Requires-Dist: urllib3==2.5.0
+Requires-Dist: uvicorn==0.35.0
+Requires-Dist: wrapt==1.17.2
+Requires-Dist: xxhash==3.5.0
+Requires-Dist: yarl==1.20.1
+Requires-Dist: zstandard==0.23.0
+Requires-Dist: rank_bm25
+Requires-Dist: scikit-learn
+Requires-Dist: psutil>=5.9.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Requires-Dist: isort>=5.12.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=5.0.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=1.2.0; extra == "docs"
+Requires-Dist: sphinx-autodoc-typehints>=1.23.0; extra == "docs"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Civie Chatbot
+
+A comprehensive chatbot API with RAG (Retrieval-Augmented Generation) capabilities, document ingestion, and customer support features built with FastAPI.
+
+## Features
+
+- 🤖 **Intelligent Chatbot**: Advanced conversational AI with context awareness
+- 📚 **Document Ingestion**: Support for PDF, DOCX, and various document formats
+- 🔍 **RAG System**: Retrieval-Augmented Generation for accurate responses
+- 💾 **Vector Database**: Efficient document storage and retrieval using Qdrant
+- 📊 **MongoDB Logging**: Comprehensive logging and monitoring
+- 🔒 **Security Middleware**: Built-in security and performance monitoring
+- 🌐 **RESTful API**: Full-featured REST API with FastAPI
+- 📝 **Patient Management**: Healthcare-focused patient information management
+
+## Installation
+
+### From PyPI
+
+```bash
+pip install civie-chatbot
+```
+
+### From Source
+
+```bash
+git clone https://github.com/civie/civie-chatbot.git
+cd civie-chatbot
+pip install -e .
+```
+
+## Quick Start
+
+### Using as a Library
+
+```python
+from civie_chatbot import create_app, initialize_chatbot, process_chat_message
+
+# Initialize the chatbot
+chatbot = initialize_chatbot({"debug": True})
+print(chatbot['status'])
+
+# Process a chat message
+response = await process_chat_message(
+    message="Hello, I need help with my account",
+    session_id="user-123"
+)
+print(response['answer'])
+```
+
+### Using as a FastAPI Application
+
+```python
+from civie_chatbot import create_app
+import uvicorn
+
+# Create the app
+app = create_app(
+    title="My Chatbot API",
+    version="1.0.0"
+)
+
+# Run the server
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+```
+
+### Document Ingestion
+
+```python
+from civie_chatbot import ingest_documents
+
+# Ingest documents
+result = await ingest_documents(
+    file_paths=["document1.pdf", "document2.pdf"],
+    collection_name="knowledge_base",
+    chunk_size=1000,
+    chunk_overlap=200
+)
+print(result['status'])
+```
+
+### Query Documents
+
+```python
+from civie_chatbot import query_documents
+
+# Query the knowledge base
+results = await query_documents(
+    query="What is the refund policy?",
+    collection_name="knowledge_base",
+    top_k=5
+)
+
+for doc in results['documents']:
+    print(doc['text'])
+```
+
+## Available Services
+
+The package exports the following services that you can use directly:
+
+- `ChatService` - Handle chat interactions
+- `CollectionService` - Manage document collections
+- `DatabaseService` - Database operations
+- `MongoService` - MongoDB-specific operations
+- `S3Service` - AWS S3 file operations
+- `AsyncIngestionService` - Asynchronous document ingestion
+- `LLMService` - Language model interactions
+- `RAGService` - Retrieval-Augmented Generation
+- `EmbeddingService` - Generate embeddings
+- `ChunkingService` - Text chunking utilities
+- `PatientService` - Patient management
+
+## API Endpoints
+
+When running as a FastAPI application, the following endpoints are available:
+
+- `GET /health` - Health check endpoint
+- `POST /api/chat` - Chat with the bot
+- `POST /api/ingest` - Ingest documents
+- `GET /api/collections` - List collections
+- `POST /api/collections` - Create a collection
+- `DELETE /api/collections/{name}` - Delete a collection
+- `GET /api/patients` - List patients
+- `POST /api/patients` - Create patient record
+
+For complete API documentation, visit `/docs` (Swagger UI) or `/redoc` (ReDoc) when running the server.
+
+## Configuration
+
+### Environment Variables
+
+Create a `.env` file in your project root:
+
+```env
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017
+MONGODB_DB_NAME=civie_chatbot
+
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key
+
+# AWS Configuration (if using S3)
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=us-east-1
+
+# Qdrant Configuration
+QDRANT_URL=http://localhost:6333
+QDRANT_API_KEY=your_qdrant_api_key
+```
+
+## Development
+
+### Install Development Dependencies
+
+```bash
+pip install -e ".[dev]"
+```
+
+### Run Tests
+
+```bash
+pytest
+```
+
+### Code Formatting
+
+```bash
+black .
+isort .
+flake8 .
+```
+
+## Docker Support
+
+### Build Docker Image
+
+```bash
+docker build -t civie-chatbot .
+```
+
+### Run with Docker Compose
+
+```bash
+docker-compose up
+```
+
+## Requirements
+
+- Python >= 3.8
+- FastAPI
+- MongoDB
+- Qdrant (Vector Database)
+- OpenAI API Key (or compatible LLM service)
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
+
+## Support
+
+For issues, questions, or support:
+- 📧 Email: support@civie.com
+- 🐛 Issues: https://github.com/civie/civie-chatbot/issues
+- 📖 Documentation: https://docs.civie.com
+
+## Changelog
+
+### Version 2.0.0
+- Initial PyPI release
+- Complete RAG system implementation
+- MongoDB logging integration
+- Enhanced security middleware
+- Patient management features
+
+## Authors
+
+**Civie Team**
+
+---
+
+Made with ❤️ by the Civie Team
