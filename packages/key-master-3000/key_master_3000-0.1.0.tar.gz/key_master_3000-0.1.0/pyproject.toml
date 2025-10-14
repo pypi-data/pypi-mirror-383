@@ -1,0 +1,29 @@
+[project]
+name = "key-master-3000"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Ole-Jakob Olsen",email = "ole.jakob.olsen@ngi.no"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "azure-identity (>=1.25.1,<2.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "azure-mgmt-keyvault (>=12.1.1,<13.0.0)",
+    "azure-keyvault-secrets (>=4.10.0,<5.0.0)",
+    "azure-mgmt-resource (>=24.0.0,<25.0.0)",
+    "inquirerpy (>=0.3.4,<0.4.0)",
+    "pyperclip (>=1.11.0,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "key_master_3000", from = "src"}]
+
+[tool.poetry.scripts]
+keymaster = "key_master_3000.main:main"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
