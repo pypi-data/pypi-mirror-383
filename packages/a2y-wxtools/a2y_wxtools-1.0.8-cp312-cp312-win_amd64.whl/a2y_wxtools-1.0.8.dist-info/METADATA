@@ -1,0 +1,44 @@
+Metadata-Version: 2.2
+Name: a2y_wxtools
+Version: 1.0.8
+Summary: A module that supplies some wx widgets.
+Home-page: http://www.kersci.com/a2y/wxtools.html
+Author: Yu Han
+Author-email: hanjunyu@163.com
+License: Private
+Platform: Windows
+Platform: Linux
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: Free For Educational Use
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: Operating System :: POSIX :: Linux
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: wxpython>=4.2.0
+Requires-Dist: pyserial>=3.4
+Requires-Dist: a2y-paratree>=0.8.2
+Requires-Dist: a2y-paratreeui>=0.9
+Requires-Dist: a2y-handy>=1.3.3
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: platform
+Dynamic: requires-dist
+Dynamic: summary
+
+# Python Module: a2y_wxtools
+
+## 简述
+此模块提供一些GUI部件、工具，它们基于wxWidgets。
+
+## ChangeLog
+
+- 2025-09-27 根据`wxPython-4.2`的输出提示修正`run_wx_app`在主窗口为对话框时的处理方式。升级为 1.0.8。
+
+- 2025-07-23 Call `SetSizeHints` instead of `SetSizeHintsSz`. Upgrade to 1.0.7
