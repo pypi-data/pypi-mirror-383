@@ -1,0 +1,28 @@
+[CDF-25879] 😅 Direct relation mapping part2 (#2049)
+
+# Description
+
+**Context**: This is part of the `alpha` migration tooling in Toolkit,
+for overview [see
+here](https://cognitedata.atlassian.net/wiki/spaces/~170890702/pages/5455773697/Migration+Tooling+in+Toolkit).
+This is step 3 of that process.
+
+This PR improves the migration of timeseries/files and eventually
+events/sequences/assets to include connections between resources in the
+form of direct relations.
+
+## Changelog
+
+- [x] Patch
+- [ ] Skip
+
+## cdf
+
+### Added
+
+- [alpha] When migrating timeseries/files, Toolkit can now lookup
+`assetIds` thus creating direct relations.
+
+## templates
+
+No changes.
