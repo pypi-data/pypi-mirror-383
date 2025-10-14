@@ -1,0 +1,19 @@
+[project]
+name = "holy_bible_api_python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "openapi_client",
+]
+
+[tool.uv.sources]
+openapi_client = { path = "generated" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
