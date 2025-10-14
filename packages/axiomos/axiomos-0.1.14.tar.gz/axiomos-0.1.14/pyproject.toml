@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "axiomos"
+version = "0.1.14"
+description = "A lightweight AXIR playground to run numerical kernels across CPU and OpenCL"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Axiomos" }]
+keywords = ["opencl", "kernels", "gemm", "axir", "numpy", "runtime", "AI"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+dependencies = [
+  "numpy>=1.23",
+  "jsonschema>=4.21",
+  "tqdm>=4.0"
+]
+
+[project.optional-dependencies]
+opencl = ["pyopencl>=2022.3"]
+
+[project.urls]
+Homepage = "https://github.com/Aidenkuro10/axiomos-vitrine"
+Documentation = "https://github.com/Aidenkuro10/axiomos-vitrine#readme"
+Repository = "https://github.com/Aidenkuro10/axiomos-vitrine"
+
+[project.scripts]
+axiomos-doctor       = "axiomos.cli.axir_doctor:main"
+axiomos-verify       = "axiomos.verify:verify_main"
+axiomos-smoke        = "axiomos.smoke:main"
+axiomos-demo         = "axiomos.cli.quick_demo:main"
+axiomos-devices      = "axiomos.cli.devices:main"
+axiomos-export-torch = "axiomos.cli.export_torch:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["axiomos*"]
