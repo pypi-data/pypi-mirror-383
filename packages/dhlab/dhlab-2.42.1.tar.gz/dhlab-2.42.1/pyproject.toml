@@ -1,0 +1,80 @@
+[project]
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "ipython",
+    "matplotlib",
+    "networkx",
+    "pandas",
+    "python-louvain",
+    "requests",
+    "seaborn",
+    "openpyxl",
+    "beautifulsoup4",
+    "jinja2",
+    "tqdm",
+    "nb-tokenizer",
+    "lazy-loader",
+    "wordcloud",
+    "scipy",
+]
+name = "dhlab"
+version = "2.42.1"
+description = "Text and image analysis of the digital collection (books, newspapers, periodicals, and images) at the National Library of Norway"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[[project.authors]]
+name = "The Digital Humanities Lab at The National Library of Norway (NB)"
+email = "dh-lab@nb.no"
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+"Bug Tracker" = "https://github.com/NationalLibraryOfNorway/DHLAB/issues"
+homepage = "https://www.nb.no/dh-lab/"
+repository = "https://github.com/NationalLibraryOfNorway/DHLAB"
+documentation = "https://nationallibraryofnorway.github.io/DHLAB/"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[dependency-groups]
+docs = [
+    "Sphinx",
+    "furo",
+    "myst-parser",
+    "readthedocs-sphinx-search",
+    "sphinx-copybutton",
+    "sphinx-togglebutton",
+    "sphinx-design",
+    "sphinx-inline-tabs",
+    "mkdocs",
+    "mkdocstrings[python]",
+    "mkdocs-material",
+    "mkdocs-section-index",
+    "mkdocs-autorefs",
+    "sphinx-autodoc2",
+    "sphinx-book-theme",
+    "linkify-it-py",
+]
+dev = [
+    "ipykernel",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+]
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
