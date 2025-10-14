@@ -1,0 +1,28 @@
+[project]
+name = "easyfed_testing_p"
+version = "0.1.1"
+description = "Tool for automatizing the deployment of easy federated learning examples"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "checksumdir>=1.3.0",
+    "dacite>=1.9.2",
+    "nvflare[dev]>=2.6.2",
+    "paramiko>=4.0.0",
+    "tqdm>=4.67.1",
+    "typer>=0.19.2",
+]
+
+[project.scripts]
+easyfed = "src.cli.app:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/*"]
+only-packages = true
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "pyproject.toml"]

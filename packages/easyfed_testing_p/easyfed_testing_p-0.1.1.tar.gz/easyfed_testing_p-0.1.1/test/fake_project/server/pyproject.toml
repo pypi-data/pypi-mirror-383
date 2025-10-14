@@ -1,0 +1,16 @@
+[project]
+name = "fed_project"
+version = "0.1.0"
+description = "Lorem ipsum"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.3.2",
+    "nvflare[dev]==2.6.2",
+    "pyyaml===6.0.1",
+    "setuptools>=80.9.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
