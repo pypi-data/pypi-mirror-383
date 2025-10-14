@@ -1,0 +1,131 @@
+[build-system]
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "oneroll"
+dynamic = ["version"]
+description = "An efficient dice expression parsing tool, based on Rust and PEG grammar"
+authors = [{ name = "HsiangNianian", email = "leader@hydroroll.team" }]
+dependencies = [
+    "rich>=14.1.0",
+    "textual>=6.1.0",
+]
+requires-python = ">=3.9"
+readme.content-type = "text/markdown"
+readme.file = "README.md"
+license = { text = "AGPL-3.0" }
+keywords = ["hydroroll", "dice", "expression", "parser", "roll", "peg", "rust"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Robot Framework",
+    "Framework :: Robot Framework :: Library",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+[project.urls]
+homepage = "https://hydroroll.team/"
+repository = "https://github.com/HydroRoll-Team/oneroll"
+documentation = "https://oneroll.hydroroll.team/"
+
+[project.scripts]
+oneroll = "oneroll.__main__:main"
+1roll = "oneroll.__main__:main"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "oneroll._core"
+python-package = "oneroll"
+python-source = "src"
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.8
+target-version = "py39"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[dependency-groups]
+dev = [
+    "docutils>=0.21.2",
+    "furo>=2024.8.6",
+    "myst-parser>=3.0.1",
+    "ruff>=0.9.6",
+    "sphinx>=7.4.7",
+    "sphinx-autobuild>=2024.10.3",
+    "sphinx-intl>=2.3.1",
+    "sphinxcontrib-httpdomain>=1.8.1",
+    "tomli>=2.2.1",
+]
+docs = [
+    "docutils>=0.21.2",
+    "furo>=2024.8.6",
+    "myst-parser>=3.0.1",
+    "rinohtype>=0.5.5",
+    "sphinx>=7.4.7",
+    "sphinx-autobuild>=2024.10.3",
+    "sphinx-click>=6.0.0",
+    "sphinx-intl>=2.3.1",
+    "sphinxcontrib-httpdomain>=1.8.1",
+    "tomli>=2.2.1",
+]
