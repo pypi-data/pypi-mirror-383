@@ -1,0 +1,287 @@
+Metadata-Version: 2.4
+Name: usf-p1-chatbot-sdk
+Version: 1.0.0
+Summary: Python SDK for USF P1 Chatbot API - Connect to https://api-civie.us.inc
+Author-email: UltraSafe <support@ultrasafe.com>
+Project-URL: Homepage, https://api-civie.us.inc
+Project-URL: Documentation, https://api-civie.us.inc/docs
+Project-URL: Repository, https://github.com/ultrasafe/usf-p1-chatbot-sdk
+Project-URL: Issues, https://github.com/ultrasafe/usf-p1-chatbot-sdk/issues
+Keywords: chatbot,api,sdk,client,usf,civie
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Internet :: WWW/HTTP
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: httpx>=0.24.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Dynamic: license-file
+
+# USF P1 Chatbot SDK
+
+A Python SDK for interacting with the USF P1 Chatbot API deployed at **https://api-civie.us.inc**
+
+[![PyPI version](https://badge.fury.io/py/usf-p1-chatbot-sdk.svg)](https://badge.fury.io/py/usf-p1-chatbot-sdk)
+[![Python Versions](https://img.shields.io/pypi/pyversions/usf-p1-chatbot-sdk.svg)](https://pypi.org/project/usf-p1-chatbot-sdk/)
+
+## Features
+
+- ✅ **Complete API Coverage** - All 33 endpoints wrapped
+- ✅ **Easy to Use** - Simple, intuitive interface
+- ✅ **Type Hints** - Full type annotations for IDE support
+- ✅ **Async Support** - Streaming chat responses
+- ✅ **Production Ready** - Proper error handling and timeouts
+- ✅ **Well Documented** - Comprehensive examples and API reference
+
+## Installation
+
+```bash
+pip install usf-p1-chatbot-sdk
+```
+
+## Quick Start
+
+```python
+from usf_p1_chatbot_sdk import ChatbotClient
+
+# Initialize client with your API key
+client = ChatbotClient(api_key="your-api-key-here")
+
+# Check API health
+health = client.health_check()
+print(f"API Status: {health['status']}")
+
+# List collections
+collections = client.list_collections()
+print(f"Collections: {collections}")
+
+# Create a new collection
+collection = client.create_collection(
+    collection_name="my_documents",
+    description="My document collection"
+)
+collection_id = collection["collection_info"]["collection_id"]
+
+# Register a patient
+patient = client.register_patient(
+    collection_id=collection_id,
+    patient_name="John Doe",
+    age=35,
+    gender="M"
+)
+
+# Ingest documents from URLs
+result = client.ingest_urls(
+    collection_id=collection_id,
+    urls=["https://example.com/document.html"],
+    patient_user_name="John Doe"
+)
+print(f"Ingestion started: {result['task_id']}")
+
+# Chat with the AI
+response = client.chat(
+    collection_id=collection_id,
+    patient_user_name="John Doe",
+    message="What information do you have about me?"
+)
+print(f"AI Response: {response['response']}")
+
+# Close the client
+client.close()
+```
+
+## API Reference
+
+### Initialization
+
+```python
+client = ChatbotClient(
+    api_key="your-api-key",              # Required
+    base_url="https://api-civie.us.inc",  # Optional, uses production by default
+    timeout=300.0                          # Optional, request timeout in seconds
+)
+```
+
+### All 33 Available Methods
+
+#### Health Check (1 method)
+- `client.health_check()` - Check API health
+
+#### Collections (3 methods)
+- `client.create_collection(name, description)` - Create a new collection
+- `client.list_collections()` - List all collections
+- `client.delete_collection(collection_id)` - Delete a collection
+
+#### Patients (7 methods)
+- `client.register_patient(collection_id, patient_name, **data)` - Register a patient
+- `client.validate_patient(collection_id, patient_name)` - Validate patient exists
+- `client.get_patient(patient_name)` - Get patient information
+- `client.delete_patient(patient_name)` - Delete a patient
+- `client.list_patients()` - List all patients
+- `client.list_patients_by_collection(collection_id)` - List patients in a collection
+- `client.get_patient_data_summary(patient_name)` - Get patient data summary
+
+#### Data Ingestion (3 methods)
+- `client.ingest_pdfs(collection_id, files, patient_name)` - Ingest PDF files
+- `client.ingest_urls(collection_id, urls, patient_name)` - Ingest from URLs
+- `client.ingest_default(collection_id, files, urls, patient_name)` - Ingest files and/or URLs
+
+#### Ingestion Status (4 methods)
+- `client.get_ingestion_progress(request_id)` - Get ingestion progress
+- `client.list_ingestion_requests()` - List recent ingestion requests
+- `client.get_ingestion_status()` - Get ingestion service status
+- `client.cancel_ingestion_request(request_id)` - Cancel an ingestion request
+
+#### Chat (2 methods)
+- `client.chat(collection_id, patient_name, message, ...)` - Send a chat message
+- `client.chat_stream(collection_id, patient_name, message, ...)` - Stream chat response (async)
+
+#### Logging (8 methods)
+- `client.get_log_collections()` - List log collections
+- `client.get_log_stats()` - Get log statistics
+- `client.get_recent_logs(limit)` - Get recent logs
+- `client.get_logs_from_collection(collection_name, limit)` - Get logs from a collection
+- `client.clear_logs_collection(collection_name)` - Clear a log collection
+- `client.get_patient_logs(collection_id, patient_name, minutes)` - Get patient logs
+- `client.get_patient_logs_from_collection(...)` - Get patient logs from specific collection
+- `client.get_logs_by_collection_and_log_collection(...)` - Get logs by collection
+
+#### File Operations (5 methods)
+- `client.get_db_files()` - Get all database files
+- `client.get_db_files_by_collection(collection_id)` - Get DB files by collection
+- `client.get_s3_files()` - Get all S3 files
+- `client.get_s3_files_by_collection(collection_id)` - Get S3 files by collection
+- `client.delete_document(document_uuid)` - Delete a document
+
+## Advanced Usage
+
+### Context Manager
+
+```python
+with ChatbotClient(api_key="your-api-key") as client:
+    collections = client.list_collections()
+    # Client automatically closed
+```
+
+### Async Streaming Chat
+
+```python
+import asyncio
+
+async def stream_chat():
+    client = ChatbotClient(api_key="your-api-key")
+    
+    async for chunk in client.chat_stream(
+        collection_id="col-123",
+        patient_user_name="John Doe",
+        message="Tell me about my documents"
+    ):
+        print(chunk, end="", flush=True)
+    
+    await client.aclose()
+
+asyncio.run(stream_chat())
+```
+
+### Error Handling
+
+```python
+from usf_p1_chatbot_sdk import ChatbotClient, ChatbotClientError
+
+client = ChatbotClient(api_key="your-api-key")
+
+try:
+    response = client.chat(
+        collection_id="col-123",
+        patient_user_name="John Doe",
+        message="Hello!"
+    )
+except ChatbotClientError as e:
+    print(f"API Error: {e}")
+except Exception as e:
+    print(f"Unexpected error: {e}")
+finally:
+    client.close()
+```
+
+### Custom Timeout
+
+```python
+# Set custom timeout for long-running operations
+client = ChatbotClient(
+    api_key="your-api-key",
+    timeout=600.0  # 10 minutes
+)
+```
+
+## Complete Example
+
+```python
+from usf_p1_chatbot_sdk import ChatbotClient
+import time
+
+# Initialize
+client = ChatbotClient(api_key="your-api-key-here")
+
+try:
+    # 1. Create collection
+    collection = client.create_collection("medical_docs", "Medical documents")
+    cid = collection["collection_info"]["collection_id"]
+    print(f"✅ Created collection: {cid}")
+    
+    # 2. Register patient
+    patient = client.register_patient(cid, "Jane Smith", age=42)
+    print("✅ Registered patient: Jane Smith")
+    
+    # 3. Ingest documents
+    result = client.ingest_urls(
+        cid,
+        ["https://en.wikipedia.org/wiki/Medicine"],
+        "Jane Smith"
+    )
+    task_id = result["task_id"]
+    print(f"✅ Started ingestion: {task_id}")
+    
+    # 4. Wait for ingestion
+    while True:
+        progress = client.get_ingestion_progress(task_id)
+        if progress["status"] in ["completed", "failed"]:
+            break
+        time.sleep(5)
+    
+    print("✅ Ingestion complete")
+    
+    # 5. Chat
+    response = client.chat(cid, "Jane Smith", "What medical information do you have?")
+    print(f"💬 AI: {response['response'][:200]}...")
+    
+    # 6. Get logs
+    logs = client.get_patient_logs(cid, "Jane Smith", 30)
+    print(f"✅ Found {len(logs.get('logs', []))} log entries")
+    
+except Exception as e:
+    print(f"❌ Error: {e}")
+finally:
+    client.close()
+    print("✅ Client closed")
+```
+
+## API Documentation
+
+For detailed API documentation, visit: **https://api-civie.us.inc/docs**
+
+## Requirements
+
+- Python 3.9+
+- httpx >= 0.24.0
