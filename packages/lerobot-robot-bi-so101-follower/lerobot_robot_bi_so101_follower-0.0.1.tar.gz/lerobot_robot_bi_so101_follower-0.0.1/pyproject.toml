@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lerobot_robot_bi_so101_follower"
+version = "0.0.1"
+description = "LeRobot so101 bimanual integration package"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Leo and Keshav", email = "gyattman123@gmail.com"},
+]
+keywords = ["robotics", "lerobot", "bimanual", "so101"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "lerobot>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/SIGRobotics-UIUC/lerobot_robot_bi_so101_follower"
+"Bug Tracker" = "https://github.com/SIGRobotics-UIUC/lerobot_robot_bi_so101_follower/issues"
+Documentation = "https://github.com/SIGRobotics-UIUC/lerobot_robot_bi_so101_follower#readme"
+"Source Code" = "https://github.com/SIGRobotics-UIUC/lerobot_robot_bi_so101_follower"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy",
+]
+
+[tool.setuptools.packages.find]
+include = ["lerobot_robot_bi_so101_follower*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.md", "*.yml", "*.yaml"]
