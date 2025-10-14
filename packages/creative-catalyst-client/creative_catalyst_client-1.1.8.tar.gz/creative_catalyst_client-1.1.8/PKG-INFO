@@ -1,0 +1,194 @@
+Metadata-Version: 2.4
+Name: creative-catalyst-client
+Version: 1.1.8
+Summary: A client for the Creative Catalyst Engine API.
+Author-email: Md Tawhidul Islam <mtawhidulislam7@gmail.com>
+Project-URL: Repository, https://github.com/MTawhid7/creative-catalyst-client
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: sseclient-py
+
+# Creative Catalyst API Client
+
+[![PyPI version](https://img.shields.io/pypi/v/creative-catalyst-client.svg)](https://pypi.org/project/creative-catalyst-client/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python Versions](https://img.shields.io/pypi/pyversions/creative-catalyst-client.svg)](https://pypi.org/project/creative-catalyst-client/)
+
+A robust Python client for interacting with the Creative Catalyst Engine API. This client handles job submission and uses a real-time Server-Sent Events (SSE) stream to provide progress updates and retrieve final results, eliminating the need for inefficient polling.
+
+---
+
+## Table of Contents
+
+- [Creative Catalyst API Client](#creative-catalyst-api-client)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Configuration](#configuration)
+    - [Core Concepts: The Variation Workflow](#core-concepts-the-variation-workflow)
+    - [Full Workflow Example](#full-workflow-example)
+  - [Error Handling](#error-handling)
+  - [Development](#development)
+  - [License](#license)
+
+---
+
+## Features
+
+-   **Simple Interface:** A clean, intuitive client for submitting creative briefs.
+-   **Real-Time & Efficient:** Uses Server-Sent Events (SSE) to get job status updates the moment they happen.
+-   **Conceptual Variation:** Request a completely new creative direction (research, text, and images) from a single prompt using a `variation_seed`.
+-   **Fast Visual Variation:** Regenerate *only the images* for an existing report in seconds using a new `seed` and optional `temperature`.
+-   **Robust Error Handling:** Includes a set of custom exceptions to handle API connection issues, job submission failures, and failed jobs gracefully.
+
+---
+
+## Installation
+
+The package can be installed from the public Python Package Index (PyPI).
+
+```bash
+pip install creative-catalyst-client
+```
+
+It is highly recommended to pin the package to a specific version in your project's `requirements.txt` file to ensure reproducible builds:
+
+```
+# In your requirements.txt
+creative-catalyst-client==1.1.8
+```
+
+---
+
+## Usage
+
+### Configuration
+
+Ensure the following environment variable is set in the environment where you are running your application:
+
+```
+CREATIVE_CATALYST_API_URL="http://<ip_address_of_catalyst_server>:9500"
+```
+
+The client will automatically read this value.
+
+### Core Concepts: The Variation Workflow
+
+The client supports a powerful, two-level variation system to give you full creative control.
+
+1.  **Conceptual Variation (`variation_seed`)**
+    Use this when you want a **completely new creative idea**. By changing the `variation_seed` in the `get_creative_report_stream` method, you are telling the engine to re-run the entire creative pipeline. This will result in new research, new descriptive text, new garment details, and new images. This is a "deep" variation.
+
+2.  **Visual Variation (`regenerate_images_stream`)**
+    Use this when you like the creative concept but want to see a **different set of images**. This is a "fast" variation that skips the entire research and synthesis pipeline. It takes the prompts from a previous job and re-runs only the image generation step, delivering new visuals in seconds.
+
+| Feature           | Conceptual Variation         | Visual Variation                                 |
+| :---------------- | :--------------------------- | :----------------------------------------------- |
+| **User Intent**   | "Show me a new idea."        | "Show me a new picture of this idea."            |
+| **Client Method** | `get_creative_report_stream` | `regenerate_images_stream`                       |
+| **Key Parameter** | `variation_seed` (integer)   | `seed` (integer), `temperature` (optional float) |
+| **Speed**         | Slow (~1-3 minutes)          | **Very Fast (~10-20 seconds)**                   |
+| **Cost**          | High (Full Pipeline)         | **Low (Image Generation Only)**                  |
+
+### Full Workflow Example
+
+The following example demonstrates the complete three-stage workflow.
+
+```python
+from creative_catalyst_client import CreativeCatalystClient, APIClientError
+
+# --- 1. INITIAL SETUP ---
+client = CreativeCatalystClient()
+creative_brief = "A men's velvet tailcoat for a Venetian masquerade ball set in the Baroque era."
+original_job_id = None
+
+try:
+    # --- 2. PART 1: Get the default, canonical report ---
+    print("--- 🚀 PART 1: Requesting Canonical Report (variation_seed=0) ---")
+    stream = client.get_creative_report_stream(creative_brief, variation_seed=0)
+    for update in stream:
+        if update.get("event") == "job_submitted":
+            original_job_id = update.get("job_id")
+            print(f"✅ Canonical job submitted with ID: {original_job_id}")
+        elif update.get("event") == "progress":
+            print(f"   Progress: {update.get('status')}")
+        elif update.get("event") == "complete":
+            print("\n--- ✅ Canonical Report Received ---\n")
+            break
+
+    # --- 3. PART 2: Get a completely new creative concept ---
+    if input("Press Enter to request a new CONCEPTUAL variation (slow)..."):
+        print("\n--- 🚀 PART 2: Requesting Conceptual Variation (variation_seed=1) ---")
+        concept_stream = client.get_creative_report_stream(creative_brief, variation_seed=1)
+        for update in concept_stream:
+            if update.get("event") == "progress":
+                print(f"   Progress: {update.get('status')}")
+            elif update.get("event") == "complete":
+                print("\n--- ✅ New Conceptual Report Received ---\n")
+                break
+
+    # --- 4. PART 3: Get a fast visual variation of the ORIGINAL report ---
+    if original_job_id and input("Press Enter to request a new VISUAL variation (fast)..."):
+        print(f"\n--- 🚀 PART 3: Requesting Visual Variation for Job '{original_job_id}' ---")
+        visual_stream = client.regenerate_images_stream(
+            original_job_id=original_job_id,
+            seed=1,
+            temperature=1.2  # Optional: Make it more creative
+        )
+        for update in visual_stream:
+            if update.get("event") == "progress":
+                print(f"   Regeneration Progress: {update.get('status')}")
+            elif update.get("event") == "complete":
+                print("\n--- ✅ New Visual Report Received ---")
+                # You can now process the result which contains new image URLs
+                final_report = update.get("result")
+                break
+
+except APIClientError as e:
+    print(f"\n--- ❌ An error occurred ---")
+    print(f"Error: {e}")
+
+print("\n--- 🎉 Workflow Demonstration Complete ---")
+```
+
+---
+
+## Error Handling
+
+The client will raise specific exceptions for different failure modes, all inheriting from `APIClientError`.
+
+-   **`APIConnectionError`**: Raised if the client cannot connect to the API server at all.
+-   **`JobSubmissionError`**: Raised if the initial job submission fails (e.g., due to a server error, invalid request, or a 404 on a regeneration request).
+-   **`JobFailedError`**: Raised if the job is accepted but fails during processing on the worker.
+
+---
+
+## Development
+
+This section is for developers contributing to the `creative-catalyst-client` package itself.
+
+The project uses `pip-tools` for dependency management.
+
+1.  **Create and activate a virtual environment:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+2.  **Install all dependencies:**
+    ```bash
+    pip-sync dev-requirements.txt
+    ```
+3.  **To add/change a dependency,** edit `requirements.in` (for production) or `dev-requirements.in` (for development).
+4.  **To update the lock files,** run: `pip-compile --strip-extras dev-requirements.in` and `pip-compile --strip-extras requirements.in`.
+5.  **To build the package,** run: `python -m build`.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
