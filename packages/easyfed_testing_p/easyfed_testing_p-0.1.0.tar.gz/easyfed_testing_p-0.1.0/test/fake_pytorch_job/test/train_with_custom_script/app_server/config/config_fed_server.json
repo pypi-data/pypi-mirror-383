@@ -1,0 +1,29 @@
+{
+    "format_version": 2,
+    "workflows": [
+        {
+            "id": "server.localhost1",
+            "path": "nvflare.app_common.workflows.fedavg.FedAvg",
+            "args": {
+                "num_clients": 2,
+                "num_rounds": 3,
+                "persistor_id": "server.localhost"
+            }
+        }
+    ],
+    "components": [
+        {
+            "id": "server.localhost",
+            "path": "nvflare.app_opt.pt.file_model_persistor.PTFileModelPersistor",
+            "args": {
+                "model": {
+                    "path": "model.SimpleTorchModel",
+                    "args": {}
+                },
+                "global_model_file_name": "/models/server.pt"
+            }
+        }
+    ],
+    "task_data_filters": [],
+    "task_result_filters": []
+}
