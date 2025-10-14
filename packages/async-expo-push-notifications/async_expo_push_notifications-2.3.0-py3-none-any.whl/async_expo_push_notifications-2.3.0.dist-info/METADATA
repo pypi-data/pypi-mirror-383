@@ -1,0 +1,293 @@
+Metadata-Version: 2.4
+Name: async-expo-push-notifications
+Version: 2.3.0
+Summary: Expo Server SDK for Python with async/await support, Pydantic models, and full type hints
+Author-email: Roach <tmdgusya@gmail.com>
+Maintainer-email: Roach <tmdgusya@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/tmdgusya/async-expo-notification-sdk
+Project-URL: Repository, https://github.com/tmdgusya/async-expo-notification-sdk
+Project-URL: Issues, https://github.com/tmdgusya/async-expo-notification-sdk/issues
+Project-URL: Documentation, https://github.com/tmdgusya/async-expo-notification-sdk#readme
+Keywords: expo,push,notifications,async,pydantic,type-hints
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Typing :: Typed
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: httpx>=0.24.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Dynamic: license-file
+
+# Async Expo Push Notifications SDK for Python
+
+**Modern Python SDK for Expo Push Notifications with async/await support, Pydantic models, and full type hints.**
+
+> **Note:** This is an **independent project** and is **not officially maintained by Expo**. It's a modern reimplementation with async support.
+
+If you have problems or suggestions, please feel free to [open an issue](https://github.com/tmdgusya/async-expo-notification-sdk/issues) or submit a PR. Contributions welcome! 🙏
+
+## Installation
+
+```bash
+pip install async-expo-push-notifications
+```
+
+> **Note:** Package name is `async-expo-push-notifications` but you still import as `exponent_server_sdk`
+
+## Requirements
+
+- Python 3.8+
+- Type-safe with Pydantic models
+- Async support with httpx
+- Synchronous support with requests (backward compatible)
+
+## Usage
+
+Use to send push notifications to Exponent Experiences from a Python server.
+
+[Full documentation](https://docs.expo.dev/push-notifications/sending-notifications/#http2-api) on the API is available if you want to dive into the details.
+
+### Async/Await Usage (Recommended for modern applications)
+
+```python
+import asyncio
+from exponent_server_sdk import AsyncPushClient, PushMessage
+
+async def send_notification():
+    async with AsyncPushClient() as client:
+        message = PushMessage(
+            to="ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+            title="Hello",
+            body="World!",
+            data={"extra": "data"}
+        )
+        ticket = await client.publish(message)
+        ticket.validate_response()
+
+asyncio.run(send_notification())
+```
+
+### Synchronous Usage (Backward Compatible)
+
+Here's an example on how to use this with retries and reporting via [pyrollbar](https://github.com/rollbar/pyrollbar).
+
+```python
+from exponent_server_sdk import (
+    DeviceNotRegisteredError,
+    PushClient,
+    PushMessage,
+    PushServerError,
+    PushTicketError,
+)
+import os
+import requests
+from requests.exceptions import ConnectionError, HTTPError
+
+# Optionally providing an access token within a session if you have enabled push security
+session = requests.Session()
+session.headers.update(
+    {
+        "Authorization": f"Bearer {os.getenv('EXPO_TOKEN')}",
+        "accept": "application/json",
+        "accept-encoding": "gzip, deflate",
+        "content-type": "application/json",
+    }
+)
+
+# Basic arguments. You should extend this function with the push features you
+# want to use, or simply pass in a `PushMessage` object.
+def send_push_message(token, message, extra=None):
+    try:
+        response = PushClient(session=session).publish(
+            PushMessage(to=token,
+                        body=message,
+                        data=extra))
+    except PushServerError as exc:
+        # Encountered some likely formatting/validation error.
+        rollbar.report_exc_info(
+            extra_data={
+                'token': token,
+                'message': message,
+                'extra': extra,
+                'errors': exc.errors,
+                'response_data': exc.response_data,
+            })
+        raise
+    except (ConnectionError, HTTPError) as exc:
+        # Encountered some Connection or HTTP error - retry a few times in
+        # case it is transient.
+        rollbar.report_exc_info(
+            extra_data={'token': token, 'message': message, 'extra': extra})
+        raise self.retry(exc=exc)
+
+    try:
+        # We got a response back, but we don't know whether it's an error yet.
+        # This call raises errors so we can handle them with normal exception
+        # flows.
+        response.validate_response()
+    except DeviceNotRegisteredError:
+        # Mark the push token as inactive
+        from notifications.models import PushToken
+        PushToken.objects.filter(token=token).update(active=False)
+    except PushTicketError as exc:
+        # Encountered some other per-notification error.
+        rollbar.report_exc_info(
+            extra_data={
+                'token': token,
+                'message': message,
+                'extra': extra,
+                'push_response': exc.push_response._asdict(),
+            })
+        raise self.retry(exc=exc)
+```
+
+## Features
+
+### 🚀 Async/Await Support
+
+Modern async/await syntax for high-performance applications:
+
+```python
+async with AsyncPushClient() as client:
+    tickets = await client.publish_multiple(messages)
+```
+
+### 🔒 Type Safety with Pydantic
+
+All models use Pydantic for validation and type safety:
+
+```python
+# Automatic validation
+message = PushMessage(
+    to="ExponentPushToken[xxx]",
+    priority="high",  # Validates against allowed values
+    richContent={"image": "https://example.com/img.png"}  # NEW!
+)
+```
+
+### 💉 Dependency Injection
+
+Inject custom HTTP clients for testing or custom behavior:
+
+```python
+import httpx
+
+custom_client = httpx.AsyncClient(
+    headers={"Authorization": f"Bearer {token}"}
+)
+push_client = AsyncPushClient(http_client=custom_client)
+```
+
+### 📸 Rich Content Support
+
+Now includes the `richContent` field for image notifications:
+
+```python
+message = PushMessage(
+    to=token,
+    title="Check this out!",
+    body="Beautiful image notification",
+    richContent={"image": "https://example.com/image.jpg"}
+)
+```
+
+## Examples
+
+Check out the [examples/](examples/) directory for more:
+
+- [async_example.py](examples/async_example.py) - Async/await usage
+- [sync_example.py](examples/sync_example.py) - Synchronous usage
+- [dependency_injection_example.py](examples/dependency_injection_example.py) - DI patterns
+
+## Migration Guide
+
+### From v2.1.x to v2.2.0
+
+The library is **fully backward compatible**. Existing code will continue to work without changes:
+
+```python
+# Old code still works!
+from exponent_server_sdk import PushClient, PushMessage
+
+client = PushClient()
+ticket = client.publish(PushMessage(to=token, body="Hello"))
+```
+
+### New Features You Can Adopt
+
+1. **Use Pydantic models** - Your `PushMessage` objects now have validation
+2. **Try async/await** - Use `AsyncPushClient` for better performance
+3. **Add richContent** - Include images in your notifications
+4. **Inject dependencies** - Pass custom HTTP clients for testing
+
+## Type Hints
+
+All classes and methods now include full type hints:
+
+```python
+from exponent_server_sdk import AsyncPushClient, PushMessage, PushTicket
+from typing import List
+
+async def send_many(messages: List[PushMessage]) -> List[PushTicket]:
+    async with AsyncPushClient() as client:
+        return await client.publish_multiple(messages)
+```
+
+## 📜 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+This project is a modern reimplementation inspired by:
+- [Expo Community Server SDK](https://github.com/expo-community/expo-server-sdk-python) - The original community-maintained SDK
+- [Expo Push Notification Service](https://docs.expo.dev/push-notifications/overview/) - Official Expo documentation and API
+
+## ⚠️ Disclaimer
+
+This is an **independent project** and is **not officially affiliated with or endorsed by Expo**.
+
+### Comparison with Official SDK
+
+| Feature | This SDK (`async-expo-push-notifications`) | [Official Community SDK](https://github.com/expo-community/expo-server-sdk-python) |
+|---------|-------------------------------------------|----------------------------------------------------------------------------------|
+| **Async/Await** | ✅ Full async support | ❌ Sync only |
+| **Type Hints** | ✅ Complete type hints | ⚠️ Partial |
+| **Pydantic** | ✅ Type-safe models | ❌ Named tuples |
+| **Dependency Injection** | ✅ Supported | ❌ No |
+| **Rich Content** | ✅ Image support | ❌ Not included |
+| **Python Version** | 3.8+ | 3.6+ |
+| **Backward Compatible** | ✅ Yes | - |
+
+**When to use this SDK:**
+- You need async/await support for high-performance applications
+- You want type safety with Pydantic models
+- You need dependency injection for testing
+- You want modern Python features (type hints, async)
+
+**When to use the official community SDK:**
+- You need a battle-tested, widely-used solution
+- You're using Python 3.6-3.7
+- You prefer simpler, synchronous code
+
+For official Expo resources and the original community SDK, please visit:
+- Official SDK: https://github.com/expo-community/expo-server-sdk-python
+- Expo: https://expo.dev
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests on [GitHub](https://github.com/tmdgusya/async-expo-notification-sdk).
