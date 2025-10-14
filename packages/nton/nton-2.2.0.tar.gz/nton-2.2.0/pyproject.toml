@@ -1,0 +1,52 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "nton"
+version = "2.2.0"
+description = "Nintendo Switch NRO to NSP Forwarder."
+authors = ["rlaphoenix <rlaphoenix@pm.me>"]
+license = "GPL-3.0-only"
+readme = "README.md"
+repository = "https://github.com/rlaphoenix/nton"
+keywords = ["nintendo", "switch", "homebrew", "forwarder"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Microsoft :: Windows :: Windows 7",
+    "Operating System :: Microsoft :: Windows :: Windows 8",
+    "Operating System :: Microsoft :: Windows :: Windows 8.1",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Topic :: Games/Entertainment",
+    "Topic :: Utilities"
+]
+exclude = ["nton/gui/resources"]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/rlaphoenix/nton/issues"
+"Forums" = "https://github.com/rlaphoenix/nton/discussions"
+"Changelog" = "https://github.com/rlaphoenix/nton/blob/master/CHANGELOG.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.13"
+click = "^8.1.7"
+requests = "^2.31.0"
+jsonpickle = "^3.0.2"
+coloredlogs = "^15.0.1"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.1.0"
+pillow = "^10.2.0"
+PySide6-Essentials = { version = "^6.6.1", optional = true }
+
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^6.3.0"
+
+[tool.poetry.extras]
+gui = ["PySide6-Essentials"]
+
+[tool.poetry.scripts]
+nton = "nton.main:main"
