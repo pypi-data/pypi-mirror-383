@@ -1,0 +1,40 @@
+[project]
+name = "blake3"
+# http://maturin.rs/metadata.html#dynamic-metadata
+dynamic = [
+    "version",
+    "description",
+    "readme",
+    "urls",
+    "authors",
+    "license",
+    "keywords",
+]
+# keep python versions in sync with
+#   - .github/workflows/dists.yml
+#   - .github/workflows/tests.yml
+requires-python = ">=3.8"
+# keep dependencies in sync with c_impl/setup.py
+dependencies = [
+    "typing_extensions >= 4.6.0; python_version <= '3.11'",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: Free Threading",
+  "Programming Language :: Rust",
+  "Topic :: Security",
+  "Topic :: Security :: Cryptography",
+  "Topic :: Utilities",
+]
+
+[build-system]
+requires = ["maturin>=1.0,<2"]
+build-backend = "maturin"
+
+[dependency-groups]
+dev = [
+    "numpy>=1.24.4",
+    "pytest>=8.3.5",
+]
