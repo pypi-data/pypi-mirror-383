@@ -1,0 +1,38 @@
+Metadata-Version: 2.2
+Name: a2y_paratree
+Version: 1.1.1
+Summary: A module that supplies some functions and classes that relate to 
+Home-page: http://www.kersci.com/a2y/paratree.html
+Author: Yu Han
+Author-email: hanjunyu@163.com
+License: Private
+Platform: Windows
+Platform: Linux
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: Free For Educational Use
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: Operating System :: POSIX :: Linux
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: platform
+Dynamic: summary
+
+# Python Module: a2y_paratree
+
+此模块提供一个与保存、加载、修改配置参数相关的功能类库。是 testparameters 模块的增强版。
+
+
+## ChangeLog
+
+- 2025-10-13 增加`ParameterBook.set_parameter_value`函数，方便设置配置参数值。版本升级为 1.1.1。
+
+- 2024-07-07 增加`ParameterBook.get_parameter_value`函数，方便读取配置参数值。版本升级为 1.1.0。
