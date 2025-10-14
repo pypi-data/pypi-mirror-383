@@ -1,0 +1,36 @@
+{
+  "name": "gradio_goodtabs",
+  "version": "0.3.3",
+  "description": "Gradio UI packages",
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "private": false,
+  "main_changeset": true,
+  "main": "Index.svelte",
+  "exports": {
+    ".": {
+      "gradio": "./Index.svelte",
+      "svelte": "./dist/Index.svelte",
+      "types": "./dist/Index.svelte.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@gradio/column": "0.2.0",
+    "@gradio/statustracker": "^0.10.11",
+    "@gradio/tabs": "0.4.4",
+    "@gradio/utils": "0.7.0"
+  },
+  "devDependencies": {
+    "@gradio/preview": "0.13.0"
+  },
+  "peerDependencies": {
+    "svelte": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gradio-app/gradio.git",
+    "directory": "js/tabs"
+  }
+}

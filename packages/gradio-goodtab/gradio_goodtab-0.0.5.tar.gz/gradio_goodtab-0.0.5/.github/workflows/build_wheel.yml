@@ -1,0 +1,89 @@
+name: Build wheel
+
+on:
+  workflow_dispatch:
+  create:
+    tags:
+      - v*
+
+jobs:
+  build:
+    permissions: write-all
+    strategy:
+      max-parallel: 4
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: ["3.10"]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install gradio
+        run: python -m pip install gradio==5.5.0
+
+      - name: gradio cc install
+        run: gradio cc install
+
+      # just install directly https://github.com/rsxdalv/gradio_goodtabs/releases/download/v0.0.3/gradio_goodtabs-0.0.3-py3-none-any.whl
+      - name: Install gradio_goodtabs
+        run: python -m pip install https://github.com/rsxdalv/gradio_goodtabs/releases/download/v0.0.3/gradio_goodtabs-0.0.3-py3-none-any.whl
+
+      - name: Build the wheel
+        run: gradio cc build
+      - run: du -h dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          path: dist/*.whl
+
+      - name: Log Built Wheels
+        run: |
+          ls dist
+  
+      - name: Set wheel name
+        run: echo "wheel_name=$(basename dist/*.whl)" >> $GITHUB_ENV
+        
+      - name: Get the tag version
+        id: extract_branch
+        run: echo ::set-output name=branch::${GITHUB_REF#refs/tags/}
+
+      - name: Get Release with tag
+        id: get_current_release
+        uses: joutvhu/get-release@v1
+        with:
+          tag_name: ${{ steps.extract_branch.outputs.branch }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_current_release.outputs.upload_url }}
+          asset_path: ./dist/${{env.wheel_name}}
+          asset_name: ${{env.wheel_name}}
+          asset_content_type: application/*
+
+      - name: Upload to TestPyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          echo "Uploading to TestPyPI..."
+          python -m twine upload --repository testpypi dist/* --verbose
+
+      - name: Upload to PyPI (optional)
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          echo "Uploading to PyPI..."
+          python -m twine upload dist/*
