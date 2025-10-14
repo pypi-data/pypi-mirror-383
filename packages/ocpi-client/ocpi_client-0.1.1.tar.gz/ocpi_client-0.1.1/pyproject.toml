@@ -1,0 +1,65 @@
+[project]
+name = "ocpi-client"
+version = "0.1.1"
+dependencies = [
+    "httpx>=0.28.1",
+    "ocpi-pydantic>=0.9.0",
+]
+requires-python = ">=3.10"
+authors = [
+    { name = "Leon" },
+]
+description = "OCPI client"
+readme = "README.md"
+license = "MIT"
+license-files = [
+    "LICEN[CS]E*",
+]
+keywords = [
+    "OCPI",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+homepage = "https://github.com/OCPI-Python/ocpi-client"
+source = "https://github.com/OCPI-Python/ocpi-client.git"
+issues = "https://github.com/OCPI-Python/ocpi-client/issues"
+changelog = "https://github.com/OCPI-Python/ocpi-client/blob/master/CHANGELOG.md"
+funding = "https://github.com/OCPI-Python/ocpi-client"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+[tool.pytest.ini_options]
+addopts = "--exitfirst\n--pdb\n--pdbcls=IPython.terminal.debugger:TerminalPdb\n--cov\n--cov-report=term\n--cov-report=html\n--cov-report=xml\n--no-cov-on-fail\n"
+asyncio_default_fixture_loop_scope = "function"
+log_level = "DEBUG"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+    "pytest-cov>=7.0",
+    "ipython>=8.37",
+    "loguru>=0.7.3",
+    "mimesis>=18",
+    "pytest-asyncio>=1.1.0",
+]
