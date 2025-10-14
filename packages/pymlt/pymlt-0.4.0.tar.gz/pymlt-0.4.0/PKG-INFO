@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: pymlt
+Version: 0.4.0
+Summary: Add your description here
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: scikit-learn>=1.7.1
+Dynamic: license-file
+
+# pymlt
+python machine learning template
+
+## links
+https://pypi.org/project/pymlt  
+https://ghcr.io/benvliet/pymlt
+https://pepy.tech/projects/pymlt  # todo: add badges  
+https://codecov.io/gh/benvliet/pymlt  # todo: add to pipeline  
+
+## project structure
+
+```
+.
+├── .github/        # ci/cd pipelines, templates
+├── docs/           # documentation
+├── notebooks/      # example notebooks
+├── scripts/        # example scripts
+├── src/            # source code
+│   ├── pymlt/      # pymlt package modules
+├── tests/          # pytest 
+├── .gitignore      # ...
+├── Dockerfile      # ...
+├── .../            # ...
+```
