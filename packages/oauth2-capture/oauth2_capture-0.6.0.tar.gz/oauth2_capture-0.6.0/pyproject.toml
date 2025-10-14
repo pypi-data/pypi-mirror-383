@@ -1,0 +1,140 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "oauth2_capture"
+version = "0.6.0"
+authors = [{name = "Sam Texas", email = "github+oauth2_capture@simplecto.com"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+description = "Capture and store OAuth2 tokens for later use."
+dependencies = [
+    "requests~=2.32.4",
+    "shortuuid==1.0.13",
+    "Django>=4.2",
+    "django-environ"
+]
+
+[project.optional-dependencies]
+
+dev = [
+    "ruff==0.12.8",
+    "pre-commit==4.3.0",
+    "coverage[toml]>=7.4,<7.11",
+]
+
+
+[project.urls]
+Home = "https://github.com/heysamtexas/django-oauth2-capture"
+Documentation = "https://github.com/heysamtexas/django-oauth2-capture#readme"
+Source = "https://github.com/heysamtexas/django-oauth2-capture"
+Issues = "https://github.com/heysamtexas/django-oauth2-capture#readme/issues"
+
+
+[tool.ruff]
+
+# Set the maximum line length to 120.
+line-length = 120
+target-version = "py312"
+exclude = [
+    "pyproject.toml",
+    "*/**/tests/*",
+    "*/**/migrations/*",
+    ".idea/**",
+    "development/manage.py",
+]
+
+
+[tool.ruff.lint]
+# Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
+# overlap with the use of a formatter, like Black, but we can override this behavior by
+# explicitly adding the rule.
+ignore = [
+    "E501",      # Line too long (handled by formatter)
+    "D203",      # One blank line required before class docstring
+    "D213",      # Multi-line docstring summary should start at the second line
+    "D100",      # Missing docstring in public module
+    "COM812",    # Trailing comma missing (handled by formatter)
+    "G004",      # Logging statement uses f-string (f-strings are fine for readability)
+    "TRY003",    # Avoid specifying long messages outside exception class (pedantic)
+    "EM102",     # Exception must not use f-string literal (f-strings are readable)
+]
+select = ["ALL", "W2", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# Relaxed rules for test files - focus on functionality over pedantic style
+"**/tests.py" = [
+    "S106",      # Possible hardcoded password (test credentials are expected)
+    "ANN",       # Type annotations (less critical in tests)
+    "PT009",     # Use assert instead of unittest-style (allow unittest patterns)
+    "D",         # All docstring requirements (tests are often self-documenting)
+    "ARG001",    # Unused function argument (common in test mocks)
+    "ARG002",    # Unused method argument (common in test mocks)
+    "S101",      # Use of assert (pytest uses asserts)
+]
+"**/test_*.py" = [
+    "S106", "ANN", "PT009", "D", "ARG001", "ARG002", "S101"
+]
+"**/tests/**/*.py" = [
+    "S106", "ANN", "PT009", "D", "ARG001", "ARG002", "S101"
+]
+"development/demo/tests.py" = [
+    "S106", "ANN", "PT009", "D", "ARG001", "ARG002", "S101"
+]
+
+[tool.coverage.run]
+source = ["oauth2_capture"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/venv/*",
+    "development/manage.py",
+    "development/*/settings.py",
+    "development/*/wsgi.py",
+    "development/*/asgi.py",
+    "*/__pycache__/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:"
+]
+show_missing = true
+skip_covered = false
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.json]
+output = "coverage.json"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.6.0"
+tag_format = "$version"
+bump_message = "bump: version $current_version → $new_version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+changelog_incremental = true
+version_files = [
+    "pyproject.toml:version",
+]
