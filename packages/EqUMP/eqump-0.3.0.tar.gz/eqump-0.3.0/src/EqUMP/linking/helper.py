@@ -1,0 +1,169 @@
+import numpy as np
+from typing import Hashable, Dict, Union, Literal, Tuple, List
+from EqUMP.base.irf import ItemParams, ItemParamsCollection, ItemModelType
+
+def transform_item_params(
+    params: ItemParamsCollection,
+    A: float = 1.0,
+    B: float = 0.0,
+    direction: Literal["to_old", "to_new"] = "to_old",
+) -> ItemParamsCollection:
+    """
+    Transform the IRT scale according to the linking coefficient A, B.
+
+    Parameters
+    ----------
+    params : Dict
+        Item parameters for the new/old test form.
+        - "a": discrimination parameter
+        - "b":
+            Dichotomous: difficulty parameter
+            Polytomous: step difficulties parameter
+        - "c": pseudo-guessing parameter
+    A/B: float
+        Linking coefficients.
+    direction: {"to_old", "to_new"}, optional
+        to_old: transform item parameters of the new test form to the old test form
+        to_new: transform item parameters of the old test form to the new test form
+
+    Returns
+    -------
+    Dict[item_id -> {'a': float, 'b': float|np.ndarray, 'c': float}]
+    """
+
+    output: ItemParamsCollection = {}
+
+    if direction == "to_old":
+        for key, par in params.items():
+            a = float(par["a"])
+            b = np.asarray(par["b"], dtype=float)
+
+            a_t = a / A
+            b_t = A * b + B
+            b_t = float(b_t) if b_t.shape == () else b_t
+
+            item = {"a": a_t, "b": b_t}
+            if "c" in par:
+                item["c"] = float(par["c"])
+
+            output[key] = item
+
+    elif direction == "to_new":
+        for key, par in params.items():
+            a = float(par["a"])
+            b = np.asarray(par["b"], dtype=float)
+
+            a_t = A * a
+            b_t = (b - B) / A
+            b_t = float(b_t) if b_t.shape == () else b_t
+
+            item = {"a": a_t, "b": b_t}
+            if "c" in par:
+                item["c"] = float(par["c"])
+
+            output[key] = item
+    return output
+
+def adjust_item_input(
+    item_infos: ItemParamsCollection
+) -> Tuple[Dict[Hashable, ItemModelType], ItemParamsCollection]:
+    """
+    Adjust item information input into params and models
+
+    Notes
+    -----
+    - (25.09.15) This function is a band-aid for terrible Item Response Function
+    """    
+    model = dict()
+    params = dict()
+    
+    for key, info in item_infos.items():
+        model[key] = info["model"]
+        
+        # redisudal key except model goes into params
+        params[key] = {k: v for k, v in info.items() if k != "model"}
+    
+    return model, params
+
+
+def validate_and_prepare_custom_quadrature(
+    custom_quadrature: Dict[str, Union[np.ndarray, List[float]]]
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Validate and prepare custom quadrature inputs for linking methods.
+
+    Parameters
+    ----------
+    custom_quadrature : Dict
+        Expected keys: {"nodes_new", "weights_new", "nodes_old", "weights_old"}
+        Values may be sequences or numpy arrays.
+
+    Returns
+    -------
+    Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]
+        nodes_new, weights_new, nodes_old, weights_old
+
+    Notes
+    -----
+    - Ensures arrays are 1D float numpy arrays with finite values
+    - Ensures matching lengths within each form
+    - Ensures non-negative weights
+    - Sorts node-weight pairs by nodes for stability if unsorted
+    """
+    if custom_quadrature is None:
+        raise ValueError("custom_quadrature must be provided when quadrature='custom'.")
+
+    required_keys = {"nodes_new", "weights_new", "nodes_old", "weights_old"}
+    missing = required_keys.difference(custom_quadrature.keys())
+    if missing:
+        raise ValueError(f"custom_quadrature is missing required keys: {sorted(missing)}")
+
+    nodes_new = np.asarray(custom_quadrature["nodes_new"], dtype=float)
+    nodes_old = np.asarray(custom_quadrature["nodes_old"], dtype=float)
+    weights_new = np.asarray(custom_quadrature["weights_new"], dtype=float)
+    weights_old = np.asarray(custom_quadrature["weights_old"], dtype=float)
+
+    for name, arr in (
+        ("nodes_new", nodes_new),
+        ("nodes_old", nodes_old),
+        ("weights_new", weights_new),
+        ("weights_old", weights_old),
+    ):
+        if arr.ndim != 1:
+            raise ValueError(f"{name} must be a 1D array.")
+        if not np.all(np.isfinite(arr)):
+            raise ValueError(f"{name} contains non-finite values.")
+
+    if len(nodes_new) != len(weights_new):
+        raise ValueError("Length mismatch: nodes_new and weights_new must have the same length.")
+    if len(nodes_old) != len(weights_old):
+        raise ValueError("Length mismatch: nodes_old and weights_old must have the same length.")
+    if len(nodes_new) == 0 or len(nodes_old) == 0:
+        raise ValueError("Custom quadrature arrays must be non-empty.")
+    if np.any(weights_new < 0.0) or np.any(weights_old < 0.0):
+        raise ValueError("Quadrature weights must be non-negative.")
+
+    # Sort pairs together if nodes are not sorted (stability)
+    if not (np.all(np.diff(nodes_new) >= 0)):
+        idx_new = np.argsort(nodes_new)
+        nodes_new = nodes_new[idx_new]
+        weights_new = weights_new[idx_new]
+    if not (np.all(np.diff(nodes_old) >= 0)):
+        idx_old = np.argsort(nodes_old)
+        nodes_old = nodes_old[idx_old]
+        weights_old = weights_old[idx_old]
+
+    return nodes_new, weights_new, nodes_old, weights_old
+
+class SLResult:
+    def plot(self):
+        """plot linking result, 
+        - transformed anchor items ICC,
+        - transformed TCC
+        """
+        pass
+
+    def summary(self):
+        """_summary_
+        """        
+        pass
