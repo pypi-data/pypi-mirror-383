@@ -1,0 +1,138 @@
+Metadata-Version: 2.4
+Name: corebrum
+Version: 0.1.0
+Summary: A basic Python package for demonstration purposes
+Home-page: https://github.com/corebrum/corebrum-pip
+Author: Corebrum
+Author-email: Corebrum <hello@corebrum.com>
+Maintainer-email: Corebrum <hello@corebrum.com>
+License: MIT License
+        
+        Copyright (c) 2024 Your Name
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/corebrum/corebrum-pip
+Project-URL: Repository, https://github.com/corebrum/corebrum-pip
+Project-URL: Issues, https://github.com/corebrum/corebrum-pip/issues
+Keywords: python,package,corebrum,demo
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Corebrum
+
+A basic Python package for demonstration purposes.
+
+## Installation
+
+You can install Corebrum using pip:
+
+```bash
+pip install corebrum
+```
+
+## Usage
+
+Here's a simple example of how to use Corebrum:
+
+```python
+import corebrum
+
+# Get a greeting message
+message = corebrum.hello_world()
+print(message)  # Output: Hello from Corebrum!
+
+# Add two numbers
+result = corebrum.add_numbers(5, 3)
+print(result)  # Output: 8
+
+# Get the package version
+version = corebrum.get_version()
+print(version)  # Output: 0.1.0
+```
+
+## Features
+
+- Simple greeting function
+- Basic math operations
+- Version information
+
+## Development
+
+To set up a development environment:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/corebrum.git
+   cd corebrum
+   ```
+
+2. Install in development mode:
+   ```bash
+   pip install -e .
+   ```
+
+3. Install development dependencies:
+   ```bash
+   pip install -e ".[dev]"
+   ```
+
+## Testing
+
+Run the tests with pytest:
+
+```bash
+pytest
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Author
+
+Your Name - your.email@example.com
+
+Project Link: [https://github.com/yourusername/corebrum](https://github.com/yourusername/corebrum)
