@@ -1,0 +1,21 @@
+##from django.db import models
+##from django_core.models import AbstractBaseModel
+##from django.utils.translation import gettext_lazy as _
+##from model_bakery import baker
+##
+
+class {{ class_name }}(AbstractBaseModel):
+    {% for field in model_fields %}
+    {{ field }}
+    {% endfor %}
+    def __str__(self):
+        return str(self.pk)
+
+    @classmethod
+    def _baker(cls):
+        return baker.make(cls)
+
+    class Meta:
+        db_table = "{{ name }}"
+        verbose_name = _("{{ class_name }}")
+        verbose_name_plural = _("{{ class_name }}s")
