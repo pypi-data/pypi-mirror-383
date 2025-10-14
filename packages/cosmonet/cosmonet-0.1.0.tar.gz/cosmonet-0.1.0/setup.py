@@ -1,0 +1,43 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="cosmonet",
+    version="0.1.0",
+    author="CosmoNet Team",
+    author_email="cosmonet-team@example.com",
+    description="Astronomical Light Curve Classification using Physics-Informed Neural Networks",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    url="https://github.com/cosmonet-team/cosmonet",
+    packages=find_packages(),
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Topic :: Scientific/Engineering :: Astronomy",
+    ],
+    python_requires=">=3.8",
+    install_requires=[
+        "numpy>=1.21.0",
+        "pandas>=1.3.0",
+        "matplotlib>=3.5.0",
+        "seaborn>=0.11.0",
+        "scikit-learn>=1.0.0",
+        "tensorflow>=2.8.0",
+        "astropy>=5.0.0",
+        "scipy>=1.7.0",
+        "tqdm>=4.62.0",
+    ],
+    license="Apache 2.0",
+    keywords="astronomy, machine-learning, neural-networks, light-curves, classification",
+    project_urls={
+        "Bug Reports": "https://github.com/cosmonet-team/cosmonet/issues",
+        "Source": "https://github.com/cosmonet-team/cosmonet",
+        "Documentation": "https://cosmonet.readthedocs.io/",
+    },
+)
