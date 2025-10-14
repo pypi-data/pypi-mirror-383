@@ -1,0 +1,21 @@
+Metadata-Version: 2.3
+Name: wikiscrape
+Version: 0.9.0
+Summary: A tool for scraping info from Wikipedia
+License: GPL-3.0-only
+Author: peaky76
+Author-email: robertjamespeacock@gmail.com
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: beautifulsoup4 (>=4.12.2,<5.0.0)
+Requires-Dist: requests (>=2.30.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+# wikiscrape
+
+A tool for scraping info from Wikipedia.
+
