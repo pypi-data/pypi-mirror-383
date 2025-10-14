@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: mypackage-prashant-Chouhan
+Version: 0.1.0
+Summary: A tiny example package (PoC)
+Author-email: Prashant Chouhan <prashantchouhan771@gmail.com>
+License: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# mypackage
+
+A simple Python package.
+
+## Installation
+
+pip install .
+
+## Usage
+
+from mypackage.hello import hello
+
+print(hello())
