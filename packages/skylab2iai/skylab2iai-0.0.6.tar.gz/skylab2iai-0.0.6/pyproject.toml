@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skylab2iai"
+version = "0.0.6"
+authors = [
+  { name="Tiago Ferrer", email="ferrertiago@gmail.com" },
+]
+description = "A Python library for accessing and analyzing Skylab mission data"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0.0",
+    "requests>=2.31.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/tferrer/skylab2iai"
+Repository = "https://github.com/tferrer/skylab2iai"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+skylab2iai = ["config/database/*.db"]
