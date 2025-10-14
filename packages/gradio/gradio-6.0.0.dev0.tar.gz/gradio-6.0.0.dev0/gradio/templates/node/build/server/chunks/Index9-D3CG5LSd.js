@@ -1,0 +1,20 @@
+import { c as create_ssr_component, b as createEventDispatcher, v as validate_component } from './ssr-C3HYbsxA.js';
+import { I as It, E as Et, Z as Ze } from './2-B-4RU9Ii.js';
+import Ot from './Gallery-DX7lhIfp.js';
+import { BaseFileUpload as lt } from './Index10-BSBES7UQ.js';
+export { default as BaseExample } from './Example2-DF9c7LSI.js';
+import './index-ClteBeTX.js';
+import './Component-NmRBwSfF.js';
+import 'path';
+import 'url';
+import 'fs';
+import './ModifyUpload-DxZ3ZBZS.js';
+import './Video-BOxlhE7M.js';
+import './hls-DpKhbIaL.js';
+import './index8-DWEiEAhs.js';
+import './Example15-QUrFCQ6n.js';
+
+const X=create_ssr_component((o,e,l,M)=>{let F,{loading_status:x}=e,{show_label:s}=e,{label:r}=e,{root:m}=e,{elem_id:y=""}=e,{elem_classes:n=[]}=e,{visible:B=!0}=e,{value:i=null}=e,{file_types:h=["image","video"]}=e,{container:j=!0}=e,{scale:U=null}=e,{min_width:z=void 0}=e,{columns:k=[2]}=e,{rows:G=void 0}=e,{height:v="auto"}=e,{preview:S}=e,{allow_preview:T=!0}=e,{selected_index:d=null}=e,{object_fit:E="cover"}=e,{buttons:c=null}=e,{interactive:w}=e,{gradio:a}=e,{fullscreen:f=!1}=e;const I=createEventDispatcher();e.loading_status===void 0&&l.loading_status&&x!==void 0&&l.loading_status(x),e.show_label===void 0&&l.show_label&&s!==void 0&&l.show_label(s),e.label===void 0&&l.label&&r!==void 0&&l.label(r),e.root===void 0&&l.root&&m!==void 0&&l.root(m),e.elem_id===void 0&&l.elem_id&&y!==void 0&&l.elem_id(y),e.elem_classes===void 0&&l.elem_classes&&n!==void 0&&l.elem_classes(n),e.visible===void 0&&l.visible&&B!==void 0&&l.visible(B),e.value===void 0&&l.value&&i!==void 0&&l.value(i),e.file_types===void 0&&l.file_types&&h!==void 0&&l.file_types(h),e.container===void 0&&l.container&&j!==void 0&&l.container(j),e.scale===void 0&&l.scale&&U!==void 0&&l.scale(U),e.min_width===void 0&&l.min_width&&z!==void 0&&l.min_width(z),e.columns===void 0&&l.columns&&k!==void 0&&l.columns(k),e.rows===void 0&&l.rows&&G!==void 0&&l.rows(G),e.height===void 0&&l.height&&v!==void 0&&l.height(v),e.preview===void 0&&l.preview&&S!==void 0&&l.preview(S),e.allow_preview===void 0&&l.allow_preview&&T!==void 0&&l.allow_preview(T),e.selected_index===void 0&&l.selected_index&&d!==void 0&&l.selected_index(d),e.object_fit===void 0&&l.object_fit&&E!==void 0&&l.object_fit(E),e.buttons===void 0&&l.buttons&&c!==void 0&&l.buttons(c),e.interactive===void 0&&l.interactive&&w!==void 0&&l.interactive(w),e.gradio===void 0&&l.gradio&&a!==void 0&&l.gradio(a),e.fullscreen===void 0&&l.fullscreen&&f!==void 0&&l.fullscreen(f);let _,D,O=o.head;do _=!0,o.head=O,F=i===null?!0:i.length===0,I("prop_change",{selected_index:d}),D=`${validate_component(It,"Block").$$render(o,{visible:B,variant:"solid",padding:!1,elem_id:y,elem_classes:n,container:j,scale:U,min_width:z,allow_overflow:!1,height:typeof v=="number"?v:void 0,fullscreen:f},{fullscreen:t=>{f=t,_=!1;}},{default:()=>`${validate_component(Et,"StatusTracker").$$render(o,Object.assign({},{autoscroll:a.autoscroll},{i18n:a.i18n},x),{},{})} ${w&&F?`${validate_component(lt,"BaseFileUpload").$$render(o,{value:null,root:m,label:r,max_file_size:a.max_file_size,file_count:"multiple",file_types:h,i18n:a.i18n,upload:(...t)=>a.client.upload(...t),stream_handler:(...t)=>a.client.stream(...t)},{},{default:()=>`${validate_component(Ze,"UploadText").$$render(o,{i18n:a.i18n,type:"gallery"},{},{})}`})}`:`${validate_component(Ot,"Gallery").$$render(o,{label:r,show_label:s,columns:k,rows:G,height:v,preview:S,object_fit:E,interactive:w,allow_preview:T,show_share_button:c?.includes("share")??!0,show_download_button:c?.includes("download")??!0,i18n:a.i18n,_fetch:(...t)=>a.client.fetch(...t),show_fullscreen_button:c?.includes("fullscreen")??!0,fullscreen:f,root:m,file_types:h,max_file_size:a.max_file_size,upload:(...t)=>a.client.upload(...t),stream_handler:(...t)=>a.client.stream(...t),selected_index:d,value:i},{selected_index:t=>{d=t,_=!1;},value:t=>{i=t,_=!1;}},{})}`}`})}`;while(!_);return D});
+
+export { Ot as BaseGallery, X as default };
+//# sourceMappingURL=Index9-D3CG5LSd.js.map
