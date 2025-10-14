@@ -1,0 +1,101 @@
+{% extends "base_view.html" %}
+{% load bird_tags %}
+
+{% block title %} meliza-lab : bird : {{ animal.name }} {% endblock %}
+
+{% block content %}
+<h2>{{ animal.name }}</h2>
+
+<hr>
+<dl class="dl-horizontal">
+  <dt>tags</dt><dd>{{ animal.tags.all|url_list }}</dd>
+  <dt>species</dt><dd>{{ animal.species }}</dd>
+  <dt>sex</dt><dd>{{ animal.sex }}</dd>
+  <dt>plumage</dt><dd>{{ animal.plumage }}</dd>
+  <dt>uuid</dt><dd>{{ animal.uuid }}</dd>
+  <dt>status</dt><dd>{{ history.summary }}</dd>
+  {% for measurement in animal_measurements %}
+  <dt>{{ measurement.type.name }} </dt><dd>{{ measurement.formatted }} (as of {{measurement.event.date}})</dd>
+  {% endfor %}
+  {% if history.expected_hatch %}<dt>expected hatch</dt><dd>{{ history.expected_hatch}}</dd>{% endif %}
+  {% if history.inbreeding_coefficient is not None %}<dt>inbreeding coefficient</dt><dd>{{ history.inbreeding_coefficient|stringformat:".3g" }}</dd>{% endif %}  
+</dl>
+
+<dl class="dl-horizontal">
+  <dt><u>family history</u></dt><dd/>
+  <dt>acquired</dt><dd>{{ animal.acquisition_event.event_date }}</dd>
+  <dt>birth pairing</dt><dd> {% if animal.birth_pairing %}<a href="{{ animal.birth_pairing.get_absolute_url }}">{{ animal.birth_pairing.began_on}} - {{ animal.birth_pairing.ended_on|default_if_none:""}}</a>{% endif %}</dd>
+  <dt>sire</dt><dd>{% if animal.sire %}<a href="{{ animal.sire.get_absolute_url }}">{{ animal.sire }}</a>: {{ animal.sire.history.summary }}{% endif %}</dd>
+  <dt>paternal grandsire</dt><dd>{% if animal.sire.sire %}<a href="{{ animal.sire.sire.get_absolute_url }}">{{ animal.sire.sire }}</a>: {{ animal.sire.sire.history.summary }}{% endif %}</dd>
+  <dt>paternal granddam</dt><dd>{% if animal.sire.dam %}<a href="{{ animal.sire.dam.get_absolute_url }}">{{ animal.sire.dam }}</a>: {{ animal.sire.dam.history.summary }}{% endif %}</dd>
+  <dt>dam</dt><dd>{% if animal.dam %}<a href="{{ animal.dam.get_absolute_url }}">{{ animal.dam }}</a>: {{ animal.dam.history.summary }}{% endif %}</dd>
+  <dt>maternal grandsire</dt><dd>{% if animal.dam.sire %}<a href="{{ animal.dam.sire.get_absolute_url }}">{{ animal.dam.sire }}</a>: {{ animal.dam.sire.history.summary }}{% endif %}</dd>
+  <dt>maternal granddam</dt><dd>{% if animal.dam.dam %}<a href="{{ animal.dam.dam.get_absolute_url }}">{{ animal.dam.dam }}</a>: {{ animal.dam.dam.history.summary }}{% endif %}</dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt><u>breeding outcomes</u></dt><dd/>
+  <dt>total eggs</dt><dd> {{ animal.n_eggs }}</dd>
+  <dt>successfully hatched</dt><dd>{{ animal.n_hatched }}</dd>
+  <dt>unexpectedly died</dt><dd>{{ kids.lost.count }} </dd>
+  <dt>currently alive</dt><dd>{{ animal.n_alive }}</dd>
+</dl>
+
+{% if not animal.sexed %}
+<a href="{% url 'birds:set_sex' animal.uuid %}">update sex</a><br/>
+{% endif %}
+<a href="{% url 'birds:update_tags' animal.uuid %}">update tags (reservations)</a><br/>
+{% if not animal.band_number %}
+<a href="{% url 'birds:new_band' animal.uuid %}">band bird</a><br/>
+{% endif %}
+<a href="{% url 'admin:birds_animal_change' animal.uuid %}">edit bird (advanced users only)</a><br/>
+
+<h3>Recent Events</h3>
+
+<table class="table table-striped table-condensed">
+  <thead>
+    <th>Status</th>
+    <th>Date</th>
+    <th>Age</th>
+    <th>Location</th>
+    <th>Comments</th>
+    <th>Entered by</th>
+    <th>Edit</th>
+  </thead>
+  <tbody>
+    {% for event in event_list|slice:":10" %}
+        <tr>
+          <td>{{ event.status }}</td>
+          <td>{{ event.date }}</td>
+	  <td>{{ event.age_display }}</td>
+          <td>{{ event.location|link_or_blank }}</td>
+          <td>{{ event.description }}</td>
+	  <td>{{ event.entered_by}}</td>
+          <td><a href="{% url 'birds:event_entry' event.id %}"
+                 class="glyphicon glyphicon-edit" alt="[edit]" aria-label="[Edit]"></a></td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'birds:event_entry' animal.uuid %}">add event</a>&nbsp;&nbsp;
+<a href="{% url 'birds:events' animal.uuid %}">all events</a>&nbsp;&nbsp;
+<a href="{% url 'birds:measurements' animal.uuid %}">all measurements</a><br/>
+
+<h3>Samples</h3>
+{% include "birds/sample_table.html" %}
+<a href="samples/new/">add sample</a>&nbsp;&nbsp;
+<a href="samples/">all samples</a><br/>
+
+<h3>Pairings</h3>
+
+{% include "birds/pairing_table.html" %}
+
+
+<h3>Children</h3>
+
+{% include "birds/animal_table.html" with animal_list=kids only %}
+
+<a href="{% url 'birds:animal_kids' animal.uuid %}">all children</a> (including eggs)&nbsp;&nbsp;
+<a href="{% url 'birds:genealogy' animal.uuid %}">full genealogy</a> (may take a while)&nbsp;&nbsp;
+<a href="{% url 'birds:kinship' animal.uuid %}?sex={{ opposite_sex }}">kinship</a> (with potential mates)<br/>
+{% endblock %}
