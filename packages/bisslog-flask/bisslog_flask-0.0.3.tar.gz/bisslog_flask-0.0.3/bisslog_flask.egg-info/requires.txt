@@ -1,0 +1,12 @@
+bisslog>=0.0.9
+bisslog-schema>=0.0.10
+flask
+
+[async]
+Flask[async]>=2.2
+
+[cors]
+flask-cors>=6.0.0
+
+[websocket]
+flask-socketio
