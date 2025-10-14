@@ -1,0 +1,55 @@
+Metadata-Version: 2.4
+Name: fw-http-client
+Version: 1.7.5
+Summary: Prod-ready HTTP client with timeout and retries
+Project-URL: Repository, https://gitlab.com/flywheel-io/tools/lib/fw-http-client
+Project-URL: Documentation, https://gitlab.com/flywheel-io/tools/lib/fw-http-client
+Author-email: Flywheel <support@flywheel.io>
+License-Expression: MIT
+License-File: LICENSE
+Keywords: Flywheel,HTTP,client
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: <4,>=3.9
+Requires-Dist: fw-utils>=3
+Requires-Dist: pydantic<3,>=2.1.1
+Requires-Dist: requests<3,>=2.24.0
+Requires-Dist: urllib3>=1.26.15
+Description-Content-Type: text/markdown
+
+# fw-http-client
+
+> [!caution] Deprecation Notice
+> This project is deprecated and superseded by [fw-client](https://gitlab.com/flywheel-io/tools/lib/fw-client)
+
+Prod-ready HTTP client with timeouts and retries by default.
+
+## Installation
+
+Add as a `poetry` dependency to your project:
+
+```bash
+poetry add fw-http-client
+```
+
+## Usage
+
+```python
+from fw_http_client import HttpClient
+
+client = HttpClient(client_name="my-app", client_version="1.0")
+data = client.get("https://httpbin.org/json")
+assert data.slideshow.title == "Sample Slide Show"
+```
+
+## Development
+
+Install the project using `poetry` and enable `pre-commit`:
+
+```bash
+poetry install
+pre-commit install
+```
+
+## License
+
+[![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
