@@ -1,0 +1,19 @@
+[project]
+name = "is-uv-demo"
+version = "1.0.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Isaac Spackman", email = "isaacjspackman@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "scipy>=1.16.2",
+]
+
+[project.scripts]
+is-uv-demo = "is_uv_demo:main"
+
+[build-system]
+requires = ["uv_build>=0.9.2,<0.10.0"]
+build-backend = "uv_build"
