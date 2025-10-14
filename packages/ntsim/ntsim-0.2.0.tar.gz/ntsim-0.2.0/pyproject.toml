@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ntsim"
+description = "Neutrino Telescope Simulation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Dmitry Naumov", email = "dmitryvnaumov@gmail.com" },
+  { name = "Sergey Zavyalov"},
+  { name = "Andrey Sheshukov"},
+  { name = "Daniil Zubchenko"},
+  { name = "Mikhail Lisitsin"},
+  { name = "Yuri Malyshkin"},
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+dependencies = [
+"configargparse",
+"numpy","numba","h5py","pandas","pyyaml",
+"g4camp>=0.1.23","particle",
+"tqdm","scipy"
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+base = []
+nupropagator = ["nupropagator>=0.0.2"]
+extra = ["pvlib", "vector", "icosphere"]
+test = ["pytest"]
+gui = ["pyqtgraph","PyOpenGL", "PyQt5","matplotlib", "webcolors"]
+
+[project.urls]
+Documentation = "https://git.jinr.ru/Baikal/ntsim#readme"
+Issues = "https://git.jinr.ru/Baikal/ntsim/issues"
+Source = "https://git.jinr.ru/Baikal/ntsim"
+
+[tool.hatch.version]
+path = "ntsim/__about__.py"
+
+

@@ -1,0 +1,107 @@
+stages:
+  - install
+  - test
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.cache/pip"
+  GEANT4_DATA_DIR: "/cvmfs/geant4.cern.ch/share/data"
+  BGVD_MODEL_URL: "git+https://${BGVD_DEPLOY_LOGIN}:${BGVD_DEPLOY_PASSWORD}@git.jinr.ru/Baikal/bgvd-model.git"
+
+.for_python:
+  image: python:$PYTHON_VERSION
+  variables:
+      VENV_DIR: "${CI_PROJECT_DIR}/venv_py${PYTHON_VERSION}"
+  cache:
+    key: 
+      files:
+        - pyproject.toml
+      prefix: ${PYTHON_VERSION}
+    paths:
+      - ${VENV_DIR}
+      - ${PIP_CACHE_DIR}
+      - /var/cache/apt/archives/
+
+.for_all_pythons:
+  extends: .for_python
+  parallel:
+    matrix:
+      - PYTHON_VERSION: ["3.10", "3.11", "3.12", "3.13"]
+
+install:
+  extends: .for_all_pythons
+  stage: install
+
+  script:
+    # Create venv
+    - python -m venv ${VENV_DIR}
+    # actibate venv
+    - source ${VENV_DIR}/bin/activate
+    # upgrade pip
+    - pip install --upgrade pip
+    # installing bgvd_model
+    - pip install ${BGVD_MODEL_URL}
+    # install NTSim
+    - pip install -e ".[test, extra]" 
+  artifacts:
+    paths:
+      - ${VENV_DIR}
+    expire_in: 1 hour
+  rules:
+    #run install job only on non-draft MR targeted to protected branch ("main")
+   - if: $CI_MERGE_REQUEST_TARGET_BRANCH_PROTECTED == "true" && $CI_MERGE_REQUEST_DRAFT_STATUS != "true"
+
+test:
+  stage: test
+  extends: .for_all_pythons
+  needs: 
+    - job: install
+      parallel: !reference [install, parallel]
+  tags:
+    - docker
+    - cvmfs #we need this part to be running specifically on the runner with CVMFS
+
+  script:
+    # access the $GEANT4_DATA_DIR - to wake up the cvmfs, if it was unmounted
+    - ls $GEANT4_DATA_DIR
+    # installing the libGL so that Geant would work
+    - apt-get update && apt-get install -y libgl1 libglx-mesa0 libglu1-mesa
+    #activate venv
+    - source ${VENV_DIR}/bin/activate
+    # show the current packages configuration
+    - pip freeze
+    # run the tests!
+    - pytest test/integration --junitxml=test_report.xml
+  artifacts:
+    expire_in: 30 days
+    reports:
+      junit: test_report.xml
+  rules:
+    #run test job only on non-draft MR targeted to protected branch ("main")
+   - if: $CI_MERGE_REQUEST_TARGET_BRANCH_PROTECTED == "true" && $CI_MERGE_REQUEST_DRAFT_STATUS != "true"
+
+include:
+  project: ntsim/ci_templates
+  ref: v0.1
+  file: 
+    - templates/publish_docker.yml
+    - templates/publish_pypi.yml
+
+check_tag_version:
+  extends: .check-tag-version
+
+publish_pipy:
+  needs: ['check_tag_version']
+  extends: .publish-to-pypi
+  when: manual #require manual confirmation
+
+publish_testpipy:
+  needs: ['check_tag_version']
+  extends: .publish-to-testpypi
+
+publish_gitlab:
+  needs: ['check_tag_version']
+  extends: .publish-to-gitlab
+
+publish_docker:
+  extends: .publish-to-docker
