@@ -1,0 +1,214 @@
+# Django SalesTrack
+
+A comprehensive Django app for tracking sales personnel, distributors, and retailers with Google Maps integration and advanced filtering capabilities.
+
+## Features
+
+- **Multi-tier Tracking**: Track employees, distributors, and retailers with hierarchical relationships
+- **Google Maps Integration**: Interactive map visualization with custom markers and clustering
+- **Advanced Filtering**: Dynamic filter controls with individual marker counts
+- **Performance Optimized**: Bulk database queries and efficient data loading for large datasets
+- **Activity Tracking**: Log and visualize sales activities and visits
+- **GeoJSON Support**: Export tracking data in GeoJSON format
+- **Responsive UI**: Mobile-friendly interface with dynamic control states
+
+## Installation
+
+### 1. Install the package
+
+```bash
+pip install django-salestrack
+```
+
+### 2. Add to Django settings
+
+Add `'salestrack'` to your `INSTALLED_APPS` in `settings.py`:
+
+```python
+INSTALLED_APPS = [
+    ...
+    'salestrack',
+    ...
+]
+```
+
+### 3. Configure URLs
+
+Include the salestrack URLs in your main `urls.py`:
+
+```python
+from django.urls import path, include
+
+urlpatterns = [
+    ...
+    path('salestrack/', include('salestrack.urls')),
+    ...
+]
+```
+
+### 4. Database Setup
+
+This app requires specific database models. Make sure you have models similar to:
+
+- `SpUsers` - User/Employee model
+- `SpVisits` - Visit tracking model
+- `SpUserVisits` - User visit relationships
+- `SpActivityLogs` - Activity logging model
+
+Run migrations:
+
+```bash
+python manage.py migrate
+```
+
+## Configuration
+
+### Required Settings
+
+Add these settings to your Django `settings.py`:
+
+```python
+# Google Maps API Key (required)
+GOOGLE_MAPS_API_KEY = 'your-google-maps-api-key'
+
+# Database configuration (MySQL recommended)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'your_database_name',
+        'USER': 'your_database_user',
+        'PASSWORD': 'your_database_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
+}
+```
+
+### Optional Settings
+
+```python
+# Customize marker clustering (optional)
+SALESTRACK_CLUSTER_MARKERS = True
+SALESTRACK_MAX_MARKERS_PER_REQUEST = 1000
+
+# Performance settings (optional)
+SALESTRACK_BATCH_SIZE = 500
+SALESTRACK_CACHE_TIMEOUT = 300  # seconds
+```
+
+## Usage
+
+### Basic Setup
+
+1. **Access the tracking interface**:
+   Navigate to `/salestrack/` in your application
+
+2. **API Endpoints**:
+   - `/salestrack/user-markers/` - Get marker data
+   - `/salestrack/tracks.geo` - Get GeoJSON track data
+
+### Model Requirements
+
+Your models should follow this structure:
+
+```python
+# Example model structure (adapt to your needs)
+class SpUsers(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    latitude = models.DecimalField(max_digits=10, decimal_places=8)
+    longitude = models.DecimalField(max_digits=11, decimal_places=8)
+    user_type = models.CharField(max_length=50)
+    # ... other fields
+
+class SpVisits(models.Model):
+    user = models.ForeignKey(SpUsers, on_delete=models.CASCADE)
+    visit_date = models.DateField()
+    latitude = models.DecimalField(max_digits=10, decimal_places=8)
+    longitude = models.DecimalField(max_digits=11, decimal_places=8)
+    # ... other fields
+```
+
+### Frontend Integration
+
+The app includes a complete Google Maps interface with:
+
+- Dynamic marker loading and filtering
+- Marker type toggles with individual counts
+- Performance optimizations for large datasets
+- Automatic control state management during API calls
+
+## API Reference
+
+### GET /user-markers/
+
+Returns marker data for map visualization.
+
+**Parameters:**
+- `date` (optional): Filter by specific date (YYYY-MM-DD format)
+
+**Response:**
+```json
+{
+  "employees": [...],
+  "distributors": [...],
+  "retailers": [...],
+  "activities": [...]
+}
+```
+
+### GET /tracks.geo
+
+Returns GeoJSON formatted tracking data.
+
+**Parameters:**
+- `date` (optional): Filter by specific date
+
+**Response:**
+```json
+{
+  "type": "FeatureCollection",
+  "features": [...]
+}
+```
+
+## Performance Considerations
+
+- The app is optimized for datasets with 7,000+ markers
+- Uses bulk database queries to minimize N+1 problems
+- Implements client-side batching for large marker sets
+- Includes control disable/enable during API calls
+
+## Dependencies
+
+- Django >= 3.2
+- mysqlclient >= 2.0.0
+- requests >= 2.25.0
+- django-mysql >= 4.5.0
+- djangorestframework >= 3.13.0
+
+## Browser Support
+
+- Chrome 60+
+- Firefox 60+
+- Safari 12+
+- Edge 79+
+
+## License
+
+MIT License
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Support
+
+For support, please open an issue in the GitHub repository or contact the maintainers.
