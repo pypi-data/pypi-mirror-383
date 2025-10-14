@@ -1,0 +1,69 @@
+[project]
+name = "osc-transformers"
+version = "0.3.0"
+description = "以配置文件的方式构建transformer模型"
+readme = "README.md"
+authors = [
+    { name = "wangmengdi", email = "790990241@qq.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    # core
+    "torch>=2.8.0",
+    # config系统
+    "confection>=0.1.4",
+    "catalogue>=2.0.1",
+    # 日志打印
+    "loguru>=0.7.3",
+    # 哈希
+    "xxhash>=3.4.1",
+    # 命令行
+    "jsonargparse>=4.40.1",
+    # 数据处理
+    "numpy"
+]
+
+[[tool.uv.index]]
+name = "aliyun"
+url = "http://mirrors.aliyun.com/pypi/simple"
+
+[[tool.uv.index]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+[project.scripts]
+osc-transformers = "osc_transformers.__main__:run_cli"
+
+[tool.ruff]
+line-length = 120
+exclude = [
+  "build",
+  "dist",
+  "docs",
+]
+
+lint.select = [
+  "E",
+  "F",  # see: https://pypi.org/project/pyflakes
+  "I",  # implementation for isort
+  "UP", # see: https://docs.astral.sh/ruff/rules/#pyupgrade-up
+  "W",  # see: https://pypi.org/project/pycodestyle
+]
+
+lint.ignore = [
+  "E501", # Line too long
+  "E731", # Do not assign a lambda expression, use a def
+  "E741", # todo: Ambiguous variable name
+  "F841", # todo: Local variable is assigned to but never used
+]
+# Use Google-style docstrings.
+lint.pydocstyle.convention = "google"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
