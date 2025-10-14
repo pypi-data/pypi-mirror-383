@@ -1,0 +1,94 @@
+Metadata-Version: 2.4
+Name: abacusutils
+Version: 2.1.2
+Summary: Python code to read halo catalogs and other Abacus N-body data products
+Author: Daniel Eisenstein, Philip Pinto, Nina Maksimova, Sownak Bose, Boryana Hadzhiyska, Sihan (Sandy) Yuan
+Author-email: Lehman Garrison <lgarrison@flatironinstitute.org>
+Project-URL: Repository, https://github.com/abacusorg/abacusutils
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.16
+Requires-Dist: blosc>=1.9.2
+Requires-Dist: astropy>=4.0.0
+Requires-Dist: scipy>=1.5.0
+Requires-Dist: numba>=0.56
+Requires-Dist: asdf>=3.1.0
+Requires-Dist: h5py
+Requires-Dist: pyyaml
+Requires-Dist: msgpack>=1
+Requires-Dist: parallel_numpy_rng>=0.1.2
+Requires-Dist: asdf-astropy>=0.3
+Provides-Extra: all
+Requires-Dist: zenbu-fftw>=1; extra == "all"
+Requires-Dist: classy; extra == "all"
+Requires-Dist: Corrfunc>=2; extra == "all"
+Requires-Dist: emcee; extra == "all"
+Requires-Dist: schwimmbad; extra == "all"
+Requires-Dist: getdist; extra == "all"
+Requires-Dist: dynesty; extra == "all"
+Requires-Dist: dill; extra == "all"
+Requires-Dist: click; extra == "all"
+Provides-Extra: docs
+Requires-Dist: sphinx>=4.2; extra == "docs"
+Requires-Dist: sphinx-book-theme>=0.3; extra == "docs"
+Requires-Dist: myst_nb>=0.17.1; extra == "docs"
+Provides-Extra: test
+Requires-Dist: abacusutils[all]; extra == "test"
+Requires-Dist: pytest; extra == "test"
+Dynamic: license-file
+
+# abacusutils
+
+<p align="center">
+<img src="docs/images/icon_red.png" width="175px" alt="Abacus Logo">
+</p>
+
+[![Documentation Status](https://readthedocs.org/projects/abacusutils/badge/?version=latest)](https://abacusutils.readthedocs.io/en/latest/?badge=latest) [![PyPI](https://img.shields.io/pypi/v/abacusutils)](https://pypi.org/project/abacusutils/) [![Tests](https://github.com/abacusorg/abacusutils/actions/workflows/tests.yml/badge.svg)](https://github.com/abacusorg/abacusutils/actions/workflows/tests.yml) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/abacusorg/abacusutils/master.svg)](https://results.pre-commit.ci/latest/github/abacusorg/abacusutils/master)
+
+abacusutils is a package for reading and manipulating data products from the Abacus *N*-body project.
+In particular, these utilities are intended for use with the [AbacusSummit](https://abacussummit.readthedocs.io>)
+suite of simulations.  The package focuses on the Python 3 API, but there is also a language-agnostic Unix pipe
+interface to some of the functionality.
+
+These interfaces are documented here: <https://abacusutils.readthedocs.io>
+
+Press the GitHub "Watch" button in the top right and select "Custom->Releases" to be notified about bug fixes
+and new features!
+
+## Installation
+The Python abacusutils package is hosted on PyPI and can be installed
+by installing "abacusutils":
+```
+pip install abacusutils
+```
+or
+```
+pip install abacusutils[all]
+```
+
+For more information, see <https://abacusutils.readthedocs.io/en/latest/installation.html>.
+
+## Usage
+abacusutils has multiple interfaces, summarized here and at <https://abacusutils.readthedocs.io/en/latest/usage.html>.
+
+Specific examples of how to use abacusutils to work with AbacusSummit data will soon
+be given at the AbacusSummit website: <https://abacussummit.readthedocs.io>
+
+### Python
+The abacusutils PyPI package contains a Python package called `abacusnbody`.
+This is the name to import (not `abacusutils`, which is just the name of the PyPI package).
+For example, to import the `compaso_halo_catalog` module, use
+```python
+import abacusnbody.data.compaso_halo_catalog
+```
+
+### Unix Pipes
+The ``pipe_asdf`` Python script reads columns from ASDF files and pipes them to
+``stdout``.  For example:
+
+```bash
+    $ pipe_asdf halo_info_000.asdf -f N -f x_com | ./client
+```

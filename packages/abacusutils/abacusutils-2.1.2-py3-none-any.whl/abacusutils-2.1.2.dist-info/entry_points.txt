@@ -1,0 +1,5 @@
+[asdf.extensions]
+abacusutils = abacusnbody.data.asdf:AbacusExtension
+
+[console_scripts]
+pipe_asdf = abacusnbody.data.pipe_asdf:main
