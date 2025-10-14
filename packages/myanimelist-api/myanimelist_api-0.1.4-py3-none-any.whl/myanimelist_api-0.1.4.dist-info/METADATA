@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: myanimelist-api
+Version: 0.1.4
+Summary: My Anime List Api Client and Auth.
+Home-page: https://github.com/PandeCode/MalApi
+Author: PandeCode
+Author-email: 47388214+PandeCode@users.noreply.github.com
+License: MIT
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Description-Content-Type: text/markdown
+Requires-Dist: flask
+Requires-Dist: requests
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: summary
+
+# MalApi
+
+## Instructions
+
+-   Create an app at https://myanimelist.net/apiconfig (May want to use http://localhost:8000/callback)
+-   Place the MAL_CLIENT_ID, MAL_CLIENT_SECRECT and MAL_REDIRECT_URI in the .env file (Refer .env.safe).
+
+## Example
+
+```python
+#!/bin/env python3
+from pprint import pprint
+from pathlib import Path
+
+from mal_api.client import Client
+from mal_api.auth import Auth
+
+MAL_CLIENT_ID     = "MAL_CLIENT_ID"
+MAL_CLIENT_SECRET = "MAL_CLIENT_SECRECT"
+MAL_REDIRECT_URI  = "http://127.0.0.1:8000/callback"
+
+def main():
+	if not MAL_CLIENT_ID or not MAL_CLIENT_SECRET or not MAL_REDIRECT_URI:
+		raise Exception("Environment Variables not loaded")
+
+	auth = Auth(
+			clientId=MAL_CLIENT_ID,
+			clientSecret=MAL_CLIENT_SECRET,
+			redirectUri=MAL_REDIRECT_URI,
+			cacheFile=Path.joinpath(Path.home(), ".cache/malCache.json"),
+	)
+
+	auth.authenticate()
+
+	client = Client(auth=auth)
+
+	pprint(client.getUserData())
+	pprint(client.getUserAnimeList())
+
+if __name__ == "__main__":
+	main()
+```
