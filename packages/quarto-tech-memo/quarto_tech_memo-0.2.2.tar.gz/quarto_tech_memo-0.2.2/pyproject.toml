@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quarto-tech-memo"
+version = "0.2.2"
+description = "A CLI script to convert a markdown note to a polished PDF tech memo using Quarto."
+authors = [{ name = "Gaël Close", email = "closega@gmail.com" }]
+requires-python = ">=3.8"
+readme = "README.md"
+license = { file = "LICENSE" }
+dependencies = [
+    "quarto-cli",
+    "typer"]
+
+[project.scripts]
+quarto-tech-memo= "quarto_tech_memo.quarto_tech_memo:app"
+
+[project.urls]
+"Source" = "https://github.com/gael-close/quarto-tech-memo"
