@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Summary - Test Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .subject-line {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .subject-line h1 {
+            margin: 0;
+            font-size: 18px;
+            color: #495057;
+        }
+        
+        .email-body {
+            background-color: #ffffff;
+            padding: 0;
+        }
+        
+        .summary-section {
+            margin-bottom: 25px;
+        }
+        
+        .summary-section h2 {
+            font-size: 16px;
+            color: #495057;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 5px;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        .summary-table td {
+            padding: 5px 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .summary-table td:first-child {
+            font-weight: bold;
+            width: 40%;
+        }
+        
+        .pass {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .fail {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .skip {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .failed-tests {
+            background-color: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .failed-tests h3 {
+            margin-top: 0;
+            color: #c53030;
+            font-size: 14px;
+        }
+        
+        .failed-test-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #ffffff;
+            border-left: 3px solid #dc3545;
+            font-size: 13px;
+        }
+        
+        .test-name {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .test-error {
+            color: #dc3545;
+            font-style: italic;
+            margin-top: 3px;
+            font-size: 12px;
+        }
+        
+        .actions {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.8;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+            font-size: 12px;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .copy-section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .copy-section h3 {
+            margin-top: 0;
+            font-size: 14px;
+            color: #495057;
+        }
+        
+        .copy-text {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 3px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .copy-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .copy-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Email Subject -->
+        <div class="subject-line">
+            <h1>📧 Email Subject</h1>
+            <div id="emailSubject">Test Report - bdd-report - 13/10/2025</div>
+        </div>
+        
+        <!-- Copy Email Content Section -->
+        <div class="copy-section">
+            <h3>📋 Copy Email Content</h3>
+            <div class="copy-text" id="emailContent">Subject: Test Report - bdd-report - 13/10/2025
+
+Test Report Summary
+
+Suite Name: bdd-report
+Date: 13/10/2025
+Total Tests: 0
+Passed: 0
+Failed: 0
+Passed/Expected: 0/0 (0.0%)
+Duration: 0.01s
+
+Key Results:
+- Total Tests: 0
+- Passed: 0
+- Failed: 0
+- Pass Rate: 0.0%
+- Duration: 0.01s
+
+
+Generated: 2025-10-13 19:36:27
+View full report: file:///Users/aspundir/Documents/Bits/repo/bdd-report/examples/suite_examples/bdd_reports/bdd_report.html</div>
+            <button class="copy-btn" onclick="copyEmailContent()">📋 Copy to Clipboard</button>
+        </div>
+        
+        <!-- Email Body Preview -->
+        <div class="email-body">
+            <div class="summary-section">
+                <h2>📊 Test Report Summary</h2>
+                <table class="summary-table">
+                    <tr>
+                        <td>Suite Name:</td>
+                        <td>bdd-report</td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td>13/10/2025</td>
+                    </tr>
+                    <tr>
+                        <td>Total Tests:</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Passed:</td>
+                        <td><span class="pass">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Failed:</td>
+                        <td><span class="fail">0</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Passed/Expected:</td>
+                        <td>0/0 (0.0%)</td>
+                    </tr>
+                    <tr>
+                        <td>Duration:</td>
+                        <td>0.01s</td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+            
+            
+        </div>
+        
+        <!-- Actions -->
+        <div class="actions">
+            <a href="#" class="btn btn-primary" onclick="openEmailClient()">📧 Open Email Client</a>
+            <a href="bdd_report.html" class="btn btn-secondary">📊 View Full Report</a>
+            <button class="btn btn-secondary" onclick="copyEmailContent()">📋 Copy Content</button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            Generated by pytest-bdd-reporter on 2025-10-13 19:36:27<br>
+            <a href="bdd_report.html">View detailed report</a> | <a href="bdd_log.html">View execution log</a>
+        </div>
+    </div>
+    
+    <script>
+        function copyEmailContent() {
+            const content = document.getElementById('emailContent').textContent;
+            navigator.clipboard.writeText(content).then(function() {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.backgroundColor = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.backgroundColor = '#28a745';
+                }, 2000);
+            }).catch(function(err) {
+                alert('Failed to copy content. Please select and copy manually.');
+            });
+        }
+        
+        function openEmailClient() {
+            const subject = encodeURIComponent(document.getElementById('emailSubject').textContent);
+            const body = encodeURIComponent(document.getElementById('emailContent').textContent);
+            const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+        }
+        
+        // Auto-select content when clicked
+        document.getElementById('emailContent').addEventListener('click', function() {
+            const range = document.createRange();
+            range.selectNode(this);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        });
+    </script>
+</body>
+</html>

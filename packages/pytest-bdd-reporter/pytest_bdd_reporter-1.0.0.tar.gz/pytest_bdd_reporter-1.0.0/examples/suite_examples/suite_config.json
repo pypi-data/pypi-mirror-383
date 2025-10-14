@@ -1,0 +1,79 @@
+{
+  "smoke_tests": {
+    "name": "smoke_tests",
+    "description": "Critical functionality tests that must pass",
+    "tests": [
+      "test_user_login",
+      "test_basic_navigation",
+      "test_core_functionality"
+    ],
+    "features": [
+      "features/smoke_tests.feature"
+    ],
+    "tags": [
+      "smoke",
+      "critical",
+      "fast"
+    ],
+    "enabled": true,
+    "priority": 1
+  },
+  "regression_tests": {
+    "name": "regression_tests", 
+    "description": "Comprehensive tests for existing functionality",
+    "tests": [
+      "test_user_management",
+      "test_data_processing", 
+      "test_report_generation",
+      "test_api_endpoints"
+    ],
+    "features": [
+      "features/regression_tests.feature"
+    ],
+    "tags": [
+      "regression",
+      "comprehensive",
+      "slow"
+    ],
+    "enabled": true,
+    "priority": 2
+  },
+  "api_tests": {
+    "name": "api_tests",
+    "description": "API endpoint and integration tests",
+    "tests": [
+      "test_auth_endpoints",
+      "test_data_endpoints",
+      "test_user_endpoints"
+    ],
+    "features": [
+      "features/api_tests.feature"
+    ],
+    "tags": [
+      "api",
+      "integration",
+      "medium"
+    ],
+    "enabled": true,
+    "priority": 3
+  },
+  "performance_tests": {
+    "name": "performance_tests",
+    "description": "Performance and load testing scenarios",
+    "tests": [
+      "test_load_handling",
+      "test_response_times",
+      "test_concurrent_users"
+    ],
+    "features": [
+      "features/performance_tests.feature"
+    ],
+    "tags": [
+      "performance",
+      "load",
+      "slow"
+    ],
+    "enabled": false,
+    "priority": 4
+  }
+}

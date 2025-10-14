@@ -1,0 +1,15 @@
+include README.md
+include LICENSE
+include MANIFEST.in
+include pyproject.toml
+recursive-include pytest_bdd_reporter/templates *.html *.js *.css
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *.orig
+recursive-exclude * *.rej
+exclude .coverage
+exclude .gitignore
+exclude .github
+exclude .pytest_cache
+exclude .vscode
+exclude *.egg-info

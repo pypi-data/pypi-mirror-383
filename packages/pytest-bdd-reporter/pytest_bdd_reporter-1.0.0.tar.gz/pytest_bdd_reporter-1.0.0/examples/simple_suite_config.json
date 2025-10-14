@@ -1,0 +1,36 @@
+{
+  "demo_suite": {
+    "name": "demo_suite",
+    "description": "Simple demonstration suite",
+    "tests": [
+      "test_addition",
+      "test_subtraction", 
+      "test_multiplication"
+    ],
+    "features": [],
+    "tags": [
+      "demo",
+      "math",
+      "simple"
+    ],
+    "enabled": true,
+    "priority": 1
+  },
+  "advanced_suite": {
+    "name": "advanced_suite",
+    "description": "Advanced mathematical operations",
+    "tests": [
+      "test_division",
+      "test_power",
+      "test_square_root"
+    ],
+    "features": [],
+    "tags": [
+      "advanced",
+      "math",
+      "complex"
+    ],
+    "enabled": true,
+    "priority": 2
+  }
+}

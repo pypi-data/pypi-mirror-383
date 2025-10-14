@@ -1,0 +1,5 @@
+[console_scripts]
+bdd-status = pytest_bdd_reporter.cli:main
+
+[pytest11]
+bdd_reporter = pytest_bdd_reporter.plugin
