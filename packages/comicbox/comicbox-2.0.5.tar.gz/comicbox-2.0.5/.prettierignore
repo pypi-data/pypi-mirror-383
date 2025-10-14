@@ -1,0 +1,16 @@
+__pycache__
+.circleci
+.git
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.venv
+/node_modules
+/schemas/*.xsd
+/test-results
+/tests/**/*.json
+/tests/**/*.xml
+/tests/**/*.yaml
+dist
+package-lock.json
+uv.lock
