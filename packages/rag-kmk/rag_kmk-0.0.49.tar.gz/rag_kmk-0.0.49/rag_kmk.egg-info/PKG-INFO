@@ -1,0 +1,55 @@
+Metadata-Version: 2.4
+Name: rag-kmk
+Version: 0.0.49
+Summary: A simple RAG implementation for educational purposes implemented by Murat Karakaya Akademi
+Author-email: Murat Karakaya <kmkarakaya@gmail.com>
+License: MIT License
+Project-URL: Homepage, https://github.com/kmkarakaya/rag-kmk
+Keywords: rag-kmk
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: pyyaml
+Requires-Dist: PyMuPDF
+Requires-Dist: python-docx
+Requires-Dist: langchain
+Requires-Dist: sentence_transformers
+Requires-Dist: google-genai
+Requires-Dist: chromadb==0.5.3
+Requires-Dist: streamlit
+Requires-Dist: docx2txt
+Requires-Dist: docling
+Provides-Extra: all
+Requires-Dist: rag-kmk[extra]; extra == "all"
+Provides-Extra: extra
+Requires-Dist: pandas; extra == "extra"
+Dynamic: license-file
+
+# rag-kmk
+
+
+[![image](https://img.shields.io/pypi/v/rag-kmk.svg)](https://pypi.python.org/pypi/rag-kmk)
+[![image](https://img.shields.io/conda/vn/conda-forge/rag-kmk.svg)](https://anaconda.org/conda-forge/rag-kmk)
+
+
+**A simple RAG implementation for educational purposes implemented by Murat Karakaya Akademi**
+
+
+-   Free software: MIT License
+-   Documentation: https://kmkarakaya.github.io/rag-kmk
+-   Tutorial: https://www.youtube.com/@MuratKarakayaAkademi
+    
+
+## Features
+
+- TODO: 
+- add other file types
