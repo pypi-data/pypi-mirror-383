@@ -1,0 +1,459 @@
+<div align="center">
+
+# Proxy Rotator
+
+**An async Python library for managing VMESS proxy rotation with automatic subscription updates, connection testing, and user-agent rotation. Perfect for web scraping projects that require reliable proxy management.**
+
+[![Python 3.14](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/downloads/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+</div>
+
+---
+## ✨ Features
+
+- **Automatic Proxy Rotation**: Seamlessly rotate through a pool of VMESS proxies
+- **Subscription Support**: Fetch and update proxies from subscription URLs
+- **Connection Testing**: Automatically test and filter working proxies
+- **User-Agent Rotation**: Optional automatic user-agent rotation for each proxy
+- **Configurable**: Extensive configuration options via Pydantic models
+- **Pythonic**: Clean async/await syntax with context managers
+- **Full Logging**: Comprehensive logging for debugging and monitoring
+- **ate Limiting**: Built-in delay with jitter for rate limit handling
+- **Thread-Safe**: Global lock prevents concurrent proxy sessions
+
+---
+## 📋 Requirements
+
+- Python 3.11+
+- [Xray-core](https://github.com/XTLS/Xray-core) installed and accessible in PATH
+
+### Installing Xray-core
+
+**Linux/macOS:**
+```bash
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+```
+
+**Windows:**
+Download from [Xray-core releases](https://github.com/XTLS/Xray-core/releases)
+
+---
+## 🚀 Installation
+
+```bash
+git clone https://github.com/keyhankamyar/proxy_rotator.git
+cd proxy-rotator
+pip install -e .
+```
+
+---
+## 📖 Quick Start
+
+### Basic Usage
+
+To use the rotation you have two options. Use manual API or context manager. First, manual:
+```python
+import httpx
+from proxy_rotator import ProxyRotator, ProxyRotatorConfig, RotationConfig
+
+# Configure with a subscription URL
+config = ProxyRotatorConfig(
+    rotation_config=RotationConfig(
+        subscription_url="https://your-subscription-url.com/vmess"
+    )
+)
+
+rotator = ProxyRotator(config)
+
+await rotator.start()
+
+async with httpx.AsyncClient(
+    proxy=rotator.proxy_url,
+    headers=rotator.headers  # Contains user agent and other fields
+) as client:
+    response = await client.get("https://httpbin.org/ip")
+    print(response.json())
+
+await rotator.stop()  # Make sure to 'stop' before another 'start' to avoid locking
+```
+
+#### To rotate:
+```python
+# ...
+await rotator.start()
+
+async with httpx.AsyncClient(
+    proxy=rotator.proxy_url,
+    headers=rotator.headers
+) as client:
+    response = await client.get("https://httpbin.org/ip")
+    print(response.json())
+
+await rotator.stop()
+
+await rotator.start()  # Each new start will rotate the proxy
+
+async with httpx.AsyncClient(
+    proxy=rotator.proxy_url,
+    headers=rotator.headers
+) as client:
+    response = await client.get("https://httpbin.org/ip")
+    print(response.json())
+
+await rotator.stop()
+```
+
+#### or:
+```python
+# ...
+await rotator.start()
+
+async with httpx.AsyncClient(
+    proxy=rotator.proxy_url,
+    headers=rotator.headers
+) as client:
+    response = await client.get("https://httpbin.org/ip")
+    print(response.json())
+
+await rotator.rotate()
+
+async with httpx.AsyncClient(
+    proxy=rotator.proxy_url,
+    headers=rotator.headers
+) as client:
+    response = await client.get("https://httpbin.org/ip")
+    print(response.json())
+
+await rotator.stop()
+```
+
+#### Context manager syntax to make your life easier:
+```python
+async with rotator:
+    async with httpx.AsyncClient(
+        proxy=rotator.proxy_url,
+        headers=rotator.headers
+    ) as client:
+        response = await client.get("https://httpbin.org/ip")
+        print(response.json())
+```
+The context manager also have builtin retries for internal errors like port allocation.
+
+#### To rotate:
+```python
+async with rotator:
+    async with httpx.AsyncClient(
+        proxy=rotator.proxy_url,
+        headers=rotator.headers
+    ) as client:
+        response = await client.get("https://httpbin.org/ip")
+        print(response.json())
+
+async with rotator:  # Each time this automatically rotates the proxy and optionally the user agents
+    async with httpx.AsyncClient(
+        proxy=rotator.proxy_url,
+        headers=rotator.headers
+    ) as client:
+        response = await client.get("https://httpbin.org/ip")
+        print(response.json())
+```
+
+#### or:
+```python
+async with rotator:
+    async with httpx.AsyncClient(
+        proxy=rotator.proxy_url,
+        headers=rotator.headers
+    ) as client:
+        response = await client.get("https://httpbin.org/ip")
+        print(response.json())
+    
+    await rotator.rotate()
+
+    async with httpx.AsyncClient(
+        proxy=rotator.proxy_url,
+        headers=rotator.headers
+    ) as client:
+        response = await client.get("https://httpbin.org/ip")
+        print(response.json())
+```
+
+### Direct Proxy List
+
+```python
+from proxy_rotator import ProxyRotatorConfig, RotationConfig
+
+config = ProxyRotatorConfig(
+    rotation_config=RotationConfig(
+        proxies=[
+            "vmess://eyJhZGQiOiIxMjcuMC4wLjEi...",
+            "vmess://eyJhZGQiOiIxOTIuMTY4LjEuMSI...",
+        ]
+    )
+)
+```
+Note that **"proxies"** argument is mutually exclusive with **"subscription_url"**. You should pass only one of them.
+
+---
+## ⚙️ Configuration
+
+### Complete Configuration Example
+
+```python
+from datetime import timedelta
+from proxy_rotator import (
+    ProxyRotatorConfig,
+    RotationConfig,
+    ConnectionTestConfig,
+    HeadersConfig,
+    XrayConfig,
+    DelayConfig,
+)
+
+config = ProxyRotatorConfig(
+    # Where to store proxy data and configs
+    data_dir=Path(".proxy_rotator"),
+    
+    # Proxy rotation settings
+    rotation_config=RotationConfig(
+        subscription_url="https://your-subscription-url.com/vmess",
+        subscription_update_interval=timedelta(hours=24),
+        enable_shuffling=True,
+    ),
+    
+    # Connection testing
+    connection_test=ConnectionTestConfig(
+        url="https://httpbin.org/",
+        timeout=10.0,
+        interval=timedelta(hours=1),
+        max_parallel_connections=10,
+        retries=2,
+    ),
+    
+    # Headers and User-Agent rotation
+    headers=HeadersConfig(
+        rotate_user_agent=True,
+        user_agents_url="https://cdn.jsdelivr.net/gh/microlinkhq/top-user-agents@master/src/desktop.json",
+        default_values={
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+        }
+    ),
+    
+    # Xray process management
+    xray=XrayConfig(
+        binary_path="xray",
+        port_range_start=10000,
+        port_range_end=60000,
+        init_wait_seconds=2.0,
+        shutdown_timeout=5.0,
+    ),
+    
+    # Rate limiting with jitter
+    delay=DelayConfig(
+        enabled=True,
+        base_delay=1.0,
+        jitter=0.2,  # ±20% variation
+        min_delay=0.5,
+        max_delay=2.0,
+    ),
+)
+```
+
+---
+### Environment Variables
+
+You can also configure using environment variables:
+
+```bash
+export PROXY_ROTATOR_DATA_DIR=/custom/path
+export PROXY_ROTATOR_XRAY__BINARY_PATH=/usr/local/bin/xray
+export PROXY_ROTATOR_DELAY__ENABLED=true
+export PROXY_ROTATOR_DELAY__BASE_DELAY=2.0
+```
+
+Or use a `.env` file:
+
+```env
+PROXY_ROTATOR_DATA_DIR=/custom/path
+PROXY_ROTATOR_XRAY__BINARY_PATH=/usr/local/bin/xray
+```
+
+---
+## 📚 Advanced Usage
+
+### Custom User-Agent List
+
+```python
+config = ProxyRotatorConfig(
+    rotation_config=RotationConfig(
+        subscription_url="https://...",
+    ),
+    headers=HeadersConfig(
+        rotate_user_agent=True,
+        user_agents_list=[
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+        ]
+    )
+)
+```
+
+### Disable Proxy Shuffling
+
+```python
+config = ProxyRotatorConfig(
+    rotation_config=RotationConfig(
+        subscription_url="https://...",
+        enable_shuffling=False,  # Use proxies in order
+    )
+)
+```
+
+### Force Refresh Subscription
+
+```python
+# Force update subscription and re-test all proxies
+await rotator.refresh()
+```
+
+### Using with Logging
+
+```python
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logger = logging.getLogger("my_scraper")
+rotator = ProxyRotator(config, logger=logger)
+```
+
+---
+## 🏗️ Project Structure
+
+```
+ProxyRotator/
+├── proxy_rotator/
+│   ├── __init__.py         # Main exports
+│   ├── config.py           # Configuration models
+│   ├── errors.py           # Custom exceptions
+│   ├── models.py           # Data models (VmessProxy, XrayConfig)
+│   ├── process.py          # Xray process management
+│   ├── py.typed
+│   ├── rotator.py          # Main ProxyRotator class
+│   ├── subscription.py     # Subscription fetching/parsing
+│   ├── user_agents.py      # User-Agent management
+│   ├── utils.py            # Utility functions
+│   └── protocols/
+│       ├── __init__.py
+│       └── vmess.py        # VMESS protocol parser
+├── .gitignore
+├── CHANGELOG.md
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── pyproject.toml
+└── requirements.txt
+```
+
+---
+## 🔍 Error Handling
+
+The library provides specific exceptions for different error cases:
+
+```python
+from proxy_rotator.errors import (
+    ProxyRotatorError,      # Base exception
+    NetworkError,           # Network operation failures
+    ProcessError,           # Xray process errors
+    PortAllocationError,    # Port allocation failures
+    ValidationError,        # Configuration/data validation
+    SubscriptionError,      # Subscription fetch/parse errors
+    ProtocolError,          # Protocol parsing errors
+)
+
+try:
+    async with rotator:
+        # Your code here
+        pass
+except PortAllocationError:
+    print("Could not allocate a free port")
+except NetworkError:
+    print("No working proxies available")
+except SubscriptionError:
+    print("Failed to fetch subscription")
+```
+
+---
+## 🛠️ Development
+
+### Setup Development Environment
+
+```bash
+# Clone repository
+git clone https://github.com/keyhankamyar/proxy_rotator.git
+cd proxy-rotator
+
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install
+pip install -e .
+
+# Or install with development dependencies
+# pip install -e ".[dev]"
+```
+
+---
+## 📝 Roadmap
+
+Future features planned for upcoming releases:
+
+- [ ] Full test suite with pytest
+- [ ] Context manager yielding httpx client directly
+- [ ] Parallel connection testing
+- [ ] VLESS protocol support
+- [ ] aiohttp client support
+- [ ] SOCKS proxy support
+- [ ] PyPI package distribution
+- [ ] Comprehensive documentation
+- [ ] Lock timeout configuration
+
+---
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+Please make sure to update tests as appropriate and follow the code style guidelines.
+
+---
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+## 🙏 Acknowledgments
+
+- [Xray-core](https://github.com/XTLS/Xray-core) for the excellent proxy core
+- [httpx](https://github.com/encode/httpx) for the async HTTP client
+- [Pydantic](https://github.com/pydantic/pydantic) for data validation
+- [microlinkhq](https://github.com/microlinkhq/top-user-agents) for providing top user agents
+
+---
+## ⚠️ Disclaimer
+
+This tool is for educational and legitimate use cases only. Users are responsible for complying with all applicable laws and terms of service of websites they interact with. The author is not responsible for any misuse of this software.
+
+---
+
+Made with ❤️ by Keyhan Kamyar
