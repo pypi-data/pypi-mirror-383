@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: thonny-python-api-docs
+Version: 0.0.2
+Summary: Browse Python API Documentation from within Thonny
+Author-email: Carol Alexandru <alexandru@ifi.uzh.ch>
+License-Expression: MIT AND PSF-2.0
+Project-URL: Homepage, https://gitlab.uzh.ch/sealuzh/thonny-python-api-docs
+Project-URL: Bug Tracker, https://gitlab.uzh.ch/sealuzh/thonny-python-api-docs/-/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE-MIT
+License-File: LICENSE-PSFL
+Requires-Dist: lxml
+Requires-Dist: tkinterweb
+Requires-Dist: thonny>=4.1.7
+Dynamic: license-file
+
+This plugin allows you to read and search the official Python documentation from within Thonny, without the need for an internet connection.
