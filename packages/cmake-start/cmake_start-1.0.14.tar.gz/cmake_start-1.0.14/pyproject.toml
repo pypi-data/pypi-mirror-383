@@ -1,0 +1,83 @@
+[project]
+name = "cmake-start"
+version = "1.0.14"
+description = "The missing CMake project initializer"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "GPL-3.0-or-later" }
+authors = [
+    { name = "friendlyanon", email = "friendlyanon_@hotmail.com" }
+]
+keywords = ["cmake", "build-tools", "utilities", "project-initializer"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Utilities",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/friendlyanon/cmake-init"
+Repository = "https://github.com/friendlyanon/cmake-init"
+Issues = "https://github.com/friendlyanon/cmake-init/issues"
+
+[project.scripts]
+cmake-init = "cmake_init_lib:pypi_main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cmake_init_lib"]
+# Include all files in the package (Python files + templates directory)
+include = [
+    "src/cmake_init_lib/**/*.py",
+    "src/cmake_init_lib/templates/**/*",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/cmake-init",
+    "/build.py",
+    "/README.md",
+    "/COPYING",
+    "/pyproject.toml",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.3.0",
+]
+
+[tool.uv]
+# UV-specific configuration
+dev-dependencies = []
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.ruff]
+line-length = 88
+target-version = "1.0.14"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N"]
+ignore = []
