@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: casm
+Version: 0.9.2
+Summary: Container Assembler
+Home-page: https://github.com/podboy/casm/
+Author: Mingzhe Zou
+Author-email: zoumingzhe@outlook.com
+License: GPLv2
+Project-URL: Source Code, https://github.com/podboy/casm/
+Project-URL: Bug Tracker, https://github.com/podboy/casm/issues
+Project-URL: Documentation, https://github.com/podboy/casm/
+Keywords: container,docker,docker-compose,podman,podman-compose
+Platform: any
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: makefile-help
+Requires-Dist: xkits-command >=0.5.0
+Requires-Dist: xkits-thread >=0.2
+Requires-Dist: xmanage >=0.7.1
+Requires-Dist: podman-compose >=1.2.0
+Requires-Dist: podman >=5.2.0
+
+# casm
+
+> Container Assembler
