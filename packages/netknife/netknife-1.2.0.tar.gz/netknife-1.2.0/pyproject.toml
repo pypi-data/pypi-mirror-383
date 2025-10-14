@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "netknife"
+version = "1.2.0"
+description = "A CLI toolkit to manage FortiGate via REST API (policies, addresses, addrgrps, VIPs, etc.)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [{ name = "Berners.lk",email = "Berners.lk@gmail.com" }]
+keywords = ["fortigate", "firewall", "network", "api", "cli"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: System :: Networking :: Firewalls",
+]
+dependencies = [
+  "requests>=2.28",
+  "urllib3>=1.26",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourname/netknife"
+Issues = "https://github.com/yourname/netknife/issues"
+
+[project.scripts]
+netknife = "netknife.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/netknife"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/netknife", "README.md", "LICENSE", "pyproject.toml"]
