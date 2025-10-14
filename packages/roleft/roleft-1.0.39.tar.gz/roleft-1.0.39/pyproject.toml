@@ -1,0 +1,23 @@
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[project]
+name = "roleft"
+version = "1.0.39"
+authors = [
+    { name = "wenzd", email = "october731@163.com" },
+]
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://yuzke.com"
+
+[tool]
