@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "deepmembrane"
+version = "0.0.0"
+description = "Deep learning and physics-based modeling for membrane transport"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Hanqing Fan" }]
+keywords = ["membranes", "deep learning", "transport", "modeling"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/fan-hanqing/deepmembrane"
+Repository = "https://github.com/fan-hanqing/deepmembrane"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/deepmembrane"]
