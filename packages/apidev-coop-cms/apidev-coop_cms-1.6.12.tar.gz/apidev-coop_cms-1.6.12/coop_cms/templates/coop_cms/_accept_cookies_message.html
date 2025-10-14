@@ -1,0 +1,29 @@
+{% load i18n %}
+<script>
+    $(function() {
+        $(".accept-cookies-message a.answer-cookies-message").click(function() {
+            $.post(
+                '{% url "coop_cms_accept_cookies_message" %}',
+                {'accept_cookies': $(this).data('value')},
+                function(data) {
+                    $('.accept-cookies-question').hide();
+                    $('.accept-cookies-answer').text(data.message);
+                    setTimeout(function () {
+                        $('.accept-cookies-message').hide();
+                    }, 5000);
+                }
+            ).fail(function() {
+                $('.accept-cookies-message').show();
+            });
+            return false;
+        })
+    })
+</script>
+<div class="accept-cookies-message">
+    <div class="accept-cookies-answer"></div>
+    <div class="accept-cookies-question">
+        {% trans "We are using cookies to analyze our traffic With Google analytics. Do you accept?" %}
+        <a href class="answer-cookies-message" data-value="1">{% trans "Yes" %}</a>
+        <a href class="answer-cookies-message" data-value="0">{% trans "No" %}</a>
+    </div>
+</div>
