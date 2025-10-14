@@ -1,0 +1,118 @@
+Metadata-Version: 2.4
+Name: vibe-ukis
+Version: 0.4.7
+Summary: vibe-ukis is a set of tools that are designed to help developers build working and reliable applications with LlamaIndex, llama-index-workflows and Chainlit.
+License-File: LICENSE
+Requires-Python: >=3.10
+Requires-Dist: bm25s>=0.2.13
+Requires-Dist: copier>=9.10.1
+Requires-Dist: fastmcp>=2.11.3
+Requires-Dist: httpx>=0.28.1
+Requires-Dist: llama-cloud-services>=0.6.62
+Requires-Dist: llama-index-core>=0.13.3
+Requires-Dist: llama-index-llms-anthropic>=0.8.4
+Requires-Dist: llama-index-llms-openai>=0.5.4
+Requires-Dist: prompt-toolkit>=3.0.51
+Requires-Dist: pystemmer>=3.0.0
+Requires-Dist: rich-gradient>=0.3.3
+Requires-Dist: rich>=14.1.0
+Requires-Dist: tomli-w>=1.2.0
+Description-Content-Type: text/markdown
+
+# vibe-ukis
+
+**vibe-ukis** is a comprehensive toolkit for building AI-powered applications with ease. Built on top of LlamaIndex and Chainlit, vibe-ukis provides powerful workflow orchestration and intelligent document processing capabilities.
+
+## Features
+
+- **LlamaIndex Integration**: Leverage the full power of LlamaIndex for building intelligent applications
+- **Chainlit UI**: Beautiful, interactive user interfaces for your AI applications
+- **LlamaIndex Workflows**: Advanced workflow orchestration for complex AI pipelines
+- **Claude Code Subagents**: Intelligent coding assistants powered by Claude
+- **Quick Starter**: Get up and running in seconds with pre-configured templates
+
+## Installation
+
+**Quick Install**
+
+Install **vibe-ukis** using `uv`:
+
+```bash
+uvx vibe-ukis@latest --help
+```
+
+Or with `pip`:
+
+```bash
+pip install vibe-ukis
+```
+
+**Development Setup**
+
+Clone the repository:
+
+```bash
+git clone https://github.com/UkisAI/VibeUkis.git
+cd vibe-ukis
+```
+
+Build and install:
+
+```bash
+python -m build
+```
+
+Regular installation:
+
+```bash
+uv pip install dist/*.whl
+```
+
+Editable installation (for development):
+
+```bash
+# Create and activate virtual environment
+source .venv/bin/activate  # On Unix/macOS
+# .venv\Scripts\activate  # On Windows
+
+# Install in editable mode
+pip install -e .
+```
+
+## Usage
+
+**vibe-ukis** provides a powerful CLI with several commands to help you build AI applications quickly.
+
+### starter
+
+The `starter` command is your quick-start solution for building AI applications with vibe-ukis. It sets up a complete project with all necessary configurations for LlamaIndex, Chainlit, and LlamaIndex workflows integration.
+
+**Features:**
+- Interactive terminal UI for easy setup
+- Pre-configured templates for common use cases
+- Integrated with Claude Code for intelligent development
+- Support for multiple coding agents (Cursor, GitHub Copilot, Claude Code)
+
+**Example usage:**
+
+```bash
+vibe-ukis starter                    # Launch interactive setup
+vibe-ukis starter -a 'Claude Code'   # Quick start with Claude Code
+vibe-ukis starter -v                 # Verbose mode for detailed logging
+vibe-ukis starter --mcp              # Launch MCP server at http://127.0.0.1:8000/mcp
+```
+
+**Flags:**
+- `-v`/`--verbose`: Enable detailed logging
+- `-w`/`--overwrite`: Overwrite existing files
+- `-m`/`--mcp`: Launch MCP server for programmatic access
+- `-a`/`--agent`: Specify coding agent (e.g., 'Claude Code', 'Cursor')
+- `-s`/`--service`: Specify service to configure
+
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to get started.
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
