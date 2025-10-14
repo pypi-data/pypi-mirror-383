@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atams"
+version = "1.1.4"
+description = "Advanced Toolkit for Application Management System - Universal toolkit for AURA projects"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [
+    {name = "ATAMS Team", email = "atamsindonesia@gmail.com"}
+]
+keywords = ["fastapi", "toolkit", "aura", "atams", "framework", "boilerplate"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: FastAPI",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Code Generators",
+]
+
+dependencies = [
+    "fastapi>=0.104.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "pycryptodome>=3.19.0",
+    "httpx>=0.25.0",
+    "email-validator>=2.0.0",
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "jinja2>=3.1.0",
+    "inflect>=7.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "build>=0.10.0",
+    "twine>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/atams/atams-toolkit"
+Documentation = "https://atams-toolkit.readthedocs.io"
+Repository = "https://github.com/atams/atams-toolkit"
+Issues = "https://github.com/atams/atams-toolkit/issues"
+
+[project.scripts]
+atams = "atams.cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["atams*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+atams = ["cli/templates/**/*.jinja2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short --strict-markers"
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

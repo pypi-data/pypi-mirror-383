@@ -1,0 +1,45 @@
+from typing import Optional
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, field_validator
+
+
+class {{ pascal_name }}Base(BaseModel):
+    {{ prefix }}name: Optional[str] = None
+
+
+class {{ pascal_name }}Create({{ pascal_name }}Base):
+    """Schema for creating {{ singular_name }}"""
+    pass
+
+
+class {{ pascal_name }}Update({{ pascal_name }}Base):
+    """Schema for updating {{ singular_name }}"""
+    pass
+
+
+class {{ pascal_name }}InDB({{ pascal_name }}Base):
+    """Schema for {{ singular_name }} from database"""
+    model_config = ConfigDict(from_attributes=True)
+
+    {{ prefix }}id: int
+    {{ prefix }}created_at: datetime
+    {{ prefix }}updated_at: Optional[datetime] = None
+
+    @field_validator('{{ prefix }}updated_at', '{{ prefix }}created_at', mode='before')
+    @classmethod
+    def fix_datetime_timezone(cls, v):
+        """Fix datetime timezone format from PostgreSQL"""
+        if v == '' or v is None:
+            return None
+        if isinstance(v, str):
+            import re
+            pattern = r'([+-]\d{2})$'
+            match = re.search(pattern, v)
+            if match:
+                v = v + ':00'
+        return v
+
+
+class {{ pascal_name }}({{ pascal_name }}InDB):
+    """Schema for {{ singular_name }} response"""
+    pass
