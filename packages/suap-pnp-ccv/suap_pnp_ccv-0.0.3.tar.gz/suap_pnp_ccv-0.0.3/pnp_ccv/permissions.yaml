@@ -1,0 +1,24 @@
+Administrador Acadêmico:
+  app_manager: edu
+  pnp_ccv:
+    configuracao:
+    - view_configuracao
+    - change_configuracao
+    turno:
+    - view_turno
+    - change_turno
+    raca:
+    - view_raca
+    - change_raca
+    cota:
+    - view_cota
+    - change_cota
+    fontefinanciamento:
+    - view_fontefinanciamento
+    - change_fontefinanciamento
+    curso:
+    - view_curso
+    - change_curso
+    ciclo:
+    - view_ciclo
+    - change_ciclo

@@ -1,0 +1,24 @@
+
+{% extends super_template %}
+
+{% load tags %}
+
+{% block content %}
+    <div class="responsive-table">
+        <table>
+            <caption>Inscritos no Ciclo</caption>
+            <thead>
+                <th>Inscrição</th>
+                <th>Nome</th>
+            </thead>
+            <tbody>
+                {% for candidato in obj.get_evadidos %}
+                    <tr>
+                        <td><a target="_blank" href="/processo_seletivo/edital/{{ candidato.edital_id }}/?tab=candidatos&candidato={{ candidato.cpf }}&uo_selecionada=&polo_selecionado=">{{ candidato.inscricao }}</a></td>
+                        <td>{{ candidato.nome }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

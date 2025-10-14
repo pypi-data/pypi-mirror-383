@@ -1,0 +1,57 @@
+
+{% extends super_template %}
+
+{% load tags %}
+
+{% block content %}
+    <style>
+        .center{
+            text-align: center;
+        }
+    </style>
+    <div class="responsive-table">
+        <table>
+            <caption>Matrículas ({{ alunos|length }})</caption>
+            <thead>
+                <th>#</th>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Situação Atual</th>
+                <th width="120px">Código / CPF</th>
+                <th>Data da Matrícula</th>
+                <th>Forma de Ingresso</th>
+                <th>Situação em {{ data_fim }}</th>
+                <th>Raça</th>
+                <th>Renda</th>
+                <th>Turno</th>
+            </thead>
+            <tbody>
+                {% for obj in alunos %}
+                    <tr {% if not obj.situacao.ativo %}style="opacity: 40%"{% endif %}>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a target="blank" href="/edu/aluno/{{ obj.matricula }}/">{{ obj.matricula }}</a></td>
+                        <td>{{ obj.nome }}</td>
+                        <td class="center">
+                            {{ obj.situacao.atual.descricao }}
+                            {% if obj.situacao.atual.procedimento %}
+                                <br><i>{{ obj.situacao.atual.procedimento.tipo }} em {{ obj.situacao.atual.procedimento.data|format }}</i>
+                            {% endif %}
+                        </td>
+                        <td class="center">{{ obj.codigo_matricula }}<br/>{{ obj.cpf }}</td>
+                        <td class="center">{{ obj.data_matricula|format }}</td>
+                        <td class="center">{{ obj.forma_ingresso }}</td>
+                        <td class="center">
+                            {{ obj.situacao.pnp.descricao|format }}
+                            {% if obj.situacao.pnp.descricao != "EM_CURSO" %}
+                            <br/><i>{{ obj.situacao.pnp.data|format }}</i>
+                            {% endif %}
+                        </td>
+                        <td class="center">{{ obj.raca }}</td>
+                        <td class="center">{{ obj.renda }}</td>
+                        <td class="center">{{ obj.turno }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
