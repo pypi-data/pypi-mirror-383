@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wyrdbound-dice"
+version = "0.0.2"
+description = "A comprehensive dice rolling library for tabletop RPGs"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "The Wyrd One", email = "wyrdbound@proton.me"}
+]
+maintainers = [
+    {name = "The Wyrd One", email = "wyrdbound@proton.me"}
+]
+keywords = ["dice", "tabletop", "rpg", "ttrpg", "gaming", "random", "probability"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9", 
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Games/Entertainment :: Role-Playing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+visualization = ["matplotlib>=3.7.0"]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/wyrdbound/wyrdbound-dice"
+Repository = "https://github.com/wyrdbound/wyrdbound-dice"
+Documentation = "https://github.com/wyrdbound/wyrdbound-dice#readme"
+"Bug Tracker" = "https://github.com/wyrdbound/wyrdbound-dice/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+wyrdbound_dice = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--strict-markers --strict-config"
+
+[tool.ruff]
+line-length = 100  # More lenient than 88 to reduce minor violations 
+target-version = "py38"
+
+[tool.ruff.lint]
+# Enable common checks including line length
+select = ["E", "F", "W", "I"]
+ignore = []  # Don't ignore line length - let ruff auto-fix it
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "E501"]  # Allow assert statements and long test strings in tests
+"tools/*" = ["E501"]  # Allow long lines in HTML templates and complex f-strings
