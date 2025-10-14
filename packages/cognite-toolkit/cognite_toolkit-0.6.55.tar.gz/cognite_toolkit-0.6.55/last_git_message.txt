@@ -1,0 +1,45 @@
+[CDF-25858] Enable statistics on deployment packs (#2033)
+
+# Description
+
+Maintainers of external module (a.k.a. deployment pack) libraries want
+to track the usage through the Toolkit in Mixpanel. They will want to
+know when deployment packs are _installed_, _built_ and _deployed_.
+
+This PR
+
+- extends module data-classes so that it is possible to tag them with
+identifiers (package and module)
+- extends tracking in`ToolkitCommand` so that its subclasses can have
+additional values added to the emitted Mixpanel event.
+- uses this approach in the BuildCommand to include package and module
+ids to the Mixpanel event
+
+<img width="3318" height="1258" alt="Screenshot 2025-10-08 at 10 27 28"
+src="https://github.com/user-attachments/assets/0820954a-e716-476a-b820-b357170bb007"
+/>
+
+<img width="2268" height="1476" alt="Screenshot 2025-10-08 at 16 06 36"
+src="https://github.com/user-attachments/assets/441e46ab-a76a-4f34-8d0f-86d32269f66a"
+/>
+
+
+
+## Changelog
+
+- [x] Patch
+- [ ] Skip
+
+## cdf
+
+### Added
+
+- Statistics on Deployment Pack installation
+
+## templates
+
+No changes.
+
+---------
+
+Co-authored-by: Anders Albert <60234212+doctrino@users.noreply.github.com>
