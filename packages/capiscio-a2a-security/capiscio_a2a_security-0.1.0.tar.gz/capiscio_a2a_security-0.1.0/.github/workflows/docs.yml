@@ -1,0 +1,64 @@
+name: Documentation Validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Build and validate documentation (no deployment)
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install mkdocs-material \
+                      "mkdocstrings[python]>=0.24" \
+                      mkdocs-git-revision-date-localized-plugin
+      
+      - name: Validate documentation build
+        run: mkdocs build --strict
+      
+      - name: Check for broken links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          folder-path: 'docs'
+        continue-on-error: true
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-build
+          path: site/
+          retention-days: 7
+      
+      - name: Add success comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Documentation validation passed!\n\n> Unified docs will be deployed from [capiscio-docs](https://github.com/capiscio/capiscio-docs) repo.'
+            })
+
