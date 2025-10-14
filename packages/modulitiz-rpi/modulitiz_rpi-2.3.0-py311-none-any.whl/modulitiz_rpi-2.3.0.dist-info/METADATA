@@ -1,0 +1,48 @@
+Metadata-Version: 2.4
+Name: modulitiz_rpi
+Version: 2.3.0
+Summary: Raccolta dei miei moduli - funzioni specifiche per il RaspberryPi
+Author-email: tiz <sderfo1234@altervista.org>
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: modulitiz-micro>=2
+Requires-Dist: RPi.GPIO==0.7.1
+Requires-Dist: types-RPi.GPIO==0.7.0.20250318
+Requires-Dist: adafruit-circuitpython-ads1x15==2.2.4
+Dynamic: license-file
+
+# modulitiz-rpi
+
+It's a Python library that contains specific functions for RaspberryPi.
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install:
+
+```bash
+pip install -U modulitiz_rpi
+```
+The other required dependencies will be installed automatically.
+
+## Usage
+
+```python
+from modulitiz_rpi.ModuloGPIOInput import ModuloGPIOInput
+
+gpioInput=ModuloGPIOInput(0)
+gpioInput.populate()
+
+# return False or True
+gpioInput.isActive()
+```
+
+## Contributing
+
+If you find any bug you can write me at [sderfo1234@altervista.org](mailto:sderfo1234@altervista.org)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
