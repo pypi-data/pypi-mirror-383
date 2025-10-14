@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: gramsplus-2
+Version: 6.0.2
+Summary: A library to build semantic descriptions of tables
+Home-page: https://github.com/usc-isi-i2/grams
+License: LICENSE
+Author: Binh Vu
+Author-email: bvu687@gmail.com
+Requires-Python: >=3.11,<3.14
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Rust
+Provides-Extra: all
+Provides-Extra: pyserini
+Requires-Dist: ftfy (>=6.1.1,<7.0.0)
+Requires-Dist: gp-core (>=6.0.1,<7.0.0)
+Requires-Dist: graph-wrapper (>=1.6.0,<2.0.0)
+Requires-Dist: hugedict (>=2.12.10,<3.0.0)
+Requires-Dist: ipython (>=8.0.1,<9.0.0)
+Requires-Dist: kgdata (>=7.0.0,<8.0.0)
+Requires-Dist: libactor (>=2.6.0,<3.0.0)
+Requires-Dist: loguru (>=0.7.0,<0.8.0)
+Requires-Dist: matplotlib (>=3.5.3,<4.0.0)
+Requires-Dist: networkx (>=3.2.1,<4.0.0)
+Requires-Dist: numparser2 (>=1.0.2,<2.0.0)
+Requires-Dist: omegaconf (>=2.0.6,<3.0.0)
+Requires-Dist: orjson (>=3.9.0,<4.0.0)
+Requires-Dist: pslpython (==2.2.2)
+Requires-Dist: pyserini-install (>=0.23.1) ; extra == "pyserini" or extra == "all"
+Requires-Dist: python-slugify (>=8.0.4,<9.0.0)
+Requires-Dist: rdflib (>=7.0.0,<8.0.0)
+Requires-Dist: rltk (==2.0.0-a20)
+Requires-Dist: ruamel-yaml (>=0.17.21,<0.18.0)
+Requires-Dist: sem-desc (>=6.10.1,<7.0.0)
+Requires-Dist: spacy (>=3.8.4,<4.0.0)
+Requires-Dist: steiner-tree (>=1.2.1,<2.0.0)
+Requires-Dist: strsim-2 (>=1.0.0,<2.0.0)
+Requires-Dist: symspellpy (>=6.7.7,<7.0.0)
+Requires-Dist: timer4 (>=1.0.4,<2.0.0)
+Requires-Dist: tqdm (>=4.64.0,<5.0.0)
+Requires-Dist: typing-extensions (>=4.0.0,<5.0.0)
+Requires-Dist: ujson (>=5.5.0,<6.0.0)
+Project-URL: Repository, https://github.com/usc-isi-i2/grams
+Description-Content-Type: text/markdown
+
+# Grams+
+
