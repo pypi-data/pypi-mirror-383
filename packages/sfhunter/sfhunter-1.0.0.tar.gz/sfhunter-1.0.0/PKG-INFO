@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: sfhunter
+Version: 1.0.0
+Summary: High-performance Salesforce URL scanner with Discord/Telegram integration
+Home-page: https://github.com/yourusername/sfhunter
+Author: SFHunter
+Author-email: sfhunter@example.com
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.7
+License-File: LICENSE
+Requires-Dist: requests>=2.28.0
+Requires-Dist: urllib3>=1.26.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
