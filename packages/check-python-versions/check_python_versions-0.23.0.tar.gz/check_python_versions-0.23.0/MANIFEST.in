@@ -1,0 +1,24 @@
+include *.mk
+include *.py
+include *.rst
+include .coveragerc
+include .gitignore
+include LICENSE
+include Makefile
+include tox.ini
+
+# added by check_manifest.py
+include *.yml
+
+# added by check_manifest.py
+include CLASSIFIERS
+include check-python-versions
+
+# added by check_manifest.py
+include pytest.ini
+recursive-include tests *.py
+
+prune .github
+
+# added by check_manifest.py
+include *.yaml
