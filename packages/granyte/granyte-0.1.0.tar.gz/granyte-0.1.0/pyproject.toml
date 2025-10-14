@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "granyte"
+version = "0.1.0"
+description = "A minimal demo package"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "Ulf Bissbort"}]
+
+[project.urls]
+Repository = "https://github.com/UlfBissbort/granyte-python"
