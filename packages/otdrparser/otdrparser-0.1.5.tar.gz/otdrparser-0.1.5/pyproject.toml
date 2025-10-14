@@ -1,0 +1,16 @@
+[project]
+name = "otdrparser"
+version = "0.1.5"
+description = "Python library for parsing OTDR files in Telcordia SR-4731 Version 2 format"
+authors = [
+   {name = "Markus Juenemann", email = "markus@juenemann.net"}
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+
+[build-system]
+requires = ["flit_core>3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project.urls]
+Home = "https://github.com/mjuenema/otdrparser"
