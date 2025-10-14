@@ -1,0 +1,530 @@
+{
+  "nodes": [
+    {
+      "id": "abs_test",
+      "type": "abs",
+      "params": {}
+    },
+    {
+      "id": "add_0",
+      "type": "add",
+      "params": {}
+    },
+    {
+      "id": "div_0",
+      "type": "div",
+      "params": {}
+    },
+    {
+      "id": "div_1",
+      "type": "div",
+      "params": {}
+    },
+    {
+      "id": "eq_0",
+      "type": "eq",
+      "params": {}
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_1",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_2",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_3",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_4",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_5",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_6",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gte_0",
+      "type": "gte",
+      "params": {}
+    },
+    {
+      "id": "logical_and_0",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "logical_and_1",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "logical_not_0",
+      "type": "logical_not",
+      "params": {}
+    },
+    {
+      "id": "logical_or_0",
+      "type": "logical_or",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "lt_1",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "lte_0",
+      "type": "lte",
+      "params": {}
+    },
+    {
+      "id": "mul_0",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "mul_1",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "mul_2",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "neq_0",
+      "type": "neq",
+      "params": {}
+    },
+    {
+      "id": "node_34",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 2
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 2
+      }
+    },
+    {
+      "id": "number_2",
+      "type": "number",
+      "params": {
+        "value": -1
+      }
+    },
+    {
+      "id": "number_3",
+      "type": "number",
+      "params": {
+        "value": 100
+      }
+    },
+    {
+      "id": "sma_0",
+      "type": "sma",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "sma_1",
+      "type": "sma",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1D"
+    },
+    {
+      "id": "sub_0",
+      "type": "sub",
+      "params": {}
+    },
+    {
+      "id": "sub_1",
+      "type": "sub",
+      "params": {}
+    },
+    {
+      "id": "sub_2",
+      "type": "sub",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "div_1",
+      "source_handle": "result",
+      "target": "mul_2",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_1",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_2",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "gt_3",
+      "source_handle": "result",
+      "target": "logical_or_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "gt_4",
+      "source_handle": "result",
+      "target": "logical_not_0",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "gt_5",
+      "source_handle": "result",
+      "target": "logical_and_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_6",
+      "source_handle": "result",
+      "target": "logical_and_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "logical_and_1",
+      "source_handle": "result",
+      "target": "node_34",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "logical_not_0",
+      "source_handle": "result",
+      "target": "node_34",
+      "target_handle": "enter_short"
+    },
+    {
+      "source": "lt_1",
+      "source_handle": "result",
+      "target": "logical_or_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "mul_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "div_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_2",
+      "source_handle": "result",
+      "target": "mul_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_3",
+      "source_handle": "result",
+      "target": "mul_2",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "sma_0",
+      "source_handle": "result",
+      "target": "gt_5",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "sma_1",
+      "source_handle": "result",
+      "target": "gt_6",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "div_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "eq_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_2",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_3",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_4",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_5",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gte_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lte_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "mul_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "mul_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "neq_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "sma_0",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "sub_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "sub_2",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "h",
+      "target": "add_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "h",
+      "target": "gt_2",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "h",
+      "target": "gt_3",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "h",
+      "target": "sub_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "l",
+      "target": "add_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "l",
+      "target": "sub_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "div_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "eq_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gt_4",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gte_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "lt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "lte_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "neq_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "sub_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "sub_2",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "v",
+      "target": "gt_6",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "v",
+      "target": "sma_1",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "sub_1",
+      "source_handle": "result",
+      "target": "abs_test",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "sub_2",
+      "source_handle": "result",
+      "target": "div_1",
+      "target_handle": "SLOT0"
+    }
+  ]
+}

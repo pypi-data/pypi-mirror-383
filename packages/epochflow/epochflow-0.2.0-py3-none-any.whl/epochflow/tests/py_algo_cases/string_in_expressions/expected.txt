@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "ifexp_0",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    },
+    {
+      "id": "text_0",
+      "type": "text",
+      "params": {
+        "value": "Bullish"
+      }
+    },
+    {
+      "id": "text_1",
+      "type": "text",
+      "params": {
+        "value": "Bearish"
+      }
+    },
+    {
+      "id": "text_2",
+      "type": "text",
+      "params": {
+        "value": "Active"
+      }
+    },
+    {
+      "id": "text_3",
+      "type": "text",
+      "params": {
+        "value": "NYSE"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "condition"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "text_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "true"
+    },
+    {
+      "source": "text_1",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "false"
+    }
+  ]
+}

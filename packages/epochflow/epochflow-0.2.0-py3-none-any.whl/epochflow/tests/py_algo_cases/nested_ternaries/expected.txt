@@ -1,0 +1,187 @@
+{
+  "nodes": [
+    {
+      "id": "cross",
+      "type": "crossover",
+      "params": {}
+    },
+    {
+      "id": "fast",
+      "type": "ema",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "ifexp_0",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "ifexp_1",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "node_13",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 30
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 1
+      }
+    },
+    {
+      "id": "number_2",
+      "type": "number",
+      "params": {
+        "value": 70
+      }
+    },
+    {
+      "id": "number_3",
+      "type": "number",
+      "params": {
+        "value": 0
+      }
+    },
+    {
+      "id": "rsi14",
+      "type": "rsi",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "id": "slow",
+      "type": "ema",
+      "params": {
+        "period": 50
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    }
+  ],
+  "edges": [
+    {
+      "source": "cross",
+      "source_handle": "result",
+      "target": "ifexp_1",
+      "target_handle": "false"
+    },
+    {
+      "source": "fast",
+      "source_handle": "result",
+      "target": "cross",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "ifexp_1",
+      "target_handle": "condition"
+    },
+    {
+      "source": "ifexp_0",
+      "source_handle": "result",
+      "target": "node_13",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "ifexp_1",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "false"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "condition"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "true"
+    },
+    {
+      "source": "number_2",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_3",
+      "source_handle": "result",
+      "target": "ifexp_1",
+      "target_handle": "true"
+    },
+    {
+      "source": "rsi14",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "rsi14",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "slow",
+      "source_handle": "result",
+      "target": "cross",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "fast",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "rsi14",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "slow",
+      "target_handle": "SLOT"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": "mac",
+      "type": "macd",
+      "params": {
+        "short_period": 12,
+        "long_period": 26,
+        "signal_period": 9
+      }
+    },
+    {
+      "id": "mac2",
+      "type": "macd",
+      "params": {
+        "short_period": 12,
+        "long_period": 26,
+        "signal_period": 9
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "W-FRI"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "mac",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "mac2",
+      "target_handle": "SLOT"
+    }
+  ]
+}

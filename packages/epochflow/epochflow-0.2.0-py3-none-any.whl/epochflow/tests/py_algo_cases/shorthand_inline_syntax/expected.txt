@@ -1,0 +1,216 @@
+{
+  "nodes": [
+    {
+      "id": "abs_ret",
+      "type": "abs",
+      "params": {}
+    },
+    {
+      "id": "bool_false_0",
+      "type": "bool_false",
+      "params": {}
+    },
+    {
+      "id": "bool_true_0",
+      "type": "bool_true",
+      "params": {}
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "gt_1",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "logical_and_0",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "logical_or_0",
+      "type": "logical_or",
+      "params": {}
+    },
+    {
+      "id": "logical_or_1",
+      "type": "logical_or",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "lt_1",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "mul_0",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 0
+      }
+    },
+    {
+      "id": "number_1",
+      "type": "number",
+      "params": {
+        "value": 0
+      }
+    },
+    {
+      "id": "number_2",
+      "type": "number",
+      "params": {
+        "value": 5
+      }
+    },
+    {
+      "id": "number_3",
+      "type": "number",
+      "params": {
+        "value": -1
+      }
+    },
+    {
+      "id": "number_4",
+      "type": "number",
+      "params": {
+        "value": 5
+      }
+    },
+    {
+      "id": "ret",
+      "type": "roc",
+      "params": {
+        "period": 1
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "bool_false_0",
+      "source_handle": "result",
+      "target": "logical_or_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "bool_true_0",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "gt_1",
+      "source_handle": "result",
+      "target": "logical_or_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "logical_or_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "lt_1",
+      "source_handle": "result",
+      "target": "logical_or_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "mul_0",
+      "source_handle": "result",
+      "target": "lt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_1",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_2",
+      "source_handle": "result",
+      "target": "mul_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_3",
+      "source_handle": "result",
+      "target": "mul_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "number_4",
+      "source_handle": "result",
+      "target": "gt_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "ret",
+      "source_handle": "result",
+      "target": "abs_ret",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "ret",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "ret",
+      "source_handle": "result",
+      "target": "gt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "ret",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "ret",
+      "source_handle": "result",
+      "target": "lt_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "ret",
+      "target_handle": "SLOT"
+    }
+  ]
+}

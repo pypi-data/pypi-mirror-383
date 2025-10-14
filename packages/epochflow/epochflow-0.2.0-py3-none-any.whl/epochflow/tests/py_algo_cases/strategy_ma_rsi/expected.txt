@@ -1,0 +1,120 @@
+{
+  "nodes": [
+    {
+      "id": "cross_up",
+      "type": "crossover",
+      "params": {}
+    },
+    {
+      "id": "fast",
+      "type": "ema",
+      "params": {
+        "period": 20
+      }
+    },
+    {
+      "id": "logical_and_0",
+      "type": "logical_and",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "node_6",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 70
+      }
+    },
+    {
+      "id": "rsi14",
+      "type": "rsi",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "id": "slow",
+      "type": "ema",
+      "params": {
+        "period": 50
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    }
+  ],
+  "edges": [
+    {
+      "source": "cross_up",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "fast",
+      "source_handle": "result",
+      "target": "cross_up",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "logical_and_0",
+      "source_handle": "result",
+      "target": "node_6",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "logical_and_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "rsi14",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "slow",
+      "source_handle": "result",
+      "target": "cross_up",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "fast",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "rsi14",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "slow",
+      "target_handle": "SLOT"
+    }
+  ]
+}

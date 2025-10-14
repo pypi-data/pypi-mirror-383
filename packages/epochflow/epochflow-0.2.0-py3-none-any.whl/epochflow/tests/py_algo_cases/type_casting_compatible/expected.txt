@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "add_0",
+      "type": "add",
+      "params": {}
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "node_3",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 100
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1D"
+    }
+  ],
+  "edges": [
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "node_3",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "add_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "add_0",
+      "target_handle": "SLOT1"
+    }
+  ]
+}

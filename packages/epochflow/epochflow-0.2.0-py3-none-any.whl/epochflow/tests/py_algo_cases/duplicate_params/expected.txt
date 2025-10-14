@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    {
+      "id": "ema_val",
+      "type": "ema",
+      "params": {
+        "period": 30
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "ema_val",
+      "target_handle": "SLOT"
+    }
+  ]
+}

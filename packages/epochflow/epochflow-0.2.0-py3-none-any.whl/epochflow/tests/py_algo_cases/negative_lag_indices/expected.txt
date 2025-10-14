@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "id": "div_0",
+      "type": "div",
+      "params": {}
+    },
+    {
+      "id": "div_1",
+      "type": "div",
+      "params": {}
+    },
+    {
+      "id": "lag_0",
+      "type": "lag",
+      "params": {
+        "period": 1
+      }
+    },
+    {
+      "id": "lag_1",
+      "type": "lag",
+      "params": {
+        "period": -1
+      }
+    },
+    {
+      "id": "lag_2",
+      "type": "lag",
+      "params": {
+        "period": -5
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    },
+    {
+      "id": "sub_0",
+      "type": "sub",
+      "params": {}
+    },
+    {
+      "id": "sub_1",
+      "type": "sub",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "lag_0",
+      "source_handle": "result",
+      "target": "div_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "lag_0",
+      "source_handle": "result",
+      "target": "sub_1",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "lag_2",
+      "source_handle": "result",
+      "target": "sub_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "div_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lag_0",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lag_1",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "lag_2",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "sub_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "sub_1",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "sub_0",
+      "source_handle": "result",
+      "target": "div_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "sub_1",
+      "source_handle": "result",
+      "target": "div_1",
+      "target_handle": "SLOT0"
+    }
+  ]
+}

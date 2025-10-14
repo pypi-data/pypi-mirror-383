@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {
+      "id": "gaps",
+      "type": "gap_classify",
+      "params": {
+        "fill_percent": 100
+      },
+      "timeframe": "1H"
+    },
+    {
+      "id": "london",
+      "type": "sessions",
+      "params": {
+        "session_type": "London"
+      },
+      "timeframe": "1H"
+    }
+  ],
+  "edges": []
+}

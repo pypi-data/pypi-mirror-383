@@ -1,0 +1,81 @@
+{
+  "nodes": [
+    {
+      "id": "ifexp_0",
+      "type": "boolean_select",
+      "params": {}
+    },
+    {
+      "id": "lt_0",
+      "type": "lt",
+      "params": {}
+    },
+    {
+      "id": "null_0",
+      "type": "null",
+      "params": {}
+    },
+    {
+      "id": "null_1",
+      "type": "null",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": 30
+      }
+    },
+    {
+      "id": "rsi_val",
+      "type": "rsi",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "condition"
+    },
+    {
+      "source": "lt_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "true"
+    },
+    {
+      "source": "null_0",
+      "source_handle": "result",
+      "target": "ifexp_0",
+      "target_handle": "false"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "rsi_val",
+      "source_handle": "result",
+      "target": "lt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "rsi_val",
+      "target_handle": "SLOT"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "nodes": [
+    {
+      "id": "abs_diff",
+      "type": "abs",
+      "params": {}
+    },
+    {
+      "id": "gt_0",
+      "type": "gt",
+      "params": {}
+    },
+    {
+      "id": "logical_not_0",
+      "type": "logical_not",
+      "params": {}
+    },
+    {
+      "id": "mul_0",
+      "type": "mul",
+      "params": {}
+    },
+    {
+      "id": "node_7",
+      "type": "trade_signal_executor",
+      "params": {}
+    },
+    {
+      "id": "number_0",
+      "type": "number",
+      "params": {
+        "value": -1
+      }
+    },
+    {
+      "id": "src",
+      "type": "market_data_source",
+      "params": {},
+      "timeframe": "1H"
+    },
+    {
+      "id": "sub_0",
+      "type": "sub",
+      "params": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "gt_0",
+      "source_handle": "result",
+      "target": "logical_not_0",
+      "target_handle": "SLOT"
+    },
+    {
+      "source": "logical_not_0",
+      "source_handle": "result",
+      "target": "node_7",
+      "target_handle": "enter_long"
+    },
+    {
+      "source": "number_0",
+      "source_handle": "result",
+      "target": "mul_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "gt_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "mul_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "c",
+      "target": "sub_0",
+      "target_handle": "SLOT0"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "gt_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "src",
+      "source_handle": "o",
+      "target": "sub_0",
+      "target_handle": "SLOT1"
+    },
+    {
+      "source": "sub_0",
+      "source_handle": "result",
+      "target": "abs_diff",
+      "target_handle": "SLOT"
+    }
+  ]
+}
