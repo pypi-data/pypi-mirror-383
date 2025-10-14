@@ -1,0 +1,52 @@
+# Tair 全球多活 延迟测试工具
+
+本工具用于测试 Tair 全球多活功能同步延迟。
+
+测试方式：
+1. 在源端写入 value 为写入时间戳的数据。
+2. 在目的端读取数据并计算同步延迟，生成图标
+
+注意事项：
+1. **测试期间会清空实例数据，请勿使用本工具对生产环境实例，请使用测试实例完成本测试。**
+2. **请使用标准版实例测试。**
+
+## 安装
+
+需要 Python 3.9 或更高版本，通过 pip 安装
+```bash
+pip install tairGDN-latencytest
+```
+
+## 快速开始
+
+### 测试流程
+
+1. 先在目的端执行
+```bash
+tairgdn-latencytest read -h <target_tair_host> -p <target_tair_port> -u <username> -a <password> -n <request_count>
+```
+2. 然后在源端执行
+```bash
+tairgdn-latencytest write [-h host] [-p port] [-u username] [-a password] [-l length] [-n requests] [-P pipeline] [-c connection]
+```
+
+### 查看子命令帮助：
+```bash
+tairgdn-latencytest write --help
+tairgdn-latencytest read --help
+```
+参数说明（源端）：
+- `-h`：源地址 host（默认 `127.0.0.1`）
+- `-p`：源端口（默认 `6379`）
+- `-u/-a`：ACL 用户/密码
+- `-l`: 命令长度（单位：`byte`）
+- `-n`：写入key总数（默认 `100000`）
+- `-P`：管道深度（默认 `8`）
+- `-c`: 连接数（默认 `8`）
+- `--help`: 帮助信息
+
+参数说明（目的端）：
+- `-h`：目标地址 host（默认 `127.0.0.1`）
+- `-p`：目标端口（默认 `6379`）
+- `-u/-a`：ACL 用户/密码（可选）
+- `-n`：读取总键数（默认 `100000`）
