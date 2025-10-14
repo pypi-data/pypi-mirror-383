@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: jupyterlab_etiq
+Version: 2.1.4
+Summary: A JupyterLab extension to display lineage and testing recommendations in Jupyterlab
+Project-URL: Homepage, https://github.com/ETIQ-AI/etiq
+Project-URL: Bug Tracker, https://github.com/ETIQ-AI/etiq/issues
+Project-URL: Repository, https://github.com/ETIQ-AI/etiq.git
+Author-email: Etiq AI <devops@etiq.ai>
+License-File: LICENSE
+Keywords: jupyter,jupyterlab,jupyterlab-extension
+Classifier: Framework :: Jupyter
+Classifier: Framework :: Jupyter :: JupyterLab
+Classifier: Framework :: Jupyter :: JupyterLab :: 4
+Classifier: Framework :: Jupyter :: JupyterLab :: Extensions
+Classifier: Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.9
+Requires-Dist: etiq-copilot>=2.1.4
+Requires-Dist: ipykernel>=6.30.1
+Requires-Dist: jupyterlab>=4.0.0
