@@ -1,0 +1,152 @@
+Metadata-Version: 2.4
+Name: gitverse
+Version: 3.3
+Summary: Get GitHub's release notes or commit history and format it into `reStructuredText`/`Markdown` documents.
+Author-email: Vignesh Rao <svignesh1793@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2020 Vignesh Rao
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://github.com/thevickypedia/gitverse
+Project-URL: Docs, https://thevickypedia.github.io/gitverse/
+Project-URL: Source, https://github.com/thevickypedia/gitverse
+Project-URL: Bug Tracker, https://github.com/thevickypedia/gitverse/issues
+Project-URL: Release Notes, https://github.com/thevickypedia/gitverse/blob/main/release_notes.rst
+Keywords: changelog,automate,commits,releases
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Version Control :: Git
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Documentation
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click
+Requires-Dist: requests
+Requires-Dist: python-dotenv
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: xmltodict; extra == "dev"
+Dynamic: license-file
+
+[![Pypi-version](https://img.shields.io/pypi/v/gitverse)](https://pypi.org/project/gitverse)
+![Python](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
+
+[![pages-build-deployment](https://github.com/thevickypedia/gitverse/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/thevickypedia/gitverse/actions/workflows/pages/pages-build-deployment)
+[![pypi-publish](https://github.com/thevickypedia/gitverse/actions/workflows/python-publish.yml/badge.svg)](https://github.com/thevickypedia/gitverse/actions/workflows/python-publish.yml)
+
+[![Pypi-format](https://img.shields.io/pypi/format/gitverse)](https://pypi.org/project/gitverse/#files)
+[![Pypi-status](https://img.shields.io/pypi/status/gitverse)](https://pypi.org/project/gitverse)
+
+![Maintained](https://img.shields.io/maintenance/yes/2023)
+[![GitHub Repo created](https://img.shields.io/date/1630367571)](https://api.github.com/repos/thevickypedia/gitverse)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/y/thevickypedia/gitverse)](https://api.github.com/repos/thevickypedia/gitverse)
+[![GitHub last commit](https://img.shields.io/github/last-commit/thevickypedia/gitverse)](https://api.github.com/repos/thevickypedia/gitverse)
+
+# GitVerse
+Get GitHub's release notes or commit history and format it into `reStructuredText`/`Markdown` documents.
+
+### Installation
+```shell
+pip install gitverse
+```
+
+### Usage
+#### Release Notes (Tags)
+Generate release notes from releases tagged in GitHub
+```shell
+gitverse-release
+```
+
+> Tries to get release notes, using GitHub API<br>
+> If failed, uses the commit message as notes for the associated release<br>
+> This feature optionally takes `GIT_TOKEN` as an environment variable if it is generated for a personal repo<br>
+
+<details>
+<summary><strong>Known issue related to the order of release notes</strong></summary>
+
+- There is a known issue with GitHub where the `git tag` command returns incorrect timestamp _(when tags are created in different timezones)_
+- If the release notes are not generated in the expected order, please run the following command to verify
+```shell
+git for-each-ref --sort='-creatordate' --format '%(refname:short) %(creatordate:iso8601)' refs/tags
+```
+- If the output is in expected order, please raise an [issue](https://github.com/thevickypedia/gitverse/issues/new)
+</details>
+
+---
+
+#### Commit History
+Generate commit history from git log
+```shell
+gitverse-commit
+```
+
+---
+
+#### Options
+- `debug` - Enable debug mode for logging.
+- `reverse` - Generate commit history/release notes in reverse order.
+
+#### Flags
+- `-b` Gather commit notes specific to a branch. Uses `Default branch` if not passed. (Only for `gitverse-commit`)
+- `-f` Write the commit notes to a custom filename.
+- `-t` Title or index line for the file generated.
+
+#### Sample
+[release_notes.rst][release_notes]
+
+[changelog.rst][changelog]
+
+### Linting
+`PreCommit` will ensure linting, and the doc creation are run on every commit.
+
+**Requirement**
+```shell
+pip install sphinx==5.1.1 pre-commit==2.20.0 recommonmark==0.7.1
+```
+
+**Usage**
+```shell
+pre-commit run --all-files
+```
+
+## Pypi Package
+[![pypi-module](https://img.shields.io/badge/Software%20Repository-pypi-1f425f.svg)](https://packaging.python.org/tutorials/packaging-projects/)
+
+[https://pypi.org/project/gitverse/][pypi]
+
+### Runbook
+[![made-with-sphinx-doc](https://img.shields.io/badge/Code%20Docs-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/en/master/man/sphinx-autogen.html)
+
+[https://thevickypedia.github.io/gitverse/][runbook]
+
+## License & copyright
+
+&copy; Vignesh Rao, GitVerse
+
+Licensed under the [MIT License][license]
+
+[release_notes]: https://github.com/thevickypedia/gitverse/blob/main/release_notes.rst
+[changelog]: https://github.com/thevickypedia/gitverse/blob/main/changelog.rst
+[runbook]: https://thevickypedia.github.io/gitverse/
+[license]: https://github.com/thevickypedia/gitverse/blob/master/LICENSE
+[pypi]: https://pypi.org/project/gitverse/
