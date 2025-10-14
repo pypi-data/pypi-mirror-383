@@ -1,0 +1,33 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+          "name": "WearablePerMed ML",
+          "type": "debugpy",
+          "request": "launch",
+          "program": "${file}",
+          "args": [
+            // STEP01: training
+            "--case-id", "cases_dataset_PI/case_PI_BRF_superclasses",
+            "--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",            
+            "--ml-models","RandomForest",
+            "--training-percent", "70",
+            // "--validation-percent", "20",
+            "--create-superclasses"
+
+            // STEP02: testing
+            // "--case-id", "case_16",
+            // //"--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",
+            // "--case-id-folder", "/media/miguel/Elements/wearablepermed/output",            
+            // "--model-id", "ESANN",
+            // "--training-percent", "70",
+            // //"--validation-percent", "20",
+            // //"--create-superclasses"
+          ],
+          "console": "integratedTerminal"
+        }
+    ]
+}
