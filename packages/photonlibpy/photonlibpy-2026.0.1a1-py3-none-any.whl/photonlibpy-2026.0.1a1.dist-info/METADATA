@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: photonlibpy
+Version: 2026.0.1a1
+Summary: Pure-python implementation of PhotonLib for interfacing with PhotonVision on coprocessors. Implemented with PhotonVision version v2026.0.1-alpha-1 .
+Home-page: https://photonvision.org
+Author: Photonvision Development Team
+Classifier: License :: OSI Approved :: MIT License
+Description-Content-Type: text/markdown
+Requires-Dist: numpy~=2.1
+Requires-Dist: wpilib<2026,>=2025.3.2
+Requires-Dist: robotpy-wpimath<2026,>=2025.3.2
+Requires-Dist: robotpy-apriltag<2026,>=2025.3.2
+Requires-Dist: robotpy-cscore<2026,>=2025.3.2
+Requires-Dist: pyntcore<2026,>=2025.3.2
+Requires-Dist: opencv-python; platform_machine != "roborio"
+
+A Pure-python implementation of PhotonLib
