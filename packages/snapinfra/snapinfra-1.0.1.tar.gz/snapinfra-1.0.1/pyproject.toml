@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snapinfra"
+version = "1.0.1"
+description = "Snap Infrastructure - AI-Powered Infrastructure Code Generator"
+readme = "README.md"
+authors = [
+    {name = "Manoj Maheshwar Jagadeesan", email = "manojmaheshwarjg@gmail.com"},
+]
+keywords = [
+    "ai", "infrastructure", "iac", "terraform", "kubernetes", 
+    "docker", "architecture", "cloudformation", "llm", "openai", 
+    "bedrock", "ollama", "code-generation", "devops"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "click>=8.0.0",
+    "rich>=13.0.0",
+    "openai>=1.0.0",
+    "boto3>=1.34.0",
+    "httpx>=0.25.0",
+    "tomli>=2.0.0;python_version<'3.11'",
+    "pydantic>=2.0.0",
+    "pyperclip>=1.8.0",
+    "python-dotenv>=1.0.0",
+    "platformdirs>=3.0.0",
+    "aiofiles>=23.0.0",
+    "typing-extensions>=4.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/manojmaheshwarjg/rhinoback"
+Documentation = "https://github.com/manojmaheshwarjg/rhinoback#readme"
+Repository = "https://github.com/manojmaheshwarjg/rhinoback.git"
+"Bug Reports" = "https://github.com/manojmaheshwarjg/rhinoback/issues"
+
+[project.scripts]
+snapinfra = "snapinfra.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["snapinfra*"]
+namespaces = false
+
+[tool.setuptools.package-dir]
+"" = "src"
