@@ -1,0 +1,27 @@
+[package]
+name = "pytera"
+version = "0.1.1"
+edition = "2021"
+description = "A fast, Python templating engine powered by Rust's Tera library"
+license = "MIT"
+authors = ["un4gt <mt3085570450@outlook.com>"]
+keywords = ["templating", "tera", "pyo3", "python", "web"]
+categories = ["api-bindings", "template-engine", "web-programming"]
+exclude = ["examples/", "templates/", "tests/", ".github/"]
+readme = "README.md"
+
+[lib]
+name = "_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.23.3", features = ["extension-module", "abi3-py38"] }
+serde_json = "1.0.145"
+tera = "1.20.0"
+
+[profile.release]
+opt-level = 'z'
+strip = true
+panic = 'abort'
+codegen-units = 1
+lto = "thin"
