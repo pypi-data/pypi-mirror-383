@@ -1,0 +1,30 @@
+Metadata-Version: 2.3
+Name: chenx_utils
+Version: 0.1.3.2
+Summary: chenx_utils is a package for eos to yidongyun 
+Project-URL: Homepage, https://github.com/cdmstrong
+Author-email: Daniel Chen <cdmstrong123@gmail.com>
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Requires-Dist: aiohttp
+Requires-Dist: boto3==1.35.92
+Requires-Dist: pydantic
+Requires-Dist: pydantic-core
+Requires-Dist: pyrender
+Requires-Dist: redis
+Requires-Dist: requests
+Description-Content-Type: text/markdown
+
+# 如何使用
+pip install daniel_eos
+
+# 可以用的包
+### upload_file, delete_file 上传文件到eos
+### upload_file as upload_file_sync 异步上传
+### AsyncHttpClient 异步http请求
+### RedisManager, redis_manager redis管理
+### json_response, error_response, CODES 响应json
+### generate_metadata  生成元数据
+### zip_folder_files    压缩文件夹
