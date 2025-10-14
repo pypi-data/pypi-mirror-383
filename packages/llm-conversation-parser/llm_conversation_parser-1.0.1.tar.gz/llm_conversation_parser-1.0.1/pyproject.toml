@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-conversation-parser"
+dynamic = ["version"]
+description = "A Python library for parsing LLM conversation JSON files into RAG-optimized format"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "nullhyeon", email = "wnsgus7832@gmail.com"}
+]
+maintainers = [
+    {name = "nullhyeon", email = "wnsgus7832@gmail.com"}
+]
+keywords = ["llm", "conversation", "parser", "rag", "claude", "gpt", "grok", "json"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.800",
+]
+
+[project.scripts]
+llm-conversation-parser = "llm_conversation_parser.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/nullhyeon/llm-conversation-parser"
+Documentation = "https://github.com/nullhyeon/llm-conversation-parser#readme"
+Repository = "https://github.com/nullhyeon/llm-conversation-parser"
+Issues = "https://github.com/nullhyeon/llm-conversation-parser/issues"
+
+[tool.setuptools]
+packages = ["llm_conversation_parser"]
+
+[tool.setuptools.package-data]
+llm_conversation_parser = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
