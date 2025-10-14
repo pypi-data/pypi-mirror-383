@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+exclude = [
+    "dist/",
+    "examples/",
+    "scripts/",
+    "tests/",
+    ".venv",
+    ".idea/",
+    ".git/",
+    ".gitignore",
+    "setup.py",
+    "*.ipynb",
+    "*.png"
+]
+
+[project]
+name = "spekpy"
+version = "2.5.3"
+description = 'A Python software toolkit for modelling the x-ray spectra from x-ray tubes'
+readme = "README.md"
+requires-python = ">=3.6"
+license = { file = "license.txt" }
+keywords = ["x-ray spectra", "x-ray tube modeling", "spectral simulation", "radiation physics", "photon energy distribution"]
+authors = [
+    { name = "Gavin Poludniowski", email = "gpoludniowski@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.6",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+]
+dependencies = ["scipy", "matplotlib"]
+
+[project.urls]
+Repository = "https://bitbucket.org/spekpy/spekpy_release"
+Documentation = "https://bitbucket.org/spekpy/spekpy_release/wiki/Home"
+Issues = "https://bitbucket.org/spekpy/spekpy_release/issues?status=new&status=open"
