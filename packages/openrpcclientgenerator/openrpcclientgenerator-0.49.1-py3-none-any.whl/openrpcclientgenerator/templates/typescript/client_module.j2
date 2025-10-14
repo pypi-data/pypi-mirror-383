@@ -1,0 +1,10 @@
+import { AxiosRequestHeaders } from "axios";
+import {rpcClient, RPC{{ "WebSocket" if transport == "WS" else transport }}Client} from "jsonrpc2-tsclient";
+
+{% if imports %}
+import {{ imports }} from "./models.js";
+{% endif %}
+
+const transport = new RPC{{ "WebSocket" if transport == "WS" else transport }}Client("{{ url }}");
+
+{% include "typescript/client.j2" %}
