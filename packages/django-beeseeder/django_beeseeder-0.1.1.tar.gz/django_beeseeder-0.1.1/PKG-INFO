@@ -1,0 +1,205 @@
+Metadata-Version: 2.4
+Name: django_beeseeder
+Version: 0.1.1
+Author: Onuh Kyrian
+Author-email: onuhudoudo@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: django
+Requires-Dist: requests
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-dist
+
+# django_beeseeder
+
+[![PyPI - Django Version](https://img.shields.io/pypi/djversions/django.svg)](https://www.djangoproject.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**django_beeseeder** is an automated database seeding tool for Django projects. It generates realistic test data for all your models with a single command, making development and testing easier and faster.
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Command Reference](#command-reference)
+- [How it Works](#how-it-works)
+- [Requirements](#requirements)
+- [Development](#development)
+- [License](#license)
+
+---
+
+## Features
+
+- 🔄 Automatically discovers your Django models
+- 🤖 Generates realistic dummy data for your models' fields
+- ⚖️ Handles model dependencies and foreign keys
+- 🏷️ Customizable record counts per app or model
+- 🎛️ CLI integration via Django management command
+- ☁️ Supports seeding from remote JSON
+- 🔐 Supports API key-based operations
+
+---
+
+## Installation
+
+You can install `django_beeseeder` in your Django project using pip:
+
+```bash
+pip install django_beeseeder
+```
+
+Or, for local development, clone the repo and install in editable mode:
+
+```bash
+git clone https://github.com/yourusername/django_beeseeder.git
+cd django_beeseeder
+pip install -e .
+```
+
+**Note:** Add to your `requirements.txt` if you want to keep it pinned:
+
+```
+django_beeseeder>=0.1.0
+```
+
+---
+
+## Setup
+
+1. Add `django_beeseeder` to your Django project's `INSTALLED_APPS` in `settings.py`:
+
+    ```python
+    INSTALLED_APPS = [
+        # ...
+        "django_beeseeder",
+        # ...
+    ]
+    ```
+
+2. Add the required settings in your `settings.py`:
+
+    ```python
+    # List the apps you want to be seeded, e.g.:
+    SEED_APPS = ["accounts", "your_other_app"]
+    
+    # API Key for beeseeder (if applicable, e.g. if using external service)
+    BEESEEDER_API_KEY = "<your-api-key>"
+    ```
+
+---
+
+## Usage
+
+Run the following command to seed your database:
+
+```bash
+python manage.py beeseed
+```
+
+- The command will:
+    - Print ASCII art
+    - Collect all models in `SEED_APPS`
+    - Generate fake data observing correct model dependency order
+    - Insert the generated data into your database
+
+You can customize the number of records, API source, or seeding method in future releases.
+
+---
+
+## Configuration
+
+- **SEED_APPS**: List of app labels to be seeded (e.g., `["accounts", "myapp"]`).
+- **BEESEEDER_API_KEY**: Your API key for the beeseeder service (if required).
+
+Example:
+
+```python
+SEED_APPS = ["accounts", "products"]
+BEESEEDER_API_KEY = "sk-abc123..."
+```
+
+---
+
+## Command Reference
+
+- `python manage.py beeseed`  
+    - Seeds the database with dummy data for all models in `SEED_APPS`.
+    - Prints a summary, and uses provided API key if connecting to external service.
+
+---
+
+## How it Works
+
+1. **Model Collection:**  
+   Collects all models from listed Django apps (`SEED_APPS`).
+
+2. **Dependency Ordering:**  
+   Orders models based on their interdependencies (foreign keys).
+
+3. **Fake Data Generation:**  
+   For each model, generates realistic fake data for supported field types.
+
+4. **Bulk Insertion:**  
+   Inserts the generated data efficiently via the Django ORM.
+
+5. **Seed From URL (Optional):**  
+   Optionally, you can seed from a remote JSON URL by editing the command code.
+
+---
+
+## Example
+
+Suppose you have `accounts` and `products` apps. Set in `settings.py`:
+
+```python
+SEED_APPS = ["accounts", "products"]
+```
+
+Then run:
+
+```bash
+python manage.py beeseed
+```
+
+The database will be seeded with example data for all models from those apps.
+
+---
+
+## Requirements
+
+- Python >= 3.8
+- Django >= 5.2.5
+
+Dependencies (see `requirements.txt` for full list):
+
+- django
+- faker
+- django-seed
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgements
+
+- [django-seed](https://github.com/Brobin/django-seed)
+- [Faker](https://faker.readthedocs.io/en/master/)
+
+---
+
+Happy seeding! 🐝
