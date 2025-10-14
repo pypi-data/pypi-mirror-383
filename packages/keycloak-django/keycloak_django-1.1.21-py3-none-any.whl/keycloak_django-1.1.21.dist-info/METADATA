@@ -1,0 +1,35 @@
+Metadata-Version: 2.3
+Name: keycloak-django
+Version: 1.1.21
+Summary: keycloak-django is Python package providing access to custom apps
+Keywords: keycloak,openid,oidc
+Author: David Campos
+Author-email: dcampos@istmocenter.com
+Requires-Python: >=3.11,<4.0
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Utilities
+Requires-Dist: django
+Requires-Dist: django-redis
+Requires-Dist: djangorestframework
+Requires-Dist: python-jose (==3.5.0)
+Requires-Dist: python-keycloak (>=2.16.1,<3.0.0)
+Requires-Dist: urllib3 (==2.5.0)
+Description-Content-Type: text/markdown
+
+# Keycloak Django
+
+**keycloak-django** is Python package
+
+## Installation
+
+### Via Pypi Package:
+
+`$ pip install keycloak-django`
