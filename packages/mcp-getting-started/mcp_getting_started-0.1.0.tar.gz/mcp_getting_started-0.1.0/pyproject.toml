@@ -1,0 +1,13 @@
+[project]
+name = "mcp-getting-started"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.17.0",
+    "openai>=2.3.0",
+]
+[project.scripts]
+mcp-getting-started-server = "mcp_getting_started.server:main"  # 假设入口模块为mcp_getting_started.server
