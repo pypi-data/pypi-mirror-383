@@ -1,0 +1,112 @@
+# SPDX-FileCopyrightText: 2023 Carnegie Mellon University - Satyalab
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# Environments
+__pycache__/
+*.code-workspace
+*.vimrc
+.gradle/
+*.dex
+*.class
+*.pyc
+.env
+.vscode/
+venv/
+.venv
+*.jar
+*swp
+
+# Protocol
+*_pb2.py
+*_pb2_grpc.py
+*.pyi
+*.desc
+
+# Backend
+backend/server/models/
+backend/server/steeleagle-vol/
+backend/server/redis/*
+!backend/server/redis/
+!backend/server/redis/redis.conf.template
+backend/streamlit/.streamlit/secrets.toml
+backend/server/engines/slam/images/*
+
+# Mission
+*.dsl
+*.ms
+*.kml
+*~
+*.log
+*.mcap
+sdk/build/src/
+sdk/api/datatypes/*.py
+sdk/api/datatypes/params/*.py
+sdk/api/actions/primitives/*.py
+# But do NOT ignore __init__.py
+!sdk/api/actions/primitives/__init__.py
+!sdk/api/datatypes/__init__.py
+!sdk/api/datatypes/waypoint.py
+!sdk/api/datatypes/params/__init__.py
+
+# Generated
+_gen_*
+
+# UV
+*.lock
+
+# Vehicle
+vehicle/config.toml
+vehicle/configs
+vehicle/docker-compose.*
+
+# Secrets
+secrets.toml
+
+# Docs
+
+# Dependencies
+docs/node_modules
+
+# Production
+*/src
+*/dist
+docs/build
+
+# Generated files
+docs/.docusaurus
+docs/.cache-loader
+
+# Misc
+docs/.env.local
+docs/.env.development.local
+docs/.env.test.local
+docs/.env.production.local
+
+docs/npm-debug.log*
+docs/yarn-debug.log*
+docs/yarn-error.log*
+
+# React
+
+# Dependencies
+*/node_modules
+*/.pnp
+*/.pnp.js
+
+# Testing
+*/coverage
+
+# Production
+*/build
+
+# Misc
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+*/npm-debug.log*
+*/yarn-debug.log*
+*/yarn-error.log*
+
+gcs/vscode-client/node_modules/*
