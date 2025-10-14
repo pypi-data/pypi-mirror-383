@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "schemachat"
+version = "0.1.0"
+description = "A unified interface for multiple LLM chat providers with structured output support"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    {name = "Will Kang", email = "willysk73@outlook.com"},
+]
+keywords = ["llm", "chat", "openai", "ollama", "ai", "language-model", "structured-output"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "ollama>=0.6.0",
+    "openai>=2.3.0",
+    "pydantic>=2.12.0",
+    "tiktoken>=0.12.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/willysk73/schemachat"
+"Bug Reports" = "https://github.com/willysk73/schemachat/issues"
+"Source" = "https://github.com/willysk73/schemachat"
+"Documentation" = "https://github.com/willysk73/schemachat#readme"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["core", "providers"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
