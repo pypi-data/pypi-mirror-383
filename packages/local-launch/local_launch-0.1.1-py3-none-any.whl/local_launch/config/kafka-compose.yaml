@@ -1,0 +1,22 @@
+services:
+  zookeeper:
+    image: containerregistry-na.jpmchase.net/container-external/docker.io/confluentinc/cp-zookeeper:6.1.2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
+    ports:
+      # - "8080:8080" - for admin control
+      - "32181:32181"
+
+  kafka:
+    image: containerregistry-na.jpmchase.net/container-external/docker.io/confluentinc/cp-kafka:6.1.2
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092
+      KAFKA_BROKER_ID: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "29092:29092"

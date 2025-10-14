@@ -1,0 +1,31 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.27.3
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            kube-reserved: cpu=500m,memory=512Mi
+            system-reserved: cpu=500m,memory=512Mi
+            eviction-hard: memory.available<100Mi,nodefs.available<10%
+  - role: worker
+    image: kindest/node:v1.27.3
+    kubeadmConfigPatches:
+      - |
+        kind: KubeletConfiguration
+        kubeReserved:
+          cpu: "500m"
+          memory: "512Mi"
+        systemReserved:
+          cpu: "500m"
+          memory: "512Mi"
+        evictionHard:
+          memory.available: "100Mi"
+          nodefs.available: "10%"

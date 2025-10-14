@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: local_launch
+Version: 0.1.1
+Summary: A framework for local launching of microservices
+Author-email: Puneet Keswani <puneet.keswani@jpmorgan.com>, Akshat Miglani <akshat.miglani@jpmchase.com>, Famidha Thurab <famidha.thurab@jpmchase.com>, Aastha Jaipuria <aastha.jaipuria@jpmchase.com>
+Project-URL: Bitbucket, https://bitbucketdc.jpmchase.net/users/f367896/repos/local-launch/browse
+Project-URL: Confluence, https://confluence.prod.aws.jpmchase.net/confluence/pages/viewpage.action?pageId=5267763341&spaceKey=~F367896&title=The%2BLocal%2BLaunch
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.0
+Requires-Dist: pyyaml
+Requires-Dist: confluent_kafka
+Requires-Dist: rich
+Requires-Dist: questionary
+Requires-Dist: argparse
+Requires-Dist: pyfiglet
+Requires-Dist: prompt_toolkit
+Requires-Dist: numpy>=1.21.0
