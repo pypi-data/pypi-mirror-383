@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dotpytree"
+version = "0.1.0"
+description = "Print tree-style Python class/function outlines."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+authors = [{ name = "Raybin" }]
+dependencies = []
+
+[project.scripts]
+dotpytree = "dotpytree.cli:main"
+
+[tool.setuptools]
+packages = ["dotpytree"]
+
+[project.urls]
+Homepage = "https://github.com/rabin-HE/dotpytree"

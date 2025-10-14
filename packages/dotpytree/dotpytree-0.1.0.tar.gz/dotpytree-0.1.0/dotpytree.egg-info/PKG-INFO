@@ -1,0 +1,81 @@
+Metadata-Version: 2.4
+Name: dotpytree
+Version: 0.1.0
+Summary: Print tree-style Python class/function outlines.
+Author: Raybin
+License: MIT
+Project-URL: Homepage, https://github.com/rabin-HE/dotpytree
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+## install
+```
+pip install dotpytree
+```
+## usage
+```
+dotpytree testFile
+📁 testFile
+
+📄 test00.py
+├── 📦 def set_interface
+├── 📦 def htonl
+├── 📦 def htons
+├── 📦 def getaddrinfo
+├── 📦 def gethostbyname
+├── 📦 def is_ipv4
+├── ♾️  class socket
+│   ├── 📦 def __init__
+│   ├── 📦 def __enter__
+│   ├── 📦 def __exit__
+│   ├── 📦 def socknum
+│   ├── 📦 def status
+│   ├── 📦 def connected
+│   ├── 📦 def getpeername
+│   ├── 📦 def inet_aton
+│   ├── 📦 def bind
+│   ├── 📦 def listen
+│   ├── 📦 def accept
+│   ├── 📦 async def async_recv
+│   ├── 📦 async def async_accept
+│   ├── 📦 def connect
+│   ├── 📦 def send
+│   ├── 📦 def sendto
+│   ├── 📦 def recv
+│   ├── 📦 def recvfrom
+│   ├── 📦 def recv_into
+│   ├── 📦 def recvfrom_into
+│   ├── 📦 def readline
+│   ├── 📦 def disconnect
+│   ├── 📦 def close
+│   ├── 📦 def available
+│   ├── 📦 def settimeout
+│   └── 📦 def gettimeout
+
+📄 test01.py
+├── 📦 async def async_hello_world
+├── ♾️  class AsyncHelloWorld
+│   ├── 📦 def __init__
+│   └── 📦 async def greet
+├── 📦 def sync_hello_world
+├── ♾️  class SyncHelloWorld
+│   ├── 📦 def __init__
+│   └── 📦 def greet
+```
+## help
+```
+dotpytree -h
+usage: dotpytree [-h] [--no-emoji] [--show-args] target
+
+Print Python file/class/function tree.
+
+positional arguments:
+  target       Python file or folder to analyze
+
+options:
+  -h, --help   show this help message and exit
+  --no-emoji   Disable emoji output
+  --show-args  Show function arguments
+```
