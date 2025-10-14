@@ -1,0 +1,32 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+types-retry = "*"
+retry2 = "*"
+
+[dev-packages]
+pre-commit = "*"
+flake8 = "*"
+flake8-docstrings = "*"
+flake8-bugbear = "*"
+black = "*"
+sphinx = "*"
+sphinx-autobuild = "*"
+myst-parser = "==1.0.0"
+sphinxcontrib-napoleon = "*"
+pytest = "*"
+pytest-vcr = "*"
+pytest-cov = "*"
+twine = "*"
+setuptools-scm = "*"
+pandas = "*"
+numpy = "*"
+tornado = "*"
+markdown-it-py = "==2.2.0"
+
+[requires]
+python_version = "3.12"
