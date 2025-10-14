@@ -1,0 +1,50 @@
+Metadata-Version: 2.4
+Name: shmx
+Version: 1.0.0
+Summary: High-performance shared-memory IPC for frame streaming
+Author: SHMX Contributors
+License: MIT
+Keywords: ipc,shared-memory,high-performance,streaming,frame
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: C++
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+# SHMX - High-Performance Shared Memory IPC
+
+SHMX is a high-performance shared-memory IPC library for frame streaming between processes.
+
+## Features
+
+- Zero-copy frame streaming using shared memory
+- Cross-platform support (Windows and Linux)
+- Python bindings with C++ implementation
+- Server/Client architecture
+- Inspector utilities for debugging
+
+## Installation
+
+```bash
+pip install shmx
+```
+
+## Usage
+
+See the main project repository for detailed documentation and examples.
+
+## License
+
+Mozilla Public License Version 2.0
+
