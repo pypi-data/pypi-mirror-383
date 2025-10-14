@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools-git-versioning"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
+
+[project]
+dynamic = ["version"]
+name = "drive2x_sca_interfaces"
+authors = [
+  { name="Aleksei Romanenko", email="aleksei.romanenko@lut.fi" }
+]
+description = """Definitions and validators for DriVe2X SCA integration."
+"""
+readme = "README.md"
+requires-python = ">=3.12"
+license = "LGPL-2.1-or-later"
+license-files = [ "LICENSE" ]
+keywords = ["D2X", "DriVe2X", "SCA", "Smart", "Charging", "Algorithm"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = ["pydantic"]
+
+[project.urls]
+Homepage = "https://github.com/Kreastr/drive2x-sca-interfaces"
+Issues = "https://github.com/Kreastr/drive2x-sca-interfaces/issues"
