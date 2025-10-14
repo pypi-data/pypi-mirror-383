@@ -1,0 +1,42 @@
+name: Publish to TestPyPI
+
+on:
+  push:
+    branches:
+      - release
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ✅ Checkout full history including tags
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # fetch all commits and tags
+
+      # ✅ Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # ✅ Install build tools
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine setuptools_scm
+
+      # ✅ Build package (sdist + wheel)
+      - name: Build package
+        run: python -m build
+
+      # ✅ Publish to TestPyPI
+      - name: Publish to TestPyPI
+        env:
+          TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
+        run: python -m twine upload --repository testpypi dist/*
