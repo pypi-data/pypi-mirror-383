@@ -1,0 +1,384 @@
+# SimFlux — MINFLUX-like simulator (poly & grid)
+
+SimFlux generates synthetic single-molecule localization data in two modes:
+
+- **poly** — polygonal monomers arranged into **linear oligomers** under a hard-core constraint, with optional **shared-edge** snapping between adjacent monomers.
+- **grid** — DNA-origami–style **point grids** (rows × cols) with fixed node separation, placed as randomly rotated lattices around sampled centroids.
+
+Both modes:
+- assign **labelled / unlabelled** emitters (probability `p`)
+- emit **measurements** (Poisson count with Gaussian noise, per-measurement signal probability `q`)
+- optionally add **spurious clutter** clusters
+- can **write HDF5** datasets and render a **2D Plotly** overview
+
+---
+
+## Table of contents
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Project layout](#project-layout)
+- [Command-line usage](#command-line-usage)
+  - [poly mode example — octagons](#poly-mode-example)
+  - [grid mode example — 3×3 DNA-origami](#grid-mode-example)
+- [Python API quickstart](#python-api-quickstart)
+- [Output data model (HDF5 schema)](#output-data-model-hdf5-schema)
+- [Parameters and behavior](#parameters-and-behavior)
+- [Reproducibility & seeding](#reproducibility--seeding)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
+- [Licence](#licence)
+
+---
+
+## Features
+
+- Oligomer-aware centroid placement (linear chains) with **hard-core spacing**
+- Grid placement with automatic **effective radius R**
+- **Shared-edge enforcement** to keep the two vertices on a shared interface coincident
+- Configurable **measurement physics**: label probability `p`, signal probability `q`, Poisson mean `measured`, ground-truth jitter `gt_uncertainty`, measurement noise `ms_uncertainty`
+- Optional **clutter** clusters proportional to the number of labelled emitters
+- **Membrane lifting** API to produce 3D coordinates from 2D inputs
+- Compact, descriptive **auto-naming** of output files
+- **Plotly** 2D quicklook
+- **pytest** test suite
+
+---
+
+## Requirements
+
+- Python ≥ 3.9 (tested with 3.13)
+- NumPy ≥ 1.23
+- pandas ≥ 1.5
+- Plotly ≥ 5.0
+- h5py ≥ 3.7
+
+---
+
+## Installation
+
+Create and activate a virtual environment (example with `venv`):
+
+```bash
+python -m venv .venv
+source .venv/bin/activate      # on Windows: .venv\\Scripts\\activate
+```
+
+Install SimFlux in editable mode and the runtime dependencies:
+
+```bash
+pip install -e .
+# or, when using a requirements.txt alongside:
+pip install -r requirements.txt
+```
+
+Verification:
+
+```bash
+python -c "import simflux, pkgutil; print(simflux.__file__)"
+```
+
+---
+
+## Project layout:
+
+```
+simflux/
+├─ simflux/               # Python package
+│  ├─ __init__.py
+│  └─ simflux.py          # the simulator module (CLI & API)
+├─ tests/                 # pytest tests
+│  └─ tests.py
+├─ pyproject.toml
+├─ requirements.txt       # optional
+└─ README.md
+```
+
+Running tests from the repository root resolves imports cleanly.
+
+---
+
+## Command-line usage
+
+All global options (e.g., `--plot`) appear **before** the subcommand (`poly` or `grid`) due to `argparse` rules.
+
+```
+python -m simflux.simflux \
+  --xrange XMIN XMAX \
+  --yrange YMIN YMAX \
+  --centroid-mean MU \
+  [--p P] [--q Q] [--measured LAMBDA] \
+  [--gt-uncertainty SIG_GT] [--ms-uncertainty SIG_MS] \
+  [--clutter-fraction FRACTION] \
+  [--plot] [--seed SEED] \
+  -o OUT_PREFIX \
+  {poly|grid} ...
+```
+
+### poly-specific
+
+```
+poly
+  --radius R
+  --mix "polygon:S@W[,polygon:S@W...]"
+  [--oligomers "K:W[,K:W...]"]   # or short names: mono/di/tri/...
+  [--enforce-shared-edge | --no-enforce-shared-edge]
+  [--store-edges]
+```
+
+### grid-specific
+
+```
+grid
+  --grid ROWS COLS
+  --sep SEPARATION
+```
+
+---
+
+### poly mode example
+
+Simulate octagonal monomers (8-gons), monomer-only (no multi-mers), modest noise, and write an HDF5 plus a quick 2D plot.
+
+```bash
+python -m simflux.simflux \
+  --xrange 0 80 \
+  --yrange 0 80 \
+  --centroid-mean 6 \
+  --p 0.8 \
+  --q 0.9 \
+  --measured 5 \
+  --gt-uncertainty 0.05 \
+  --ms-uncertainty 0.5 \
+  --clutter-fraction 0.1 \
+  --plot \
+  --seed 42 \
+  -o out/sim \
+  poly \
+  --radius 3.5 \
+  --mix "polygon:8@1.0" \
+  --oligomers "mono:1.0" \
+  --enforce-shared-edge
+```
+
+**What gets produced**
+
+- HDF5 file whose name encodes key settings, e.g.:
+
+  ```
+  out/sim_poly-8_olig-mono1_p-0.8_q-0.9_cl-0.1_mu-6_R-3.5_gt-0.05_ms-0.5_SE_seed-42.h5
+  ```
+
+- A Plotly window with centroids, emitters, observed points, and clutter.
+
+---
+
+### grid mode example
+
+Simulate 3 rows × 3 cols lattice, node separation 10 units, moderate noise.
+
+```bash
+python -m simflux.simflux \
+  --xrange 0 120 \
+  --yrange 0 120 \
+  --centroid-mean 4 \
+  --p 0.75 \
+  --q 0.8 \
+  --measured 6 \
+  --gt-uncertainty 0.05 \
+  --ms-uncertainty 0.4 \
+  --clutter-fraction 0.05 \
+  --plot \
+  --seed 99 \
+  -o out/grid \
+  grid \
+  --grid 3 3 \
+  --sep 10
+```
+
+Resulting file name looks like:
+
+```
+out/grid_grid-3x3_sep-10_p-0.75_q-0.8_cl-0.05_mu-4_R-14.142_gt-0.05_ms-0.4_seed-99.h5
+```
+
+(The effective radius `R` is computed from the grid geometry.)
+
+---
+
+## Python API quickstart
+
+All functionality is available programmatically.
+
+```python
+import numpy as np
+from simflux.simflux import (
+    simulate_poly, simulate_grid, plot2d,
+    parse_mix, parse_oligomers
+)
+
+# Poly: octagons
+geom_mix = parse_mix("polygon:8@1.0")
+oligs    = parse_oligomers("mono:1.0")
+
+poly_data = simulate_poly(
+    filename=None,                 # keep in memory (no HDF5)
+    xrange=(0, 80), yrange=(0, 80),
+    centroid_mean_groups=6,
+    radius=3.5,
+    geom_mix=geom_mix,
+    oligomer_pmf=oligs,
+    p=0.8, q=0.9, measured=5,
+    gt_uncertainty=0.05, ms_uncertainty=0.5,
+    clutter_fraction=0.1,
+    membrane_function=None,
+    enforce_shared_edge=True,
+    store_edges=False,
+    seed=42,
+)
+plot2d(data=poly_data)
+
+# Grid: 3x3
+grid_data = simulate_grid(
+    filename=None,
+    xrange=(0, 120), yrange=(0, 120),
+    centroid_mean_groups=4,
+    rows=3, cols=3, sep=10,
+    p=0.75, q=0.8, measured=6,
+    gt_uncertainty=0.05, ms_uncertainty=0.4,
+    clutter_fraction=0.05,
+    membrane_function=None,
+    seed=99,
+)
+plot2d(data=grid_data)
+```
+
+**Membrane lifting (optional 3D)**
+
+```python
+def gentle_bump(x, y):
+    # Small smooth height field
+    return 0.02 * ((x - x.mean())**2 + (y - y.mean())**2)
+
+# Example: write poly output with membrane-applied positions
+simulate_poly(..., filename="with_membrane.h5", membrane_function=gentle_bump)
+```
+
+---
+
+## Output data model (HDF5 schema)
+
+When `filename` is provided, groups and datasets follow this schema:
+
+```
+/centroid
+  position    (C, 3) float   # x,y[,z]; z=0 if no membrane
+  id          (C,)   int32
+  group_id    (C,)   int32    # chain/grid id
+  [poly only]
+    group_index (C,) int32    # index within chain
+    group_size  (C,) int32
+    sides       (C,) int32    # polygon sides
+  [grid only]
+    theta      (C,) float     # rotation angle
+    rows, cols (C,) int32
+    sep, R     (C,) float
+
+/ emitter
+  position    (E, 3) float
+  id          (E,)   int32
+  centroid_id (E,)   int32
+  type        (E,)   string   # "labelled" or "unlabelled"
+
+/ observed
+  position    (M, 3) float
+  emitter_id  (M,)   int32
+  centroid_id (M,)   int32
+
+/ clutter
+  position    (K, 3) float
+  emitter_id  (K,)   int32    # always -1
+  type        (K,)   string   # "clutter"
+
+/ edges       [poly, optional]
+  (P, 2) int32 pairs of emitter ids if --store-edges
+```
+
+In-memory returns mirror the same structure, but positions are `(N, 2)` unless a membrane is applied before writing.
+
+---
+
+## Parameters and behavior
+
+- **`p`** — probability an emitter is **labelled**. Unlabelled emitters never generate observed measurements.
+- **`measured`** — Poisson mean for the **number of measurement attempts** per labelled emitter (or per clutter cluster).
+- **`q`** — probability that a generated measurement is **kept as signal**. Acts as an acceptance filter after drawing noisy positions.
+- **`gt_uncertainty`** — Gaussian jitter applied to **ground-truth nodes/vertices** (absolute units).
+- **`ms_uncertainty`** — Gaussian noise applied to **measurement positions** (absolute units).
+- **`clutter_fraction`** — number of clutter clusters is `floor(fraction × N_labelled_emitters)`. `None` disables clutter entirely; `0.0` enables with zero clusters (no effect).
+- **Hard-core spacing**:
+  - poly: centroid placement audited at distance `< 2 × radius` **between different chains**
+  - grid: centroid placement audited at distance `< 2 × R` **between different grids**
+- **`enforce_shared_edge`** (poly) — for adjacent monomers in a chain, keeps exactly two shared vertices coincident and drops duplicates along the shared edge.
+- **`store_edges`** (poly) — emits all pairwise edges among kept vertices per monomer; quadratic cost; disabled by default.
+- **Membrane function** — callable `f(x, y) -> z` applied to positions **on write**; shape must match point count; omitted raises a shape error.
+
+---
+
+## Reproducibility & seeding
+
+- Each top-level routine (`simulate_poly`, `simulate_grid`, and centroid generators) accepts `seed`; when provided, `np.random.seed(seed)` is set inside the routine for deterministic runs.
+- For deterministic testing, pass a `seed` to the simulation call. Global RNG state is otherwise unaffected across separate runs in typical usage.
+
+---
+
+## Testing
+
+Run all tests:
+
+```bash
+pytest -q
+```
+
+Run a subset:
+
+```bash
+pytest tests -k simulate_poly -q
+```
+
+Note on NumPy 2.x: comparing **string arrays** with `np.testing.assert_allclose` now raises a dtype error. Tests here use exact string comparisons for `type` fields and numeric comparisons for coordinates and ids.
+
+---
+
+## Troubleshooting
+
+**Global flags before subcommand**
+
+- `argparse` requires global flags **before** `poly` or `grid`. Example:
+  - ✅ `... --plot poly --radius 5 --mix "polygon:8@1"`
+  - ❌ `... poly --radius 5 --mix "polygon:8@1" --plot`
+
+**Editable install**
+
+- `pip install -e .` must include the **path argument** (`.`). Running just `pip install -e` triggers an error: “-e option requires 1 argument”.
+
+**Tests not finding the package**
+
+- Execute `pytest` from the repository root **after** `pip install -e .`.
+
+**NumPy DTypePromotionError in tests**
+
+- Occurs when `assert_allclose` is applied to unicode arrays (e.g., `"labelled"`/`"unlabelled"`). Use `assert_array_equal` for strings.
+
+**Hard-core placement yields too few centroids**
+
+- Increase the sampling window (`--xrange/--yrange`), reduce `--centroid-mean`, reduce polygon `--radius` (poly) or grid `--sep` / `R` (grid), or raise `max_group_attempts` inside the code if needed.
+
+---
+
+## Licence
+
+Released under the **MIT License**.  
+Copyright © 2025 Jack Peyton.  
+See [LICENCE](LICENCE) for the full text.
