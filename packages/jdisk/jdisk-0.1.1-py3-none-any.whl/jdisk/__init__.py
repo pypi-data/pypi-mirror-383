@@ -1,0 +1,39 @@
+"""jdisk Python Client.
+
+A simple Python implementation for Shanghai Jiao Tong University Netdisk.
+Based on analysis of existing implementations including JboxTransferCLI.
+"""
+
+__version__ = "0.1.0"
+__author__ = "SJTU Netdisk Team"
+
+from .auth import SJTUAuth
+from .client import SJTUNetdiskClient
+from .download import FileDownloader
+from .exceptions import (
+    APIError,
+    AuthenticationError,
+    DownloadError,
+    SJTUNetdiskError,
+    UploadError,
+)
+from .jdisk import main
+from .models import DirectoryInfo, FileInfo, Session, UploadResult
+from .upload import FileUploader
+
+__all__ = [
+    "SJTUAuth",
+    "SJTUNetdiskClient",
+    "FileUploader",
+    "FileDownloader",
+    "FileInfo",
+    "DirectoryInfo",
+    "UploadResult",
+    "Session",
+    "SJTUNetdiskError",
+    "AuthenticationError",
+    "UploadError",
+    "DownloadError",
+    "APIError",
+    "main",
+]
