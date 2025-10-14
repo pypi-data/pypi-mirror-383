@@ -1,0 +1,361 @@
+syntax = "proto3";
+
+//////// Overall types //////////
+message GamepadRead {
+    float left_stick_x = 1;
+    float left_stick_y = 2;
+    float right_stick_x = 3;
+    float right_stick_y = 4;
+    bool left_bumper = 5;
+    bool right_bumper = 6;
+    float left_trigger = 7;
+    float right_trigger = 8;
+    bool a_button = 9;
+    bool b_button = 10;
+    bool x_button = 11;
+    bool y_button = 12;
+    bool select_button = 13;
+    bool start_button = 14;
+    bool left_stick_button = 15;
+    bool right_stick_button = 16;
+    bool dpad_up = 17;
+    bool dpad_down = 18;
+    bool dpad_left = 19;
+    bool dpad_right = 20;
+}
+
+enum ReportFrequency { 
+    Rf1000Hz = 0;
+    Rf500Hz = 3;
+    Rf250Hz = 4;
+    Rf100Hz = 1;
+    Rf50Hz = 2;
+}
+
+enum RobotType {
+    // Invalid Robot Type.
+    RtUnknown = 0;
+
+    // Bases
+    RtTripleOmniWheelLRDriver = 1;
+    // Standard vehicle. Name will be changed to in the future.
+    RtPcwVehicle = 2;
+    // Custom PCW vehicle. No matter how many PCW modules are used, all of them are treated as this same type of vehicle.
+    RtCustomPcwVehicle = 4;
+    RtMark1DiffBBDriver = 6;
+    RtMark1McnmBBDriver = 7;
+    RtArk2LrDriver = 5;
+
+    // Lifts
+    // Linear Lifts can only be controlled by position with max speed.
+    RtLotaLinearLift = 8;
+
+    // Rotational Lifts
+    RtZeta3Lift = 13;
+
+    // Arm
+    // Legacy
+    RtArmSaber750d3Lr3DmDriver = 9;
+    RtArmSaber750d4Lr3DmDriver = 10;
+    RtArmSaber750h3Lr3DmDriver = 11;
+    RtArmSaber750h4Lr3DmDriver = 12;
+    // Current MainStream Products
+    RtArmSaberD6X = 14;
+    RtArmSaberD7X = 15;
+    RtArmArcherD6Y = 16;
+    
+    // Special modes
+    // Working purely as a can bus forwarder.
+    RtPureForwardOnly = 100;
+}
+
+// Deliberately named to ParkingStop instead of EmergencyStop, to indicate that it is NOT emergency stop.
+enum ParkingStopCategory {
+    PscEmergencyStopButton = 0;
+    PscMotorHasError = 1;
+    PscBatteryProtection = 2;
+    PscGamepadTriggered = 3;
+    PscUnknownParkingStopCategory = 4;
+    PscAPICommunicationTimeout = 5;
+    PscLimitSwitchTriggered = 6;
+    PscBmsTimeout = 7;
+}
+
+message ParkingStopDetail {
+    string reason = 1;
+    ParkingStopCategory category = 2;
+    bool is_remotely_clearable = 3;
+}
+
+enum WarningCategory {
+    WcUnknownWarningCategory = 0;
+    WcBatteryLow = 1;
+}
+
+//////// Motor //////////
+message SingleMotorTarget{
+    oneof target{
+        double torque = 1;  // Nm
+        double speed = 2;   // rad/s
+        int64 position = 3; // encoder position
+        bool brake = 4;     // No matter set to true or false, brake will always be applied. Be aware that putting into brake mode might cause motor to lose position information.
+        MitMotorTarget mit_target = 5;   // Not all motors support this.
+    }
+}
+
+// todo Add speed with max torque, and position with max torque and speed.
+
+message MitMotorTarget {
+    double torque = 1;  // Nm
+    double speed = 2;   // rad/s
+    double position = 3; // encoder position
+    double kp = 4;
+    double kd = 5;
+}
+
+message MotorTargets {
+    repeated SingleMotorTarget targets = 1;
+}
+
+enum MotorError{
+    MeCommunicationError = 0;
+    MeOverCurrent = 1;
+    MeOverVoltage = 2;
+    MeUnderVoltage = 3;
+    MeMotorOverTemperature = 4;
+    MeDriverOverTemperature = 5;
+    MeGeneralError = 6;
+}
+
+message MotorStatus {
+    // Nm
+    double torque = 2; 
+    // In general positivive is counter-clockwise(Right hand). But view angle is defined differently for different robot types.
+    // View XSTD guide for detailed definition of positive direction.
+    // m/s, direction is not defined, for linear motor
+    double speed = 3;
+    // encoder position
+    int64 position = 4;
+    // Number of pulses per rotation, output asix
+    // Number of pulses per meter, for linear motor
+    uint32 pulse_per_rotation = 5;
+    double wheel_radius = 6;
+
+    repeated MotorError error = 7;
+    SingleMotorTarget current_target = 8;
+
+    optional float driver_temperature = 11;
+    optional float motor_temperature = 12;
+    // current suppiled voltage
+    optional float voltage = 13;
+}
+
+message ImuAcceleration {
+    float ax = 1; // m/s^2
+    float ay = 2; // m/s^2
+    float az = 3; // m/s^2
+}
+
+message ImuAngularVelocity {
+    float wx = 1; // rad/s
+    float wy = 2; // rad/s
+    float wz = 3; // rad/s
+}
+
+message ImuQuaternion {
+    float qx = 1; // unitless
+    float qy = 2; // unitless
+    float qz = 3; // unitless
+    float qw = 4; // unitless
+}
+
+message ImuData {
+    ImuAcceleration acceleration = 1;
+    ImuAngularVelocity angular_velocity = 2;
+    ImuQuaternion quaternion = 3;
+}
+
+//////// Base //////////
+
+// Base State
+enum BaseState {
+    BsParked = 0;
+    BsAlgrithmControl = 1;
+    BsOvertakeSpeedControl = 2;
+    BsOvertakeZeroResistanceControl = 3;
+    BsEmergencyStop = 4;
+}
+
+message BaseEstimatedOdometry {
+    float speed_x = 1; // m/s
+    float speed_y = 2; // m/s
+    float speed_z = 3; // rad/s
+    double pos_x = 4;
+    double pos_y = 5;
+    double pos_z = 6;
+}
+message BaseStatus {
+    BaseState state = 1;
+
+    // Weather the API control is initialized.
+    bool api_control_initialized = 2;
+    float battery_voltage = 3;                  // V
+    uint32 battery_thousandth = 4;              // 1/1000
+    repeated MotorStatus motor_status = 5;
+
+    // Only avalible on vehicles that have BMS.
+    optional bool battery_charging = 10;
+    optional ParkingStopDetail parking_stop_detail = 11;
+    optional WarningCategory warning = 12;
+    // Not all base types support this!
+    optional BaseEstimatedOdometry estimated_odometry = 13;
+}
+
+message XyzSpeed {
+    float speed_x = 1;
+    float speed_y = 2;
+    float speed_z = 3;
+}
+
+message SimpleBaseMoveCommand {
+    oneof command{
+        XyzSpeed xyz_speed = 1;
+        bool zero_resistance = 2;
+        bool brake = 3;
+    }
+}
+
+message BaseCommand {
+    oneof command{
+        // Only after api_control_initialize is set, can the vehicle be controlled by the API.
+        bool api_control_initialize = 1;
+        // If currently has a clearable parking stop, the parking stop state will be cleared.
+        bool clear_parking_stop = 2;
+        // You have to continuesly send this command if you want to use api control. (Start sending these commands and keep sending it first, then send api_control_initialize)
+        // Note only force controlled base types support this.
+        // MotorTargets and SimpleBaseMoveCommand are mutually exclusive. Once you send one of them, the other will be ignored until deinitialize.
+        MotorTargets motor_targets = 3;
+        SimpleBaseMoveCommand simple_move_command = 5;
+    }
+}
+
+//////// Lift //////////
+
+enum LiftState {
+    LsBrake = 0;
+    LsCalibrating = 1;
+    LsAlgrithmControl = 2;
+    LsOvertakeControl = 3;
+    LsEmergencyStop = 4;
+}
+
+message RotateLiftStatus {
+    bool calibrated = 1;
+    LiftState state = 2;
+    repeated MotorStatus motor_status = 3;
+    // todo consider move max_pos and min_pos to MotorStatus as a optional field
+    repeated int32 max_pos = 4;
+    repeated int32 min_pos = 5;
+    optional ParkingStopDetail parking_stop_detail = 10;
+}
+
+message RotateLiftRuntimeConfig {
+    // Set max speed for position control. Must not be negative.
+    repeated double pos_mode_max_speed = 1;
+}
+
+// Must keep sending. If not, will apply brake after timeout. (Will not cause Parking Stop)
+message RotateLiftCommand {
+    oneof command{
+        bool calibrate = 1;
+        MotorTargets motor_targets = 2;
+        RotateLiftRuntimeConfig runtime_config = 3;
+    }
+}
+
+// Read motor_status of APIUp to get current position
+message LinearLiftStatus {
+    bool calibrated = 1;
+    LiftState state = 2;
+    // The max position you can set using software.
+    int64 max_pos = 3;
+    int64 current_pos = 4;
+    // Number of pulses per rotation, output asix
+    // Number of pulses per meter, for linear motor
+    uint32 pulse_per_rotation = 5;
+    // Pulses per second. ReadOnly, defines the max speed of the lift.
+    uint32 max_speed = 6;
+    // Pulses per second
+    uint32 speed = 7;
+    optional ParkingStopDetail parking_stop_detail = 10;
+    optional bool custom_button_pressed = 11;
+}
+
+message LinearLiftCommand {
+    oneof command{
+        // No matter calibrate is true or false, will always start calibration when oneof selects this.
+        // Unlike base you have the clear parking stop option (E.g. If triggered by limit switch, the exact moment you clear it, it get triggered again)
+        // Therefore to clear clearable parking stop, send calibrate command directly.
+        // DO NOT frequently send calibrate command.
+        bool calibrate = 1;
+        // Encoder position.
+        // You can calculate this from meters by multiplying with pulse_per_rotation.
+        // Value you send will be clamped to [0, max_pos].
+        // Unlike base, you don't have to keep sending target_pos, though it is recommended to do so.
+        int64 target_pos = 2;
+        // No matter brake is true or false, brake will be applied when oneof selects this.
+        // Once recieved, will apply brake immediately and get into LsBrake mode.
+        // You can exit LsBrake mode by sending target_pos command or calibrate command.
+        // You don't have to keep sending brake command, though it is recommended to do so.
+        bool brake = 3;
+        // Set speed.
+        uint32 set_speed = 4;
+    }
+}
+
+//////// Arm //////////
+
+// Base State
+enum ArmState {
+    AsParked = 0;
+    AsTimeout = 1;
+    AsEmergencyStop = 4;
+}
+
+message ArmStatus {
+    ArmState state = 1;
+
+    // Weather the API control is initialized.
+    bool api_control_initialized = 2;
+    bool calibrated = 3;
+    repeated MotorStatus motor_status = 4;
+
+    optional ParkingStopDetail parking_stop_detail = 5;
+}
+
+enum HandType {
+    HtInvalid = 0;
+    HtGp100 = 1;
+}
+
+message HandStatus {
+    HandType hand_type = 1;
+    repeated MotorStatus motor_status = 2;
+}
+
+message HandCommand {
+    MotorTargets motor_targets = 1;
+}
+
+message ArmCommand {
+    oneof command{
+        // Only after api_control_initialize is set, can the vehicle be controlled by the API.
+        bool api_control_initialize = 1;
+        // If currently has a clearable parking stop, the parking stop state will be cleared.
+        bool clear_parking_stop = 2;
+        // You have to continuesly send this command if you want to use api control. (Start sending these commands and keep sending it first, then send api_control_initialize)
+        // The API does not support simple speed control.
+        MotorTargets motor_targets = 3;
+        bool calibrate = 4;
+    }
+}

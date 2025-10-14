@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "public_api_types.proto"; 
+
+message APIUp {
+    RobotType robot_type = 1;
+    oneof status{
+        BaseStatus base_status = 2;
+        LinearLiftStatus linear_lift_status = 3;
+        RotateLiftStatus rotate_lift_status = 5;
+        ArmStatus arm_status = 4;
+    }
+    // Imu's raw data. Independent of mounting position.
+    optional ImuData imu_data = 10;
+    optional GamepadRead gamepad_read = 11;
+    optional HandStatus hand_status = 13;
+    
+    ReportFrequency report_frequency = 12;
+}
