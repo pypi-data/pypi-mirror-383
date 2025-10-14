@@ -1,0 +1,88 @@
+Metadata-Version: 2.4
+Name: fuzzytri
+Version: 1.0.0
+Summary: Noravshan mantiq nazariyasi va amaliyoti uchun Python kutubxonasi
+Author-email: FuzzyTri Team <fuzzytri@example.com>
+Project-URL: Homepage, https://github.com/username/fuzzytri
+Project-URL: Documentation, https://fuzzytri.readthedocs.io
+Project-URL: Repository, https://github.com/username/fuzzytri
+Project-URL: Issue Tracker, https://github.com/username/fuzzytri/issues
+Keywords: fuzzy,logic,noravshan,vector,mathematics
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx; extra == "docs"
+Requires-Dist: sphinx-rtd-theme; extra == "docs"
+Dynamic: license-file
+
+# FuzzyTri
+
+Noravshan mantiq nazariyasi va amaliyoti uchun Python kutubxonasi.
+
+## O'rnatish
+
+```bash
+pip install fuzzytri
+```
+
+## Yoki manba koddan o'rnatish:
+
+* git clone https://github.com/username/fuzzytri.git
+* cd fuzzytri
+* pip install -e .
+
+## Tezkor Boshlash
+
+```
+from fuzzytri import FuzzyTriangular, FuzzyOperations
+
+# Vektorlar yaratish
+v1 = FuzzyTriangular(3.0, 2.0, 1.0)
+v2 = FuzzyTriangular(2.0, 1.0, 3.0)
+
+# Asosiy operatsiyalar
+qoshish = v1 + v2
+ayirish = v1 - v2
+kopaytirish = v1 * v2
+bolish = v1 / v2
+
+print(f"Qo'shish: {qoshish}")
+print(f"Ko'paytirish: {kopaytirish}")
+```
+
+## Loyihani Ishga Tushirish
+
+```
+# Kutubxonani o'rnatish
+pip install -e .
+
+# Testlarni ishga tushirish
+pytest
+
+# Misollarni ishga tushirish
+python examples/basic_usage.py
+python examples/advanced_operations.py
+```
+
+#� �f�u�z�z�y�t�r�i�
+�
+�
