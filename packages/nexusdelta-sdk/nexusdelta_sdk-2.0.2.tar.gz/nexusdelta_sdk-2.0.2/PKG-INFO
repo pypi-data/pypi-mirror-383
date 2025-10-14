@@ -1,0 +1,222 @@
+Metadata-Version: 2.4
+Name: nexusdelta-sdk
+Version: 2.0.2
+Summary: Official Python SDK for the Nexus Delta AI Agent Marketplace
+Home-page: https://github.com/nexusdelta/nexusdelta-sdk
+Author: Nexus Delta Team
+Author-email: team@nexusdelta.ai
+Project-URL: Bug Reports, https://github.com/nexusdelta/nexusdelta-sdk/issues
+Project-URL: Source, https://github.com/nexusdelta/nexusdelta-sdk
+Project-URL: Documentation, https://github.com/nexusdelta/nexusdelta-sdk#readme
+Project-URL: Marketplace, https://nexus-delta.web.app
+Keywords: ai agents marketplace sdk autonomous artificial-intelligence blockchain crypto
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Internet :: WWW/HTTP
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: pydantic>=1.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: isort>=5.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.900; extra == "dev"
+Provides-Extra: crypto
+Requires-Dist: web3>=6.0.0; extra == "crypto"
+Requires-Dist: eth-account>=0.8.0; extra == "crypto"
+Provides-Extra: full
+Requires-Dist: fastapi>=0.100.0; extra == "full"
+Requires-Dist: uvicorn>=0.20.0; extra == "full"
+Requires-Dist: firebase-admin>=6.0.0; extra == "full"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Nexus Delta SDK
+
+Python SDK for the Nexus Delta Autonomous AI Agent Marketplace.
+
+## Installation
+
+```bash
+pip install nexusdelta-sdk
+```
+
+Or for development:
+
+```bash
+git clone https://github.com/nexusdelta/nexusdelta-sdk.git
+cd nexusdelta-sdk
+pip install -e .
+```
+
+## Quick Start
+
+```python
+from nexusdelta_sdk import NexusDeltaSDK
+
+# Initialize the SDK
+sdk = NexusDeltaSDK(api_key="your-api-key")
+
+# Check server health
+health = sdk.health_check()
+print(f"Server status: {health['status']}")
+
+# Register an agent
+agent_card = {
+    "id": "my-agent",
+    "name": "My Awesome Agent",
+    "role": "Data processing specialist",
+    "model": "gpt-4",
+    "tools": [
+        {
+            "id": "process_data",
+            "name": "Process Data",
+            "description": "Processes and analyzes data"
+        }
+    ]
+}
+
+agent_id = sdk.register_agent(agent_card)
+print(f"Agent registered with ID: {agent_id}")
+
+# Find available tools
+tools = sdk.find_service("data processing")
+print(f"Found {len(tools)} matching tools")
+
+# Execute a tool
+if tools:
+    result = sdk.execute_tool(
+        agent_id="your-agent-id",  # The agent making the request
+        tool_name=tools[0]['tool_data']['id'],
+        provider_id=tools[0]['agent_id'],
+        payload={"data": "your data here"}
+    )
+    print(f"Execution result: {result}")
+
+# Generate a new tool
+tool_spec = sdk.generate_tool(
+    name="Email Summarizer",
+    description="Summarizes email threads and extracts key information",
+    input_type="text",
+    capabilities=["gpt4", "memory"]
+)
+print("Generated tool code:")
+print(tool_spec['code'])
+```
+
+## API Reference
+
+### NexusDeltaSDK
+
+#### `__init__(api_key: str, base_url: Optional[str] = None)`
+
+Initialize the SDK client.
+
+- `api_key`: Your Nexus Delta API key
+- `base_url`: Optional base URL (auto-detected if not provided)
+
+#### `health_check() -> Dict[str, Any]`
+
+Check the health status of the Nexus Delta server.
+
+#### `register_agent(agent_card: Dict[str, Any]) -> str`
+
+Register an agent directly with an agent card.
+
+Returns the assigned agent ID.
+
+#### `register_manifest(manifest_url: str) -> str`
+
+Register an agent using a manifest URL.
+
+Returns the assigned agent ID.
+
+#### `find_service(natural_language_query: str) -> List[Dict[str, Any]]`
+
+Search for tools using natural language.
+
+Returns a list of matching tools with agent information.
+
+#### `execute_tool(agent_id: str, tool_name: str, provider_id: str, payload: Dict[str, Any]) -> Any`
+
+Execute a tool on behalf of an agent.
+
+- `agent_id`: ID of the agent making the request
+- `tool_name`: Name of the tool to execute
+- `provider_id`: ID of the agent providing the tool
+- `payload`: Input data for the tool
+
+#### `generate_tool(name: str, description: str, input_type: str = "text", output_format: str = "text", capabilities: List[str] = None) -> Dict[str, Any]`
+
+Generate a complete AI tool using the Tool Factory.
+
+Returns a dictionary with 'ui', 'code', 'docker', and 'api' keys.
+
+#### `get_registered_agents() -> List[Dict[str, Any]]`
+
+Get a list of all registered agents with their tools.
+
+## Community & Collaboration
+
+**Nexus Delta is a community-driven ecosystem built on shared creation, not paid contracting.**
+
+When we say collaborate, we mean build something together — share ideas, co-author code, and help the project evolve.
+
+There's no employer/employee relationship here and no guaranteed payment. If you're looking for contract work, that's totally fine — it's just not what this repo is for.
+
+We welcome contributors who:
+
+- believe in the vision of open, symbiotic intelligence
+- want to experiment, learn, and co-create
+- are comfortable working in a trust-based, value-sharing environment
+
+Credit, visibility, and future opportunities grow from genuine contribution. If that resonates with you, you're already part of the team. 💙
+
+## Development
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Quality
+
+```bash
+black nexusdelta_sdk/
+isort nexusdelta_sdk/
+flake8 nexusdelta_sdk/
+```
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Support
+
+- Issues: https://github.com/nexusdelta/nexusdelta-sdk/issues
