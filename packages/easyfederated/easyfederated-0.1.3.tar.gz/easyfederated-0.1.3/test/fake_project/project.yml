@@ -1,0 +1,62 @@
+api_version: 3
+name: example_project
+description: NVIDIA FLARE sample project yaml file
+
+participants:
+  - name: "server.localhost"
+    type: server
+    org: nvidia
+    fed_learn_port: 8002
+    admin_port: 8003
+    tls:
+      cert: server.crt
+      key: server.key
+      root_ca: rootCA.pem
+      require_client_cert: true
+
+  - name: site1
+    type: client
+    org: nvidia
+    enable_byoc: true
+    tls:
+      cert: client1.crt
+      key: client1.key
+      root_ca: rootCA.pem
+
+  - name: site2
+    type: client
+    org: nvidia
+    enable_byoc: false
+    tls:
+      cert: client2.crt
+      key: client2.key
+      root_ca: rootCA.pem
+
+  - name: admin@pablofraile.net
+    type: admin
+    org: udl
+    role: project_admin
+    tls:
+      cert: admin.crt
+      key: admin.key
+      root_ca: rootCA.pem
+      require_client_cert: true
+
+
+builders:
+  - path: nvflare.lighter.impl.workspace.WorkspaceBuilder
+    args:
+      template_file: master_template.yml
+
+  - path: nvflare.lighter.impl.static_file.StaticFileBuilder
+    args:
+      config_folder: config
+      overseer_agent:
+        args:
+          sp_end_point: server:8004:8005
+        overseer_exists: false
+        path: nvflare.ha.dummy_overseer_agent.DummyOverseerAgent
+
+  - path: nvflare.lighter.impl.cert.CertBuilder
+
+  - path: nvflare.lighter.impl.signature.SignatureBuilder

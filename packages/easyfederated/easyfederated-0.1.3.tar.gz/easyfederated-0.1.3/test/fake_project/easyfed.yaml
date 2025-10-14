@@ -1,0 +1,26 @@
+easyfed:
+  folder: ./.easyfed
+  nvidia_flare_project: ./test/fake_project/project.yml
+
+machines:
+  # server.pablofraile.net:
+  #   type: local
+  server.localhost:
+    type: local
+
+  # site1:
+  #   type: remote
+  #   ip: 35.195.202.213
+  #   user: pofn_gft_com
+  site1:
+    type: local
+  site2:
+    type: local
+
+project:
+  server.localhost:
+    folder: ./test/fake_project/client
+  site1:
+    folder: ./test/fake_project/client
+  site2:
+    folder: ./test/fake_project/client
