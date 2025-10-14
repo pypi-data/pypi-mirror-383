@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: chamfer-metal
+Version: 0.1.0
+Summary: Chamfer distance with Metal/MPS acceleration (macOS)
+Author: Janos
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/Janos95/chamfer
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=2.1
+Requires-Dist: nanobind>=2.0
+Dynamic: license-file
+
+# chamfer-metal
+
+Chamfer distance computation with a Metal/MPS-accelerated kd-tree (macOS) and CPU fallback.
+
+## Features
+
+- kd-tree search on Apple Silicon GPUs via Metal
+- CPU fallback for all platforms
+- PyTorch autograd support
+- Benchmarks comparing Metal, CPU kd-tree, and brute force

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69", "wheel", "torch", "nanobind"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chamfer-metal"
+version = "0.1.0"
+description = "Chamfer distance with Metal/MPS acceleration (macOS)"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [{name = "Janos"}]
+dependencies = ["torch>=2.1", "nanobind>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/Janos95/chamfer"
+
+[tool.setuptools]
+packages = ["chamfer"]
+package-dir = {"chamfer" = "chamfer"}
+include-package-data = true
+
+[tool.setuptools.package-data]
+chamfer = ["src/*.mm", "src/*.cpp", "src/*.hpp"]
