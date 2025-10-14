@@ -1,0 +1,24 @@
+site_name: LabOne Python API 
+
+plugins: 
+  mkdocstrings:
+    enabled: true
+
+###############################################################################
+#### Navigation
+###############################################################################
+nav:
+- Home: index.md
+- LabOne:
+  - labone/index.md
+  - labone/getting_started.ipynb
+  - labone/api_comparison.md
+  - labone/mapping.md
+  - Reference:
+    - labone/reference/index.md
+    - labone/reference/node.md
+    - labone/reference/kernel_session.md
+    - labone/reference/errors.md
+    - labone/reference/annotated_value.md
+    - labone/reference/subscriptions.md
+    - labone/reference/mock.md
