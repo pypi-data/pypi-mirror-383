@@ -1,0 +1,16 @@
+site_name: iZiFizi Docs
+theme:
+  name: material
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - scripts/gen_ref_pages.py
+  - literate-nav
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [izifizi]
+          options:
+            docstring_style: sphinx
