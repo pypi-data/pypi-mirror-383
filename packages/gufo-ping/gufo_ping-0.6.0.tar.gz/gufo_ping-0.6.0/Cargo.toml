@@ -1,0 +1,23 @@
+[package]
+edition = "2024"
+name = "gufo_ping"
+version = "0.6.0"
+
+# See more keys and their definitions 
+# at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["cdylib"]
+name = "gufo_ping"
+
+[dependencies]
+byteorder = "1.5"
+coarsetime = "0.1"
+internet-checksum = "0.2"
+pyo3 = {version = "0.26", features = ["extension-module"]}
+rand = "0.9"
+socket2 = {version = "0.6", features = ["all"]}
+twox-hash = "2.1"
+
+[profile.release]
+lto = "fat" # Full link-time optimization
+strip = "debuginfo"
