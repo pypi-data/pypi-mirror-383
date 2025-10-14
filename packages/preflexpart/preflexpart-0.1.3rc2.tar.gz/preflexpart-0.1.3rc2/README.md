@@ -1,0 +1,159 @@
+# preFLEXPART
+
+<p align="center">
+    <a href="https://pypi.org/project/preflexpart/">
+    <img src="https://img.shields.io/pypi/v/preflexpart.svg?color=ff69b4" alt="PyPI version">
+    </a>
+    <a href="https://opensource.org/licenses/mit">
+    <img src="https://img.shields.io/badge/licence-MIT-blue.svg" alt="Licence">
+    </a>
+</p>
+
+> **WARNING:**
+>
+> This project is in BETA and under active development. Interfaces and functionality are subject to change.
+
+**preFLEXPART** is a Python toolkit to retrieve and preprocess ECMWF IFS fields for the Lagrangian particle dispersion model [**FLEXPART**](https://www.flexpart.eu/).
+
+It uses ECMWF’s [earthkit-data](https://earthkit-data.readthedocs.io/en/latest/) library to load meteorological GRIB data into familiar xarray/numpy arrays for computation, preserves GRIB metadata, and can write the results back to GRIB2.
+
+
+## Compatibility
+
+Target model: [**FLEXPART V10**](https://www.flexpart.eu/)
+
+
+## Install
+
+```bash
+# poetry
+poetry add preflexpart
+
+# or pip
+pip install preflexpart
+```
+
+
+## At a glance
+
+1. **Retrieve IFS forecasts**
+   - via [MARS](https://confluence.ecmwf.int/display/UDOC/MARS+user+documentation)
+   - via [Polytope](https://polytope.readthedocs.io/en/latest/)
+   - from local GRIB files
+
+2. **Preprocess for FLEXPART V10**
+   - De-accumulates precipitation, radiation, and fluxes
+   - Converts `etadot` → `omega` (Pa s⁻¹)
+
+3. **Write GRIB2**
+   - Preserves/overrides GRIB metadata as needed
+   - Ensures all fields are written as **GRIB2**
+
+## Example usage
+
+Run the full **preFLEXPART** preprocessing pipeline end-to-end using the example scripts in the [`examples/`](examples/) directory.
+Each script demonstrates a complete workflow: loading IFS data, preprocessing it, and writing FLEXPART-ready GRIB2 files.
+
+| Data Source | Example Command |
+|--------------|-----------------|
+| 🧪 **Bundled test data** | `python -s examples/run_pipeline_local.py tests/data/test_sources_raw_ifs.tar.gz` |
+| 💾 **Local GRIB files** | `python -s examples/run_pipeline_local.py /path/to/grib_dir` |
+| ☁️ **ECMWF MARS archive** | `python -s examples/run_pipeline_mars.py --date 2025-09-29 --time 12 --step "1/to/2/by/1" --max-level 137` |
+| 🌍 **ECMWF Polytope API** | `python -s examples/run_pipeline_polytope.py --date 2025-07-29 --time 1200 --step "1/to/2/by/1" --max-level 137` |
+
+
+## Documentation
+
+See the `docs/` folder for detailed information:
+- [Inputs](docs/inputs.md)
+- [Data Sources](docs/sources.md)
+- [Preprocessing](docs/preprocessing.md)
+- [GRIB I/O](docs/io_grib.md)
+
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+## Running Tests
+
+To run the full test suite:
+```
+poetry run pytest
+```
+
+## Feedback
+
+Found a bug or have feedback?
+Please [open an issue](https://gitlab.phaidra.org/flexpart/preflexpart/-/issues).
+
+## Roadmap / TODO
+
+- [ ] Publish a hosted documentation site (e.g., Read the Docs or GitHub Pages)
+- [ ] Add Copernicus Data Store (CDS) as a data source
+- [ ] Find suitable package name (flexprep?)
+
+
+## Testing the preFLEXPART Package
+
+This guide explains how to test the **preFLEXPART** pipeline using example scripts included in the repository.
+Each example demonstrates a full workflow: **loading**, **preprocessing**, and **writing** FLEXPART-ready GRIB2 files.
+
+
+### 1️. Install the package
+
+You can either install it from **PyPI (recommended for testers)** or from **source (for contributors)**.
+
+#### Option A — From PyPI
+```bash
+pip install preflexpart==0.1.3-rc1
+```
+
+> 💡 After installation, you can run the example scripts using plain `python` —
+> no need for Poetry when installed via `pip`.
+
+#### Option B — From source (development setup)
+```bash
+git clone https://gitlab.phaidra.org/flexpart/preflexpart.git
+cd preflexpart
+poetry install
+```
+
+
+### 2️. Run an example pipeline
+
+Each example runs the preFLEXPART pipeline end-to-end.
+
+| Data source | Command | Notes |
+|--------------|----------|-------|
+| 🧪 **Bundled test data** | `python examples/run_pipeline_local.py tests/data/test_sources_raw_ifs.tar.gz` | Works offline using a small bundled dataset |
+| 💾 **Local GRIB files** | `python examples/run_pipeline_local.py /path/to/grib_dir` | Use your own GRIB directory |
+| ☁️ **ECMWF MARS archive** | `python examples/run_pipeline_mars.py --date 2025-09-29 --time 12 --step "1/to/2/by/1" --max-level 137` | Requires ECMWF MARS credentials (`.ecmwfapirc`) |
+
+> 🧠 If you installed with Poetry instead of pip, prefix each command with:
+> ```bash
+> poetry run python ...
+> ```
+
+
+### 3️. Check the outputs
+
+After running a pipeline, the processed GRIB2 files are written to:
+
+```
+out_grib2/
+```
+
+Each file corresponds to one forecast step (e.g. `dispf2025072912`).
+
+
+### Try it out
+
+- You can run preflexpart with the included dataset:
+  ```bash
+  python examples/run_pipeline_local.py tests/data/test_sources_raw_ifs.tar.gz
+  ```
+- MARS and Polytope examples require ECMWF access tokens or credentials.
+- All examples write FLEXPART-ready GRIB2 files suitable for dispersion simulations.
+
+Found a bug or have feedback? Please [open an issue](https://gitlab.phaidra.org/flexpart/preflexpart/-/issues) or contact nina.burgdorfer@meteoswiss.ch
