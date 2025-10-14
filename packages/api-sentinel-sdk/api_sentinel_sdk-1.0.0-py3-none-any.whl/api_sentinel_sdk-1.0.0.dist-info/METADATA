@@ -1,0 +1,118 @@
+Metadata-Version: 2.4
+Name: api-sentinel-sdk
+Version: 1.0.0
+Summary: A lightweight SDK for real-time API cost monitoring and control.
+Home-page: https://github.com/aimrrs/api-sentinel-sdk
+Author: aimrrs
+Author-email: aimrrs404@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/aimrrs/api-sentinel-sdk/issues
+Project-URL: Documentation, https://github.com/aimrrs/api-sentinel-sdk#readme
+Project-URL: Source Code, https://github.com/aimrrs/api-sentinel-sdk
+Keywords: api monitoring sdk sentinel cost tracking openai
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: tiktoken>=0.3.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.910; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# API Sentinel SDK
+
+API Sentinel SDK is a Python library designed to provide seamless integration with the API Sentinel platform, enabling developers to monitor, secure, and analyze their API usage with ease.
+
+## Features
+- Easy integration with the API Sentinel platform
+- Adapters for different API providers (e.g., OpenAI)
+- Error handling utilities
+- Extensible adapter base for custom integrations
+
+## Installation
+
+You can install the SDK using pip:
+
+```bash
+pip install api-sentinel-sdk
+```
+
+Or, if you are developing locally:
+
+```bash
+pip install -e .
+```
+
+## Usage
+
+Here's a basic example of how to use the SDK:
+
+```python
+from sentinel.adapters.openai import OpenAIAdapter
+
+# Initialize the adapter
+adapter = OpenAIAdapter(api_key="your-api-key")
+
+# Make a request
+response = adapter.send_request({
+    "prompt": "Hello, world!",
+    "max_tokens": 5
+})
+
+print(response)
+```
+
+## Project Structure
+
+```
+sentinel/
+    __init__.py
+    errors.py
+    adapters/
+        __init__.py
+        base.py
+        openai.py
+```
+
+- `adapters/`: Contains adapter classes for different API providers.
+- `errors.py`: Custom error classes for the SDK.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## Author
+[aimrrs](https://github.com/aimrrs)
+
+
+
