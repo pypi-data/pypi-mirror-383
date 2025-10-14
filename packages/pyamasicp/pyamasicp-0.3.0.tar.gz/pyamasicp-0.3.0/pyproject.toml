@@ -1,0 +1,38 @@
+[project]
+name = "pyamasicp"
+version = "0.3.0"
+authors = [
+    { name = "Petr Vraník", email = "hpa@suteren.net" },
+]
+description = "Client for iiyama TV rs232 over lan protocol"
+license = "MIT"
+keywords = ["rs232", "lan", "iiyama", "home-assistant", "SICP", "TV", "monitor", "home-automation"]
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Utilities",
+    "Topic :: Home Automation",
+    "Topic :: Multimedia",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/konikvranik/pyamasicp/"
+Issues = "https://github.com/konikvranik/pyamasicp/issues"
+
+
+[tool.black]
+line-length = 79
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
+
