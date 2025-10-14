@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: workspace-agent
+Version: 0.0.2
+Summary: Workspace management package for `out` folder shared between different packages.
+Project-URL: Homepage, https://github.com/ppak10/workspace-agent
+Project-URL: Issues, https://github.com/ppak10/workspace-agent/issues
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: mcp>=1.14.0
+Requires-Dist: pydantic>=2.11.9
+Requires-Dist: rich>=14.1.0
+Requires-Dist: typer>=0.17.4
+Dynamic: license-file
+
+[![pytest](https://github.com/ppak10/workspace-agent/actions/workflows/pytest.yml/badge.svg)](https://github.com/ppak10/workspace-agent/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/github/ppak10/workspace-agent/graph/badge.svg?token=BJBTFCWMR4)](https://codecov.io/github/ppak10/workspace-agent)
+
+# workspace-agent
+
+ Workspace management package for `out` folder shared between different packages.
+
+<div style="display: flex; justify-content: center;">
+  <img src="./icon.svg" alt="Logo" width="50%">
+</div>
+
