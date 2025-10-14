@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local_launch"
+version = "0.1.1"
+description = "A framework for local launching of microservices"
+authors = [
+    { name = "Puneet Keswani", email = "puneet.keswani@jpmorgan.com" },
+    { name = "Akshat Miglani", email = "akshat.miglani@jpmchase.com" },
+    { name = "Famidha Thurab", email = "famidha.thurab@jpmchase.com" },
+    { name = "Aastha Jaipuria", email = "aastha.jaipuria@jpmchase.com" }
+]
+readme = "README.md"
+# license = { file = "LICENSE" }
+requires-python = ">=3.7"
+dependencies = [
+    "requests>=2.0",
+    "pyyaml",
+    "confluent_kafka",
+    "rich",
+    "questionary",
+    "argparse",
+    "pyfiglet",
+    "prompt_toolkit",
+    "numpy>=1.21.0"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+Bitbucket = "https://bitbucketdc.jpmchase.net/users/f367896/repos/local-launch/browse"
+Confluence = "https://confluence.prod.aws.jpmchase.net/confluence/pages/viewpage.action?pageId=5267763341&spaceKey=~F367896&title=The%2BLocal%2BLaunch"
+
+[tool.setuptools]
+packages = ["local_launch"]
+
+[tool.setuptools.package-data]
+local_launch = [
+    "config/*",
+    "resources/**/*"
+]

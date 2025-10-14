@@ -1,0 +1,18 @@
+[microservice]
+docker_image = "test-image"
+dockerfile_path = "I:\\I2I\\test\\Dockerfile"
+kube_kustomize_path = "I:\\I2I\\test\\kube\\kustomize\\overlays\\test"
+namespace = "my-microservice-namespace"
+cluster_name = "microservice-cluster"
+kind_config_path = "I:\\local-launch\\local_launch\\config\\kind-config.yaml"
+kafka_path = "I:\\local-launch\\local_launch\\config\\kafka-compose.yaml"
+
+[features]
+kafka = true
+kafka_setup_yaml = "I:\\I2I\\test\\kube\\local_launch\\local_launch.yaml"
+
+[modifiable]
+project_root_dir = "I:\\I2I\\test"
+
+[locallaunch]
+banner_name = "Local Launch"
