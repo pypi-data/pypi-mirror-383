@@ -1,0 +1,119 @@
+Metadata-Version: 2.4
+Name: wallabag-client
+Version: 1.8.11
+Summary: A command-line client for the self-hosted `read-it-later` app Wallabag
+Home-page: https://github.com/artur-shaik/wallabag-client
+Author: Artur Shaik
+Author-email: artur@shaik.link
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: beautifulsoup4>=4.9.1
+Requires-Dist: pycryptodome>=3.9.8
+Requires-Dist: requests>=2.11.1
+Requires-Dist: click>=8.0
+Requires-Dist: yaspin
+Requires-Dist: click_repl>=0.2.0
+Requires-Dist: pyxdg
+Requires-Dist: colorama>=0.4.3
+Requires-Dist: delorean
+Requires-Dist: humanize
+Requires-Dist: lxml
+Requires-Dist: tzlocal
+Requires-Dist: tabulate
+Requires-Dist: packaging
+Requires-Dist: markdownify
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+![badge](https://action-badges.now.sh/artur-shaik/wallabag-client) [![codecov](https://codecov.io/gh/artur-shaik/wallabag-client/branch/master/graph/badge.svg?token=INPHCV9VDO)](https://codecov.io/gh/artur-shaik/wallabag-client) [![PyPI version shields.io](https://img.shields.io/pypi/v/wallabag-client.svg)](https://pypi.python.org/pypi/wallabag-client/)
+
+# wallabag-client
+
+Wallabag-client is a command line client for the self hosted read-it-later app [wallabag](https://www.wallabag.org/). Unlike to other services, wallabag is free and open source.
+
+Wallabag-client is refactored version of existed wallabag-cli tool.
+
+You can read additional info [here](https://shaik.link/wallabag-client-features.html)
+
+--------------------------------------------------------------------------------
+
+## Features
+
+- List entries (filterable tabulated output with nerd icons);
+- Show the content of an entry with custom width and alignment;
+- Add new entries;
+- Delete entries;
+- Mark existing entries as read;
+- Mark existing entries as starred;
+- Change the title of existing entries;
+- Tags support;
+- Annotations support;
+- Opening entries in browser;
+- Showing entry information;
+- Export entry to file.
+
+## Installation
+
+`sudo pip3 install wallabag-client`
+
+## Usage
+
+`wallabag --help`
+
+```
+Usage: wallabag [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --config TEXT       Use custom configuration file
+  --debug             Enable debug logging to stdout
+  --debug-level TEXT  Debug level
+  --version           Show the version and exit.
+  -h, --help          Show this message and exit.
+
+Commands:
+  add             Add a new entry to wallabag.
+  anno            Annotation commands.
+  config          Start configuration.
+  delete          Delete an entry from wallabag.
+  delete-by-tags  Delete entries from wallabag by tags.
+  export          Export entry to file.
+  info            Get entry information.
+  list            List the entries on the wallabag account.
+  open            Open entry in browser.
+  read            Toggle the read-status of an existing entry.
+  repl            Start an interactive shell.
+  show            Show the text of an entry.
+  star            Toggle the starred-status of an existing entry.
+  tags            Retrieve and print all tags.
+  update          Toggle the read or starred status or change the title of...
+  update-by-tags  Set the read or starred status of an existing entries...
+```
+
+## Install shell completion (zsh)
+
+A completion script for zsh is provided in the directory `completion/zsh/_wallabag`.
+
+Installation can vary based on your zsh settings and environment. Most importantly, the file has to be placed in one of the directories contained in the `$fpath` variable and then autoloaded.
+
+If you want to install the completion script for all users, you can do the following:
+
+```sh
+mkdir -p /usr/local/share/zsh/site-functions
+cp _wallabag /usr/local/share/zsh/site-functions
+```
+
+and restart zsh.
+
+A better option is to have a directory in your home for local completion scripts, but setting this up is beyond the scope of these instructions. You may refer to [this answer on Stackoverflow](https://stackoverflow.com/a/67161186) for more details.
