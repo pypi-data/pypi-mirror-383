@@ -1,0 +1,37 @@
+Metadata-Version: 2.4
+Name: lsr_benchmark
+Version: 0.0.1rc2
+Summary: The lsr-benchmark aims to support holisitc evaluations of the lexical sparse retrieval paradigm to contrast efficiency and effectiveness accross diverse retrieval scenarios.
+Home-page: https://github.com/reneuir/lsr-benchmark
+Project-URL: Bug Tracker, https://github.com/reneuir/lsr-benchmark/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.9
+License-File: LICENSE
+Requires-Dist: click
+Requires-Dist: ir-datasets
+Requires-Dist: ir_measures
+Requires-Dist: pyyaml
+Requires-Dist: tira
+Requires-Dist: tirex-tracker>=0.2.16
+Requires-Dist: tqdm
+Provides-Extra: test
+Requires-Dist: pytest==8.*,>=8.0; extra == "test"
+Requires-Dist: pytest-cov==5.*,>=5.0; extra == "test"
+Requires-Dist: approvaltests; extra == "test"
+Requires-Dist: evaluate; extra == "test"
+Requires-Dist: parameterized; extra == "test"
+Provides-Extra: dev
+Requires-Dist: ir-datasets==0.5.9; extra == "dev"
+Requires-Dist: spacy~=3.8; extra == "dev"
+Requires-Dist: trectools; extra == "dev"
+Dynamic: license-file
