@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zz-mp3-to-wav"
+version = "0.1.0"
+authors = [{"name" = "zhangzeng"}]
+description = "基于ffmpeg的MP3转WAV工具"
+requires-python = ">=3.8"
+dependencies = []
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
