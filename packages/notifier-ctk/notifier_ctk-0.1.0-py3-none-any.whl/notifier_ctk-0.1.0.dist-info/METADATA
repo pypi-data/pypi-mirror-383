@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: notifier-ctk
+Version: 0.1.0
+Summary: Animated notification widget for CustomTkinter with emoji & sound
+Author-email: Your Name <you@example.com>
+License: MIT
+Keywords: notifier,customtkinter,gui,notification,toast
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Development Status :: 4 - Beta
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: customtkinter
+Requires-Dist: Pillow
+Requires-Dist: screeninfo
+Requires-Dist: regex
+Requires-Dist: requests
+Dynamic: license-file
+
+# notifier-ctk
+
+Animated notification widget for **CustomTkinter**, featuring emoji icons, looping GIFs, and sounds.
+
+## Installation
+
+```bash
+pip install notifier-ctk
