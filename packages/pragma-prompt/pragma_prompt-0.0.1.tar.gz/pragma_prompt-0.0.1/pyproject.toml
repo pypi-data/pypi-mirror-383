@@ -1,0 +1,125 @@
+[tool.poetry]
+name = "pragma-prompt"
+version = "0.0.1"
+description = "A powerful toolkit for building, managing, and composing hierarchical prompts as code."
+authors = ["David Tokar <1413david@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/DavidTokar12/PragmaPrompt"
+homepage = "https://github.com/DavidTokar12/PragmaPrompt"
+include = ["src/pragma_prompt/py.typed"]
+packages = [{include = "pragma_prompt", from = "src"}]
+
+
+keywords = [
+    "prompt", "llm", "prompt-engineering", "ai", 
+    "openai", "claude", "anthropic", "hierarchical prompts", "prompt management"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+pydantic = "^2.11.7"
+prettytable = "^3.16.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.1.1"
+ipykernel = "^6.29.5"
+vcrpy = "^7.0.0"
+pytest-xdist = "^3.6.1"
+ruff = "^0.11.8"
+mypy = "^1.17.0"
+black = {extras = ["jupyter"], version = "^25.1.0"}
+matplotlib = "^3.10.3"
+flake8 = "^7.3.0"
+flake8-force-keyword-arguments = "^2.0.0"
+openai = "^1.102.0"
+dotenv = "^0.9.9"
+pytest-asyncio = "^1.1.0"
+pandas = "^2.3.2"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+extend-exclude = []
+fix = true
+line-length = 88
+target-version = "py310"
+
+[tool.flake8]
+select = ["FKA1"]
+kwargs-max-positional-arguments = 0
+max-line-length = 88
+
+[tool.ruff.lint]
+extend-select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "ERA", # flake8-eradicate/eradicate
+    "I",   # isort
+    "N",   # pep8-naming
+    "PIE", # flake8-pie
+    "PGH", # pygrep
+    "RUF", # ruff checks
+    "SIM", # flake8-simplify
+    "T20", # flake8-print
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
+]
+
+ignore = [
+    "TC003",  # move into type checking block
+    "TC001",  # move into type checking block
+    "TC002",  # move into type checking block
+    "ERA001", # Found commented-out code
+]
+
+extend-safe-fixes = [
+    "TCH", # move import from and to TYPE_CHECKING blocks
+]
+
+unfixable = [
+    "ERA", # do not autoremove commented out code
+]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.isort]
+force-single-line = true
+lines-between-types = 1
+lines-after-imports = 2
+known-first-party = ["poetry"]
+known-third-party = ["poetry.core"]
+required-imports = ["from __future__ import annotations"]
+
+[tool.mypy]
+files = ["src", "tests", "examples"]
+exclude = "tests/manual_tests/.*"
+strict = true
+mypy_path = ["src"]
+namespace_packages = true
+explicit_package_bases = true
+plugins = ["pydantic.mypy"]
+
+enable_error_code = [
+    "ignore-without-code",
+    "redundant-expr",
+    "truthy-bool",
+]
