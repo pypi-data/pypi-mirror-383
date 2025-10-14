@@ -1,0 +1,121 @@
+Metadata-Version: 2.3
+Name: aws_bedrock_runtime_mate
+Version: 0.1.1
+Summary: Make the Amazon Bedrock Runtime API easier to use with intuitive Python interfaces and type-safe utilities.
+License: MIT
+Author: Sanhe Hu
+Author-email: husanhe@email.com
+Maintainer: Sanhe Hu
+Maintainer-email: husanhe@email.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Provides-Extra: auto
+Provides-Extra: dev
+Provides-Extra: doc
+Provides-Extra: test
+Requires-Dist: Sphinx (>=7.4.7,<8.0.0) ; extra == "doc"
+Requires-Dist: boto3 (>=1.35.99,<2.0.0)
+Requires-Dist: boto3-dataclass[bedrock-runtime] (>=1.40.0,<2.0.0)
+Requires-Dist: build (>=1.2.1,<2.0.0) ; extra == "dev"
+Requires-Dist: docfly (==3.0.0) ; extra == "doc"
+Requires-Dist: func-args (>=1.0.1,<2.0.0)
+Requires-Dist: furo (==2024.8.6) ; extra == "doc"
+Requires-Dist: ipython (>=8.18.1,<8.19.0) ; extra == "doc"
+Requires-Dist: nbsphinx (>=0.8.12,<1.0.0) ; extra == "doc"
+Requires-Dist: pygments (>=2.18.0,<3.0.0) ; extra == "doc"
+Requires-Dist: pytest (>=8.2.2,<9.0.0) ; extra == "test"
+Requires-Dist: pytest-cov (>=6.0.0,<7.0.0) ; extra == "test"
+Requires-Dist: rich (>=13.8.1,<15.0.0)
+Requires-Dist: rstobj (==1.2.1) ; extra == "doc"
+Requires-Dist: sphinx-copybutton (>=0.5.2,<1.0.0) ; extra == "doc"
+Requires-Dist: sphinx-design (>=0.6.1,<1.0.0) ; extra == "doc"
+Requires-Dist: sphinx-jinja (>=2.0.2,<3.0.0) ; extra == "doc"
+Requires-Dist: twine (>=6.0.0,<7.0.0) ; extra == "dev"
+Requires-Dist: wheel (>=0.45.0,<1.0.0) ; extra == "dev"
+Project-URL: Changelog, https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/blob/main/release-history.rst
+Project-URL: Documentation, https://aws-bedrock-runtime-mate.readthedocs.io/en/latest/
+Project-URL: Download, https://pypi.org/pypi/aws-bedrock-runtime-mate#files
+Project-URL: Homepage, https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project
+Project-URL: Issues, https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/issues
+Project-URL: Repository, https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project
+Description-Content-Type: text/x-rst
+
+
+.. image:: https://readthedocs.org/projects/aws-bedrock-runtime-mate/badge/?version=latest
+    :target: https://aws-bedrock-runtime-mate.readthedocs.io/en/latest/
+    :alt: Documentation Status
+
+.. image:: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/actions?query=workflow:CI
+
+.. image:: https://codecov.io/gh/MacHu-GWU/aws_bedrock_runtime_mate-project/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/MacHu-GWU/aws_bedrock_runtime_mate-project
+
+.. image:: https://img.shields.io/pypi/v/aws-bedrock-runtime-mate.svg
+    :target: https://pypi.python.org/pypi/aws-bedrock-runtime-mate
+
+.. image:: https://img.shields.io/pypi/l/aws-bedrock-runtime-mate.svg
+    :target: https://pypi.python.org/pypi/aws-bedrock-runtime-mate
+
+.. image:: https://img.shields.io/pypi/pyversions/aws-bedrock-runtime-mate.svg
+    :target: https://pypi.python.org/pypi/aws-bedrock-runtime-mate
+
+.. image:: https://img.shields.io/badge/✍️_Release_History!--None.svg?style=social&logo=github
+    :target: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/blob/main/release-history.rst
+
+.. image:: https://img.shields.io/badge/⭐_Star_me_on_GitHub!--None.svg?style=social&logo=github
+    :target: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project
+
+------
+
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
+    :target: https://aws-bedrock-runtime-mate.readthedocs.io/en/latest/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Install-blue.svg
+    :target: `install`_
+
+.. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
+    :target: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project
+
+.. image:: https://img.shields.io/badge/Link-Submit_Issue-blue.svg
+    :target: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Request_Feature-blue.svg
+    :target: https://github.com/MacHu-GWU/aws_bedrock_runtime_mate-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Download-blue.svg
+    :target: https://pypi.org/pypi/aws-bedrock-runtime-mate#files
+
+
+Welcome to ``aws_bedrock_runtime_mate`` Documentation
+==============================================================================
+.. image:: https://aws-bedrock-runtime-mate.readthedocs.io/en/latest/_static/aws_bedrock_runtime_mate-logo.png
+    :target: https://aws-bedrock-runtime-mate.readthedocs.io/en/latest/
+
+Documentation for ``aws_bedrock_runtime_mate``.
+
+This project simplifies working with the Amazon Bedrock Runtime API by providing intuitive Python interfaces, type-safe dataclasses, and helpful utilities. It abstracts away the complexity of raw API calls, allowing developers to focus on building AI-powered applications with Amazon Bedrock's foundation models without dealing with low-level implementation details.
+
+
+.. _install:
+
+Install
+------------------------------------------------------------------------------
+
+``aws_bedrock_runtime_mate`` is released on PyPI, so all you need is to:
+
+.. code-block:: console
+
+    $ pip install aws-bedrock-runtime-mate
+
+To upgrade to latest version:
+
+.. code-block:: console
+
+    $ pip install --upgrade aws-bedrock-runtime-mate
+
