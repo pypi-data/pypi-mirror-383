@@ -1,0 +1,33 @@
+Metadata-Version: 2.4
+Name: PyProtectorX
+Version: 1.1.0
+Summary: Advanced Python Code Protection and Encryption
+Home-page: https://pyprotector.netlify.app
+Author: Zain Alkhalil (VIP)
+Author-email: "Zain Alkhalil (VIP)" <zainr56h@gmail.com>
+License: Proprietary
+Project-URL: Homepage, https://pyprotectorx.netlify.app
+Project-URL: Source, https://github.com/vipty1/PyProtectorX
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# PyProtectorX v1.1.0
+🔒 Ultimate Python Code Protection System
+Created by Zain Alkhalil (VIP)
+---
+### Python API
+```python
+import PyProtectorX
+encrypted = PyProtectorX.dumps("print('Hello')")
+PyProtectorX.Run(encrypted)
+```
+### Cli API
+```python
+pyprotectorx encrypt script.py
+python script_Enc.py
+```

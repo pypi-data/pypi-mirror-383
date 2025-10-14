@@ -1,0 +1,17 @@
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyProtectorX"
+version = "1.1.0"
+description = "Advanced Python Code Protection and Encryption"
+readme = "README.md"
+license = {text = "Proprietary"}
+authors = [{name = "Zain Alkhalil (VIP)", email = "zainr56h@gmail.com"}]
+requires-python = ">=3.6"
+
+[project.urls]
+Homepage = "https://pyprotectorx.netlify.app"
+Source = "https://github.com/vipty1/PyProtectorX"

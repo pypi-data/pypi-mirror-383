@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include main.c
+include encrypt.py
+global-exclude .pyc
+global-exclude pycache
+global-exclude .git
