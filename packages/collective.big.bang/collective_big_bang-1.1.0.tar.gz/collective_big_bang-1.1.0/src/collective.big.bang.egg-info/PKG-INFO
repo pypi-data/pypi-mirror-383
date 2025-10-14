@@ -1,0 +1,261 @@
+Metadata-Version: 2.4
+Name: collective.big.bang
+Version: 1.1.0
+Summary: Add-on which create Plone site into Zope
+Home-page: https://github.com/collective/collective.big.bang
+Author: Benoît Suttor
+Author-email: benoit.suttor@imio.be
+License: GPL version 2
+Project-URL: PyPI, https://pypi.python.org/pypi/collective.big.bang
+Project-URL: Source, https://github.com/collective/collective.big.bang
+Project-URL: Tracker, https://github.com/collective/collective.big.bang/issues
+Keywords: Python Plone CMS
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Plone
+Classifier: Framework :: Plone :: Addon
+Classifier: Framework :: Plone :: 6.0
+Classifier: Framework :: Plone :: 6.1
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Operating System :: OS Independent
+Classifier: License :: OSI Approved :: GNU General Public License v2 (GPLv2)
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.GPL
+License-File: LICENSE.rst
+Requires-Dist: setuptools
+Requires-Dist: plone.api>=1.8.4
+Requires-Dist: plone.app.dexterity
+Requires-Dist: plone.restapi
+Provides-Extra: test
+Requires-Dist: plone.app.testing; extra == "test"
+Requires-Dist: plone.testing>=5.0.0; extra == "test"
+Requires-Dist: plone.app.contenttypes; extra == "test"
+Requires-Dist: plone.app.robotframework[debug]; extra == "test"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+[![Latest Version](https://img.shields.io/pypi/v/collective.big.bang.svg)](https://pypi.python.org/pypi/collective.big.bang/)
+[![Tests Status](https://github.com/collective/collective.big.bang/actions/workflows/test.yml/badge.svg)](https://github.com/collective/collective.big.bang/actions/workflows/test.yml)
+![Supported - Python Versions](https://img.shields.io/pypi/pyversions/collective.big.bang.svg?style=plastic)
+[![License](https://img.shields.io/pypi/l/collective.big.bang.svg)](https://pypi.python.org/pypi/collective.big.bang/)
+
+# collective.big.bang
+
+```
+Our whole universe was in a hot, dense state
+Then nearly fourteen billion years ago expansion started, wait
+The earth began to cool, the autotrophs began to drool
+Neanderthals developed tools
+We built a wall (we built the pyramids)
+Math, science, history, unraveling the mysteries
+That all started with the big bang! Hey!
+```
+
+So all started with the Plone site! Hey!
+This package is used to create a Plone site when Zope is started (just before the `Ready to handle requests` sentence).
+
+You can use environment variables to create the Plone site and choose which packages you would like to install. See "Environment variables".
+
+You can also expand your Plone site by starting automaticaly all pending upgrade steps when database opened.
+
+### Why not use `collective.recipe.plonesite`?
+
+The goal is to create the Plone site when you deploy a new Plone in a containerized environment.
+We think it's easier to create the Plone site on start-up, without an entrypoint or extra commands.
+It's simpler in a containerized environment than starting a buildout part to create a Plone site.
+
+---
+
+**Fun fact:**
+This package is now called `collective.big.bang` instead of the original `collective.bigbang`, because the name `collective.bigbang` was rejected by PyPI.
+
+## Environment variables
+
+You can add environment variables into your buildout under the `instance` part using `environment-vars`:
+
+```
+...
+[instance]
+...
+environment-vars =
+    PLONE_EXTENSION_IDS plone.app.caching:default,plonetheme.barceloneta:default
+    DEFAULT_LANGUAGE fr
+    ADMIN_PASSWORD mysuperpa$$w0rd
+    ACTIVE_BIGBANG True
+    ACTIVE_BIGBANG_EXPANSION True
+```
+
+Or use tools like [`direnv`](https://direnv.net/) (example `.envrc` file):
+
+```bash
+export PLONE_EXTENSION_IDS=plone.app.caching:default,plonetheme.barceloneta:default
+export DEFAULT_LANGUAGE=fr
+export ADMIN_PASSWORD=mysuperpa$$w0rd
+export ACTIVE_BIGBANG=True
+export ACTIVE_BIGBANG_EXPANSION=True
+```
+
+### `PLONE_EXTENSION_IDS`
+A list of GenericSetup profiles to install.
+**Default:** `plone.app.caching:default,plonetheme.barceloneta:default`
+
+### `DEFAULT_LANGUAGE`
+The default language of the Plone site.
+**Default:** `en`
+
+### `ADMIN_PASSWORD`
+The password for the Zope "admin" user.
+**Note:** No default. If not set, the admin password will not be updated.
+
+### `ACTIVE_BIGBANG`
+Create a Plone site on this instance.
+Used to avoid conflict errors; should be `True` on only one instance.
+**Default:** `False`
+
+### `ACTIVE_BIGBANG_EXPANSION`
+Expansion of the Plone universe, it run all pending upgrades.
+Used to avoid conflict errors; should be `True` on only one instance.
+**Default:** `False`
+
+---
+
+## Features
+
+- Creates Plone site when Zope is started.
+- Run all pending upgrade steps when database is open.
+
+## Installation
+
+Install `collective.big.bang` by adding it to your `buildout`:
+
+```
+[buildout]
+
+...
+
+eggs +=
+    collective.big.bang
+
+...
+
+[instance]
+...
+environment-vars =
+    PLONE_EXTENSION_IDS plone.app.caching:default,plonetheme.barceloneta:default
+    DEFAULT_LANGUAGE fr
+    ADMIN_PASSWORD mysuperpa$$w0rd
+    ACTIVE_BIGBANG True
+    ACTIVE_BIGBANG_EXPANSION True
+```
+
+Then run:
+
+```bash
+bin/buildout
+```
+
+## Contribute
+
+- [Issue Tracker](https://github.com/collective/collective.big.bang/issues)
+- [Source Code](https://github.com/collective/collective.big.bang)
+
+## Support
+
+If you're having issues, please let us know by opening an issue.
+
+## License
+
+The project is licensed under the **GPLv2**.
+
+
+# Contributors
+
+- Benoît Suttor, benoit.suttor@imio.be
+- Laurent Lasudry, laurent.lasudry@affinitic.be
+- Olivier Delaere
+- Rémi Dubois, remi.dubois@imio.be
+
+
+# Changelog
+
+
+## 1.1.0 (2025-10-14)
+
+- Added expansion feature, which allows to perform all pending upgrade steps in one operation.
+  [bsuttor]
+
+- Upgrade dev environment to Plone 6.1
+  [remdub]
+
+
+## 1.0.3 (2022-05-13)
+
+- Do not notify DarwinStartedEvent if site doesn't exist.
+  [odelaere]
+
+
+## 1.0.2 (2022-05-13)
+
+- Fix mountpoints break bid.bang execution.
+  [odelaere]
+
+
+## 1.0.1 (2022-04-15)
+
+- Notify an event after bang.
+  [odelaere]
+
+
+## 1.0 (2022-03-01)
+
+- Do not set "admin" password if ADMIN_PASSWORD env variable is not set.
+  [bsuttor]
+
+
+## 1.0b2 (2022-01-27)
+
+- Ignore mountpoint configurations in site creation.
+  [odelaere]
+
+
+## 1.0b1 (2022-01-25)
+
+- Added tests and better support for plone from 4.3 to 6.0.
+  [odelaere]
+
+
+## 1.0a3 (2021-10-04)
+
+- Strip extension ids.
+  [odelaere]
+- Do not attempt to do anything if ACTIVE_BIGBANG id not True.
+  [odelaere]
+
+
+## 1.0a2 (2021-08-17)
+
+- Fix package after renaming from collective.bigbang to collective.big.bang
+  [laulaz]
+
+
+## 1.0a1 (2021-08-13)
+
+- Initial release.
+  [bsuttor]
