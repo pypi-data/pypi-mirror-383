@@ -1,0 +1,134 @@
+Metadata-Version: 2.4
+Name: hca-smart-sync
+Version: 0.3.0
+Summary: Intelligent S3 synchronization for HCA Atlas data
+License: Apache-2.0
+License-File: LICENSE
+Keywords: HCA,S3,sync,bioinformatics,datasets,checksum,manifest
+Author: HCA Team
+Author-email: dave@clevercanary.com
+Requires-Python: >=3.10,<4.0
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Scientific/Engineering
+Requires-Dist: boto3 (>=1.34.0,<2.0.0)
+Requires-Dist: botocore (>=1.34.0,<2.0.0)
+Requires-Dist: natsort (>=8.4.0,<9.0.0)
+Requires-Dist: pydantic (>=2.0.0,<3.0.0)
+Requires-Dist: pydantic-settings (>=2.0.0,<3.0.0)
+Requires-Dist: pyyaml (>=6.0.0,<7.0.0)
+Requires-Dist: rich (>=13.0.0,<14.0.0)
+Requires-Dist: typer (>=0.16.0,<0.17.0)
+Project-URL: Homepage, https://github.com/clevercanary/hca-ingest-tools/blob/main/smart-sync/README.md
+Project-URL: Issues, https://github.com/clevercanary/hca-ingest-tools/issues
+Project-URL: Repository, https://github.com/clevercanary/hca-ingest-tools
+Description-Content-Type: text/markdown
+
+# HCA Smart-Sync
+
+Intelligent S3 data synchronization for HCA Atlas source datasets and integrated objects.
+
+## Features
+
+- **Smart synchronization** - Only uploads files with changed checksums
+- **SHA256 verification** - Research-grade data integrity
+- **Manifest generation** - Automatic upload manifests
+- **Progress tracking** - Real-time upload progress
+- **Environment support** - Separate prod and dev buckets
+- **Dry run mode** - Preview changes before uploading
+
+## Requirements
+
+- Python 3.10+
+- AWS CLI configured with appropriate profiles
+- S3 access to HCA Atlas buckets
+
+## Installation
+
+Install using pipx (recommended):
+
+```bash
+pipx install hca-smart-sync
+```
+
+## Quick Start
+
+### First Time Setup
+
+Configure default settings (optional but recommended):
+
+```bash
+hca-smart-sync config init
+# Enter your default AWS profile and atlas name
+```
+
+### Basic Usage
+
+```bash
+# Sync source datasets for gut atlas
+hca-smart-sync sync gut-v1 source-datasets --profile my-profile
+
+# Sync integrated objects for immune atlas
+hca-smart-sync sync immune-v1 integrated-objects --profile my-profile
+
+# Dry run to preview changes
+hca-smart-sync sync gut-v1 source-datasets --profile my-profile --dry-run
+```
+
+### Using Config Defaults
+
+Once you've configured defaults, you can omit the atlas:
+
+```bash
+# File type only (uses config for atlas and profile)
+hca-smart-sync sync source-datasets
+
+# Or integrated objects
+hca-smart-sync sync integrated-objects
+
+# Override config atlas, use config profile
+hca-smart-sync sync immune-v1 source-datasets
+```
+
+### Flexible Argument Order
+
+The tool accepts arguments in two ways:
+
+```bash
+# Atlas first, then file type
+hca-smart-sync sync gut-v1 source-datasets
+
+# File type first (uses config for atlas)
+hca-smart-sync sync source-datasets
+```
+
+**Note:** File type is always required - you must specify either `source-datasets` or `integrated-objects`.
+
+### Available Options
+
+- `--profile TEXT` - AWS profile to use (uses config default if not specified)
+- `--dry-run` - Preview changes without uploading
+- `--verbose` - Show detailed output
+- `--force` - Force upload even if file content is unchanged
+- `--local-path TEXT` - Custom local directory (defaults to current directory)
+
+### Getting Help
+
+```bash
+# Show all available commands
+hca-smart-sync --help
+
+# Show sync command options
+hca-smart-sync sync --help
+
+# Show version
+hca-smart-sync --version
+```
+
