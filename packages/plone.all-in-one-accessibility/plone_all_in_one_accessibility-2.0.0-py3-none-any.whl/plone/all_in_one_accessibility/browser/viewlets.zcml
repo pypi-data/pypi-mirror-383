@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone">
+
+  <browser:viewlet
+      name="plone.aioa.customcss"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHeadLinks"
+      class=".viewlets.AccessibilityCSSViewlet"
+      permission="zope2.View"
+      layer="plone.all_in_one_accessibility.interfaces.IPloneAllInOneAccessibilityLayer"
+  />
+
+</configure>

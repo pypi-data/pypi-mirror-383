@@ -1,0 +1,5 @@
+[console_scripts]
+update_locale = plone.all_in_one_accessibility.locales.update:update_locale
+
+[z3c.autoinclude.plugin]
+target = plone

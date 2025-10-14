@@ -1,0 +1,24 @@
+<metal:main define-macro="master"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    metal:use-macro="context/main_template/macros/master">
+
+  <metal:content fill-slot="content-core">
+    <h1>All in One Accessibility Setting</h1>
+
+    <p><strong>Hex color code:</strong> <span tal:content="context/aioa_color" /></p>
+    <p><strong>Enable Precise widget icon positioning:</strong> <span tal:content="context/enable_widget_icon_position" /></p>
+    <p><strong>Icon position:</strong> <span tal:content="context/aioa_place" /></p>
+    <p><strong>Right offset (PX):</strong> <span tal:content="context/to_the_right_px" /></p>
+    <p><strong>To the right:</strong> <span tal:content="context/to_the_right" /></p>
+    <p><strong>Bottom offset (PX):</strong> <span tal:content="context/to_the_bottom_px" /></p>
+    <p><strong>To the bottom:</strong> <span tal:content="context/to_the_bottom" /></p>
+    <p><strong>Widget Size:</strong> <span tal:content="context/aioa_size" /></p>
+    <p><strong>Icon Type:</strong> <span tal:content="context/aioa_icon_type" /></p>
+    <p><strong>Enable Custom Icon Size:</strong> <span tal:content="context/enable_icon_custom_size" /></p>
+    <p><strong>Select exact icon size (PX):</strong> <span tal:content="context/aioa_size_value" /></p>
+    <p><strong>Desktop Icon Size:</strong> <span tal:content="context/aioa_icon_size" /></p>
+
+  </metal:content>
+</metal:main>

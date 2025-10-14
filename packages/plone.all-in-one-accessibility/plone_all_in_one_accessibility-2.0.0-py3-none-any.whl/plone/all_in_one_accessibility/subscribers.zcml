@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+
+  <subscriber
+      for="plone.all_in_one_accessibility.content.all_in_one_accessibility_setting.IAllInOneAccessibilitySetting
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler=".subscribers.send_to_external_api_on_add" />
+
+  <subscriber
+      for="plone.all_in_one_accessibility.content.all_in_one_accessibility_setting.IAllInOneAccessibilitySetting
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler=".subscribers.send_to_external_api_on_edit" />
+
+
+  <subscriber
+    for="plone.all_in_one_accessibility.content.all_in_one_accessibility_setting.IAllInOneAccessibilitySetting
+         zope.lifecycleevent.interfaces.IObjectAddedEvent"
+    handler=".subscribers.disable_add_after_creation" />
+
+  <subscriber
+    for="plone.all_in_one_accessibility.content.all_in_one_accessibility_setting.IAllInOneAccessibilitySetting
+         zope.lifecycleevent.interfaces.IObjectRemovedEvent"
+    handler=".subscribers.enable_add_after_deletion" />
+
+</configure>
