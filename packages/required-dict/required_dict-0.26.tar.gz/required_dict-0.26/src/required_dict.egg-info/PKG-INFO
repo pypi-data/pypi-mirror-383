@@ -1,0 +1,398 @@
+Metadata-Version: 2.4
+Name: required_dict
+Version: 0.26
+Summary: An easy-to-user dictionary validation tool, good for use-cases like POST API data validation.
+Author-email: Stephen Hilton <stephen@familyhilton.com>
+License-Expression: MIT
+Keywords: python,validation,dictionary,dict
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# required-dict
+
+An easy-to-use Python library for validating dictionary data with chainable validation rules. Build for API data validation, but good for any form processing or configuration validation.
+
+## Installation
+
+```bash
+pip install required_dict
+```
+
+## Quick Start
+
+```python
+from required_dict import REQUIRED
+
+validation = {
+    'user_name': REQUIRED(),
+    'user_email': REQUIRED().as_email().none_ok(),
+    'user_age': REQUIRED().greater_than(18),
+    'user_type': REQUIRED().constrain_to('buyer', 'seller').default('buyer')
+}
+
+user_data = {
+    'user_name': 'John Doe',
+    'user_email': 'john@example.com',
+    'user_age': 25
+}
+
+validated = REQUIRED.validate_data(validation, user_data)
+print(validated['user_type'])  # 'buyer' (from default)
+```
+
+## Core Features
+
+### Basic Requirements
+```python
+REQUIRED()                    # Field must exist and not be None
+REQUIRED().none_ok()          # Allow None values
+REQUIRED().default('value')   # Set default if missing
+```
+
+### Type Validation
+```python
+REQUIRED().as_type(str)                      # Exact type matching
+REQUIRED().as_type(int, isinstance=True)     # isinstance() checking
+```
+
+### Format Validation
+```python
+REQUIRED().as_email()         # Email format
+REQUIRED().as_uuid()          # Any UUID version
+REQUIRED().as_uuid(4)         # Specific UUID version
+REQUIRED().as_isotime()       # ISO-8601 timestamp
+REQUIRED().as_json()          # Valid JSON
+```
+
+### Numeric Validation
+```python
+REQUIRED().as_posnum()                       # Positive numbers
+REQUIRED().as_negnum()                       # Negative numbers
+REQUIRED().greater_than(18)                  # > 18
+REQUIRED().greater_than(18, or_equal_to=True) # >= 18
+REQUIRED().less_than(65)                     # < 65
+REQUIRED().less_than(65, or_equal_to=True)   # <= 65
+
+# Chain for ranges
+REQUIRED().greater_than(18, True).less_than(65, True)  # 18 <= value <= 65
+```
+
+### Constraints & Whitelists
+```python
+REQUIRED().constrain_to('buyer', 'seller')   # Must be one of these
+REQUIRED().whitelist('SYSTEM', 'ADMIN')      # These values bypass validation
+```
+
+### Field Aliases
+```python
+REQUIRED().alias('id', 'user_id', 'party_id')  # Accept multiple field names
+```
+
+## Examples
+
+### User Registration
+```python
+validation = {
+    'user_name': REQUIRED(),
+    'user_email': REQUIRED().as_type(str).as_email(),
+    'user_age': REQUIRED().greater_than(13),
+    'user_balance': REQUIRED().as_posnum().default(0),
+    'user_type': REQUIRED().constrain_to('buyer', 'seller'),
+    'user_detail': REQUIRED().as_json(),
+    'joined_time': REQUIRED().as_isotime(),
+    'notes': 'Default notes'  # Non-REQUIRED field
+}
+
+user_data = {
+    'user_name': 'John Doe',
+    'user_email': 'john@example.com',
+    'user_age': 25,
+    'user_type': 'buyer',
+    'user_detail': '{"preferences": {"theme": "dark"}}',
+    'joined_time': '2025-01-01T12:00:00+00:00'
+}
+
+validated = REQUIRED.validate_data(validation, user_data)
+```
+
+### Handling Missing Fields
+```python
+# This fails - missing required field
+try:
+    REQUIRED.validate_data(
+        validation={'name': REQUIRED()},
+        user_data={}
+    )
+except ValueError as e:
+    print(e)  # name = REQUIRED - Missing
+
+# This fails - None not allowed by default
+try:
+    REQUIRED.validate_data(
+        validation={'name': REQUIRED()},
+        user_data={'name': None}
+    )
+except ValueError as e:
+    print(e)  # name = REQUIRED - Present, but Empty
+
+# This works - None explicitly allowed
+validated = REQUIRED.validate_data(
+    validation={'name': REQUIRED().none_ok()},
+    user_data={'name': None}
+)
+```
+
+### Alias Handling
+```python
+# Basic usage - all aliases populated
+validated = REQUIRED.validate_data(
+    validation={'id': REQUIRED().alias('user_id', 'party_id')},
+    user_data={'user_id': 'abc123'}
+)
+# Result: id, user_id, party_id all equal 'abc123'
+
+# Conflicting aliases generate warnings
+import warnings
+with warnings.catch_warnings(record=True) as w:
+    warnings.simplefilter("always")
+    validated = REQUIRED.validate_data(
+        validation={'id': REQUIRED().alias('user_id', 'party_id')},
+        user_data={'user_id': 'abc', 'party_id': 'xyz'}  # Different values!
+    )
+    if w:
+        print(w[0].message)  # Warning about conflicting values
+
+# Convert warnings to errors
+try:
+    REQUIRED.validate_data(
+        validation={'id': REQUIRED().alias('user_id', 'party_id')},
+        user_data={'user_id': 'abc', 'party_id': 'xyz'},
+        error_on_conflicting_aliases=True
+    )
+except ValueError as e:
+    print(e)  # Error about conflicting aliases
+```
+
+### Numeric Ranges
+```python
+validation = {
+    'child_age': REQUIRED().greater_than(0).less_than(13),
+    'teen_age': REQUIRED().greater_than(12).less_than(20),  # 13-19
+    'adult_age': REQUIRED().greater_than(17),               # 18+
+}
+
+# Valid data
+REQUIRED.validate_data(validation, {'child_age': 8})   # Valid
+REQUIRED.validate_data(validation, {'teen_age': 16})   # Valid
+REQUIRED.validate_data(validation, {'adult_age': 25})  # Valid
+```
+
+### Email Validation
+```python
+validation = {
+    'email1': REQUIRED().as_email(),
+    'email2': REQUIRED().as_email(),
+    'email3': REQUIRED().as_email(),
+}
+
+# Valid emails
+valid_emails = {
+    'email1': 'user@example.com',
+    'email2': 'test.email@company.co.uk',
+    'email3': 'user_name@sub-domain.com',
+}
+
+validated = REQUIRED.validate_data(validation, valid_emails)
+
+# Invalid emails will raise ValueError
+invalid_emails = {
+    'email1': 'user@domain',      # No TLD
+    'email2': 'user.domain.com',  # No @
+    'email3': '@domain.com',      # No local part
+}
+```
+
+### UUID Validation
+```python
+validation = {
+    'any_uuid': REQUIRED().as_uuid(),           # Any version
+    'uuid_v4': REQUIRED().as_uuid(4),          # UUIDv4 only
+    'uuid_v7': REQUIRED().as_uuid(7),          # UUIDv7 only
+    'special_id': REQUIRED().as_uuid().whitelist('SYSTEM')  # UUID or special value
+}
+
+valid_data = {
+    'any_uuid': '550e8400-e29b-41d4-a716-446655440000',
+    'uuid_v4': '550e8400-e29b-41d4-a716-446655440000',
+    'uuid_v7': '01234567-1234-7654-8765-123456789012',
+    'special_id': 'SYSTEM'  # Bypasses UUID validation
+}
+```
+
+### Complex Validation
+```python
+# API payload validation
+validation = {
+    'request_id': REQUIRED().as_uuid(4),
+    'timestamp': REQUIRED().as_isotime(),
+    'payload': REQUIRED().as_json(),
+    'user_id': REQUIRED().alias('id', 'userid'),
+    'action': REQUIRED().constrain_to('create', 'update', 'delete'),
+    'priority': REQUIRED().greater_than(0).less_than(11).default(5),
+    'metadata': REQUIRED().none_ok().default(None)
+}
+
+api_data = {
+    'request_id': '550e8400-e29b-41d4-a716-446655440000',
+    'timestamp': '2025-01-01T12:00:00+00:00',
+    'payload': '{"action": "user_update"}',
+    'id': 'user_12345',  # Populates all aliases
+    'action': 'update'
+}
+
+validated = REQUIRED.validate_data(validation, api_data)
+```
+
+## Configuration Options
+
+### Key Normalization
+```python
+# Default: keys lowercased automatically
+data = {'USER_NAME': 'John', 'Id': '123'}
+validation = {'user_name': REQUIRED(), 'id': REQUIRED()}
+validated = REQUIRED.validate_data(validation, data)  # Works
+
+# Disable key lowercasing
+validated = REQUIRED.validate_data(
+    validation={'USER_NAME': REQUIRED()},
+    user_data={'USER_NAME': 'John'},
+    keys_lowercased=False
+)
+```
+
+### Value Trimming
+```python
+# Default: string values trimmed
+user_data = {'name': '  John  '}
+validated = REQUIRED.validate_data({'name': REQUIRED()}, user_data)
+print(validated['name'])  # 'John'
+
+# Disable trimming
+validated = REQUIRED.validate_data(
+    validation={'name': REQUIRED()},
+    user_data={'name': '  John  '},
+    values_trimmed=False
+)
+print(validated['name'])  # '  John  '
+```
+
+### Error Handling
+```python
+# Disable errors for missing fields - this effectively removes validation
+validated = REQUIRED.validate_data(
+    validation={'required_field': REQUIRED()},
+    user_data={},
+    error_on_missing_required=False
+)
+
+# Control alias conflicts
+REQUIRED.validate_data(
+    validation={'id': REQUIRED().alias('user_id')},
+    user_data={'user_id': 'abc', 'id': 'xyz'},
+    error_on_conflicting_aliases=True  # Raises error instead of warning
+)
+```
+
+## Error Messages
+
+```python
+try:
+    REQUIRED.validate_data(
+        validation={
+            'user_name': REQUIRED(),
+            'user_email': REQUIRED().as_email(),
+            'user_age': REQUIRED().greater_than(18)
+        },
+        user_data={
+            'user_email': 'susy@example,com',
+            'user_age': 16
+        }
+    )
+except ValueError as e:
+    print(e)
+    # Output:
+    # One or more required fields were missing, left empty, or of the wrong type:
+    #   user_name = REQUIRED - Missing
+    #   user_email = REQUIRED - Present, but Not Valid Email Format (susy@example,com)
+    #   user_age = REQUIRED - Present, but Not Greater Than 18 (16)
+    #
+    # Full signature (JSON keys):
+    #   Required: user_name, user_email, user_age
+    #   Optional: 
+```
+
+## Advanced Features
+
+### Method Chaining
+```python
+# All methods return self for chaining
+REQUIRED().as_type(str).as_email().none_ok().default('admin@system.com')
+REQUIRED().as_type(int).greater_than(0).less_than(100).default(50)
+```
+
+### Debugging Rules
+```python
+rule = REQUIRED().as_email().as_type(str).none_ok()
+print(rule)
+# Output:
+# REQUIRED: KEY MUST EXIST
+# REQUIRED: type : [<class 'str'>] (isinstance: False)
+# REQUIRED: noneok : True
+# REQUIRED: email : True
+```
+
+### Class vs Instance Usage
+```python
+# Both work
+REQUIRED.validate_data(validation, data)      # Class method
+REQUIRED().validate_data(validation, data)    # Instance method
+
+# Rules must be instances
+validation = {
+    'field': REQUIRED()    # ✓ Correct
+    # 'field': REQUIRED   # ✗ Wrong
+}
+```
+
+## Example Use-Cases
+
+### API Validation
+```python
+def validate_user_update(request_data):
+    validation = {
+        'user_id': REQUIRED().as_uuid().alias('id'),
+        'name': REQUIRED().as_type(str),
+        'email': REQUIRED().as_email(),
+        'age': REQUIRED().greater_than(12).less_than(120),
+        'role': REQUIRED().constrain_to('user', 'admin').default('user')
+    }
+    return REQUIRED.validate_data(validation, request_data)
+```
+
+### Configuration Validation
+```python
+def validate_config(config_dict):
+    validation = {
+        'database_url': REQUIRED().as_type(str),
+        'port': REQUIRED().greater_than(1024).less_than(65536).default(8080),
+        'debug': REQUIRED().as_type(bool).default(False),
+        'log_level': REQUIRED().constrain_to('DEBUG', 'INFO', 'WARNING', 'ERROR').default('INFO')
+    }
+    return REQUIRED.validate_data(validation, config_dict)
+```
+
+## License
+
+MIT License
