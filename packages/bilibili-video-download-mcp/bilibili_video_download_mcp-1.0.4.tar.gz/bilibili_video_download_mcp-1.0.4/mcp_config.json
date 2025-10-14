@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "bilibili-video-download-mcp": {
+      "name": "Bilibili Video Download MCP",
+      "type": "stdio",
+      "description": "Bilibili video downloader MCP server",
+      "isActive": true,
+      "registryUrl": "",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/liqunying/Cursor/skills/python/B站视频下载",
+        "run",
+        "python",
+        "-m",
+        "bilibili_video_download_mcp"
+      ]
+    }
+  }
+}

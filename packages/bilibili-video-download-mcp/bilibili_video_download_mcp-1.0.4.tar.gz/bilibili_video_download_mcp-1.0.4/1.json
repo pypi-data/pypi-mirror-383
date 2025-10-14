@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "z6vqCNGidnJkCm8EwtZ1a": {
+      "name": "B站视频下载",
+      "type": "stdio",
+      "isActive": true,
+      "registryUrl": "",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/fjc/Desktop/mcp/skills/python/B站视频下载",
+        "run",
+        "bilibili-video-download-mcp"
+      ]
+    }
+  }
+}
