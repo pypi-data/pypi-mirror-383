@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "algo-scope"
+version = "1.0.0"
+description = "Algorithm Explorer – Algo Scope"
+authors = [
+    { name = "Shivendra", email = "2k22.csai2211760@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+keywords = ["algorithms", "data-structures", "python", "explorer"]
+
+[tool.setuptools]
+packages = ["algo_scope"]
+include-package-data = true
