@@ -1,0 +1,38 @@
+# Include documentation files
+include README.md
+include LICENSE
+include CHANGELOG.md
+
+# Include configuration files
+include pyproject.toml
+include setup.py
+
+# Include documentation directory
+recursive-include docs *.md *.txt *.rst
+
+# Include test files
+recursive-include tests *.py
+
+# Include data files
+recursive-include src/corally *.txt *.csv *.json
+
+# Exclude compiled Python files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude __pycache__
+global-exclude .git*
+global-exclude .DS_Store
+
+# Exclude development files
+exclude .gitignore
+exclude .env
+exclude .env.example
+exclude tox.ini
+exclude .coverage
+exclude .pytest_cache
+
+# Exclude build artifacts
+exclude build
+exclude dist
+exclude *.egg-info
