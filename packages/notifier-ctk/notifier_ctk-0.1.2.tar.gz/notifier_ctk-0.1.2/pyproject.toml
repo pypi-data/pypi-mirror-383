@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notifier-ctk"
+version = "0.1.2"
+description = "Beautiful animated desktop notifications using CustomTkinter"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+  { name = "Carlos Leonheart Guerrero", email = "leonheart0137@gmail.com" }
+]
+dependencies = [
+  "customtkinter>=5.2",
+  "pillow>=10.0",
+  "requests",
+  "regex",
+  "screeninfo",
+]
+keywords = ["notification", "desktop", "tkinter", "customtkinter", "UI", "toast"]
+
+[project.urls]
+Homepage = "https://github.com/leonheart0137/notifier-ctk"
+Issues = "https://github.com/leonheart0137/notifier-ctk/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["notifier*"]
+
+[tool.setuptools.package-data]
+"notifier" = ["sound/*.wav", "emojis/*"]
+
+[project.optional-dependencies]
+dev = ["pytest", "build", "twine"]

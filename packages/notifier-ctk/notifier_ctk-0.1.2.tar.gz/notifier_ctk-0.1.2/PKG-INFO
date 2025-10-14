@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: notifier-ctk
+Version: 0.1.2
+Summary: Beautiful animated desktop notifications using CustomTkinter
+Author-email: Carlos Leonheart Guerrero <leonheart0137@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/leonheart0137/notifier-ctk
+Project-URL: Issues, https://github.com/leonheart0137/notifier-ctk/issues
+Keywords: notification,desktop,tkinter,customtkinter,UI,toast
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: customtkinter>=5.2
+Requires-Dist: pillow>=10.0
+Requires-Dist: requests
+Requires-Dist: regex
+Requires-Dist: screeninfo
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+Dynamic: license-file
+
+# notifier-ctk
+
+Animated notification widget for **CustomTkinter**, featuring emoji icons, looping GIFs, and sounds.
+
+## Installation
+
+```bash
+pip install notifier-ctk
+```
+
+## Example
+```python
+from notifier import Notifier
+
+Notifier(
+    title="🚀 Launching",
+    message="Mission ready!",
+    button="⚡ Click me!"
+    beep=True
+).show()
+```
