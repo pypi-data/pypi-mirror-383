@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=67", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tairgdn-latencytest"
+version = "0.0.2"
+description = "A tool to test Tair GDN sync latency."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.9"
+dependencies = ["redis>=4.2.0","numpy","rich>=13.0.0","matplotlib>=3.7.0"]
+
+[project.scripts]
+# Python entry-point wrapper to be installed in `$venv/bin`
+tairgdn-latencytest = "tair_gdn_latency_test.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
