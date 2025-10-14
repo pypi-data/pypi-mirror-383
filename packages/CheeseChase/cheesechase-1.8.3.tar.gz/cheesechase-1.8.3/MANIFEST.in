@@ -1,0 +1,5 @@
+include VERSION
+include requirements.txt
+include .python-version
+recursive-include CheeseChase/resources *
+exclude test/*
