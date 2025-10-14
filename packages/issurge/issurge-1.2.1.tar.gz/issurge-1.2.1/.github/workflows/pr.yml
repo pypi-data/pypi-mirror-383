@@ -1,0 +1,31 @@
+name: PR checks
+
+on:
+  pull_request:
+    branches: [develop, main]
+    paths-ignore:
+      - .github/workflows/**
+      - '!.github/workflows/pr.yml'
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11, 3.12, 3.13, 3.14]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: yezz123/setup-uv@v4
+      - name: Run unit tests
+        run: uv run pytest
+      - name: Build Python package
+        run: uv build
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          fail_ci_if_error: true
