@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drf-postman"
+version = "0.1.0"
+description = "A Django + DRF package to generate Postman v2.1 collections with a single command"
+authors = [
+    {name = "Kevin Kimani", email = "kimanikevin254@gmail.com"}
+]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+requires-python = ">=3.8"
+keywords = ["django", "drf", "postman", "collections", "api"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "Django>=3.2",
+    "djangorestframework>=3.12",
+    "drf-spectacular>=0.26.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-django>=4.5"
+]
+
+[project.urls]
+Homepage = "https://github.com/kimanikevin254/django-drf-postman"
+Repository = "https://github.com/kimanikevin254/django-drf-postman"
+Issues = "https://github.com/kimanikevin254/django-drf-postman/issues"
+
+[tool.setuptools.packages.find]
+include = ["drf_postman*"]
+exclude = ["example_project*", "tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = [
+    "--verbose",
+    "--cov=drf_postman",
+    "--cov-report=term-missing",
+]
+DJANGO_SETTINGS_MODULE = "example_project.settings"
