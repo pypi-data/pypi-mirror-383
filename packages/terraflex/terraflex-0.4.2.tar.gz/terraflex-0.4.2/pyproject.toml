@@ -1,0 +1,127 @@
+[tool.poetry]
+name = "terraflex"
+version = "0.4.2"
+description = ""
+authors = ["Elran Shefer"]
+readme = "README.md"
+homepage = "https://github.com/IamShobe/terraflex"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = { extras = ["standard"], version = "^0.112.2" }
+pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
+httpx = "^0.27.2"
+xdg-base-dirs = "^6.0.1"
+typer = "^0.12.5"
+pyyaml = "^6.0.2"
+requests = "^2.32.3"
+rich = "^13.8.1"
+questionary = "^2.0.1"
+semver = "^3.0.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.3"
+pytest = "^8.3.2"
+anyio = "^4.4.0"
+mkdocs-material = "^9.5.34"
+mkdocs-include-dir-to-nav = "^1.2.0"
+markdown-exec = {extras = ["ansi"], version = "^1.9.3"}
+mkdocs-include-markdown-plugin = "^6.2.2"
+mkdocstrings = {extras = ["python"], version = "^0.26.1"}
+mkdocs-kroki-plugin = "^0.9.0"
+pyright = "^1.1.381"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[tool.ruff.lint]
+select = [
+    'F',      # Pyflakes
+    'E',      # pycodestyle (Error)
+    'I',      # isort
+    'D',      # pydocstyle
+    'UP',     # pyupgrade
+    'YTT',    # flake8-2020
+    'B',      # flake8-bugbear
+    'T10',    # flake8-debugger
+    'T20',    # flake8-print
+    'C4',     # flake8-comprehensions
+    'PYI006', # flake8-pyi
+]
+ignore = ['D105', 'D107', 'D205', 'D415', 'E501', 'B011', 'B028', 'B904', 'D100', 'D101', 'D102', 'D103']
+flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+isort = { known-first-party = ['pydantic', 'tests'] }
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.per-file-ignores]
+'terraflex/cli/*' = ['T201']
+
+[tool.pyright]
+include = ["terraflex"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
+]
+strict = ["terraflex"]
+
+executionEnvironments = [
+  { root = "." }
+]
+
+[tool.poetry.scripts]
+terraflex = "terraflex.cli.cli:main"
+
+[tool.poetry.plugins."terraflex.plugins.storage_provider"]
+git = "terraflex.plugins.git_storage_provider.git_storage_provider:GitStorageProvider"
+local = "terraflex.plugins.local_storage_provider.local_storage_provider:LocalStorageProvider"
+envvar = "terraflex.plugins.envvar_storage_provider.envvar_storage_provider:EnvVarStorageProvider"
+onepassword = "terraflex.plugins.onepassword_storage_provider.onepassword_storage_provider:OnePasswordStorageProvider"
+
+[tool.poetry.plugins."terraflex.plugins.transformer"]
+encryption = "terraflex.plugins.encryption_transformation.encryption_transformation_provider:EncryptionTransformation"
+
+[tool.poetry.plugins."terraflex.plugins.transformer.encryption"]
+age = "terraflex.plugins.encryption_transformation.age.provider:AgeEncryptionProvider"
+
+[tool.poetry.plugins."terraflex.plugins.dependencies"]
+age = "terraflex.plugins.encryption_transformation.age.provider:AgeDependency"
