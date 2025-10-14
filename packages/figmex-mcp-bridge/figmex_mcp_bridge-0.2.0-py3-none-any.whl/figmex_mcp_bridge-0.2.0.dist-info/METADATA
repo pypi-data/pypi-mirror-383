@@ -1,0 +1,158 @@
+Metadata-Version: 2.4
+Name: figmex-mcp-bridge
+Version: 0.2.0
+Summary: MCP bridge that connects Codex CLI to the Figmex Figma plugin over WebSocket.
+Author: Austin Wells
+License-Expression: MIT
+Project-URL: homepage, https://github.com/austinwells/Figmex-MCP-Bridge
+Project-URL: issues, https://github.com/austinwells/Figmex-MCP-Bridge/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastmcp>=2.8.0
+Requires-Dist: websockets>=12.0
+Requires-Dist: pydantic>=2.6
+Requires-Dist: python-dotenv>=1.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: ruff>=0.4; extra == "dev"
+Dynamic: license-file
+
+<div align="center">
+
+# Figmex MCP Bridge
+
+[GitHub](https://github.com/austinwells/Figmex-MCP-Bridge) · [Email](mailto:hello@austinwells.dev)
+
+</div>
+
+Figmex MCP Bridge is a small Python service that Codex CLI launches automatically. It speaks the Model Context Protocol (MCP), forwards tool calls to the [Figmex Figma plugin](https://github.com/austinwells/Figmex-MCP) over a localhost WebSocket, and streams document events back to Codex.
+
+Use this package when you want an AI agent (Codex, Action Transformers, etc.) to edit a live Figma file without leaving your editor.
+
+---
+
+## 1. Quick Start (Codex CLI + Figma)
+
+1. **Install the bridge**
+
+   ```bash
+   python3 -m pip install --upgrade figmex-mcp-bridge
+   ```
+
+   The executable is typically placed in `~/Library/Python/<version>/bin` (macOS) or `%APPDATA%\Python\Python311\Scripts` (Windows). Add the directory to your PATH if necessary.
+
+2. **Configure Codex CLI**
+
+   Append to `~/.codex/config.toml`:
+
+   ```toml
+   [mcp_servers.figmex]
+   command = "/Users/YOU/Library/Python/3.11/bin/figmex-mcp-bridge"
+   args = ["serve", "--log-level", "DEBUG"]
+   startup_timeout_sec = 30
+   tool_timeout_sec = 60
+   ```
+
+   (Replace the `command` path with the location from step 1. You can also generate this snippet via `figmex-mcp-bridge config --name figmex`.)
+
+3. **Install and load the Figma plugin**
+
+   - Clone [austinwells/Figmex-MCP](https://github.com/austinwells/Figmex-MCP).
+   - Run `npm install && npm run build`.
+   - In Figma Desktop, choose **Plugins → Development → Import plugin from manifest…** and select the `manifest.json` file from that repository.
+   - Launch the plugin. It will attempt to connect to `ws://127.0.0.1:8787`.
+
+4. **Start Codex CLI**
+
+   Codex will spin up the bridge automatically. When the plugin UI reports “Connected”, you can ask Codex to run commands such as:
+
+   ```bash
+   codex> Using Figmex, create a rectangle at x=80, y=160 sized 120x120 with a blue fill.
+   ```
+
+   The CLI calls the MCP tools behind the scenes (`list_figma_commands`, `describe_figma_commands`, `invoke_figma_command`) and relays results back to the plugin.
+
+---
+
+## 2. MCP Tools Exposed by the Bridge
+
+| Tool | Purpose |
+| ---- | ------- |
+| `figmex.list_figma_commands` | Returns the command names and metadata advertised by the plugin bootstrap. |
+| `figmex.describe_figma_commands` | Detailed documentation (args, selection requirements, notes) for each Figmex command. |
+| `figmex.invoke_figma_command` | Executes a command. Accepts `{ "command": "create-text", "args": {...} }` or `{ "command": "...", "params": {...} }` or simply `"command-name"` for commands without arguments. |
+
+The bridge converts either `args` or `params` and normalises common aliases (`nodeId` → `id`, `nodeIds` → `ids`). JSON-RPC responses from the plugin are forwarded directly to Codex.
+
+---
+
+## 3. Under the Hood
+
+1. The bridge listens on `ws://127.0.0.1:8787` (HTTP/S mode is available via `serve-http`).
+2. When the plugin bootstraps it sends a command-definition payload describing each command, argument, and optional notes.
+3. The bridge persists this metadata, exposes it through the MCP tools above, and relays JSON-RPC requests/responses between Codex and the plugin.
+4. Document change events (selection/document snapshots) are streamed back to Codex as JSON-RPC notifications.
+
+---
+
+## 4. Local Development
+
+```bash
+git clone https://github.com/austinwells/Figmex-MCP-Bridge.git
+cd Figmex-MCP-Bridge
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -e .[dev]
+pytest
+ruff check .
+python3 -m build
+```
+
+The build step creates wheel/sdist artefacts in `dist/`. Upload with `python3 -m twine upload dist/*` when publishing to PyPI.
+
+To run the bridge directly:
+
+```bash
+figmex-mcp-bridge serve --log-level DEBUG
+```
+
+or in HTTP mode (useful for inspection tools):
+
+```bash
+figmex-mcp-bridge serve-http --host 127.0.0.1 --port 3845
+```
+
+---
+
+## 5. Tips & Troubleshooting
+
+| Issue | Resolution |
+| ----- | ---------- |
+| Bridge times out waiting for the plugin | Ensure the Figmex plugin is running in Figma Desktop; the bridge waits for its bootstrap payload. |
+| `invoke_figma_command` reports “Input validation error” | Send an object (`{"command": "...", "args": {...}}`). The bridge also accepts JSON strings and will normalise `params` → `args`. |
+| Commands that rely on selection (e.g. `get-selection`) behave unexpectedly | Remember that the command simply mirrors the current Figma selection. Use `set-selection` first or instruct users to select items. |
+| Fonts/text updates fail | When creating/updating text nodes, include a valid `fontName` (`{ family: "Inter", style: "Regular" }`). |
+
+The bridge logs to stderr by default; run with `--log-level DEBUG` to see more detail.
+
+---
+
+## 6. Support & Links
+
+- Bridge repository: [https://github.com/austinwells/Figmex-MCP-Bridge](https://github.com/austinwells/Figmex-MCP-Bridge)
+- Figma plugin: [https://github.com/austinwells/Figmex-MCP](https://github.com/austinwells/Figmex-MCP)
+- Email: [hello@austinwells.dev](mailto:hello@austinwells.dev)
+
+Please open an issue or reach out via email if you need help getting up and running.
+
+---
+
+## 7. License
+
+Released under the MIT License. See [LICENSE](LICENSE) for full terms.
