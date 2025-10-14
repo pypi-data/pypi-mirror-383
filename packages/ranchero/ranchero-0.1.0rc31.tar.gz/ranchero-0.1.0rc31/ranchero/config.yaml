@@ -1,0 +1,99 @@
+# Automatically cast types when reading a file
+auto_cast_types: False
+# Automatically parse dates when reading a file
+auto_parse_dates: False
+# Automatically rancheroize dataframes upon file read
+auto_rancheroize: True
+# Automatically standardize dataframes upon file read (dataframe must be rancheroized)
+auto_standardize: False
+# Ignore polars read errors when parsing a file -- recommended to keep this as true
+ignore_polars_read_errors: True
+
+
+# When doing things that might modify the index, check it for integrity/lack of duplicates
+check_index: True
+
+# How to handle duplicate values when running check_index().
+#
+# - error: Throw a fatal error that includes the number of duplicate values
+# - verbose_error: As error, but attempt to print all duplicated values, and dump a TSV
+# - warn: pl.DataFrame.unique(subset=[index_column], keep='any') + print a non-fatal warning
+# - verbose_warn: As warn, but attempt to print all duplicated values, and dump a TSV
+# - silent: pl.DataFrame.unique(subset=[index_column], keep='any') + print to logging.debug
+# - allow: Allow duplicate values. NOT RECOMMENDED; THIS WILL BREAK MERGING DATAFRAMES! Will print a warning!
+# - dropall: pl.DataFrame.unique(subset=[index_column], keep='none') + warn
+dupe_index_handling: 'verbose_warn'
+
+# Values in run_id column must start with SRR, ERR, or DRR
+force_INSDC_runs: True
+# Values in sample_id column must start with SAMN, SAME, or SAMD
+force_INSDC_samples: False
+
+# When querying gcloud for metadata, which metadata fields can be returned?
+gs_metadata: ["creation_time", "md5_hash", "size"]
+
+# How to handle columns relating to host information found in "attrs" in BQ JSONs, which are much less useful
+# if they had been combined into a single column like we would locational data n stuff, but can add a ton of
+# columns with barely any filled-in values.
+# Note: What we consider to be "host information columns" is defined in kolumns.host_info
+#
+# - columns: Treat like anything else in attrs -- each key becomes its own column
+# - dictionary: Create a single 'host_info' column with a list(dict()) of key-value pairs
+# - drop: Drop them
+host_info_handling: 'dictionary'
+
+# Indicator column when merging dataframes
+indicator_column: 'collection'
+
+# Write intermediate files to the disk
+intermediate_files: False
+
+# Log level
+# logging.DEBUG = 10
+# logging.INFO = 20
+# logging.WARNING = 30
+# logging.ERROR = 40
+loglevel: 20
+
+# Mycobacterial mode -- Taxonomic information, lineage, and host disease stuff specific to the Actinomycetota
+# genus of Mycobacterium, including tuberculosis, leprosy, NTM, and previous genus members like Mycolicibacterium
+mycobacterial_mode: True
+
+# If 'platform' and 'layout' columns exist and have type pl.Utf8 (string), remove all samples that aren't
+# "PAIRED" for 'layout' and "ILLUMINA" for 'platform'
+paired_illumina_only: False
+
+# Try to (mostly) use polars when normalizing the dataframe
+polars_normalize: True
+
+# When writing using ranchero to_tsv(), how to handle quotation marks. Ranchero to_tsv() will pass in this config option
+# when it calls polars write_csv() -- and therefore the options here the same as polars options -- but this option
+# does NOT override your own polars' config. In other words, if you call polars write_csv() directly, this won't apply.
+# this option does NOT go into effect if you call polars to_csv() directly.
+#
+# As of polars 1.27.0 the options are 'necessary', 'always', 'non-numeric', 'never'
+#
+# Justification: As of polars 1.27.0 you normally cannot use polars write_csv() to write lists to a file, even if seperator is
+# tab. Ranchero to_tsv() tries to get around this issue by converting lists into strings containing brackets. This workaround
+# will allow write_csv() to write to the file, but polars will add extraneous dquotes when write_csv(quote_style='necessary').
+quote_style: 'never'
+
+# Try to remove phages when standardizing taxonomic information
+rm_phages: True
+
+# Ruleset for standardizing taxonomic information -- updated by prepare_taxoncore_dictionary(),
+# so leave this as None here
+taxoncore_ruleset: None
+
+# When column equals key, filter out rows that have anything in that key's value list
+# Example: "assay_type": ['Tn-Seq', 'ChIP-Seq'] --> If there's a column called "assay_type", any rows that
+# have the value "Tn-Seq" or "ChIP-Seq" will be removed upon rancheroization
+unwanted:
+  "assay_type": ['Tn-Seq', 'ChIP-Seq']
+
+# When writing a list column to a TSV file, when should we include brackets? Note that this is done per row;
+# so with 'len_gt_one' it is possible for some rows to get brackets and others to not get brackets.
+#
+# - always: Write the brackets even if a row's list has only one or zero values (better for other TSV parsers)
+# - len_gt_one: Only if the row's list len is greater than one (better for downstream ranchero analysis)
+list_bracket_style: 'len_gt_one'
