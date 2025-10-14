@@ -1,0 +1,21 @@
+[package]
+name = "specado-schemas-temp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Provider and prompt schema validation helpers for Specado."
+readme = "README.md"
+keywords = ["ai", "llm", "schema"]
+categories = ["api-bindings", "data-structures"]
+publish = true
+
+[lib]
+name = "specado_schemas"
+
+[dependencies]
+serde_json.workspace = true
+jsonschema.workspace = true
+thiserror.workspace = true
+once_cell.workspace = true
