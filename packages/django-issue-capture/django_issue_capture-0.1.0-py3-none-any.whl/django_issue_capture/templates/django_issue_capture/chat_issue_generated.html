@@ -1,0 +1,155 @@
+<!-- Issue Generated Successfully -->
+<div class="issue-generated-container p-4 border rounded bg-success bg-opacity-10 border-success">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <h4 class="text-success mb-0">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            Issue Created Successfully!
+        </h4>
+        <button type="button" class="btn-close" onclick="closeIssueForm()"></button>
+    </div>
+
+    <!-- Issue Preview -->
+    <div class="card mb-3">
+        <div class="card-header bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <span class="badge bg-primary me-2">#{{ issue.short_uuid }}</span>
+                    {{ issue.title }}
+                </h5>
+                <div>
+                    <span class="badge bg-secondary">{{ issue.get_priority_display }}</span>
+                    <span class="badge bg-info">{{ issue.template.display_name }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Main Description -->
+            <div class="mb-3">
+                <h6>Description</h6>
+                <div class="bg-light p-3 rounded">
+                    {{ issue.description|linebreaks }}
+                </div>
+            </div>
+
+            <!-- AI-Generated Content -->
+            {% if issue.acceptance_criteria %}
+            <div class="mb-3">
+                <h6>Acceptance Criteria</h6>
+                <div class="bg-light p-3 rounded">
+                    {{ issue.acceptance_criteria|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if issue.technical_specifications %}
+            <div class="mb-3">
+                <h6>Technical Specifications</h6>
+                <div class="bg-light p-3 rounded">
+                    {{ issue.technical_specifications|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if issue.implementation_hints %}
+            <div class="mb-3">
+                <h6>Implementation Hints</h6>
+                <div class="bg-light p-3 rounded">
+                    {{ issue.implementation_hints|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Metadata -->
+            <div class="row text-muted">
+                <div class="col-md-6">
+                    <small>
+                        <strong>Complexity:</strong> {{ issue.estimated_complexity|default:"Not specified" }}<br>
+                        <strong>Suggested Labels:</strong> {{ issue.suggested_labels|default:"None" }}<br>
+                        <strong>AI Confidence:</strong>
+                        {% if issue.llm_confidence_score %}
+                            {{ issue.llm_confidence_score|floatformat:1 }}/10
+                        {% else %}
+                            Not available
+                        {% endif %}
+                    </small>
+                </div>
+                <div class="col-md-6">
+                    <small>
+                        <strong>Created:</strong> {{ issue.created_at|date:"M j, Y g:i A" }}<br>
+                        <strong>Conversation Turns:</strong> {{ conversation.turns_count }}<br>
+                        <strong>Template Used:</strong> {{ issue.template.display_name }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex gap-2 mb-3">
+        <a href="{% url 'django_issue_capture:detail' issue.short_uuid %}" class="btn btn-primary">
+            <i class="bi bi-eye me-1"></i>
+            View Issue Details
+        </a>
+        <a href="{% url 'django_issue_capture:list' %}" class="btn btn-secondary">
+            <i class="bi bi-list me-1"></i>
+            View All Issues
+        </a>
+        {% if not issue.is_promoted_to_github %}
+        <button type="button" class="btn btn-success" onclick="alert('GitHub promotion available in admin interface')">
+            <i class="bi bi-github me-1"></i>
+            Promote to GitHub
+        </button>
+        {% endif %}
+    </div>
+
+    <!-- Conversation Summary -->
+    {% if conversation.context_gathered %}
+    <div class="card">
+        <div class="card-header">
+            <h6 class="mb-0">
+                <i class="bi bi-chat-left-text me-2"></i>
+                Conversation Summary
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <strong>Key Information Gathered:</strong>
+                    <ul class="mb-0">
+                        {% for key, value in conversation.context_gathered.items %}
+                        {% if value %}
+                        <li><strong>{{ key|title }}:</strong> {{ value|truncatewords:10 }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <small class="text-muted">
+                        <strong>Completeness:</strong> {{ conversation.get_context_completeness|floatformat:0 }}%<br>
+                        <strong>Total Messages:</strong> {{ conversation.messages|length }}<br>
+                        <strong>Duration:</strong> {{ conversation.turns_count }} turns
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Next Steps -->
+    <div class="alert alert-info mt-3">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Next Steps:</strong>
+        <ul class="mb-0 mt-2">
+            <li>Review the issue details and make any necessary edits</li>
+            <li>Assign the issue to a team member if needed</li>
+            <li>Promote to GitHub when ready for development</li>
+            <li>Use the conversation history for future reference</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function closeIssueForm() {
+    document.getElementById('issue-capture-container').innerHTML = '';
+}
+</script>

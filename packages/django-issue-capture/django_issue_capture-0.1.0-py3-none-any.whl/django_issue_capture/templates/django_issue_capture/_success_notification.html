@@ -1,0 +1,18 @@
+<!-- Success Notification -->
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <strong>Issue Created!</strong>
+    Issue <a href="{{ issue.get_absolute_url }}" class="alert-link">#{{ issue.short_uuid }}</a> has been successfully created.
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+
+<script>
+// Auto-dismiss after 5 seconds
+setTimeout(function() {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+        const bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();
+    }
+}, 5000);
+</script>

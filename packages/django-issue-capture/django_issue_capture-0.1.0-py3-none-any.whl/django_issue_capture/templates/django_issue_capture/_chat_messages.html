@@ -1,0 +1,25 @@
+{% for message in new_messages %}
+<div class="message mb-3 {% if message.role == 'user' %}user-message text-end{% else %}assistant-message{% endif %}">
+    <div class="message-bubble {% if message.role == 'user' %}bg-primary text-white{% else %}bg-light{% endif %} p-3 rounded-3 d-inline-block"
+         style="max-width: 80%;">
+        {% if message.role == 'user' %}
+        <div class="message-meta mb-1">
+            <small class="text-white-50">
+                <i class="bi bi-person-fill me-1"></i>
+                You
+            </small>
+        </div>
+        {% else %}
+        <div class="message-meta mb-1">
+            <small class="text-muted">
+                <i class="bi bi-robot me-1"></i>
+                AI Assistant
+            </small>
+        </div>
+        {% endif %}
+        <div class="message-content">
+            {{ message.content|linebreaks }}
+        </div>
+    </div>
+</div>
+{% endfor %}
