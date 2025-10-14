@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["piperabm", "piperabm.*"]
+
+[project]
+name = "piperabm"
+version = "0.1.2"
+description = "An Agent-Based Model Framework for Simulating Resilience in Python"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    { name = "Aslan Noorghasemi", email = "aslann@cmu.edu" },
+    { name = "Sierra Hicks", email = "sh2337@cornell.edu" },
+    { name = "Christopher McComb", email = "ccm@cmu.edu" },
+]
+dependencies = [
+    "keepdelta==0.2.0",
+    "matplotlib",
+    "networkx",
+    "numpy",
+    "scipy",
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering",
+]
