@@ -1,0 +1,14 @@
+
+[dev]
+build
+wheel
+twine
+mypy
+flake8
+Flake8-pyproject
+pep8-naming
+tox>=3
+
+[test]
+pytest>=7
+pytest-cov
