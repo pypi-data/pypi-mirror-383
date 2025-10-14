@@ -1,0 +1,25 @@
+THIS-769  Expose diff method for comparing named graphs (#1329)
+
+# Description
+
+Adds diff() method to NeatInstanceStore and exposes it via
+neat._diff.instances() for comparing two named graphs. Results are
+stored in DIFF_ADD and DIFF_DELETE named graphs.
+
+## Bump
+
+- [ ] Patch
+- [x] Minor
+- [ ] Skip
+
+## Changelog
+### Added
+
+- NeatInstanceStore.diff() method for comparing two named graphs
+- neat._diff.instances() API for session-level diffing
+- Store diff results in dedicated DIFF_ADD and DIFF_DELETE named graphs
+
+---------
+
+Co-authored-by: Andrian Gasper <andrian.gasper@cognite.com>
+Co-authored-by: Nikola Vasiljevic <35523348+nikokaoja@users.noreply.github.com>
