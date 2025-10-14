@@ -1,0 +1,60 @@
+Metadata-Version: 2.4
+Name: haunt
+Version: 0.1.1
+Summary: Symlink dotfiles manager
+Project-URL: Homepage, https://github.com/mikepqr/haunt
+Project-URL: Repository, https://github.com/mikepqr/haunt
+Project-URL: Issues, https://github.com/mikepqr/haunt/issues
+Author-email: Mike Lee Williams <mike@mike.place>
+License: MIT
+License-File: LICENSE
+Keywords: dotfiles,symlink
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# haunt
+
+A dotfiles symlink manager.
+
+## Installation
+
+```bash
+# Run directly with uvx (no install needed)
+uvx haunt
+
+# Or install globally with uv
+uv tool install haunt
+
+# Or install with pip
+pip install haunt
+```
+
+## Usage
+
+```bash
+haunt --help
+```
+
+## Development
+
+```bash
+# Run tests
+uv run pytest
+
+# Run locally
+uv run haunt --help
+
+# Run with coverage
+uv run pytest --cov=haunt --cov-report=term-missing
+```
+
+## License
+
+MIT
