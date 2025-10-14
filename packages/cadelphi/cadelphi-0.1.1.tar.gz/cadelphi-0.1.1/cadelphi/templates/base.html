@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{{ texts["title_base"] }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset_url('css/normalize.css') }}" />
+    <link rel="stylesheet" href="{{ asset_url('css/style.css') }}" />
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="brand">
+          <a href="{{ path_for('index') }}">
+            <img src="{{ asset_url('img/cadelphi-logo.svg') }}" alt="cadelphi" class="brand-mark" />
+            <span class="brand-name">cadelphi</span>
+          </a>
+        </h1>
+        <nav>
+          <a href="{{ path_for('participate_start') }}">{{ texts["nav_participant"] }}</a>
+          <a href="{{ path_for('admin_login_page') }}">{{ texts["nav_admin"] }}</a>
+        </nav>
+        <form class="language-form" method="get" action="{{ path_for('change_language') }}">
+          <label for="language-select">{{ texts["language_label"] }}</label>
+          {% set current_query = request.url.query %}
+          <input type="hidden" name="next" value="{{ request.url.path }}{% if current_query %}?{{ current_query }}{% endif %}" />
+          <select id="language-select" name="lang" onchange="this.form.submit()">
+            {% for code, label in language_options.items() %}
+            <option value="{{ code }}" {% if code == language %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+    </header>
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <small>&copy; {{ now().year }} cadelphi</small>
+      </div>
+    </footer>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

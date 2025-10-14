@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_admin_dashboard"] }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <header class="panel-header">
+    <h2>{{ texts["admin_dashboard_heading"] }}</h2>
+    <div class="actions">
+      <a class="button" href="{{ path_for('admin_graph') }}">{{ texts["button_view_graph"] }}</a>
+      <a class="button" href="{{ path_for('admin_settings_page') }}">{{ texts["button_settings"] }}</a>
+      <a class="button secondary" href="{{ path_for('admin_logout') }}">{{ texts["button_logout"] }}</a>
+    </div>
+  </header>
+  {% if settings %}
+  <p>{{ texts["active_strategy"].format(strategy=strategy_labels.get(settings.selection_strategy.value, settings.selection_strategy.value)) }}</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h3>{{ texts["topics_heading"] }}</h3>
+  {% if topics_data %}
+  {% for topic_data in topics_data %}
+  <article class="topic-block">
+    <header>
+      <h4>{{ topic_data.topic.title }}</h4>
+      <p>{{ topic_data.topic.description }}</p>
+    </header>
+    {% if topic_data.arguments %}
+    <ul class="argument-list">
+      {% for item in topic_data.arguments %}
+      <li>
+        <div class="argument-text">{{ item.argument.content }}</div>
+        <div class="argument-meta">
+          <span>{{ texts["author_label"] }}: {{ item.argument.author.name or texts["anonymous_label"] }}</span>
+          {% if item.average_score %}
+          <span>{{ texts["average_label"] }}: {{ '%.2f'|format(item.average_score) }}</span>
+          <span>{{ texts["max_label"] }}: {{ item.max_score }}</span>
+          <span>{{ texts["min_label"] }}: {{ item.min_score }}</span>
+          {% else %}
+          <span>{{ texts["no_votes_label"] }}</span>
+          {% endif %}
+        </div>
+        {% if item.argument.votes %}
+        <details>
+          <summary>{{ texts["vote_details_summary"] }}</summary>
+          <ul class="vote-list">
+            {% for vote in item.argument.votes %}
+            <li>
+              <strong>{{ vote.score }}/5</strong>
+              <span>- {{ vote.participant.name or texts["anonymous_label"] }}</span>
+              {% if vote.comment %}
+              <p>{{ vote.comment }}</p>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </details>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>{{ texts["no_arguments_topic"] }}</p>
+    {% endif %}
+  </article>
+  {% endfor %}
+  {% else %}
+  <p>{{ texts["no_topics_admin"] }}</p>
+  {% endif %}
+</section>
+{% endblock %}

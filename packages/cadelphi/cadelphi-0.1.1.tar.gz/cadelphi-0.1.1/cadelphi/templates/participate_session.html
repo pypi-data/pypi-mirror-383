@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_participate_session"] }}{% endblock %}
+{% block content %}
+<section class="panel">
+  <header class="panel-header">
+    <h2>{{ texts["rating_heading"] }}</h2>
+    <span class="progress">{{ texts["progress_status"].format(progress=progress) }}</span>
+  </header>
+  <article class="argument-card">
+    <h3>{{ texts["argument_heading"] }}</h3>
+    <p>{{ argument.content }}</p>
+  </article>
+  <form method="post" class="form-grid rating-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <fieldset class="rating">
+      <legend>{{ texts["rating_legend"] }}</legend>
+      <div class="rating-stars">
+        {% for value in range(5, 0, -1) %}
+        <input type="radio" id="score-{{ value }}" name="score" value="{{ value }}" required />
+        <label for="score-{{ value }}" data-value="{{ value }}">
+          <span class="sr-only">{{ texts['star_title'].format(value=value) }}</span>
+        </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+    <label>{{ texts["comment_label"] }}
+      <textarea name="comment" rows="3" maxlength="2000" placeholder="{{ texts['comment_placeholder'] }}"></textarea>
+    </label>
+    <button type="submit" class="button primary">{{ texts["button_finish_vote"] if is_last else texts["button_next_argument"] }}</button>
+  </form>
+</section>
+{% endblock %}

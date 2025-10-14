@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ texts["title_admin_graph"] }}{% endblock %}
+{% block extra_head %}
+<script type="module" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+{% endblock %}
+{% block content %}
+<section class="panel">
+  <header class="panel-header">
+    <h2>{{ texts["graph_heading"] }}</h2>
+    <div class="actions">
+      <a class="button secondary" href="{{ path_for('admin_dashboard') }}">{{ texts["button_back_to_dashboard"] }}</a>
+    </div>
+  </header>
+  <div class="controls">
+    <label>{{ texts["graph_metric_label"] }}
+      <select id="metric-select">
+        <option value="average">{{ texts["graph_metric_average"] }}</option>
+        <option value="max">{{ texts["graph_metric_max"] }}</option>
+        <option value="min">{{ texts["graph_metric_min"] }}</option>
+      </select>
+    </label>
+  </div>
+  <div id="graph-container" class="graph-container"></div>
+</section>
+<section class="panel">
+  <h3>{{ texts["graph_summary_heading"] }}</h3>
+  <table class="summary-table" id="graph-summary">
+    <thead>
+      <tr>
+        <th>{{ texts["graph_summary_column_title"] }}</th>
+        <th>{{ texts["graph_summary_column_argument"] }}</th>
+        <th>{{ texts["graph_summary_column_value"] }}</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.__CADELPHI_GRAPH__ = {
+    dataEndpoint: "{{ path_for('admin_graph_data') }}",
+    summaryEndpoint: "{{ path_for('admin_graph_summary') }}",
+    errorMessage: "{{ texts["graph_error_fetch"] }}",
+    summaryErrorMessage: "{{ texts["graph_summary_error"] }}"
+  };
+</script>
+<script src="{{ asset_url('js/admin_graph.js') }}"></script>
+{% endblock %}
