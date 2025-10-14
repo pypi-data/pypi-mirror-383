@@ -1,0 +1,418 @@
+{
+  "member_sets": [
+    {
+      "id": 1,
+      "l_y": null,
+      "l_z": null,
+      "classification": null,
+      "members": [
+        {
+          "id": 1,
+          "start_node": {
+            "id": 1,
+            "X": 0.0,
+            "Y": 0.0,
+            "Z": 0.0,
+            "nodal_support": 1
+          },
+          "end_node": {
+            "id": 2,
+            "X": 5.0,
+            "Y": 0.0,
+            "Z": 0.0,
+            "nodal_support": 1
+          },
+          "section": 1,
+          "rotation_angle": 0.0,
+          "start_hinge": null,
+          "end_hinge": null,
+          "classification": "",
+          "weight": 76.92999999999999,
+          "chi": null,
+          "reference_member": null,
+          "reference_node": null,
+          "member_type": "Normal"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "l_y": null,
+      "l_z": null,
+      "classification": null,
+      "members": [
+        {
+          "id": 2,
+          "start_node": {
+            "id": 2,
+            "X": 5.0,
+            "Y": 0.0,
+            "Z": 0.0,
+            "nodal_support": 1
+          },
+          "end_node": {
+            "id": 3,
+            "X": 5.0,
+            "Y": 5.0,
+            "Z": 0.0,
+            "nodal_support": null
+          },
+          "section": 1,
+          "rotation_angle": 0.0,
+          "start_hinge": null,
+          "end_hinge": null,
+          "classification": "",
+          "weight": 76.92999999999999,
+          "chi": null,
+          "reference_member": null,
+          "reference_node": null,
+          "member_type": "Normal"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "l_y": null,
+      "l_z": null,
+      "classification": null,
+      "members": [
+        {
+          "id": 3,
+          "start_node": {
+            "id": 3,
+            "X": 5.0,
+            "Y": 5.0,
+            "Z": 0.0,
+            "nodal_support": null
+          },
+          "end_node": {
+            "id": 4,
+            "X": 5.0,
+            "Y": 5.0,
+            "Z": -1.0,
+            "nodal_support": 1
+          },
+          "section": 1,
+          "rotation_angle": 0.0,
+          "start_hinge": null,
+          "end_hinge": null,
+          "classification": "",
+          "weight": 15.386,
+          "chi": null,
+          "reference_member": null,
+          "reference_node": null,
+          "member_type": "Tension"
+        }
+      ]
+    }
+  ],
+  "load_cases": [
+    {
+      "id": 1,
+      "name": "End Load",
+      "nodal_loads": [
+        {
+          "id": 1,
+          "node": 3,
+          "load_case": 1,
+          "magnitude": 1000.0,
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "load_type": "force"
+        }
+      ],
+      "nodal_moments": [],
+      "distributed_loads": [],
+      "rotation_imperfections": [],
+      "translation_imperfections": []
+    }
+  ],
+  "load_combinations": [],
+  "imperfection_cases": [],
+  "settings": {
+    "id": 1,
+    "analysis_options": {
+      "id": 1,
+      "solve_loadcases": true,
+      "solver": "newton_raphson",
+      "tolerance": 0.01,
+      "max_iterations": 30,
+      "dimensionality": "3D",
+      "order": "LINEAR"
+    },
+    "general_info": {
+      "project_name": "Unnamed Project",
+      "author": "Unknown",
+      "version": "1.0"
+    }
+  },
+  "results": {
+    "loadcases": {
+      "End Load": {
+        "name": "End Load",
+        "result_type": {
+          "Loadcase": 1
+        },
+        "displacement_nodes": {
+          "1": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "dz": 0.0,
+            "rx": 4.859086491739553e-7,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "2": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "dz": 0.0,
+            "rx": 4.859086491739553e-7,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "3": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "dz": 2.4295432458697765e-6,
+            "rx": 4.859086491739554e-7,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "4": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "dz": 0.0,
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          }
+        },
+        "reaction_nodes": {
+          "1": {
+            "nodal_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 0.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "location": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "support_id": 1
+          },
+          "2": {
+            "nodal_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 5.551115123125783e-17,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "location": {
+              "X": 5.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "support_id": 1
+          },
+          "4": {
+            "nodal_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": -1000.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "location": {
+              "X": 5.0,
+              "Y": 5.0,
+              "Z": -1.0
+            },
+            "support_id": 1
+          }
+        },
+        "member_results": {
+          "1": {
+            "start_node_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 0.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "end_node_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 0.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "maximums": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 0.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "minimums": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 0.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            }
+          },
+          "2": {
+            "start_node_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 5.551115123125783e-17,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "end_node_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": -5.551115123125783e-17,
+              "mx": 1.1102230246251565e-16,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "maximums": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 5.551115123125783e-17,
+              "mx": 1.1102230246251565e-16,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "minimums": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": -5.551115123125783e-17,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            }
+          },
+          "3": {
+            "start_node_forces": {
+              "fx": -0.0,
+              "fy": -0.0,
+              "fz": 1000.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "end_node_forces": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": -1000.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "maximums": {
+              "fx": 0.0,
+              "fy": 0.0,
+              "fz": 1000.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            },
+            "minimums": {
+              "fx": -0.0,
+              "fy": -0.0,
+              "fz": -1000.0,
+              "mx": 0.0,
+              "my": 0.0,
+              "mz": 0.0
+            }
+          }
+        },
+        "summary": {
+          "total_displacements": 3,
+          "total_reaction_forces": 1,
+          "total_member_forces": 3
+        },
+        "unity_checks": null
+      }
+    },
+    "loadcombinations": {},
+    "unity_checks_overview": null
+  },
+  "memberhinges": [],
+  "materials": [
+    {
+      "id": 1,
+      "name": "Steel",
+      "e_mod": 210000000000.0,
+      "g_mod": 80769000000.0,
+      "density": 7850.0,
+      "yield_stress": 235000000.0
+    }
+  ],
+  "sections": [
+    {
+      "id": 1,
+      "name": "IPE 180 Beam Section",
+      "material": 1,
+      "h": null,
+      "b": null,
+      "i_y": 8.19e-7,
+      "i_z": 0.00001063,
+      "j": 2.7e-8,
+      "area": 0.00196,
+      "shape_path": null
+    }
+  ],
+  "nodal_supports": [
+    {
+      "id": 1,
+      "classification": null,
+      "displacement_conditions": {
+        "X": {
+          "condition_type": "Fixed",
+          "stiffness": null
+        },
+        "Y": {
+          "condition_type": "Fixed",
+          "stiffness": null
+        },
+        "Z": {
+          "condition_type": "Fixed",
+          "stiffness": null
+        }
+      },
+      "rotation_conditions": {
+        "X": {
+          "condition_type": "Free",
+          "stiffness": null
+        },
+        "Y": {
+          "condition_type": "Free",
+          "stiffness": null
+        },
+        "Z": {
+          "condition_type": "Fixed",
+          "stiffness": null
+        }
+      }
+    }
+  ],
+  "shape_paths": []
+}
