@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: flacopyus
+Version: 0.1.0
+Summary: CLI tool to mirror your FLAC audio library to a portable lossy Opus version
+Maintainer-email: curegit <contact@curegit.jp>
+License-Expression: GPL-3.0-or-later
+Project-URL: homepage, https://github.com/curegit/flacopyus
+Project-URL: repository, https://github.com/curegit/flacopyus.git
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Typing :: Typed
+Requires-Python: >=3.14
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: rich>=14
+Provides-Extra: dev
+Requires-Dist: pip; extra == "dev"
+Requires-Dist: setuptools>=78; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: license-file
+
+# Flacopyus
+
+Mirror your FLAC audio library to a portable lossy Opus version
+
+```sh
+flacopyus FLAC/ OPUS/ --bitrate 128 --delete-excluded --copy mp3 m4a
+```
+
+## License
+
+GNU General Public License v3.0 or later
+
+Copyright (C) 2025 curegit
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.
+If not, see <https://www.gnu.org/licenses/>.
