@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "youku-video-download-mcp": {
+      "name": "Youku Video Download MCP",
+      "type": "stdio",
+      "description": "Youku video downloader for downloading videos from Youku platform",
+      "isActive": true,
+      "registryUrl": "",
+      "command": "uvx",
+      "args": [
+        "youku-video-download-mcp"
+      ]
+    }
+  }
+}
