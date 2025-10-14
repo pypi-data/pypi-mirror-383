@@ -1,0 +1,65 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:monkey="http://namespaces.plone.org/monkey"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="imio.annex">
+
+  <i18n:registerTranslations directory="locales" />
+
+  <include package="imio.helpers" />
+  <include package="imio.dashboard" />
+  <include package="imio.actionspanel" />
+  <include package="collective.dms.scanbehavior" zcml:condition="installed collective.dms.scanbehavior" />
+  <include package="collective.documentviewer" />
+  <include package="collective.iconifiedcategory" />
+  <include package="collective.quickupload" />
+
+  <include package=".browser" />
+  <include package=".content" />
+  <include package=".quickupload" />
+
+  <include file="profiles.zcml" />
+
+  <!-- IPrettyLink -->
+  <adapter for="imio.annex.content.annex.IAnnex"
+           factory=".adapters.AnnexPrettyLinkAdapter"
+           provides="imio.prettylink.interfaces.IPrettyLink" />
+
+  <!-- Columns -->
+  <adapter
+    name="number-column"
+    for="zope.interface.Interface
+         zope.interface.Interface
+         collective.iconifiedcategory.interfaces.ICategorizedTable"
+    provides="z3c.table.interfaces.IColumn"
+    factory="collective.eeafaceted.z3ctable.columns.ElementNumberColumn"
+    />
+
+  <!-- monkey patches -->
+  <include package="collective.monkeypatcher" />
+
+  <monkey:patch
+    description="Ensure that an event is triggered before the document conversion"
+    class="collective.documentviewer.convert.Converter"
+    original="__call__"
+    replacement=".patch.converter_call"
+    preserveOriginal="true" />
+
+  <monkey:patch
+    description="Ensure that an event is triggered before the document conversion"
+    class="collective.documentviewer.async.JobRunner"
+    original="queue_it"
+    replacement=".patch.jobrunner_queue_it"
+    preserveOriginal="true" />
+
+  <!-- behaviors -->
+  <plone:behavior zcml:condition="installed collective.dms.scanbehavior"
+       title="Scan metadata (fields to_sign/signed hidden)"
+       description="Adds scan information fields but hides fields to_sign/signed"
+       provides=".behaviors.IScanFieldsHiddenToSignAndSigned" />
+
+</configure>
