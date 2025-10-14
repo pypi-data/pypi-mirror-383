@@ -1,0 +1,601 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.4.0] - 2025-10-13
+### Added
+- Option to pass `dt` for each update step (pr #57 from ManuelPalermo)
+- WMM 2025 (pr #130 from niklasknoell)
+- Build Backend Replacement (pr #116 from eragooon)
+- Type hints to be compatible with PEP-484.
+- Citation file.
+- Submodule `sensors` in module `utils`.
+- Submodule `geodesy` in module `utils`.
+- **Unscented Kalman Filter** attitude estimator. Including documentation and unit tests.
+- **Fast Kalman Filter** attitude estimator. Including documentation and unit tests.
+- Jupyter Notebook to showcase main features.
+- Enable CI Testing.
+- Logo and icon.
+- Added `pyproject.toml` file to replace the deprecated `setup.py`.
+- Added `__version__` to main package `__init__.py` file.
+- Attribute `rng` in class `Sensors` and set its default to global a `GENERATOR`.
+- Description of basic requirements for core utils in docstring.
+- Guard clauses in attitude estimators to validate input data.
+- Examples in docstring of all attitude estimators.
+- Method `_validate_input()` in attitude estimators for sensor data.
+- Core function `_assert_acc_mag_inputs()` to improve assertion of sensor data.
+- Script `test_core_functions` to test core utility functions.
+- Use attribute rng for random angular positions in class `Sensors`.
+- Unit tests for `AngularRate` using method `'series'` and `'closed'`.
+- Test for estimation of rotation matrices with `AngularRate`.
+- Test of Euler angles for estimator `AngularRate`.
+- Information about its computation into its docstring.
+- Core function `_assert_numerical_positive_variable()` to simplify assertions.
+- `test_wmm.py` to tests folder.
+- Unit test `TestEcompass`.
+- Guards in `ecompass`.
+- Examples in docstring of `random_attitudes()`.
+- Link to Madgwick's personal Google Scholar page.
+- Implementation, documentation pages, and unit tests of:
+  - `dca2enu`.
+  - `enu2dca`.
+  - `enu2aer`.
+  - `aer2enu`.
+- Unit Tests for:
+  - `enu2ecef`.
+  - `qad`.
+  - `qcip`.
+  - `qeip`.
+  - `qdist`.
+  - `ecef2enu`.
+  - `geo2rect`.
+  - `sind`.
+  - `cosd`.
+  - `geo2rect()`.
+  - `random_attitudes()`.
+  - Inverse of non-versor quaternions, and add helper constant SQ22 in quaternion tests.
+  - Rpy parameter in class Quaternion, and move test of random attitudes to TestQuaternion.
+  - Random quaternion in construction.
+  - SLERP methods and functions.
+  - LERP interpolation in `slerp`.
+  - `slerp_I` of AQUA submodule.
+  - Euler angles equal to 0 or factors of 2*pi in DCM.
+  - Axis as int in euler angle rotations.
+  - Test assertion for when euler rotation axis is None.
+  - Rotation sequences in DCM.
+  - Multi array of DCMs.
+  - Methods of dcm to quaternion, and use seeded random generator.
+- Documentation pages of:
+  - `ecef2geodetic`.
+  - `geodetic2ecef`.
+  - `geodetic2enu`.
+  - `enu2ecef`.
+- In `QuaternionArray`:
+  - Method `slerp_nan()` to fill NaNs with interpolated values.
+  - Method `angular_velocities()` to compute angular velocities from a sequence of quaternions.
+  - Method `from_DCM()` and parameter `DCM`.
+  - Method `from_rpy()`.
+  - Method `to_array()`.
+  - Validity check to constructor.
+  - Testing purity and reality of `QuaternionArray` objects.
+  - Explanatory comments in `__new__` method of `QuaternionArray`.
+  - Use `_assert_numerical_iterable()`.
+  - Option `in_place` to method `rotate_by`.
+  - Parameter `rpy` to class `QuaternionArray` to build quaternions from roll-pitch-yaw angles.
+  - Parameter `order`.
+  - Properties in documentation.
+  - Information and warning to docstring.
+  - Test for method `to_DCM()`.
+- Information about second geodetic coordinates for `geodetic2enu` transformation.
+- Refactor test of `geodetic2enu` to fit format of the other tests.
+- Documentation page of `enu2ecef`.
+- Missing parameters in docstring of `ececf2enu` and `enu2ecef`.
+- Function `enu2uvw` to transform with UVW mapping, and redefine `enu2ecef` using `enu2uvw`.
+- Epoch `'1984'` to `IGF`.
+- Information about height in docstring of geo2rect.
+- Reference of CODATA 2018.
+- Docstring of class `referenceEllipsoid`.
+- Geodesy to submodule `utils`.
+- Function `ecef2enuv` and use it to re-define `ecef2enu`.
+- References about geodetic and cartesian transformations.
+- Guard clauses and degrees to radian conversion of coordinates in `geo2rect`.
+- Constant values for repeated computations over SQ22.
+- Hyperlink to codacy site in codacy badge.
+- Assertions to function `slerp()`.
+- Method `__array_finalize__` to properly sub-class from NumPy array.
+- Private method `_assert_triaxial_sample_vector()` to AQUA and improve handling of empty acc vector.
+- Information about AQUA's adaptive gain in docstrings, and add image illustrating it.
+- Identity matrix return as default estimation in `Tilt`.
+- Parameter `representation` in estimator `Tilt`.
+- Possibility of accepting lists in `FLAE.estimate()`.
+- Handling of sensor measurements equal to zero.
+- Option to use int for axes in function `rot_seq()`.
+- Information in docstring of class `Sensors`, and add its documentation.
+- Reference of Wikipedia's Euler Angles.
+- Return type to `_guard_clauses()` method.
+- Try catch logic for method description function.
+- New case of logarithm for when quaternion is real (scalar).
+- Missing bibtex references in `WGS` submodule.
+- Virtual environment to gitignore.
+- Support for BibTeX citations using `sphinxcontrib-bibtex`.
+- Sphinx extensions to doc dependencies in `pyproject.toml`
+- Docstring information to `itzhack()`.
+- Unit tests for each DCM to quaternion algorithm.
+- Information to docstring of all methods converting from DCM to Quaternion.
+- Space after code-block:: console directive to avoid parsing errors.
+- `test_conjugate()` and `test_conj()` to `TestQuaternionArray`.
+- `test_is_identity()` to `TestQuaternionArray`.
+- `test_is_versor()` to `TestQuaternionArray`.
+- Unit Tests for all estimators.
+- Function `_assert_list_of_strings()` in core functions script.
+- Guard clauses to option `'euler'` in DCM constructor, and use `_assert_numerical_iterable` instead of `_assert_iterables` in script.
+- Function `ecef2lla()` to compute geodetic latitude, longitude, and altitude from ECEF coordinates.
+- Options `'yaw'` and `'span'` to class `Sensors`.
+- Final paragraph in docstring of `Sarabandi's`.
+- Return for trivial case in `log(R)`, and its reference.
+- Sphinx extension dependencies in `requirements.txt` of docs.
+- Parameter 'degrees' to `DCM` to indicate the use of angles in degrees.
+- Parameter degrees to functions `rotation()` and `rot_seq()` to be compliant with other packages and software that also implements them.
+- Indentation in parameters of `EKF.__init__()` to comply with PEP-8.
+- Class `Sensors` to generate synthetic sensor data.
+- Experimental function `__centrifugal_force()`.
+- Property `geodetic_vector` to class `WMM`.
+- Documentation of methods for DCM to quaternion:
+  - `Itzhack`.
+  - `Sarabandi`.
+  - `Shepperd`.
+- Page of Specialized Functions for Attitudes.
+- Explanation of `random_attitudes()`, and add examples in docstring of class `Quaternion`.
+- Pages for class DCM, and its methods. Remove unused docs, and fix docstring in method `from_quaternion()`.
+- Function `get_nan_intervals()` to core sub-module.
+- Examples to `qdist`, `qeip`, `qcip`, and `qad`.
+- Function `rmse_matrices()` to submodule metrics.
+- Function `random_angpos()` to generate angular positions, and add tests for Complementary Filter.
+- Example in docstring of `FQA`.
+- Information in docstring of, and handle matrices in function `rmse`.
+- Missing backslash in formula of docstring.
+- Info to docstrings of the functions of submodule core.
+- Information in docstring of method `angular_velocities()`.
+- Table of Contents in docstring of Madgwick's
+- Data handling in Complementary Filter
+- Optional estimation without magnetometer.
+- Options of representation in docstring.
+- Assertions for invalid earth-measurements.
+- `test_wrong_input_vector_types` in unit tests.
+- Assertion of numerical array to `FLAE` and `FAMC` unit tests.
+- Private submodule `core` to handle data.
+- Labels in guard clauses.
+- Error handling and tests to Davenport's estimator.
+- Typing and improve error handling in `FLAE` estimator.
+- Option `representation` to `SAAM`, and its corresponding unit test.
+- Two-dimensional vectorized computation in `hughes` function, and change its nomeclature to fit original documentation.
+- Mathematical background to docstring of Hughes method.
+- "Attitude Representations" to main page.
+- Terms in page "Nomenclature".
+- Mathematical background to docstring of function `chaverini`.
+- Pypi topics in setup.
+- setuptools and wheel to CI action.
+- Information to core submodule.
+- Reference to newest technical report of WMM.
+- Attributes of `DCM` to Sphinx documentation.
+- Parameter `order` in class `Quaternion`.
+- Unit Tests for classes:
+  - `Quaternion`.
+  - `QuaternionArray`.
+  - `DCM`.
+- Functions for synthetic angular velocities.
+- in `DCM`:
+  - Private assertion of `SO3` in `DCM`.
+  - Error raise when parameter of `to_quaternion()` is incorrect.
+  - Multi-dimensionality to Chiaverini's method converting `DCM` to `Quaternion`.
+- Option 'frame' and guard clauses for input parameters.
+- Estimation of error over 3d arrays in chordal distance.
+- Option to pass dt for each update step: -adds option to pass a different dt for each update step on filters which do gyroscope integration -relevant for real data, where sampling time might be inconstant defaults to constant value defined on `__init__` if no value is specified in the update step.
+- Option of random orientation to class `Quaternion`.
+- Immediate computation of orientation when only 1 sample of each sensor is given.
+- Clipping of values in function `qad()` to avoid NANs with `arccos`.
+- Guard clauses to class `TRIAD`.
+- Guard clauses when creating rotation sequences.
+- Docstring and examples to metrics functions.
+- Guard clauses to quaternion metrics.
+- Unit tests for all attitude estimators.
+- Unit tests for `WGS` and `international_gravity`.
+- Unit test for `WGS84`.
+- Tests for functions of metrics.
+- Validation of rotations with guard clauses in metrics functions.
+- Definitions to nomenclature docs.
+- Handling of empty quaternion in class `Quaternion`.
+- Examples of `slerp` and `lerp` in docstring.
+- Expand error handlings to `TRIAD`.
+
+### Changed
+- Update documentation to adhere to aerospace notation (pr #88 from nasbotond)
+- Moved from the setuptools to hatchling build backend.
+- Docutils version will now be installed by Sphinx.
+- `docs/conf.py` to get its version from the package import.
+- Use new class `Sensors` to generate data for unit tests of attitude estimators.
+- Migrate `.readthedocs.yml` to v2. See https://blog.readthedocs.com/migrate-configuration-v2/
+- Change `nansum()` to `sum()`, so that `np.nan` values can be returned in `qad`.
+- Rename attribute `ang_pos` as `angular_positions` in class `Sensors` and `TestTilt`.
+- Use a local variable for the random number generator in function `random_angpos()`.
+- `FUNDING.yml`.
+- Information in YAML file of **readthedocs**.
+- Documentation theme to **Pydata**.
+- Update `README` with github badge and submodule information.
+- Update information about requirements of installation.
+- Madgwick:
+  - Use class `Quaternion` for setting of `q0`.
+  - Use `getattr()` instead of dunder method `__getattribute__` to call methods in assertion of inputs.
+  - Skip correction with accelerometer and magnetometer if gradient norm is equal to zero.
+  - Simplify handling of incorrect measurements in update methods.
+  - Refactor quaternion correction in methods `updateIMU()` and `updateMARG()`.
+  - Update nomeclature and improve documentation.
+  - Handle of zero-gradient at `updateIMU()` method.
+- EKF:
+  - Use local variables `z` and `q`, instead of creating attributes.
+  - Use `np.array` instead of `np.copy` to try to optimize memory usage.
+  - Use function `_assert_numerical_positive_variable` to validate input values.
+  - Redefine Jacobian `dh/dq`, and change order of default noises array.
+  - Definition of `Q_t` in method `update()`.
+  - Switch reference frame of acceleration.
+  - Change format of subscripts of matrices to be consistent in docstring.
+  - Improve description of `q` in docstring of methods.
+  - Use `ecompass` instead of `am2q` for first quaternion.
+- AQUA: Enforce returning numpy array in method updateMARG of AQUA.
+  - Re-define test for adaptive gain to be range-focused.
+  - Simplify examples in docstring of `adaptive_gain()`.
+  - Improve handling of zeroed vector norms.
+  - Use global variables in unit test.
+  - Update wording in index of documentation and info in table.
+  - Improve assertion of input parameters.
+- SAAM:
+  - Use symbol of asymptotically equal for relation of vectors through rotation matrix.
+  - Expand description of minimization problem in docstring.
+  - Use `_assert_acc_mag_inputs()` to check validity of sensor inputs.
+- AngularRate:
+  - Rename final quaternion as `q_new` for readability.
+  - Use boxes to highlight important equations.
+  - Update method `integrate_angular_positions()` to use given input parameter `'representation'` instead of class attribute.
+  - Refactor methods to make it more effective and readable.
+  - Use `factorial` from standard library instead of numpy's implementation.
+- Fourati:
+  - Use class `Quaternion` for setting of `q0`.
+  - Estimate initial attitude with `am2q`, and redefine operations to be closer to article's.
+  - Import functions and constants directly in Fourati estimator.
+- Mahony:
+  - Increase indentation of `__init__` parameters.
+  - Add types of return values of private methods.
+- Move default noise std deviations to be attributes of class Sensors instead of global variables.
+- Expand explanation of quaternion exponential in its docstring.
+- Expand process model to show linear operation between rotation operator and previous quaternion.
+- Change page "World Models" to "Geodesy".
+- Move info from `geodesy.rst` to docstring of `geodesy.py`
+- Move docs of `WMM`, `WGS84`, and related functions to subfolder `geodesy`.
+- Improve handling of wrong input in method `from_DCM()`.
+- Moved unit tests from submodule `wmm` to folder `/tests`.
+- Re-implementation of `Complementary` filter using roll-pitch-yaw angles.
+- Re-implementation of `rec2geo` based on ESA's publication.
+- Improve error handling in attitude estimators with new guard clauses.
+- Use assertion of numerical iterable in attitude estimators.
+- Use class `Quaternion` and/or `QuaternionArray` in attitude estimators.
+- Update string formatting to f-strings.
+- Move contents of page frames to page of geodesy.
+- Change `cmath` to `math`.
+- Set same global threshold (0.08) for `SAAM` and `FAMC` estimators.
+- Use new attribute geodetic_vector of `WMM` to set `REFERENCE_MAGNETIC_VECTOR`, and correct height value in `NORMAL_GRAVITY`.
+- Rewrite short description of class `WMM`.
+- Use function `_assert_numerical_positive_variable()` to validate input values in `Fourati`, `Mahony`, and `ROLEQ`.
+- Use core function `_assert_acc_mag_inputs()` to check validity of given sensor data in `Davenport`, `QUEST`, `FAMC`, and `FLAE`.
+- Use absolute value for `T2` in `FLAE` to avoid square root of negative.
+- Use local copies of arrays instead of attributes in method `_compute_all()` of `FAMC`, `FLAE`, and `QUEST`.
+- Change names for unit tests of `geodetic2ecef`.
+- Swap input of `lat` and `lon` parameters in `geo2rect` to conform standard practice.
+- Rename `geo2rect` as `geodetic2ecef` to be name-compatible with other software.
+- Rename `rec2geo` as `ecef2geodetic` to be name-compatible with other software.
+- Make `ecef2lla` synonym of `ecef2geodetic`.
+- Compute latitude without altitude in `ecef2geodetic()`, and use `arctan2`.
+- Explicitly define epoch inside `__init__` of `WMM`.
+- Update documentation, and version used of `q2R` in computation of Measurement Model `h`.
+- Update version in conf file of docs.
+- Make Shepperd's the default method in method `from_DCM()` of class `QuaternionArray`.
+- Make Shepperd's the default method in method `to_quaternion()` of class `DCM`.
+- Move tests of `WGS84` to Unit Test script.
+- Bibtex reference `inbook` to `incollection`.
+- `numpy.copy` functions to `numpy.array` in assertions of core utilities.
+- In `OLEQ` estimator:
+  - Improve description of weights in docstring.
+  - Improve weights assertion with unit tests.
+  - Simplify handling of zero norm of accelerometers or magnetometers.
+- Use `OLEQ` (instead of `ecompass`) to estimate initial attitude in `ROLEQ`.
+- List input parameters in a section, instead of a section per parameter.
+- Move ESA reference up to conform to alphabetic order.
+- Change `referenceEllipsoid` to `ReferenceEllipsoid` using PascalCase to conform to PEP-8.
+- Re-define `WGS` sub-classing it from `ReferenceEllipsoid`.
+- Update geodetic information of Munich to be at Mariensäule (km 0.)
+- Change call `ptp()` to `numpy.ptp()`.
+- Change test `q0` value of `[1, 0, 0]` to `[0, 0, 0]` for invalid pure quaternion in `TestAngular`.
+- Update `python-app.yml` to use latest Python version.
+- Vectorize method `angular_velocities`.
+- Simplify handling of magnetic field equal to zero in method `estimate()` of `Tilt`.
+- Angles as attributes of `Tilt`.
+- Raise error with wrong acceleration in class `Tilt`.
+- Add `.ipynb_checkpoints` to `.gitignore`.
+- SLERP:
+  - Expand docstring with explanation and examples.
+  - Rename variables to avoid confusion with other notations.
+  - Return empty array if `nan_intervals` not found.
+  - `SLERP_NaN()` returns same array if no NaNs are found.
+- Bibliography:
+  - Submodules' and filters' docstrings use `bibtex`.
+  - Update to `bibtex` citation in submodule `metrics`.
+  - Lock version of `sphinxcontrib-bibtex` to be 2.6.3 or newer to avoid problem with `pybtex`.
+- Update values of `IGF` epoch `1980`.
+- Use Numpy's new random number generator for the creation of sensor signals.
+- Clip traces to `[-1, 3]` in function `hughes()`.
+- Handle NaNs in function `itzhack()`.
+- Expand docstring of `qeip` to explain return values.
+- Re-phrase `qdist` docstring to make it clear.
+- Move titles of filters' docstrings to rst files.
+- Update information about frames in the submodule's docstring.
+- Move metrics RST files to new folder `metrics`, and update their links in `metrics.rst`.
+- Simplify `NED` and `ENU` transformations with a single function.
+- Move class `Sensors` to highest level of package.
+- Method `wrap_angle()` allows now to take values outside the range `[-2pi, 2pi]`.
+- Change `KeyError` to `ValueError` in method `wrap_angle()`.
+- Rename `_assert_iterable` as `_assert_valid_array_type`.
+- Move `_assert_same_shapes` function to `core` submodule.
+- Better handling of zero-valued accelerometer values.
+- Computed angles are returned as radians.
+- Improve handling of angle inputs that are factors of 2*pi radians in `DCM`.
+- Reject axes as integers in rotation sequence functions of orientation and `DCM`.
+- Change version of Python to `'latest'` in `readthedocs` build action.
+- Refactor `Itzhack` method to obtain quaternion from `DCM` according to original article.
+- Use normalized standard deviations for gaussian noises.
+- Use global variables in tests to be re-usable accross different unit tests.
+- `assertEqual` to `assertAlmostEqual` in `TestAngularDistance`.
+- Simplify operations in method `angular_velocities` and adapt typing hints.
+- Aesthetical improvements in docstrings of class `Quaternion`.
+- Improve docstring in method `product` from class `Quaternion`
+- Expand description of `core` utils submodule.
+- Use method `from_rpy()` for parameter `'angles'` in class `Quaternion`.
+- Simplify input validation with class `Quaternion` and function `_assert_numerical_positive_variable()`.
+- Replace `_assert_iterables()` with `_assert_numerical_iterable()` for improved verification in class `Quaternion`.
+- Improve handling of zero arrays as input of `Quaternion`.
+- Make method `from_quaternion()` static to ease its call in class `DCM`.
+- Simplify setting of attribute `scalar_vector` in class `Quaternion`.
+- Improve example in docstring of `QuaternionArray.is_real()`.
+- Improve docstring of `QuaternionArray.rotate_by()`.
+- Revert assertion of new `QuaternionArray` to use `_assert_iterables()`.
+- Update `THRESHOLD` value, add `ND` values to generated magnetometer values.
+- Angle setting in function `rotation()` to simplify computations.
+- Tests of parameter `rpy` in `DCM` to use angles as radians.
+- Update docstring in `ecef2geo()`.
+- Import global constants independently in `wgs84`, instead of star import.
+- Update computation of prime meridian curve radius and add its reference.
+- Switch places of roll and yaw in `rpy2q()`, to be consistent with order in documentation and most references.
+- Explicitly set `html_css_files` in Sphinx's `conf.py` to an empty list.
+- Simplify setting reference frames in `TRIAD`.
+- Use function `random_angpos()` to generate reference orientations.
+- Use uniform random generator in function `random_attitudes()`.
+- Improve detection of numerical values in `core` utils.
+- Re-organize index page of documentation.
+- Redefine log of Rotation matrix.
+- Use logarithm of Rotation matrix to test angular distance between rotation matrices.
+- Index of attitude representation pages packed into a single page.
+- Foldable sections from bullet points in `README.md`.
+- Change message of assertion of `int` or `float` in `_assert_numerical_positive_variable()`.
+- Refactor messages of `assertAlmostEqual` in tests of `WMM` to use f-strings.
+- Change decimal precision of tests involving `ecef` and `enu` to 4.
+- Redefine transformation functions in `WGS84` to use `a` and `b` only.
+- Switch comparison in docutils dependency at `pyproject` file to use the newest version.
+
+### Deprecated
+- Imports of `warning` breaking some builds.
+
+### Removed
+- `requirements.txt` from docs
+- `tools` folder for version management. Check `pyproject.toml`
+- `pythonbuild.yml`
+- `io` and `plot` submodules from code base.
+- Unused `**kwargs` in `euclidean()`.
+- Unused constant `EARTH_FLATTENING`.
+- Unused function `q2R()` in `Mahony`.
+- Unused constant of Earth's eccentricity.
+- Unused function `logR()`.
+- Unused import of numpy type hints.
+- Testing three-element array when setting `q0`.
+- Section about different gravitational methods from `WGS84` docstring.
+- Note about quaternion conversion. It is not valid anymore.
+- Guards for `Quaternion` objects in method `__mul__`.
+- Repeated functions `rotation()` and `rot_seq()`. They are in submodule `dcm`.
+- Sphinx extensions from list of docs in `pyproject.toml`
+- Sphinx extensions from requirements.
+- Wrong type of test in `metrics`.
+- Keyword version in install of Python dependencies.
+- Loops for `'hughes'` and `'chiaverini'` (they vectorize 3d arrays already.)
+- Method `angle_integration()`, and estimate attitude with explicit loop (it improves readability.)
+- Test of assertion when `gain = 0` is given to `Complementary` Test. It is overhead, but possible.
+- Constrained angles in `QuaternionArray`.
+- Omega attribute breaking return values.
+- Unused test files.
+- `test_new` unit test.
+- Unnecessary control flow in class `Quaternion`.
+- Normalization of product of quaternions. They are now assumed as non-versors.
+
+### Fixed
+- Order of roll, pitch, yaw in `Quaternion.from_rpy()` (pr #65 from jaluebbe)
+- Bias integration in Mahony filter (pr #66 from timethy)
+- Unwanted compass rotations at 180deg heading (pr #67 from jaluebbe)
+- Equation docstring of QUEST algorithm (pr #108 from tokoro10g)
+- Loop condition in `FLAE-newton` (pr #102 from petrinm).
+- Default values for gravity vector.
+- Default Munich height.
+- Leading spaces in docstring in `QuaternionArray.remove_jumps()`.
+- Rendering of example code in docstring of `random_attitudes()`.
+- Handle undefined variable `i` in `QuaternionArray.from_DCM()`.
+- Re-raise `RuntimeWarning` as `RuntimeError` in `from_DCM` method of `QuaternionArray`
+- Clip trace values of estimation of `q_w` in function `chiaverini()` to `[-1, 3]`, to avoid negated `sqrt()` created by imprecise `DCM`.
+- Char escapes to properly parse blank spaces in docstring.
+- `AngularRate` asserts input quaternion, instead of initial quaternion.
+- `TestChordal` uses `chordal` instead of `euclidean`.
+- Values for reference gravitational vector in `EKF`.
+- Docstrings for magnetic references in `EKF`.
+- Equations in docstrings of `enu2dca` and `dca2enu`.
+- Equation in docstring of `qdist`, and add information about its error span.
+- Example call of `ReferenceEllipsoid` at each of its methods.
+- Default values in docstring of `WMM`, and default value of height parameter.
+- So-called invalid escapes in docstring of class `WMM`.
+- Type in citation, and fix example in docstring of property `first_eccentricity_squared`.
+- Default value to use first eccentricity squared in `geo2rect`.
+- Example in docstring of function `rotation()`.
+- Handling of zeroed-gyroscope measurements in AQUA's `updateIMU()`.
+- Calls in `test_wrong_input_vectors()` for unit tests of attitude estimators.
+- AQUA's adaptive gain updates.
+- Examples in docstring of `DCM` to use `DEG2RAD`.
+- Equation of quaternion derivative in footnote.
+- Invalid backslash to avoid parsing errors in LaTeX of docstrings.
+- Computation of `log(R)`.
+- Clipping values in multi-array computation of Quaternion in Chaverini's method.
+- In `QUEST` estimator:
+  - Use a normalized gravitational vector.
+  - Definition of `_set_magnetic_field_vector()`.
+  - Equation docstring of `QUEST` algorithm
+  - Other errors in docstring equations.
+- In `Mahony` estimator:
+  - Bias integration.
+  - Vector field `v_m`.
+- Return of inverse when quaternion is not versor.
+- Docstring of function `random_angpos()` in estimator's tests.
+- Setting of array in method `rotate_by()` of class `QuaternionArray`.
+- Typos and wording in `index.rst`.
+- References and phrasing in docstring of `AQUA`.
+- Formatting of escape characters in docstring.
+- Use of array in function `q_conj` of submodule `orientation`.
+- Docstring of `chaverini`.
+- Code style and add typing in `__gaussian_filter()`
+- Initial values of `ROLEQ` and reference vectors.
+- Estimation of auxiliary quaternion from magnetometer readings.
+- Broken link to Wahba's Problem.
+- Documentation in `WGS84`.
+- Example in docstring of `FAMC`.
+- Correct vertical bar in definition of quaternion derivative in docstring of `AngularRate`.
+- Definition of SCADA.
+- Equation of Taylor series in Quaternion Linearization.
+- Documentation and add example in doc of class.
+- Docstring about degrees in function `rot_seq()`.
+- Reduce expression of redundant boolean check in `get_nan_interval()`.
+- Instructions to install package.
+- Comments about equation references.
+- Docstring about negative skew-symmetric matrices.
+- Docstring of Chiaverini's method.
+- Docstring in Hughes method.
+- Definition of objective function in docstring, and update information about LTP.
+
+## [0.3.1] - 2021-09-29
+### Added
+- Error raise if geomagnetic field is invalid in class `EKF`.
+- New method `Omega` in class `AQUA` to simplify the product between angular rate and quaternion.
+- New method `rotate_by` in class `QuaternionArray`.
+- More Acronyms in page `Nomeclature` of documentation.
+- Individual pages for each method and attribute of classes `Quaternion` and `DCM` into documentation.
+- Merge pull request of basic automation tests.
+
+### Changed
+- Fix undefined matrix `R` in method `update` of class `EKF`.
+- Fix shape of converted points in function `ned2enu`.
+- Fix parameters in function `rec2geo` of submodule `frames`.
+- Fix method `from_quaternion` of class `DCM`.
+- Fix Munich height (in km) in global constants.
+- Improve detection of empty arrays when building `TRIAD` object.
+- Improve description of estimator `AQUA` in its docstring.
+- Improve imports in submodules `frames` and `dcm`.
+- Improve style and descriptions in docstrings of functions in submodule `orientation`.
+- Method `init_q` is now synonym of the more convenient method `estimate` in class `AQUA`.
+- Parameter `as_quaternion` in method `estimate` of class `TRIAD` renamed to `representation`, and its value is now of type `str`.
+- Versioning is defined using f-strings.
+
+### Removed
+- Redundant normalization of magnetic measurement vector in class `FQA`.
+
+## [0.3.0] - 2021-02-03
+### Added
+- World Magnetic Model as class `WMM`.
+- World Geodetic System as class `WGS`.
+- Geodetic and planetary constants.
+- New class `DCM` to represent Direction Cosine Matrices.
+- Attitude Estimator `EKF`.
+- Attitude Estimator `TRIAD`.
+- Attitude Estimator `Davenport`.
+- Attitude Estimator `QUEST`.
+- Attitude Estimator `SAAM`.
+- Attitude Estimator `OLEQ`.
+- Attitude Estimator `ROLEQ`.
+- Implementation of modes `newton`, `eig` and `symbolic` in estimator `FLAE`.
+- New function `ecompass` to estimate Orientation from an observation of an accelerometer and a magnetometer.
+- New method `row_reduction` in estimator `FLAE`.
+- New methods `to_angles`, `is_pure`, `is_real`, `is_versor`, and `is_identity` in class `QuaternionArray`.
+- New properties `logarithm` and `log` in class `Quaternion`.
+- New parameter `versor` defaulting to `True` in class `Quaternion` to initialize quaternions as versors.
+- New frame transformations `ned2enu`, `enu2ned`, `ecef2enu`, `enu2ecef`, `ll2ecef`, and `ecef2llf`.
+- Requirements file.
+- Manifest file.
+- Documentation with Sphinx.
+- Type hints.
+
+### Changed
+- Fix `AQUA`.
+- Fix missing imports in several submodules.
+- Fix versioning that prevented install from a fresh setup.
+- `Tilt` can perform vectorized estimations over 2D arrays.
+- `QuaternionArray` is now subclassed from a `numpy.array`.
+- Simplify implementation of class `Complementary`.
+- Create copies of quaternions and normalize them when given in `metrics` functions.
+- Complete attitude estimator `FAMC`.
+- Complete docstrings of all functions, methods and classes.
+- Improve examples and information in `README`.
+
+### Removed
+- Submodules `plot` and `io` to remove dependencies on `scipy` and `matplotlib`.
+
+## [0.2.2-dev1] - 2020-02-06
+### Added
+- Support for other characters as separators in function `load` of submodule `io`.
+- Function `am2euler` to obtain Euler angles from gravity and geomagnetic measurements.
+- Notice of discontinuation of `io` and `plotting` submodules.
+- Add badge of code quality.
+
+### Changed
+- Using `isinstance(x, y)` instead of `type(x)==y` to confirm types of variables.
+- Update setup information.
+
+## [0.2.2] - 2020-01-06
+### Added
+- This changelog.
+- Script `triad.py` for future submodule implementation of TRIAD method.
+
+### Changed
+- Action `Build Python Package` builds **only** when new commit is pushed to `master` branch.
+- Simplify building triads in function `triad` of submodule `orientation`.
+- Fix documentation of `am2angles` and `quest` of submodule `orientation`.
+
+## [0.2.1] - 2020-12-28
+### Added
+- Class `QuaternionArray` to handle several quaternions at once.
+- Add methods `log()`, `exp()`, `inv()`, `to_array()` and `to_list()` to class `Quaternion`.
+
+## [0.2.0] - 2019-12-27
+### Added
+- Class `Quaternion` to handle quaternion operations.
+- Add methods `log()`, `exp()`, `inv()`, `to_array()` and `to_list()` to class `Quaternion`.
+- More definitions of colors with formats ints and floats.
+- Functions `hex_to_int()` and `hex_to_float()` convert any color defined as hex into `int` and `float`.
+- Badges in README to indicate basic information.
+
+### Changed
+- Improve versioning.
+
+### Removed
+- Function `R2q()` to get quaternion from rotation matrix. Method `from_DCM()` of class `Quaternion` is preferred.

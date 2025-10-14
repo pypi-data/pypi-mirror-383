@@ -1,0 +1,30 @@
+# Binaries and compiled
+*.exe
+*.o
+*.out
+*.a
+*.pyc
+
+# auto-generated
+*.egg-info/
+*/__pycache__/
+*.DS_Store
+build/*
+dist/*
+*/.ipynb_checkpoints/*
+
+# test-related
+.coverage
+.cache
+.pytest_cache
+
+# developer environments
+.idea
+.vscode
+.env
+.venv
+
+# Documentation
+doctest/*
+docs/build/
+docs/source/_build/
