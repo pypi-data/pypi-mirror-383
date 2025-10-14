@@ -1,0 +1,73 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+copyright: |
+  <p>Copyright &copy; 2025 <a href="https://ul.org">UL Research Institutes</a>. Licensed under the <a href="https://apache.org/licenses/LICENSE-2.0">Apache License</a>.</p>
+  <p>A project of the <a href="https://dsri.org">Digital Safety Research Institute</a>.</p>
+
+edit_uri: -/blob/main/docs/
+
+extra:
+  generator: false
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - Home: index.md
+  - install.md
+  - getting-started.md
+  - Features:
+      - update.md
+      - bundle.md
+      - readme.md
+  - Output formats:
+      - gitlab-includes.md
+  - Reference:
+      - config-file.md
+
+extra_css:
+  - style.css
+
+site_name: saferatday0 cici
+site_url: https://cici.tools
+
+repo_name: saferatday0/cici
+repo_url: https://gitlab.com/saferatday0/cici
+
+theme:
+  features:
+    - content.action.edit
+    - content.action.view
+    - content.code.copy
+    - content.tabs.link
+    - navigation.prune
+    - navigation.sections
+    - toc.follow
+    - search.share
+    - search.suggest
+
+  language: en
+
+  name: material
+
+  palette:
+    scheme: slate
+    primary: lime
+    accent: lime
+
+  icon:
+    logo: material/lightning-bolt

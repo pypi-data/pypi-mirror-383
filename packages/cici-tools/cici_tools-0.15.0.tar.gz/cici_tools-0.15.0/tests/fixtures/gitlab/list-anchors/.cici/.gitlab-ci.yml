@@ -1,0 +1,10 @@
+.script-install: &script-install
+  - apt-get update -y
+  - apt-get install -y tree fzf
+
+install:
+  image: "${CONTAINER_PROXY}debian:trixie"
+  before_script:
+    - echo installing
+    - *script-install
+    - echo done with install

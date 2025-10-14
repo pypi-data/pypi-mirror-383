@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+stages:
+  - test
+  - build
+  - deploy
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - when: always
+
+.cici-base:
+  stage: test
+  cache: {}
+  dependencies: []
+  variables:
+    GIT_DEPTH: "1"
+    GIT_SUBMODULE_STRATEGY: "none"
+
+cici-bundle:
+  extends: .cici-base
+  script:
+    - pip install cici-tools
+    - cici --version
+    - cici bundle
+
+cici-readme:
+  extends: .cici-base
+  script:
+    - pip install cici-tools
+    - cici --version
+    - cici readme
+
+cici-update:
+  extends: .cici-base
+  script:
+    - pip install cici-tools
+    - cici --version
+    - cici update -f

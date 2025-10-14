@@ -1,0 +1,24 @@
+/*
+ * SPDX-FileCopyrightText: UL Research Institutes
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.md-typeset h1 {
+  color: var(--md-default-fg-color--light);
+  font-size: 2.5em;
+  line-height: 1.3;
+  margin: 0 0 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.md-typeset h1,
+.md-typeset h2 {
+  font-weight: 700;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  color: white;
+  font-weight: 700;
+}

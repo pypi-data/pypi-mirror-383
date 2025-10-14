@@ -1,0 +1,215 @@
+stages:
+  - test
+  - build
+  - deploy
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - when: always
+
+.container-script-docker-setup: &container-script-docker-setup
+  - docker --version
+  - echo "$CONTAINER_REGISTRY_PASSWORD" | docker login "$CONTAINER_REGISTRY" -u "$CONTAINER_REGISTRY_USER" --password-stdin
+  - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login "$CI_DEPENDENCY_PROXY_SERVER" -u "$CI_DEPENDENCY_PROXY_USER" --password-stdin
+  - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login "$CI_SERVER_HOST" -u "$CI_DEPENDENCY_PROXY_USER" --password-stdin
+
+.container-docker-base:
+  image: "${CONTAINER_PROXY}docker:28-cli"
+  id_tokens:
+    SIGSTORE_ID_TOKEN:
+      aud: sigstore
+  services:
+    - name: "${CONTAINER_PROXY}docker:28-dind"
+      alias: docker
+  variables:
+    # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#docker-in-docker-with-tls-enabled-in-the-docker-executor
+    DOCKER_TLS_CERTDIR: "/certs"
+
+container-docker:
+  extends: .container-docker-base
+  stage: build
+  script:
+    - *container-script-docker-setup
+    - apk add --no-cache cosign
+    - _CONTAINER_OPTS="$CONTAINER_BUILD_OPTS"
+    - _CONTAINER_OPTS="$_CONTAINER_OPTS --tag ${CONTAINER_IMAGE}-${CONTAINER_COMMIT_SHORT_SHA}"
+    - |-
+      if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] ; then
+        _CONTAINER_OPTS="$_CONTAINER_OPTS --tag ${CONTAINER_NAME}:latest"
+      fi
+    - >-
+      docker buildx build
+      --build-arg "CONTAINER_NAME=$CONTAINER_NAME"
+      --build-arg "CONTAINER_PROXY=$CONTAINER_PROXY"
+      --build-arg "CONTAINER_VERSION=$CONTAINER_VERSION"
+      --file "${CONTAINER_DOCKERFILE}"
+      --progress plain
+      --push
+      --tag "${CONTAINER_IMAGE}"
+      $_CONTAINER_OPTS "${CONTAINER_CONTEXT}"
+
+    # sign image
+    - COSIGN_IMAGE_DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "$CONTAINER_IMAGE")"
+    - cosign sign --yes "$COSIGN_IMAGE_DIGEST"
+
+# https://hub.docker.com/_/docker
+# https://www.docker.com/blog/multi-platform-docker-builds/
+container-docker-multiarch:
+  extends: .container-docker-base
+  stage: build
+  script:
+    - *container-script-docker-setup
+    - apk add --no-cache cosign
+    - _CONTAINER_OPTS="$CONTAINER_BUILD_OPTS"
+    - _CONTAINER_OPTS="$_CONTAINER_OPTS --tag ${CONTAINER_IMAGE}-${CONTAINER_COMMIT_SHORT_SHA}-${CONTAINER_DOCKER_ARCH}"
+    - |-
+      if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] ; then
+        _CONTAINER_OPTS="$_CONTAINER_OPTS --tag ${CONTAINER_NAME}:latest-${CONTAINER_DOCKER_ARCH}"
+      fi
+    # CONTAINER_PROXY cannot be used for multiarch container builds
+    # due to https://gitlab.com/gitlab-org/gitlab/-/issues/325669, so it
+    # is not passed via --build-arg
+    - >-
+      docker buildx build
+      --build-arg "CONTAINER_NAME=$CONTAINER_NAME"
+      --build-arg "CONTAINER_DOCKER_MACHINE_ARCH=$CONTAINER_DOCKER_MACHINE_ARCH"
+      --build-arg "CONTAINER_VERSION=$CONTAINER_VERSION"
+      --file "${CONTAINER_DOCKERFILE}"
+      --platform "$CONTAINER_DOCKER_PLATFORM"
+      --progress plain
+      --push
+      --tag "${CONTAINER_IMAGE}-${CONTAINER_DOCKER_ARCH}"
+      $_CONTAINER_OPTS "${CONTAINER_CONTEXT}"
+
+    # sign image
+    - COSIGN_IMAGE_DIGEST="$(docker inspect --format='{{index .RepoDigests 0}}' "${CONTAINER_IMAGE}-${CONTAINER_DOCKER_ARCH}")"
+    - cosign sign --yes "$COSIGN_IMAGE_DIGEST"
+
+    # add marker files for manifest job
+    - mkdir -p dist/container/arch
+    - touch "dist/container/arch/${CONTAINER_DOCKER_ARCH}"
+  artifacts:
+    paths:
+      - "dist/container/arch/*"
+
+# https://github.com/docker-library/official-images#architectures-other-than-amd64
+# https://docs.docker.com/desktop/multi-arch/#build-and-run-multi-architecture-images
+# docker buildx ls
+
+container-docker-multiarch-amd64:
+  extends: container-docker-multiarch
+  variables:
+    CONTAINER_DOCKER_ARCH: amd64
+    CONTAINER_DOCKER_MACHINE_ARCH: x86_64
+    CONTAINER_DOCKER_PLATFORM: linux/amd64
+
+container-docker-multiarch-arm32v6:
+  extends: container-docker-multiarch
+  variables:
+    CONTAINER_DOCKER_ARCH: arm32v6
+    CONTAINER_DOCKER_MACHINE_ARCH: armv7l
+    CONTAINER_DOCKER_PLATFORM: linux/arm/v6
+
+container-docker-multiarch-arm32v7:
+  extends: container-docker-multiarch
+  variables:
+    CONTAINER_DOCKER_ARCH: arm32v7
+    CONTAINER_DOCKER_MACHINE_ARCH: armv7l
+    CONTAINER_DOCKER_PLATFORM: linux/arm/v7
+
+container-docker-multiarch-arm64v8:
+  extends: container-docker-multiarch
+  variables:
+    CONTAINER_DOCKER_ARCH: arm64v8
+    CONTAINER_DOCKER_MACHINE_ARCH: aarch64
+    CONTAINER_DOCKER_PLATFORM: linux/arm64
+
+container-docker-multiarch-i386:
+  extends: container-docker-multiarch
+  variables:
+    CONTAINER_DOCKER_ARCH: i386
+    CONTAINER_DOCKER_MACHINE_ARCH: x86_64
+    CONTAINER_DOCKER_PLATFORM: linux/386
+
+# this job is based on steps described in
+# https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
+container-docker-multiarch-manifest:
+  extends: .container-docker-base
+  stage: deploy
+  script:
+    - *container-script-docker-setup
+    - apk add --no-cache cosign
+
+    # pull published images and build amend_list
+    - amend_list=""
+    - |-
+      cd dist/container/arch
+      for platform in * ; do
+        echo "adding architecture: ${platform}"
+        docker pull "${CONTAINER_IMAGE}-${platform}"
+        amend_list="$amend_list --amend ${CONTAINER_IMAGE}-${platform}"
+      done
+      cd -
+
+    # push standard image name
+    - docker manifest create "${CONTAINER_IMAGE}" ${amend_list}
+    - docker manifest inspect "${CONTAINER_IMAGE}"
+    - docker manifest push "${CONTAINER_IMAGE}"
+
+    # push image with short sha
+    - |-
+      if [ -z "$CI_COMMIT_TAG" ] ; then
+        docker manifest create "${CONTAINER_IMAGE}-${CONTAINER_COMMIT_SHORT_SHA}" ${amend_list}
+        docker manifest inspect "${CONTAINER_IMAGE}-${CONTAINER_COMMIT_SHORT_SHA}"
+        docker manifest push "${CONTAINER_IMAGE}-${CONTAINER_COMMIT_SHORT_SHA}"
+      fi
+
+    # push latest image if default branch
+    - |-
+      if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] ; then
+        docker manifest create "${CONTAINER_NAME}:latest" ${amend_list}
+        docker manifest inspect "${CONTAINER_NAME}:latest"
+        docker manifest push "${CONTAINER_NAME}:latest"
+      fi
+
+container-hadolint:
+  stage: test
+  image: ghcr.io/hadolint/hadolint:latest-debian
+  cache: {}
+  dependencies: []
+  script:
+    - hadolint --ignore DL3059 "${CONTAINER_DOCKERFILE}"
+
+container-trivy:
+  extends: .container-docker-base
+  stage: deploy
+  script:
+    - *container-script-docker-setup
+    - apk add --no-cache curl
+    - >-
+      curl -sSL https://github.com/aquasecurity/trivy/releases/download/v0.49.1/trivy_0.49.1_Linux-64bit.tar.gz
+      | tar -xzf - -C /usr/local/bin/
+    - docker pull "${CONTAINER_IMAGE}"
+    - >-
+      trivy image "${CONTAINER_IMAGE}"
+      --format json
+      --no-progress
+      -o "${CI_JOB_NAME_SLUG}.json"
+    - trivy convert "${CI_JOB_NAME_SLUG}.json"
+    - >-
+      trivy convert "${CI_JOB_NAME_SLUG}.json"
+      --format template
+      --template "@/usr/local/bin/contrib/gitlab.tpl"
+      -o "${CI_JOB_NAME_SLUG}-gitlab.json"
+    - >-
+      trivy convert "${CI_JOB_NAME_SLUG}.json"
+      --format template
+      --template "@/usr/local/bin/contrib/html.tpl"
+      -o "${CI_JOB_NAME_SLUG}.html"
+  artifacts:
+    paths:
+      - "${CI_JOB_NAME_SLUG}.json"
+      - "${CI_JOB_NAME_SLUG}.html"
+      - "${CI_JOB_NAME_SLUG}-gitlab.json"

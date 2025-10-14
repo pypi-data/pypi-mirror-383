@@ -1,0 +1,170 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+name: container
+
+repo_url: https://gitlab.com/saferatday0/library/container
+
+gitlab_project_path: saferatday0/library/container
+
+brief: >-
+  Build [OCI](https://opencontainers.org/) container images.
+
+description: |-
+  **Open Container Initiative (OCI)** is an open governance structure
+  and set of industry standards around container formats and runtimes.
+  Established in 2015 under the Linux Foundation, OCI creates vendor-neutral,
+  portable, and open specifications for containerization technology.
+
+  OCI ensures that containers built with one tool can run on any
+  OCI-compliant runtime, preventing vendor lock-in and promoting
+  interoperability across the container ecosystem. Major container
+  technologies like Docker, containerd, and Podman all implement OCI
+  standards, making containers portable between different platforms and
+  cloud providers. This standardization has been crucial for the widespread
+  adoption of containerization in modern software development and deployment.
+
+targets:
+  - name: container-docker-multiarch-amd64
+    brief: >-
+      Build a container for the amd64 platform using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-docker-multiarch-arm32v6
+    brief: >-
+      Build a container for the arm32v6 platform using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-docker-multiarch-arm32v7
+    brief: >-
+      Build a container for the arm32v7 platform using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-docker-multiarch-arm64v8
+    brief: >-
+      Build a container for the arm64v8 platform using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-docker-multiarch-i386
+    brief: >-
+      Build a container for the i386 platform using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-docker-multiarch
+    brief: >-
+      Build a container for another architecture using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-docker-multiarch-manifest
+    brief: >-
+      Build a manifest for a multiarch docker container.
+    groups:
+      - build
+      - release
+
+  - name: container-docker
+    brief: >-
+      Build a container using docker.
+    groups:
+      - build
+      - release
+
+  - name: container-hadolint
+    brief: >-
+      Lint a Dockerfile using hadolint.
+    groups:
+      - lint
+
+  - name: container-trivy
+    brief: >-
+      Scan a completed container image for vulnerabilities with [trivy](https://trivy.dev/).
+    groups:
+      - security
+
+variables:
+  CONTAINER_BUILD_OPTS:
+    default: ""
+    description: |-
+      Extra options to pass to container build command.
+
+  CONTAINER_COMMIT_SHA:
+    default: "${CI_COMMIT_SHA}"
+    description: |-
+      Commit SHA for the container release.
+
+  CONTAINER_COMMIT_SHORT_SHA:
+    default: "${CI_COMMIT_SHORT_SHA}"
+    description: |-
+      First 8 characters of the commit SHA.
+
+  CONTAINER_CONTEXT:
+    default: "${CI_PROJECT_DIR}"
+    description: |-
+      Directory to use as container context.
+
+  CONTAINER_DOCKERFILE:
+    default: "${CONTAINER_CONTEXT}/Dockerfile"
+    description: |-
+      Full path to the target Dockerfile.
+
+  CONTAINER_IMAGE:
+    default: "${CONTAINER_NAME}:${CONTAINER_VERSION}"
+    description: |-
+      Fully qualified container image URL.
+
+  CONTAINER_NAME:
+    default: "${CONTAINER_REGISTRY}${CONTAINER_NAME_SUFFIX}"
+    description: |-
+      Name component of the image URL.
+
+  CONTAINER_NAME_SUFFIX:
+    default: ""
+    description: |-
+      Suffix to add to container name.
+
+  CONTAINER_PROXY:
+    default: "${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/"
+    description: |-
+      URL prefix for pull-through registry cache.
+
+  CONTAINER_REGISTRY:
+    default: "${CI_REGISTRY_IMAGE}"
+    description: |-
+      Container registry URL.
+
+  CONTAINER_REGISTRY_USER:
+    default: "${CI_REGISTRY_USER}"
+    description: |-
+      Container registry username.
+
+  CONTAINER_REGISTRY_PASSWORD:
+    default: "${CI_REGISTRY_PASSWORD}"
+    description: |-
+      Container registry password.
+
+  CONTAINER_VERSION:
+    default: "${CONTAINER_VERSION_PREFIX}${CI_COMMIT_REF_NAME}${CONTAINER_VERSION_SUFFIX}"
+    description: |-
+      Container image version.
+
+  CONTAINER_VERSION_PREFIX:
+    default: ""
+    description: |-
+      Prefix to add to the container image version.
+
+  CONTAINER_VERSION_SUFFIX:
+    default: ""
+    description: |-
+      Suffix to add to the container image version.

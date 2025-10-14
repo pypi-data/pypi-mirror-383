@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+# check to inheret script and override stage and keep existing
+
+.simple-job:
+  stage: test-hidden
+  image: python
+  unknownkey: "some stuff"
+simple-job:
+  extends: .simple-job
+  stage: test
+  variables:
+    TEST_VAR: "testing stufffffff"
+  script:
+    - pass

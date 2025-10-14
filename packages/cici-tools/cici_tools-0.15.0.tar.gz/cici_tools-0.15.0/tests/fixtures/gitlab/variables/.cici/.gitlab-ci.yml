@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+# check to inheret script and override stage and keep existing
+
+variables:
+  TESTING_VARIABLE: "alkdjflakdjflkjdflkjda"
+  meta_variable:
+    description: "this is a description"
+    value: "alkdjflskjdf"
+    options:
+      - aksdjfkj
+      - whatever man
+    expand: true
+  meta_variable_two:
+    description: "only this yo"
+  meta_variable_three:
+    value: "only this value yo"
+
+simple-job:
+  stage: test
+  image: whatever
+  variables:
+    TEST_VAR:
+      description: "whatever"
+  script:
+    - pass

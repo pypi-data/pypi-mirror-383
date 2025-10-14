@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+name: cici
+
+repo_url: https://gitlab.com/saferatday0/cici
+
+gitlab_project_path: saferatday0/cici
+
+brief: >-
+  Build and publish CI/CD pipeline components with cici.
+
+description: |-
+  cici, short for Continuous Integration Catalog Interface, is a framework and
+  toolkit for managing the integration and lifecycle of packaged CI/CD
+  components in a software delivery pipeline.
+
+  cici enables the efficient sharing of CI/CD code in an organization, and
+  eliminates a major source of friction that otherwise leads to poor adoption of
+  automation and DevOps practices.
+
+  cici is a foundational component of [saferatday0](https://saferatday0.dev/)
+  and powers the [saferatday0 library](https://gitlab.com/saferatday0/library).
+
+targets:
+  - name: cici-bundle
+    brief: >-
+      Bundle GitLab CI/CD includes into single files.
+    container:
+      image: python:3.11-alpine
+
+  - name: cici-readme
+    brief: >-
+      Generate READMEs for CI pipelines.
+    container:
+      image: python:3.11-alpine
+
+  - name: cici-update
+    brief: >-
+      Update GitLab CI/CD includes to latest released versions.
+    container:
+      image: python:3.11-alpine

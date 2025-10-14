@@ -1,0 +1,248 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+stages:
+  - test
+  - build
+  - deploy
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - when: always
+
+.opentofu-base:
+  image: registry.gitlab.com/components/opentofu/gitlab-opentofu:latest
+  cache: {}
+  dependencies: []
+  variables:
+    GIT_DEPTH: "1"
+  before_script:
+    - tofu -version
+
+.opentofu-base-run:
+  extends: .opentofu-base
+  variables:
+    TF_STATE_NAME: "$OPENTOFU_STATE_NAME"
+    TF_ROOT: "$OPENTOFU_ROOT"
+    TF_ADDRESS: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${OPENTOFU_STATE_NAME}"
+  cache:
+    key: "$OPENTOFU_STATE_NAME"
+    paths:
+      - ${OPENTOFU_ROOT}/.terraform
+  before_script:
+    - tofu -version
+    - echo "TF_ROOT = $TF_ROOT"
+    - echo "TF_STATE_NAME = $TF_STATE_NAME"
+    - echo "TF_ADDRESS = $TF_ADDRESS"
+    - echo "Entering path '$OPENTOFU_ROOT' for state '$OPENTOFU_STATE_NAME'"
+    - cd "${OPENTOFU_ROOT}"
+
+.opentofu-apply:
+  extends: .opentofu-base-run
+  stage: deploy
+  resource_group: $OPENTOFU_STATE_NAME
+  environment:
+    name: "$OPENTOFU_STATE_NAME/apply"
+
+.opentofu-manual-apply:
+  extends: .opentofu-apply
+  script:
+    - gitlab-tofu apply
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+
+.opentofu-auto-apply:
+  extends: .opentofu-apply
+  script:
+    - gitlab-tofu plan
+    - gitlab-tofu plan-json
+    - gitlab-tofu apply
+  artifacts:
+    paths:
+      - "${OPENTOFU_ROOT}/plan.json"
+    reports:
+      terraform: "${OPENTOFU_ROOT}/plan.json"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+.opentofu-destroy:
+  extends: .opentofu-base-run
+  stage: deploy
+  script:
+    - gitlab-tofu destroy
+  resource_group: $OPENTOFU_STATE_NAME
+  environment:
+    name: "$OPENTOFU_STATE_NAME/apply"
+    action: stop
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+
+.opentofu-root:
+  variables:
+    OPENTOFU_ROOT: "${CI_PROJECT_DIR}"
+
+.opentofu-env:
+  variables:
+    OPENTOFU_ROOT: "${CI_PROJECT_DIR}/deploy/${OPENTOFU_STATE_NAME}"
+
+.opentofu-env-development:
+  extends: .opentofu-env
+  variables:
+    OPENTOFU_STATE_NAME: "development"
+
+.opentofu-env-production:
+  extends: .opentofu-env
+  variables:
+    OPENTOFU_STATE_NAME: "production"
+
+.opentofu-env-staging:
+  extends: .opentofu-env
+  variables:
+    OPENTOFU_STATE_NAME: "staging"
+
+.opentofu-module-build:
+  extends: .opentofu-base
+  stage: deploy
+  variables:
+    OPENTOFU_MODULE_DIR: ${CI_PROJECT_DIR}
+    OPENTOFU_MODULE_NAME: ${CI_PROJECT_NAME}
+    OPENTOFU_MODULE_VERSION: ${CI_COMMIT_TAG}
+
+.opentofu-module-release:
+  extends: .opentofu-base
+  stage: test
+  variables:
+    OPENTOFU_MODULE_VERSION: ${CI_COMMIT_TAG}
+
+.opentofu-plan:
+  extends: .opentofu-base-run
+  stage: test
+  script:
+    - gitlab-tofu plan
+    - gitlab-tofu plan-json
+  resource_group: $OPENTOFU_STATE_NAME
+  environment:
+    name: "$OPENTOFU_STATE_NAME/plan"
+  artifacts:
+    paths:
+      - "${OPENTOFU_ROOT}/plan.cache"
+      - "${OPENTOFU_ROOT}/plan.json"
+    reports:
+      terraform: "${OPENTOFU_ROOT}/plan.json"
+
+.opentofu-trivy:
+  extends: .opentofu-base-run
+  stage: build
+  script:
+    - >-
+      curl -sSL https://github.com/aquasecurity/trivy/releases/download/v0.49.1/trivy_0.49.1_Linux-64bit.tar.gz
+      | tar -C /usr/local/bin/ -xzf - trivy
+    - trivy config "${OPENTOFU_ROOT}/plan.json"
+
+.opentofu-validate:
+  extends: .opentofu-base-run
+  stage: test
+  script:
+    - gitlab-tofu validate
+
+opentofu-development-apply:
+  extends: [.opentofu-env-development, .opentofu-manual-apply]
+  dependencies: [opentofu-development-plan]
+
+opentofu-development-auto-apply:
+  extends: [.opentofu-env-development, .opentofu-auto-apply]
+
+opentofu-development-destroy:
+  extends: [.opentofu-env-development, .opentofu-destroy]
+
+opentofu-development-plan:
+  extends: [.opentofu-env-development, .opentofu-plan]
+
+opentofu-development-trivy:
+  extends: [.opentofu-env-development, .opentofu-trivy]
+  dependencies: [opentofu-development-plan]
+
+opentofu-development-validate:
+  extends: [.opentofu-env-development, .opentofu-validate]
+
+opentofu-fmt:
+  extends: .opentofu-base
+  stage: test
+  script:
+    - tofu fmt -recursive -check -diff
+
+opentofu-module-build:
+  extends: .opentofu-module-build
+  stage: deploy
+  script:
+    - OPENTOFU_MODULE_NAME=$(echo "${OPENTOFU_MODULE_NAME}" | tr " _" -) # module-name must not have spaces or underscores, so translate them to hyphens
+    - tar -vczf /tmp/${OPENTOFU_MODULE_NAME}-${OPENTOFU_MODULE_SYSTEM}-${OPENTOFU_MODULE_VERSION}.tgz -C ${OPENTOFU_MODULE_DIR} --exclude=./.git .
+    - 'curl --fail-with-body --location --header "JOB-TOKEN: ${CI_JOB_TOKEN}"
+      --upload-file /tmp/${OPENTOFU_MODULE_NAME}-${OPENTOFU_MODULE_SYSTEM}-${OPENTOFU_MODULE_VERSION}.tgz
+      ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/terraform/modules/${OPENTOFU_MODULE_NAME}/${OPENTOFU_MODULE_SYSTEM}/${OPENTOFU_MODULE_VERSION}/file'
+  rules:
+    - if: $CI_COMMIT_TAG
+
+opentofu-module-release:
+  extends: .opentofu-module-release
+  stage: test
+  script:
+    - echo $CI_COMMIT_TAG
+
+opentofu-production-apply:
+  extends: [.opentofu-env-production, .opentofu-manual-apply]
+  dependencies: [opentofu-production-plan]
+
+opentofu-production-auto-apply:
+  extends: [.opentofu-env-production, .opentofu-auto-apply]
+
+opentofu-production-destroy:
+  extends: [.opentofu-env-production, .opentofu-destroy]
+
+opentofu-production-plan:
+  extends: [.opentofu-env-production, .opentofu-plan]
+
+opentofu-production-trivy:
+  extends: [.opentofu-env-production, .opentofu-trivy]
+  dependencies: [opentofu-production-plan]
+
+opentofu-production-validate:
+  extends: [.opentofu-env-production, .opentofu-validate]
+
+opentofu-staging-apply:
+  extends: [.opentofu-env-staging, .opentofu-manual-apply]
+  dependencies: [opentofu-staging-plan]
+
+opentofu-staging-auto-apply:
+  extends: [.opentofu-env-staging, .opentofu-auto-apply]
+
+opentofu-staging-destroy:
+  extends: [.opentofu-env-staging, .opentofu-destroy]
+
+opentofu-staging-plan:
+  extends: [.opentofu-env-staging, .opentofu-plan]
+
+opentofu-staging-trivy:
+  extends: [.opentofu-env-staging, .opentofu-trivy]
+  dependencies: [opentofu-staging-plan]
+
+opentofu-staging-validate:
+  extends: [.opentofu-env-staging, .opentofu-validate]
+
+opentofu-trivy:
+  extends: [.opentofu-trivy]
+  stage: test
+  variables:
+    OPENTOFU_ROOT: "."
+  script:
+    - >-
+      curl -sSL https://github.com/aquasecurity/trivy/releases/download/v0.49.1/trivy_0.49.1_Linux-64bit.tar.gz
+      | tar -C /usr/local/bin/ -xzf - trivy
+    - trivy config .
+
+opentofu-validate:
+  extends: [.opentofu-root, .opentofu-validate]

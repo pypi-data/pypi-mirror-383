@@ -1,0 +1,301 @@
+# SPDX-FileCopyrightText: UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+name: opentofu
+
+repo_url: https://gitlab.com/saferatday0/library/opentofu
+
+gitlab_project_path: saferatday0/library/opentofu
+
+brief: >-
+  Deploy OpenTofu-managed infrastructure from GitLab.
+
+description: |-
+
+  OpenTofu is an open-source infrastructure-as-code tool that serves as
+  a community-driven fork of Terraform. Created in response to HashiCorp’s
+  license change for Terraform, OpenTofu maintains compatibility with
+  Terraform’s configuration language and state files while being governed
+  by the Linux Foundation.
+
+  It allows developers and DevOps teams to define, provision, and manage
+  cloud infrastructure using declarative configuration files. OpenTofu
+  supports the same providers and modules as Terraform, making it a
+  drop-in replacement that can manage resources across AWS, Azure, Google
+  Cloud, and hundreds of other services.
+
+  The key advantage of OpenTofu is that it remains truly open-source under
+  the Mozilla Public License 2.0, ensuring it will always be free to use
+  and modify without licensing restrictions.
+
+  This pipeline:
+
+  - Formats the Opentofu-managed project with
+    [opentofu fmt](https://opentofu.org/docs/cli/commands/fmt/).
+
+  - Validates the Opentofu-managed project with
+    [opentofu validate](https://opentofu.org/docs/cli/commands/validate/).
+
+  - Plans the Opentofu-managed project with
+    [opentofu plan](https://opentofu.org/docs/cli/commands/plan/).
+
+  - Applies the Opentofu-managed project with
+    [opentofu apply](https://opentofu.org/docs/cli/commands/apply/).
+
+  - Runs Trivy scanner against the Opentofu-managed project with
+    [trivy config](https://trivy.dev/v0.48/docs/references/configuration/cli/trivy_config/).
+
+  - Publishes an OpenTofu module when a new tag is cut.
+
+  ## Configuration
+
+  ### Multiple environments
+
+  When multiple environments are deployed from a project, it will likely be
+  necessary to use different variable values for different environments.
+  To add credentials specific to an environment, use one of the following
+  environment scopes:
+
+    - development - `development/*`
+
+    - production - `production/*`
+
+    - staging - `staging/*`
+
+  ## Usage
+
+  ### Dual deployment preset
+
+  Include the pipeline:
+
+  ```yaml
+  include:
+  - project: saferatday0/library/opentofu
+    file:
+      - opentofu-fmt.yml
+      - opentofu-staging-auto-apply.yml
+      - opentofu-staging-trivy.yml
+      - opentofu-staging-validate.yml
+      - opentofu-production-apply.yml
+      - opentofu-production-plan.yml
+      - opentofu-production-trivy.yml
+      - opentofu-production-validate.yml
+  ```
+
+  ### Deploy to all default environemts
+
+  Include the pipeline:
+
+  ```yaml
+  include:
+  - project: saferatday0/library/opentofu
+    file:
+      - opentofu-development-auto-apply.yml
+      - opentofu-production-apply.yml
+      - opentofu-production-plan.yml
+      - opentofu-staging-auto-apply.yml
+  ```
+
+  ### Publish an OpenTofu Module
+
+  An opentofu module will only get published when a new tag is cut. Make sure
+  you set the following environment variable in the .gitlab-ci.yml at the root
+  level of this project. Without it, the module will fail to publish. You can
+  set it anything you would like for example: google, aws, azure etc. In the
+  following example it is being set to google.
+
+  ```yaml
+  variables:
+    OPENTOFU_MODULE_SYSTEM: google
+  ```
+
+  ### Run trivy
+
+  `trivy`` does misconfiguration scanning for OpenTofu. Include the pipeline for
+  the relevant deployments:
+
+  ```yaml
+  include:
+  - project: saferatday0/library/opentofu
+    file:
+      - opentofu-production-trivy.yml
+  ```
+
+  ### Deploy to a `production`` environment
+
+  Include the pipeline:
+
+  ```yaml
+  include:
+  - project: saferatday0/library/opentofu
+    file:
+      - opentofu-production-apply.yml
+      - opentofu-production-plan.yml
+  ```
+
+  ### Deploy to a `staging` environment
+
+  Include the pipeline:
+
+  ```yaml
+  include:
+  - project: saferatday0/library/opentofu
+    file:
+      - opentofu-staging-auto-apply.yml
+  ```
+
+  ### Run `opentofu validate`
+
+  Include the pipeline:
+
+  ```yaml
+  include:
+  - project: saferatday0/library/opentofu
+    file:
+      - opentofu-production-validate.yml
+  ```
+
+  ### Run `trivy`
+
+  trivy does misconfiguration scanning for OpenTofu. Include the pipeline for
+  the relevant deployments:
+
+  ```yaml
+  include:
+    - project: saferatday0/library/opentofu
+      file:
+        - opentofu-production-trivy.yml
+  ```
+
+targets:
+  - name: opentofu-development-apply
+    brief: >-
+      Run opentofu apply against development environment with
+      [tofu apply](https://opentofu.org/docs/cli/commands/apply/).
+
+  - name: opentofu-development-auto-apply
+    brief: >-
+      Run opentofu auto approve on development environment which instructs
+      OpenTofu to apply a plan without asking for confirmation with
+      [tofu
+      apply -auto-approve](https://opentofu.org/docs/cli/commands/apply/#automatic-plan-mode).
+
+  - name: opentofu-development-destroy
+    brief: >-
+      Destroy opentofu managed projects in development environment with [tofu
+      destroy](https://opentofu.org/docs/cli/commands/destroy/).
+
+  - name: opentofu-development-plan
+    brief: >-
+      Run opentofu plan on development environment with [tofu
+      plan](https://opentofu.org/docs/cli/commands/plan/).
+
+  - name: tofu-development-trivy
+    brief: >-
+      Run Trivy scan on development environment with
+      [trivy config](https://trivy.dev/v0.48/docs/references/configuration/cli/trivy_config/).
+
+  - name: opentofu-development-validate
+    brief: >-
+      Validate opentofu managed projects in development environment with
+      [tofu validate](https://opentofu.org/docs/cli/commands/validate/).
+
+  - name: opentofu-fmt
+    brief: >-
+      Run formatting on opentofu managed projects with [tofu
+      fmt](https://opentofu.org/docs/cli/commands/fmt/).
+
+  - name: opentofu-module-build
+    brief: >-
+      Build opentofu module in project
+
+  - name: opentofu-module-release
+    brief: >-
+      Tag opentofu release
+
+  - name: opentofu-production-apply
+    brief: >-
+      Run opentofu apply against production environment with
+      [tofu apply](https://opentofu.org/docs/cli/commands/apply/).
+
+  - name: opentofu-production-auto-apply
+    brief: >-
+      Run opentofu auto approve on production environment which instructs
+      OpenTofu to apply a plan without asking for confirmation with
+      [tofu
+      apply -auto-approve](https://opentofu.org/docs/cli/commands/apply/#automatic-plan-mode).
+
+  - name: opentofu-production-destroy
+    brief: >-
+      Destroy opentofu managed projects in production environment with [tofu
+      destroy](https://opentofu.org/docs/cli/commands/destroy/).
+
+  - name: opentofu-production-plan
+    brief: >-
+      Run opentofu plan on prouction environment with [tofu
+      plan](https://opentofu.org/docs/cli/commands/plan/).
+
+  - name: opentofu-production-trivy
+    brief: >-
+      Run Trivy scan on production environment with
+      [trivy config](https://trivy.dev/v0.48/docs/references/configuration/cli/trivy_config/).
+
+  - name: opentofu-production-validate
+    brief: >-
+      Validate opentofu managed projects in production environment with
+      [tofu validate](https://opentofu.org/docs/cli/commands/validate/).
+
+  - name: opentofu-staging-apply
+    brief: >-
+      Run opentofu apply against staging environment with
+      [tofu apply](https://opentofu.org/docs/cli/commands/apply/).
+
+  - name: opentofu-staging-auto-apply
+    brief: >-
+      Run opentofu auto approve on staging environment which instructs
+      OpenTofu to apply a plan without asking for confirmation with
+      [tofu
+      apply -auto-approve](https://opentofu.org/docs/cli/commands/apply/#automatic-plan-mode).
+
+  - name: opentofu-staging-destroy
+    brief: >-
+      Destroy opentofu managed projects in staging environment with [tofu
+      destroy](https://opentofu.org/docs/cli/commands/destroy/).
+
+  - name: opentofu-staging-plan
+    brief: >-
+      Run opentofu plan on staging environment with [tofu
+      plan](https://opentofu.org/docs/cli/commands/plan/).
+
+  - name: opentofu-staging-trivy
+    brief: >-
+      Run Trivy scan on staging environment with
+      [trivy config](https://trivy.dev/v0.48/docs/references/configuration/cli/trivy_config/).
+
+  - name: opentofu-staging-validate
+    brief: >-
+      Validate opentofu managed projects in staging environment with
+      [tofu validate](https://opentofu.org/docs/cli/commands/validate/).
+
+  - name: opentofu-trivy
+    brief: >-
+      Run Trivy scan with
+      [trivy config](https://trivy.dev/v0.48/docs/references/configuration/cli/trivy_config/).
+
+  - name: opentofu-validate
+    brief: >-
+      Validate opentofu managed projects with
+      [tofu validate](https://opentofu.org/docs/cli/commands/validate/).
+
+variables:
+  OPENTOFU_MODULE_VERSION:
+    brief: Opentofu module version.
+    default: "${CI_COMMIT_TAG}"
+
+  OPENTOFU_MODULE_NAME:
+    brief: Opentofu module project name.
+    default: "${CI_PROJECT_NAME}"
+
+  OPENTOFU_MODULE_DIR:
+    brief: Opentofu module project directory.
+    default: "${CI_PROJECT_DIR}"
