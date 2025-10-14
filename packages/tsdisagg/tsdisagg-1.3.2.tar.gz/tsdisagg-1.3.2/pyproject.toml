@@ -1,0 +1,152 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "tsdisagg"
+dynamic = ['version']
+description = "Temporal Disaggregation of Time Series Data in Python"
+readme = 'README.md'
+license = { file = 'LICENSE'}
+authors = [{name = "Jesse Grabowski", email="jessegrabowski@gmail.com"}]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Mathematics"
+]
+
+keywords = [
+  "time series",
+  "decomposition",
+  "datetime",
+  "econometrics"
+]
+
+dependencies = [
+    "numpy",
+    "pandas >= 2.2.0",
+    "scipy"
+]
+
+[project.urls]
+Repository = "https://github.com/jessegrabowski/tsdisagg.git"
+Issues = "https://github.com/jessegrabowski/tsdisagg/issues"
+
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "hypothesis"
+]
+
+[tool.hatch.version]
+source = 'vcs'
+
+[tool.hatch.build.hooks.vcs]
+version-file = "tsdisagg/_version.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  '/.github',
+  '/examples',
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["tsdisagg"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+xfail_strict = true
+addopts = [
+  "-v",
+  "--doctest-modules",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: nocover",
+  "raise NotImplementedError",
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W",      # pycodestyle / pyflakes
+  "B",                # flake8-bugbear
+  "UP",               # pyupgrade
+  "I",                # isort
+  "C4",               # flake8-comprehensions
+  "SIM",              # flake8-simplify
+  "ARG",              # flake8-unused-arguments
+  "PTH",              # flake8-use-pathlib
+  "TID",              # flake8-tidy-imports
+  "DTZ",              # flake8-datetimez
+  "RET",              # flake8-return
+  "PERF",             # perflint
+  "TRY",              # try/except best practices
+  "PL",               # pylint-inspired rules
+  "NPY",              # numpy-specific rules
+  "RUF",              # Ruff-specific
+  "D",                # pydocstyle
+  "C90",              # mccabe complexity
+]
+ignore = [
+    "RUF001", # Allow Greek letters in strings
+    "RUF002", # Allow Greek letters in docstrings
+    "RUF012", # Mutable class attributes without ClassVar
+    "PLR0913", # Allow functions with many arguments
+    "PLC2401", # Allow non-standard ASCII characters in identifiers (e.g., Greek letters)
+    "TRY003", # Allow custom exception messages
+
+    # Allow missing docstrings; enforce style where present
+    "D100", "D101", "D102", "D103", "D104", "D105", "D107",
+
+    # Recommended when using Ruff's formatter
+    "W191",
+    "E111", "E114", "E117",
+    "D206", "D300",
+    "Q000", "Q001", "Q002", "Q003",
+    "COM812", "COM819",
+    "ISC001", "ISC002",
+]
+
+allowed-confusables = ["×"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.isort]
+lines-between-types = 1
+
+[tool.ruff.lint.per-file-ignores]
+'tests/*.py' = [
+    'F401', # Unused import warning for test files -- this check removes imports of fixtures
+    'F811',  # Redefine while unused -- this check fails on imported fixtures
+    'F841', # Unused variable warning for test files
+    'D106',  # Missing docstring for public method -- unittest test subclasses don't need docstrings
+    "PLR2004", # Allow magic numbers in test files
+    "E741", # Allow single letter variable names in test files
+]

@@ -1,0 +1,9 @@
+name: tsdisagg-test
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  # Core dependencies
+  - numpy
+  - scipy
+  - pandas
