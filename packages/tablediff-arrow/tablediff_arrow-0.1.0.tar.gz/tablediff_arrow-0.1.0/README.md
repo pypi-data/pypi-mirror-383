@@ -1,0 +1,286 @@
+﻿# tablediff-arrow
+
+Fast, file-based diffs for Parquet/CSV/Arrow (local or S3) with keyed comparisons, per-column tolerances, and HTML/CSV reports—built on Apache Arrow.
+
+[![CI](https://github.com/psmman/tablediff-arrow/workflows/CI/badge.svg)](https://github.com/psmman/tablediff-arrow/actions)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Features
+
+- **Fast**: Built on Apache Arrow for high-performance data processing
+- **Multiple Formats**: Support for Parquet, CSV, and Arrow IPC files
+- **S3 Support**: Read files directly from S3 (optional)
+- **Keyed Comparisons**: Compare tables using one or more key columns
+- **Numeric Tolerances**: Configure absolute and relative tolerances for numeric columns
+- **Rich Reports**: Generate HTML and CSV reports with detailed differences
+- **Python 3.10+**: Modern Python with type hints and clean APIs
+- **Well Tested**: Comprehensive test suite with high coverage
+
+## Installation
+
+```bash
+pip install tablediff-arrow
+```
+
+For S3 support:
+
+```bash
+pip install tablediff-arrow[s3]
+```
+
+For development:
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Quick Start
+
+### Command Line Interface
+
+Compare two Parquet files using `id` as the key column:
+
+```bash
+tablediff left.parquet right.parquet -k id
+```
+
+Compare with numeric tolerance:
+
+```bash
+tablediff left.csv right.csv -k id -t amount:0.01
+```
+
+Generate an HTML report:
+
+```bash
+tablediff left.parquet right.parquet -k id -o report.html
+```
+
+Compare S3 files:
+
+```bash
+tablediff s3://bucket/left.parquet s3://bucket/right.parquet -k id --s3
+```
+
+### Python API
+
+```python
+from tablediff_arrow import TableDiff
+
+# Create a differ with key columns and tolerances
+differ = TableDiff(
+    key_columns=['id'],
+    tolerance={'amount': 0.01},  # Absolute tolerance
+    relative_tolerance={'price': 0.001}  # Relative tolerance (0.1%)
+)
+
+# Compare files
+result = differ.compare_files('left.parquet', 'right.parquet')
+
+# Print summary
+print(result.summary())
+
+# Check if there are differences
+if result.has_differences:
+    print(f"Found {result.changed_rows} changed rows")
+    print(f"Found {result.left_only_rows} rows only in left")
+    print(f"Found {result.right_only_rows} rows only in right")
+
+# Generate reports
+from tablediff_arrow.reports import generate_html_report, generate_csv_report
+
+generate_html_report(result, 'report.html')
+generate_csv_report(result, 'output_dir/', prefix='diff')
+```
+
+## Usage Examples
+
+### Multiple Key Columns
+
+Compare tables using composite keys:
+
+```bash
+tablediff left.parquet right.parquet -k year -k month -k product
+```
+
+```python
+differ = TableDiff(key_columns=['year', 'month', 'product'])
+result = differ.compare_files('left.parquet', 'right.parquet')
+```
+
+### Numeric Tolerances
+
+Use absolute tolerance for monetary values:
+
+```bash
+tablediff left.csv right.csv -k id -t amount:0.01 -t balance:0.001
+```
+
+Use relative tolerance for percentages:
+
+```bash
+tablediff left.csv right.csv -k id -r rate:0.001 -r score:0.01
+```
+
+```python
+differ = TableDiff(
+    key_columns=['id'],
+    tolerance={'amount': 0.01, 'balance': 0.001},
+    relative_tolerance={'rate': 0.001, 'score': 0.01}
+)
+```
+
+### Working with PyArrow Tables
+
+```python
+import pyarrow as pa
+from tablediff_arrow import TableDiff
+
+# Create tables directly
+left = pa.table({'id': [1, 2, 3], 'value': [10, 20, 30]})
+right = pa.table({'id': [1, 2, 3], 'value': [10, 21, 30]})
+
+# Compare
+differ = TableDiff(key_columns=['id'])
+result = differ.compare_tables(left, right)
+
+print(result.summary())
+```
+
+### S3 Files
+
+```python
+import s3fs
+from tablediff_arrow import TableDiff
+
+# Create S3 filesystem
+fs = s3fs.S3FileSystem()
+
+# Compare S3 files
+differ = TableDiff(key_columns=['id'])
+result = differ.compare_files(
+    's3://my-bucket/left.parquet',
+    's3://my-bucket/right.parquet',
+    filesystem=fs
+)
+```
+
+## CLI Options
+
+```
+Usage: tablediff [OPTIONS] LEFT RIGHT
+
+  Compare two tables and generate diff reports.
+
+Arguments:
+  LEFT   Path to the left/source table file (local or s3://)
+  RIGHT  Path to the right/target table file (local or s3://)
+
+Options:
+  -k, --key TEXT              Key column(s) for comparison (required, can be
+                              specified multiple times)
+  -t, --tolerance TEXT        Absolute tolerance for numeric columns
+                              (format: column:value)
+  -r, --relative-tolerance    Relative tolerance for numeric columns
+                              (format: column:value)
+  --left-format [parquet|csv|arrow]
+                              Format of the left file
+  --right-format [parquet|csv|arrow]
+                              Format of the right file
+  -o, --output TEXT           Output file path for HTML report
+  --csv-output PATH           Output directory for CSV reports
+  --s3                        Enable S3 filesystem support
+  --help                      Show this message and exit.
+```
+
+## Output Reports
+
+### HTML Report
+
+The HTML report provides an interactive view of differences:
+
+- Summary statistics (matched, changed, added, removed rows)
+- Color-coded differences table
+- Separate sections for left-only and right-only rows
+- Change counts per column
+
+### CSV Reports
+
+CSV output generates multiple files:
+
+- `{prefix}_summary.csv`: Summary statistics
+- `{prefix}_changes.csv`: Detailed changes with old and new values
+- `{prefix}_left_only.csv`: Rows only in the left table
+- `{prefix}_right_only.csv`: Rows only in the right table
+
+## Development
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/psmman/tablediff-arrow.git
+cd tablediff-arrow
+
+# Install with development dependencies
+pip install -e ".[dev]"
+
+# Install pre-commit hooks
+pre-commit install
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=tablediff_arrow --cov-report=html
+
+# Run specific test file
+pytest tests/test_compare.py
+```
+
+### Code Quality
+
+```bash
+# Format code
+black src tests
+
+# Lint
+ruff check src tests
+
+# Type check
+mypy src
+```
+
+### Pre-commit Hooks
+
+The project uses pre-commit hooks to ensure code quality:
+
+- trailing-whitespace: Remove trailing whitespace
+- end-of-file-fixer: Ensure files end with a newline
+- check-yaml/json/toml: Validate config files
+- black: Format Python code
+- ruff: Lint Python code
+- mypy: Type checking
+
+## Requirements
+
+- Python 3.10 or higher
+- pyarrow >= 14.0.0
+- pandas >= 2.0.0
+- click >= 8.0.0
+- jinja2 >= 3.0.0
+- s3fs >= 2023.0.0 (optional, for S3 support)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
