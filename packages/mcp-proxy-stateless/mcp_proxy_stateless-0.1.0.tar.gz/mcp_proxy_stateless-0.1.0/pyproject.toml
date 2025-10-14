@@ -1,0 +1,26 @@
+[project]
+name = "mcp-proxy-stateless"
+version = "0.1.0"
+description = "Stdio-to-StreamableHTTP MCP proxy that enforces stateless requests."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp>=1.8.0",
+]
+
+[project.scripts]
+mcp-proxy-stateless = "post_class.mcp_proxy_stateless.main:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+package = true
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,85 @@
+# 概要
+別途公開されいるStreamable HTTP 方式のMCPサーバをStdio方式に変換して使用できるようにするアプリです。
+特徴として、強制的にステートレスにするため、mcp-session-idを毎回削除します。
+
+## 利用方法
+### インストール
+uv add mcp-proxy-stateless
+
+## クライアントのMCP設定例
+{
+  "mcpServers": {
+    "lf-agents": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-stateless",
+        "--insecure",
+        "--headers",
+        "x-api-key",
+        "YOUR_API_KEY",
+        "https://your_mcp_domain/mcp"
+      ]
+    }
+  }
+}
+
+## 前提条件
+別途公開されているMCPサーバはStreamableHTTPである必要があります。
+SSEには対応しておりません。
+
+## Claude Desktop 設定例
+Claude Desktop の `claude_desktop_config.json`（もしくは UI の MCP 設定）に以下のように追加します。
+
+1) Windows（WSL 経由）
+{
+  "mcpServers": {
+    "my_mcp_stateless": {
+      "command": "wsl",
+      "args": [
+        "uvx",
+        "mcp-proxy-stateless",
+        "--insecure",
+        "https://your_mcp_streamable_http_endpoint/mcp"
+      ]
+    }
+  }
+}
+
+2) macOS / Linux（直接実行）
+{
+  "mcpServers": {
+    "my_mcp_stateless": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-stateless",
+        "--insecure",
+        "https://your_mcp_streamable_http_endpoint/mcp"
+      ]
+    }
+  }
+}
+
+補足:
+- APIキーが必要なサーバの場合は `--headers KEY VALUE` を複数回指定できます。
+- 社内CA等で `--insecure` を避ける場合は、`SSL_CERT_FILE=/path/to/cacert.pem` を付与して検証を有効化してください。
+
+## TLS 検証（社内CA / 自己署名対応）
+- `--insecure` を付与すると、リモートへのTLS証明書検証を無効化します。
+  - 例: `uvx mcp-proxy-stateless --insecure --headers x-api-key YOUR_API_KEY https://example/mcp`
+- 推奨: 検証無効ではなく、CA証明書を指定して検証を有効のままにする
+  - `SSL_CERT_FILE=/path/to/cacert.pem uvx mcp-proxy-stateless ...`
+
+## テスト実行（uv）
+- 依存の同期
+  - `uv sync`
+- 全テストを実行
+  - `uv run -m unittest discover -s test -v`
+- 個別テストのみ
+  - エンドユーザ視点のMCPクライアントテスト: `uv run -m unittest test/test_client_user.py -v`
+  - さらに特定ケースのみ: `uv run -m unittest test.test_client_user.TestClientLike.test_my_mcp_insecure -v`
+- 環境変数
+  - `.env` を自動読込（存在する場合）。主に以下を使用します。
+    - `TEST_URL_PLAYWRIGHT`: テスト用のPlaywrightMCPエンドポイントのURL（例: `https://.../mcp`）。
+    - `SSL_CERT_FILE`: 接続先が企業内CAなどの場合のHTTPSのPEMパス。`test_my_mcp_ssl_cert_file` で使用。
+- 設定ファイル
+  - `test/test_mcp_servers.json` にMCP設定を用意できます。URLに `${TEST_URL_PLAYWRIGHT}` を記述すると、`.env` の値で展開されます。
