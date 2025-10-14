@@ -1,0 +1,17 @@
+dvc
+sshfs[bcrypt]>=2023.4.1
+
+[dev]
+dvc-ssh[tests]
+mypy==1.18.2
+
+[gssapi]
+sshfs[gssapi]>=2021.11.2
+
+[tests]
+dvc[testing]
+pytest<9,>=7
+pytest-cov>=4.1.0
+pytest-xdist>=3.2
+pytest-mock
+pytest-docker<4,>=1
