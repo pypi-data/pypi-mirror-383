@@ -1,0 +1,33 @@
+Metadata-Version: 2.3
+Name: omnibusx-sdk
+Version: 0.1.2
+Summary: 
+Author: Huy Nguyen
+Author-email: huy@omnibusx.com
+Requires-Python: >=3.9
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: httpx (>=0.28.1,<0.29.0)
+Requires-Dist: pydantic (>=2.11.7,<3.0.0)
+Description-Content-Type: text/markdown
+
+# OmnibusX SDK
+
+OmnibusX SDK is a Python package for submitting data programmatically to the OmnibusX Enterprise platform.
+
+## Features
+
+- Seamless integration with OmnibusX Enterprise APIs
+- Utilities for authentication and data submission
+- Type-safe interfaces
+
+## Installation
+
+```bash
+pip install omnibusx-sdk
+```
+
