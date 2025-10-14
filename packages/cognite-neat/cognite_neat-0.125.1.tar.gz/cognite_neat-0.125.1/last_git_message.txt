@@ -1,0 +1,26 @@
+Refactor: Unify graph diff logic and merge add/delete queries. (#1335)
+
+# Description
+
+This merge request refactors the RDF graph comparison logic by
+consolidating the previously separate `get_triples_to_add` and
+`get_triples_to_delete` queries into a single, generic `get_graph_diff`
+method.
+
+## Bump
+
+- [x] Patch
+- [ ] Minor
+- [ ] Skip
+
+## Changelog
+### Changed
+
+- Unified `get_triples_to_add` and `get_triples_to_delete` into a single
+generic `get_graph_diff` query.
+- Updated corresponding tests to use the new generic method.
+- Updated `NeatInstanceStore` method to use the new generic query.
+
+---------
+
+Co-authored-by: Andrian Gasper <andrian.gasper@cognite.com>
