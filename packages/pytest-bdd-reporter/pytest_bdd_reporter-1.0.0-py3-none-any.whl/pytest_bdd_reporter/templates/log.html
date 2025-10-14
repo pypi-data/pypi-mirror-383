@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDD Test Log</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 300;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .log-entry {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .log-header {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-title {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .log-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-passed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-skipped {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .log-content {
+            padding: 20px;
+        }
+
+        .log-section {
+            margin-bottom: 15px;
+        }
+
+        .log-section h4 {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .log-output {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .error-output {
+            background: #fff5f5;
+            border-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .meta-item {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+        }
+
+        text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .controls {
+            background: white;
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        .controls-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid #ced4da;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .filter-btn:hover {
+            background: #e9ecef;
+        }
+
+        .filter-btn.active:hover {
+            background: #0056b3;
+        }
+
+        .expand-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .expand-btn {
+            padding: 6px 10px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .expand-btn:hover {
+            background: #545b62;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .suite {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .suite-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .suite-header:hover {
+            background: #e9ecef;
+        }
+
+        .suite-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+
+        .suite-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .suite-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+        }
+
+        .suite-content {
+            display: none;
+            padding: 0;
+        }
+
+        .suite-content.expanded {
+            display: block;
+        }
+
+        .test {
+            border-bottom: 1px solid #f1f3f4;
+            transition: background-color 0.3s ease;
+        }
+
+        .test:last-child {
+            border-bottom: none;
+        }
+
+        .test.hidden {
+            display: none;
+        }
+
+        .test-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-header:hover {
+            background: #f8f9fa;
+        }
+
+        .test-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-icon.passed {
+            background: #28a745;
+        }
+
+        .status-icon.failed {
+            background: #dc3545;
+        }
+
+        .status-icon.skipped {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .test-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .test-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .test-content {
+            display: none;
+            padding: 0 20px 20px 20px;
+            background: #fafbfc;
+        }
+
+        .test-content.expanded {
+            display: block;
+        }
+
+        .test-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-size: 0.8em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .log-section {
+            margin-top: 15px;
+        }
+
+        .log-header {
+            background: #e9ecef;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: #495057;
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-content {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: 8px 15px;
+            border-bottom: 1px solid #f1f3f4;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            display: flex;
+            gap: 10px;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            color: #6c757d;
+            min-width: 80px;
+        }
+
+        .log-level {
+            min-width: 60px;
+            font-weight: bold;
+        }
+
+        .log-level.TRACE {
+            color: #6c757d;
+        }
+
+        .log-level.DEBUG {
+            color: #17a2b8;
+        }
+
+        .log-level.INFO {
+            color: #007bff;
+        }
+
+        .log-level.WARN {
+            color: #ffc107;
+        }
+
+        .log-level.ERROR {
+            color: #dc3545;
+        }
+
+        .log-message {
+            flex: 1;
+        }
+
+        .output-section {
+            margin-top: 15px;
+        }
+
+        .output-content {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .error-section {
+            margin-top: 15px;
+        }
+
+        .error-content {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            padding: 15px;
+        }
+
+        .error-message {
+            font-weight: 600;
+            color: #721c24;
+            margin-bottom: 10px;
+        }
+
+        .error-traceback {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .timeline {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 50;
+            display: none;
+        }
+
+        .timeline.show {
+            display: block;
+        }
+
+        .timeline-header {
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .timeline-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #f1f3f4;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .timeline-item:hover {
+            background: #f8f9fa;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .timeline {
+                display: none !important;
+            }
+
+            .controls-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: auto;
+            }
+
+            .filter-group {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>BDD Test Execution Log</h1>
+            <div class="header-stats">
+                <div class="stat">
+                    <div class="stat-value passed">{{ summary.passed }}</div>
+                    <div>Passed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value failed">{{ summary.failed }}</div>
+                    <div>Failed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">{{ "%.2f"|format(session.duration) }}s</div>
+                    <div>Duration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="controls-content">
+            <input type="text" class="search-box" placeholder="Search tests, logs, or error messages..." id="searchBox">
+
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="passed">Passed</button>
+                <button class="filter-btn" data-filter="failed">Failed</button>
+                <button class="filter-btn" data-filter="skipped">Skipped</button>
+            </div>
+
+            <div class="expand-controls">
+                <button class="expand-btn" onclick="expandAll()">Expand All</button>
+                <button class="expand-btn" onclick="collapseAll()">Collapse All</button>
+                <button class="expand-btn" onclick="toggleTimeline()">Timeline</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        {% for feature in features %}
+        <div class="suite" data-feature="{{ feature.name }}">
+            <div class="suite-header" onclick="toggleSuite(this)">
+                <div class="suite-title">
+                    <span class="expand-icon">▶</span>
+                    <span class="suite-name">{{ feature.name }}</span>
+                </div>
+                <div class="suite-stats">
+                    <span class="passed">{{ feature.passed }} passed</span>
+                    <span class="failed">{{ feature.failed }} failed</span>
+                    <span class="skipped">{{ feature.skipped }} skipped</span>
+                </div>
+            </div>
+            <div class="suite-content">
+                {% for scenario in feature.scenarios %}
+                <div class="test" data-status="{{ scenario.status }}" data-name="{{ scenario.name|lower }}">
+                    <div class="test-header" onclick="toggleTest(this)">
+                        <div class="test-title">
+                            <span class="expand-icon">▶</span>
+                            <span class="status-icon {{ scenario.status }}">
+                                {% if scenario.status == 'passed' %}✓{% elif scenario.status == 'failed' %}✗{% else
+                                %}○{% endif %}
+                            </span>
+                            <span class="test-name">{{ scenario.name }}</span>
+                        </div>
+                        <div class="test-meta">
+                            <span>{{ "%.3f"|format(scenario.duration) }}s</span>
+                            <span>{{ scenario.start_time|timestamp_to_time }}</span>
+                        </div>
+                    </div>
+                    <div class="test-content">
+                        <div class="test-info">
+                            <div class="info-item">
+                                <div class="info-label">Status</div>
+                                <div class="info-value">{{ scenario.status|title }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Duration</div>
+                                <div class="info-value">{{ "%.3f"|format(scenario.duration) }} seconds</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Start Time</div>
+                                <div class="info-value">{{ scenario.start_time|timestamp_to_datetime }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">End Time</div>
+                                <div class="info-value">{{ scenario.end_time|timestamp_to_datetime }}</div>
+                            </div>
+                        </div>
+
+                        {% if scenario.logs %}
+                        <div class="log-section">
+                            <div class="log-header">
+                                Test Execution Log
+                                <span>({{ scenario.logs|length }} entries)</span>
+                            </div>
+                            <div class="log-content">
+                                {% for log in scenario.logs %}
+                                {% if log.strip() %}
+                                {% set log_parts = log.split(' - ') %}
+                                <div class="log-entry">
+                                    <div class="log-time">{{ log_parts[0] if log_parts|length > 0 else '' }}</div>
+                                    <div
+                                        class="log-level {{ 'ERROR' if 'ERROR' in log else 'WARN' if 'WARNING' in log else 'INFO' if 'INFO' in log else 'DEBUG' }}">
+                                        {{ 'ERROR' if 'ERROR' in log else 'WARN' if 'WARNING' in log else 'INFO' if
+                                        'INFO' in log else 'DEBUG' }}
+                                    </div>
+                                    <div class="log-message">{{ log_parts[-1] if log_parts|length > 0 else log }}</div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if scenario.stdout %}
+                        <div class="output-section">
+                            <div class="log-header">Standard Output</div>
+                            <div class="output-content">{{ scenario.stdout }}</div>
+                        </div>
+                        {% endif %}
+
+                        {% if scenario.stderr %}
+                        <div class="output-section">
+                            <div class="log-header">Standard Error</div>
+                            <div class="output-content">{{ scenario.stderr }}</div>
+                        </div>
+                        {% endif %}
+
+                        {% if scenario.error %}
+                        <div class="error-section">
+                            <div class="log-header">Error Details</div>
+                            <div class="error-content">
+                                <div class="error-message">{{ scenario.error }}</div>
+                                {% if scenario.traceback %}
+                                <div class="error-traceback">{{ scenario.traceback }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="timeline" id="timeline">
+        <div class="timeline-header">Execution Timeline</div>
+        {% for feature in features %}
+        {% for scenario in feature.scenarios %}
+        <div class="timeline-item" onclick="scrollToTest('{{ scenario.name }}')">
+            <div style="font-weight: 500;">{{ scenario.name }}</div>
+            <div style="color: #666; font-size: 0.7em;">{{ "%.3f"|format(scenario.duration) }}s</div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tests = document.querySelectorAll('.test');
+
+            tests.forEach(test => {
+                const testName = test.dataset.name;
+                const testContent = test.textContent.toLowerCase();
+
+                if (testName.includes(searchTerm) || testContent.includes(searchTerm)) {
+                    test.classList.remove('hidden');
+                } else {
+                    test.classList.add('hidden');
+                }
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+                const tests = document.querySelectorAll('.test');
+
+                tests.forEach(test => {
+                    if (filter === 'all' || test.dataset.status === filter) {
+                        test.classList.remove('hidden');
+                    } else {
+                        test.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Toggle suite
+        function toggleSuite(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.expand-icon');
+
+            content.classList.toggle('expanded');
+            icon.classList.toggle('expanded');
+        }
+
+        // Toggle test
+        function toggleTest(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.expand-icon');
+
+            content.classList.toggle('expanded');
+            icon.classList.toggle('expanded');
+        }
+
+        // Expand/Collapse all
+        function expandAll() {
+            document.querySelectorAll('.suite-content').forEach(content => {
+                content.classList.add('expanded');
+            });
+            document.querySelectorAll('.test-content').forEach(content => {
+                content.classList.add('expanded');
+            });
+            document.querySelectorAll('.expand-icon').forEach(icon => {
+                icon.classList.add('expanded');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.suite-content').forEach(content => {
+                content.classList.remove('expanded');
+            });
+            document.querySelectorAll('.test-content').forEach(content => {
+                content.classList.remove('expanded');
+            });
+            document.querySelectorAll('.expand-icon').forEach(icon => {
+                icon.classList.remove('expanded');
+            });
+        }
+
+        // Timeline
+        function toggleTimeline() {
+            document.getElementById('timeline').classList.toggle('show');
+        }
+
+        function scrollToTest(testName) {
+            const test = document.querySelector(`[data-name="${testName.toLowerCase()}"]`);
+            if (test) {
+                test.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                test.style.backgroundColor = '#fff3cd';
+                setTimeout(() => {
+                    test.style.backgroundColor = '';
+                }, 2000);
+            }
+        }
+
+        // Auto-expand failed tests
+        document.addEventListener('DOMContentLoaded', function () {
+            // Expand suites with failed tests
+            document.querySelectorAll('.suite').forEach(suite => {
+                const failedTests = suite.querySelectorAll('.test[data-status="failed"]');
+                if (failedTests.length > 0) {
+                    const header = suite.querySelector('.suite-header');
+                    toggleSuite(header);
+
+                    // Expand failed tests
+                    failedTests.forEach(test => {
+                        const testHeader = test.querySelector('.test-header');
+                        toggleTest(testHeader);
+                    });
+                }
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function (e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case 'f':
+                            e.preventDefault();
+                            document.getElementById('searchBox').focus();
+                            break;
+                        case 'e':
+                            e.preventDefault();
+                            expandAll();
+                            break;
+                        case 'c':
+                            e.preventDefault();
+                            collapseAll();
+                            break;
+                        case 't':
+                            e.preventDefault();
+                            toggleTimeline();
+                            break;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

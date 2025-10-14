@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .header {
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #cccccc;
+            padding: 10px 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #000000;
+        }
+
+        .header .info {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #666666;
+        }
+
+        .nav-links {
+            margin-top: 10px;
+        }
+
+        .nav-links a {
+            color: #0066cc;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 12px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .statistics {
+            margin-bottom: 30px;
+        }
+
+        .statistics h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #000000;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 5px;
+        }
+
+        .stats-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            border: 1px solid #cccccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .stats-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .stats-table td {
+            font-size: 12px;
+        }
+
+        .pass {
+            color: #009900;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        .skip {
+            color: #ff9900;
+            font-weight: bold;
+        }
+
+        .test-details {
+            margin-top: 30px;
+        }
+
+        .test-details h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #000000;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 5px;
+        }
+
+        .test-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 12px;
+        }
+
+        .test-table th,
+        .test-table td {
+            border: 1px solid #cccccc;
+            padding: 6px 8px;
+            text-align: left;
+        }
+
+        .test-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .test-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .test-table tr:hover {
+            background-color: #e6f3ff;
+        }
+
+        .status-pass {
+            color: #009900;
+            font-weight: bold;
+        }
+
+        .status-fail {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        .status-skip {
+            color: #ff9900;
+            font-weight: bold;
+        }
+
+        .tag {
+            background-color: #e6f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 3px;
+            padding: 1px 4px;
+            font-size: 10px;
+            margin-right: 3px;
+            display: inline-block;
+        }
+
+        .error-msg {
+            color: #cc0000;
+            font-size: 11px;
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .suite-section {
+            margin-top: 30px;
+        }
+
+        .suite-header {
+            background-color: #f0f0f0;
+            border: 1px solid #cccccc;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .suite-header:hover {
+            background-color: #e6e6e6;
+        }
+
+        .suite-content {
+            border: 1px solid #cccccc;
+            border-top: none;
+            display: none;
+        }
+
+        .suite-content.expanded {
+            display: block;
+        }
+
+        .suite-stats {
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .test-row {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .test-row:last-child {
+            border-bottom: none;
+        }
+
+        .test-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .test-meta {
+            font-size: 11px;
+            color: #666666;
+        }
+
+        .expand-icon {
+            margin-right: 5px;
+            transition: transform 0.2s;
+        }
+
+        .expand-icon.rotated {
+            transform: rotate(90deg);
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #cccccc;
+            font-size: 11px;
+            color: #666666;
+            text-align: center;
+        }
+
+        .search-box {
+            margin-bottom: 15px;
+            padding: 6px 10px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            font-size: 12px;
+            width: 300px;
+        }
+
+        .filter-buttons {
+            margin-bottom: 15px;
+        }
+
+        .filter-btn {
+            padding: 4px 8px;
+            margin-right: 5px;
+            border: 1px solid #cccccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            font-size: 11px;
+            border-radius: 3px;
+        }
+
+        .filter-btn.active {
+            background-color: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+
+        .filter-btn:hover {
+            background-color: #e6e6e6;
+        }
+
+        .filter-btn.active:hover {
+            background-color: #0052a3;
+        }
+
+        .log-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        .log-link:hover {
+            text-decoration: underline;
+        }
+
+        .test-table th {
+            font-size: 11px;
+            padding: 6px 8px;
+        }
+
+        .test-table td {
+            font-size: 11px;
+            padding: 6px 8px;
+            vertical-align: top;
+        }
+
+        .test-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .error-msg {
+            color: #dc3545;
+            font-style: italic;
+            background-color: #fff5f5;
+            padding: 2px 4px;
+            border-radius: 2px;
+            border-left: 2px solid #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>{{ session.suite_name or 'Test Suite' }} - Test Report</h1>
+        <div class="info">
+            Generated {{ session.end_time.strftime('%Y-%m-%d %H:%M:%S') }}
+        </div>
+        <div class="nav-links">
+            <a href="bdd_log.html">Log</a>
+            <a href="bdd_report.json">Report</a>
+            <a href="email_summary.html" title="Email summary page">📧 Email Summary</a>
+            <a href="text_email_report.html" title="Text-based email report">📧 Text Email Report</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Report Summary -->
+        <div class="report-summary" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin-bottom: 25px;">
+            <h2 style="margin-top: 0; color: #495057;">Report Summary</h2>
+            <div style="font-size: 14px; line-height: 1.6;">
+                <strong>Suite Name:</strong> {{ session.suite_name or 'Test Suite' }}<br>
+                <strong>Date:</strong> {{ session.end_time.strftime('%d/%m/%Y') }}<br>
+                <strong>Total Tests:</strong> {{ summary.total }}<br>
+                <strong>Passed:</strong> <span class="pass">{{ summary.passed }}</span><br>
+                <strong>Failed:</strong> <span class="fail">{{ summary.failed }}</span><br>
+                <strong>Passed/Expected:</strong> {{ summary.passed }}/{{ summary.total }} ({{ "%.1f"|format(summary.pass_rate) }}%)<br>
+                <strong>Duration:</strong> {{ "%.2f"|format(session.duration) }}s
+            </div>
+        </div>
+
+        <!-- Test Statistics -->
+        <div class="statistics">
+            <h2>Test Statistics</h2>
+
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Total</th>
+                        <th>Pass</th>
+                        <th>Fail</th>
+                        <th>Skip</th>
+                        <th>Pass %</th>
+                        <th>Elapsed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ summary.total }}</td>
+                        <td class="pass">{{ summary.passed }}</td>
+                        <td class="fail">{{ summary.failed }}</td>
+                        <td class="skip">{{ summary.skipped }}</td>
+                        <td>{{ "%.1f"|format(summary.pass_rate) }}%</td>
+                        <td>{{ "%.2f"|format(session.duration) }}s</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Suite Statistics -->
+            {% if session.features %}
+            <h3 style="font-size: 14px; margin-top: 25px; margin-bottom: 10px;">Suite Statistics</h3>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Suite</th>
+                        <th>Total</th>
+                        <th>Pass</th>
+                        <th>Fail</th>
+                        <th>Skip</th>
+                        <th>Pass %</th>
+                        <th>Logs</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feature in features %}
+                    <tr>
+                        <td><strong>{{ feature.name }}</strong></td>
+                        <td>{{ feature.passed + feature.failed + feature.skipped }}</td>
+                        <td class="pass">{{ feature.passed }}</td>
+                        <td class="fail">{{ feature.failed }}</td>
+                        <td class="skip">{{ feature.skipped }}</td>
+                        <td>
+                            {% set total = feature.passed + feature.failed + feature.skipped %}
+                            {% if total > 0 %}
+                            {{ "%.1f"|format((feature.passed / total) * 100) }}%
+                            {% else %}
+                            0.0%
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="bdd_log.html#suite-{{ feature.name|replace(' ', '-')|lower }}" 
+                               class="log-link" title="View suite logs">
+                                📋 Suite Logs
+                            </a>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="#" onclick="toggleSuiteDetails('{{ feature.name }}')" 
+                                   style="font-size: 10px; text-decoration: none;">📊 Details</a>
+                                {% if feature.failed > 0 %}
+                                <a href="#" onclick="showFailedTests('{{ feature.name }}')" 
+                                   style="font-size: 10px; text-decoration: none; color: #dc3545;">❌ Failures</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+            <!-- Tag Statistics -->
+            {% if session.tag_statistics %}
+            <h3 style="font-size: 14px; margin-top: 25px; margin-bottom: 10px;">Tag Statistics</h3>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Total</th>
+                        <th>Pass</th>
+                        <th>Fail</th>
+                        <th>Skip</th>
+                        <th>Pass %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tag, stats in session.tag_statistics.items() %}
+                    <tr>
+                        <td>{{ tag }}</td>
+                        <td>{{ stats.total }}</td>
+                        <td class="pass">{{ stats.passed }}</td>
+                        <td class="fail">{{ stats.failed }}</td>
+                        <td class="skip">{{ stats.skipped }}</td>
+                        <td>
+                            {% if stats.total > 0 %}
+                            {{ "%.1f"|format((stats.passed / stats.total) * 100) }}%
+                            {% else %}
+                            0.0%
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+        <!-- Test Details -->
+        <div class="test-details">
+            <h2>Test Details</h2>
+
+            <input type="text" class="search-box" placeholder="Search tests..." id="searchBox">
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="passed">Pass</button>
+                <button class="filter-btn" data-filter="failed">Fail</button>
+                <button class="filter-btn" data-filter="skipped">Skip</button>
+            </div>
+
+            <table class="test-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Test Name</th>
+                        <th style="width: 8%;">Status</th>
+                        <th style="width: 12%;">Duration</th>
+                        <th style="width: 15%;">Suite</th>
+                        <th style="width: 12%;">Tags</th>
+                        <th style="width: 10%;">Start Time</th>
+                        <th style="width: 8%;">Logs</th>
+                        <th style="width: 10%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scenario in scenarios %}
+                    <tr class="test-row-table" data-status="{{ scenario.status }}"
+                        data-name="{{ scenario.name|lower }}">
+                        <td>
+                            <div class="test-name">{{ scenario.name }}</div>
+                            {% if scenario.error and scenario.status == 'failed' %}
+                            <div class="error-msg" style="margin-top: 3px; font-size: 10px;">
+                                {{ scenario.error.split('\n')[0][:80] }}{% if scenario.error.split('\n')[0]|length > 80 %}...{% endif %}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="status-{{ scenario.status }}">
+                            {{ scenario.status|upper }}
+                            {% if scenario.is_overridden %}
+                            <br><small style="color: #007bff;">OVERRIDE</small>
+                            {% endif %}
+                            {% if scenario.bug_info %}
+                            <br><small style="color: #ffc107;">{{ scenario.bug_info.bug_id }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>{{ "%.3f"|format(scenario.duration) }}s</strong>
+                            {% if scenario.duration > 1.0 %}
+                            <br><small style="color: #ff9900;">SLOW</small>
+                            {% elif scenario.duration < 0.01 %}
+                            <br><small style="color: #28a745;">FAST</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>{{ scenario.feature or 'Unknown' }}</strong>
+                        </td>
+                        <td>
+                            {% if scenario.tags %}
+                            {% for tag in scenario.tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                            {% else %}
+                            <small style="color: #6c757d;">No tags</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <small>{{ scenario.start_time|timestamp_to_time }}</small>
+                        </td>
+                        <td>
+                            {% if scenario.captured_output or scenario.captured_logs %}
+                            <a href="bdd_log.html#{{ scenario.name|replace(' ', '-')|lower }}" 
+                               class="log-link" title="View captured logs">
+                                📋 Logs
+                            </a>
+                            {% else %}
+                            <small style="color: #6c757d;">No logs</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 2px;">
+                                <a href="bdd_log.html#{{ scenario.name|replace(' ', '-')|lower }}"
+                                   style="font-size: 10px; text-decoration: none;">📄 Details</a>
+                                {% if scenario.status == 'failed' %}
+                                <a href="#" onclick="copyErrorDetails('{{ scenario.name }}', '{{ scenario.error|replace("'", "\\'") if scenario.error else "" }}')"
+                                   style="font-size: 10px; text-decoration: none; color: #dc3545;">📋 Copy Error</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Suite Details -->
+        <div class="suite-section">
+            <h2>Suite Details</h2>
+
+            {% for feature in features %}
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <span class="expand-icon">▶</span>
+                    {{ feature.name }}
+                    <span class="suite-stats">
+                        {{ feature.passed + feature.failed + feature.skipped }} tests,
+                        <span class="pass">{{ feature.passed }} passed</span>,
+                        <span class="fail">{{ feature.failed }} failed</span>
+                        {% if feature.skipped > 0 %}, <span class="skip">{{ feature.skipped }} skipped</span>{% endif %}
+                    </span>
+                </div>
+                <div class="suite-content">
+                    {% for scenario in feature.scenarios %}
+                    <div class="test-row">
+                        <div class="test-name">
+                            <span class="status-{{ scenario.status }}">{{ scenario.status|upper }}</span>
+                            {{ scenario.name }}
+                        </div>
+                        <div class="test-meta">
+                            Duration: {{ "%.3f"|format(scenario.duration) }}s
+                            | Start: {{ scenario.start_time|timestamp_to_time }}
+                            {% if scenario.tags %}
+                            | Tags: {% for tag in scenario.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor
+                            %}
+                            {% endif %}
+                        </div>
+                        {% if scenario.error %}
+                        <div class="error-msg">{{ scenario.error }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="footer">
+            Generated by pytest-bdd-reporter | <a href="bdd_log.html">View detailed log</a>
+        </div>
+    </div>
+
+    <script>
+        // Include status management JavaScript
+        {{ status_management_js|safe }}
+        
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.test-row-table');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+                const rows = document.querySelectorAll('.test-row-table');
+
+                rows.forEach(row => {
+                    if (filter === 'all' || row.dataset.status === filter) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Toggle suite
+        function toggleSuite(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.expand-icon');
+
+            content.classList.toggle('expanded');
+            icon.classList.toggle('rotated');
+        }
+
+        // Auto-expand failed suites
+        document.addEventListener('DOMContentLoaded', function () {
+            const suiteHeaders = document.querySelectorAll('.suite-header');
+            suiteHeaders.forEach(header => {
+                const statsText = header.querySelector('.suite-stats').textContent;
+                if (statsText.includes('failed') && !statsText.includes('0 failed')) {
+                    toggleSuite(header);
+                }
+            });
+        });
+
+        // Copy error details function
+        function copyErrorDetails(testName, errorMessage) {
+            const content = `Test: ${testName}\nError: ${errorMessage}`;
+            navigator.clipboard.writeText(content).then(function() {
+                showNotification('Error details copied to clipboard!', 'success');
+            }).catch(function(err) {
+                showNotification('Failed to copy error details', 'error');
+            });
+        }
+
+        // Toggle suite details
+        function toggleSuiteDetails(suiteName) {
+            const rows = document.querySelectorAll('.test-row-table');
+            let suiteTests = [];
+            
+            rows.forEach(row => {
+                const suiteCell = row.cells[3]; // Suite column
+                if (suiteCell && suiteCell.textContent.trim() === suiteName) {
+                    suiteTests.push(row);
+                }
+            });
+
+            if (suiteTests.length > 0) {
+                const isVisible = suiteTests[0].style.display !== 'none';
+                suiteTests.forEach(row => {
+                    row.style.display = isVisible ? 'none' : '';
+                });
+                showNotification(`${isVisible ? 'Hidden' : 'Showing'} ${suiteTests.length} tests for ${suiteName}`, 'info');
+            }
+        }
+
+        // Show failed tests for a suite
+        function showFailedTests(suiteName) {
+            const rows = document.querySelectorAll('.test-row-table');
+            let failedTests = [];
+            
+            rows.forEach(row => {
+                const suiteCell = row.cells[3]; // Suite column
+                const statusCell = row.cells[1]; // Status column
+                if (suiteCell && suiteCell.textContent.trim() === suiteName && 
+                    statusCell && statusCell.textContent.includes('FAILED')) {
+                    failedTests.push(row.cells[0].textContent.trim()); // Test name
+                }
+            });
+
+            if (failedTests.length > 0) {
+                const message = `Failed tests in ${suiteName}:\n${failedTests.join('\n')}`;
+                alert(message);
+            } else {
+                showNotification(`No failed tests in ${suiteName}`, 'info');
+            }
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                border-radius: 4px;
+                color: white;
+                font-size: 14px;
+                z-index: 1000;
+                background-color: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

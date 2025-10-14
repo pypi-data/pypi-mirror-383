@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ session.suite_name or 'Test Suite' }} - Text Email Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        .email-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .email-header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .email-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .email-header .subtitle {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .email-subject {
+            background-color: #e9ecef;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .email-subject h2 {
+            margin: 0;
+            font-size: 16px;
+            color: #495057;
+        }
+
+        .subject-text {
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+            border: 1px solid #dee2e6;
+        }
+
+        .text-content {
+            padding: 20px;
+        }
+
+        .text-preview {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .copy-section {
+            background-color: #e9ecef;
+            padding: 15px 20px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .copy-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .copy-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .copy-btn.success {
+            background-color: #28a745;
+        }
+
+        .email-footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .instructions {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h4 {
+            margin: 0 0 10px 0;
+            color: #856404;
+        }
+
+        .instructions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #856404;
+        }
+
+        @media (max-width: 600px) {
+            .copy-buttons {
+                flex-direction: column;
+            }
+            
+            .copy-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Email Header -->
+        <div class="email-header">
+            <h1>📧 {{ session.suite_name or 'Test Suite' }} - Text Email Report</h1>
+            <div class="subtitle">{{ session.end_time.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+        </div>
+
+        <!-- Email Subject -->
+        <div class="email-subject">
+            <h2>📋 Email Subject</h2>
+            <div class="subject-text" id="emailSubject">{{ session.suite_name or 'Test Suite' }} Report : {{ session.end_time.strftime('%Y:%m:%d') }}: Total : {{ summary.total }} ; Pass : {{ summary.passed }}: Fail : {{ summary.failed }} ; PassWExcep: {% set overridden_pass = scenarios|selectattr('is_overridden', 'equalto', true)|selectattr('status', 'equalto', 'passed')|list|length %}{{ overridden_pass }}</div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="text-content">
+            <div class="instructions">
+                <h4>📝 Text-Based Email Report</h4>
+                <ul>
+                    <li><strong>Universal Compatibility:</strong> Plain text format works in all email providers</li>
+                    <li><strong>Detailed Information:</strong> Comprehensive test results and statistics</li>
+                    <li><strong>Professional Format:</strong> Clean, structured layout for stakeholders</li>
+                    <li><strong>Easy to Copy:</strong> One-click copying to clipboard</li>
+                </ul>
+            </div>
+
+            <!-- Text Preview -->
+            <h3>📄 Email Content Preview</h3>
+            <div class="text-preview" id="textContent">{{ session.suite_name or 'Test Suite' }} - Test Report
+{{ '=' * 60 }}
+
+📧 SUBJECT: {{ session.suite_name or 'Test Suite' }} Report : {{ session.end_time.strftime('%Y:%m:%d') }}: Total : {{ summary.total }} ; Pass : {{ summary.passed }}: Fail : {{ summary.failed }} ; PassWExcep: {% set overridden_pass = scenarios|selectattr('is_overridden', 'equalto', true)|selectattr('status', 'equalto', 'passed')|list|length %}{{ overridden_pass }}
+
+📊 EXECUTIVE SUMMARY
+{{ '-' * 30 }}
+Suite Name      : {{ session.suite_name or 'Test Suite' }}
+Test Date       : {{ session.end_time.strftime('%Y-%m-%d') }}
+Test Time       : {{ session.end_time.strftime('%H:%M:%S') }}
+Total Tests     : {{ summary.total }}
+Passed Tests    : {{ summary.passed }}
+Failed Tests    : {{ summary.failed }}{% if summary.skipped > 0 %}
+Skipped Tests   : {{ summary.skipped }}{% endif %}
+Pass Rate       : {{ "%.1f"|format(summary.pass_rate) }}%
+Total Duration  : {{ "%.2f"|format(session.duration) }} seconds
+{% if summary.failed == 0 %}
+✅ STATUS       : ALL TESTS PASSED{% else %}
+⚠️ STATUS       : {{ summary.failed }} TEST(S) FAILED{% endif %}
+
+{% if summary.failed > 0 %}❌ FAILED TESTS DETAILS
+{{ '-' * 30 }}
+{% for scenario in scenarios %}{% if scenario.status == 'failed' %}
+Test Name: {{ scenario.name }}
+{% if scenario.feature %}Suite: {{ scenario.feature }}{% endif %}
+Duration: {{ "%.3f"|format(scenario.duration) }}s
+{% if scenario.error %}Error: {{ scenario.error.split('\n')[0][:150] }}{% if scenario.error.split('\n')[0]|length > 150 %}...{% endif %}{% endif %}
+{{ '-' * 50 }}
+{% endif %}{% endfor %}
+
+{% endif %}📋 COMPLETE TEST RESULTS
+{{ '-' * 30 }}
+| # | Test Name                    | Status  | Duration | Suite           | Tags        |
+|---|------------------------------|---------|----------|-----------------|-------------|
+{% for scenario in scenarios %}| {{ "%2d"|format(loop.index) }} | {{ "%-28s"|format(scenario.name[:28]) }} | {{ "%-7s"|format(scenario.status|upper) }} | {{ "%8.3f"|format(scenario.duration) }}s | {{ "%-15s"|format((scenario.feature or 'Unknown')[:15]) }} | {{ "%-11s"|format((scenario.tags|join(',') if scenario.tags else 'None')[:11]) }} |
+{% endfor %}{{ '-' * 85 }}
+
+{% if features %}📦 SUITE BREAKDOWN
+{{ '-' * 30 }}
+{% for feature in features %}Suite: {{ feature.name }}
+   Total Tests : {{ feature.passed + feature.failed + feature.skipped }}
+   Passed      : {{ feature.passed }}
+   Failed      : {{ feature.failed }}{% if feature.skipped > 0 %}
+   Skipped     : {{ feature.skipped }}{% endif %}
+   Pass Rate   : {% set total = feature.passed + feature.failed + feature.skipped %}{% if total > 0 %}{{ "%.1f"|format((feature.passed / total) * 100) }}%{% else %}0.0%{% endif %}
+   {{ '-' * 40 }}
+{% endfor %}
+
+{% endif %}📈 KEY METRICS
+{{ '-' * 30 }}
+• Average Test Duration: {{ "%.3f"|format(session.duration / summary.total if summary.total > 0 else 0) }}s
+• Fastest Test: {% set fastest = scenarios|selectattr('status', 'ne', 'skipped')|min(attribute='duration') %}{{ fastest.name }} ({{ "%.3f"|format(fastest.duration) }}s)
+• Slowest Test: {% set slowest = scenarios|selectattr('status', 'ne', 'skipped')|max(attribute='duration') %}{{ slowest.name }} ({{ "%.3f"|format(slowest.duration) }}s)
+• Success Rate: {{ "%.1f"|format(summary.pass_rate) }}%
+{% if summary.failed > 0 %}• Failure Rate: {{ "%.1f"|format((summary.failed / summary.total) * 100) }}%{% endif %}
+
+{% if summary.failed > 0 %}⚠️ ACTION REQUIRED
+{{ '-' * 30 }}
+This report contains {{ summary.failed }} failed test(s) that require attention.
+Please review the failed tests section above and take appropriate action.
+
+{% endif %}{{ '=' * 85 }}
+Generated by pytest-bdd-reporter on {{ session.end_time.strftime('%Y-%m-%d %H:%M:%S') }}
+{{ '=' * 85 }}</div>
+        </div>
+
+        <!-- Copy Section -->
+        <div class="copy-section">
+            <h3>📋 Copy Email Content</h3>
+            <p style="margin: 0 0 10px 0; font-size: 12px; color: #6c757d;">
+                <strong>Text-based email content for universal compatibility across all email providers</strong>
+            </p>
+            <div class="copy-buttons">
+                <button class="copy-btn" onclick="copySubject()">📧 Copy Subject Only</button>
+                <button class="copy-btn" onclick="copyFullTextReport()">📝 Copy Complete Text Report</button>
+                <button class="copy-btn" onclick="openEmailClient()">✉️ Open Email Client</button>
+                <button class="copy-btn" onclick="copyExecutiveSummary()">📊 Copy Executive Summary</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="email-footer">
+            Generated by pytest-bdd-reporter on {{ session.end_time.strftime('%Y-%m-%d %H:%M:%S') }}<br>
+            <a href="bdd_report.html" style="color: #007bff;">View Interactive Report</a> | 
+            <a href="bdd_log.html" style="color: #007bff;">View Detailed Log</a>
+        </div>
+    </div>
+
+    <script>
+        function copySubject() {
+            const subject = document.getElementById('emailSubject').textContent;
+            navigator.clipboard.writeText(subject).then(function() {
+                showCopySuccess('Email subject copied to clipboard!');
+            }).catch(function(err) {
+                alert('Failed to copy subject. Please select and copy manually.');
+            });
+        }
+
+        function copyFullTextReport() {
+            const textContent = document.getElementById('textContent').textContent;
+            navigator.clipboard.writeText(textContent).then(function() {
+                showCopySuccess('Complete text report copied to clipboard!');
+            }).catch(function(err) {
+                alert('Failed to copy text report. Please select and copy manually.');
+            });
+        }
+
+        function copyExecutiveSummary() {
+            const summaryText = `{{ session.suite_name or 'Test Suite' }} - Test Report Summary
+
+📊 EXECUTIVE SUMMARY
+{{ '-' * 30 }}
+Suite Name      : {{ session.suite_name or 'Test Suite' }}
+Test Date       : {{ session.end_time.strftime('%Y-%m-%d') }}
+Test Time       : {{ session.end_time.strftime('%H:%M:%S') }}
+Total Tests     : {{ summary.total }}
+Passed Tests    : {{ summary.passed }}
+Failed Tests    : {{ summary.failed }}{% if summary.skipped > 0 %}
+Skipped Tests   : {{ summary.skipped }}{% endif %}
+Pass Rate       : {{ "%.1f"|format(summary.pass_rate) }}%
+Total Duration  : {{ "%.2f"|format(session.duration) }} seconds
+PassWExcep      : {% set overridden_pass = scenarios|selectattr('is_overridden', 'equalto', true)|selectattr('status', 'equalto', 'passed')|list|length %}{{ overridden_pass }}
+{% if summary.failed == 0 %}
+✅ STATUS       : ALL TESTS PASSED{% else %}
+⚠️ STATUS       : {{ summary.failed }} TEST(S) FAILED{% endif %}
+
+Generated by pytest-bdd-reporter on {{ session.end_time.strftime('%Y-%m-%d %H:%M:%S') }}`;
+
+            navigator.clipboard.writeText(summaryText).then(function() {
+                showCopySuccess('Executive summary copied to clipboard!');
+            }).catch(function(err) {
+                alert('Failed to copy summary. Please select and copy manually.');
+            });
+        }
+
+        function openEmailClient() {
+            const subject = encodeURIComponent(document.getElementById('emailSubject').textContent);
+            const body = encodeURIComponent(document.getElementById('textContent').textContent);
+            
+            const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+            
+            // Try multiple methods to open email client
+            try {
+                window.location.href = mailtoLink;
+                showCopySuccess('Opening email client...');
+            } catch (e) {
+                try {
+                    const tempLink = document.createElement('a');
+                    tempLink.href = mailtoLink;
+                    tempLink.style.display = 'none';
+                    document.body.appendChild(tempLink);
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
+                    showCopySuccess('Opening email client...');
+                } catch (e2) {
+                    try {
+                        window.open(mailtoLink, '_blank');
+                        showCopySuccess('Opening email client...');
+                    } catch (e3) {
+                        // Fallback: Copy to clipboard
+                        const fullContent = document.getElementById('emailSubject').textContent + '\\n\\n' + document.getElementById('textContent').textContent;
+                        navigator.clipboard.writeText(fullContent).then(function() {
+                            alert('Could not open email client automatically.\\n\\nComplete email content (subject + body) has been copied to clipboard.\\nPlease paste it into your email client manually.');
+                        }).catch(function() {
+                            alert('Could not open email client.\\nPlease copy the content manually from the preview above.');
+                        });
+                    }
+                }
+            }
+        }
+
+        function showCopySuccess(message) {
+            // Create a temporary success message
+            const successDiv = document.createElement('div');
+            successDiv.textContent = message;
+            successDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #28a745;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 4px;
+                z-index: 1000;
+                font-size: 14px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            `;
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                if (document.body.contains(successDiv)) {
+                    document.body.removeChild(successDiv);
+                }
+            }, 3000);
+        }
+
+        // Auto-select content when clicked
+        document.getElementById('textContent').addEventListener('click', function() {
+            const range = document.createRange();
+            range.selectNode(this);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        });
+
+        document.getElementById('emailSubject').addEventListener('click', function() {
+            const range = document.createRange();
+            range.selectNode(this);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        });
+    </script>
+</body>
+</html>
