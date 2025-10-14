@@ -1,0 +1,6 @@
+[console_scripts]
+assign-public-key = snowflake_keypair_helper.cli:assign_public_key
+create-user = snowflake_keypair_helper.cli:create_user
+generate-keypair = snowflake_keypair_helper.cli:generate_keypair
+list-cli-commands = snowflake_keypair_helper.cli:list_cli_commands
+
