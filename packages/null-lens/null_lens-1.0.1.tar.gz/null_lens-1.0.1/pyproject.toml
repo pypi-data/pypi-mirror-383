@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "null-lens"
+version = "1.0.1"  # ⬅️ bump this for new PyPI release
+description = "The missing protocol between user requests and AI actions — standardized intent parsing for every AI system."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "Null Technologies", email = "support@null-core.ai" }
+]
+keywords = ["AI", "intent", "parser", "standardization", "sdk"]
+
+dependencies = ["requests"]
+
+[project.urls]
+Homepage = "https://null-core.ai"
+Documentation = "https://github.com/null-core-ai/null-lens#readme"
+Repository = "https://github.com/null-core-ai/null-lens"
+Issues = "https://github.com/null-core-ai/null-lens/issues"

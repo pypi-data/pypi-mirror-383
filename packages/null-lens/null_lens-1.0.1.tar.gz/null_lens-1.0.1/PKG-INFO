@@ -1,0 +1,253 @@
+Metadata-Version: 2.4
+Name: null-lens
+Version: 1.0.1
+Summary: The missing protocol between user requests and AI actions — standardized intent parsing for every AI system.
+Author-email: Null Technologies <support@null-core.ai>
+License: MIT
+Project-URL: Homepage, https://null-core.ai
+Project-URL: Documentation, https://github.com/null-core-ai/null-lens#readme
+Project-URL: Repository, https://github.com/null-core-ai/null-lens
+Project-URL: Issues, https://github.com/null-core-ai/null-lens/issues
+Keywords: AI,intent,parser,standardization,sdk
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests
+Dynamic: license-file
+
+# ⟁ Null Lens
+
+**The missing protocol between user requests and AI actions.**  
+Standardized intent parsing for every AI system.  
+Converts any input into a deterministic schema — **[Motive] [Scope] [Priority]**.
+
+---
+
+## 🧩 What it does
+
+Null Lens turns unstructured natural-language input into a fixed three-line intent block:
+
+```
+[Motive] — what the user wants to achieve
+[Scope] — where the request applies (context or domain)
+[Priority] — what must be done first or resolved
+````
+
+One ambiguous paragraph in → three structured fields out.
+
+---
+## 🐍 Python SDK
+
+```bash
+pip install null-lens
+```
+
+**Usage**
+
+```python
+from null_lens import NullLens
+
+lens = NullLens(api_key="your_api_key_here")
+
+result = lens.parse("Summarize Q4 strategy across LATAM markets.")
+print(result)
+```
+**Response**
+
+```
+[Motive] Summarize strategic direction for Q4  
+[Scope] LATAM markets  
+[Priority] Identify key actions for planning cycle
+```
+---
+## ⚡ JavaScript / TypeScript SDK
+```bash
+npm install null-lens
+```
+**Usage**
+
+```js
+import { NullLens } from "null-lens";
+
+const lens = new NullLens(process.env.NULL_LENS_API_KEY);
+
+const result = await lens.parse("Summarize Q4 strategy across LATAM markets.");
+console.log(result);
+```
+**Response**
+
+```
+[Motive] Summarize strategic direction for Q4  
+[Scope] LATAM markets  
+[Priority] Identify key actions for planning cycle
+```
+---
+### Get your API key
+You’ll need an API key to use Lens.
+
+→ [https://null-core.ai](https://null-core.ai) → sign up → get **100 free queries instantly.**  
+No credit card. No approval delay.
+
+```bash
+export NULL_LENS_API_KEY="your_api_key_here"
+# or on Windows PowerShell
+setx NULL_LENS_API_KEY "your_api_key_here"
+```
+
+---
+
+## 🧠 Why it matters
+
+AI systems don’t fail at inference — they fail at **interpretation.**
+Lens removes ambiguity before reasoning begins.
+
+**Without Lens**
+
+* Prompt retries
+* Context drift
+* RAG scaffolding debt
+
+**With Lens**
+
+* Stable input schema
+* Consistent reasoning
+* Deterministic orchestration
+
+---
+
+## 🔌 API Access
+
+**Endpoint**
+
+```
+POST https://null-core.ai/api/lens
+```
+
+**Headers**
+
+```
+Authorization: Bearer <API_KEY>  
+Content-Type: application/json
+```
+
+**Body**
+
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Summarize the latency impact of our RAG pipeline for 100k qps"
+    }
+  ]
+}
+```
+
+**Response**
+
+```json
+{
+  "object": "chat.completion",
+  "org_id": "xxxx-xxxx-xxxx",
+  "response": "[Motive] Identify latency impact of RAG pipeline\n[Scope] RAG pipeline, 100k QPS scenario\n[Priority] Optimize for performance stability"
+}
+```
+
+---
+
+## 🧩 Parsing Helpers
+
+**JavaScript**
+
+```js
+function parseLensResponse(responseText) {
+  const lines = responseText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  const find = (prefix) => {
+    const line = lines.find(l => l.toLowerCase().startsWith(prefix));
+    return line ? line.split(']').slice(1).join(']').trim() : null;
+  };
+  return {
+    motive: find('[motive]'),
+    scope: find('[scope]'),
+    priority: find('[priority]')
+  };
+}
+```
+
+**Python**
+
+```python
+def parse_lens_response(text):
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+    def find(prefix):
+        for l in lines:
+            if l.lower().startswith(prefix):
+                return l.split(']', 1)[1].strip()
+        return None
+    return {
+        "motive": find("[motive]"),
+        "scope": find("[scope]"),
+        "priority": find("[priority]")
+    }
+```
+
+---
+
+## 🧩 Example cURL
+
+```bash
+curl -X POST https://null-core.ai/api/lens \
+  -H "Authorization: Bearer <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"We migrated API to v2 and uptime dropped — logs show auth timeouts. Root cause & mitigation before Friday?"}]}'
+```
+
+---
+
+## 🧠 Best Practices
+
+* **One call per semantic input** — send full text in `messages[0].content`.
+* **Persist outputs** — store Motive / Scope / Priority as fields in your DB.
+* **Cache identical inputs** — identical input → identical output.
+* **Use Lens before RAG / agents** — treat its output as your canonical intent layer.
+* **Test with messy inputs** — long emails, transcripts, logs; the schema holds.
+
+---
+
+## 🔐 Security & Compliance
+
+* Stateless — no inputs stored or retained.
+* You manage your own API keys.
+* Rotate keys if compromised.
+* Don’t send confidential or PII data unless necessary.
+* Provided *as-is*, without warranties; you own compliance and handling.
+
+---
+
+## ❓ FAQ
+
+**Q:** Is Lens stateful?
+**A:** No — each call is independent. Inputs are transient and not stored.
+
+**Q:** Is the output deterministic?
+**A:** Yes. Same input → same 3-line output. Determinism by design.
+
+**Q:** Will the format ever change?
+**A:** Never. The `[Motive] / [Scope] / [Priority]` schema is permanent.
+
+**Q:** Average latency?
+**A:** ~1–5 s per call, depending on region and load.
+
+**Q:** Enterprise pricing?
+**A:** Contact **[support@null-core.ai](mailto:support@null-core.ai)** for volume or dedicated environments.
+
+---
+
+## 🩶 License
+
+MIT License — see [LICENSE](LICENSE)
+
+---
+
+**API-first. Stateless. Deterministic.**
+Every call, every time.
