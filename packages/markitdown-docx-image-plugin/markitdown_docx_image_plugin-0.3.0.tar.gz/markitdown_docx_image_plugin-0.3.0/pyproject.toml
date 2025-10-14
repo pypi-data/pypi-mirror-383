@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "markitdown-docx-image-plugin"
+dynamic = ["version"]
+description = '将Word文档中的图片提取到目录中，并在Markdown中使用相对路径引用'
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = ["markitdown", "docx", "image", "plugin"]
+authors = [
+  { name = "Fengyun" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "markitdown>=0.0.2",
+  "mammoth",
+  "beautifulsoup4",
+  "markdownify",
+]
+
+[project.urls]
+Documentation = "https://github.com/microsoft/markitdown#readme"
+Source = "https://github.com/microsoft/markitdown"
+
+[tool.hatch.version]
+path = "src/markitdown_docx_image_plugin/__about__.py"
+
+# IMPORTANT: MarkItDown 将通过这个入口点发现插件
+[project.entry-points."markitdown.plugin"]
+docx_image_extractor = "markitdown_docx_image_plugin"
+
+[tool.hatch.build.targets.sdist]
+only-include = ["src/markitdown_docx_image_plugin"]
+

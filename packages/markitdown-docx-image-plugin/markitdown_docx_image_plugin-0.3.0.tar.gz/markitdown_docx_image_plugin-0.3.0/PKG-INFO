@@ -1,0 +1,245 @@
+Metadata-Version: 2.4
+Name: markitdown-docx-image-plugin
+Version: 0.3.0
+Summary: 将Word文档中的图片提取到目录中，并在Markdown中使用相对路径引用
+Project-URL: Documentation, https://github.com/microsoft/markitdown#readme
+Project-URL: Source, https://github.com/microsoft/markitdown
+Author: Fengyun
+License-Expression: MIT
+Keywords: docx,image,markitdown,plugin
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.9
+Requires-Dist: beautifulsoup4
+Requires-Dist: mammoth
+Requires-Dist: markdownify
+Requires-Dist: markitdown>=0.0.2
+Description-Content-Type: text/markdown
+
+# MarkItDown DOCX图片提取插件
+
+这个插件扩展了 MarkItDown，能够将 Word 文档（.docx）中的图片提取到指定目录，并在生成的 Markdown 中使用相对路径引用这些图片。
+
+## 功能特点
+
+- ✅ 自动从 DOCX 文件中提取所有图片
+- ✅ 保存图片到指定目录（默认为 `docx_images/`）
+- ✅ 在 Markdown 中使用相对路径引用图片
+- ✅ 避免 Data URI 导致的 Markdown 文件过大
+- ✅ 生成唯一的图片文件名（基于原文档名 + UUID）
+- ✅ 支持配置图片服务器host（通过环境变量）
+- ✅ **自动转换 Word 公式为 LaTeX 格式**（OMML → `$...$`）
+- ✅ **优先级设置确保在标准转换器之前运行**（priority=-1.0）
+
+## 问题解决
+
+### 默认行为的问题
+
+MarkItDown 默认将 DOCX 中的图片转换为 base64 编码的 Data URI，这会导致：
+- Markdown 文件变得非常大
+- 不利于版本控制
+- 某些编辑器无法正确显示
+
+### 本插件的解决方案
+
+将图片提取为独立文件，使用相对路径引用：
+```markdown
+![图片描述](docx_images/document_image1_a3f7b8c9d1e2.png)
+![图片描述](docx_images/document_image2_f9e4d3c2b1a0.jpg)
+```
+
+或者使用图片服务器的完整URL：
+```markdown
+![图片描述](https://cdn.example.com/docx_images/document_image1_a3f7b8c9d1e2.png)
+![图片描述](https://cdn.example.com/docx_images/document_image2_f9e4d3c2b1a0.jpg)
+```
+
+## 安装
+
+1. 首先确保已安装 MarkItDown：
+```bash
+pip install markitdown[docx]
+```
+
+2. 安装本插件：
+```bash
+cd /path/to/markitdown-docx-image-plugin
+pip install -e .
+```
+
+3. 验证插件已安装：
+```bash
+markitdown --list-plugins
+```
+
+应该看到：
+```
+Installed MarkItDown 3rd-party Plugins:
+
+  * docx_image_extractor    (package: markitdown_docx_image_plugin)
+```
+
+## 使用方法
+
+### 命令行使用
+
+```bash
+# 基本用法（图片保存到 docx_images/ 目录）
+markitdown --use-plugins document.docx -o output.md
+
+# 图片和 markdown 会分别生成：
+# - output.md （包含相对路径的图片引用）
+# - docx_images/document_image1_a3f7b8c9d1e2.png
+# - docx_images/document_image2_f9e4d3c2b1a0.jpg
+```
+
+### Python API 使用
+
+```python
+from markitdown import MarkItDown
+
+# 启用插件
+md = MarkItDown(enable_plugins=True)
+
+# 转换文档（使用默认图片目录 "docx_images"）
+result = md.convert("document.docx")
+
+# 保存 markdown
+with open("output.md", "w", encoding="utf-8") as f:
+    f.write(result.markdown)
+
+# 图片会自动保存到 docx_images/ 目录
+```
+
+### 自定义图片输出目录
+
+```python
+from markitdown import MarkItDown
+
+# 启用插件并指定图片目录
+md = MarkItDown(
+    enable_plugins=True, 
+    image_output_dir="assets/images"
+)
+
+result = md.convert("document.docx", image_output_dir="assets/images")
+
+with open("output.md", "w", encoding="utf-8") as f:
+    f.write(result.markdown)
+
+# 图片会保存到 assets/images/ 目录
+```
+
+### 配置图片服务器host
+
+通过设置环境变量 `IMAGE_SERVER_HOST`，可以让生成的 Markdown 使用完整的图片服务器URL，而不是相对路径：
+
+```bash
+# 使用相对路径（默认）
+markitdown --use-plugins document.docx -o output.md
+# 生成: ![](docx_images/doc_image1_a3f7b8c9d1e2.png)
+
+# 使用图片服务器URL
+export IMAGE_SERVER_HOST="https://cdn.example.com"
+markitdown --use-plugins document.docx -o output.md
+# 生成: ![](https://cdn.example.com/docx_images/doc_image1_a3f7b8c9d1e2.png)
+```
+
+在Python中使用：
+
+```python
+import os
+from markitdown import MarkItDown
+
+# 设置图片服务器host
+os.environ['IMAGE_SERVER_HOST'] = 'https://cdn.example.com'
+
+# 启用插件
+md = MarkItDown(enable_plugins=True)
+
+# 转换文档
+result = md.convert("document.docx")
+
+# 生成的图片引用将使用完整URL
+# ![](https://cdn.example.com/docx_images/document_image1_a3f7b8c9d1e2.png)
+```
+
+**应用场景：**
+- 本地开发时不设置环境变量，使用相对路径
+- 生产环境中设置环境变量，使用CDN或图片服务器的完整URL
+- 自动化处理时可根据需要动态配置
+
+## 工作原理
+
+1. **提取图片**：使用 mammoth 从 DOCX 文件中提取所有图片
+2. **生成唯一文件名**：文件名格式为 `{文档名}_image{序号}_{UUID}.{扩展名}`，其中UUID确保文件名唯一性
+3. **保存文件**：将图片保存到指定目录
+4. **生成图片引用**：根据环境变量 `IMAGE_SERVER_HOST` 决定使用相对路径还是完整URL
+5. **转换 Markdown**：将 HTML 转换为 Markdown
+
+## 输出示例
+
+**输入文件：** `report.docx`（包含2张图片）
+
+**输出结构：**
+```
+report.md
+docx_images/
+  ├── report_image1_a3f7b8c9d1e2.png
+  └── report_image2_f9e4d3c2b1a0.jpg
+```
+
+**report.md 内容（相对路径模式）：**
+```markdown
+# 报告标题
+
+这是报告的第一段文字。
+
+![图表1](docx_images/report_image1_a3f7b8c9d1e2.png)
+
+这是更多内容。
+
+![照片](docx_images/report_image2_f9e4d3c2b1a0.jpg)
+```
+
+**report.md 内容（配置图片服务器后）：**
+```markdown
+# 报告标题
+
+这是报告的第一段文字。
+
+![图表1](https://cdn.example.com/docx_images/report_image1_a3f7b8c9d1e2.png)
+
+这是更多内容。
+
+![照片](https://cdn.example.com/docx_images/report_image2_f9e4d3c2b1a0.jpg)
+```
+
+## 注意事项
+
+1. **目录创建**：插件会自动创建图片输出目录（如果不存在）
+2. **文件命名**：图片文件名包含UUID（12位），确保唯一性，避免冲突
+3. **相对路径 vs 完整URL**：
+   - 未设置 `IMAGE_SERVER_HOST`：使用相对路径（如 `docx_images/file.png`）
+   - 设置了 `IMAGE_SERVER_HOST`：使用完整URL（如 `https://cdn.example.com/docx_images/file.png`）
+4. **环境变量**：`IMAGE_SERVER_HOST` 会自动移除末尾的斜杠，确保URL格式正确
+
+## 依赖项
+
+- `markitdown>=0.0.2`
+- `mammoth` - 用于读取 DOCX 文件
+- `beautifulsoup4` - 用于解析 HTML
+- `markdownify` - 用于将 HTML 转换为 Markdown
+
+## 许可证
+
+MIT License
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
