@@ -1,0 +1,378 @@
+Metadata-Version: 2.4
+Name: snapinfra
+Version: 1.0.0
+Summary: Snap Infrastructure - AI-Powered Infrastructure Code Generator
+Author-email: Firefly Team <team@firefly.ai>
+Project-URL: Homepage, https://github.com/gofireflyio/aiac
+Project-URL: Documentation, https://github.com/gofireflyio/aiac#readme
+Project-URL: Repository, https://github.com/gofireflyio/aiac.git
+Project-URL: Bug Reports, https://github.com/gofireflyio/aiac/issues
+Keywords: ai,infrastructure,iac,terraform,kubernetes,docker,architecture,cloudformation,llm,openai,bedrock,ollama,code-generation,devops
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Code Generators
+Classifier: Topic :: System :: Systems Administration
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: boto3>=1.34.0
+Requires-Dist: httpx>=0.25.0
+Requires-Dist: tomli>=2.0.0; python_version < "3.11"
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: pyperclip>=1.8.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: platformdirs>=3.0.0
+Requires-Dist: aiofiles>=23.0.0
+Requires-Dist: typing-extensions>=4.5.0
+Dynamic: license-file
+
+# SnapInfra - AI-Powered Infrastructure Code Generator
+
+[![PyPI version](https://badge.fury.io/py/snapinfra.svg)](https://badge.fury.io/py/snapinfra)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+**Snap your infrastructure into existence with AI-powered code generation**
+
+SnapInfra is an advanced command-line tool that leverages Large Language Models (LLMs) to generate infrastructure-as-code templates, configuration files, utilities, and architectural documentation from natural language descriptions.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+- [Current Features](#current-features)
+- [Usage Examples](#usage-examples)
+- [Architecture](#architecture)
+- [Supported Providers](#supported-providers)
+- [Roadmap](#roadmap)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
+### Via pip (Recommended)
+```bash
+pip install snapinfra
+```
+
+### Via pipx (Isolated installation)
+```bash
+pipx install snapinfra
+```
+
+### From Source
+```bash
+git clone https://github.com/gofireflyio/snapinfra.git
+cd snapinfra
+pip install -e .
+```
+
+## Quick Start
+
+1. **First run** will prompt you to create a configuration file:
+```bash
+snapinfra terraform for AWS EC2
+```
+
+2. **Configure your LLM provider** by editing `~/.config/snapinfra/snapinfra.toml`
+
+3. **Generate infrastructure code**:
+```bash
+snapinfra terraform for a highly available kubernetes cluster
+```
+
+## Configuration
+
+SnapInfra uses a TOML configuration file to manage multiple LLM providers and their settings.
+
+### Configuration File Location
+- **Linux/Unix**: `~/.config/snapinfra/snapinfra.toml`
+- **Windows**: `%APPDATA%/snapinfra/snapinfra.toml`
+- **macOS**: `~/Library/Application Support/snapinfra/snapinfra.toml`
+
+### Example Configuration
+```toml
+default_backend = "openai"
+
+[backends.openai]
+type = "openai"
+api_key = "$OPENAI_API_KEY"
+default_model = "gpt-4"
+
+[backends.azure_openai]
+type = "openai"
+url = "https://your-tenant.openai.azure.com/openai/deployments/your-deployment"
+api_key = "$AZURE_OPENAI_API_KEY"
+api_version = "2023-05-15"
+default_model = "gpt-4"
+
+[backends.aws_bedrock]
+type = "bedrock"
+aws_profile = "default"
+aws_region = "us-east-1"
+default_model = "amazon.titan-text-express-v1"
+
+[backends.local_ollama]
+type = "ollama"
+url = "http://localhost:11434/api"
+default_model = "mistral:latest"
+```
+
+## Current Features
+
+### Core Functionality
+- **Multi-Provider Support**: OpenAI, Azure OpenAI, AWS Bedrock, Ollama
+- **Interactive CLI**: Rich terminal interface with syntax highlighting
+- **Conversation Mode**: Iterative refinement through chat-based interaction
+- **Multiple Output Formats**: Code-only, full markdown, or mixed output
+- **File Operations**: Save generated code to files with automatic organization
+- **Clipboard Integration**: Copy generated code directly to clipboard
+
+### Infrastructure-as-Code Generation
+- **Terraform**: Complete infrastructure templates with proper resource dependencies
+- **Pulumi**: Multi-language support (TypeScript, Python, Go, C#)
+- **CloudFormation**: AWS native templates with best practices
+- **Kubernetes**: Manifests, deployments, services, and configurations
+- **Ansible**: Playbooks and role definitions
+- **Docker**: Optimized Dockerfiles and docker-compose configurations
+
+### Configuration Management
+- **Environment Variables**: Automatic expansion and validation
+- **Named Backends**: Support for multiple environments (dev, staging, prod)
+- **Model Selection**: Per-backend default models with runtime override
+- **Custom Headers**: Support for proxy setups and custom authentication
+
+### Developer Experience
+- **Async Architecture**: Concurrent request handling for improved performance
+- **Error Handling**: Comprehensive error messages with actionable suggestions
+- **Timeout Management**: Configurable timeouts for different operations
+- **Cross-Platform**: Identical functionality across Windows, macOS, and Linux
+
+## Usage Examples
+
+### Basic Generation
+```bash
+# Generate Terraform for AWS EKS
+snapinfra terraform for a highly available eks cluster
+
+# Generate Kubernetes deployment
+snapinfra k8s manifest for a mongodb deployment with persistent storage
+
+# Generate secure Dockerfile
+snapinfra dockerfile for a production nodejs application
+```
+
+### Advanced Options
+```bash
+# Use specific backend and model
+snapinfra -b aws_bedrock -m amazon.titan-text-express-v1 terraform for S3
+
+# Save to file and include documentation
+snapinfra terraform for EKS -o infrastructure.tf -r infrastructure-docs.md
+
+# Non-interactive mode with clipboard copy
+snapinfra -q --clipboard dockerfile for python flask application
+
+# List available models for a backend
+snapinfra -b openai --list-models
+```
+
+### Interactive Mode
+```bash
+snapinfra terraform for AWS Lambda with API Gateway
+# Generates initial code, then provides options:
+# [S/s]: save and exit
+# [W/w]: save and chat
+# [C/c]: continue chatting
+# [Y/y]: copy to clipboard
+# [Q/q]: quit
+```
+
+## Architecture
+
+### Core Components
+
+#### CLI Layer (`snapinfra.cli`)
+- **Click-based CLI**: Modern command-line interface with rich help
+- **Rich Integration**: Beautiful terminal output with syntax highlighting
+- **Interactive Prompts**: User-friendly input validation and guidance
+
+#### Configuration Management (`snapinfra.config`)
+- **TOML Parsing**: Robust configuration file handling with validation
+- **Environment Variables**: Secure credential management
+- **Multi-Backend**: Support for multiple named configurations
+
+#### Backend Abstraction (`snapinfra.backends`)
+- **Provider Interface**: Unified API for all LLM providers
+- **Async Implementation**: Non-blocking operations with proper error handling
+- **Extensible Design**: Easy addition of new LLM providers
+
+#### Type System (`snapinfra.types`)
+- **Pydantic Models**: Strong typing with runtime validation
+- **Abstract Interfaces**: Clean separation of concerns
+- **Custom Exceptions**: Detailed error classification and handling
+
+## Supported Providers
+
+### OpenAI / Azure OpenAI
+- **Models**: GPT-4, GPT-3.5-turbo, and latest releases
+- **Features**: Full API compatibility, streaming responses, custom endpoints
+- **Authentication**: API key based, Azure AD integration
+
+### AWS Bedrock
+- **Models**: Amazon Titan, Anthropic Claude, AI21 Jurassic, Cohere Command
+- **Features**: Native AWS integration, IAM-based authentication
+- **Regions**: Multi-region support with automatic failover
+
+### Ollama (Self-hosted)
+- **Models**: Mistral, Llama 2, CodeLlama, and community models
+- **Features**: Local deployment, no external dependencies
+- **Performance**: Optimized for local inference
+
+## Roadmap
+
+### Version 1.1 (Q1 2025)
+- **Enhanced Output Formats**
+  - YAML configuration generation
+  - JSON schema validation
+  - Multi-file project scaffolding
+
+- **Provider Expansions**
+  - Anthropic Claude direct API support
+  - Cohere API integration
+  - Hugging Face Inference API support
+
+### Version 1.2 (Q2 2025)
+- **Template System**
+  - Reusable template library
+  - Custom template creation and sharing
+  - Template versioning and management
+
+- **Advanced Configuration**
+  - Per-project configuration files
+  - Configuration inheritance
+  - Environment-specific overrides
+
+### Version 1.3 (Q3 2025)
+- **Technical Architecture Diagrams**
+  - **React Flow Canvas Generator**: Interactive diagram creation with drag-and-drop interface
+  - **Architecture Visualization**: Automatic generation of system architecture diagrams from infrastructure code
+  - **Component Mapping**: Visual representation of infrastructure relationships and dependencies
+  - **Export Capabilities**: PNG, SVG, and PDF output formats
+  - **Collaboration Features**: Real-time editing and sharing capabilities
+
+- **Code Analysis and Optimization**
+  - Infrastructure code analysis and recommendations
+  - Security best practices validation
+  - Cost optimization suggestions
+
+### Version 1.4 (Q4 2025)
+- **Integration Ecosystem**
+  - VS Code extension with inline generation
+  - GitHub Actions integration
+  - CI/CD pipeline templates
+
+- **Web Interface**
+  - Browser-based GUI for non-technical users
+  - Project management and history
+  - Team collaboration features
+
+### Version 2.0 (2026)
+- **Multi-Modal Support**
+  - Image-to-infrastructure generation
+  - Architecture diagram parsing and code generation
+  - Voice command interface
+
+- **Enterprise Features**
+  - SSO integration (SAML, OIDC)
+  - Audit logging and compliance reporting
+  - Multi-tenant deployment support
+
+## Development
+
+### Setup Development Environment
+```bash
+git clone https://github.com/gofireflyio/snapinfra.git
+cd snapinfra
+
+# Install with development dependencies
+pip install -e ".[dev,test,docs]"
+
+# Run tests
+pytest
+
+# Format code
+make format
+
+# Run full CI pipeline
+make ci
+```
+
+### Project Structure
+```
+snapinfra/
+├── src/snapinfra/           # Main package
+│   ├── cli/                 # Command-line interface
+│   ├── config/              # Configuration management
+│   ├── backends/            # LLM provider implementations
+│   ├── types/               # Type definitions and models
+│   └── utils/               # Utility functions
+├── tests/                   # Test suite
+├── docs/                    # Documentation
+├── pyproject.toml           # Package configuration
+└── Makefile                 # Development commands
+```
+
+### Available Commands
+```bash
+make help          # Show all available commands
+make install       # Install package
+make test          # Run tests with coverage
+make lint          # Run linting checks
+make format        # Format code
+make build         # Build distribution packages
+make docker        # Build Docker image
+```
+
+## Contributing
+
+We welcome contributions from the community! Please see our contributing guidelines for details on:
+
+- Code standards and formatting
+- Testing requirements
+- Documentation updates
+- Feature request process
+- Bug report procedures
+
+### Development Workflow
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes with tests
+4. Ensure all tests pass (`make test`)
+5. Format code (`make format`)
+6. Commit changes (`git commit -m 'Add amazing feature'`)
+7. Push to branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+## License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+---
+
+**SnapInfra** - Snap your infrastructure into existence with AI-powered code generation.
