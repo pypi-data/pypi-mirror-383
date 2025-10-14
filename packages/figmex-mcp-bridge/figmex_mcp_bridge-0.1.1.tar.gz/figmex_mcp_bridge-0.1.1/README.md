@@ -1,0 +1,93 @@
+# Figmex MCP Bridge
+
+This service connects the Figmex Figma plugin to Codex CLI (or any MCP-compatible client). It exposes Figma operations as MCP tools and forwards requests to the plugin over a localhost WebSocket.
+
+## How it works
+
+1. The Figmex plugin opens a WebSocket to `ws://127.0.0.1:8787` when it launches.
+2. This bridge listens on that address, relays JSON-RPC requests to the plugin, and keeps track of live document events.
+3. The bridge exposes an MCP server so Codex CLI (or another MCP client) can issue tools like `invoke_figma_command`.
+
+## Getting started
+
+- Install via pip (recommended once a release is published):
+  ```bash
+  python3 -m pip install figmex-mcp-bridge
+  ```
+- During development clone the repo and install editable:
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  python3 -m pip install -e .
+  ```
+
+### Run directly
+
+```bash
+figmex-mcp-bridge serve
+```
+
+This starts the bridge as a stdio MCP server. Launch Codex CLI afterwards and it will connect automatically if your config references the server (see below). Open the Figmex plugin in Figma and the bridge will pair with it as soon as the plugin boots.
+
+To expose an HTTP transport for debugging:
+
+```bash
+figmex-mcp-bridge serve-http --port 3845
+```
+
+### Configure Codex CLI
+
+Add the following snippet to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.figmex]
+command = "figmex-mcp-bridge"
+args = ["serve"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+```
+
+You can print this snippet (or an HTTP variant) with:
+
+```bash
+figmex-mcp-bridge config --name figmex
+```
+
+Now launching Codex CLI automatically spins up the bridge. Open the plugin in Figma and start issuing commands such as:
+
+```
+mcp call figmex invoke_figma_command --json '{"command": "get-selection"}'
+```
+
+See `figmex_mcp_bridge/server.py` for the MCP definition. The default tool accepts:
+
+- `command` – string key matching the plugin's supported command list.
+- `args` – optional JSON object with arguments for that command.
+
+## Development
+
+Run tests and lint:
+
+```bash
+pytest
+ruff check .
+```
+
+Build distribution artifacts:
+
+```bash
+python3 -m pip install build
+python3 -m build
+```
+
+The wheel/sdist will appear in `dist/` ready for publication or packaging.
+
+## Roadmap
+
+- Auto-register individual Figma commands as dedicated MCP tools once the plugin bootstrap is received.
+- Surface document events (selection/document changes) as MCP notifications or resources.
+- Package an executable bridge so Codex CLI can launch it automatically.
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE) for details.
