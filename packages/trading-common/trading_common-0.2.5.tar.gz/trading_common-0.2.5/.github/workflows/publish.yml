@@ -1,0 +1,114 @@
+name: Publish Package
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Optional version or tag to publish (e.g., 0.1.0, v0.1.0, v.0.1.0)'
+        required: false
+        default: ''
+      publish_to:
+        description: 'Where to publish'
+        required: true
+        default: 'pypi'
+        type: choice
+        options:
+        - pypi
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Resolve release ref and version
+      id: release_meta
+      run: |
+        set -euo pipefail
+
+        ref="$RAW_REF"
+
+        if [[ "$EVENT_NAME" == "workflow_dispatch" && -n "$MANUAL_VERSION" ]]; then
+          candidate="$MANUAL_VERSION"
+          if [[ "$candidate" == refs/* ]]; then
+            ref="$candidate"
+          elif [[ "$candidate" =~ ^[vV].* ]]; then
+            ref="refs/tags/$candidate"
+          else
+            ref="refs/tags/v$candidate"
+          fi
+        fi
+
+        if [[ "$ref" != refs/tags/* ]]; then
+          echo "::error::Publish workflow must target a git tag (got '$ref')." >&2
+          exit 1
+        fi
+
+        tag="${ref#refs/tags/}"
+
+        normalized="$tag"
+        case "$normalized" in
+          [vV][._-]*)
+            normalized="${normalized:2}"
+            ;;
+          [vV]*)
+            normalized="${normalized:1}"
+            ;;
+        esac
+        normalized="${normalized#[._-]}"
+
+        if [[ ! "$normalized" =~ ^[0-9]+(\.[0-9]+){2}$ ]]; then
+          echo "::error::Unable to extract semantic version from tag '$tag'." >&2
+          exit 1
+        fi
+
+        echo "full_ref=$ref" >> "$GITHUB_OUTPUT"
+        echo "checkout_ref=$tag" >> "$GITHUB_OUTPUT"
+        echo "version=$normalized" >> "$GITHUB_OUTPUT"
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        RAW_REF: ${{ github.ref }}
+        MANUAL_VERSION: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version || '' }}
+
+    - name: Checkout code (tag or default)
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ steps.release_meta.outputs.checkout_ref }}
+
+    - name: Verify tag checkout
+      run: |
+        actual_tag="$(git describe --exact-match --tags)"
+        if [[ "$actual_tag" != "$EXPECTED_TAG" ]]; then
+          echo "::error::Expected to be on tag '$EXPECTED_TAG' but got '$actual_tag'." >&2
+          exit 1
+        fi
+      env:
+        EXPECTED_TAG: ${{ steps.release_meta.outputs.checkout_ref }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+
+    - name: Build package
+      env:
+        SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.release_meta.outputs.version }}
+      run: python -m build
+
+    # Publish based on input or tag trigger
+    - name: Publish to PyPI
+      if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_to == 'pypi') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) }}
+      run: |
+        python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
