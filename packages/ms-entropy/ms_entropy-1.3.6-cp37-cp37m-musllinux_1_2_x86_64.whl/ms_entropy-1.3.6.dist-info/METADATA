@@ -1,0 +1,383 @@
+Metadata-Version: 2.1
+Name: ms-entropy
+Version: 1.3.6
+Summary: This package provides a Python implementation of calculating spectral entropy, entropy similarity, and Flash entropy search for mass spectrometry data.
+Home-page: https://github.com/YuanyueLi/MSEntropy
+Author-email: Yuanyue Li <mail@yli.one>
+License: Apache License
+                                   Version 2.0, January 2004
+                                http://www.apache.org/licenses/
+        
+           TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+        
+           1. Definitions.
+        
+              "License" shall mean the terms and conditions for use, reproduction,
+              and distribution as defined by Sections 1 through 9 of this document.
+        
+              "Licensor" shall mean the copyright owner or entity authorized by
+              the copyright owner that is granting the License.
+        
+              "Legal Entity" shall mean the union of the acting entity and all
+              other entities that control, are controlled by, or are under common
+              control with that entity. For the purposes of this definition,
+              "control" means (i) the power, direct or indirect, to cause the
+              direction or management of such entity, whether by contract or
+              otherwise, or (ii) ownership of fifty percent (50%) or more of the
+              outstanding shares, or (iii) beneficial ownership of such entity.
+        
+              "You" (or "Your") shall mean an individual or Legal Entity
+              exercising permissions granted by this License.
+        
+              "Source" form shall mean the preferred form for making modifications,
+              including but not limited to software source code, documentation
+              source, and configuration files.
+        
+              "Object" form shall mean any form resulting from mechanical
+              transformation or translation of a Source form, including but
+              not limited to compiled object code, generated documentation,
+              and conversions to other media types.
+        
+              "Work" shall mean the work of authorship, whether in Source or
+              Object form, made available under the License, as indicated by a
+              copyright notice that is included in or attached to the work
+              (an example is provided in the Appendix below).
+        
+              "Derivative Works" shall mean any work, whether in Source or Object
+              form, that is based on (or derived from) the Work and for which the
+              editorial revisions, annotations, elaborations, or other modifications
+              represent, as a whole, an original work of authorship. For the purposes
+              of this License, Derivative Works shall not include works that remain
+              separable from, or merely link (or bind by name) to the interfaces of,
+              the Work and Derivative Works thereof.
+        
+              "Contribution" shall mean any work of authorship, including
+              the original version of the Work and any modifications or additions
+              to that Work or Derivative Works thereof, that is intentionally
+              submitted to Licensor for inclusion in the Work by the copyright owner
+              or by an individual or Legal Entity authorized to submit on behalf of
+              the copyright owner. For the purposes of this definition, "submitted"
+              means any form of electronic, verbal, or written communication sent
+              to the Licensor or its representatives, including but not limited to
+              communication on electronic mailing lists, source code control systems,
+              and issue tracking systems that are managed by, or on behalf of, the
+              Licensor for the purpose of discussing and improving the Work, but
+              excluding communication that is conspicuously marked or otherwise
+              designated in writing by the copyright owner as "Not a Contribution."
+        
+              "Contributor" shall mean Licensor and any individual or Legal Entity
+              on behalf of whom a Contribution has been received by Licensor and
+              subsequently incorporated within the Work.
+        
+           2. Grant of Copyright License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              copyright license to reproduce, prepare Derivative Works of,
+              publicly display, publicly perform, sublicense, and distribute the
+              Work and such Derivative Works in Source or Object form.
+        
+           3. Grant of Patent License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              (except as stated in this section) patent license to make, have made,
+              use, offer to sell, sell, import, and otherwise transfer the Work,
+              where such license applies only to those patent claims licensable
+              by such Contributor that are necessarily infringed by their
+              Contribution(s) alone or by combination of their Contribution(s)
+              with the Work to which such Contribution(s) was submitted. If You
+              institute patent litigation against any entity (including a
+              cross-claim or counterclaim in a lawsuit) alleging that the Work
+              or a Contribution incorporated within the Work constitutes direct
+              or contributory patent infringement, then any patent licenses
+              granted to You under this License for that Work shall terminate
+              as of the date such litigation is filed.
+        
+           4. Redistribution. You may reproduce and distribute copies of the
+              Work or Derivative Works thereof in any medium, with or without
+              modifications, and in Source or Object form, provided that You
+              meet the following conditions:
+        
+              (a) You must give any other recipients of the Work or
+                  Derivative Works a copy of this License; and
+        
+              (b) You must cause any modified files to carry prominent notices
+                  stating that You changed the files; and
+        
+              (c) You must retain, in the Source form of any Derivative Works
+                  that You distribute, all copyright, patent, trademark, and
+                  attribution notices from the Source form of the Work,
+                  excluding those notices that do not pertain to any part of
+                  the Derivative Works; and
+        
+              (d) If the Work includes a "NOTICE" text file as part of its
+                  distribution, then any Derivative Works that You distribute must
+                  include a readable copy of the attribution notices contained
+                  within such NOTICE file, excluding those notices that do not
+                  pertain to any part of the Derivative Works, in at least one
+                  of the following places: within a NOTICE text file distributed
+                  as part of the Derivative Works; within the Source form or
+                  documentation, if provided along with the Derivative Works; or,
+                  within a display generated by the Derivative Works, if and
+                  wherever such third-party notices normally appear. The contents
+                  of the NOTICE file are for informational purposes only and
+                  do not modify the License. You may add Your own attribution
+                  notices within Derivative Works that You distribute, alongside
+                  or as an addendum to the NOTICE text from the Work, provided
+                  that such additional attribution notices cannot be construed
+                  as modifying the License.
+        
+              You may add Your own copyright statement to Your modifications and
+              may provide additional or different license terms and conditions
+              for use, reproduction, or distribution of Your modifications, or
+              for any such Derivative Works as a whole, provided Your use,
+              reproduction, and distribution of the Work otherwise complies with
+              the conditions stated in this License.
+        
+           5. Submission of Contributions. Unless You explicitly state otherwise,
+              any Contribution intentionally submitted for inclusion in the Work
+              by You to the Licensor shall be under the terms and conditions of
+              this License, without any additional terms or conditions.
+              Notwithstanding the above, nothing herein shall supersede or modify
+              the terms of any separate license agreement you may have executed
+              with Licensor regarding such Contributions.
+        
+           6. Trademarks. This License does not grant permission to use the trade
+              names, trademarks, service marks, or product names of the Licensor,
+              except as required for reasonable and customary use in describing the
+              origin of the Work and reproducing the content of the NOTICE file.
+        
+           7. Disclaimer of Warranty. Unless required by applicable law or
+              agreed to in writing, Licensor provides the Work (and each
+              Contributor provides its Contributions) on an "AS IS" BASIS,
+              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+              implied, including, without limitation, any warranties or conditions
+              of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+              PARTICULAR PURPOSE. You are solely responsible for determining the
+              appropriateness of using or redistributing the Work and assume any
+              risks associated with Your exercise of permissions under this License.
+        
+           8. Limitation of Liability. In no event and under no legal theory,
+              whether in tort (including negligence), contract, or otherwise,
+              unless required by applicable law (such as deliberate and grossly
+              negligent acts) or agreed to in writing, shall any Contributor be
+              liable to You for damages, including any direct, indirect, special,
+              incidental, or consequential damages of any character arising as a
+              result of this License or out of the use or inability to use the
+              Work (including but not limited to damages for loss of goodwill,
+              work stoppage, computer failure or malfunction, or any and all
+              other commercial damages or losses), even if such Contributor
+              has been advised of the possibility of such damages.
+        
+           9. Accepting Warranty or Additional Liability. While redistributing
+              the Work or Derivative Works thereof, You may choose to offer,
+              and charge a fee for, acceptance of support, warranty, indemnity,
+              or other liability obligations and/or rights consistent with this
+              License. However, in accepting such obligations, You may act only
+              on Your own behalf and on Your sole responsibility, not on behalf
+              of any other Contributor, and only if You agree to indemnify,
+              defend, and hold each Contributor harmless for any liability
+              incurred by, or claims asserted against, such Contributor by reason
+              of your accepting any such warranty or additional liability.
+        
+           END OF TERMS AND CONDITIONS
+        
+           APPENDIX: How to apply the Apache License to your work.
+        
+              To apply the Apache License to your work, attach the following
+              boilerplate notice, with the fields enclosed by brackets "[]"
+              replaced with your own identifying information. (Don't include
+              the brackets!)  The text should be enclosed in the appropriate
+              comment syntax for the file format. We also recommend that a
+              file or class name and description of purpose be included on the
+              same "printed page" as the copyright notice for easier
+              identification within third-party archives.
+        
+           Copyright [yyyy] [name of copyright owner]
+        
+           Licensed under the Apache License, Version 2.0 (the "License");
+           you may not use this file except in compliance with the License.
+           You may obtain a copy of the License at
+        
+               http://www.apache.org/licenses/LICENSE-2.0
+        
+           Unless required by applicable law or agreed to in writing, software
+           distributed under the License is distributed on an "AS IS" BASIS,
+           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+           See the License for the specific language governing permissions and
+           limitations under the License.
+        
+Project-URL: Homepage, https://github.com/YuanyueLi/MSEntropy
+Project-URL: Bug Tracker, https://github.com/YuanyueLi/MSEntropy/issues
+Keywords: mass spectrometry,ms entropy,entropy,spectral entropy,entropy similarity,flash entropy,flash entropy similarity,flash entropy search
+Platform: Linux
+Platform: MacOS
+Platform: Windows
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy >=1.9.3
+Provides-Extra: all
+Requires-Dist: lz4 >=4.3.2 ; extra == 'all'
+Requires-Dist: msgpack >=1.0.5 ; extra == 'all'
+Requires-Dist: pyteomics >=4.6 ; extra == 'all'
+Provides-Extra: gpu
+Requires-Dist: cupy >=12.0.0 ; extra == 'gpu'
+
+[![DOI](https://zenodo.org/badge/232434019.svg)](https://zenodo.org/badge/latestdoi/232434019)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7972082.svg)](https://doi.org/10.5281/zenodo.7972082)
+[![Test MS Entropy package](https://github.com/YuanyueLi/MSEntropy/actions/workflows/run_test.yml/badge.svg?branch=main)](https://github.com/YuanyueLi/MSEntropy/actions/workflows/run_test.yml)
+[![Documentation Status](https://readthedocs.org/projects/msentropy/badge/?version=latest)](https://msentropy.readthedocs.io/en/latest/?badge=latest)
+
+
+If you have any questions, feel free to send me E-mails: mail@yli.one. If you find this package useful, please consider citing the following papers:
+
+> Li, Y., Fiehn, O. **Flash entropy search to query all mass spectral libraries in real time**, _Nat Methods_ **20**, 1475-1478 (2023). [https://doi.org/10.1038/s41592-023-02012-9](https://doi.org/10.1038/s41592-023-02012-9)
+> 
+> Li, Y., Kind, T., Folz, J. _et al._ **Spectral entropy outperforms MS/MS dot product similarity for small-molecule compound identification**, _Nat Methods_ **18**, 1524-1531 (2021). [https://doi.org/10.1038/s41592-021-01331-z](https://doi.org/10.1038/s41592-021-01331-z)
+
+# Theoretical Background
+
+`Spectral entropy` is an useful property to measure the complexity of a spectrum. It is inspried by the concept of Shannon entropy in information theory. [(ref)](https://doi.org/10.1038/s41592-021-01331-z)
+
+`Entropy similarity`, which measured spectral similarity based on spectral entropy, has been shown to outperform dot product similarity in compound identification. [(ref)](https://doi.org/10.1038/s41592-021-01331-z)
+
+The calculation of entropy similarity can be accelerated by using the `Flash Entropy Search` algorithm. [(ref)](https://doi.org/10.1038/s41592-023-02012-9)
+
+# How to use this package
+
+This repository contains the source code to calculate spectral entropy and entropy similarity in various programming languages. Also implemented the Flash Entropy Search algorithm in Python.
+
+## For Python users
+
+A detailed tutorial is available here: [https://msentropy.readthedocs.io](https://msentropy.readthedocs.io)
+
+### Installation
+
+```bash
+pip install ms_entropy
+```
+
+### Usage of Classical entropy functions
+
+```python
+import numpy as np
+import ms_entropy as me
+
+peaks_query = np.array([[69.071, 7.917962], [86.066, 1.021589], [86.0969, 100.0]], dtype = np.float32)
+peaks_reference = np.array([[41.04, 37.16], [69.07, 66.83], [86.1, 999.0]], dtype = np.float32)
+
+# Calculate entropy similarity.
+entropy = me.calculate_spectral_entropy(peaks_query, clean_spectrum = True, min_ms2_difference_in_da = 0.05)
+print(f"Spectral entropy is {entropy}.")
+
+# Calculate unweighted entropy similarity.
+unweighted_similarity = me.calculate_unweighted_entropy_similarity(peaks_query, peaks_reference, ms2_tolerance_in_da = 0.05)
+print(f"Unweighted entropy similarity: {unweighted_similarity}.")
+
+# Calculate entropy similarity.
+similarity = me.calculate_entropy_similarity(peaks_query, peaks_reference, ms2_tolerance_in_da = 0.05)
+print(f"Entropy similarity: {similarity}.")
+```
+
+### Usage of Flash Entropy Search
+
+```python
+from ms_entropy import FlashEntropySearch
+entropy_search = FlashEntropySearch()
+entropy_search.build_index(spectral_library)
+entropy_similarity = entropy_search.search(
+    precursor_mz=query_spectrum_precursor_mz, peaks=query_spectrum_peaks)
+```
+
+## For R users
+
+A document is available here: [https://cran.r-project.org/web/packages/msentropy/msentropy.pdf](https://cran.r-project.org/web/packages/msentropy/msentropy.pdf)
+
+### Installation
+
+```R
+install.packages("msentropy")
+```
+
+### Usage
+
+```R
+library(msentropy)
+
+# Peaks A
+mz_a <- c(169.071, 186.066, 186.0769)
+intensity_a <- c(7.917962, 1.021589, 100.0)
+peaks_a <- matrix(c(mz_a, intensity_a), ncol = 2, byrow = FALSE)
+
+# Peaks B
+mz_b <- c(120.212, 169.071, 186.066)
+intensity_b <- c(37.16, 66.83, 999.0)
+peaks_b <- matrix(c(mz_b, intensity_b), ncol = 2, byrow = FALSE)
+
+# Calculate spectral entropy
+spectral_entropy_a <- calculate_spectral_entropy(clean_spectrum(peaks_a, min_ms2_difference_in_da = 0.02))
+spectral_entropy_b <- calculate_spectral_entropy(clean_spectrum(peaks_b, min_ms2_difference_in_da = 0.02))
+
+# Calculate entropy similarity
+entropy_similarity <- calculate_entropy_similarity(peaks_a, peaks_b, ms2_tolerance_in_da = 0.02)
+```
+
+## For C/C++ users
+
+### Usage
+
+```C
+#include "SpectralEntropy.h"
+
+// Calculate spectral entropy
+{
+    int spec_a_len = 3;
+    float spec_a[3][2] = {{169.071, 7.917962}, {186.066, 1.021589}, {186.0769, 100.0}};
+    
+    // The parameters for clean_spectrum function
+    int normalize_intensity = 1;
+    float ms2_tolerance_in_da = 0.02, ms2_tolerance_in_ppm = -1;
+    float min_mz= -1, max_mz = -1;
+    float noise_threshold = 0.01;
+    int max_peak_num = -1;
+
+    // Always clean the spectrum before calculating spectral entropy
+    spec_a_len = clean_spectrum(*spec_a, spec_a_len, min_mz, max_mz, noise_threshold, max_peak_num, ms2_tolerance_in_da, ms2_tolerance_in_ppm, max_peak_num, normalize_intensity);
+
+    // Calculate spectral entropy
+    float spectral_entropy = calculate_spectral_entropy(*spec_a, spec_a_len);
+
+    printf("Spectral Entropy: %f\n", spectral_entropy);
+}
+
+// Calculate entropy similarity
+{
+    int spec_a_len = 3;
+    float spec_a[3][2] = {{169.071, 7.917962}, {186.066, 1.021589}, {186.0769, 100.0}};
+
+    int spec_b_len = 3;
+    float spec_b[3][2] = {{120.212, 37.16}, {169.071, 66.83}, {186.066, 999.0}};
+
+    // The parameters for calculate_entropy_similarity function.
+    int clean_spectra = 1;
+    float ms2_tolerance_in_da = 0.02, ms2_tolerance_in_ppm = -1;
+    float min_mz= -1, max_mz = -1;
+    float noise_threshold = 0.01;
+    int max_peak_num = -1;
+
+    // Calculate entropy similarity, the data in spec_a and spec_b will modified.
+    float similarity = calculate_entropy_similarity(*spec_a, spec_a_len, *spec_b, spec_b_len, ms2_tolerance_in_da, ms2_tolerance_in_ppm, clean_spectra, min_mz, max_mz, noise_threshold, max_peak_num);
+    printf("Entropy Similarity: %f\n", similarity);
+}
+```
+
+An example is available in folder [languages/c folder](https://github.com/YuanyueLi/MSEntropy/tree/main/languages/c) and [Example.c](https://github.com/YuanyueLi/MSEntropy/blob/main/languages/c/Example.c), [CMakeLists.txt](https://github.com/YuanyueLi/MSEntropy/blob/main/languages/c/CMakeLists.txt)
+
+## For JavaScript users
+
+An example is available in folder [languages/javascript folder](https://github.com/YuanyueLi/MSEntropy/tree/main/languages/javascript) and [example.js](https://github.com/YuanyueLi/MSEntropy/blob/main/languages/javascript/example.js)
+
+Also, refer to [MSViewer repository](https://github.com/YuanyueLi/MSViewer) for a working example of using this package in a web application.
