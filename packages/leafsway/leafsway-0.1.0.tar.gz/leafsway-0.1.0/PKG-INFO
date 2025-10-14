@@ -1,0 +1,64 @@
+Metadata-Version: 2.4
+Name: leafsway
+Version: 0.1.0
+Summary: Behavior Tree runtime with Python DSL for external system integration
+Author-email: LeafSway Contributors <leafsway-dev@googlegroups.com>
+Maintainer-email: LeafSway Contributors <leafsway-dev@googlegroups.com>
+License: Apache-2.0
+Project-URL: Homepage, https://github.com/mashimashica/leafsway
+Project-URL: Repository, https://github.com/mashimashica/leafsway
+Project-URL: Documentation, https://github.com/mashimashica/leafsway/tree/main/docs
+Project-URL: Issues, https://github.com/mashimashica/leafsway/issues
+Project-URL: Changelog, https://github.com/mashimashica/leafsway/blob/main/CHANGELOG.md
+Keywords: behavior-tree,workflow,orchestration,dsl,mlops,automation,decision-tree,state-machine
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Distributed Computing
+Classifier: Typing :: Typed
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+Provides-Extra: llm
+Requires-Dist: jinja2>=3.0; extra == "llm"
+Requires-Dist: jsonschema>=4.0; extra == "llm"
+Requires-Dist: requests>=2.31.0; extra == "llm"
+Provides-Extra: llm-openai
+Requires-Dist: openai>=1.0; extra == "llm-openai"
+Provides-Extra: llm-anthropic
+Requires-Dist: anthropic>=0.18; extra == "llm-anthropic"
+Provides-Extra: llm-google
+Requires-Dist: google-generativeai>=0.3.0; extra == "llm-google"
+Provides-Extra: http
+Requires-Dist: httpx>=0.24; extra == "http"
+Requires-Dist: tenacity>=8.0; extra == "http"
+Requires-Dist: jsonschema>=4.0; extra == "http"
+Provides-Extra: sql
+Requires-Dist: sqlalchemy>=2.0; extra == "sql"
+Requires-Dist: psycopg2-binary>=2.9; extra == "sql"
+Provides-Extra: script
+Requires-Dist: psutil>=5.9; extra == "script"
+Provides-Extra: redis
+Requires-Dist: redis>=4.5; extra == "redis"
+Provides-Extra: full
+Requires-Dist: leafsway[http,llm,llm-anthropic,llm-google,llm-openai,redis,script,sql]; extra == "full"
+
+# leafsway (Python package)
+
+This package metadata reserves the `leafsway` name on PyPI while the
+implementation is rebuilt around the new repository layout.
+
+Links and classifiers track the active home at
+https://github.com/mashimashica/leafsway.

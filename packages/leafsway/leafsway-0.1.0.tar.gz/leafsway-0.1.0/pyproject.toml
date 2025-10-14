@@ -1,0 +1,149 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "leafsway"
+version = "0.1.0"
+description = "Behavior Tree runtime with Python DSL for external system integration"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "LeafSway Contributors", email = "leafsway-dev@googlegroups.com"}
+]
+maintainers = [
+    {name = "LeafSway Contributors", email = "leafsway-dev@googlegroups.com"}
+]
+keywords = [
+    "behavior-tree",
+    "workflow",
+    "orchestration",
+    "dsl",
+    "mlops",
+    "automation",
+    "decision-tree",
+    "state-machine"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Distributed Computing",
+    "Typing :: Typed"
+]
+
+dependencies = [
+    "pyyaml>=6.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0"
+]
+
+# LLM engines
+llm = [
+    "jinja2>=3.0",
+    "jsonschema>=4.0",
+    "requests>=2.31.0"
+]
+
+# Specific LLM providers
+llm-openai = [
+    "openai>=1.0"
+]
+
+llm-anthropic = [
+    "anthropic>=0.18"
+]
+
+llm-google = [
+    "google-generativeai>=0.3.0"
+]
+
+# HTTP engine
+http = [
+    "httpx>=0.24",
+    "tenacity>=8.0",
+    "jsonschema>=4.0"
+]
+
+# SQL engine
+sql = [
+    "sqlalchemy>=2.0",
+    "psycopg2-binary>=2.9"
+]
+
+# Script engine
+script = [
+    "psutil>=5.9"
+]
+
+# State backends
+redis = [
+    "redis>=4.5"
+]
+
+# All engines
+full = [
+    "leafsway[llm,llm-openai,llm-anthropic,llm-google,http,sql,script,redis]"
+]
+
+[project.urls]
+Homepage = "https://github.com/mashimashica/leafsway"
+Repository = "https://github.com/mashimashica/leafsway"
+Documentation = "https://github.com/mashimashica/leafsway/tree/main/docs"
+Issues = "https://github.com/mashimashica/leafsway/issues"
+Changelog = "https://github.com/mashimashica/leafsway/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["leafsway*"]
+exclude = ["tests*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+include = '\\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+ignore = []
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--strict-markers --cov=leafsway --cov-report=term-missing"
