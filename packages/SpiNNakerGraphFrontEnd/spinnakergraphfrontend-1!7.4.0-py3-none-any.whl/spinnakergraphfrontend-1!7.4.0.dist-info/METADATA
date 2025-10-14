@@ -1,0 +1,42 @@
+Metadata-Version: 2.4
+Name: SpiNNakerGraphFrontEnd
+Version: 1!7.4.0
+Summary: Front end to the SpiNNaker tool chain which uses a basic graph
+Home-page: https://github.com/SpiNNakerManchester/SpiNNakerGraphFrontEnd
+Maintainer: SpiNNakerTeam
+Maintainer-email: spinnakerusers@googlegroups.com
+License: Apache License 2.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Natural Language :: English
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: <4,>=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+License-File: LICENSE_POLICY.md
+Requires-Dist: SpiNNFrontEndCommon==1!7.4.0
+Provides-Extra: test
+Requires-Dist: SpiNNakerTestBase==1!7.4.0; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Requires-Dist: testfixtures; extra == "test"
+Dynamic: license-file
+
+
+# SpiNNakerGraphFrontEnd
+An front-end interface for running non-neural applications on SpiNNaker hardware.
+
+Documentation
+=============
+[SpiNNakerGraphFrontEnd Python documentation](http://spinnakergraphfrontend.readthedocs.io/en/7.4.0)
+<br>
+[Combined python documentation](http://spinnakermanchester.readthedocs.io/en/7.4.0)
+
