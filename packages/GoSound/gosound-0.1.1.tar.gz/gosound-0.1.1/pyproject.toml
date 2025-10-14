@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "GoSound" 
+version = "0.1.1"           
+authors = [
+  { name = "王子毅" },
+]
+description = "A short description of my awesome library."
+readme = { file = "README.txt", content-type = "text/plain" }
+license = { text = "MIT" }  
+keywords = [
+    "easy",
+    "pygame", 
+    "play-audio",
+]
+classifiers = [             
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
+dependencies = [            
+    "pygame",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
