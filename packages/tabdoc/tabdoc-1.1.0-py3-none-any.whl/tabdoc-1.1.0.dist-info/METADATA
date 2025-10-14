@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: tabdoc
+Version: 1.1.0
+Summary: tabular datasets to excel,word,pdf
+Home-page: https://github.com/tinybees/tabdoc
+Author: TinyBees
+Author-email: a598824322@qq.com
+License: MIT
+Keywords: tabular,datasets,excel,word,pdf
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: Chinese (Simplified)
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: aelog (>=1.0.3)
+Requires-Dist: openpyxl (<=3.1.5,>=2.4.11)
+Requires-Dist: path (<=16.2.0)
+Requires-Dist: python-docx (>=0.8.10)
+Requires-Dist: reportlab (<=3.5.68)
+Requires-Dist: tablib (>=0.12.1)
+
+# tabdoc
+tabular datasets to excel,word,pdf
+
+# Installing tabdoc
+- ```pip install tabdoc```
+
+# Usage
+### 后续添加，现在没时间.
+
+
