@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: svg2wkt
+Version: 0.1.0
+Summary: Convert SVG to WKT
+Author-email: Mickaël Desfrênes <mickael.desfrenes@unicaen.fr>
+Maintainer-email: Mickaël Desfrênes <mickael.desfrenes@unicaen.fr>
+License-Expression: CECILL-B
+License-File: LICENSE.txt
+Requires-Python: >=3.13
+Requires-Dist: beautifulsoup4
+Requires-Dist: lxml
+Requires-Dist: shapely
+Requires-Dist: svgpath2mpl
+Description-Content-Type: text/markdown
+
+# svg2wkt
+
+Converts SVG to WKT.
+
+    from svg2wkt import convert
+    wkt = convert(svg)
