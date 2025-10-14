@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+# encoding=UTF-8
+
+# Copyright © 2012-2025 Jakub Wilk <jwilk@jwilk.net>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the “Software”), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import concurrent.futures
+import datetime
+import os
+import re
+import urllib.request
+
+int(0_0)  # Python >= 3.6 is required
+
+header_template = '''\
+# This file contains names of built-in exceptions that exist in the following
+# Python versions: {versions}
+
+# Last update: {today}
+'''
+
+versions = '''
+2.5 2.6 2.7
+3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 3.10 3.11 3.12 3.13 3.14
+'''
+versions = versions.split()
+
+def main():
+    here = os.path.dirname(__file__)
+    path = f'{here}/../pydiatra/data/exceptions'
+    exceptions = set()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        for vexceptions in executor.map(extract_exceptions, versions):
+            exceptions |= vexceptions
+    today = datetime.date.today()
+    header = header_template.format(
+        today=today,
+        versions=str.join(', ', versions)
+    )
+    with open(path, 'wt', encoding='ASCII') as file:
+        print(header, file=file)
+        for exc in sorted(exceptions):
+            print(exc, file=file)
+
+def _extract_exceptions(version):
+    url = 'https://docs.python.org/{ver}/library/exceptions.html'
+    if re.match(r'\A2[.][0-5]\Z', version):
+        url = 'https://docs.python.org/{ver}/lib/module-exceptions.html'
+    url = url.format(ver=version)
+    with urllib.request.urlopen(url) as fp:
+        html = fp.read()
+    html = html.decode('UTF-8')
+    match = re.search('<pre>(?:<span></span>)?(?:<span class="ne">)?(BaseException.*?)</pre>', html, flags=re.DOTALL)
+    if match is None:
+        raise RuntimeError(f'cannot extract exception names for Python {version}')
+    s = match.group(1)
+    s = re.sub('</?span[^<]*>', '', s)
+    s = re.sub(r'\s+\(.*$', '', s, flags=re.MULTILINE)
+    s = re.sub('^[ \t│├─└|+-]+', '', s, flags=re.MULTILINE)
+    for exc in s.split():
+        exc = exc.strip('[]')
+        if not re.match(r'\A\w+\Z', exc):
+            raise RuntimeError(f'invalid Python {version} exception name: {exc}')
+        yield exc
+
+def extract_exceptions(version):
+    return frozenset(_extract_exceptions(version))
+
+if __name__ == '__main__':
+    main()
+
+# vim:ts=4 sts=4 sw=4 et

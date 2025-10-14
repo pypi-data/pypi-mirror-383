@@ -1,0 +1,102 @@
+Metadata-Version: 1.1
+Name: pydiatra
+Version: 0.12.8
+Summary: yet another static checker for Python code
+Home-page: https://jwilk.net/software/pydiatra
+Author: Jakub Wilk
+Author-email: jwilk@jwilk.net
+License: MIT
+Description: 
+        Overview
+        ========
+        
+        **pydiatra** is yet another static checker for Python code.
+        
+        Implemented checks
+        ==================
+        
+        * embedded code copies
+        
+        * ``except`` shadowing builtins
+          (e.g. ``except IOError, OSError:``, which overwrites ``OSError``)
+        
+        * bare ``except``
+          (i.e. ``except:``)
+        
+        * hardcoded errno values
+          (e.g. ``exc.errno == 2`` instead of ``exc.errno == errno.ENOENT``)
+        
+        * inconsistent use of tabs and spaces in indentation
+        
+        * ``mkstemp()`` file descriptor leaks
+          (e.g. ``path = tempfile.mkstemp()[1]``)
+        
+        * obsolete PIL imports
+          (e.g. ``import Image`` instead of ``from PIL import Image``)
+        
+        * regular expression syntax errors
+        
+        * misplaced flags arguments in
+          ``re.split()``, ``re.sub()``, ``re.subn()``
+        
+        * dubious or deprecated constructs in regular expressions:
+        
+          * duplicate range
+            (e.g. ``re.compile("[aa]")``)
+        
+          * overlapping ranges
+            (e.g. ``re.compile("[a-zA-z]")``)
+        
+          * bad escape sequences
+            (e.g. ``re.compile(r"\eggs")``)
+        
+          * misplaced inline flags
+            (e.g. ``re.compile("eggs(?i)")``; Python 3.6+ only)
+        
+          * combining incompatible flags
+        
+          * redundant flags
+        
+        * string exceptions
+          (e.g. ``raise "eggs"`` or ``except "ham":``)
+        
+        * string formatting errors
+        
+        * comparisons with ``sys.version`` or ``sys.hexversion``
+        
+        * Python syntax errors
+        
+        * Python syntax warnings
+        
+          * assertions that are always true
+        
+          * syntactic constructs that are no longer supported in Python 3
+        
+          * ill-formed assignments to global variables
+        
+          * use of ``async`` and ``await`` as names
+        
+          * invalid escape sequences in strings
+            (Python 3.6+ only)
+        
+        See the manual page for details.
+        
+        Prerequisites
+        =============
+        
+        * Python 2.7 or 3.2+
+        * futures_ (needed only for Python 2.X)
+        
+        .. _futures:
+           https://pypi.org/project/futures/
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Quality Assurance

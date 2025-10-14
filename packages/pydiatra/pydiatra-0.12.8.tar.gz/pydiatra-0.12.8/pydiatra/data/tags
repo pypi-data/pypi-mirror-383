@@ -1,0 +1,361 @@
+[assertion-always-true]
+severity = minor
+certainty = certain
+references =
+ https://docs.python.org/3/reference/simple_stmts.html#grammar-token-assert_stmt
+description =
+ It's a mistake to write code like this::
+ .
+ .    assert(x > 0, "x must be positive")  # wrong!
+ .
+ The intention was to check whether ``x > 0`` is true.
+ But this code checks if the tuple is true,
+ and it always is, regardless of the value of ``x``.
+ The correct code omits the parentheses::
+ .
+ .    assert x > 0, "x must be positive"
+
+[async-await-used-as-name]
+severity = important
+certainty = certain
+references =
+ https://docs.python.org/3/whatsnew/3.6.html#new-keywords
+description =
+ The use of ``async`` or ``await`` as names was deprecated in Python 3.6.
+ They will become reserved keywords in Python 3.7.
+
+[embedded-code-copy]
+severity = important
+certainty = possible
+references =
+ https://www.debian.org/doc/debian-policy/ch-source.html#s-embeddedfiles
+description =
+ The source appears to include
+ a convenience copy of code from other software package.
+
+[except-shadows-builtin]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/2/whatsnew/2.6.html#pep-3110-exception-handling-changes
+description =
+ It's a mistake to write code like this::
+ .
+ .    try:
+ .        ...
+ .    except TypeError, ValueError:  # wrong!
+ .        ...
+ .
+ The intention was to catch both ``TypeError`` and ``ValueError`` exceptions,
+ but this code does something different: it will catch ``TypeError``
+ and bind the resulting exception object to the local name ``ValueError``.
+ The ``ValueError`` exception will not be caught at all.
+ The correct code specifies a tuple of exceptions::
+ .
+ .    try:
+ .        ...
+ .    except (TypeError, ValueError):
+ .        ...
+
+[bare-except]
+severity = minor
+certainty = possible
+experimental = yes
+references =
+ https://docs.python.org/2/howto/doanddont.html#except
+description =
+ It's a mistake to write code like this::
+ .
+ .    try:
+ .        ...
+ .    except:  # wrong!
+ .        ...
+ .
+ The ``except:`` clause catches all the exceptions,
+ including exceptions that the programmer never expected to happen,
+ potentially hiding programming errors,
+ or ignoring ``KeyboardInterrupt`` triggered by user's Ctrl+C.
+ .
+ Please catch only the exceptions you expect to be raised.
+
+[hardcoded-errno-value]
+severity = normal
+certainty = possible
+references =
+ https://lists.debian.org/20100803162901.GA5419@jwilk.net
+ https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_03
+ https://docs.python.org/3/library/exceptions.html#os-exceptions
+description =
+ It's a mistake to write code like this::
+ .
+ .    try:
+ .        ...
+ .    except OSError as exc:
+ .        if exc.errno == 17:  # non-portable!
+ .            ...
+ .
+ The code was meant to check for ``EEXIST``,
+ but actual value of this constant may vary with architecture.
+ The portable code uses constant from the ``errno`` module::
+ .
+ .    try:
+ .        ...
+ .    except OSError as exc:
+ .        if exc.errno == errno.EEXIST:
+ .            ...
+ .
+ Or, since Python 3.3::
+ .
+ .    try:
+ .        ...
+ .    except FileExistsError:
+ .        ...
+
+[inconsistent-indentation]
+severity = normal
+certainty = certain
+references =
+ https://docs.python.org/2/reference/lexical_analysis.html#indentation
+description =
+ The source file mixes tabs and spaces for indentation in a way that makes it
+ depend on the worth of a tab expressed in spaces.
+ .
+ You can check consistency of indentation with the following command::
+ .
+ .    python -m tabnanny <pyfile>
+
+[mkstemp-file-descriptor-leak]
+severity = normal
+certainty = possible
+description =
+ ``tempfile.mkstemp()`` returns a tuple containing
+ a file descriptor and the pathname.
+ It is responsibility of the caller to close the file descriptor
+ when it's no longer needed.
+ It's a mistake to write code like this::
+ .
+ .    path = tempfile.mkstemp()[1]
+ .
+ because it leaks the file descriptor.
+ .
+ Please consider using a higher-level function instead,
+ ``tempfile.TemporaryFile()`` or ``tempfile.NamedTemporaryFile()``,
+ which take care of file closing automatically.
+references =
+ https://docs.python.org/3/library/tempfile.html#tempfile.mkstemp
+
+[obsolete-pil-import]
+severity = important
+certainty = possible
+references =
+ https://mail.python.org/pipermail/image-sig/2011-January/006650.html
+ https://lists.debian.org/5117D0B7.801@debian.org
+description =
+ Python Imaging Library 1.2 and Pillow (a PIL fork) no longer support this
+ style of imports::
+ .
+ .    import Image
+ .
+ Imports from the PIL namespace should be used instead::
+ .
+ .    from PIL import Image
+
+[py3k-compat-warning]
+severity = wishlist
+certainty = certain
+description =
+ The parser encountered a syntactic construct
+ that is no longer supported in Python 3.
+
+[regexp-bad-escape]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/3/whatsnew/3.5.html#deprecated-python-modules-functions-and-methods
+ https://docs.python.org/3/whatsnew/3.3.html#re
+description =
+ The regular expression or the substitution pattern contains
+ an unknown escape sequence consisting of ``\`` and an ASCII letter.
+ Such sequences were deprecated in Python 3.5.
+ In regular expressions, they are disallowed since Python 3.6.
+ In substitution patterns, they are disallowed since Python 3.7.
+ .
+ The ``\u``\ *XXXX* and ``\U``\ *XXXXXXXX* sequences
+ were added only in Python 3.3.
+ In earlier versions, ``\u`` and ``\U`` stand for literal ``u`` and ``U``.
+
+[regexp-duplicate-range]
+severity = normal
+certainty = possible
+description =
+ A character set in a regular expression includes
+ the same character range twice.
+ This is probably a mistake.
+ .
+ For example::
+ .
+ .    [A-ZA-Z]
+ .
+ could be simplified to::
+ .
+ .    [A-Z]
+
+[regexp-incompatible-flags]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/3/whatsnew/3.5.html#deprecated-python-modules-functions-and-methods
+description =
+ ``re.ASCII``, ``re.LOCALE`` and ``re.UNICODE`` are mutually exclusive.
+ .
+ Combining ``re.LOCALE`` and ``re.ASCII`` is meaningless, but it used to work.
+ This misfeature was deprecated in Python 3.5.
+ It was removed in Python 3.6.
+ .
+ Using ``re.LOCALE`` for Unicode regexps has never worked correctly.
+ This misfeature was deprecated in Python 3.5.
+ It was removed in Python 3.6.
+
+[regexp-misplaced-inline-flags]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/3/whatsnew/3.6.html#id5
+description =
+ An inline flag (such as ``(?i)``) is not at the start of the regular
+ expression.
+ .
+ Inline flags in the middle of the regular expression were deprecated in Python
+ 3.6.
+ .
+ For example::
+ .
+ .    re.compile('eggs(?i)')
+ .
+ should be rewritten as::
+ .
+ .    re.compile('(?i)eggs')
+ .
+ or::
+ .
+ .    re.compile('eggs', re.IGNORECASE)
+
+[regexp-misplaced-flags-argument]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/3/library/re.html#re.split
+ https://docs.python.org/3/library/re.html#re.sub
+ https://docs.python.org/3/library/re.html#re.subn
+description =
+ The code uses a regular expression function with the flags argument in the
+ wrong position.
+ .
+ The fourth argument of ``re.split()``, ``re.sub()`` and ``re.subn()``
+ is not flags, but the number of splits or substitutions.
+ .
+ Regexp methods don't accept flags at all.
+ Flags have to be supplied at compile time.
+
+[regexp-overlapping-ranges]
+severity = normal
+certainty = possible
+description =
+ A character set in a regular expression includes
+ two intersecting character ranges.
+ This is probably a mistake.
+ .
+ For example::
+ .
+ .    [A-za-z]
+ .
+ is a common misspelling of::
+ .
+ .    [A-Za-z]
+
+[regexp-redundant-flag]
+severity = minor
+certainty = possible
+references =
+ https://docs.python.org/3/library/re.html#regular-expression-syntax
+description =
+ The regular expression flag has no effect on this regular expression.
+ .
+ ``re.ASCII`` and ``re.UNICODE`` affect only semantics of
+ ``\w``, ``\W``, ``\b``, ``\B``, ``\d``, ``\D``, ``\s`` and ``\S``,
+ and case-insensitive matching.
+ .
+ ``re.LOCALE`` affects only semantics of
+ ``\w``, ``\W``, ``\b``, ``\B``, ``\s`` and ``\S``,
+ and case-insensitive matching.
+ .
+ ``re.MULTILINE`` affects only semantics of ``^`` and ``$``.
+ .
+ ``re.DOTALL`` affects only semantics of ``.``.
+
+[regexp-syntax-error]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/3/library/re.html#regular-expression-syntax
+description =
+ The code attempts to compile a regular expression
+ that is not syntactically valid.
+
+[regexp-syntax-warning]
+severity = important
+certainty = possible
+description =
+ The code attempts to compile a regular expression
+ that uses a dubious or deprecated syntactic construct.
+
+[string-exception]
+severity = important
+certainty = possible
+references =
+ https://docs.python.org/2/whatsnew/2.6.html#deprecations-and-removals
+description =
+ The code attempts to raise or catch strings exceptions.
+ .
+ String exceptions have been removed in Python 2.6.
+ Attempting to raise them causes ``TypeError``.
+
+[string-formatting-error]
+severity = important
+certainty = certain
+references =
+ https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting
+ https://docs.python.org/3/library/string.html#formatstrings
+description =
+ The code uses string formatting (either ``%``-formatting or ``str.format()``)
+ in a way that always causes runtime error.
+
+[syntax-error]
+severity = serious
+certainty = certain
+description =
+ The parser encountered a syntax error.
+
+[syntax-warning]
+severity = important
+certainty = possible
+description =
+ The parser encountered a dubious syntactic construct.
+
+[sys.hexversion-comparison]
+severity = wishlist
+certainty = possible
+description =
+ Comparisons with ``sys.hexversion`` are poorly readable and error-prone.
+ Consider using the ``sys.version_info`` tuple instead,
+
+[sys.version-comparison]
+severity = normal
+certainty = possible
+description =
+ ``sys.version`` is a human-readable string,
+ which should not be used in comparisons.
+ Use the ``sys.version_info`` tuple or
+ the functions provided by the ``platform`` module instead.
+
+# vim:ft=dosini

@@ -1,0 +1,53 @@
+[MASTER]
+load-plugins = pylint.extensions.check_elif
+
+[MESSAGES CONTROL]
+disable =
+    bad-builtin,
+    bad-continuation,
+    bad-option-value,
+    consider-using-f-string,
+    duplicate-code,
+    fixme,
+    inconsistent-return-statements,
+    invalid-name,
+    locally-disabled,
+    locally-enabled,
+    no-else-continue,
+    no-else-return,
+    no-self-use,
+    raise-missing-from,
+    redefined-variable-type,
+    super-with-arguments,
+    too-few-public-methods,
+    too-many-boolean-expressions,
+    too-many-branches,
+    too-many-locals,
+    too-many-return-statements,
+    too-many-statements,
+    use-dict-literal,
+    use-yield-from,
+    useless-object-inheritance,
+
+[TYPECHECK]
+# FIXME: Pylint doesn't grok setuptools' distutils.
+ignored-modules =
+    distutils.command.build,
+    distutils.command.install,
+    distutils.command.install_data,
+    distutils.command.sdist,
+    distutils.core,
+
+[BASIC]
+no-docstring-rgx = .*
+
+[REPORTS]
+reports = no
+score = no
+msg-template = {path}:{line}: {C}: {symbol} [{obj}] {msg}
+
+[FORMAT]
+max-line-length = 120
+expected-line-ending-format = LF
+
+# vim:ft=dosini ts=4 sts=4 sw=4 et

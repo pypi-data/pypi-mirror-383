@@ -1,0 +1,12 @@
+include MANIFEST.in
+
+include .pylintrc
+include LICENSE
+exclude README.rst
+include doc/*
+include private/*
+exclude private/git-*
+include py[23]diatra
+include tests/*
+
+global-exclude *.py[co]

@@ -1,0 +1,125 @@
+#!/usr/bin/env python
+# encoding=UTF-8
+
+# Copyright © 2013-2024 Jakub Wilk <jwilk@jwilk.net>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the “Software”), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import io
+import os
+import posixpath
+import re
+import sys
+import unittest
+
+import nose
+import nose.plugins
+
+import tools
+
+if nose.__versioninfo__ < (0, 11):
+    raise RuntimeError('nose >= 0.11 is required')
+
+class Plugin(nose.plugins.Plugin):
+
+    name = 'pydiatra'
+    enabled = True
+
+    def options(self, parser, env):
+        pass
+
+    def wantFile(self, file):
+        if file.endswith('.t'):
+            return True
+
+    def loadTestsFromFile(self, path):
+        if self.wantFile(path):
+            yield TestCase(path)
+
+class TestCase(unittest.TestCase):
+
+    # XXX Keep this in sync with private/update-coverage.
+    _comment_re = re.compile(r'''
+        ^ [#][#]
+        (?: \s+ \[ (?:
+            (?P<rel> << | >= | == ) \s+ (?P<ver> [0-9][.][0-9]+ ) |
+            (?P<ver1> [0-9][.][0-9]+ ) - (?P<ver2> [0-9][.][0-9]+)
+        ) \] )?
+        \s+
+        (?P<expected> .+ )
+        ''', re.VERBOSE
+    )
+
+    def __init__(self, path):
+        super(TestCase, self).__init__('test')
+        self.path = os.path.relpath(path)
+        self.name = os.path.splitext(os.path.basename(path))[0]
+
+    def test(self):
+        if '.py2.' in self.path and sys.version_info >= (3,):
+            raise nose.SkipTest
+        if '.py3.' in self.path and sys.version_info < (3,):
+            raise nose.SkipTest
+        def parse_version(ver):
+            return tuple(
+                int(x) for x in ver.split('.')
+            )
+        expected = []
+        code_n = None
+        with io.open(self.path, 'rt', encoding='UTF-8', errors='replace') as file:
+            for n, line in enumerate(file, 1):
+                match = self._comment_re.match(line)
+                if match is None:
+                    code_n = n
+                    continue
+                relation = match.group('rel')
+                if relation:
+                    version = parse_version(match.group('ver'))
+                    if relation == '<<' and not sys.version_info < version:
+                        continue
+                    if relation == '>=' and not sys.version_info >= version:
+                        continue
+                    if relation == '==' and sys.version_info[:len(version)] != version:
+                        continue
+                ver1 = match.group('ver1')
+                ver2 = match.group('ver2')
+                if ver1 and ver2:
+                    ver1 = parse_version(ver1)
+                    ver2 = parse_version(ver2)
+                    if not ver1 <= sys.version_info[:len(ver2)] <= ver2:
+                        continue
+                xline = match.group('expected')
+                upath = posixpath.join(*self.path.split(os.sep))
+                xline = xline.replace(repr(upath), repr(self.path))
+                if xline[:2] == '*:':
+                    xline = str(code_n) + xline[1:]
+                expected += [(
+                    self.path +
+                    (':' if xline[0].isdigit() else ': ') +
+                    xline
+                )]
+        tools.run_pydiatra(self.path, expected)
+
+    def __str__(self):
+        return self.name
+
+if __name__ == '__main__':
+    nose.main(addplugins=[Plugin()])
+
+# vim:ts=4 sts=4 sw=4 et

@@ -1,0 +1,844 @@
+.\" Man page generated from reStructuredText.
+.
+.TH PYDIATRA 1 "2025-10-13" "pydiatra 0.12.8" ""
+.SH NAME
+pydiatra \- static checker for Python code
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.SH SYNOPSIS
+.sp
+For Python 2:
+.nf
+\fBpy2diatra\fP [\fIoptions\fP] \fIfile\-or\-dir\fP [\fIfile\-or\-dir\fP …]
+.fi
+.sp
+.sp
+For Python 3:
+.nf
+\fBpy3diatra\fP [\fIoptions\fP] \fIfile\-or\-dir\fP [\fIfile\-or\-dir\fP …]
+.fi
+.sp
+.sp
+For any Python:
+.nf
+\fBpython\fP\fIX\fP\fB\&.\fP\fIY\fP \fB\-m\fP \fBpydiatra\fP [\fIoptions\fP] \fIfile\-or\-dir\fP [\fIfile\-or\-dir\fP …]
+.fi
+.sp
+.sp
+(Beware that the last form adds current working directory to \fBsys.path\fP\&.)
+.SH OPTIONS
+.INDENT 0.0
+.TP
+.B \-v\fP,\fB  \-\-verbose
+Print \fBOK\fP if no issues were found.
+.TP
+.BI \-j \ n\fR,\fB \ \-\-jobs \ n
+Use \fIn\fP processes in parallel.
+\fIn\fP can be a positive integer,
+or \fBauto\fP to determine the number automatically.
+The default is to use only a single process.
+.TP
+.B \-h\fP,\fB  \-\-help
+Show help message and exit.
+.TP
+.B \-\-version
+Show version information and exit.
+.UNINDENT
+.SH DESCRIPTION
+.sp
+\fBpydiatra\fP is a static checker for Python code.
+.sp
+The following checks are implemented:
+.SS assertion\-always\-true
+.sp
+It's a mistake to write code like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+assert(x > 0, "x must be positive")  # wrong!
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The intention was to check whether \fBx > 0\fP is true.
+But this code checks if the tuple is true,
+and it always is, regardless of the value of \fBx\fP\&.
+The correct code omits the parentheses:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+assert x > 0, "x must be positive"
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/reference/simple_stmts.html#grammar\-token\-assert_stmt\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+minor, certain
+.UNINDENT
+.UNINDENT
+.SS async\-await\-used\-as\-name
+.sp
+The use of \fBasync\fP or \fBawait\fP as names was deprecated in Python 3.6.
+They will become reserved keywords in Python 3.7.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/whatsnew/3.6.html#new\-keywords\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, certain
+.UNINDENT
+.UNINDENT
+.SS embedded\-code\-copy
+.sp
+The source appears to include
+a convenience copy of code from other software package.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://www.debian.org/doc/debian\-policy/ch\-source.html#s\-embeddedfiles\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS except\-shadows\-builtin
+.sp
+It's a mistake to write code like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+try:
+    ...
+except TypeError, ValueError:  # wrong!
+    ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The intention was to catch both \fBTypeError\fP and \fBValueError\fP exceptions,
+but this code does something different: it will catch \fBTypeError\fP
+and bind the resulting exception object to the local name \fBValueError\fP\&.
+The \fBValueError\fP exception will not be caught at all.
+The correct code specifies a tuple of exceptions:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+try:
+    ...
+except (TypeError, ValueError):
+    ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/2/whatsnew/2.6.html#pep\-3110\-exception\-handling\-changes\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS bare\-except
+.sp
+It's a mistake to write code like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+try:
+    ...
+except:  # wrong!
+    ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The \fBexcept:\fP clause catches all the exceptions,
+including exceptions that the programmer never expected to happen,
+potentially hiding programming errors,
+or ignoring \fBKeyboardInterrupt\fP triggered by user's Ctrl+C.
+.sp
+Please catch only the exceptions you expect to be raised.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/2/howto/doanddont.html#except\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+minor, possible
+.UNINDENT
+.UNINDENT
+.SS hardcoded\-errno\-value
+.sp
+It's a mistake to write code like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+try:
+    ...
+except OSError as exc:
+    if exc.errno == 17:  # non\-portable!
+        ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The code was meant to check for \fBEEXIST\fP,
+but actual value of this constant may vary with architecture.
+The portable code uses constant from the \fBerrno\fP module:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+try:
+    ...
+except OSError as exc:
+    if exc.errno == errno.EEXIST:
+        ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Or, since Python 3.3:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+try:
+    ...
+except FileExistsError:
+    ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://lists.debian.org/20100803162901.GA5419@jwilk.net\fP
+\fI\%https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_03\fP
+\fI\%https://docs.python.org/3/library/exceptions.html#os\-exceptions\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+normal, possible
+.UNINDENT
+.UNINDENT
+.SS inconsistent\-indentation
+.sp
+The source file mixes tabs and spaces for indentation in a way that makes it
+depend on the worth of a tab expressed in spaces.
+.sp
+You can check consistency of indentation with the following command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+python \-m tabnanny <pyfile>
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/2/reference/lexical_analysis.html#indentation\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+normal, certain
+.UNINDENT
+.UNINDENT
+.SS mkstemp\-file\-descriptor\-leak
+.sp
+\fBtempfile.mkstemp()\fP returns a tuple containing
+a file descriptor and the pathname.
+It is responsibility of the caller to close the file descriptor
+when it's no longer needed.
+It's a mistake to write code like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+path = tempfile.mkstemp()[1]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+because it leaks the file descriptor.
+.sp
+Please consider using a higher\-level function instead,
+\fBtempfile.TemporaryFile()\fP or \fBtempfile.NamedTemporaryFile()\fP,
+which take care of file closing automatically.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/library/tempfile.html#tempfile.mkstemp\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+normal, possible
+.UNINDENT
+.UNINDENT
+.SS obsolete\-pil\-import
+.sp
+Python Imaging Library 1.2 and Pillow (a PIL fork) no longer support this
+style of imports:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+import Image
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Imports from the PIL namespace should be used instead:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+from PIL import Image
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://mail.python.org/pipermail/image\-sig/2011\-January/006650.html\fP
+\fI\%https://lists.debian.org/5117D0B7.801@debian.org\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS py3k\-compat\-warning
+.sp
+The parser encountered a syntactic construct
+that is no longer supported in Python 3.
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+wishlist, certain
+.UNINDENT
+.UNINDENT
+.SS regexp\-bad\-escape
+.sp
+The regular expression or the substitution pattern contains
+an unknown escape sequence consisting of \fB\e\fP and an ASCII letter.
+Such sequences were deprecated in Python 3.5.
+In regular expressions, they are disallowed since Python 3.6.
+In substitution patterns, they are disallowed since Python 3.7.
+.sp
+The \fB\eu\fP\fIXXXX\fP and \fB\eU\fP\fIXXXXXXXX\fP sequences
+were added only in Python 3.3.
+In earlier versions, \fB\eu\fP and \fB\eU\fP stand for literal \fBu\fP and \fBU\fP\&.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/whatsnew/3.5.html#deprecated\-python\-modules\-functions\-and\-methods\fP
+\fI\%https://docs.python.org/3/whatsnew/3.3.html#re\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-duplicate\-range
+.sp
+A character set in a regular expression includes
+the same character range twice.
+This is probably a mistake.
+.sp
+For example:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[A\-ZA\-Z]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+could be simplified to:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[A\-Z]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+normal, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-incompatible\-flags
+.sp
+\fBre.ASCII\fP, \fBre.LOCALE\fP and \fBre.UNICODE\fP are mutually exclusive.
+.sp
+Combining \fBre.LOCALE\fP and \fBre.ASCII\fP is meaningless, but it used to work.
+This misfeature was deprecated in Python 3.5.
+It was removed in Python 3.6.
+.sp
+Using \fBre.LOCALE\fP for Unicode regexps has never worked correctly.
+This misfeature was deprecated in Python 3.5.
+It was removed in Python 3.6.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/whatsnew/3.5.html#deprecated\-python\-modules\-functions\-and\-methods\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-misplaced\-inline\-flags
+.sp
+An inline flag (such as \fB(?i)\fP) is not at the start of the regular
+expression.
+.sp
+Inline flags in the middle of the regular expression were deprecated in Python
+3.6.
+.sp
+For example:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+re.compile(\(aqeggs(?i)\(aq)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+should be rewritten as:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+re.compile(\(aq(?i)eggs\(aq)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+or:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+re.compile(\(aqeggs\(aq, re.IGNORECASE)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/whatsnew/3.6.html#id5\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-misplaced\-flags\-argument
+.sp
+The code uses a regular expression function with the flags argument in the
+wrong position.
+.sp
+The fourth argument of \fBre.split()\fP, \fBre.sub()\fP and \fBre.subn()\fP
+is not flags, but the number of splits or substitutions.
+.sp
+Regexp methods don't accept flags at all.
+Flags have to be supplied at compile time.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/library/re.html#re.split\fP
+\fI\%https://docs.python.org/3/library/re.html#re.sub\fP
+\fI\%https://docs.python.org/3/library/re.html#re.subn\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-overlapping\-ranges
+.sp
+A character set in a regular expression includes
+two intersecting character ranges.
+This is probably a mistake.
+.sp
+For example:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[A\-za\-z]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+is a common misspelling of:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[A\-Za\-z]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+normal, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-redundant\-flag
+.sp
+The regular expression flag has no effect on this regular expression.
+.sp
+\fBre.ASCII\fP and \fBre.UNICODE\fP affect only semantics of
+\fB\ew\fP, \fB\eW\fP, \fB\eb\fP, \fB\eB\fP, \fB\ed\fP, \fB\eD\fP, \fB\es\fP and \fB\eS\fP,
+and case\-insensitive matching.
+.sp
+\fBre.LOCALE\fP affects only semantics of
+\fB\ew\fP, \fB\eW\fP, \fB\eb\fP, \fB\eB\fP, \fB\es\fP and \fB\eS\fP,
+and case\-insensitive matching.
+.sp
+\fBre.MULTILINE\fP affects only semantics of \fB^\fP and \fB$\fP\&.
+.sp
+\fBre.DOTALL\fP affects only semantics of \fB\&.\fP\&.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/library/re.html#regular\-expression\-syntax\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+minor, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-syntax\-error
+.sp
+The code attempts to compile a regular expression
+that is not syntactically valid.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/library/re.html#regular\-expression\-syntax\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS regexp\-syntax\-warning
+.sp
+The code attempts to compile a regular expression
+that uses a dubious or deprecated syntactic construct.
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS string\-exception
+.sp
+The code attempts to raise or catch strings exceptions.
+.sp
+String exceptions have been removed in Python 2.6.
+Attempting to raise them causes \fBTypeError\fP\&.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/2/whatsnew/2.6.html#deprecations\-and\-removals\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS string\-formatting\-error
+.sp
+The code uses string formatting (either \fB%\fP\-formatting or \fBstr.format()\fP)
+in a way that always causes runtime error.
+.sp
+References:
+.INDENT 0.0
+.INDENT 3.5
+.nf
+\fI\%https://docs.python.org/3/library/stdtypes.html#printf\-style\-string\-formatting\fP
+\fI\%https://docs.python.org/3/library/string.html#formatstrings\fP
+.fi
+.sp
+.UNINDENT
+.UNINDENT
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, certain
+.UNINDENT
+.UNINDENT
+.SS syntax\-error
+.sp
+The parser encountered a syntax error.
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+serious, certain
+.UNINDENT
+.UNINDENT
+.SS syntax\-warning
+.sp
+The parser encountered a dubious syntactic construct.
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+important, possible
+.UNINDENT
+.UNINDENT
+.SS sys.hexversion\-comparison
+.sp
+Comparisons with \fBsys.hexversion\fP are poorly readable and error\-prone.
+Consider using the \fBsys.version_info\fP tuple instead,
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+wishlist, possible
+.UNINDENT
+.UNINDENT
+.SS sys.version\-comparison
+.sp
+\fBsys.version\fP is a human\-readable string,
+which should not be used in comparisons.
+Use the \fBsys.version_info\fP tuple or
+the functions provided by the \fBplatform\fP module instead.
+.sp
+Severity, certainty:
+.INDENT 0.0
+.INDENT 3.5
+normal, possible
+.UNINDENT
+.UNINDENT
+.SH EXIT STATUS
+.sp
+One of the following exit values can be returned by \fBpydiatra\fP:
+.INDENT 0.0
+.TP
+.B 0
+No issues with the checked code were found.
+.TP
+.B 1
+A fatal error occurred.
+.TP
+.B 2
+At least one issue with the checked code was found.
+.UNINDENT
+.SH SEE ALSO
+.sp
+\fBpyflakes\fP(1),
+\fBpylint\fP(1)
+.
+.\" Generated by docutils manpage writer.
+.
