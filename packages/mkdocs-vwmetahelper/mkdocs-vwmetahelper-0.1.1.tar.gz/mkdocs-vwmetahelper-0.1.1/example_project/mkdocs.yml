@@ -1,0 +1,8 @@
+site_name: Example VWMetaHelper
+plugins:
+  - search
+  - vwmetahelper:
+      include_dir: docs/_includes
+nav:
+  - Home: index.md
+  - Story: story.md
