@@ -1,0 +1,21 @@
+# Define package for feature-engineering
+[project]
+name = "feature-engineering-5632425"
+version = "0.1.0"
+description = "Feature extraction and validation schema tools"
+authors = [{ name = "Katsiaryna", email = "katsiaryna.shymchonak@innowise.com" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["numpy", "pandas", "dill", "shap", "scikit-learn"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["feature_engineering*"]
+
+[pypi]
+username = "__token__"
+password = "pypi-AgEIcHlwaS5vcmcCJDNlMTI1Y2U4LTBkNTktNDU1Yy1hZjBmLTkzMjY2YTNkMDc3ZQACKlszLCIyMGE3Y2I5My0xYmVmLTQ0NWMtOWZhNy0yOWNmNDE2YjQ0YzMiXQAABiD7985UbHQQIehzOpkq0g2RoRG7H2cMuYYPV8MRIn7mmQ"
