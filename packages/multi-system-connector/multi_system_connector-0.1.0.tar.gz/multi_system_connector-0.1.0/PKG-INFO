@@ -1,0 +1,31 @@
+Metadata-Version: 2.4
+Name: multi_system_connector
+Version: 0.1.0
+Summary: FastAPI Multi-System Connector with Azure AI and SharePoint
+Author-email: Logesh <logesh@nihilent.com>
+License: MIT
+Project-URL: homepage, https://github.com/Logesh4466/MULTI_SYSTEM_CONNECTOR
+Project-URL: repository, https://github.com/Logesh4466/MULTI_SYSTEM_CONNECTOR
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Framework :: FastAPI
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastapi<1.0.0,>=0.100.0
+Requires-Dist: uvicorn<1.0.0,>=0.20.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: azure-identity>=1.14.0
+Requires-Dist: azure-ai-projects>=1.0.0b2
+Dynamic: license-file
+
+# Multi-System Connector
+
+A FastAPI-based connector that integrates Azure AI Foundry and SharePoint APIs.
+
+## Installation
+
+```bash
+pip install multi-system-connector

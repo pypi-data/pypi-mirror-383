@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multi_system_connector"
+version = "0.1.0"
+description = "FastAPI Multi-System Connector with Azure AI and SharePoint"
+authors = [{name="Logesh", email="logesh@nihilent.com"}]
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Framework :: FastAPI",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "fastapi>=0.100.0,<1.0.0",
+    "uvicorn>=0.20.0,<1.0.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+    "azure-identity>=1.14.0",
+    "azure-ai-projects>=1.0.0b2"
+]
+
+[project.urls]
+homepage = "https://github.com/Logesh4466/MULTI_SYSTEM_CONNECTOR"
+repository = "https://github.com/Logesh4466/MULTI_SYSTEM_CONNECTOR"
+
+[project.scripts]
+multi-connector = "multi_system_connector.cli:run"
