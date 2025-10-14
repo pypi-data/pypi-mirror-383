@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: rormula
+Version: 0.1.10
+Classifier: Programming Language :: Rust
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Dist: pandas
+Summary: Formula parser and evaluator for Wilkinson notation
+Keywords: design of experiments,Wilkinson,parser,eval,doe
+Author-email: Behrang Shafei <behrang.shafei@basf.com>
+License: BSD-3-Clause
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+Project-URL: repository, https://github.com/basf/rormula
+Project-URL: homepage, https://github.com/basf/rormula
+
+# Rormula
+
+Rormula is a Python package that parses the Wilkinson notation to create model matrices useful in design of experiments. 
+Additionally, it can be used for column arithmetics similar to
+`df.eval` where `df` is a Pandas dataframe. Rormula is significantly faster for small matrices than `df.eval` or [Formulaic](https://github.com/matthewwardrop/formulaic), does not allow arbitrary code execution but only pre-defined operators,
+and still a not well tested prototype.
+
+More information can be found under https://github.com/basf/rormula.
+
