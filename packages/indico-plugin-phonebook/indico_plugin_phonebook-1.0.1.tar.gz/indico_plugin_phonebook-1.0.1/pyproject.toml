@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "indico-plugin-phonebook"
+version = "1.0.1"
+description = "Webhook endpoint to sync categories from the phonebook"
+authors = [
+    { name = "Vincent Garonne", email = "vincent.garonne@bnl.gov"  }
+]
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+dependencies = [
+    "requests>=2.32.3",
+    "jsonschema>=4.23.0"
+]
+
+[project.urls]
+Homepage = "https://git.racf.bnl.gov/gitea/CDS/indico-plugin-phonebook"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["indico_plugin_phonebook*"]
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
+[project.entry-points."indico.plugins"]
+phonebook = "indico_plugin_phonebook.plugin:PhonebookPlugin"
