@@ -1,0 +1,14 @@
+SpiNNMan==1!7.4.0
+SpiNNaker_PACMAN==1!7.4.0
+spalloc==1!7.4.0
+scipy>=0.16.0
+
+[plotting]
+seaborn
+
+[test]
+pytest-cov
+testfixtures
+httpretty!=1.0.0
+types-jsonschema
+types-requests
