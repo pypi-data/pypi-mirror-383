@@ -1,0 +1,94 @@
+Metadata-Version: 2.4
+Name: futunn-helper
+Version: 1.0.0
+Summary: Asynchronous Python client for Futunn stock market quote API, inspired by py-googletrans
+Project-URL: Homepage, https://github.com/yourusername/futunn-helper
+Project-URL: Documentation, https://github.com/yourusername/futunn-helper/blob/main/AGENTS.md
+Project-URL: Repository, https://github.com/yourusername/futunn-helper
+Project-URL: Issues, https://github.com/yourusername/futunn-helper/issues
+Author-email: Futunn Helper Contributors <futunn-helper@example.com>
+License: MIT License
+        
+        Copyright (c) 2025 Futunn Helper Contributors
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE
+Keywords: api,async,finance,futunn,httpx,market,stock,trading
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Office/Business :: Financial :: Investment
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.11
+Requires-Dist: httpx[http2]>=0.27.0
+Description-Content-Type: text/markdown
+
+# futunn-helper
+
+Asynchronous Python client for Futunn stock market quote API.
+
+## Features
+
+- 🚀 Async/await support with `httpx`
+- 🌍 Multiple markets (US, HK, CN, SG, AU, JP, MY, CA)
+- 🔐 Automatic token management
+- 📊 Real-time stock data
+- ⚡ Concurrent request handling
+
+## Installation
+
+```bash
+pip install futunn-helper
+```
+
+## Quick Start
+
+```python
+import asyncio
+from futunn import FutunnClient
+
+async def main():
+    client = FutunnClient()
+    
+    # Get top turnover US stocks
+    stocks = await client.get_stock_list(
+        market_type=2,      # US market
+        rank_type=5,        # Top turnover
+        page_size=50
+    )
+    
+    print(f"Total: {stocks.pagination.total} stocks")
+    for stock in stocks.stocks[:5]:
+        print(f"{stock.stock_code}: ${stock.price_nominal}")
+
+asyncio.run(main())
+```
+
+## Requirements
+
+- Python >= 3.11
+- httpx[http2] >= 0.27.0
+
+## License
+
+MIT License
