@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pvvoltloss"
+description = "Tools for pv voltage loss analysis using EQE and EL spectra."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Jolanda S. Müller"}]
+keywords = ["photovoltaics", "opv", "voltage losses", "eqe", "electroluminescence","reciprocity"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
+
+dynamic = ["version", "dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+version = {attr = "pvvoltloss.__version__"}
+
+[project.urls]
+Homepage = "https://github.com/Jenny-Nelson-Group/pvvoltloss"
+Issues = "https://github.com/Jenny-Nelson-Group/pvvoltloss"
+
+# Optional: create a CLI command 'voltage-loss' -> pvvoltloss.cli:main
+[project.scripts]
+pvvoltloss = "pvvoltloss.cli:main"
+analyse-voltage-losses = "pvvoltloss.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# Include package data (like your CSV)
+[tool.setuptools.package-data]
+pvvoltloss = ["data/*.csv", "data/examples/*.csv"]
