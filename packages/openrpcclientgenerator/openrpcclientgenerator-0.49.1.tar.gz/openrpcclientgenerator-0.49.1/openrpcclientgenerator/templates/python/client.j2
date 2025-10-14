@@ -1,0 +1,46 @@
+
+{{ indent }}class {{ ("_" if indent else "") + cs.to_pascal(group.name) }}Client(Transportable):
+{% if indent == "" %}{# Checks nesting. #}
+    def __init__(self, headers: dict[str, Any], client_url: str = CLIENT_URL, **kwargs: Any) -> None:
+        transport = AsyncRPC{{ transport }}Client(client_url, headers, **kwargs)
+        {% for cg in group.child_groups.values() %}
+        self.{{ cs.to_snake(cg.name) }} = {{ class_prefix }}._{{ cs.to_pascal(cg.name) }}Client(transport)
+        {% endfor %}
+        super().__init__(transport)
+{% elif group.child_groups %}
+{{ indent }}    def __init__(self, transport: ClientType) -> None:
+{{ indent }}        {% for group in group.child_groups.values() %}
+{{ indent }}        self.{{ cs.to_snake(group.name) }} = {{ class_prefix }}._{{ cs.to_pascal(group.name) }}Client(transport)
+{{ indent }}        {% endfor %}
+{{ indent }}        super().__init__(transport)
+{% endif %}
+{% for name, method in group.methods.items() %}
+{{ indent }}    @rpc_class_method(method_name="{{ method.name.replace('"', '\\"') }}")
+{{ indent }}    async def {{ cs.to_snake(name) or "method" }}(
+{{ indent }}        self,
+                    {% for param in method.params %}
+{{ indent }}        {{ cs.to_snake(param.name) }}: {{ py_type(param.schema_) }}
+                        {% if not param.required %}
+                            = Undefined
+                        {% endif %}
+                        {% if not loop.last %}
+                            ,
+                        {% endif %}
+                    {% endfor %}
+{{ indent }}    ) -> {{ py_type(method.result.schema_) }}: ...
+{% endfor %}
+{% for group in group.child_groups.values() %}
+    {% with indent=indent + " " * 4, prefix=cs.to_snake(group.name) + ".", class_prefix=class_prefix + "._" + cs.to_pascal(group.name) + "Client" %}
+        {% include "python/client.j2" %}
+    {% endwith %}
+{% endfor %}
+{# Check to see if this is root level group. #}
+{% if indent == "" and transport == "WS" %}
+    async def connect(self) -> None:
+        """Connect to WebSocket server."""
+        await self.transport.connect()
+
+    async def close(self) -> None:
+        """Close connection to WebSocket server."""
+        await self.transport.close()
+{% endif %}
