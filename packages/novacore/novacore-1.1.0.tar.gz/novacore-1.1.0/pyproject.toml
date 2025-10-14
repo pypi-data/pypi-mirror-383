@@ -1,0 +1,20 @@
+# filename: pyproject.toml
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "novacore"
+version = "1.1.0"
+description = "License validation and comparison against config for fyura.tech API"
+authors = [{ name = "Vedant", email = "vedant.storm@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["requests>=2.31"]
+
+[tool.setuptools]
+packages = ["novacore"]            # only package the 'login' directory
+include-package-data = false
+
+[project.scripts]
+login = "novacore.license:login"     # points to function cli() in login/license.py
