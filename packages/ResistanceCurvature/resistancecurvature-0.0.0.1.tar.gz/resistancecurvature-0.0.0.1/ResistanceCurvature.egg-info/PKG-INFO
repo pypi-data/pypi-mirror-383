@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: ResistanceCurvature
+Version: 0.0.0.1
+Summary: Calculate resistance curvature
+Author: Chaoqun Fei, Tinglve Zhou, Yangyang Li
+Author-email: 1079484353@qq.com
+License: Apache-2.0
+Keywords: python,Curvature,Resistance,Geometry,windows,mac,linux
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Environment :: GPU :: NVIDIA CUDA
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=1.10.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+
+# ResistanceCurvature
+
+A powerful Python package for calculating resistance curvature
+
+## Features
+
+- **High performance**: GPU acceleration supported
+- **Easy to Use**: Fully based on PyTorch, with a clear interface design
+
+## Installation
+
+You can install the package using pip:
+
+```bash
+pip install ResistanceCurvature
+```
+
+
+## Simple Example
+
+```python
+import torch
+from ResistanceCurvature.resistance_curvature import ResistanceCurvature
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+rc = ResistanceCurvature(device=device)
+adj_tensor = torch.tensor([[0, 1, 1],
+                     [1, 0, 1],
+                     [1, 1, 0],], dtype=torch.float32, device=device)
+node_curvature, edge_curvature = rc.cal_curvature(adj_tensor)
+print("Node Curvature:", node_curvature)
+print("Edge Curvature:", edge_curvature)
+
+```
