@@ -1,0 +1,412 @@
+
+# adaptRetrieval - Adaptive Retrieval
+
+A Python class that implements adaptive embedding-based document retrieval using ABIDE intrinsic dimensionality estimation and dense retrievers to dynamically determine the optimal number of documents to retrieve for each query.
+
+
+## Overview
+
+The `aRAG` class select the optimal number of relevant documents (k*) for each query, rather than using a fixed k value. This adaptive approach improves retrieval quality by considering the local geometry of the embedding space.
+
+## Features
+
+- **Adaptive k Selection**: Automatically determines optimal number of documents using intrinsic dimensionality
+- **Dense Retriever**: Uses SentenceTransformer models for embeddings' generation
+- **Fallback Mechanism**: Returns top-k documents if adaptive method fails
+- **Reproducible**: Fixed random seeds for consistent results
+- **Flexible Distance Metrics**: Supports both cosine distance and dot product similarity
+
+## Installation
+
+```
+pip install numpy scipy scikit-learn
+pip install sentence-transformers torch
+pip install dadapy
+```
+
+### Requirements
+
+```{python}
+numpy>=1.24.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+sentence-transformers>=2.2.0
+torch>=2.0.0
+dadapy>=0.2.0
+```
+
+## Quick Start
+
+```{python}
+from adaptRetriever import aRAG
+
+# Initialize the retriever
+retriever = aRAG(
+    model_name='google/embeddinggemma-300M', #or any other model with SenteceTransformer, e.g., sentence-transformers/msmarco-MiniLM-L-6-v3
+    k_fallback=5,
+    random_seed=0
+)
+
+# Define query and documents
+query = "Mentions eating habits, nutrition, or making choices to maintain a healthy diet."
+
+documents = [
+    # --- RELEVANT (20 Documents) ---
+    "I’ve been trying to eat more vegetables and cut down on sugar lately",
+    "I switched from soda to water to stay healthier",
+    "I started meal prepping to make sure I eat balanced meals during the week",
+    "Breakfast with oats and fruit keeps me full all morning",
+    "I’m learning to cook more at home instead of eating fast food",
+    "I’ve reduced my salt intake after my doctor’s advice",
+    "I tried a plant-based diet for a month and felt more energetic",
+    "I make sure to eat enough protein with every meal",
+    "I replaced chips with almonds as my afternoon snack",
+    "Drinking green smoothies has become part of my morning routine",
+    "I’m counting my daily calories to maintain a healthy weight",
+    "I started eating fish twice a week for the omega-3s",
+    "I try to avoid processed food whenever I can",
+    "I read nutrition labels before buying anything now",
+    "I’ve started adding more fiber to my meals for better digestion",
+    "I’m experimenting with vegetarian recipes this month",
+    "I drink herbal tea instead of coffee in the evening",
+    "I’ve noticed my energy levels are better when I eat breakfast",
+    "I plan my meals ahead so I don’t eat junk food in a rush",
+    "I’m trying to cut down on sweets and eat more fruit instead",
+
+    # --- NON RELEVANT (80 documents) ---
+    "I went to the movies last night with some friends",
+    "My dog wouldn’t stop barking during the thunderstorm",
+    "I started watching a new series on Netflix",
+    "The rain today made everything smell fresh and clean",
+    "My favorite color has always been green",
+    "I spent the afternoon cleaning my apartment",
+    "My cousin is visiting us next weekend",
+    "I love listening to jazz music while working",
+    "I’m thinking about learning a new language",
+    "The view from the mountain was breathtaking",
+    "I played some video games after dinner",
+    "My laptop crashed while I was finishing a report",
+    "I had a great time at the concert yesterday",
+    "The traffic this morning was terrible",
+    "I saw a rainbow while walking home",
+    "I bought a new pair of shoes online",
+    "I’m planning a trip to Italy next summer",
+    "My cat was chasing shadows all morning",
+    "I went jogging in the park with my neighbor",
+    "The sunset over the lake looked beautiful",
+    "I found an old photo album from high school",
+    "The new smartphone model looks really nice",
+    "I tried painting for the first time this weekend",
+    "My favorite book is being turned into a movie",
+    "I’m learning to play the guitar in my free time",
+    "The city lights looked stunning last night",
+    "I baked cookies for my family this afternoon",
+    "The museum exhibition was surprisingly interesting",
+    "I spent the whole day working on my essay",
+    "The weather was perfect for a picnic today",
+    "My friend adopted a puppy from the shelter",
+    "The train was delayed by almost an hour",
+    "I joined a new yoga class downtown",
+    "The sound of rain helps me fall asleep faster",
+    "I watched a documentary about space exploration",
+    "My plants are growing really well on the balcony",
+    "I love the smell of fresh coffee in the morning",
+    "The park was full of blooming flowers today",
+    "I finally finished reading that mystery novel",
+    "I met an old classmate at the grocery store",
+    "I tried a new hairstyle and really liked it",
+    "The local market had such fresh produce today",
+    "I took a long walk to clear my mind",
+    "My boss complimented my presentation at work",
+    "I helped my friend move into her new apartment",
+    "I’m really enjoying my photography hobby lately",
+    "The beach was crowded but the water was warm",
+    "I bought tickets for the theater next month",
+    "My phone battery keeps dying too quickly",
+    "I took some nice photos during my hike",
+    "The smell of rain always reminds me of home",
+    "My favorite café reopened after renovation",
+    "I attended a workshop on creative writing",
+    "I played chess with my brother last night",
+    "The bakery near my office sells the best croissants",
+    "I listened to a podcast while cleaning the house",
+    "My neighbor’s dog is always so friendly",
+    "I finished an online course in graphic design",
+    "The street musicians were amazing today",
+    "My new headphones sound incredible",
+    "I went shopping for groceries after work",
+    "I finally organized my desk and cleaned my room",
+    "The park bench was freshly painted this week",
+    "I love spending Sundays doing nothing productive",
+    "The coffee shop was playing my favorite songs",
+    "I tried sketching with charcoal for the first time",
+    "The waves at the beach were calm and relaxing",
+    "I bought a cozy blanket for the living room",
+    "I met my friends for brunch downtown",
+    "The fireworks last night were stunning",
+    "I helped my parents in the garden today",
+    "The old library near the station is closing soon",
+    "I saw a shooting star while walking home",
+    "My shoes got soaked in the rain this morning",
+    "I took the bus instead of driving today",
+    "My favorite actor just won an award",
+    "The sky was so clear you could see every star",
+    "I spent all day editing photos from my trip",
+    "My little sister started kindergarten today",
+    "I tried origami for the first time this evening",
+    "The market had fresh flowers everywhere",
+    "My computer finally finished updating",
+    "The cafe added new drinks to the menu",
+    "I went to the gym after work and felt great",
+    "My alarm didn’t go off this morning",
+    "I saw a butterfly land on my window sill",
+    "I painted my bedroom walls light blue",
+    "I played board games with friends all night",
+    "The river looked beautiful under the moonlight",
+    "I finally fixed the broken shelf in my room",
+    "I watched some funny videos before bed",
+    "The bakery near my house smells amazing",
+    "I received a surprise gift from a friend today",
+    "My phone has been lagging all week",
+    "The city square was filled with music and lights",
+    "I love sitting by the window when it rains"
+]
+
+# Retrieve most relevant documents
+relevant_docs = retriever.retrieve(query, documents)
+
+print(f"Retrieved {len(relevant_docs)} documents:")
+for i, doc in enumerate(relevant_docs, 1):
+    print(f"{i}. {doc}")
+```
+
+```{python}
+Output:
+1. I’m counting my daily calories to maintain a healthy weight
+2. I’ve been trying to eat more vegetables and cut down on sugar lately
+3. I try to avoid processed food whenever I can
+4. I’m learning to cook more at home instead of eating fast food
+5. I plan my meals ahead so I don’t eat junk food in a rush
+6. I started meal prepping to make sure I eat balanced meals during the week
+7. I’m trying to cut down on sweets and eat more fruit instead
+8. I’ve started adding more fiber to my meals for better digestion
+9. I switched from soda to water to stay healthier
+10. I’ve noticed my energy levels are better when I eat breakfast
+11. I’ve reduced my salt intake after my doctor’s advice
+12. I make sure to eat enough protein with every meal
+13. I read nutrition labels before buying anything now
+14. I tried a plant-based diet for a month and felt more energetic
+15. I replaced chips with almonds as my afternoon snack
+16. Breakfast with oats and fruit keeps me full all morning
+17. I started eating fish twice a week for the omega-3s
+18. I’m experimenting with vegetarian recipes this month
+19. Drinking green smoothies has become part of my morning routine
+```
+
+
+## Class Reference
+
+### `aRAG`
+
+Adaptive Retrieval-Augmented Generation class using intrinsic dimensionality and dense retrievers for document selection.
+
+#### Constructor
+
+```
+aRAG(model_name='google/embeddinggemma-300M', 
+     k_fallback=5, 
+     random_seed=0)
+```
+
+**Parameters:**
+
+- **model_name** (`str`, optional): Name of the dense retriever model from sentence-transformers  
+  Default: `'sentence-transformers/msmarco-MiniLM-L-12-v3'`
+
+- **k_fallback** (`int`, optional): Number of documents to retrieve if adaptive method fails  
+  Default: `5`
+
+- **random_seed** (`int`, optional): Random seed for reproducibility  
+  Default: `0`
+
+**Example:**
+
+```
+retriever = aRAG(
+    model_name='google/embeddinggemma-300M',
+    k_fallback=3,
+    random_seed=0
+)
+```
+
+---
+
+### `retrieve()`
+
+Retrieve the most relevant documents for a given query using adaptive RAG.
+
+```
+retrieve(query, documents, use_cosine=True, Dthr=23.92812698, r='opt', n_iter=10)
+```
+
+**Parameters:**
+
+- **query** (`str`): The query text
+
+- **documents** (`list of str`): List of document texts to search
+
+- **use_cosine** (`bool`, optional): Whether to use cosine distance (True) or dot product similarity (False)  
+  Default: `True`
+
+- **Dthr** (`float`, optional): threshold for k* computation  
+  Default: `23.92812698`
+
+- **r** (`str` or `float`, optional): Ratio for neighborhood shells. Use `'opt'` for automatic optimal ratio  
+  Default: `'opt'`
+
+- **n_iter** (`int`, optional): Number of iterations for intrinsic dimensionality estimation  
+  Default: `10`
+
+**Returns:**
+
+- `list of str`: Retrieved documents ranked by relevance (most relevant first)
+
+**Example:**
+
+```
+# Basic usage
+results = retriever.retrieve(query, documents)
+
+# Custom parameters
+results = retriever.retrieve(
+    query=query,
+    documents=documents,
+    use_cosine=True,
+)
+```
+
+
+
+---
+
+## How It Works
+
+### Adaptive k* Selection
+
+The class uses intrinsic dimensionality estimation to determine the optimal number of neighbors:
+
+1. **Encode**: Query and documents are encoded using a dense retriever model
+2. **Compute ID**: Intrinsic dimensionality is estimated using the k*-binomial method
+3. **Determine k***: The optimal number of neighbors (k*) is computed based on local geometry
+4. **Retrieve**: k* nearest neighbors are returned
+
+Relevant documents are retrieved by selecting the top \(k^*\) documents with the highest embedding similarity scores:
+
+$$
+\mathbf{D}_{retrieved} = \{d_{i}\}_{d_i \in \mathcal{N}(q, k^*)}
+$$
+
+where 
+
+$$\(\mathcal{N}(q, k^*)\)$$ 
+
+represents the adaptive neighborhood of size k* for query q.
+
+
+## Advanced Usage
+
+### Custom Dense Retriever Model
+
+```
+# Use a different SentenceTransformer model
+retriever = aRAG(model_name='all-mpnet-base-v2')
+```
+
+Popular models:
+- `sentence-transformers/msmarco-MiniLM-L-12-v3` (fast, good for search)
+- `all-MiniLM-L6-v2` (very fast, lighter)
+- `all-mpnet-base-v2` (high quality, slower)
+
+### Adjusting Distance Threshold (Dthr)
+
+The distance threshold affects k* selection:
+
+```
+# More conservative (fewer documents)
+results = retriever.retrieve(query, docs, Dthr=6.67)
+
+# More inclusive (more documents)
+results = retriever.retrieve(query, docs, Dthr=23.92812698)
+```
+
+### Using Dot Product Instead of Cosine
+
+```
+# Dot product similarity (faster but assumes normalized embeddings)
+results = retriever.retrieve(query, docs, use_cosine=False)
+```
+
+
+## Error Handling
+
+The class includes automatic fallback:
+
+```
+# If adaptive method fails, automatically uses k_fallback
+try:
+    results = retriever.retrieve(query, documents)
+except Exception as e:
+    print(f"Error: {e}")
+    # Class internally handles this with fallback
+```
+
+Output:
+```
+⚠️ Error in adaptive retrieval: <error message>. Using fallback with k=5
+```
+
+## Citation
+
+If you use this code in your research, please cite:
+
+```
+@inproceedings{ravenda-etal-2025-llms,
+    title = "Are {LLM}s effective psychological assessors? Leveraging adaptive {RAG} for interpretable mental health screening through psychometric practice",
+    author = "Ravenda, Federico  and
+      Bahrainian, Seyed Ali  and
+      Raballo, Andrea  and
+      Mira, Antonietta  and
+      Kando, Noriko",
+    editor = "Che, Wanxiang  and
+      Nabende, Joyce  and
+      Shutova, Ekaterina  and
+      Pilehvar, Mohammad Taher",
+    booktitle = "Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2025",
+    address = "Vienna, Austria",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.acl-long.440/",
+    doi = "10.18653/v1/2025.acl-long.440",
+    pages = "8975--8991",
+    ISBN = "979-8-89176-251-0",
+    abstract = "In psychological practice, standardized questionnaires serve as essential tools for assessing mental health through structured, clinically-validated questions (i.e., items). While social media platforms offer rich data for mental health screening, computational approaches often bypass these established clinical assessment tools in favor of black-box classification. We propose a novel questionnaire-guided screening framework that bridges psychological practice and computational methods through adaptive Retrieval-Augmented Generation (aRAG). Our approach links unstructured social media content and standardized clinical assessments by retrieving relevant posts for each questionnaire item and using Large Language Models (LLMs) to complete validated psychological instruments. Our findings demonstrate two key advantages of questionnaire-guided screening: First, when completing the Beck Depression Inventory-II (BDI-II), our approach matches or outperforms state-of-the-art performance on Reddit-based benchmarks without requiring training data. Second, we show that guiding LLMs through standardized questionnaires yields superior results compared to directly prompting them for depression screening. Additionally, we show as a proof-of-concept how our questionnaire-based methodology successfully extends to self-harm screening."
+}
+```
+
+```
+@article{di2024beyond,
+  title={Beyond the noise: intrinsic dimension estimation with optimal neighbourhood identification},
+  author={Di Noia, Antonio and Macocco, Iuri and Glielmo, Aldo and Laio, Alessandro and Mira, Antonietta},
+  journal={arXiv preprint arXiv:2405.15132},
+  year={2024}
+}
+```
+
+## License
+
+MIT License
+
+## Acknowledgments
+
+- Based on intrinsic dimensionality estimation methods from [dadapy](https://github.com/sissa-data-science/DADApy)
