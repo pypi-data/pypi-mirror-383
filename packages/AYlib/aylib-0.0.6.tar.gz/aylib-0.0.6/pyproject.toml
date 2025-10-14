@@ -1,0 +1,6 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# 简化配置，避免与setup.py冲突
+# 主要配置在setup.py中定义
