@@ -1,0 +1,80 @@
+Metadata-Version: 2.4
+Name: otx
+Version: 2.6.0
+Summary: OpenVINO™ Training Extensions: Train, Evaluate, Optimize, Deploy Computer Vision Models via OpenVINO™
+Author: OpenVINO™ Training Extensions Contributors
+Project-URL: Documentation, https://open-edge-platform.github.io/training_extensions/
+Project-URL: Repository, https://github.com/open-edge-platform/training_extensions/
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Cython
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: datumaro==1.10.0
+Requires-Dist: omegaconf==2.3.0
+Requires-Dist: rich==14.0.0
+Requires-Dist: jsonargparse==4.35.0
+Requires-Dist: ftfy==6.3.1
+Requires-Dist: regex==2024.11.6
+Requires-Dist: importlib_resources==6.5.2
+Requires-Dist: docstring_parser==0.16
+Requires-Dist: rich_argparse==1.7.0
+Requires-Dist: einops==0.8.1
+Requires-Dist: decord==0.6.0
+Requires-Dist: typeguard<4.5,>=4.3
+Requires-Dist: setuptools==78.1.1
+Requires-Dist: lightning==2.4.0
+Requires-Dist: torchmetrics==1.6.0
+Requires-Dist: pytorchcv==0.0.67
+Requires-Dist: timm==1.0.3
+Requires-Dist: openvino==2025.2
+Requires-Dist: openvino-model-api==0.3.0.2
+Requires-Dist: onnx==1.17.0
+Requires-Dist: onnxconverter-common==1.16.0
+Requires-Dist: nncf==2.17.0
+Requires-Dist: anomalib[core]==1.1.3
+Provides-Extra: dev
+Requires-Dist: uv; extra == "dev"
+Requires-Dist: tox-uv==1.26.0; extra == "dev"
+Requires-Dist: pre-commit==4.2.0; extra == "dev"
+Requires-Dist: pylint; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: coverage; extra == "dev"
+Requires-Dist: pytest-timeout; extra == "dev"
+Requires-Dist: pytest-mock; extra == "dev"
+Requires-Dist: pytest-csv; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: onnxruntime==1.21.1; extra == "dev"
+Provides-Extra: cuda
+Requires-Dist: torch==2.8.0; extra == "cuda"
+Requires-Dist: torchvision==0.23.0; extra == "cuda"
+Provides-Extra: xpu
+Requires-Dist: torch==2.8.0+xpu; extra == "xpu"
+Requires-Dist: pytorch-triton-xpu==3.4.0; extra == "xpu"
+Requires-Dist: torchvision==0.23.0; extra == "xpu"
+Provides-Extra: docs
+Requires-Dist: furo; extra == "docs"
+Requires-Dist: myst-parser; extra == "docs"
+Requires-Dist: sphinx==7.2.6; extra == "docs"
+Requires-Dist: pydata-sphinx-theme==0.12.0; extra == "docs"
+Requires-Dist: sphinx-tabs; extra == "docs"
+Requires-Dist: sphinx-panels; extra == "docs"
+Requires-Dist: sphinx-design; extra == "docs"
+Requires-Dist: sphinx-copybutton==0.5.2; extra == "docs"
+Requires-Dist: sphinx-autoapi; extra == "docs"
+Requires-Dist: sphinxemoji; extra == "docs"
+Requires-Dist: nbsphinx; extra == "docs"
+Requires-Dist: myst-parser>=2.0.0; extra == "docs"
+Requires-Dist: linkify-it-py; extra == "docs"
+Provides-Extra: ci-publish
+Requires-Dist: build==1.2.2.post1; extra == "ci-publish"
+Provides-Extra: ci-benchmark
+Requires-Dist: pandas<2.4; extra == "ci-benchmark"
+Requires-Dist: matplotlib==3.10.1; extra == "ci-benchmark"
+Requires-Dist: openpyxl==3.1.5; extra == "ci-benchmark"
+Requires-Dist: mlflow==2.21.3; extra == "ci-benchmark"
+Requires-Dist: py-cpuinfo==9.0.0; extra == "ci-benchmark"
