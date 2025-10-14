@@ -1,0 +1,40 @@
+Metadata-Version: 2.1
+Name: ktree
+Version: 0.0.1
+Summary: This module provides a hierarchical spatial ordering structure, which can be used as a QuadTree or an Octree.
+Home-page: https://github.com/SealtielFreak/ktree
+Author: SealtielFreak
+Author-email: sealtielfreak@yandex.com
+License: WTFPL
+Platform: UNKNOWN
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# KTree
+
+![Python - Version](https://img.shields.io/badge/python-%3E%3D3.8-brightgreen)
+![PyPI - Version](https://img.shields.io/pypi/v/ktree?color=green&label=pip%20install%20ktree)
+![Python - Implementation](https://img.shields.io/pypi/implementation/ktree)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/ktree)
+
+## Description
+
+This project provides a hierarchical spatial planning structure, which can be used as
+a [QuadTree](https://en.wikipedia.org/wiki/Quadtree) or an [Octree](https://en.wikipedia.org/wiki/Octree) (including
+configuring with a one-dimension or multiple dimensions).
+
+## Install
+
+### From pip
+
+```
+pip install ktree
+```
+
+### From GitHub
+
+```
+pip install git+https://github.com/SealtielFreak/ktree.git
+```
+
+
