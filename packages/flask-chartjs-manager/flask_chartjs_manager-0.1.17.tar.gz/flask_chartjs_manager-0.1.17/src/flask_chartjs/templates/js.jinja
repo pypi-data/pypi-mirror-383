@@ -1,0 +1,47 @@
+{% macro render_dict_as_json(dict) %}
+    {% for key, val in dict.items() recursive %}               
+        {% set outer_loop = loop %}      
+        {% if val is mapping %}                    
+            {{ key|safe }}: { {{ outer_loop(val.items()) }} },
+        {% elif val is sequence and val is not string %}
+            {{ key|safe }}: [
+                {% for inner_val in val recursive %}
+                    {% if inner_val is mapping %}
+                        { {{ outer_loop(inner_val.items()) }} },
+                    {% elif inner_val is sequence and inner_val is not string %}
+                        [ {{ loop(inner_val) }} ],
+                    {% else %}
+                        {% if inner_val is string and inner_val[0] == '%' %}
+                            {{ inner_val[1:] | safe }},
+                        {% else %}
+                            {{ inner_val | tojson }},
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                ],
+        {% else %}            
+            {{ key|safe }}: 
+                {% if val is string and val[0] == '%' %}
+                    {{ val[1:] | safe }},
+                {% else %}
+                    {{ val | tojson }},
+                {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+
+{% set var_name = 'chart_' + chart.id | replace('-', '_')  %}
+{% set canvas_id = 'canvas_' + chart.id | replace('-', '_') %}
+<script nonce={{ csp_nonce() if csp_nonce else '' }}>
+    if (typeof htmx !== 'undefined') {
+        var {{ var_name }} = htmx.find("#{{ canvas_id }}")
+    } else {
+        var {{ var_name }} = document.querySelector("#{{ canvas_id }}")
+    }
+    new Chart({{ var_name }},
+        {
+            {{ render_dict_as_json(chart_data) }}
+        }
+        );
+</script>

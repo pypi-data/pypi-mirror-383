@@ -1,0 +1,9 @@
+<canvas id="{{  'canvas_' + chart.id | replace('-', '_') }}"
+    {% if width %}
+    width="{{ width }}"
+    {% endif %}
+    {% if height %}
+    height="{{ height }}"
+    {% endif %}
+    aria-label="{{ chart._title if chart._title else chart.id }}" role="img"
+    ></canvas>  
