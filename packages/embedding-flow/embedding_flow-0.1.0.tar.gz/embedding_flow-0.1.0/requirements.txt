@@ -1,0 +1,17 @@
+# Core dependencies
+pandas>=2.0.0
+pyarrow>=12.0.0
+
+# ML & Embeddings
+sentence-transformers>=2.2.0
+torch>=2.0.0
+
+# Vector Database
+qdrant-client>=1.7.0
+
+# Airflow (si se necesita localmente, sino está en el servidor)
+# apache-airflow>=2.7.0
+
+# Utilities
+python-dotenv>=1.0.0
+
