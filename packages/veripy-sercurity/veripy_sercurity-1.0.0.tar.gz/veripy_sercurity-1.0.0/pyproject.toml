@@ -1,0 +1,18 @@
+[project]
+name = "veripy-sercurity"
+version = "1.0.0"
+description = "Email verification system"
+authors = [
+  {name="Yixuan Xu", email="xuyixuan370@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}    # <- replace license-expression
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11"
+]
+dependencies = [
+  "tk"
+]
