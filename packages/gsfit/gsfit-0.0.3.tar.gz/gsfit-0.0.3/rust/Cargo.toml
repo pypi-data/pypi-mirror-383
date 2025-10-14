@@ -1,0 +1,17 @@
+[workspace]
+members = ["data_tree", "gsfit_rs"]
+resolver = "3"  # Use Rust 2024 edition resolver
+[workspace.package]
+edition = "2024"
+
+# Workspace-wide profile settings
+[profile.release]
+debug = false
+overflow-checks = true
+opt-level = 3  # Highest optimization level
+lto = true  # Link Time Optimization
+codegen-units = 1  # Fewer units can lead to better optimization
+
+[profile.dev]
+debug = true
+overflow-checks = true

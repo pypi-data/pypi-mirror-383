@@ -1,0 +1,11 @@
+[package]
+name = "data_tree"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ndarray = "0.16.1"
+data_tree_derive = { path = "data_tree_derive" }
+
+[dev-dependencies]
+# For running tests
