@@ -1,0 +1,1191 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>User Track - Urja Feeds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="{% static 'plugins/select2/select2.min.css' %}" rel="stylesheet" />
+    <style>
+      html, body, #map { height: 100%; margin: 0; padding: 0; }
+      .distance-badge {
+        position: absolute; top: 10px; left: 10px; z-index: 5;
+        background: white; padding: 8px 12px; border-radius: 8px;
+        border: 1px solid #ddd; font-family: system-ui, sans-serif;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .controls {
+        position: absolute; top: 10px; right: 10px; z-index: 5;
+        background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd;
+        font-family: system-ui, sans-serif; display: flex; gap: 8px; align-items: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        flex-wrap: wrap;
+      }
+      .info-panel {
+        position: absolute; bottom: 10px; left: 10px; z-index: 5;
+        background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd;
+        font-family: system-ui, sans-serif; font-size: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        max-width: 300px;
+      }
+      .marker-filters {
+        position: fixed; top: 80px; left: 10px; right: 10px; z-index: 1000;
+        background: white; padding: 12px 16px; border-radius: 8px; border: 2px solid #007bff;
+        font-family: system-ui, sans-serif; display: flex; gap: 12px; align-items: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        flex-wrap: nowrap;
+        font-size: 14px;
+        font-weight: 500;
+        width: auto;
+        transform: none;
+      }
+      .marker-toggle {
+        display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+        border: 2px solid #ddd; border-radius: 6px; cursor: pointer;
+        background: white; transition: all 0.3s;
+        font-weight: 500;
+        font-size: 13px;
+      }
+      .marker-toggle:hover {
+        background: #f8f9fa;
+        border-color: #007bff;
+        transform: translateY(-1px);
+      }
+      .marker-toggle.active {
+        opacity: 1.0;
+        background: #e3f2fd;
+        border-color: #007bff;
+      }
+      .marker-toggle:not(.active) {
+        opacity: 0.6;
+        background: #f5f5f5;
+      }
+      .marker-dot {
+        width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      }
+      .marker-dot.employees { background-color: #0066FF; }
+      .marker-dot.distributors { background-color: #00AA00; }
+      .marker-dot.distributors-visited { background-color: #00FF00; }
+      .marker-dot.retailers { background-color: #FFA500; }
+      .marker-dot.retailers-visited { background-color: #FFFF00; }
+      .marker-dot.retailers-created { background-color: #FF6600; }
+      .marker-dot.activities { background-color: #FF0000; }
+      .marker-count {
+        font-size: 11px;
+        color: #666;
+        font-weight: normal;
+      }
+
+      input, button, select {
+        font: inherit;
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      select {
+        min-width: 150px;
+      }
+      button {
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .error {
+        color: #dc3545;
+      }
+      .success {
+        color: #28a745;
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .error {
+        color: #dc3545;
+      }
+      .success {
+        color: #28a745;
+      }
+      .live-tracking {
+        background: #28a745;
+        animation: pulse 2s infinite;
+      }
+      .live-tracking:hover {
+        background: #1e7e34;
+      }
+      button:disabled {
+        background: #6c757d !important;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      input:disabled, select:disabled {
+        background: #e9ecef !important;
+        color: #6c757d !important;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+      }
+      .countdown {
+        font-size: 11px;
+        color: #666;
+        margin-left: 4px;
+      }
+      @media (max-width: 768px) {
+        .controls {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+    <script>
+      // Initialize with URL parameters or template variables
+      const Q = new URLSearchParams(window.location.search);
+      const initialUserId = Q.get("user_id") || "{{ user_id|default:'' }}";
+      const initialDate = Q.get("date") || "{{ date_str|default:'' }}";
+
+      let map;
+      let currentData = null;
+      let refreshInterval = null;
+      let countdownInterval = null;
+      let isLiveTracking = false;
+      let countdownSeconds = 0;
+      let startMarker = null;
+      let endMarker = null;
+
+      // Marker management
+      let currentMarkers = {
+        employees: [],
+        distributors: [],
+        'distributors-visited': [],
+        retailers: [],
+        'retailers-visited': [],
+        'retailers-created': [],
+        activities: []
+      };
+      let markerVisibility = {
+        employees: false,
+        distributors: false,
+        'distributors-visited': false,
+        retailers: false,
+        'retailers-visited': false,
+        'retailers-created': false,
+        activities: false
+      };
+
+      // Helper function to check if selected date is today (using local timezone)
+      function isTodaysDate(dateStr) {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayLocal = `${year}-${month}-${day}`;
+        return dateStr === todayLocal;
+      }
+
+      // Update live button visibility and state based on selected date
+      function updateLiveTrackingState() {
+        const liveBtn = document.getElementById("liveBtn");
+        const dateStr = document.getElementById("date").value.trim();
+
+        if (isTodaysDate(dateStr)) {
+          liveBtn.style.display = 'inline-block';
+          liveBtn.disabled = false;
+          liveBtn.title = "Auto-refresh every 5 seconds for today's live data";
+        } else {
+          // Stop live tracking if it's running and date is changed to non-today
+          if (isLiveTracking) {
+            stopLiveTracking();
+          }
+          liveBtn.style.display = 'none';
+          liveBtn.disabled = true;
+        }
+      }
+
+      // Live tracking functions
+      function toggleLiveTracking() {
+        const liveBtn = document.getElementById("liveBtn");
+        const userId = document.getElementById("userId").value.trim();
+        const dateStr = document.getElementById("date").value.trim();
+
+        if (!userId || !dateStr) {
+          alert("Please select a user and date first to enable live tracking");
+          return;
+        }
+
+        // Only allow live tracking for today's date
+        if (!isTodaysDate(dateStr)) {
+          alert("Live tracking is only available for today's date. Historical data doesn't change.");
+          return;
+        }
+
+        if (isLiveTracking) {
+          stopLiveTracking();
+        } else {
+          startLiveTracking();
+        }
+      }
+
+      function startLiveTracking() {
+        isLiveTracking = true;
+        const liveBtn = document.getElementById("liveBtn");
+        liveBtn.classList.add("live-tracking");
+        liveBtn.innerHTML = '🔄 Live <span class="countdown" id="countdown">5</span>';
+
+        // Start 5-second refresh cycle
+        countdownSeconds = 5;
+        refreshInterval = setInterval(() => {
+          const userId = document.getElementById("userId").value.trim();
+          const dateStr = document.getElementById("date").value.trim();
+          const optimize = document.getElementById("optimize").value;
+
+          if (userId && dateStr) {
+            loadGeoJSON(userId, dateStr, optimize, true); // silent refresh
+          }
+          countdownSeconds = 5; // reset countdown
+        }, 5000);
+
+        // Update countdown every second
+        countdownInterval = setInterval(() => {
+          countdownSeconds--;
+          const countdownElement = document.getElementById("countdown");
+          if (countdownElement) {
+            countdownElement.textContent = countdownSeconds;
+          }
+          if (countdownSeconds <= 0) {
+            countdownSeconds = 5;
+          }
+        }, 1000);
+      }
+
+      function stopLiveTracking() {
+        isLiveTracking = false;
+        const liveBtn = document.getElementById("liveBtn");
+        liveBtn.classList.remove("live-tracking");
+        liveBtn.innerHTML = '▶️ Live';
+
+        if (refreshInterval) {
+          clearInterval(refreshInterval);
+          refreshInterval = null;
+        }
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+      }
+
+      // Utility function to get CSRF token
+      function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+      }
+
+      // Fit map bounds to coordinates
+      function fitBoundsToLine(coords) {
+        if (!coords.length) return;
+        const bounds = new google.maps.LatLngBounds();
+        coords.forEach(([lon, lat]) => bounds.extend(new google.maps.LatLng(lat, lon)));
+
+        // Add some padding to the bounds
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+        const padding = 0.01; // degrees
+        bounds.extend(new google.maps.LatLng(ne.lat() + padding, ne.lng() + padding));
+        bounds.extend(new google.maps.LatLng(sw.lat() - padding, sw.lng() - padding));
+
+        map.fitBounds(bounds);
+      }
+
+      // Clear all markers
+      function clearAllMarkers() {
+        Object.keys(currentMarkers).forEach(type => {
+          currentMarkers[type].forEach(marker => marker.setMap(null));
+          currentMarkers[type] = [];
+        });
+      }
+
+      // Reset marker filters to default state (all hidden for performance)
+      function resetMarkerFilters() {
+        console.log('Resetting marker filters to default state (all hidden)');
+
+        // Reset visibility state - hide all by default for performance
+        markerVisibility = {
+          employees: false,
+          distributors: false,
+          'distributors-visited': false,
+          retailers: false,
+          'retailers-visited': false,
+          'retailers-created': false,
+          activities: false
+        };
+
+        // Update all toggle button appearances to inactive state
+        ['employees', 'distributors', 'distributors-visited', 'retailers', 'retailers-visited', 'retailers-created', 'activities'].forEach(type => {
+          const button = document.getElementById(`toggle-${type}`);
+          if (button) {
+            button.classList.remove('active');
+            button.style.opacity = '0.5';
+          }
+        });
+      }
+
+      // Function to disable all controls
+      function disableControls() {
+        const controlsToDisable = [
+          'userId',
+          'date',
+          'optimize',
+          'loadBtn',
+          'liveBtn',
+          'filterToggle'
+        ];
+
+        // Find and disable export buttons (they don't have IDs)
+        const exportButtons = document.querySelectorAll('.controls button[onclick*="export"]');
+
+        controlsToDisable.forEach(id => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.disabled = true;
+            element.style.opacity = '0.6';
+            element.style.cursor = 'not-allowed';
+          }
+        });
+
+        // Disable export buttons
+        exportButtons.forEach(button => {
+          button.disabled = true;
+          button.style.opacity = '0.6';
+          button.style.cursor = 'not-allowed';
+        });
+
+        console.log('Controls disabled');
+      }
+
+      // Function to enable all controls
+      function enableControls() {
+        const controlsToEnable = [
+          'userId',
+          'date',
+          'optimize',
+          'loadBtn',
+          'liveBtn',
+          'filterToggle'
+        ];
+
+        // Find export buttons
+        const exportButtons = document.querySelectorAll('.controls button[onclick*="export"]');
+
+        controlsToEnable.forEach(id => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.disabled = false;
+            element.style.opacity = '';
+            element.style.cursor = '';
+          }
+        });
+
+        // Enable export buttons
+        exportButtons.forEach(button => {
+          button.disabled = false;
+          button.style.opacity = '';
+          button.style.cursor = '';
+        });
+
+        console.log('Controls enabled');
+      }
+
+      // Load and display markers
+      async function loadMarkers(userId) {
+        // Disable controls as soon as loadMarkers is called
+        disableControls();
+
+        const markerFilters = document.getElementById("markerFilters");
+        const filterToggle = document.getElementById("filterToggle");
+        console.log('loadMarkers called with userId:', userId);
+
+        // Always hide the filter toggle button when a new user is selected (before data loads)
+        if (filterToggle) {
+          filterToggle.style.display = 'none';
+          console.log('Hiding filter toggle button for new user selection');
+        }
+
+        if (!userId) {
+          clearAllMarkers();
+          resetMarkerFilters(); // Reset filters when no user is selected
+          console.log('No user selected, hiding marker filters');
+          markerFilters.style.display = 'none';
+          filterPanelVisible = false;
+          return;
+        }
+
+        console.log('About to start fetching markers for userId:', userId);
+        try {
+          // Get the selected date from the date input
+          const dateStr = document.getElementById("date").value.trim();
+          const url = `/salestrack/user-markers/?user_id=${encodeURIComponent(userId)}&date=${encodeURIComponent(dateStr)}`;
+          console.log('Fetching markers for user:', userId, 'date:', dateStr);
+          console.log('Full URL:', url);
+
+          const res = await fetch(url);
+          console.log('Fetch response:', res);
+          console.log('Response status:', res.status);
+          console.log('Response ok:', res.ok);
+
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+          }
+
+          const data = await res.json();
+          console.log('Received marker data:', data);
+
+          // Clear existing markers
+          clearAllMarkers();
+
+          // Reset marker filters to default state when new user is selected
+          resetMarkerFilters();
+
+          // Add employee markers (blue circles)
+          if (data.employees) {
+            Object.values(data.employees).forEach(emp => {
+              if (emp.last_location && emp.last_location.latitude && emp.last_location.longitude) {
+                const marker = new google.maps.Marker({
+                  position: {
+                    lat: parseFloat(emp.last_location.latitude),
+                    lng: parseFloat(emp.last_location.longitude)
+                  },
+                  map: markerVisibility.employees ? map : null,
+                  title: `${emp.name} (SAP: ${emp.sap_id})`,
+                  icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 12,
+                    fillColor: "#0066FF",
+                    fillOpacity: 1.0,
+                    strokeWeight: 3,
+                    strokeColor: "#FFFFFF"
+                  }
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                  content: `
+                    <div style="font-family: system-ui, sans-serif; font-size: 12px;">
+                      <div><strong>Employee:</strong> ${emp.name}</div>
+                      <div><strong>SAP ID:</strong> ${emp.sap_id}</div>
+                      <div><strong>Last Update:</strong> ${new Date(emp.last_location.sync_date_time).toLocaleString()}</div>
+                    </div>
+                  `
+                });
+
+                marker.addListener('click', () => infoWindow.open(map, marker));
+                currentMarkers.employees.push(marker);
+              }
+
+              // Add distributor markers (green circles)
+              if (emp.distributors) {
+                Object.values(emp.distributors).forEach(dist => {
+                  if (dist.latitude && dist.longitude) {
+                    const isVisited = dist.is_visited_today;
+                    const markerType = isVisited ? 'distributors-visited' : 'distributors';
+
+                    const marker = new google.maps.Marker({
+                      position: {
+                        lat: parseFloat(dist.latitude),
+                        lng: parseFloat(dist.longitude)
+                      },
+                      map: markerVisibility[markerType] ? map : null,
+                      title: `${dist.name} - ${dist.store_name}`,
+                      icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 10,
+                        fillColor: isVisited ? "#00FF00" : "#00AA00",
+                        fillOpacity: 1.0,
+                        strokeWeight: 3,
+                        strokeColor: "#FFFFFF"
+                      }
+                    });
+
+                    const infoWindow = new google.maps.InfoWindow({
+                      content: `
+                        <div style="font-family: system-ui, sans-serif; font-size: 12px;">
+                          <div><strong>Distributor:</strong> ${dist.name}</div>
+                          <div><strong>Store:</strong> ${dist.store_name}</div>
+                          <div><strong>SAP ID:</strong> ${dist.sap_id}</div>
+                          <div><strong>Employee:</strong> ${dist.employee_name}</div>
+                          <div><strong>Retailer Count:</strong> ${dist.retailer_count}</div>
+                          <div><strong>Visits Today:</strong> ${dist.visits ? dist.visits.length : 0}</div>
+                          ${isVisited ? '<div><strong style="color: #00FF00;">Visited Today!</strong></div>' : ''}
+                        </div>
+                      `
+                    });
+
+                    marker.addListener('click', () => infoWindow.open(map, marker));
+                    currentMarkers[markerType].push(marker);
+                  }
+
+                  // Add retailer markers (orange circles)
+                  if (dist.retailers) {
+                    Object.values(dist.retailers).forEach(retailer => {
+                      if (retailer.latitude && retailer.longitude) {
+                        const isVisited = retailer.is_visited_today;
+                        const isCreated = retailer.is_created_today;
+
+                        let markerType = 'retailers';
+                        let fillColor = "#FFA500"; // Default orange
+
+                        if (isCreated) {
+                          markerType = 'retailers-created';
+                          fillColor = "#FF6600"; // Darker orange for created
+                        } else if (isVisited) {
+                          markerType = 'retailers-visited';
+                          fillColor = "#FFFF00"; // Yellow for visited
+                        }
+
+                        const marker = new google.maps.Marker({
+                          position: {
+                            lat: parseFloat(retailer.latitude),
+                            lng: parseFloat(retailer.longitude)
+                          },
+                          map: markerVisibility[markerType] ? map : null,
+                          title: `${retailer.name} - ${retailer.store_name}`,
+                          icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 8,
+                            fillColor: fillColor,
+                            fillOpacity: 1.0,
+                            strokeWeight: 3,
+                            strokeColor: "#FFFFFF"
+                          }
+                        });
+
+                        const infoWindow = new google.maps.InfoWindow({
+                          content: `
+                            <div style="font-family: system-ui, sans-serif; font-size: 12px;">
+                              <div><strong>Retailer:</strong> ${retailer.name}</div>
+                              <div><strong>Store:</strong> ${retailer.store_name}</div>
+                              <div><strong>SAP ID:</strong> ${retailer.sap_id}</div>
+                              <div><strong>Distributor:</strong> ${retailer.distributor_name}</div>
+                              <div><strong>Employee:</strong> ${retailer.employee_name}</div>
+                              <div><strong>Visits Today:</strong> ${retailer.visits ? retailer.visits.length : 0}</div>
+                              ${isCreated ? '<div><strong style="color: #FF6600;">Created Today!</strong></div>' : ''}
+                              ${isVisited ? '<div><strong style="color: #FFFF00;">Visited Today!</strong></div>' : ''}
+                            </div>
+                          `
+                        });
+
+                        marker.addListener('click', () => infoWindow.open(map, marker));
+                        currentMarkers[markerType].push(marker);
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+
+          // Add activity markers (red circles)
+          if (data.activity_markers) {
+            data.activity_markers.forEach(activity => {
+              if (activity.latitude && activity.longitude) {
+                const marker = new google.maps.Marker({
+                  position: {
+                    lat: parseFloat(activity.latitude),
+                    lng: parseFloat(activity.longitude)
+                  },
+                  map: markerVisibility.activities ? map : null,
+                  title: `${activity.heading} - ${activity.user_name}`,
+                  icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 8,
+                    fillColor: "#FF0000",
+                    fillOpacity: 1.0,
+                    strokeWeight: 3,
+                    strokeColor: "#FFFFFF"
+                  }
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                  content: `
+                    <div style="font-family: system-ui, sans-serif; font-size: 12px;">
+                      <div><strong>Activity:</strong> ${activity.heading}</div>
+                      <div><strong>User:</strong> ${activity.user_name}</div>
+                      <div><strong>Module:</strong> ${activity.module}</div>
+                      <div><strong>Time:</strong> ${new Date(activity.created_at).toLocaleString()}</div>
+                      ${activity.activity ? `<div><strong>Details:</strong> ${activity.activity}</div>` : ''}
+                    </div>
+                  `
+                });
+
+                marker.addListener('click', () => infoWindow.open(map, marker));
+                currentMarkers.activities.push(marker);
+              }
+            });
+          }
+
+          const employeeCount = currentMarkers.employees.length;
+          const distributorCount = currentMarkers.distributors.length + currentMarkers['distributors-visited'].length;
+          const retailerCount = currentMarkers.retailers.length + currentMarkers['retailers-visited'].length + currentMarkers['retailers-created'].length;
+          const activityCount = currentMarkers.activities.length;
+
+          console.log(`Loaded ${employeeCount} employee, ${distributorCount} distributor, ${retailerCount} retailer, and ${activityCount} activity markers`);
+
+          // Show marker filter panel if any markers were loaded
+          const totalMarkers = employeeCount + distributorCount + retailerCount + activityCount;
+          console.log('Total markers loaded:', totalMarkers);
+
+          // Always show filter toggle button if we have any data (even if markers are hidden by default)
+          const filterToggle = document.getElementById("filterToggle");
+          console.log('filterToggle element:', filterToggle);
+          console.log('totalMarkers count:', totalMarkers);
+          console.log('Individual counts - employees:', employeeCount, 'distributors:', distributorCount, 'retailers:', retailerCount, 'activities:', activityCount);
+
+          // Update individual marker counts in filter toggle buttons
+          updateIndividualMarkerCounts(employeeCount, distributorCount, retailerCount, activityCount);
+
+          if (totalMarkers > 0) {
+            console.log('Markers found - showing filter toggle button');
+
+            if (filterToggle) {
+              console.log('Setting filterToggle display to inline-block');
+              filterToggle.style.display = 'inline-block';
+              filterToggle.textContent = `🎛️ Filters (${totalMarkers})`;
+              console.log('filterToggle display after setting:', filterToggle.style.display);
+            } else {
+              console.log('ERROR: filterToggle element not found!');
+            }
+            // Keep the filter panel hidden by default - user must click toggle to show
+            markerFilters.style.display = 'none';
+            filterPanelVisible = false;
+          } else {
+            console.log('No markers - hiding filter toggle button');
+            markerFilters.style.display = 'none';
+
+            if (filterToggle) {
+              filterToggle.style.display = 'none';
+            }
+            filterPanelVisible = false;
+          }
+
+          // Re-enable controls after successful marker loading
+          enableControls();
+        } catch (error) {
+          console.error('Error loading markers:', error);
+          console.error('Error stack:', error.stack);
+          console.error('Error name:', error.name);
+          console.error('Error message:', error.message);
+          markerFilters.style.display = 'none';
+
+          // Re-enable controls even if there's an error
+          enableControls();
+        }
+      }
+
+      // Update individual marker counts in filter toggle buttons
+      function updateIndividualMarkerCounts(employeeCount, distributorCount, retailerCount, activityCount) {
+        // Update individual marker type counts
+        const countElements = {
+          'count-employees': employeeCount,
+          'count-distributors': currentMarkers.distributors.length,
+          'count-distributors-visited': currentMarkers['distributors-visited'].length,
+          'count-retailers': currentMarkers.retailers.length,
+          'count-retailers-visited': currentMarkers['retailers-visited'].length,
+          'count-retailers-created': currentMarkers['retailers-created'].length,
+          'count-activities': activityCount
+        };
+
+        Object.keys(countElements).forEach(elementId => {
+          const element = document.getElementById(elementId);
+          if (element) {
+            element.textContent = `(${countElements[elementId]})`;
+          }
+        });
+      }
+
+      // Toggle marker visibility
+      function toggleMarkers(type) {
+        markerVisibility[type] = !markerVisibility[type];
+        const markersArray = currentMarkers[type];
+
+        markersArray.forEach(marker => {
+          marker.setMap(markerVisibility[type] ? map : null);
+        });
+
+        // Update toggle button appearance
+        const button = document.getElementById(`toggle-${type}`);
+        if (button) {
+          button.classList.toggle('active', markerVisibility[type]);
+          button.style.opacity = markerVisibility[type] ? '1.0' : '0.5';
+        }
+      }
+
+      // Toggle filter panel visibility
+      let filterPanelVisible = false;
+      function toggleFilterPanel() {
+        const markerFilters = document.getElementById("markerFilters");
+        const filterToggle = document.getElementById("filterToggle");
+
+        filterPanelVisible = !filterPanelVisible;
+
+        if (filterPanelVisible) {
+          markerFilters.style.display = 'flex';
+          // Update button text to show it's open
+          const currentText = filterToggle.textContent;
+          filterToggle.textContent = currentText.replace('🎛️', '🔼');
+        } else {
+          markerFilters.style.display = 'none';
+          // Update button text to show it's closed
+          const currentText = filterToggle.textContent;
+          filterToggle.textContent = currentText.replace('🔼', '🎛️');
+        }
+      }
+
+      // Load and display tracking data
+      async function loadGeoJSON(userId, dateStr, optimize = 'conservative', silentRefresh = false) {
+        const distanceElement = document.getElementById("distance");
+        const infoElement = document.getElementById("info");
+        const loadBtn = document.getElementById("loadBtn");
+
+        if (!userId || !dateStr) {
+          if (!silentRefresh) {
+            alert("Please select a user and enter a date");
+          }
+          return;
+        }
+
+        // Set loading state (skip for silent refresh)
+        if (!silentRefresh) {
+          loadBtn.classList.add("loading");
+          loadBtn.textContent = "Loading...";
+          distanceElement.textContent = "Loading...";
+          infoElement.innerHTML = "Loading tracking data...";
+        }
+
+        try {
+          const url = `/salestrack/tracks.geo?user_id=${encodeURIComponent(userId)}&date=${encodeURIComponent(dateStr)}&optimize=${encodeURIComponent(optimize)}`;
+          const res = await fetch(url);
+
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+          }
+
+          const data = await res.json();
+          currentData = data;
+
+          // Clear previous data and markers
+          map.data.forEach(f => map.data.remove(f));
+          if (startMarker) {
+            startMarker.setMap(null);
+            startMarker = null;
+          }
+          if (endMarker) {
+            endMarker.setMap(null);
+            endMarker = null;
+          }
+
+          if (!data.features || !data.features.length) {
+            if (!silentRefresh) {
+              distanceElement.textContent = "No tracking data found";
+              infoElement.innerHTML = `<span class="error">No tracking data found for User ${userId} on ${dateStr}</span>`;
+            }
+            return;
+          }
+
+          // Add GeoJSON data to map
+          map.data.addGeoJson(data);
+
+          // Style: bold thick red line with blue track points
+          map.data.setStyle(feature => {
+            const geomType = feature.getGeometry().getType();
+            if (geomType === "LineString") {
+              return {
+                strokeWeight: 4,        // Thick line
+                strokeColor: "#DC143C",  // Solid red (Crimson)
+                strokeOpacity: 1.0      // Solid (no transparency)
+              };
+            }
+            return {
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 2,               // Slightly larger dots
+                fillColor: "#0066FF",   // Blue dots
+                fillOpacity: 0.25,       // Transparent blue
+                strokeWeight: 0.5,        // White border around dots
+                strokeColor: "#000000"
+              }
+            };
+          });
+
+          // Fit bounds to LineString (skip during silent refresh to preserve user's map view)
+          const line = data.features.find(f => f.geometry && f.geometry.type === "LineString");
+          if (line && line.geometry.coordinates.length > 0) {
+            if (!silentRefresh) {
+              fitBoundsToLine(line.geometry.coordinates);
+            }
+
+            // Add start/end markers
+            const coords = line.geometry.coordinates;
+            const start = coords[0];
+            const end = coords[coords.length - 1];
+
+            startMarker = new google.maps.Marker({
+              position: { lat: start[1], lng: start[0] },
+              map,
+              title: "Start Point",
+              label: {
+                text: "S",
+                color: "white",
+                fontWeight: "bold"
+              },
+              icon: {
+                url: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMwMEZGMDAiIHN0cm9rZT0iIzAwNzAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEyIiB5PSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPlM8L3RleHQ+Cjwvc3ZnPg==",
+                scaledSize: new google.maps.Size(24, 24)
+              }
+            });
+
+            if (coords.length > 1) {
+              endMarker = new google.maps.Marker({
+                position: { lat: end[1], lng: end[0] },
+                map,
+                title: "End Point",
+                label: {
+                  text: "E",
+                  color: "white",
+                  fontWeight: "bold"
+                },
+                icon: {
+                  url: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGRjAwMDAiIHN0cm9rZT0iIzcwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEyIiB5PSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPkU8L3RleHQ+Cjwvc3ZnPg==",
+                  scaledSize: new google.maps.Size(24, 24)
+                }
+              });
+            }
+          }
+
+          // Display distance and info
+          const km = (data.meta && data.meta.total_distance_km) ? data.meta.total_distance_km : 0;
+          const pointCount = line ? line.properties.points : 0;
+          const optimizedCount = line ? line.properties.optimized_points : 0;
+          const optimization = data.meta ? data.meta.optimization : 'conservative';
+
+          distanceElement.innerHTML = `🧭 <strong>${km.toFixed(2)} km</strong>`;
+
+          let optimizationInfo = '';
+          if (optimization !== 'none' && pointCount !== optimizedCount) {
+            const reduction = ((pointCount - optimizedCount) / pointCount * 100).toFixed(1);
+            optimizationInfo = `<div><strong>Optimization:</strong> ${optimization} (${reduction}% reduction)</div>`;
+          }
+
+          // Get selected user name
+          const userSelect = document.getElementById("userId");
+          const selectedOption = userSelect.options[userSelect.selectedIndex];
+          const userName = selectedOption ? selectedOption.text : `User ${userId}`;
+
+          const refreshStatus = silentRefresh ?
+            `<div class="success">🔄 Auto-refreshed ${new Date().toLocaleTimeString()}</div>` :
+            `<div class="success">✓ Data loaded successfully</div>`;
+
+          infoElement.innerHTML = `
+            <div><strong>User:</strong> ${userName}</div>
+            <div><strong>Date:</strong> ${dateStr}</div>
+            <div><strong>Track Points:</strong> ${pointCount}</div>
+            <div><strong>Displayed:</strong> ${optimizedCount}</div>
+            ${optimizationInfo}
+            <div><strong>Distance:</strong> ${km.toFixed(2)} km</div>
+            ${refreshStatus}
+          `;
+
+          // Add info window for points
+          map.data.addListener('click', function(event) {
+            const feature = event.feature;
+            if (feature.getGeometry().getType() === 'Point') {
+              const props = feature.getProperty('timestamp') ? {
+                timestamp: feature.getProperty('timestamp'),
+                accuracy: feature.getProperty('accuracy'),
+                velocity: feature.getProperty('velocity'),
+                status: feature.getProperty('status'),
+                message: feature.getProperty('message')
+              } : {};
+
+              const content = `
+                <div style="font-family: system-ui, sans-serif; font-size: 12px;">
+                  ${props.timestamp ? `<div><strong>Time:</strong> ${new Date(props.timestamp).toLocaleString()}</div>` : ''}
+                  ${props.accuracy ? `<div><strong>Accuracy:</strong> ${props.accuracy}m</div>` : ''}
+                  ${props.velocity ? `<div><strong>Velocity:</strong> ${props.velocity} m/s</div>` : ''}
+                  ${props.status ? `<div><strong>Status:</strong> ${props.status}</div>` : ''}
+                  ${props.message ? `<div><strong>Message:</strong> ${props.message}</div>` : ''}
+                </div>
+              `;
+
+              const infoWindow = new google.maps.InfoWindow({
+                content: content,
+                position: event.latLng
+              });
+
+              infoWindow.open(map);
+            }
+          });
+
+        } catch (error) {
+          console.error('Error loading tracking data:', error);
+          if (!silentRefresh) {
+            distanceElement.textContent = "Error loading data";
+            infoElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+          }
+        } finally {
+          // Reset loading state (skip for silent refresh)
+          if (!silentRefresh) {
+            loadBtn.classList.remove("loading");
+            loadBtn.textContent = "Load Track";
+          }
+        }
+      }
+
+      // Export functions
+      function exportKML() {
+        if (!currentData || !currentData.features.length) {
+          alert("No data to export. Please load tracking data first.");
+          return;
+        }
+
+        const userId = document.getElementById("userId").value.trim();
+        const dateStr = document.getElementById("date").value.trim();
+
+        const url = `/salestrack/tracks.geo?user_id=${encodeURIComponent(userId)}&date=${encodeURIComponent(dateStr)}&format=kml`;
+        window.open(url, '_blank');
+      }
+
+      function exportGeoJSON() {
+        if (!currentData) {
+          alert("No data to export. Please load tracking data first.");
+          return;
+        }
+
+        const dataStr = JSON.stringify(currentData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        const userId = document.getElementById("userId").value.trim();
+        const dateStr = document.getElementById("date").value.trim();
+        a.href = url;
+        a.download = `user_${userId}_${dateStr}_track.geojson`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      // Initialize map
+      function initMap() {
+        console.log('initMap called');
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 28.6139, lng: 77.2088 }, // Delhi
+          zoom: 6,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // Check marker filter panel on initialization
+        const markerFilters = document.getElementById("markerFilters");
+        console.log('Initial marker filter panel check:', markerFilters);
+        console.log('Initial display style:', markerFilters ? markerFilters.style.display : 'element not found');
+
+        // Initially hide the filter panel
+        if (markerFilters) {
+          markerFilters.style.display = 'none';
+        }
+
+        // Setup controls
+        const userSelect = document.getElementById("userId");
+        const dateInput = document.getElementById("date");
+        const loadBtn = document.getElementById("loadBtn");
+
+        // Pre-select user if provided
+        if (initialUserId) {
+          userSelect.value = initialUserId;
+        }
+        dateInput.value = initialDate;
+
+        // Event listeners
+        loadBtn.addEventListener("click", () => {
+          const uid = userSelect.value.trim();
+          const dt = dateInput.value.trim();
+          const opt = document.getElementById("optimize").value;
+          loadGeoJSON(uid, dt, opt);
+          loadMarkers(uid); // Load markers when user is selected
+        });
+
+        // User selection change
+        userSelect.addEventListener("change", () => {
+          const uid = userSelect.value.trim();
+
+          // Always clear markers and hide UI elements first when user changes
+          clearAllMarkers();
+          document.getElementById("markerFilters").style.display = 'none';
+          const filterToggle = document.getElementById("filterToggle");
+          if (filterToggle) {
+            filterToggle.style.display = 'none';
+          }
+
+          // Then load new data if user is selected
+          if (uid) {
+            loadMarkers(uid);
+          }
+        });
+
+        // Enter key support
+        [userSelect, dateInput].forEach(input => {
+          input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+              loadBtn.click();
+            }
+          });
+        });
+
+        // Date change listener to update live tracking state and reload markers
+        dateInput.addEventListener("change", () => {
+          updateLiveTrackingState();
+
+          // Clear markers and hide UI elements when date changes
+          clearAllMarkers();
+          document.getElementById("markerFilters").style.display = 'none';
+          const filterToggle = document.getElementById("filterToggle");
+          if (filterToggle) {
+            filterToggle.style.display = 'none';
+          }
+
+          // Reload markers with new date if user is selected
+          const uid = userSelect.value.trim();
+          if (uid) {
+            console.log('Date changed, reloading markers for user:', uid, 'with new date:', dateInput.value);
+            loadMarkers(uid);
+          }
+        });
+
+        // Initial live tracking state check
+        updateLiveTrackingState();
+
+        // Auto-load if both parameters are present
+        if (initialUserId && initialDate) {
+          loadGeoJSON(initialUserId, initialDate);
+          loadMarkers(initialUserId);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        // Initialize map after DOM is ready
+        $(".selectField").select2();
+      });
+
+      // Set default date to today (local timezone)
+      window.addEventListener('load', function() {
+        const dateInput = document.getElementById("date");
+        if (!dateInput.value) {
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          dateInput.value = `${year}-${month}-${day}`;
+        }
+        // Update live tracking state after setting default date
+        updateLiveTrackingState();
+      });
+
+      // Cleanup intervals when page unloads
+      window.addEventListener('beforeunload', function() {
+        stopLiveTracking();
+      });
+    </script>
+    <!-- Google Maps API with your key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNCcTQduJoNRebWEf7zgqlpe1YJibSuGI&callback=initMap"
+            defer></script>
+    <script src="{% static 'plugins/select2/select2.min.js' %}"></script>
+  </head>
+  <body>
+    <div class="distance-badge" id="distance">—</div>
+
+    <div class="marker-filters" id="markerFilters" style="display: none;">
+      <span style="font-weight: bold; margin-right: 8px;">Markers:</span>
+      <div class="marker-toggle active" id="toggle-employees" onclick="toggleMarkers('employees')">
+        <div class="marker-dot employees"></div>
+        <span>Employees <span id="count-employees" class="marker-count">(0)</span></span>
+      </div>
+      <div class="marker-toggle active" id="toggle-distributors" onclick="toggleMarkers('distributors')">
+        <div class="marker-dot distributors"></div>
+        <span>Distributors <span id="count-distributors" class="marker-count">(0)</span></span>
+      </div>
+      <div class="marker-toggle active" id="toggle-distributors-visited" onclick="toggleMarkers('distributors-visited')">
+        <div class="marker-dot distributors-visited"></div>
+        <span>Distributors Visited <span id="count-distributors-visited" class="marker-count">(0)</span></span>
+      </div>
+      <div class="marker-toggle active" id="toggle-retailers" onclick="toggleMarkers('retailers')">
+        <div class="marker-dot retailers"></div>
+        <span>Retailers <span id="count-retailers" class="marker-count">(0)</span></span>
+      </div>
+      <div class="marker-toggle active" id="toggle-retailers-visited" onclick="toggleMarkers('retailers-visited')">
+        <div class="marker-dot retailers-visited"></div>
+        <span>Retailers Visited <span id="count-retailers-visited" class="marker-count">(0)</span></span>
+      </div>
+      <div class="marker-toggle active" id="toggle-retailers-created" onclick="toggleMarkers('retailers-created')">
+        <div class="marker-dot retailers-created"></div>
+        <span>Retailers Created <span id="count-retailers-created" class="marker-count">(0)</span></span>
+      </div>
+      <div class="marker-toggle active" id="toggle-activities" onclick="toggleMarkers('activities')">
+        <div class="marker-dot activities"></div>
+        <span>Activities <span id="count-activities" class="marker-count">(0)</span></span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <label>User:
+
+
+        <select id="userId" class="inputField selectField">
+          <option value="">Select a user...</option>
+          {% for user in user_list %}
+            <option value="{{ user.id }}"{% if user.id|stringformat:"s" == user_id %} selected{% endif %}>
+              {{ user.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Date:
+        <input id="date" type="date" />
+      </label>
+      <label>Optimize:
+        <select id="optimize">
+          <option value="conservative" selected>Balanced</option>
+          <option value="aggressive">Fast</option>
+          <option value="none">Full Detail</option>
+        </select>
+      </label>
+      <button id="loadBtn">Load Track</button>
+      <button id="liveBtn" onclick="toggleLiveTracking()" title="Auto-refresh every 5 seconds">▶️ Live</button>
+      <button id="filterToggle" onclick="toggleFilterPanel()" title="Show/Hide marker filters" style="display: none;">🎛️ Filters</button>
+      <button onclick="exportGeoJSON()" title="Export as GeoJSON">📄 JSON</button>
+      <button onclick="exportKML()" title="Export as KML">🗺️ KML</button>
+    </div>
+
+    <div class="info-panel" id="info">
+      Select a user and date to load tracking data.
+    </div>
+
+    <div id="map"></div>
+  </body>
+</html>
