@@ -1,0 +1,1 @@
+from climax.climax_rs import __version__
