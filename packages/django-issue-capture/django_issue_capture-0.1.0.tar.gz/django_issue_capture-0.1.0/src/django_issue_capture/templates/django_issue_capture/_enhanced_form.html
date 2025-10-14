@@ -1,0 +1,139 @@
+<!-- Enhanced Issue Form -->
+<div class="enhanced-form-container">
+    <div class="alert alert-success">
+        <i class="bi bi-check-circle me-2"></i>
+        <strong>AI Enhancement Complete!</strong> Review and edit the enhanced content below before creating the issue.
+    </div>
+
+    <form hx-post="{% url 'django_issue_capture:create' %}"
+          hx-target="#issue-capture-container"
+          hx-swap="innerHTML">
+        {% csrf_token %}
+
+        <!-- Enhanced Title -->
+        <div class="mb-3">
+            <label for="enhanced-title" class="form-label">Enhanced Title <span class="text-danger">*</span></label>
+            <input type="text"
+                   class="form-control"
+                   id="enhanced-title"
+                   name="title"
+                   value="{{ title }}"
+                   required>
+        </div>
+
+        <!-- Enhanced Description -->
+        <div class="mb-3">
+            <label for="enhanced-description" class="form-label">Enhanced Description <span class="text-danger">*</span></label>
+            <textarea class="form-control"
+                      id="enhanced-description"
+                      name="description"
+                      rows="8"
+                      required>{{ description }}</textarea>
+            <div class="form-text">AI has enhanced your description with additional structure and detail.</div>
+        </div>
+
+        <!-- Acceptance Criteria (if provided) -->
+        {% if acceptance_criteria %}
+        <div class="mb-3">
+            <label for="acceptance-criteria" class="form-label">Acceptance Criteria</label>
+            <textarea class="form-control"
+                      id="acceptance-criteria"
+                      name="acceptance_criteria"
+                      rows="4">{{ acceptance_criteria }}</textarea>
+            <div class="form-text">AI-generated acceptance criteria for this issue.</div>
+        </div>
+        {% endif %}
+
+        <!-- Technical Specifications (if provided) -->
+        {% if technical_specifications %}
+        <div class="mb-3">
+            <label for="technical-specs" class="form-label">Technical Specifications</label>
+            <textarea class="form-control"
+                      id="technical-specs"
+                      name="technical_specifications"
+                      rows="4">{{ technical_specifications }}</textarea>
+            <div class="form-text">AI-generated technical implementation details.</div>
+        </div>
+        {% endif %}
+
+        <!-- Implementation Hints (if provided) -->
+        {% if implementation_hints %}
+        <div class="mb-3">
+            <label for="implementation-hints" class="form-label">Implementation Hints</label>
+            <textarea class="form-control"
+                      id="implementation-hints"
+                      name="implementation_hints"
+                      rows="3">{{ implementation_hints }}</textarea>
+            <div class="form-text">AI-generated hints and suggestions for implementation.</div>
+        </div>
+        {% endif %}
+
+        <!-- Issue Metadata -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="enhanced-priority" class="form-label">Priority</label>
+                <select class="form-select" id="enhanced-priority" name="priority">
+                    <option value="low" {% if priority == 'low' %}selected{% endif %}>Low</option>
+                    <option value="medium" {% if priority == 'medium' or not priority %}selected{% endif %}>Medium</option>
+                    <option value="high" {% if priority == 'high' %}selected{% endif %}>High</option>
+                    <option value="urgent" {% if priority == 'urgent' %}selected{% endif %}>Urgent</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="complexity" class="form-label">Estimated Complexity</label>
+                <select class="form-select" id="complexity" name="estimated_complexity">
+                    <option value="">Not specified</option>
+                    <option value="low" {% if estimated_complexity == 'low' %}selected{% endif %}>Low</option>
+                    <option value="medium" {% if estimated_complexity == 'medium' %}selected{% endif %}>Medium</option>
+                    <option value="high" {% if estimated_complexity == 'high' %}selected{% endif %}>High</option>
+                    <option value="very-high" {% if estimated_complexity == 'very-high' %}selected{% endif %}>Very High</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Suggested Labels (if provided) -->
+        {% if suggested_labels %}
+        <div class="mb-3">
+            <label for="suggested-labels" class="form-label">Suggested Labels</label>
+            <input type="text"
+                   class="form-control"
+                   id="suggested-labels"
+                   name="suggested_labels"
+                   value="{{ suggested_labels }}"
+                   placeholder="comma, separated, labels">
+            <div class="form-text">AI-suggested GitHub labels (comma-separated).</div>
+        </div>
+        {% endif %}
+
+        <!-- Hidden fields to indicate this was enhanced -->
+        <input type="hidden" name="creation_mode" value="quick">
+        <input type="hidden" name="has_llm_conversation" value="false">
+        <input type="hidden" name="reported_url" value="{{ request.META.HTTP_REFERER|default:'' }}">
+
+        <!-- Actions -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-lg me-1"></i>
+                Create Enhanced Issue
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="showModeSelection()">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Options
+            </button>
+            <button type="button" class="btn btn-outline-secondary" onclick="closeIssueForm()">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function showModeSelection() {
+    // This would need to be implemented to go back to the template selection
+    location.reload(); // Simple fallback
+}
+
+function closeIssueForm() {
+    document.getElementById('issue-capture-container').innerHTML = '';
+}
+</script>

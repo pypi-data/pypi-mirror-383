@@ -1,0 +1,155 @@
+<!-- Chat Interface for Issue Creation -->
+<div class="chat-container border rounded bg-white">
+    <!-- Chat Header -->
+    <div class="chat-header bg-primary text-white p-3 rounded-top d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-0">
+                <i class="bi bi-robot me-2"></i>
+                AI Issue Assistant
+            </h5>
+            <small>{{ conversation.template.display_name }} • Turn {{ conversation.turns_count }}/{{ conversation.template.max_conversation_turns }}</small>
+        </div>
+        <div class="d-flex gap-2">
+            {% if conversation.ready_for_generation %}
+            <button type="button"
+                    class="btn btn-success btn-sm"
+                    hx-post="{% url 'django_issue_capture:chat_generate' conversation.conversation_id %}"
+                    hx-target="#issue-capture-container"
+                    hx-swap="innerHTML"
+                    hx-indicator="#generating-spinner">
+                <i class="bi bi-check-lg me-1"></i>
+                Generate Issue
+            </button>
+            {% endif %}
+            <button type="button" class="btn-close btn-close-white" onclick="closeIssueForm()"></button>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="chat-progress p-2 bg-light border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">Context Gathering: {{ conversation.get_context_completeness|floatformat:0 }}% complete</small>
+            <div class="progress flex-grow-1 mx-3" style="height: 6px;">
+                <div class="progress-bar"
+                     role="progressbar"
+                     style="width: {{ conversation.get_context_completeness|floatformat:0 }}%"
+                     aria-valuenow="{{ conversation.get_context_completeness|floatformat:0 }}"
+                     aria-valuemin="0"
+                     aria-valuemax="100"></div>
+            </div>
+            {% if conversation.ready_for_generation %}
+            <span class="badge bg-success">Ready</span>
+            {% else %}
+            <span class="badge bg-warning">Gathering Info</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages p-3" id="chat-messages" style="height: 400px; overflow-y: auto;">
+        {% for message in conversation.messages %}
+        <div class="message mb-3 {% if message.role == 'user' %}user-message text-end{% else %}assistant-message{% endif %}">
+            <div class="message-bubble {% if message.role == 'user' %}bg-primary text-white{% else %}bg-light{% endif %} p-3 rounded-3 d-inline-block"
+                 style="max-width: 80%;">
+                {% if message.role == 'user' %}
+                <div class="message-meta mb-1">
+                    <small class="text-white-50">
+                        <i class="bi bi-person-fill me-1"></i>
+                        You
+                    </small>
+                </div>
+                {% else %}
+                <div class="message-meta mb-1">
+                    <small class="text-muted">
+                        <i class="bi bi-robot me-1"></i>
+                        AI Assistant
+                    </small>
+                </div>
+                {% endif %}
+                <div class="message-content">
+                    {{ message.content|linebreaks }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Chat Input -->
+    {% if conversation.is_active %}
+    <div class="chat-input border-top p-3">
+        <form hx-post="{% url 'django_issue_capture:chat_message' conversation.conversation_id %}"
+              hx-target="#chat-messages"
+              hx-swap="beforeend"
+              hx-indicator="#sending-spinner"
+              hx-on::after-request="clearMessageInput(); scrollToBottom();">
+            {% csrf_token %}
+            <div class="input-group">
+                <textarea class="form-control"
+                          name="message"
+                          id="message-input"
+                          placeholder="Type your response..."
+                          rows="2"
+                          required
+                          onkeydown="handleEnterKey(event)"></textarea>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        </form>
+
+        <div id="sending-spinner" class="htmx-indicator text-center mt-2">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Sending...</span>
+            </div>
+            <small class="text-muted ms-2">AI is thinking...</small>
+        </div>
+    </div>
+    {% else %}
+    <div class="chat-input border-top p-3 text-center text-muted">
+        <i class="bi bi-check-circle me-2"></i>
+        Conversation complete
+    </div>
+    {% endif %}
+
+    <!-- Generate Issue Spinner -->
+    <div id="generating-spinner" class="htmx-indicator position-absolute top-50 start-50 translate-middle bg-white border rounded p-4 shadow-lg">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-2" role="status">
+                <span class="visually-hidden">Generating...</span>
+            </div>
+            <div class="text-muted">Generating comprehensive issue...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+function clearMessageInput() {
+    document.getElementById('message-input').value = '';
+}
+
+function scrollToBottom() {
+    const messages = document.getElementById('chat-messages');
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function handleEnterKey(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        event.target.closest('form').requestSubmit();
+    }
+}
+
+function closeIssueForm() {
+    document.getElementById('issue-capture-container').innerHTML = '';
+}
+
+// Auto-scroll to bottom on load
+document.addEventListener('DOMContentLoaded', function() {
+    scrollToBottom();
+});
+
+// Auto-scroll after HTMX requests
+document.body.addEventListener('htmx:afterRequest', function() {
+    setTimeout(scrollToBottom, 100);
+});
+</script>
