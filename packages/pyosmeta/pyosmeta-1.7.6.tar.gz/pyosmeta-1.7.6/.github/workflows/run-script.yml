@@ -1,0 +1,30 @@
+on:
+  workflow_call:
+    secrets:
+      gh_token:
+        description: 'The GitHub token used to run the update-contributors script'
+        required: true
+
+jobs:
+  run_update_contributors:
+    runs-on: ubuntu-latest
+    steps:
+      # TODO: consider replacing python/pip/update-web-metadata installs with docker image
+      - name: Setup Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v5
+      - name: Upgrade pip
+        run: |
+          # install pip=>20.1 to use "pip cache dir"
+          python -m pip install --upgrade pip wheel
+      - name: Install package
+        run: python -m pip install git+https://github.com/pyopenSci/update-web-metadata
+
+      - name: Check out the code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v4
+        with:
+          persist-credentials: false
+
+      - name: Run script from update-web-metadata repo
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: update-contributors
