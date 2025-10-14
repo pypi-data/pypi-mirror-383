@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: nginx-config-lint
+Version: 0.1.1
+Summary: CLI tool for linting nginx jinja2 templates
+Author-email: SberDevices LLC <info@sberdevices.ru>
+License-Expression: Apache-2.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click==8.3.0
+Requires-Dist: crossplane==0.5.8
+Requires-Dist: Jinja2==3.1.6
+Dynamic: license-file
+
+## Nginx Config Lint
+
+CLI tool for linting nginx jinja2 templates from `nginx/dev.conf` and `nginx/pr.conf`
+
+## How to upload to pip
+
+Install `twine`
+
+`python3 -m pip install --upgrade twine`
+
+- Bump version in `pyproject.toml`
+- Build Package (`python3 -m build`)
+- Upload Package (`python3 -m twine upload dist/*`)
