@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PDF Report Configuration Schema",
+  "description": "JSON配置文件的Schema定义",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "PDF元数据",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "pageSize": {
+          "type": "string",
+          "enum": [
+            "A4",
+            "A3",
+            "A5",
+            "LETTER",
+            "LEGAL"
+          ]
+        },
+        "orientation": {
+          "type": "string",
+          "enum": [
+            "portrait",
+            "landscape"
+          ]
+        },
+        "margin": {
+          "type": "number"
+        },
+        "topMargin": {
+          "type": "number"
+        },
+        "bottomMargin": {
+          "type": "number"
+        },
+        "leftMargin": {
+          "type": "number"
+        },
+        "rightMargin": {
+          "type": "number"
+        }
+      }
+    },
+    "styles": {
+      "type": "object",
+      "description": "样式定义",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "fontSize": {
+            "type": "number"
+          },
+          "textColor": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "alignment": {
+            "type": "string",
+            "enum": [
+              "left",
+              "center",
+              "right",
+              "justify"
+            ]
+          },
+          "bold": {
+            "type": "boolean"
+          },
+          "spaceBefore": {
+            "type": "number"
+          },
+          "spaceAfter": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "dataSources": {
+      "type": "array",
+      "description": "数据源配置",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "json",
+              "csv",
+              "excel",
+              "database",
+              "api",
+              "inline"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "description": "PDF元素",
+      "items": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "table",
+              "chart",
+              "image",
+              "spacer",
+              "pagebreak",
+              "list"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          },
+          "dataSource": {
+            "type": "string"
+          },
+          "chartType": {
+            "type": "string",
+            "enum": [
+              "bar",
+              "line",
+              "pie",
+              "scatter",
+              "area"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "elements"
+  ]
+}

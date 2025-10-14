@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdf-report-generator"
+version = "0.1.0"
+description = "A flexible PDF report generator with JSON configuration support"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "PDF Report Team"}
+]
+keywords = ["pdf", "report", "generator", "reportlab", "document"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "reportlab>=4.0.0",
+    "Pillow>=10.0.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.7.0",
+    "Jinja2>=3.0.0",
+    "openpyxl>=3.0.0",
+    "requests>=2.28.0",
+    "SQLAlchemy>=2.0.0",
+]
+
+[project.optional-dependencies]
+api = [
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "python-multipart>=0.0.6",
+    "pydantic>=2.0.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+]
+all = [
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "python-multipart>=0.0.6",
+    "pydantic>=2.0.0",
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+]
+
+[project.scripts]
+pdf-report-api = "pdf_generator.cli:run_api"
+
+[tool.setuptools]
+packages = ["pdf_generator", "pdf_generator.config", "pdf_generator.core", 
+            "pdf_generator.data_sources", "pdf_generator.templates", 
+            "pdf_generator.utils", "api"]
+
+[tool.setuptools.package-data]
+pdf_generator = ["templates/*.py", "templates/*.json"]
+"*" = ["fonts/*.TTF", "fonts/README.md", "templates/*.json"]

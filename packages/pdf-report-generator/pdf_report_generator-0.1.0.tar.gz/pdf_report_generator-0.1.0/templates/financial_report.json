@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "title": "财务分析报告",
+    "author": "财务部",
+    "pageSize": "A4",
+    "orientation": "portrait"
+  },
+  "styles": {
+    "title": {
+      "fontSize": 22,
+      "textColor": "#1A5490",
+      "alignment": "center",
+      "bold": true,
+      "spaceAfter": 30
+    },
+    "heading": {
+      "fontSize": 14,
+      "textColor": "#2E5C8A",
+      "bold": true,
+      "spaceBefore": 15,
+      "spaceAfter": 10
+    },
+    "body": {
+      "fontSize": 10,
+      "textColor": "#333333"
+    },
+    "financialTable": {
+      "gridColor": "#D0D0D0",
+      "headerBackground": "#4472C4",
+      "headerTextColor": "#FFFFFF",
+      "fontSize": 9
+    }
+  },
+  "dataSources": [
+    {
+      "name": "revenue_data",
+      "type": "json",
+      "path": "data/revenue.json"
+    },
+    {
+      "name": "expense_data",
+      "type": "json",
+      "path": "data/expenses.json"
+    }
+  ],
+  "elements": [
+    {
+      "type": "text",
+      "content": "{{metadata.title}}",
+      "style": "title"
+    },
+    {
+      "type": "text",
+      "content": "收入分析",
+      "style": "heading"
+    },
+    {
+      "type": "table",
+      "dataSource": "revenue_data",
+      "style": "financialTable"
+    },
+    {
+      "type": "spacer",
+      "height": 0.5
+    },
+    {
+      "type": "chart",
+      "chartType": "pie",
+      "dataSource": "revenue_data",
+      "labels": "类别",
+      "values": "金额",
+      "title": "收入构成",
+      "width": 6,
+      "height": 4,
+      "showPercentage": true
+    },
+    {
+      "type": "pagebreak"
+    },
+    {
+      "type": "text",
+      "content": "支出分析",
+      "style": "heading"
+    },
+    {
+      "type": "table",
+      "dataSource": "expense_data",
+      "style": "financialTable"
+    },
+    {
+      "type": "chart",
+      "chartType": "bar",
+      "dataSource": "expense_data",
+      "xAxis": "类别",
+      "yAxis": "金额",
+      "title": "支出分布",
+      "width": 6.5,
+      "height": 4
+    }
+  ]
+}

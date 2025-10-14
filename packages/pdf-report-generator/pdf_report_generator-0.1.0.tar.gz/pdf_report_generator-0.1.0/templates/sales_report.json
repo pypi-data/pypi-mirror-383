@@ -1,0 +1,161 @@
+{
+  "metadata": {
+    "title": "2024年销售分析报告",
+    "author": "销售部门",
+    "pageSize": "A4",
+    "orientation": "portrait",
+    "margin": 0.75
+  },
+  "styles": {
+    "title": {
+      "fontSize": 24,
+      "textColor": "#2C3E50",
+      "alignment": "center",
+      "spaceBefore": 0,
+      "spaceAfter": 20,
+      "bold": true
+    },
+    "heading1": {
+      "fontSize": 16,
+      "textColor": "#34495E",
+      "alignment": "left",
+      "spaceBefore": 15,
+      "spaceAfter": 10,
+      "bold": true
+    },
+    "heading2": {
+      "fontSize": 14,
+      "textColor": "#34495E",
+      "alignment": "left",
+      "spaceBefore": 12,
+      "spaceAfter": 8,
+      "bold": true
+    },
+    "body": {
+      "fontSize": 10,
+      "textColor": "#2C3E50",
+      "alignment": "justify",
+      "spaceBefore": 0,
+      "spaceAfter": 8
+    },
+    "salesTable": {
+      "gridColor": "#BDC3C7",
+      "headerBackground": "#3498DB",
+      "headerTextColor": "#FFFFFF",
+      "fontSize": 9,
+      "padding": 8,
+      "rowBackground": [
+        "#ECF0F1",
+        "#FFFFFF"
+      ]
+    }
+  },
+  "dataSources": [
+    {
+      "name": "sales_data",
+      "type": "csv",
+      "path": "data/sales.csv"
+    }
+  ],
+  "elements": [
+    {
+      "type": "text",
+      "content": "{{metadata.title}}",
+      "style": "title"
+    },
+    {
+      "type": "spacer",
+      "height": 0.3
+    },
+    {
+      "type": "text",
+      "content": "报告日期：2024年12月",
+      "style": "body"
+    },
+    {
+      "type": "spacer",
+      "height": 0.5
+    },
+    {
+      "type": "text",
+      "content": "一、销售概况",
+      "style": "heading1"
+    },
+    {
+      "type": "text",
+      "content": "本报告展示了2024年度各产品的销售数据，包括销量、销售额等关键指标。通过数据分析，我们可以了解各产品的市场表现，为未来的销售策略提供参考。",
+      "style": "body"
+    },
+    {
+      "type": "spacer",
+      "height": 0.3
+    },
+    {
+      "type": "text",
+      "content": "二、销售数据表",
+      "style": "heading1"
+    },
+    {
+      "type": "table",
+      "dataSource": "sales_data",
+      "columns": [
+        "产品",
+        "销量",
+        "金额",
+        "增长率"
+      ],
+      "style": "salesTable",
+      "columnWidths": [
+        2.5,
+        1.5,
+        1.5,
+        1.5
+      ]
+    },
+    {
+      "type": "spacer",
+      "height": 0.5
+    },
+    {
+      "type": "text",
+      "content": "三、销量对比图",
+      "style": "heading1"
+    },
+    {
+      "type": "chart",
+      "chartType": "bar",
+      "dataSource": "sales_data",
+      "xAxis": "产品",
+      "yAxis": "销量",
+      "title": "各产品销量对比",
+      "width": 6.5,
+      "height": 4,
+      "alignment": "center",
+      "grid": true,
+      "xLabel": "产品名称",
+      "yLabel": "销量（件）"
+    },
+    {
+      "type": "pagebreak"
+    },
+    {
+      "type": "text",
+      "content": "四、销售额趋势",
+      "style": "heading1"
+    },
+    {
+      "type": "chart",
+      "chartType": "line",
+      "dataSource": "sales_data",
+      "xAxis": "产品",
+      "yAxis": "金额",
+      "title": "销售额趋势图",
+      "width": 6.5,
+      "height": 4,
+      "alignment": "center",
+      "grid": true,
+      "xLabel": "产品",
+      "yLabel": "销售额（元）"
+    }
+  ]
+}

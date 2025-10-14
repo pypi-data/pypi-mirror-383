@@ -1,0 +1,35 @@
+# 包含额外的数据文件
+include README.md
+include LICENSE
+include requirements.txt
+include QUICKSTART.md
+include USAGE_GUIDE.md
+include TABLE_MERGE_GUIDE.md
+include INSTALLATION.md
+include PACKAGE_USAGE.md
+include BUILD_PUBLISH.md
+
+# 包含模板示例（仅示例，不作为包数据）
+recursive-include templates *.json
+
+# 包含文档
+recursive-include docs *.md *.png *.jpg *.svg
+
+# 排除不需要的文件和目录
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * .DS_Store
+exclude .gitignore
+exclude .python-version
+exclude uv.lock
+
+# 排除字体文件（由用户自己提供）
+recursive-exclude fonts *
+
+# 排除示例数据
+recursive-exclude data *
+
+# 排除示例生成的PDF
+recursive-exclude examples *.pdf
+exclude *.pdf
+
