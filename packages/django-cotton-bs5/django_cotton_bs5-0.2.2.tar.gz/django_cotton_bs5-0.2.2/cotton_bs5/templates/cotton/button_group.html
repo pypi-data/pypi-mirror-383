@@ -1,0 +1,9 @@
+{% load i18n %}
+<c-vars size vertical label class />
+{% trans "Button group" as default_label %}
+<div class="btn-group{% if vertical %}-vertical{% endif %}{% if size %} btn-group-{{ size }}{% endif %} {{ class }}"
+     role="group"
+     aria-label="{% firstof label default_label %}"
+     {{ attrs }}>
+  {{ slot }}
+</div>

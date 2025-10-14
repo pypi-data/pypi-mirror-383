@@ -1,0 +1,9 @@
+{% load i18n %}
+<c-vars type="border" size variant label class />
+{% trans "Loading..." as default_label %}
+<div class="spinner-{{ type }}{% if size %} spinner-{{ type }}-{{ size }}{% endif %}{% if variant %} text-{{ variant }}{% endif %} {{ class }}"
+     role="status"
+     {{ attrs }}>
+        <span class="visually-hidden">{% firstof label default_label %}</span>
+        {{ slot }}
+</div>

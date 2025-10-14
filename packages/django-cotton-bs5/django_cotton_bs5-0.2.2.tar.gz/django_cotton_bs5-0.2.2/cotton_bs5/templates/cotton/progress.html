@@ -1,0 +1,24 @@
+{% load i18n %}
+<c-vars value
+        :min="0"
+        :max="100"
+        text
+        label
+        variant="primary"
+        striped
+        animated
+        class />
+{% trans "Progress" as default_label %}
+<div class="progress {{ class }}"
+     role="progressbar"
+     aria-label="{% firstof label default_label %}"
+     aria-valuenow="{{ value }}"
+     aria-valuemin="{{ min }}"
+     aria-valuemax="{{ max }}"
+     {{ attrs }}>
+  <div class="progress-bar bg-{{ variant }}{% if striped %} progress-bar-striped{% endif %}{% if animated %} progress-bar-animated{% endif %}"
+       style="width: calc(({{ value }} - {{ min }}) / ({{ max }} - {{ min }}) * 100%)">
+    {{ text }}
+    {{ slot }}
+  </div>
+</div>
