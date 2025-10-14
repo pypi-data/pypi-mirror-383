@@ -1,0 +1,2166 @@
+JUST SEARCH "Program-(program number) to find the required experiment
+
+
+#    1. Mean, Median, Mode
+#    Program-1: 
+
+import pandas as pd
+import numpy as np
+
+# Create a sample dataset with missing values
+data1 = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Emily', 'Frank', 'Grace'],
+    'Score': [85, 92, 78, 88, 76, np.nan, 85],
+    'Age': [22, 21, 22, 23, 22, 24, 21],
+    'Department': ['HR', 'IT', 'Finance', 'IT', 'HR', 'Finance', 'IT']
+}
+df1 = pd.DataFrame(data1)
+
+print("--- Original DataFrame 1 ---")
+print(df1)
+print("\n" + "="*30 + "\n")
+
+# --- Handling Missing Values --- [cite: 2]
+# We'll fill the missing 'Score' with the mean of the existing scores.
+mean_score = df1['Score'].mean()
+df1['Score'].fillna(mean_score, inplace=True)
+print("--- DataFrame After Handling Missing Values ---")
+print(df1)
+print("\n" + "="*30 + "\n")
+
+# --- Computing Mean, Median, Mode, Variance, Standard Deviation --- [cite: 1]
+print("--- Descriptive Statistics for 'Score' ---")
+print(f"Mean: {df1['Score'].mean():.2f}")
+print(f"Median: {df1['Score'].median():.2f}")
+print(f"Mode: {df1['Score'].mode()[0]}") # Mode can have multiple values, we take the first
+print(f"Variance: {df1['Score'].var():.2f}")
+print(f"Standard Deviation: {df1['Score'].std():.2f}")
+print("\n" + "="*30 + "\n")
+
+# --- Filtering Data --- [cite: 2]
+# Filter for students in the 'IT' department
+it_students = df1[df1['Department'] == 'IT']
+print("--- Filtered DataFrame (IT Department Only) ---")
+print(it_students)
+print("\n" + "="*30 + "\n")
+
+# --- Reshaping Data (Pivot) --- [cite: 2]
+# Let's create a pivot table showing the average score per department
+pivot_table = df1.pivot_table(values='Score', index='Department', aggfunc='mean')
+print("--- Reshaped Data (Pivot Table of Avg Score by Dept) ---")
+print(pivot_table)
+print("\n" + "="*30 + "\n")
+
+
+# --- Merging Data --- [cite: 2]
+# Create a second DataFrame to merge with the first
+data2 = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Emily', 'Frank', 'Grace'],
+    'Years_of_Experience': [1, 0, 1, 2, 1, 3, 0]
+}
+df2 = pd.DataFrame(data2)
+
+print("--- Original DataFrame 2 ---")
+print(df2)
+print("\n")
+
+# Merge df1 and df2 based on the 'Name' column
+merged_df = pd.merge(df1, df2, on='Name')
+print("--- Merged DataFrame ---")
+print(merged_df)
+
+
+
+
+#   2. Building and Evaluating Predictive Models.py
+#   Program-2:
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.datasets import load_iris
+
+# 1. Load a real-world dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# For clarity, let's put it into a pandas DataFrame
+df = pd.DataFrame(data=X, columns=iris.feature_names)
+df['species'] = y
+print("--- First 5 Rows of the Iris Dataset ---")
+print(df.head())
+print("\n" + "="*40 + "\n")
+
+# 2. Split the dataset into training and testing sets
+# 80% for training, 20% for testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+print(f"Training set size: {X_train.shape[0]} samples")
+print(f"Testing set size: {X_test.shape[0]} samples")
+print("\n" + "="*40 + "\n")
+
+# 3. Build the Predictive Model
+# We'll use Logistic Regression, a common classification model
+model = LogisticRegression(max_iter=200)
+
+# Train the model using the training data
+model.fit(X_train, y_train)
+print("Model training complete.")
+print("\n" + "="*40 + "\n")
+
+# 4. Evaluate the Model
+# Make predictions on the unseen test data
+y_pred = model.predict(X_test)
+
+# Compare predicted labels with actual labels
+accuracy = accuracy_score(y_test, y_pred)
+print(f"--- Model Evaluation ---")
+print(f"Accuracy: {accuracy:.2f}")
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred, target_names=iris.target_names))
+
+# 5. Use the model to predict on new data
+# New flower with measurements: sepal length=5.1, sepal width=3.5, petal length=1.4, petal width=0.2
+new_flower = [[5.1, 3.5, 1.4, 0.2]]
+prediction = model.predict(new_flower)
+predicted_species = iris.target_names[prediction[0]]
+print("\n--- Prediction on New Data ---")
+print(f"The model predicts the new flower is a: {predicted_species}")
+
+
+
+
+#   3. Reflex Agent vs. Model-Based Agent.py
+#   Program-3:
+
+import random
+
+class VacuumEnvironment:
+    # A class for a simple two-room vacuum environment.
+    def __init__(self):
+        # The environment can be in any of 4 states.
+        # We start with a random state.
+        self.state = {
+            'A': random.choice(['Clean', 'Dirty']),
+            'B': random.choice(['Clean', 'Dirty'])
+        }
+        self.agent_location = random.choice(['A', 'B'])
+        self.actions_taken = 0
+        print(f"Initial State: Agent in Room {self.agent_location}, Status: {self.state}")
+
+    def get_percept(self):
+        # Returns the agent's current location and the status of that location.
+        return (self.agent_location, self.state[self.agent_location])
+
+    def step(self, action):
+        # Executes an agent's action and updates the environment.
+        self.actions_taken += 1
+        if action == 'Suck':
+            self.state[self.agent_location] = 'Clean'
+            print(f"Action: Suck. Room {self.agent_location} is now Clean.")
+        elif action == 'Right' and self.agent_location == 'A':
+            self.agent_location = 'B'
+            print("Action: Move Right. Agent is now in Room B.")
+        elif action == 'Left' and self.agent_location == 'B':
+            self.agent_location = 'A'
+            print("Action: Move Left. Agent is now in Room A.")
+        # 'NoOp' action does nothing but still counts as a step in this simulation
+        elif action == 'NoOp':
+                print("Action: NoOp. Goal achieved, agent stops.")
+        return self.get_percept()
+
+def simple_reflex_agent(percept):
+    # A simple reflex agent function. Rule-based: if dirty, suck; else, move.
+    location, status = percept
+    if status == 'Dirty':
+        return 'Suck'
+    elif location == 'A':
+        return 'Right'
+    elif location == 'B':
+        return 'Left'
+
+def model_based_agent():
+    # A factory function that returns an agent with an internal model.
+    # The model stores the agent's belief about the world state.
+    model = {'A': 'Unknown', 'B': 'Unknown'}
+
+    def agent_function(percept):
+        location, status = percept
+        # Update internal model based on current percept
+        model[location] = status
+
+        # Decide action based on model
+        if model['A'] == 'Clean' and model['B'] == 'Clean':
+            # If both rooms are known to be clean, do nothing.
+            return 'NoOp'
+        elif status == 'Dirty':
+            return 'Suck'
+        elif location == 'A':
+            return 'Right'
+        elif location == 'B':
+            return 'Left'
+
+    return agent_function
+
+# --- Simulation ---
+print("--- 1. SIMPLE REFLEX AGENT SIMULATION ---")
+env_reflex = VacuumEnvironment()
+max_steps = 10  # Run for a few steps to observe behavior
+for _ in range(max_steps):
+    percept = env_reflex.get_percept()
+    action = simple_reflex_agent(percept)
+    env_reflex.step(action)
+    # This agent never "finishes", it will run forever. We check manually.
+    if _ > 3 and env_reflex.state['A'] == 'Clean' and env_reflex.state['B'] == 'Clean':
+        print("...World is clean, but agent continues moving...")
+print(f"\nTotal actions taken by Simple Reflex Agent after {max_steps} steps: {env_reflex.actions_taken}\n")
+
+print("\n--- 2. MODEL-BASED AGENT SIMULATION ---")
+env_model = VacuumEnvironment()
+agent_model = model_based_agent()
+for _ in range(max_steps):
+    percept = env_model.get_percept()
+    action = agent_model(percept)
+    env_model.step(action)
+    if action == 'NoOp':
+        # The agent stops itself once the goal is reached
+        break
+print(f"\nTotal actions taken by Model-Based Agent: {env_model.actions_taken}")
+
+
+
+
+
+
+#   4. Reflex Agent vs. Goal-Based Agent.py
+#   Program-4:
+
+import random
+import time
+
+class VacuumEnvironment:
+    # A class for a simple two-room vacuum environment.
+    def __init__(self):
+        # Start with a random state
+        self.state = {
+            'A': random.choice(['Clean', 'Dirty']),
+            'B': random.choice(['Clean', 'Dirty'])
+        }
+        self.agent_location = random.choice(['A', 'B'])
+        self.actions_taken = 0
+        print(f"Initial State: Agent in Room {self.agent_location}, Status: {self.state}")
+
+    def get_percept(self):
+        # Returns the agent's current location and the status of that location.
+        return (self.agent_location, self.state[self.agent_location])
+
+    def step(self, action):
+        # Executes an agent's action and updates the environment.
+        self.actions_taken += 1
+        if action == 'Suck':
+            self.state[self.agent_location] = 'Clean'
+            print(f"Action: Suck. Room {self.agent_location} is now Clean.")
+        elif action == 'Right' and self.agent_location == 'A':
+            self.agent_location = 'B'
+            print("Action: Move Right. Agent is now in Room B.")
+        elif action == 'Left' and self.agent_location == 'B':
+            self.agent_location = 'A'
+            print("Action: Move Left. Agent is now in Room A.")
+        elif action == 'NoOp':
+            print("Action: NoOp. Goal achieved, agent terminates.")
+        return self.get_percept()
+
+# --- Agent Definitions ---
+
+def simple_reflex_agent(percept):
+    # A simple reflex agent. If dirty, suck; otherwise, move to the other room.
+    location, status = percept
+    if status == 'Dirty':
+        return 'Suck'
+    elif location == 'A':
+        return 'Right'
+    elif location == 'B':
+        return 'Left'
+
+def goal_based_agent():
+    # A factory function that returns an agent with an internal model and a goal.
+    # The agent's knowledge about the world
+    model = {'A': 'Unknown', 'B': 'Unknown'}
+    # The state the agent wants to achieve
+    goal_state = {'A': 'Clean', 'B': 'Clean'}
+    
+    def agent_function(percept):
+        location, status = percept
+        # Update internal model based on current percept
+        model[location] = status
+        
+        # Check if the goal has been achieved
+        if model == goal_state:
+            return 'NoOp'
+        # Decide action to move toward the goal
+        elif status == 'Dirty':
+            return 'Suck'
+        elif location == 'A':
+            return 'Right' # Move to B to check its status
+        elif location == 'B':
+            return 'Left' # Move to A to check its status
+            
+    return agent_function
+
+# --- Simulation ---
+
+print("--- 1. SIMPLE REFLEX AGENT SIMULATION ---")
+env_reflex = VacuumEnvironment()
+max_steps = 10 # Let's observe for 10 steps
+for i in range(max_steps):
+    print(f"Step {i+1}:")
+    percept = env_reflex.get_percept()
+    action = simple_reflex_agent(percept)
+    env_reflex.step(action)
+    if i > 3 and env_reflex.state['A'] == 'Clean' and env_reflex.state['B'] == 'Clean':
+        print("...World is clean, but the reflex agent continues its repetitive movement...")
+    time.sleep(0.5)
+print(f"\nTotal actions taken by Simple Reflex Agent after {max_steps} steps: {env_reflex.actions_taken}\n")
+
+print("\n" + "="*50 + "\n")
+
+print("--- 2. GOAL-BASED AGENT SIMULATION ---")
+env_goal = VacuumEnvironment()
+agent_goal = goal_based_agent()
+for i in range(max_steps):
+    print(f"Step {i+1}:")
+    percept = env_goal.get_percept()
+    action = agent_goal(percept)
+    env_goal.step(action)
+    time.sleep(0.5)
+    # The agent stops itself once the goal is reached
+    if action == 'NoOp':
+        break
+print(f"\nTotal actions taken by Goal-Based Agent to reach the goal: {env_goal.actions_taken}")
+
+
+
+
+
+#   5.Reflex Agent vs. Utility-Based Agent.py 
+#   Program-5:
+
+import random
+import time
+
+class VacuumEnvironment:
+    """A class for a simple two-room vacuum environment."""
+    def __init__(self, initial_state=None, agent_location=None):
+        if initial_state:
+            self.state = initial_state
+        else:
+            self.state = {
+                'A': random.choice(['Clean', 'Dirty']),
+                'B': random.choice(['Clean', 'Dirty'])
+            }
+
+        self.agent_location = agent_location if agent_location else random.choice(['A', 'B'])
+        self.actions_taken = 0
+        self.total_utility = 0
+
+        print(f"Initial State: Agent in Room {self.agent_location}, Status: {self.state}")
+
+    def get_percept(self):
+        """Returns the agent's current location and the status of that location."""
+        return (self.agent_location, self.state[self.agent_location])
+
+    def step(self, action):
+        """Executes an agent's action, updates the environment, and calculates utility."""
+        self.actions_taken += 1
+        action_cost = -1  # Each action has a small cost
+
+        if action == 'Suck':
+            if self.state[self.agent_location] == 'Dirty':
+                self.state[self.agent_location] = 'Clean'
+                print(f"Action: Suck. Room {self.agent_location} is now Clean.")
+            else:
+                    print(f"Action: Suck. (No change, room was already clean).")
+        elif action == 'Right' and self.agent_location == 'A':
+            self.agent_location = 'B'
+            print("Action: Move Right. Agent is now in Room B.")
+        elif action == 'Left' and self.agent_location == 'B':
+            self.agent_location = 'A'
+            print("Action: Move Left. Agent is now in Room A.")
+        elif action == 'NoOp':
+            print("Action: NoOp. Agent is idle.")
+            action_cost = 0 # NoOp has no cost if world is clean
+
+        # Calculate utility for the new state
+        current_utility = self.calculate_utility() + action_cost
+        self.total_utility += current_utility
+        print(f"State Utility: {self.calculate_utility()}, Action Cost: {action_cost}, Total Utility: {self.total_utility}")
+
+    def calculate_utility(self):
+        """Utility function: +10 for each clean room."""
+        utility = 0
+        if self.state['A'] == 'Clean':
+            utility += 10
+        if self.state['B'] == 'Clean':
+            utility += 10
+        return utility
+
+# --- Agent Definitions ---
+
+def simple_reflex_agent(percept):
+    """A simple reflex agent. If dirty, suck; otherwise, move."""
+    location, status = percept
+    if status == 'Dirty':
+        return 'Suck'
+    elif location == 'A':
+        return 'Right'
+    elif location == 'B':
+        return 'Left'
+
+def utility_based_agent(percept, current_state, utility_func):
+    """
+    A utility-based agent that chooses the action leading to the best future state.
+    """
+    location, status = percept
+    actions = ['Suck', 'Right', 'Left', 'NoOp']
+    best_action = 'NoOp'
+    max_utility = -float('inf')
+
+    # If the world is already perfect, do nothing.
+    if current_state['A'] == 'Clean' and current_state['B'] == 'Clean':
+        return 'NoOp'
+
+    # Simulate each possible action to see its outcome
+    for action in actions:
+        # Predict the next state based on the action
+        next_state = current_state.copy()
+        action_cost = -1
+
+        if action == 'Suck' and next_state[location] == 'Dirty':
+            next_state[location] = 'Clean'
+        # For simplicity, we only consider moves that change location
+        elif action == 'Right' and location == 'A':
+            # This action's utility depends on the state of the other room, which is unknown.
+            # A more complex agent might model probabilities. Here we just evaluate known outcomes.
+            pass
+        elif action == 'Left' and location == 'B':
+            pass
+        
+        # The utility of an action is the utility of the resulting state minus the cost
+        expected_utility = utility_func(next_state) + action_cost
+
+        if expected_utility > max_utility:
+            max_utility = expected_utility
+            best_action = action
+
+    # Fallback if no action seems to improve utility (e.g., current room is clean)
+    if best_action == 'NoOp' and status == 'Clean':
+        return 'Right' if location == 'A' else 'Left'
+
+    return best_action
+
+# --- Simulation ---
+# Setup an environment where one room is clean and the other is dirty [cite: 18]
+# to clearly measure the difference in decision making.
+initial_env_state = {'A': 'Clean', 'B': 'Dirty'}
+agent_start_loc = 'A'
+
+print("--- 1. SIMPLE REFLEX AGENT SIMULATION ---")
+env_reflex = VacuumEnvironment(initial_env_state.copy(), agent_start_loc)
+for i in range(5): # Run for 5 steps
+    print(f"\n--- Step {i+1} ---")
+    percept = env_reflex.get_percept()
+    action = simple_reflex_agent(percept)
+    env_reflex.step(action)
+    time.sleep(0.5)
+print(f"\nFinal Utility Score for Simple Reflex Agent: {env_reflex.total_utility}\n")
+
+print("\n" + "="*50 + "\n")
+
+print("--- 2. UTILITY-BASED AGENT SIMULATION ---")
+env_utility = VacuumEnvironment(initial_env_state.copy(), agent_start_loc)
+for i in range(5): # Run for 5 steps
+    print(f"\n--- Step {i+1} ---")
+    percept = env_utility.get_percept()
+    # The agent uses its knowledge of the current state to make a decision
+    action = utility_based_agent(percept, env_utility.state, env_utility.calculate_utility)
+    env_utility.step(action)
+    if env_utility.state['A'] == 'Clean' and env_utility.state['B'] == 'Clean' and action == 'NoOp':
+        break # Agent has rationally decided to stop
+    time.sleep(0.5)
+print(f"\nFinal Utility Score for Utility-Based Agent: {env_utility.total_utility}")
+
+
+
+
+
+#   6.  Reflex Agent vs. Learning Agent.py
+#   Program-6:
+
+import random
+import matplotlib.pyplot as plt
+
+class RewardingVacuumEnvironment:
+    """A vacuum environment that provides rewards for actions."""
+    def __init__(self):
+        self.state = ('A', 'Dirty', 'Dirty') # (Location, A_Status, B_Status)
+
+    def reset(self):
+        """Resets the environment to a random initial state."""
+        loc = random.choice(['A', 'B'])
+        a_status = 'Dirty' # Always start dirty for a consistent challenge
+        b_status = 'Dirty'
+        self.state = (loc, a_status, b_status)
+        return self.state
+
+    def step(self, action):
+        """
+        Executes an action and returns the new state, reward, and if the task is done.
+        """
+        loc, a_status, b_status = self.state
+        reward = -1 # Cost of living/taking an action
+
+        if action == 'Suck':
+            if loc == 'A' and a_status == 'Dirty':
+                a_status = 'Clean'
+                reward += 10 # Positive reward for cleaning
+            elif loc == 'B' and b_status == 'Dirty':
+                b_status = 'Clean'
+                reward += 10
+            else:
+                reward -= 5 # Penalty for sucking a clean room
+        
+        elif action == 'Left':
+            if loc == 'B':
+                loc = 'A'
+            else:
+                reward -= 5 # Penalty for hitting a wall
+        
+        elif action == 'Right':
+            if loc == 'A':
+                loc = 'B'
+            else:
+                reward -= 5 # Penalty for hitting a wall
+
+        self.state = (loc, a_status, b_status)
+        done = (a_status == 'Clean' and b_status == 'Clean')
+        return self.state, reward, done
+
+# --- Agent Definitions ---
+
+def simple_reflex_agent_policy(state):
+    """The policy for the simple reflex agent."""
+    loc, a_status, b_status = state
+    current_loc_status = a_status if loc == 'A' else b_status
+    if current_loc_status == 'Dirty':
+        return 'Suck'
+    return 'Right' if loc == 'A' else 'Left'
+
+class QLearningAgent:
+    """A learning agent that uses a Q-table to make decisions."""
+    def __init__(self, actions, alpha=0.1, gamma=0.9, epsilon=0.1):
+        self.actions = actions
+        self.alpha = alpha       # Learning rate
+        self.gamma = gamma       # Discount factor
+        self.epsilon = epsilon   # Exploration rate
+        self.q_table = {}        # The Q-table
+
+    def get_q_value(self, state, action):
+        """Get Q-value for a state-action pair, default to 0."""
+        return self.q_table.get((state, action), 0.0)
+
+    def choose_action(self, state):
+        """Choose action using epsilon-greedy policy."""
+        if random.random() < self.epsilon:
+            return random.choice(self.actions) # Explore
+        else:
+            # Exploit: choose the best known action
+            q_values = [self.get_q_value(state, a) for a in self.actions]
+            max_q = max(q_values)
+            # Handle ties by choosing randomly among the best
+            best_actions = [i for i, q in enumerate(q_values) if q == max_q]
+            return self.actions[random.choice(best_actions)]
+
+    def learn(self, state, action, reward, next_state):
+        """Update Q-table using the Bellman equation."""
+        old_q = self.get_q_value(state, action)
+        future_q = max([self.get_q_value(next_state, a) for a in self.actions])
+        
+        # Q-learning formula
+        new_q = old_q + self.alpha * (reward + self.gamma * future_q - old_q)
+        self.q_table[(state, action)] = new_q
+
+# --- Simulation and Comparison ---
+
+def run_simulation(agent, env, is_learning_agent=False):
+    """Runs one episode for a given agent and returns the total reward."""
+    state = env.reset()
+    total_reward = 0
+    done = False
+    max_steps_per_episode = 20
+
+    for _ in range(max_steps_per_episode):
+        if is_learning_agent:
+            action = agent.choose_action(state)
+            next_state, reward, done = env.step(action)
+            agent.learn(state, action, reward, next_state)
+            state = next_state
+        else: # Simple Reflex Agent
+            action = agent(state)
+            state, reward, done = env.step(action)
+        
+        total_reward += reward
+        if done:
+            break
+    return total_reward
+
+# --- Main Execution ---
+env = RewardingVacuumEnvironment()
+actions = ['Suck', 'Left', 'Right']
+learning_agent = QLearningAgent(actions)
+
+num_episodes = 500
+learning_rewards = []
+reflex_rewards = []
+
+print("Running simulations... please wait.")
+for episode in range(num_episodes):
+    # Run learning agent
+    reward_lr = run_simulation(learning_agent, env, is_learning_agent=True)
+    learning_rewards.append(reward_lr)
+    
+    # Run reflex agent for comparison
+    reward_sr = run_simulation(simple_reflex_agent_policy, env)
+    reflex_rewards.append(reward_sr)
+    
+    if (episode + 1) % 100 == 0:
+        print(f"Episode {episode + 1}/{num_episodes} complete.")
+
+# --- Plotting the Results ---
+plt.figure(figsize=(12, 6))
+plt.plot(reflex_rewards, label='Simple Reflex Agent Reward', color='red', linestyle='--')
+plt.plot(learning_rewards, label='Learning Agent Reward', color='blue')
+
+# Plot a moving average for the learning agent to show the trend more clearly
+moving_avg = [sum(learning_rewards[i-50:i])/50 for i in range(50, len(learning_rewards))]
+plt.plot(range(50, len(learning_rewards)), moving_avg, label='Learning Agent (50-episode MA)', color='green', linewidth=2)
+
+plt.title('Performance Comparison: Simple Reflex vs. Learning Agent')
+plt.xlabel('Episode')
+plt.ylabel('Cumulative Reward per Episode')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+7.Model-Based Agent vs. Goal-Based Agent.py
+
+Program-7:
+
+import random
+import time
+
+class VacuumEnvironment:
+    """A class for a simple two-room vacuum environment."""
+    def __init__(self):
+        # Start with a random state
+        self.state = {
+            'A': random.choice(['Clean', 'Dirty']),
+            'B': random.choice(['Clean', 'Dirty'])
+        }
+        self.agent_location = random.choice(['A', 'B'])
+        self.actions_taken = 0
+        print(f"Initial State: Agent in Room {self.agent_location}, Status: {self.state}")
+
+    def get_percept(self):
+        """Returns the agent's current location and the status of that location."""
+        return (self.agent_location, self.state[self.agent_location])
+
+    def step(self, action):
+        """Executes an agent's action and updates the environment."""
+        self.actions_taken += 1
+        if action == 'Suck':
+            self.state[self.agent_location] = 'Clean'
+            print(f"Action: Suck. Room {self.agent_location} is now Clean.")
+        elif action == 'Right' and self.agent_location == 'A':
+            self.agent_location = 'B'
+            print("Action: Move Right. Agent is now in Room B.")
+        elif action == 'Left' and self.agent_location == 'B':
+            self.agent_location = 'A'
+            print("Action: Move Left. Agent is now in Room A.")
+        elif action == 'NoOp':
+             print("Action: NoOp. Goal achieved, agent terminates.")
+
+# --- Agent Definitions ---
+
+def model_based_agent():
+    """An agent that maintains a model but has no explicit goal to stop."""
+    model = {'A': 'Unknown', 'B': 'Unknown'}
+    
+    def agent_function(percept):
+        location, status = percept
+        # Update internal model
+        model[location] = status
+        print(f"Agent's Internal Model: {model}")
+        
+        # Act based on rules applied to the model
+        if status == 'Dirty':
+            return 'Suck'
+        elif location == 'A':
+            return 'Right'
+        elif location == 'B':
+            return 'Left'
+            
+    return agent_function
+
+def goal_based_agent():
+    """An agent with a model and an explicit goal state."""
+    model = {'A': 'Unknown', 'B': 'Unknown'}
+    goal_state = {'A': 'Clean', 'B': 'Clean'}
+    
+    def agent_function(percept):
+        location, status = percept
+        # Update internal model
+        model[location] = status
+        print(f"Agent's Internal Model: {model}")
+        
+        # **Crucially, check if the goal has been achieved**
+        if model == goal_state:
+            return 'NoOp'
+        elif status == 'Dirty':
+            return 'Suck'
+        elif location == 'A':
+            return 'Right'
+        elif location == 'B':
+            return 'Left'
+            
+    return agent_function
+
+# --- Simulation ---
+
+print("--- 1. MODEL-BASED AGENT SIMULATION ---")
+env_model = VacuumEnvironment()
+agent_model = model_based_agent()
+max_steps = 10 # Observe for 10 steps
+
+for i in range(max_steps):
+    print(f"\n--- Step {i+1} ---")
+    percept = env_model.get_percept()
+    action = agent_model(percept)
+    env_model.step(action)
+    if env_model.state['A'] == 'Clean' and env_model.state['B'] == 'Clean':
+        print("...World is clean, but the agent continues acting based on its rules...")
+    time.sleep(0.5)
+print(f"\nTotal actions by Model-Based Agent after {max_steps} steps: {env_model.actions_taken}\n")
+
+print("\n" + "="*50 + "\n")
+
+print("--- 2. GOAL-BASED AGENT SIMULATION ---")
+env_goal = VacuumEnvironment()
+agent_goal = goal_based_agent()
+for i in range(max_steps):
+    print(f"\n--- Step {i+1} ---")
+    percept = env_goal.get_percept()
+    action = agent_goal(percept)
+    env_goal.step(action)
+    if action == 'NoOp':
+        # The agent terminates itself once the goal is reached
+        break
+    time.sleep(0.5)
+print(f"\nTotal actions by Goal-Based Agent to reach goal: {env_goal.actions_taken}")
+
+
+
+8.Model-Based Agent vs. Utility-Based Agent.py
+
+Program-8:
+import random
+import time
+
+class UtilityVacuumEnvironment:
+    """A vacuum environment that calculates utility for states and actions."""
+    def __init__(self, initial_state=None, agent_location=None):
+        # Set a specific state for a controlled comparison
+        self.state = initial_state if initial_state else {'A': 'Dirty', 'B': 'Dirty'}
+        self.agent_location = agent_location if agent_location else 'A'
+        self.actions_taken = 0
+        self.total_utility = self.calculate_state_utility(self.state) # Start with initial utility
+
+        print(f"Initial State: Agent in Room {self.agent_location}, Status: {self.state}")
+        print(f"Initial Total Utility: {self.total_utility}")
+
+    def calculate_state_utility(self, state):
+        """Utility function: +10 for each clean room."""
+        utility = 0
+        if state.get('A') == 'Clean':
+            utility += 10
+        if state.get('B') == 'Clean':
+            utility += 10
+        return utility
+
+    def step(self, action):
+        """Executes an action and updates the total utility based on costs and rewards."""
+        action_cost = -1  # Every action has a small cost to encourage efficiency
+        
+        if action == 'Suck':
+            if self.state[self.agent_location] == 'Dirty':
+                self.state[self.agent_location] = 'Clean'
+                print(f"Action: Suck. Room {self.agent_location} cleaned.")
+            else:
+                 print(f"Action: Suck. (Inefficient: room was already clean).")
+        elif action == 'Right' and self.agent_location == 'A':
+            self.agent_location = 'B'
+            print("Action: Move Right.")
+        elif action == 'Left' and self.agent_location == 'B':
+            self.agent_location = 'A'
+            print("Action: Move Left.")
+        elif action == 'NoOp':
+            print("Action: NoOp.")
+            action_cost = 0 # NoOp has no cost if the world is clean
+
+        # Update total utility
+        new_state_utility = self.calculate_state_utility(self.state)
+        # For simplicity, we just add the action cost to the cumulative score
+        self.total_utility += action_cost
+        print(f"New State: {self.state}, Agent at: {self.agent_location}")
+        print(f"Current State Utility: {new_state_utility}, Cumulative Utility Score: {self.total_utility}")
+
+
+# --- Agent Definitions ---
+
+def model_based_agent(percept, model):
+    """An agent that acts based on fixed rules applied to its internal model."""
+    location, status = percept
+    model[location] = status # Update model
+    print(f"Model-Based Agent's Model: {model}")
+    
+    if status == 'Dirty':
+        return 'Suck'
+    return 'Right' if location == 'A' else 'Left'
+
+def utility_based_agent(percept, current_state, utility_func):
+    """An agent that chooses the action leading to the state with the highest utility."""
+    location, _ = percept
+    possible_actions = ['Suck', 'Right', 'Left', 'NoOp']
+    best_action = 'NoOp'
+    max_utility = -float('inf')
+
+    # Simulate and evaluate each possible action
+    for action in possible_actions:
+        action_cost = -1
+        # Predict the next state
+        next_state = current_state.copy()
+        next_loc = location
+        
+        if action == 'Suck':
+            next_state[location] = 'Clean'
+        elif action == 'Right' and location == 'A':
+            next_loc = 'B'
+        elif action == 'Left' and location == 'B':
+            next_loc = 'A'
+        elif action == 'NoOp':
+            action_cost = 0
+
+        # Calculate the utility of the action's outcome
+        expected_utility = utility_func(next_state) + action_cost
+        
+        if expected_utility > max_utility:
+            max_utility = expected_utility
+            best_action = action
+            
+    print(f"Utility Agent chose '{best_action}' with expected utility of {max_utility}")
+    return best_action
+
+# --- Simulation ---
+initial_env_state = {'A': 'Dirty', 'B': 'Dirty'}
+agent_start_loc = 'A'
+max_steps = 6
+
+print("--- 1. MODEL-BASED AGENT SIMULATION ---")
+env_model = UtilityVacuumEnvironment(initial_env_state.copy(), agent_start_loc)
+agent_model_state = {'A': 'Unknown', 'B': 'Unknown'}
+for i in range(max_steps):
+    print(f"\n--- Step {i+1} ---")
+    percept = (env_model.agent_location, env_model.state[env_model.agent_location])
+    action = model_based_agent(percept, agent_model_state)
+    env_model.step(action)
+    time.sleep(0.5)
+print(f"\nFinal Utility for Model-Based Agent: {env_model.total_utility}\n")
+
+print("\n" + "="*50 + "\n")
+
+print("--- 2. UTILITY-BASED AGENT SIMULATION ---")
+env_utility = UtilityVacuumEnvironment(initial_env_state.copy(), agent_start_loc)
+for i in range(max_steps):
+    print(f"\n--- Step {i+1} ---")
+    percept = (env_utility.agent_location, env_utility.state[env_utility.agent_location])
+    action = utility_based_agent(percept, env_utility.state, env_utility.calculate_state_utility)
+    env_utility.step(action)
+    if action == 'NoOp':
+        print("Agent has rationally decided to stop.")
+        break
+    time.sleep(0.5)
+print(f"\nFinal Utility for Utility-Based Agent: {env_utility.total_utility}")
+
+
+
+
+9.Model-Based Agent vs. Learning Agent.py
+
+Program-9:
+
+import random
+import matplotlib.pyplot as plt
+
+class DynamicVacuumEnvironment:
+    """A vacuum environment where rules can change."""
+    def __init__(self):
+        self.slippery_mode = False # The environmental condition
+        self.state = ('A', 'Dirty', 'Dirty')
+
+    def reset(self):
+        """Resets to a random initial state."""
+        loc = random.choice(['A', 'B'])
+        self.state = (loc, 'Dirty', 'Dirty')
+        return self.state
+
+    def step(self, action):
+        """Executes an action, returning the new state, reward, and completion status."""
+        loc, a_status, b_status = self.state
+        reward = -1 # Cost for every action
+
+        if action == 'Suck':
+            if (loc == 'A' and a_status == 'Dirty') or (loc == 'B' and b_status == 'Dirty'):
+                reward += 10 # Reward for cleaning
+                if loc == 'A': a_status = 'Clean'
+                else: b_status = 'Clean'
+            else:
+                reward -= 5 # Penalty for sucking a clean room
+        
+        elif action == 'Left':
+            if loc == 'B': loc = 'A'
+            else: reward -= 5 # Penalty for hitting wall
+        
+        elif action == 'Right':
+            # Check for the dynamic condition
+            if self.slippery_mode and random.random() < 0.5:
+                # Action fails 50% of the time in slippery mode
+                print("--- Action 'Right' failed due to slippery floor! ---")
+                reward -= 2 # Extra penalty for slipping
+            elif loc == 'A':
+                loc = 'B'
+            else:
+                reward -= 5 # Penalty for hitting wall
+
+        self.state = (loc, a_status, b_status)
+        done = (a_status == 'Clean' and b_status == 'Clean')
+        return self.state, reward, done
+
+# --- Agent Definitions ---
+
+class QLearningAgent:
+    """A learning agent that uses Q-learning."""
+    def __init__(self, actions, alpha=0.1, gamma=0.9, epsilon=0.1):
+        self.actions = actions
+        self.alpha = alpha
+        self.gamma = gamma
+        self.epsilon = epsilon
+        self.q_table = {}
+
+    def get_q_value(self, state, action):
+        return self.q_table.get((state, action), 0.0)
+
+    def choose_action(self, state):
+        if random.random() < self.epsilon:
+            return random.choice(self.actions) # Explore
+        else:
+            q_values = [self.get_q_value(state, a) for a in self.actions]
+            max_q = max(q_values)
+            return self.actions[q_values.index(max_q)] # Exploit
+
+    def learn(self, state, action, reward, next_state):
+        old_q = self.get_q_value(state, action)
+        future_q = max([self.get_q_value(next_state, a) for a in self.actions])
+        new_q = old_q + self.alpha * (reward + self.gamma * future_q - old_q)
+        self.q_table[(state, action)] = new_q
+
+def model_based_agent_policy(state):
+    """A fixed policy for the model-based agent."""
+    loc, a_status, b_status = state
+    current_loc_status = a_status if loc == 'A' else b_status
+    if current_loc_status == 'Dirty':
+        return 'Suck'
+    return 'Right' if loc == 'A' else 'Left'
+
+# --- Simulation ---
+
+def run_episode(agent, env, is_learning=False):
+    """Runs a single episode and returns the cumulative reward."""
+    state = env.reset()
+    total_reward = 0
+    done = False
+    for _ in range(20): # Max steps per episode
+        if is_learning:
+            action = agent.choose_action(state)
+            next_state, reward, done = env.step(action)
+            agent.learn(state, action, reward, next_state)
+            state = next_state
+        else:
+            action = agent(state)
+            state, reward, done = env.step(action)
+        total_reward += reward
+        if done: break
+    return total_reward
+
+# --- Main Execution ---
+env = DynamicVacuumEnvironment()
+actions = ['Suck', 'Left', 'Right']
+learning_agent = QLearningAgent(actions)
+
+num_episodes = 1000
+change_episode = 500 # Episode where the environment changes
+
+learning_rewards = []
+model_rewards = []
+
+print("Running simulation... The environment will change at episode 500.")
+for ep in range(num_episodes):
+    if ep == change_episode:
+        print("\n--- ENVIRONMENT CHANGE: Slippery floors are now active! ---\n")
+        env.slippery_mode = True
+
+    # Run and record both agents
+    learning_rewards.append(run_episode(learning_agent, env, is_learning=True))
+    model_rewards.append(run_episode(model_based_agent_policy, env))
+
+# --- Plotting the Results ---
+def moving_average(data, window_size):
+    return [sum(data[i-window_size:i]) / window_size for i in range(window_size, len(data))]
+
+window = 50
+plt.figure(figsize=(12, 6))
+plt.plot(range(window, num_episodes), moving_average(model_rewards, window), label='Model-Based Agent', color='red')
+plt.plot(range(window, num_episodes), moving_average(learning_rewards, window), label='Learning Agent', color='blue')
+plt.axvline(x=change_episode, color='black', linestyle='--', label='Environment Change')
+plt.title('Adaptability Comparison: Model-Based vs. Learning Agent')
+plt.xlabel('Episode')
+plt.ylabel('Cumulative Reward (50-Episode Moving Average)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+10.Goal-Based Agent vs. Utility-Based Agent.py"
+
+
+import random
+import time
+
+class DynamicVacuumEnvironment:
+    """An environment where clean rooms can become dirty again."""
+    def __init__(self):
+        self.state = {'A': 'Dirty', 'B': 'Dirty'}
+        self.agent_location = 'A'
+        self.cumulative_utility = 0
+
+    def step(self, action):
+        """Execute an action and update the environment."""
+        action_cost = -1  # Actions have a small cost
+
+        if action == 'Suck' and self.state[self.agent_location] == 'Dirty':
+            self.state[self.agent_location] = 'Clean'
+            print(f"Action: Suck. Room {self.agent_location} cleaned.")
+        elif action == 'Right' and self.agent_location == 'A':
+            self.agent_location = 'B'
+            print("Action: Move Right.")
+        elif action == 'Left' and self.agent_location == 'B':
+            self.agent_location = 'A'
+            print("Action: Move Left.")
+        elif action == 'NoOp':
+            action_cost = 0 # No cost for being idle
+            print("Action: NoOp.")
+
+        # Update utility based on the new state and action cost
+        self.cumulative_utility += self.get_state_utility() + action_cost
+
+        # --- DYNAMIC ELEMENT ---
+        # There's a 20% chance a random clean room gets dirty
+        if random.random() < 0.20:
+            dirty_room = random.choice(['A', 'B'])
+            if self.state[dirty_room] == 'Clean':
+                self.state[dirty_room] = 'Dirty'
+                print(f"--- DYNAMIC CHANGE: Room {dirty_room} became dirty! ---")
+
+    def get_state_utility(self):
+        """Calculates the utility of the current state. +10 for each clean room."""
+        utility = 0
+        if self.state.get('A') == 'Clean': utility += 10
+        if self.state.get('B') == 'Clean': utility += 10
+        return utility
+
+# --- Agent Definitions ---
+
+class GoalBasedAgent:
+    def __init__(self):
+        self.goal_state = {'A': 'Clean', 'B': 'Clean'}
+        self.goal_achieved = False
+
+    def choose_action(self, percept, current_state):
+        # If goal was already met, do nothing forever.
+        if self.goal_achieved:
+            return 'NoOp'
+        
+        # Check if the goal has just been met
+        if current_state == self.goal_state:
+            self.goal_achieved = True
+            print("Goal-Based Agent: Goal achieved! Terminating.")
+            return 'NoOp'
+        
+        # Standard logic to reach the goal
+        location, status = percept
+        if status == 'Dirty':
+            return 'Suck'
+        return 'Right' if location == 'A' else 'Left'
+
+class UtilityBasedAgent:
+    def choose_action(self, percept, current_state, utility_func):
+        """Choose the action that maximizes future utility."""
+        location, _ = percept
+        best_action = 'NoOp'
+        max_utility = -float('inf')
+
+        for action in ['Suck', 'Right', 'Left', 'NoOp']:
+            # Predict the utility of the outcome of each action
+            next_state_sim = current_state.copy()
+            action_cost = -1
+            if action == 'Suck':
+                next_state_sim[location] = 'Clean'
+            elif action == 'NoOp':
+                action_cost = 0
+
+            expected_utility = utility_func(next_state_sim) + action_cost
+            if expected_utility > max_utility:
+                max_utility = expected_utility
+                best_action = action
+        
+        return best_action
+
+# --- Simulation ---
+SIMULATION_STEPS = 20
+
+print("--- 1. GOAL-BASED AGENT SIMULATION (Dynamic Environment) ---")
+env_goal = DynamicVacuumEnvironment()
+agent_goal = GoalBasedAgent()
+for i in range(SIMULATION_STEPS):
+    print(f"\n--- Step {i+1} ---")
+    percept = (env_goal.agent_location, env_goal.state[env_goal.agent_location])
+    action = agent_goal.choose_action(percept, env_goal.state)
+    env_goal.step(action)
+    print(f"Current State: {env_goal.state}, Cumulative Utility: {env_goal.cumulative_utility}")
+    time.sleep(0.3)
+print(f"\nFINAL UTILITY for Goal-Based Agent: {env_goal.cumulative_utility}\n")
+
+print("\n" + "="*60 + "\n")
+
+print("--- 2. UTILITY-BASED AGENT SIMULATION (Dynamic Environment) ---")
+env_utility = DynamicVacuumEnvironment()
+agent_utility = UtilityBasedAgent()
+for i in range(SIMULATION_STEPS):
+    print(f"\n--- Step {i+1} ---")
+    percept = (env_utility.agent_location, env_utility.state[env_utility.agent_location])
+    action = agent_utility.choose_action(percept, env_utility.state, env_utility.get_state_utility)
+    env_utility.step(action)
+    print(f"Current State: {env_utility.state}, Cumulative Utility: {env_utility.cumulative_utility}")
+    time.sleep(0.3)
+print(f"\nFINAL UTILITY for Utility-Based Agent: {env_utility.cumulative_utility}")
+
+
+
+11.Goal-Based Agent vs. Learning Agent.py
+Program-11:
+
+import random
+import matplotlib.pyplot as plt
+
+class DynamicRewardEnvironment:
+    """An environment where the cost of actions can change."""
+    def __init__(self):
+        self.movement_cost = -1  # Initial cost of moving
+        self.state = ('A', 'Dirty', 'Dirty')
+
+    def reset(self):
+        """Resets the environment to a standard starting state."""
+        loc = random.choice(['A', 'B'])
+        self.state = (loc, 'Dirty', 'Dirty')
+        return self.state
+
+    def step(self, action):
+        """Executes an action and returns the outcome."""
+        loc, a_status, b_status = self.state
+        reward = 0
+
+        if action == 'Suck':
+            if (loc == 'A' and a_status == 'Dirty') or (loc == 'B' and b_status == 'Dirty'):
+                reward += 10
+                if loc == 'A': a_status = 'Clean'
+                else: b_status = 'Clean'
+            else:
+                reward -= 5  # Penalty for inefficient action
+        elif action in ['Left', 'Right']:
+            reward += self.movement_cost  # Apply the current movement cost
+            if action == 'Left':
+                if loc == 'B': loc = 'A'
+                else: reward -= 2 # Hit a wall
+            elif action == 'Right':
+                if loc == 'A': loc = 'B'
+                else: reward -= 2 # Hit a wall
+
+        self.state = (loc, a_status, b_status)
+        done = (a_status == 'Clean' and b_status == 'Clean')
+        return self.state, reward, done
+
+# --- Agent Definitions ---
+
+class GoalBasedAgent:
+    """An agent with a fixed strategy to reach its goal."""
+    def __init__(self):
+        self.goal_state = ('Clean', 'Clean') # Simplified goal check
+        self.goal_achieved = False
+
+    def choose_action(self, state):
+        loc, a_status, b_status = state
+        if (a_status, b_status) == self.goal_state:
+            self.goal_achieved = True
+            return 'NoOp' # Stop when goal is reached
+
+        current_loc_status = a_status if loc == 'A' else b_status
+        if current_loc_status == 'Dirty':
+            return 'Suck'
+        return 'Right' if loc == 'A' else 'Left'
+
+class QLearningAgent:
+    """An agent that learns the best strategy."""
+    def __init__(self, actions, alpha=0.1, gamma=0.9, epsilon=0.1):
+        self.actions = actions
+        self.alpha, self.gamma, self.epsilon = alpha, gamma, epsilon
+        self.q_table = {}
+
+    def get_q_value(self, state, action):
+        return self.q_table.get((state, action), 0.0)
+
+    def choose_action(self, state):
+        if random.random() < self.epsilon:
+            return random.choice(self.actions) # Explore
+        else: # Exploit
+            q_values = [self.get_q_value(state, a) for a in self.actions]
+            return self.actions[q_values.index(max(q_values))]
+
+    def learn(self, state, action, reward, next_state, done):
+        old_q = self.get_q_value(state, action)
+        future_q = 0 if done else max([self.get_q_value(next_state, a) for a in self.actions])
+        new_q = old_q + self.alpha * (reward + self.gamma * future_q - old_q)
+        self.q_table[(state, action)] = new_q
+
+# --- Simulation ---
+
+def run_episode(agent, env, is_learning=False):
+    """Runs one episode and returns the total reward."""
+    state = env.reset()
+    if isinstance(agent, GoalBasedAgent): agent.goal_achieved = False
+    total_reward = 0
+    max_steps = 15
+
+    for _ in range(max_steps):
+        if is_learning:
+            action = agent.choose_action(state)
+        else: # Goal-based agent
+            action = agent.choose_action(state)
+
+        if action == 'NoOp': break
+        next_state, reward, done = env.step(action)
+
+        if is_learning:
+            agent.learn(state, action, reward, next_state, done)
+        
+        state = next_state
+        total_reward += reward
+        if done: break
+    return total_reward
+
+# --- Main Execution ---
+env = DynamicRewardEnvironment()
+actions = ['Suck', 'Left', 'Right']
+learning_agent = QLearningAgent(actions)
+goal_agent = GoalBasedAgent()
+
+num_episodes = 800
+change_episode = 400
+
+learning_rewards = []
+goal_rewards = []
+
+print(f"Running simulation... Environment will change at episode {change_episode}.")
+for ep in range(num_episodes):
+    if ep == change_episode:
+        print("\n--- ENVIRONMENT CHANGE: Movement cost increased! ---\n")
+        env.movement_cost = -5  # Make movement much more costly
+
+    learning_rewards.append(run_episode(learning_agent, env, is_learning=True))
+    goal_rewards.append(run_episode(goal_agent, env))
+
+# --- Plotting the Results ---
+def moving_average(data, window_size):
+    return [sum(data[i-window_size:i]) / window_size for i in range(window_size, len(data))]
+
+window = 40
+plt.figure(figsize=(12, 6))
+plt.plot(range(window, num_episodes), moving_average(goal_rewards, window), label='Goal-Based Agent', color='red')
+plt.plot(range(window, num_episodes), moving_average(learning_rewards, window), label='Learning Agent', color='blue')
+plt.axvline(x=change_episode, color='black', linestyle='--', label='Environment Change')
+plt.title('Performance in a Changing Environment: Goal-Based vs. Learning Agent')
+plt.xlabel('Episode')
+plt.ylabel('Cumulative Reward (40-Episode Moving Average)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+12.Utility-Based Agent vs. Learning Agent .py
+Program-12:
+
+
+import random
+import matplotlib.pyplot as plt
+
+class RewardingVacuumEnvironment:
+    """An environment that provides rewards which act as utility feedback."""
+    def __init__(self):
+        self.state = ('A', 'Dirty', 'Dirty')
+
+    def reset(self):
+        """Resets the environment to a random initial state."""
+        loc = random.choice(['A', 'B'])
+        self.state = (loc, 'Dirty', 'Dirty')
+        return self.state
+
+    def get_predicted_utility(self, state, action):
+        """
+        Calculates the immediate reward (utility) for taking an action in a state.
+        This is the 'perfect knowledge' the Utility-Based Agent uses.
+        """
+        loc, a_status, b_status = state
+        reward = -1 # Base cost for any action
+
+        if action == 'Suck':
+            if (loc == 'A' and a_status == 'Dirty') or (loc == 'B' and b_status == 'Dirty'):
+                reward += 10
+            else:
+                reward -= 5 # Penalty for sucking a clean room
+        elif action == 'Left' and loc == 'A':
+            reward -= 5 # Penalty for hitting a wall
+        elif action == 'Right' and loc == 'B':
+            reward -= 5 # Penalty for hitting a wall
+        return reward
+
+    def step(self, action):
+        """Executes an action and returns the new state and actual reward."""
+        reward = self.get_predicted_utility(self.state, action)
+        loc, a_status, b_status = self.state
+
+        # Update state based on action
+        if action == 'Suck':
+            if loc == 'A': a_status = 'Clean'
+            elif loc == 'B': b_status = 'Clean'
+        elif action == 'Left' and loc == 'B':
+            loc = 'A'
+        elif action == 'Right' and loc == 'A':
+            loc = 'B'
+
+        self.state = (loc, a_status, b_status)
+        done = (a_status == 'Clean' and b_status == 'Clean')
+        return self.state, reward, done
+
+# --- Agent Definitions ---
+
+class UtilityBasedAgent:
+    """An agent that uses a perfect utility function to decide."""
+    def __init__(self, actions, utility_func):
+        self.actions = actions
+        self.utility_func = utility_func
+
+    def choose_action(self, state):
+        """Choose the action with the maximum expected utility."""
+        utilities = [self.utility_func(state, a) for a in self.actions]
+        max_utility = max(utilities)
+        best_actions = [i for i, u in enumerate(utilities) if u == max_utility]
+        return self.actions[random.choice(best_actions)]
+
+class QLearningAgent:
+    """An agent that learns to maximize utility through feedback."""
+    def __init__(self, actions, alpha=0.1, gamma=0.9, epsilon=0.1):
+        self.actions, self.alpha, self.gamma, self.epsilon = actions, alpha, gamma, epsilon
+        self.q_table = {}
+
+    def get_q_value(self, state, action):
+        return self.q_table.get((state, action), 0.0)
+
+    def choose_action(self, state):
+        if random.random() < self.epsilon:
+            return random.choice(self.actions) # Explore
+        else: # Exploit
+            q_values = [self.get_q_value(state, a) for a in self.actions]
+            return self.actions[q_values.index(max(q_values))]
+
+    def learn(self, state, action, reward, next_state, done):
+        old_q = self.get_q_value(state, action)
+        future_q = 0 if done else max([self.get_q_value(next_state, a) for a in self.actions])
+        new_q = old_q + self.alpha * (reward + self.gamma * future_q - old_q)
+        self.q_table[(state, action)] = new_q
+
+# --- Simulation ---
+def run_episode(agent, env, is_learning=False):
+    state = env.reset()
+    total_reward = 0
+    done = False
+    for _ in range(15): # Max steps
+        action = agent.choose_action(state)
+        next_state, reward, done = env.step(action)
+        if is_learning:
+            agent.learn(state, action, reward, next_state, done)
+        state = next_state
+        total_reward += reward
+        if done: break
+    return total_reward
+
+# --- Main Execution ---
+env = RewardingVacuumEnvironment()
+actions = ['Suck', 'Left', 'Right']
+
+utility_agent = UtilityBasedAgent(actions, env.get_predicted_utility)
+learning_agent = QLearningAgent(actions)
+
+num_episodes = 600
+utility_rewards = []
+learning_rewards = []
+
+print("Running simulations...")
+for ep in range(num_episodes):
+    utility_rewards.append(run_episode(utility_agent, env))
+    learning_rewards.append(run_episode(learning_agent, env, is_learning=True))
+
+# --- Plotting the Results ---
+def moving_average(data, window_size):
+    return [sum(data[i-window_size:i]) / window_size for i in range(window_size, len(data))]
+
+window = 30
+plt.figure(figsize=(12, 6))
+plt.plot(range(window, num_episodes), moving_average(utility_rewards, window), label='Utility-Based Agent (Optimal)', color='red', linestyle='--')
+plt.plot(range(window, num_episodes), moving_average(learning_rewards, window), label='Learning Agent', color='blue')
+plt.title('Performance Comparison: Utility-Based vs. Learning Agent')
+plt.xlabel('Episode')
+plt.ylabel('Cumulative Reward / Utility (30-Episode Moving Average)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+13. A Algorithm in state space.py
+Program-13:
+
+
+import heapq
+
+class PuzzleNode:
+    """A class representing a state in the 8-puzzle search space."""
+    def __init__(self, state, parent=None, action=None, cost=0):
+        self.state = state      # The tuple representation of the puzzle grid (e.g., (1,2,3,4,0,5,...))
+        self.parent = parent    # The node that generated this node
+        self.action = action    # The action taken to get here ('Up', 'Down', etc.)
+        self.cost = cost        # g(n): The cost from the start node to this node
+
+        # f(n) = g(n) + h(n)
+        self.f_cost = self.cost + self.calculate_manhattan_distance()
+
+    def __lt__(self, other):
+        """Comparator for the priority queue. A* prioritizes lower f_cost."""
+        return self.f_cost < other.f_cost
+
+    def calculate_manhattan_distance(self):
+        """
+        Heuristic function (h(n)): Calculates the sum of Manhattan distances
+        for each tile from its current position to its goal position.
+        """
+        distance = 0
+        goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)
+        for i in range(9):
+            if self.state[i] != 0:
+                current_value = self.state[i]
+                goal_index = goal_state.index(current_value)
+                
+                # Get (row, col) for current and goal positions
+                current_row, current_col = divmod(i, 3)
+                goal_row, goal_col = divmod(goal_index, 3)
+                
+                distance += abs(current_row - goal_row) + abs(current_col - goal_col)
+        return distance
+
+def get_neighbors(node):
+    """Generates all valid successor states from the current node."""
+    neighbors = []
+    state_list = list(node.state)
+    zero_index = state_list.index(0)
+    row, col = divmod(zero_index, 3)
+
+    # Define possible moves (dr, dc, action_name)
+    moves = [(-1, 0, 'Up'), (1, 0, 'Down'), (0, -1, 'Left'), (0, 1, 'Right')]
+
+    for dr, dc, action in moves:
+        new_row, new_col = row + dr, col + dc
+        if 0 <= new_row < 3 and 0 <= new_col < 3:
+            # Create a new state by swapping the zero tile
+            new_state = list(state_list)
+            new_zero_index = new_row * 3 + new_col
+            new_state[zero_index], new_state[new_zero_index] = new_state[new_zero_index], new_state[zero_index]
+            
+            # Create the new neighbor node
+            neighbors.append(PuzzleNode(tuple(new_state), parent=node, action=action, cost=node.cost + 1))
+    return neighbors
+
+def a_star_search(initial_state, goal_state):
+    """
+    Performs the A* search to find the shortest path from initial to goal state.
+    """
+    start_node = PuzzleNode(initial_state)
+    
+    # The 'open list' is a priority queue of nodes to be evaluated
+    open_list = []
+    heapq.heappush(open_list, start_node)
+    
+    # The 'closed set' stores states that have already been evaluated
+    closed_set = set()
+
+    while open_list:
+        # Get the node with the lowest f_cost from the priority queue
+        current_node = heapq.heappop(open_list)
+
+        # Goal check
+        if current_node.state == goal_state:
+            # Reconstruct the path from the goal node back to the start
+            path = []
+            while current_node.parent:
+                path.append(current_node.action)
+                current_node = current_node.parent
+            return path[::-1] # Return the reversed path of actions
+
+        closed_set.add(current_node.state)
+
+        for neighbor in get_neighbors(current_node):
+            if neighbor.state in closed_set:
+                continue # Skip already evaluated states
+
+            # If neighbor is not in open list, add it.
+            # (A more complete implementation would check if a shorter path to this neighbor was found)
+            if neighbor not in open_list:
+                heapq.heappush(open_list, neighbor)
+    
+    return None # Return None if no solution is found
+
+# --- Simulation ---
+# 0 represents the empty tile
+initial_state = (1, 2, 3, 0, 4, 6, 7, 5, 8)
+goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)
+
+print(f"Solving 8-puzzle from initial state: {initial_state}")
+print(f"Goal state: {goal_state}")
+print("\nRunning A* Search...")
+
+path_to_goal = a_star_search(initial_state, goal_state)
+
+if path_to_goal:
+    print(f"\nSolution found in {len(path_to_goal)} steps!")
+    print("Path:", " -> ".join(path_to_goal))
+else:
+    print("No solution found.")
+
+
+
+14a. Breadth First Search Algorithm.py
+Program-14a:
+
+from collections import deque
+
+def is_valid_state(state):
+    """
+    Checks if a state is valid.
+    A state is invalid if missionaries are outnumbered by cannibals on either bank.
+    """
+    missionaries_start, cannibals_start, _ = state
+    
+    # Calculate the number of people on the destination bank
+    missionaries_dest = 3 - missionaries_start
+    cannibals_dest = 3 - cannibals_start
+
+    # Check for invalid conditions
+    # 1. On the starting bank: if there are missionaries, they can't be outnumbered.
+    if missionaries_start > 0 and missionaries_start < cannibals_start:
+        return False
+    # 2. On the destination bank: if there are missionaries, they can't be outnumbered.
+    if missionaries_dest > 0 and missionaries_dest < cannibals_dest:
+        return False
+        
+    return True
+
+def get_successors(state):
+    """
+    Generates all valid successor states from the current state.
+    """
+    successors = []
+    m_start, c_start, boat_pos = state
+    
+    # Possible moves for the boat: (missionaries, cannibals)
+    moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+
+    if boat_pos == 1: # Boat is on the starting bank
+        direction = -1 # Moving people from start to destination
+    else: # Boat is on the destination bank
+        direction = 1 # Moving people from destination to start
+
+    for dm, dc in moves:
+        # Calculate the new state based on the move
+        new_m = m_start + direction * dm
+        new_c = c_start + direction * dc
+        new_boat_pos = 1 - boat_pos
+        
+        new_state = (new_m, new_c, new_boat_pos)
+
+        # Check if the new state is within bounds (0 to 3 people) and is valid
+        if 0 <= new_m <= 3 and 0 <= new_c <= 3 and is_valid_state(new_state):
+            successors.append(new_state)
+            
+    return successors
+
+def bfs_missionaries_cannibals():
+    """
+    Performs BFS to find the shortest solution path.
+    """
+    # State representation: (missionaries_on_start, cannibals_on_start, boat_position)
+    # boat_position: 1 for start bank, 0 for destination bank.
+    start_state = (3, 3, 1)
+    goal_state = (0, 0, 0)
+    
+    # The queue stores tuples of (state, path_to_state)
+    queue = deque([(start_state, [start_state])])
+    
+    # A set to keep track of visited states to avoid cycles and redundant work
+    visited = {start_state}
+
+    while queue:
+        current_state, path = queue.popleft()
+        
+        # Check if we have reached the goal
+        if current_state == goal_state:
+            return path
+            
+        # Explore neighbors (successors)
+        for successor in get_successors(current_state):
+            if successor not in visited:
+                visited.add(successor)
+                new_path = list(path)
+                new_path.append(successor)
+                queue.append((successor, new_path))
+                
+    return None # Return None if no solution is found
+
+# --- Demonstration ---
+
+print("--- Solving the Missionaries and Cannibals Problem using BFS ---")
+solution_path = bfs_missionaries_cannibals()
+
+if solution_path:
+    print(f"\nSolution found in {len(solution_path) - 1} steps!\n")
+    print("Path from Start to Goal:")
+    print("(Missionaries, Cannibals, Boat Position) on Start Bank")
+    print("-" * 50)
+    for i, state in enumerate(solution_path):
+        print(f"Step {i}: {state}")
+else:
+    print("No solution found.")
+
+
+
+14b.Depth First Search Algorithm.py
+Program-14b:
+
+def dfs_water_jug(jug1_cap, jug2_cap, target):
+    """
+    Solves the Water Jug problem using Depth-First Search.
+
+    Args:
+        jug1_cap (int): The capacity of the first jug.
+        jug2_cap (int): The capacity of the second jug.
+        target (int): The target amount of water to measure.
+
+    Returns:
+        list: A list of states representing the path to the solution, or None if no solution exists.
+    """
+    # The stack stores tuples of (state, path_to_state)
+    # State is (amount_in_jug1, amount_in_jug2)
+    stack = [((0, 0), [(0, 0)])]
+    
+    # A set to keep track of visited states to avoid infinite loops
+    visited = set()
+
+    while stack:
+        current_state, path = stack.pop()
+
+        # If we've already processed this state, skip it
+        if current_state in visited:
+            continue
+        
+        visited.add(current_state)
+
+        jug1_amt, jug2_amt = current_state
+
+        # Check if we have reached the goal
+        if jug1_amt == target or jug2_amt == target:
+            return path
+
+        # --- Generate all possible successor states ---
+        successors = []
+        
+        # 1. Fill jug 1
+        successors.append((jug1_cap, jug2_amt))
+        # 2. Fill jug 2
+        successors.append((jug1_amt, jug2_cap))
+        # 3. Empty jug 1
+        successors.append((0, jug2_amt))
+        # 4. Empty jug 2
+        successors.append((jug1_amt, 0))
+        
+        # 5. Pour from jug 1 to jug 2
+        pour_amount_1_to_2 = min(jug1_amt, jug2_cap - jug2_amt)
+        successors.append((jug1_amt - pour_amount_1_to_2, jug2_amt + pour_amount_1_to_2))
+
+        # 6. Pour from jug 2 to jug 1
+        pour_amount_2_to_1 = min(jug2_amt, jug1_cap - jug1_amt)
+        successors.append((jug1_amt + pour_amount_2_to_1, jug2_amt - pour_amount_2_to_1))
+        
+        # Push valid, unvisited successors onto the stack
+        for successor in successors:
+            if successor not in visited:
+                new_path = path + [successor]
+                stack.append((successor, new_path))
+    
+    return None # Return None if the stack becomes empty and no solution is found
+
+# --- Demonstration ---
+
+# Classic problem: You have a 4-gallon jug and a 3-gallon jug.
+# Can you measure out exactly 2 gallons of water?
+jug1_capacity = 4
+jug2_capacity = 3
+target_amount = 2
+
+print("--- Solving the Water Jug Problem using DFS ---")
+print(f"Jugs with capacities {jug1_capacity} and {jug2_capacity}. Target: {target_amount}\n")
+
+solution_path = dfs_water_jug(jug1_capacity, jug2_capacity, target_amount)
+
+if solution_path:
+    print(f"Solution found in {len(solution_path) - 1} steps!")
+    print("Path (Jug1, Jug2):")
+    print("-" * 20)
+    for i, state in enumerate(solution_path):
+        print(f"Step {i}: {state}")
+else:
+    print("No solution found.")
+
+
+
+
+
+15.HillClimbing.py
+Program-15:
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. Define the objective function (the "landscape" we are climbing)
+def objective_function(x):
+    """A function with multiple peaks to test the algorithm."""
+    return np.sin(x) + np.cos(2 * x)
+
+# 2. Implement the Hill Climbing Algorithm
+def hill_climbing(start_x, step_size, max_iterations, objective_func):
+    """
+    Performs the hill climbing search.
+
+    Args:
+        start_x (float): The initial starting point in the search space.
+        step_size (float): The size of the step to take when checking neighbors.
+        max_iterations (int): The maximum number of iterations to run.
+        objective_func (function): The function to be maximized.
+
+    Returns:
+        tuple: The best position found and its corresponding value.
+    """
+    current_position = start_x
+    current_value = objective_func(current_position)
+    
+    print(f"Starting Hill Climbing at x = {current_position:.4f}, Value = {current_value:.4f}")
+
+    for i in range(max_iterations):
+        # Evaluate neighbors
+        neighbor_left = current_position - step_size
+        neighbor_right = current_position + step_size
+        
+        value_left = objective_func(neighbor_left)
+        value_right = objective_func(neighbor_right)
+        
+        # Find the best neighbor
+        best_neighbor_pos = current_position
+        best_neighbor_val = current_value
+
+        if value_left > best_neighbor_val:
+            best_neighbor_pos = neighbor_left
+            best_neighbor_val = value_left
+        
+        if value_right > best_neighbor_val:
+            best_neighbor_pos = neighbor_right
+            best_neighbor_val = value_right
+        
+        # If the best neighbor is not better than the current position, we've reached a peak
+        if best_neighbor_pos == current_position:
+            print(f"Peak found after {i} iterations.")
+            return current_position, current_value
+        
+        # Otherwise, move to the best neighbor
+        current_position = best_neighbor_pos
+        current_value = best_neighbor_val
+        print(f"Iteration {i+1}: Moved to x = {current_position:.4f}, New Value = {current_value:.4f}")
+
+    print("Reached maximum iterations.")
+    return current_position, current_value
+
+# --- 3. Demonstration ---
+
+# Simulation parameters
+SEARCH_RANGE = [-5, 5]
+STEP_SIZE = 0.1
+MAX_ITERATIONS = 100
+STARTING_POINT = -4.0  # Let's start from the left side
+
+print("--- AI Solution: Hill Climbing for Function Maximization ---")
+best_pos, best_val = hill_climbing(STARTING_POINT, STEP_SIZE, MAX_ITERATIONS, objective_function)
+print("\n--- Result ---")
+print(f"Algorithm finished. Found a maximum at x = {best_pos:.4f} with a value of {best_val:.4f}")
+print("Note: This may be a local maximum, not necessarily the global one.")
+
+# --- 4. Visualization (Optional) ---
+x_vals = np.arange(SEARCH_RANGE[0], SEARCH_RANGE[1], 0.01)
+y_vals = objective_function(x_vals)
+
+plt.figure(figsize=(10, 6))
+plt.plot(x_vals, y_vals, label='Objective Function: sin(x) + cos(2x)')
+plt.scatter(STARTING_POINT, objective_function(STARTING_POINT), color='orange', s=100, zorder=5, label='Starting Point')
+plt.scatter(best_pos, best_val, color='red', s=150, zorder=5, marker='*', label=f'Found Peak at ({best_pos:.2f}, {best_val:.2f})')
+plt.title("Hill Climbing Algorithm Visualization")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+
+16.Simulated Annealing Algorithm.py
+Program-16:
+
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+# 1. Define the objective function (the "energy landscape")
+def objective_function(x):
+    """A function with multiple peaks to test the algorithm."""
+    return np.sin(x) + np.cos(2 * x)
+
+# 2. Implement the Simulated Annealing Algorithm
+def simulated_annealing(start_x, step_size, max_iterations, initial_temp, cooling_rate):
+    """
+    Performs the simulated annealing search.
+
+    Args:
+        start_x (float): The initial starting point.
+        step_size (float): Controls the size of the neighborhood to search.
+        max_iterations (int): The total number of iterations.
+        initial_temp (float): The starting temperature.
+        cooling_rate (float): The rate at which the temperature cools (e.g., 0.99).
+
+    Returns:
+        tuple: The best position found and its corresponding value.
+    """
+    current_pos = start_x
+    current_val = objective_function(current_pos)
+    
+    best_pos = current_pos
+    best_val = current_val
+    
+    temp = initial_temp
+    
+    print(f"Starting Simulated Annealing at x = {current_pos:.4f}, Value = {current_val:.4f}")
+
+    for i in range(max_iterations):
+        # Generate a random neighbor
+        neighbor_pos = current_pos + np.random.uniform(-step_size, step_size)
+        neighbor_val = objective_function(neighbor_pos)
+        
+        # Calculate the change in "energy" (value)
+        energy_delta = neighbor_val - current_val
+        
+        # Decide whether to move to the neighbor
+        if energy_delta > 0:
+            # Always accept a better solution
+            current_pos, current_val = neighbor_pos, neighbor_val
+        else:
+            # Sometimes accept a worse solution based on temperature
+            acceptance_probability = math.exp(energy_delta / temp)
+            if np.random.rand() < acceptance_probability:
+                current_pos, current_val = neighbor_pos, neighbor_val
+        
+        # Update the best solution found so far
+        if current_val > best_val:
+            best_pos, best_val = current_pos, current_val
+            
+        # Cool the temperature
+        temp *= cooling_rate
+        
+    print(f"Finished after {max_iterations} iterations.")
+    return best_pos, best_val
+
+# --- 3. Demonstration ---
+
+# Simulation parameters
+SEARCH_RANGE = [-5, 5]
+STEP_SIZE = 0.5  # A larger step size allows for more exploration
+MAX_ITERATIONS = 2000
+INITIAL_TEMP = 20.0
+COOLING_RATE = 0.995
+# Start near a local maximum to see if the algorithm can escape it
+STARTING_POINT = 2.5 
+
+print("--- AI Solution: Simulated Annealing for Function Maximization ---")
+best_pos, best_val = simulated_annealing(STARTING_POINT, STEP_SIZE, MAX_ITERATIONS, INITIAL_TEMP, COOLING_RATE)
+print("\n--- Result ---")
+print(f"Algorithm finished. Found a maximum at x = {best_pos:.4f} with a value of {best_val:.4f}")
+print("This is likely the global maximum, as the algorithm can escape local peaks.")
+
+# --- 4. Visualization (Optional) ---
+x_vals = np.arange(SEARCH_RANGE[0], SEARCH_RANGE[1], 0.01)
+y_vals = objective_function(x_vals)
+
+plt.figure(figsize=(10, 6))
+plt.plot(x_vals, y_vals, label='Objective Function: sin(x) + cos(2x)')
+plt.scatter(STARTING_POINT, objective_function(STARTING_POINT), color='orange', s=100, zorder=5, label='Starting Point')
+plt.scatter(best_pos, best_val, color='red', s=150, zorder=5, marker='*', label=f'Found Peak at ({best_pos:.2f}, {best_val:.2f})')
+plt.title("Simulated Annealing Visualization")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+
+17.FOPL related problems.py
+Program-17:
+
+# --- Representing Literals and Clauses ---
+# A literal is a tuple, e.g., ('Loves', 'x', 'y')
+# A negative literal is ('~', ('Loves', 'x', 'y'))
+# Variables are lowercase strings. Constants are uppercase.
+# A clause is a set of literals.
+
+def is_variable(term):
+    """Check if a term is a variable."""
+    return isinstance(term, str) and term[0].islower()
+
+def unify(term1, term2, substitution):
+    """
+    Unify two terms with a given substitution.
+    Returns a new substitution on success, or None on failure.
+    """
+    if substitution is None:
+        return None
+    if term1 == term2:
+        return substitution
+    if is_variable(term1):
+        if term1 in substitution:
+            return unify(substitution[term1], term2, substitution)
+        else:
+            # Simple occurs check
+            if is_variable(term2) and term2 in substitution and substitution[term2] == term1:
+                 return substitution
+            new_sub = substitution.copy()
+            new_sub[term1] = term2
+            return new_sub
+    if is_variable(term2):
+        return unify(term2, term1, substitution)
+    if isinstance(term1, tuple) and isinstance(term2, tuple):
+        if len(term1) != len(term2):
+            return None
+        # Recursively unify predicate and arguments
+        for t1, t2 in zip(term1, term2):
+            substitution = unify(t1, t2, substitution)
+            if substitution is None:
+                return None
+        return substitution
+    return None
+
+def resolve(clause1, clause2):
+    """
+    Resolve two clauses. Returns a set of new resolvent clauses.
+    """
+    resolvents = set()
+    for lit1 in clause1:
+        for lit2 in clause2:
+            # Check for complementary literals, e.g., P(...) and ~P(...)
+            is_neg1 = lit1[0] == '~'
+            is_neg2 = lit2[0] == '~'
+            
+            p1 = lit1[1] if is_neg1 else lit1
+            p2 = lit2[1] if is_neg2 else lit2
+
+            if is_neg1 != is_neg2:
+                # Attempt to unify the predicates
+                substitution = unify(p1, p2, {})
+                if substitution is not None:
+                    # Create the new clause
+                    new_clause_literals = (clause1 - {lit1}) | (clause2 - {lit2})
+                    
+                    # Apply the substitution to all literals in the new clause
+                    resolvent = set()
+                    for lit in new_clause_literals:
+                        neg = lit[0] == '~'
+                        pred = lit[1] if neg else lit
+                        
+                        new_pred_args = []
+                        for arg in pred[1:]:
+                            while arg in substitution:
+                                arg = substitution[arg]
+                            new_pred_args.append(arg)
+                        
+                        new_pred = (pred[0],) + tuple(new_pred_args)
+                        resolvent.add(('~', new_pred) if neg else new_pred)
+                    
+                    resolvents.add(frozenset(resolvent)) # Use frozenset to add to a set
+    return resolvents
+
+# --- Demonstration ---
+# Simplified clauses from the problem (using functions/constants directly)
+# Note: For simplicity, the complex first axiom is replaced by its direct implication.
+# "Everyone who loves all animals is loved by someone" + "Jack loves all animals" -> "Someone loves Jack"
+
+c1 = {('~', ('Animal', 'y')), ('~', ('Kills', 'x', 'y')), ('~', ('Loves', 'z', 'x'))}
+c2 = {('Loves', 'G_Jack', 'Jack')} # G_Jack is a Skolem constant for "someone who loves Jack"
+c3 = {('Cat', 'Tuna')}
+c4 = {('~', ('Cat', 'x')), ('Animal', 'x')}
+c5 = {('Kills', 'Jack', 'Tuna'), ('Kills', 'Curiosity', 'Tuna')}
+neg_goal = {('~', ('Kills', 'Curiosity', 'Tuna'))}
+
+clauses = [c1, c2, c3, c4, c5, neg_goal]
+print("--- Initial Clauses ---")
+for i, c in enumerate(clauses): print(f"{i+1}: {c}")
+
+# Resolution steps
+print("\n--- Resolution Steps ---")
+# R1: Resolve c5 and neg_goal
+r1_set = resolve(c5, neg_goal)
+r1 = set(list(r1_set)[0])
+print(f"R1 (from 5, neg_goal): {r1}")
+
+# R2: Resolve c4 and c3
+r2_set = resolve(c4, c3)
+r2 = set(list(r2_set)[0])
+print(f"R2 (from 4, 3): {r2}")
+
+# R3: Resolve c1 and r1
+r3_set = resolve(c1, r1)
+r3 = set(list(r3_set)[0])
+print(f"R3 (from 1, R1): {r3}")
+
+# R4: Resolve r3 and r2
+r4_set = resolve(r3, r2)
+r4 = set(list(r4_set)[0])
+print(f"R4 (from R3, R2): {r4}")
+
+# R5: Resolve r4 and c2 -> Empty Clause
+r5_set = resolve(r4, c2)
+r5 = set(list(r5_set)[0]) if r5_set else set()
+print(f"R5 (from R4, 2): {r5}")
+
+if not r5:
+    print("\nEmpty clause derived. The goal 'Kills(Curiosity, Tuna)' is TRUE.")
+else:
+    print("\nCould not derive empty clause.")
+
+
+
+18.simple calculator in Prolog.txt
+Program-18:
+
+
+MAIN CODE
+
+% --- MAIN PREDICATE ---
+% calculate(Operation, Num1, Num2, Result).
+% It succeeds if Result is the correct outcome of the operation.
+% Operation must be one of: add, subtract, multiply, divide.
+
+% --- RULES ---
+
+% Rule for addition.
+% The 'is' operator evaluates the arithmetic expression on its right.
+calculate(add, X, Y, Result) :-
+    Result is X + Y.
+
+% Rule for subtraction.
+calculate(subtract, X, Y, Result) :-
+    Result is X - Y.
+
+% Rule for multiplication.
+calculate(multiply, X, Y, Result) :-
+    Result is X * Y.
+
+% Rule for division.
+% This includes a guard (Y =\= 0) to ensure the divisor is not zero.
+calculate(divide, X, Y, Result) :-
+    Y =\= 0,
+    Result is X / Y.
+
+% Rule to handle division by zero.
+% This rule specifically catches the error case, prints a message, and fails.
+% The cut (!) prevents Prolog from trying other rules.
+calculate(divide, _X, 0, _) :-
+    write('Error: Cannot divide by zero.'), nl,
+    fail.
+
+
+QUERIES
+
+calculate(add, 150, 32, Result)
+
+calculate(multiply, 12, 12, Result)
+
+calculate(divide, 99, 8, Result)
+
+calculate(subtract, 50, 23, Result)
