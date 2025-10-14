@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-secp256k1-cardano"
+version = "0.2.4"
+description = "Ctypes Python3 FFI bindings for libsecp256k1 at commit hash ac83be33"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    {name = "scg", email = "scgbckbone@proton.me"}
+]
+requires-python = ">=3.6"
+keywords = [
+    "bitcoin",
+    "secp256k1",
+    "ecdsa",
+    "schnorr",
+]
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/ImperatorLang/python-secp256k1"
+
+[project.optional-dependencies]
+typing_extensions = ["typing_extensions>=3.6"]
+
+[tool.setuptools]
+zip-safe = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pysecp256k1*"]
+exclude = ["tests*"]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0.1",
+]
