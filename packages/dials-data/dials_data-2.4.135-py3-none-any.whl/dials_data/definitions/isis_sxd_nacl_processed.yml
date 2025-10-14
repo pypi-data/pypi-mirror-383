@@ -1,0 +1,18 @@
+name: Experiment geometry and strong spots for time-of-flight Laue neutron diffraction data recorded from NaCl crystals at SXD (ISIS)
+author: David McDonagh (2024)
+license: CC-BY 4.0
+url: https://doi.org/10.5281/zenodo.4415768
+description: >
+  imported.expt and strong.refl were created using DIALS 3.dev.1130-g8c524b30c
+  with the following commands:
+    $ dials.import "$(dials.data get -q isis_sxd_example_data)/sxd_nacl_run.nxs"
+    $ dials.find_spots imported.expt
+    $ dials.index imported.expt strong.refl unit_cell=5.64,5.64,5.64,90,90,90 space_group=225 
+    $ dials.refine indexed.expt indexed.refl
+data:
+  - url: https://github.com/dials/data-files/raw/0f9e5fadfdc5eac0ab6b4ce5e0cad8f819ac723c/isis_sxd_nacl_processed/imported.expt
+  - url: https://github.com/dials/data-files/raw/0f9e5fadfdc5eac0ab6b4ce5e0cad8f819ac723c/isis_sxd_nacl_processed/strong.refl
+  - url: https://github.com/dials/data-files/raw/0f9e5fadfdc5eac0ab6b4ce5e0cad8f819ac723c/isis_sxd_nacl_processed/indexed.expt
+  - url: https://github.com/dials/data-files/raw/0f9e5fadfdc5eac0ab6b4ce5e0cad8f819ac723c/isis_sxd_nacl_processed/indexed.refl
+  - url: https://github.com/dials/data-files/raw/0f9e5fadfdc5eac0ab6b4ce5e0cad8f819ac723c/isis_sxd_nacl_processed/refined.expt
+  - url: https://github.com/dials/data-files/raw/0f9e5fadfdc5eac0ab6b4ce5e0cad8f819ac723c/isis_sxd_nacl_processed/refined.refl
