@@ -1,0 +1,9 @@
+include LICENSE
+include Makefile
+include pytest.ini
+include requirements.txt
+include versioneer.py
+include pytng/_version.py
+recursive-include pytng/ *
+recursive-include tests/ *
+exclude pytng/pytng.c

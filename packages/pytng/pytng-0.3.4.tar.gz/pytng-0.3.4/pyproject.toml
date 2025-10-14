@@ -1,0 +1,71 @@
+[build-system]
+# Minimum requirements for the build system to execute
+requires = [
+    "cython",
+    "setuptools>=61.2",
+    "versioningit",
+    "wheel",
+    # below matches MDA
+    "numpy>=2.0.0",
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "pytng"
+description = "Minimal Cython wrapper of the TNG trajectory library"
+readme = "README.rst"
+authors = [{name = "Max Linke, Richard J Gowers, Hugo MacDermott-Opeskin", email = "max_linke@gmx.de"}]
+maintainers = [{name = "MDAnalysis Core Developers", email = "mdanalysis@numfocus.org"}]
+license = {file = "LICENSE.txt"}
+classifiers = [
+    'Development Status :: 6 - Mature',
+    'Environment :: Console',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: BSD License',
+    'Operating System :: POSIX',
+    'Operating System :: MacOS :: MacOS X',
+    'Operating System :: Microsoft :: Windows',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
+    'Programming Language :: C',
+    'Topic :: Scientific/Engineering',
+    'Topic :: Scientific/Engineering :: Bio-Informatics',
+    'Topic :: Scientific/Engineering :: Chemistry',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+urls = {Homepage = "http://mdanalysis.org/pytng"}
+requires-python = ">= 3.10"
+dependencies = [
+    "numpy>1.22.3",
+]
+dynamic = ["version"]
+
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+docs = [
+    "mdanalysis-sphinx-theme",
+    "sphinx-sitemap",
+]
+
+[tool.versioningit]
+default-version = "1+unknown"
+
+
+[tool.versioningit.format]
+distance = "{base_version}+{distance}.{vcs}{rev}"
+dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+distance-dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+
+
+[tool.versioningit.vcs]
+method = "git" 
+match = ["*"]
+default-tag = "0.0.0"
