@@ -1,0 +1,51 @@
+{
+  "pattern_id": "pattern-1957",
+  "intent_ref": "customer_transactions.intent.md",
+  "operations": [
+    {
+      "type": "filter",
+      "description": "Filter transactions older than 90 days"
+    },
+    {
+      "type": "aggregate",
+      "description": "Group transactions by customer_id"
+    },
+    {
+      "type": "aggregate",
+      "description": "Calculate total spending per customer"
+    },
+    {
+      "type": "aggregate",
+      "description": "Calculate average transaction amount per customer"
+    },
+    {
+      "type": "aggregate",
+      "description": "Identify most frequent product category per customer"
+    },
+    {
+      "type": "aggregate",
+      "description": "Count number of transactions per customer"
+    },
+    {
+      "type": "flag",
+      "description": "Flag customers with total spending > $1000 as high_value"
+    },
+    {
+      "type": "flag",
+      "description": "Flag customers with no purchases in 30 days as at_risk"
+    }
+  ],
+  "metadata": {
+    "context": [
+      "financial",
+      "customer-analytics",
+      "data-processing"
+    ],
+    "patterns": [
+      "etl",
+      "aggregation",
+      "filtering"
+    ],
+    "requirement_count": 12
+  }
+}

@@ -1,0 +1,25 @@
+# Compiled output
+compiled/
+*.pyc
+__pycache__/
+
+# API keys and secrets
+.env
+*.key
+*.secret
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+*.egg-info/
+dist/
+build/
+.pytest_cache/
