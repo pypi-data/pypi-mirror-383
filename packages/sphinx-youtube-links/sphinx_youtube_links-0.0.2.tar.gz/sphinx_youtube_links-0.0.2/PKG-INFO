@@ -1,0 +1,65 @@
+Metadata-Version: 2.4
+Name: sphinx-youtube-links
+Version: 0.0.2
+Summary: A Sphinx extension for embedding YouTube video links.
+License-Expression: GPL-3.0
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: docutils>=0.21.2
+Requires-Dist: sphinx~=7.0
+Requires-Dist: requests
+Requires-Dist: beautifulsoup4
+Dynamic: license-file
+
+# sphinx-youtube-links
+
+sphinx-youtube-links adds a Sphinx directive that creates styled YouTube video links with
+automatic title extraction.
+
+## Basic usage
+
+To add a YouTube link to your document, use the `youtube` directive with the desired
+YouTube URL:
+
+```
+.. youtube:: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+```
+
+You can also specify a custom title:
+
+```
+.. youtube:: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+   :title: Custom Video Title
+```
+
+## Project setup
+
+sphinx-youtube-links is published on PyPI and can be installed with:
+
+```bash
+pip install sphinx-youtube-links
+```
+
+After adding sphinx-youtube-links to your Python project, update your Sphinx's conf.py file to
+include sphinx-youtube-links as one of its extensions:
+
+```python
+extensions = [
+    "sphinx_youtube_links"
+]
+```
+
+## Community and support
+
+You can report any issues or bugs on the project's [GitHub
+repository](https://github.com/canonical/youtube-links).
+
+youtube-links is covered by the [Ubuntu Code of
+Conduct](https://ubuntu.com/community/ethos/code-of-conduct).
+
+## License and copyright
+
+youtube-links is released under the [GPL-3.0 license](LICENSE).
+
+© 2025 Canonical Ltd.
