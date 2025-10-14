@@ -1,0 +1,15 @@
+name: Lysozyme SSX dataset from Diamond Light Source I24
+author: Beilsten-Edmands, James (2025)
+license: CC-BY 4.0
+url: https://zenodo.org/records/17160799
+description: >
+  1000 still-shot images, collected on lysozyme microcrystals on a
+  fixed target grid in November 2024. This is a subset of a
+  full chip dataset, for the purpose of testing live-feedback data
+  analysis routines. This data was collected at an X-ray energy
+  of 25keV on a CdTe Eiger2 9M detector.
+
+data:
+ - url: https://zenodo.org/records/17160799/files/lysozyme_25keV.nxs
+ - url: https://zenodo.org/records/17160799/files/lysozyme_25keV_000001.h5
+ - url: https://zenodo.org/records/17160799/files/lysozyme_25keV_meta.h5
