@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kern-convertor"
+version = "0.1.1"
+authors = [
+    {name = "Anirban Mitra", email = "mitra_anirban@yahoo.co.in"}
+]
+license = "FSFAP"
+description = "Python script to convert font kerning data from Adobe fea format to UFO plist format and vice-versa"
+readme = "README.md"
+keywords = ["fonts", "typography", "opentype", "features"]
+requires-python = ">=3.6"
+dependencies = [
+    "fonttools>=4.0.0"
+]
+[project.urls]
+Homepage = "https://github.com/mitradranirban/kern-convertor"
+Repository = "https://github.com/mitradranirban/kern-convertor"
+
