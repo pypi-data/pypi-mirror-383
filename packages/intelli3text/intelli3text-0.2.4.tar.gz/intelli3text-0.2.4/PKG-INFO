@@ -1,0 +1,425 @@
+Metadata-Version: 2.4
+Name: intelli3text
+Version: 0.2.4
+Summary: Ingestion (web/PDF/DOCX/TXT), cleaning, paragraph-level LID (PT/EN/ES), and spaCy-based normalization; PDF export.
+Author-email: Jefferson Rodrigo Speck <jeffersonspeck@msn.com>
+License: MIT
+Project-URL: Homepage, https://github.com/jeffersonspeck/intelli3text
+Project-URL: Repository, https://github.com/jeffersonspeck/intelli3text
+Project-URL: Issues, https://github.com/jeffersonspeck/intelli3text/issues
+Project-URL: Documentation, https://jeffersonspeck.github.io/intelli3text/
+Keywords: NLP,spaCy,language id,LID,cleaning,normalization,PDF,web extraction,text processing,Portuguese,Spanish,English
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy==1.26.4
+Requires-Dist: thinc==8.2.4
+Requires-Dist: spacy==3.7.4
+Requires-Dist: trafilatura>=1.8
+Requires-Dist: jusText>=3.0
+Requires-Dist: lxml[html_clean]>=5.2
+Requires-Dist: pdfminer.six>=20220524
+Requires-Dist: python-docx>=1.1
+Requires-Dist: ftfy>=6.2
+Requires-Dist: clean-text>=0.6
+Requires-Dist: requests>=2.32
+Requires-Dist: reportlab>=4.1
+Requires-Dist: Unidecode>=1.3.8
+Requires-Dist: fasttext-wheel>=0.9.2
+Provides-Extra: cld3
+Requires-Dist: pycld3>=0.22; extra == "cld3"
+Dynamic: license-file
+
+# intelli3text
+
+Ingestion of texts (Web/PDF/DOCX/TXT), cleaning, and multilingual normalization (PT/EN/ES) with **paragraph-level language detection** and **PDF export**.  
+Focus on **frictionless install (`pip install`)**: on first run it **auto-downloads** the required models (fastText LID and spaCy) and works **offline** with sensible fallbacks.
+
+**Docs website:** https://jeffersonspeck.github.io/intelli3text/  
+**PyPI:** https://pypi.org/project/intelli3text/  
+**Repository:** https://github.com/jeffersonspeck/intelli3text
+
+---
+
+## Table of Contents
+
+- [Usage Manual](USAGE.md)
+- [Why this project?](#why-this-project)
+- [Key features](#key-features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick start (CLI)](#quick-start-cli)
+- [CLI examples](#cli-examples)
+- [Python usage (API)](#python-usage-api)
+- [Language identification (LID)](#language-identification-lid)
+- [spaCy models & normalization](#spacy-models--normalization)
+- [Cleaning pipeline](#cleaning-pipeline)
+- [PDF export](#pdf-export)
+- [Cache, auto-downloads & offline mode](#cache-auto-downloads--offline-mode)
+- [Architecture & Design Patterns](#architecture--design-patterns)
+- [Design Science Research (DSR)](#design-science-research-dsr)
+- [Binary compatibility (NumPy/Thinc/spaCy)](#binary-compatibility-numpythincspacy)
+- [Performance tips](#performance-tips)
+- [Extensibility](#extensibility)
+- [Troubleshooting](#troubleshooting)
+- [Publishing to PyPI](#publishing-to-pypi)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [How to cite](#how-to-cite)
+
+---
+
+## Why this project?
+
+In research and production, common needs include:
+
+1. **Ingest** text from heterogeneous sources (web, PDFs, DOCX, TXT);
+2. **Clean** and **normalize** the content;
+3. **Lemmatize** and remove stopwords;
+4. **Detect language** accurately, including **bilingual** documents;
+5. **Export** results with traceability (PDF that shows normalized, cleaned, and raw text).
+
+**intelli3text** is built to be **plug-and-play**: `pip install` and go — no native toolchains, no manual compiles, no painful environment setup.
+
+---
+
+## Key features
+
+- **Ingestion**: URL (HTML), PDF (`pdfminer.six`), DOCX (`python-docx`), TXT.
+- **Cleaning**: Unicode fixes (`ftfy`), noise removal (`clean-text`), PDF-specific line-break & hyphenation heuristics.
+- **Paragraph-level LID**: **fastText LID** (176 languages) with tolerant fallback.
+- **spaCy normalization**: lemmatized tokens without stopwords/punctuation; PT/EN/ES.
+- **PDF export**: summary, global normalized text, per-paragraph table and sections for cleaned/normalized/raw text.
+- **Auto-download on first run**:
+  - `lid.176.bin` (fastText LID);
+  - spaCy models for PT/EN/ES (`lg→md→sm`) with offline fallback.
+- **CLI & Python API**: use from shell or embed in code.
+
+---
+
+## Requirements
+
+- **Python 3.9+**
+- Internet only on **first run** (to download models). After that, it works offline.
+- To avoid binary mismatches, the package pins **compatible** versions of `numpy`, `thinc`, and `spacy`.
+
+---
+
+## Installation
+
+```bash
+pip install intelli3text
+# or from a local repo:
+# pip install .
+````
+
+> **No extra scripts.**
+> On first execution, required models are fetched to a local cache automatically.
+
+---
+
+## Quick start (CLI)
+
+```bash
+intelli3text "https://pt.wikipedia.org/wiki/Howard_Gardner" --export-pdf output.pdf
+```
+
+Output:
+
+* JSON to `stdout` with `language_global`, `cleaned`, `normalized`, and a list of `paragraphs`.
+* A PDF report at `output.pdf`.
+
+---
+
+## CLI examples
+
+* Local PDF:
+
+  ```bash
+  intelli3text "./my_paper.pdf" --export-pdf report.pdf
+  ```
+
+* Choose spaCy model size:
+
+  ```bash
+  intelli3text "URL" --nlp-size md
+  # options: lg (default) | md | sm
+  ```
+
+* Select cleaners:
+
+  ```bash
+  intelli3text "URL" --cleaners ftfy,clean_text,pdf_breaks
+  ```
+
+* Save JSON to file:
+
+  ```bash
+  intelli3text "URL" --json-out result.json
+  ```
+
+* Use CLD3 as primary (if installed as extra):
+
+  ```bash
+  pip install intelli3text[cld3]
+  intelli3text "URL" --lid-primary cld3 --lid-fallback none
+  ```
+
+> Full CLI reference: see **Docs → CLI** on the website:
+> [https://jeffersonspeck.github.io/intelli3text/](https://jeffersonspeck.github.io/intelli3text/)
+
+---
+
+## Python usage (API)
+
+```python
+from intelli3text import PipelineBuilder, Intelli3Config
+
+cfg = Intelli3Config(
+    cleaners=["ftfy", "clean_text", "pdf_breaks"],
+    lid_primary="fasttext",         # or "cld3" if you installed the extra
+    lid_fallback=None,              # or "cld3"
+    nlp_model_pref="lg",            # "lg" | "md" | "sm"
+    export={"pdf": {"path": "output.pdf", "include_global_normalized": True}},
+)
+
+pipeline = PipelineBuilder(cfg).build()
+res = pipeline.process("https://pt.wikipedia.org/wiki/Howard_Gardner")
+
+print(res["language_global"], len(res["paragraphs"]))
+print(res["paragraphs"][0]["language"], res["paragraphs"][0]["normalized"][:200])
+```
+
+> More samples (including safe-to-import examples): **Docs → Examples**.
+
+---
+
+## Language identification (LID)
+
+* **Primary**: **fastText LID** (`lid.176.bin`) auto-downloaded on first use.
+* **Tolerant**: if `fasttext` is unavailable, the pipeline **won’t crash** — it returns `"pt"` with confidence `0.0` as a safe fallback.
+* **Accuracy**: detection is per **paragraph**; `language_global` is the most frequent.
+* **Optional**: `pycld3` via extra:
+
+  ```bash
+  pip install intelli3text[cld3]
+  # CLI: --lid-primary cld3 --lid-fallback none
+  ```
+
+---
+
+## spaCy models & normalization
+
+* Size preference: **`lg` → `md` → `sm`**.
+* If the model is missing, the library **tries to download it**.
+* **Offline**: falls back to `spacy.blank(<lang>)` with a `sentencizer` (no crash).
+* Normalization includes:
+
+  * tokenization;
+  * dropping stopwords/punctuation/whitespace;
+  * **lemmatization** (when the model has a lexicon);
+  * joining lemmas.
+
+---
+
+## Cleaning pipeline
+
+Default order (`--cleaners ftfy,clean_text,pdf_breaks`):
+
+1. **FTFY**: fixes Unicode glitches.
+2. **clean-text**: removes URLs/emails/phones; keeps numbers/punctuation by default.
+3. **pdf_breaks**: PDF heuristics (de-hyphenation; merge artificial breaks; collapse multiple newlines).
+
+You can customize the list/order via CLI or API.
+
+---
+
+## PDF export
+
+The report includes:
+
+* **Summary** (global language, total paragraphs),
+* **Global Normalized Text** (optional),
+* **Per-paragraph table** (language, confidence, normalized preview),
+* Per-paragraph sections showing:
+
+  * **normalized**,
+  * **cleaned**,
+  * **raw**.
+
+Library: **ReportLab**.
+
+---
+
+## Cache, auto-downloads & offline mode
+
+* Default **cache** directory: `~/.cache/intelli3text/`
+  Override via env var:
+  `INTELLI3TEXT_CACHE_DIR=/your/custom/path`
+
+* **Auto-download** on first use:
+
+  * `lid.176.bin` (fastText LID),
+  * spaCy models PT/EN/ES in order `lg→md→sm`.
+
+* **Offline** behavior:
+
+  * LID returns fallback `"pt", 0.0` if fastText is unavailable;
+  * spaCy uses `blank()` (functional, but without full lexical features).
+
+---
+
+## Architecture & Design Patterns
+
+**Applied patterns**:
+
+* **Builder**: `PipelineBuilder` composes extractors, cleaners, LID, normalizer, and exporters from declarative config.
+* **Strategy**:
+
+  * *Extractors* (Web/PDF/DOCX/TXT) implement `IExtractor`.
+  * *Cleaners* implement `ICleaner`, chained via `CleanerChain`.
+  * *Language Detectors* implement a simple interface (`FastTextLID`, `CLD3LID`).
+  * *Normalizer* implements `INormalizer` (`SpacyNormalizer` here).
+  * *Exporters* implement `IExporter` (`PDFExporter` here).
+* **Factory/Registry**: lazy loading of spaCy models by lang/size with fallbacks.
+* **Facade**: CLI and `Pipeline.process()` offer a simple entry point.
+
+**Package layout (summary)**
+
+```
+src/intelli3text/
+  __init__.py
+  __main__.py            # CLI
+  config.py              # Intelli3Config (parameters)
+  utils.py               # cache/download helpers
+  builder.py             # PipelineBuilder (Builder)
+  pipeline.py            # Pipeline (Facade)
+
+  extractors/            # Strategy
+    base.py
+    web_trafilatura.py
+    file_pdfminer.py
+    file_docx.py
+    file_text.py
+
+  cleaners/              # Strategy + Chain of Responsibility
+    base.py
+    chain.py
+    unicode_ftfy.py
+    clean_text.py
+    pdf_linebreaks.py
+
+  lid/                   # Strategy
+    base.py
+    fasttext_lid.py
+    # (optional) cld3_lid.py
+
+  nlp/
+    base.py
+    registry.py          # Factory/Registry (spaCy models + fallback)
+    spacy_normalizer.py  # Strategy
+
+  export/
+    base.py
+    pdf_reportlab.py     # Strategy
+```
+
+---
+
+## Design Science Research (DSR)
+
+* **Artifact**: robust ingestion/cleaning/LID/normalization/export pipeline prioritizing reproducibility and trivial install.
+* **Problem**: heterogeneous sources, bilingual content, and environment friction (native deps, binary mismatches).
+* **Design**: auto-downloads, fallbacks, and stable binary pins; per-paragraph LID; auditable PDF report.
+* **Demonstration**: clean CLI & Python API; Web/PDF/DOCX/TXT; PT/EN/ES.
+* **Evaluation**: empirical stability across environments (user site, WSL, Windows), LID quality (fastText), normalization quality (spaCy).
+* **Contributions**: engineering best practices (Builder/Strategy/Factory) to minimize friction and maximize reuse in research/production.
+
+---
+
+## Binary compatibility (NumPy/Thinc/spaCy)
+
+To avoid the classic `numpy.dtype size changed` error:
+
+* We pin **compatible** versions in `pyproject.toml`.
+* If you already had other global packages and hit this error:
+
+  1. `pip uninstall -y spacy thinc numpy`
+  2. `pip cache purge`
+  3. `pip install --user --no-cache-dir "numpy==1.26.4" "thinc==8.2.4" "spacy==3.7.4"`
+  4. `pip install --user --no-cache-dir intelli3text` (or `-e .` from the local repo)
+
+> Tip: always use the **same Python** that runs `intelli3text` (check `head -1 ~/.local/bin/intelli3text`).
+
+---
+
+## Performance tips
+
+* **Paragraph length**: controlled by `paragraph_min_chars` (default 30) and `lid_min_chars` (default 60).
+* **LID sample cap**: very long texts are truncated (~2k chars) to speed up without hurting accuracy much.
+* **spaCy model size**: `sm` is lighter; `lg` gives better quality (default).
+
+---
+
+## Extensibility
+
+* **New sources**: implement `IExtractor` and register in `PipelineBuilder`.
+* **New cleaners**: implement `ICleaner` and map it in `NAME2CLEANER`.
+* **New LIDs**: implement the interface under `lid/base.py`.
+* **Exporters**: implement `IExporter` (e.g., JSONL/CSV/HTML), expose option in CLI/Builder.
+
+---
+
+## Troubleshooting
+
+* **Trafilatura ‘unidecode’ warning**: already handled — we depend on `Unidecode`.
+* **No Internet on first run**:
+
+  * LID: fallback `"pt", 0.0`.
+  * spaCy: `spacy.blank(<lang>)`.
+  * Later, with Internet, run again to fetch full models.
+* **`ModuleNotFoundError: fasttext`**:
+
+  * We depend on `fasttext-wheel` (prebuilt wheels).
+  * Reinstall: `pip install fasttext-wheel`.
+
+> More tips and parameter-by-parameter guidance:
+> [https://jeffersonspeck.github.io/intelli3text/](https://jeffersonspeck.github.io/intelli3text/)
+
+---
+
+## Roadmap
+
+* [ ] Exporters: HTML/Markdown with paragraph navigation.
+* [ ] Quality metrics (lexical density, diversity, etc.).
+* [ ] More languages via custom spaCy models.
+* [ ] Optional normalization using Stanza.
+
+---
+
+## License
+
+**MIT** — you’re free to use, modify and distribute.
+
+> Note: the original upstream licenses of third-party models and libraries still apply.
+
+---
+
+## How to cite
+
+> Speck, J. (2025). **intelli3text**: ingestion, cleaning, paragraph-level LID and spaCy normalization with PDF export. GitHub: [https://github.com/jeffersonspeck/intelli3text](https://github.com/jeffersonspeck/intelli3text)
+
+
