@@ -1,0 +1,20 @@
+{
+  "project_id": "your-project-id",
+  "project_name": "GSM8K Project",
+  "project_description": "A quickstart tutorial project for training math reasoning models using the GSM8K dataset with RLHF",
+  "dataset_id": "your-dataset-id",
+  "dataset_name": "GSM8K Dataset",
+  "dataset_description": "Grade school math word problems for training mathematical reasoning capabilities",
+  "organization_id": "your-organization-id",
+  "params": {
+    "algorithm.adv_estimator": "gae",
+    "data.train_files": ["train.jsonl"],
+    "data.val_files": ["val.jsonl"],
+    "gpus": "0",
+    "model": "gpt-3.5-turbo",
+    "training.learning_rate": 0.0001,
+    "training.batch_size": 8,
+    "training.episodes": 100,
+    "training.gamma": 0.99
+  }
+}
