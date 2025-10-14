@@ -1,0 +1,19 @@
+[package]
+name = "pauli_prop_accelerate"
+version = "0.0.0"
+edition = "2024"
+readme = "README.md"
+
+[lib]
+name = "_accelerate"
+crate-type = ["cdylib"]
+
+[dependencies]
+rand = "0.9"
+rand_distr = "0.5"
+numpy = "0.26"
+pyo3 = { version = "0.26", features = ["abi3-py310", "macros", "extension-module"] }
+num-complex = "0.4"
+rustc-hash = "2.1"
+hashbrown = "0.15"
+ordered-float = "5.0"
