@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: weibo-2-album
+Version: 0.0.71
+Summary: Return photo list and caption (markdown format) from weibo.
+Home-page: https://github.com/gaoyunzhi/weibo_2_album
+Author: Yunzhi Gao
+Author-email: gaoyunzhi@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: cached-url
+Requires-Dist: pyyaml
+Requires-Dist: bs4
+Requires-Dist: lxml
+Requires-Dist: telegram-util
+
+# weibo_2_album
+
+Return photo list and caption (markdown format) from weibo.
+
+## usage
+
+```
+import weibo_2_album
+result = weibo_2_album.get(url)
+result.imgs
+result.cap
+```
+
+## how to install
+
+`pip3 install weibo_2_album`
+
