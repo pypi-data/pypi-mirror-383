@@ -1,0 +1,12 @@
+cftime
+certifi
+numpy
+
+[parallel]
+mpi4py
+
+[tests]
+Cython
+packaging
+pytest
+typing-extensions>=4.15.0
