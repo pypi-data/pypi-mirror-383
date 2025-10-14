@@ -1,0 +1,102 @@
+Metadata-Version: 2.4
+Name: cobaya_utilities
+Version: 0.3.4
+Summary: A set of functions to deal with MCMC output from cobaya
+Author: Xavier Garrido
+Project-URL: Homepage, https://github.com/xgarrido/cobaya_utilities
+Project-URL: Documentation, https://cobaya_utilities.readthedocs.io
+Project-URL: Source, https://github.com/xgarrido/cobaya_utilities
+Project-URL: Tracker, https://github.com/xgarrido/cobaya_utilities/issues
+Project-URL: Licensing, https://github.com/xgarrido/cobaya_utilities/blob/master/LICENCE
+Keywords: cobaya,MCMC,plot
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Classifier: Topic :: Education
+Requires-Python: >=3.10.0
+Description-Content-Type: text/x-rst
+Requires-Dist: cobaya>=3.4.1
+Requires-Dist: seaborn
+Requires-Dist: tqdm
+Requires-Dist: jinja2
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Requires-Dist: camb; extra == "test"
+Requires-Dist: mflike; extra == "test"
+Provides-Extra: notebook
+Requires-Dist: jupyter; extra == "notebook"
+Requires-Dist: camb; extra == "notebook"
+Requires-Dist: latex2mathml; extra == "notebook"
+
+==================
+ Cobaya utilities
+==================
+
+A set of tools to deal with MCMC chains and a complement to `cobaya
+<https://github.com/CobayaSampler/cobaya>`_ and `getdist <https://github.com/cmbant/getdist>`_.
+
+.. image:: https://img.shields.io/pypi/v/cobaya-utilities.svg?style=flat
+   :target: https://pypi.python.org/pypi/cobaya-utilities
+
+.. image:: https://img.shields.io/github/actions/workflow/status/xgarrido/cobaya_utilities/testing.yml?branch=master
+   :target: https://github.com/xgarrido/cobaya_utilities/actions
+   :alt: GitHub Workflow Status
+
+.. image:: https://readthedocs.org/projects/cobaya-utilities/badge/?version=latest
+   :target: https://cobaya-utilities.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
+.. image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/xgarrido/cobaya_utilities/master
+
+.. image:: https://codecov.io/gh/xgarrido/cobaya_utilities/branch/master/graph/badge.svg?token=qrrVcbNCs5
+   :target: https://codecov.io/gh/xgarrido/cobaya_utilities
+
+.. image:: https://results.pre-commit.ci/badge/github/xgarrido/cobaya_utilities/master.svg
+   :target: https://results.pre-commit.ci/latest/github/xgarrido/cobaya_utilities/master
+   :alt: pre-commit.ci status
+
+Installing the code
+-------------------
+
+The easiest way to install the module is
+
+.. code:: shell
+
+    pip install [--user] cobaya-utilities
+
+If you plan to made some modifications, to improve or to correct some bugs, then you need to clone
+the following repository
+
+.. code:: shell
+
+    git clone https://github.com/xgarrido/cobaya_utilities.git /where/to/clone
+
+Then you can install the code and its dependencies *via*
+
+.. code:: shell
+
+    pip install -e [--user] /where/to/clone
+
+
+Running/testing the code
+------------------------
+
+You can test the ``cobaya_utilities`` module (assuming you have ``pytest`` installed) by doing
+
+.. code:: shell
+
+    pytest
+
+
+.. end_before_documentation
+
+Documentation
+-------------
+
+Read the docs at `cobaya-utilities.readthedocs.io <http://cobaya-utilities.readthedocs.io>`_.
