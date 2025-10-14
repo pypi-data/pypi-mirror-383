@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: release
+
+    permissions:
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        ref: ${{ github.event.release.tag_name }}  # Checkout the exact tag
+        fetch-depth: 0  # Full history for hatch-vcs
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.11"
+
+    - name: Install Hatch
+      run: pip install hatch
+
+    - name: Build package
+      run: hatch build
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        verbose: true

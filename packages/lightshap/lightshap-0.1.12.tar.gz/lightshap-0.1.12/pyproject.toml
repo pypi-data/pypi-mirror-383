@@ -1,0 +1,225 @@
+[build-system]
+requires = [
+    "hatchling==1.27.0",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "lightshap"
+version = "0.1.12"  # Static version
+# dynamic = ["version"]  # Commented out for static versioning
+description = "A lightweight SHAP library"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Michael Mayer", email = "mayermichael79@gmail.com"}
+]
+maintainers = [
+    {name = "Michael Mayer", email = "mayermichael79@gmail.com"}
+]
+keywords = ["shap", "explainability", "machine-learning", "interpretability", "xai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0.0",
+    "pandas>=2.2.2",  # numpy 2
+    "matplotlib>=3.8.4",  # numpy 2
+    "scipy>=1.13.1", # numpy 2
+    "joblib>=1.3.0",
+    "tqdm>=4.67.0",
+]
+
+[project.optional-dependencies]
+# Polars support
+polars = ["polars>=1.1.0", "pyarrow>=18.0.0"]
+
+# Tree model support (these are optional since users might only want one)
+xgboost = ["xgboost>=2.1.0"]
+lightgbm = ["lightgbm>=4.4.0"]
+catboost = ["catboost>=1.2.5"]
+
+# All tree models
+tree = ["xgboost>=2.1.0", "lightgbm>=4.4.0", "catboost>=1.2.5"]
+
+# Documentation dependencies
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+# Development dependencies
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "pre-commit>=2.20.0",
+    # Documentation
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+    # Optional dependencies needed for testing
+    "polars>=1.1.0",
+    "pyarrow>=18.0.0",
+    "xgboost>=2.1.0",
+    "lightgbm>=4.4.0",
+    "catboost>=1.2.5",
+    "scikit-learn>=1.5.0",
+]
+
+# All optional dependencies
+all = [
+    "polars>=1.1.0",
+    "pyarrow>=18.0.0",
+    "xgboost>=2.1.0",
+    "lightgbm>=4.4.0",
+    "catboost>=1.2.5",
+    "scikit-learn>=1.5.0",
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/mayer79/LightSHAP"
+Repository = "https://github.com/mayer79/LightSHAP"
+"Bug Tracker" = "https://github.com/mayer79/LightSHAP/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lightshap"]
+
+# Ruff configuration (handles both linting and formatting)
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, handled by formatter
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # Allow unused imports in __init__.py
+"tests/**/*" = ["B011"]   # Allow assert False in tests
+
+# Format configuration
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["src/lightshap/tests", "src/lightshap/explanation/tests", "src/lightshap/explainers/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+    "--cov=lightshap",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src/lightshap"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "src/__about__.py",
+    "*/__init__.py",  # Import-only files
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.hatch.envs.test]
+dependencies = [
+    "scikit-learn>=1.5.0",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    # Optional dependencies needed for testing
+    "polars>=1.1.0",
+    "pyarrow>=18.0.0", # for pl.to_pandas()
+    "xgboost>=2.1.0",
+    "lightgbm>=4.4.0",
+    "catboost>=1.2.5",
+]
+
+[tool.hatch.envs.test.scripts]
+test = "pytest {args}"
+cov = "pytest --cov=lightshap --cov-report=html --cov-report=term-missing {args}"
+
+[tool.hatch.publish.index]
+disable = false
+
+[tool.hatch.publish.index.repos]
+testpypi = "https://test.pypi.org/legacy/"
+
+[tool.hatch.envs.release]
+dependencies = [
+    "build",
+    "twine",
+]
+
+[tool.hatch.envs.release.scripts]
+check = "python -m build --check"  
+build = "python -m build"  # Use python -m build instead of hatch build
+publish-test = "python -m twine upload --repository testpypi dist/*"
+publish = "python -m twine upload dist/*"
+
+# GitHub deployment environment configuration
+[tool.hatch.envs.release.env-vars]
+ENVIRONMENT = "release"
+
+[tool.hatch.envs.dev]
+dependencies = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.6.0",
+    "mkdocstrings[python]>=1.18.0",
+]
+
+# NOTE: removed the [tool.hatch.envs.dev.scripts] section to avoid hatch wrapping/CLI parsing issues.
