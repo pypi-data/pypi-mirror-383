@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: foxypack
+Version: 0.0.5
+Summary: foxy interface library, entity balancing core, and shared parser
+Author-Email: shapdi <shapranov.work@gmail.com>
+License: MIT
+Project-URL: repository, https://github.com/ShapDi/foxypack
+Requires-Python: >=3.10
+Requires-Dist: pydantic==2.11.7
+Provides-Extra: test
+Requires-Dist: coverage>=7.10.7; extra == "test"
+Requires-Dist: mypy>=1.18.2; extra == "test"
+Requires-Dist: pytest>=8.4.2; extra == "test"
+Requires-Dist: ruff>=0.13.2; extra == "test"
+Description-Content-Type: text/markdown
+
+# foxypack
