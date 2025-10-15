@@ -1,0 +1,87 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "caplena"
+version = "2.1.2"
+authors = [{name = "Caplena", email = "support@caplena.com"}]
+maintainers = [{name = "Pascal de Buren", email = "pascal@caplena.com"}]
+keywords = ["caplena", "api", "nlp", "customer feedback"]
+readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Typing :: Typed",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+license = {file = "LICENSE"}
+requires-python = ">=3.8"
+dynamic = ["description"]
+dependencies = [
+    "requests >=2.26.0",
+    "typing-extensions >=4.0.0",
+    "backoff >=2.2.0",
+    "cachetools>=5.0.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-watch",
+    "requests-mock",
+    "types-cachetools",
+    "types-six",
+    "types-Pygments",
+    "types-colorama",
+    "types-setuptools",
+]
+doc = [
+    "sphinx",
+    "furo",
+]
+dev = [
+    "isort",
+    "black",
+    "flake8",
+    "pyright",
+    "pre-commit",
+    "mypy",
+    "types-requests",
+]
+
+[project.urls]
+"Homepage" = "https://caplena.com"
+"Source Code" = "https://github.com/caplena/caplena-python"
+"API Reference" = "https://caplena.com/docs/developers/"
+"Bug Tracker" = "https://github.com/caplena/caplena-python/issues"
+"Documentation" = "https://caplena.com/docs/sdk/python/"
+
+[tool.black]
+line-length = 100
+include = '.pyi?$'
+exclude = '''
+/(
+    .git
+    | .hg
+    | .mypy_cache
+    | .tox
+    | .venv
+    | venv
+    | _build
+    | buck-out
+    | build
+    | dist
+)/
+'''
