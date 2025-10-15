@@ -1,0 +1,309 @@
+Metadata-Version: 2.1
+Name: astrosr
+Version: 1.0.2
+Summary: Astronomical super-resolution with drizzle for wide field-of-view images
+Author-email: Elías Gabriel Ferrer Jorge <gabrielferrerjorge@gmail.com>
+Maintainer-email: Elías Gabriel Ferrer Jorge <gabrielferrerjorge@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2025 Gabriel Ferrer
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/dot-gabriel-ferrer/astroSR
+Project-URL: Documentation, https://github.com/dot-gabriel-ferrer/astroSR#readme
+Project-URL: Repository, https://github.com/dot-gabriel-ferrer/astroSR
+Project-URL: Bug Tracker, https://github.com/dot-gabriel-ferrer/astroSR/issues
+Project-URL: Changelog, https://github.com/dot-gabriel-ferrer/astroSR/blob/main/CHANGELOG.md
+Keywords: astronomy,astrophysics,drizzle,super-resolution,fits,wcs,image-processing,scientific-computing
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy<2.0,>=1.20.0
+Requires-Dist: astropy>=6.0
+Requires-Dist: matplotlib>=3.5.0
+Requires-Dist: drizzlepac>=3.6.0
+Requires-Dist: scipy>=1.7.0
+Requires-Dist: numba>=0.56.0
+Requires-Dist: tqdm>=4.62.0
+Requires-Dist: pandas>=1.3.0
+Provides-Extra: all
+Requires-Dist: astrosr[dev,docs,test]; extra == "all"
+Provides-Extra: dev
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: flake8>=5.0.0; extra == "dev"
+Requires-Dist: isort>=5.10.0; extra == "dev"
+Requires-Dist: mypy>=0.991; extra == "dev"
+Requires-Dist: pre-commit>=2.20.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=5.0.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=1.0.0; extra == "docs"
+Requires-Dist: myst-parser>=0.18.0; extra == "docs"
+Provides-Extra: test
+Requires-Dist: pytest>=7.0.0; extra == "test"
+Requires-Dist: pytest-cov>=4.0.0; extra == "test"
+Requires-Dist: pytest-xvfb>=2.0.0; extra == "test"
+
+# astroSR - Astronomical Super-Resolution with Drizzle
+
+[![CI](https://github.com/dot-gabriel-ferrer/astroSR/actions/workflows/ci.yml/badge.svg)](https://github.com/dot-gabriel-ferrer/astroSR/actions/workflows/ci.yml)
+[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/dot-gabriel-ferrer/astroSR/branch/main/graph/badge.svg)](https://codecov.io/gh/dot-gabriel-ferrer/astroSR)
+
+## Description
+
+This package implements the **Drizzle** algorithm (Fruchter & Hook 2002) to combine multiple dithered astronomical images and create super-resolution images with precise photometry conservation.
+
+### Key Features
+
+✨ **Professional Drizzle Algorithm**
+- Faithful implementation of Fruchter & Hook (2002)
+- Exact flux conservation for precise photometry
+- Pixel-to-pixel mapping with overlap area calculation
+
+🔬 **Real Resolution Improvement**
+- Increases spatial resolution (reduces arcsec/pix)
+- Leverages dithering to resolve sub-pixel details
+- Configurable improvement factor (typically 2-3×)
+
+📊 **Flexible Weighting**
+- Custom weights per image (exposure time, quality, etc.)
+- Multiple kernel types (square, gaussian, tophat)
+- Noise correlation control via `pixfrac` parameter
+
+📐 **Complete WCS Support**
+- Input WCS header handling
+- Precise geometric transformations
+- Output image WCS generation
+
+### Resolution Gain with Drizzle
+
+The achievable spatial resolution using drizzle depends on:
+- The number of input images per field.
+- The dithering pattern (relative sub-pixel shifts between images).
+- The alignment quality and the PSF.
+
+**Theoretical estimate:**
+- If images are well-aligned and dithers are optimal, the pixel scale can be reduced by up to a factor of √N, where N is the number of independent, well-dithered images.
+- In practice, the gain is usually between 1.5× and 2× (i.e., you can halve the pixel scale) with at least 4–9 images and good dithering.
+
+**Practical summary:**
+- 2 images: modest improvement (~1.4×)
+- 4 images: clear improvement (~2×)
+- 9 images: optimal improvement (~3×)
+- More images: marginal additional gain, limited by PSF and alignment.
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/dot-gabriel-ferrer/astroSR.git
+cd astroSR
+
+# Install
+pip install .
+
+# Or for development
+pip install -e .
+```
+
+### Dependencies
+
+- Python ≥ 3.9
+- NumPy
+- Astropy
+- SciPy
+- Matplotlib (for visualization)
+
+## Quick Usage
+
+### Command Line
+
+```bash
+# Basic example: combine 4 images with 2× improvement factor
+python scripts/run_drizzle.py \
+    -i img1.fits img2.fits img3.fits img4.fits \
+    -o combined_highres.fits \
+    --scale-factor 2.0 \
+    --pixfrac 0.8
+```
+
+```bash
+# With custom weights
+python scripts/run_drizzle.py \
+    -i short.fits long.fits \
+    -o weighted_output.fits \
+    --weights 1.0 3.0 \
+    --scale-factor 2.0
+```
+
+### As Python Module
+
+```python
+from astrosr import drizzle_super_resolution
+
+# Basic example
+drizzle_super_resolution(
+    input_files=['img1.fits', 'img2.fits', 'img3.fits'],
+    output_file='superres.fits',
+    scale_factor=2.0,
+    pixfrac=0.8
+)
+
+# With advanced parameters
+drizzle_super_resolution(
+    input_files=['obs1.fits', 'obs2.fits', 'obs3.fits', 'obs4.fits'],
+    output_file='output.fits',
+    pixel_scale=0.5,        # arcsec/pix
+    scale_factor=2.0,
+    pixfrac=0.8,
+    weights=[1.0, 1.0, 1.2, 0.8],
+    kernel='square',
+    save_weight_map=True,
+    preserve_flux=True
+)
+```
+
+## Documentation
+
+- **[Usage Guide](docs/usage.md)**: Detailed examples and use cases
+- **[Drizzle Algorithm](docs/algorithm.md)**: Mathematical foundations and references
+- **[API Reference](docs/api.md)**: Complete function documentation (coming soon)
+
+## Main Parameters
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `scale_factor` | 2.0 | Resolution improvement factor (1.5-3.0 typical) |
+| `pixfrac` | 0.8 | Drizzle pixel fraction (0.6-1.0 recommended) |
+| `kernel` | 'square' | Kernel type: square, gaussian, tophat |
+| `weights` | None | Per-image weights (e.g., exposure time) |
+| `pixel_scale` | auto | Output pixel scale (arcsec/pix) |
+
+See `docs/usage.md` for detailed descriptions.
+
+## Use Cases
+
+### 1. Dithered Observations
+
+Combine multiple exposures of the same field with small displacements:
+
+```bash
+python scripts/run_drizzle.py -i dithered_*.fits -o superres.fits --scale-factor 2.0
+```
+
+### 2. Overlapping Mosaics
+
+Join partially overlapping images into a high-resolution mosaic:
+
+```bash
+python scripts/run_drizzle.py -i tile_*.fits -o mosaic.fits --scale-factor 1.5
+```
+
+### 3. Quality Weighting
+
+Assign weights based on exposure time or seeing:
+
+```python
+drizzle_super_resolution(
+    input_files=['good_seeing.fits', 'medium_seeing.fits', 'poor_seeing.fits'],
+    output_file='quality_weighted.fits',
+    weights=[3.0, 2.0, 1.0],
+    scale_factor=2.0
+)
+```
+
+## Project Structure
+
+```
+astrosr/
+├── src/astrosr/              # Main code
+│   ├── __init__.py
+│   └── drizzle_super_resolution.py
+├── tests/                    # Unit tests
+│   └── test_drizzle_super_resolution.py
+├── scripts/                  # CLI scripts
+│   └── run_drizzle.py
+├── docs/                     # Documentation
+│   ├── usage.md             # Usage guide
+│   └── algorithm.md         # Mathematical foundations
+├── examples/                 # Examples (coming soon)
+├── pyproject.toml           # Package configuration
+└── README.md                # This file
+```
+
+## Scientific References
+
+1. **Fruchter, A. S., & Hook, R. N. (2002)**. "Drizzle: A Method for the Linear Reconstruction of Undersampled Images". *Publications of the Astronomical Society of the Pacific*, 114(792), 144-152. [DOI: 10.1086/338393](https://doi.org/10.1086/338393)
+
+2. **Gonzaga, S., et al. (2012)**. "The DrizzlePac Handbook". Space Telescope Science Institute.
+
+3. **Koekemoer, A. M., et al. (2003)**. "HST Dither Handbook". Space Telescope Science Institute.
+
+## Validation
+
+The algorithm has been validated for:
+
+- ✓ Flux conservation (<1% error)
+- ✓ Effective resolution improvement
+- ✓ Correct NaN pixel handling
+- ✓ Precise geometric transformations
+
+See `tests/` for test cases.
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Contact
+
+- Issues: [GitHub Issues](https://github.com/dot-gabriel-ferrer/astroSR/issues)
+- Email: gabriel.ferrer@example.com
+
+## Acknowledgments
+
+- Original algorithm: Andrew Fruchter and Richard Hook (STScI)
+- Inspiration: DrizzlePac package from Space Telescope Science Institute
+- Astropy community
+
+---
+
+**Note**: This is a research package. For critical applications, consider using the official DrizzlePac from STScI.
