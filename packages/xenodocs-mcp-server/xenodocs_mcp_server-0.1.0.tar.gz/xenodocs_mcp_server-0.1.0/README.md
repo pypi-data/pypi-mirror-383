@@ -1,0 +1,207 @@
+# XenoDocs MCP Server
+
+MCP (Model Context Protocol) server for accessing XenoDocs documentation from `backend.xenodocs.com`.
+
+## Features
+
+- 🔍 Search documentation across all projects
+- 📄 Retrieve specific documents by ID
+- 📁 List all available projects
+- 🔐 Secure API key authentication
+- 🚀 Runs locally in VS Code via stdio
+- ⚡ Fast async HTTP requests with httpx
+
+## Installation
+
+Install via uvx (recommended):
+
+```bash
+uvx install xenodocs-mcp-server
+```
+
+Or via pip:
+
+```bash
+pip install xenodocs-mcp-server
+```
+
+## Configuration in VS Code
+
+### Method 1: Environment Variable (Recommended)
+
+1. Open VS Code User Settings JSON (Ctrl+Shift+P → "Preferences: Open User Settings (JSON)")
+2. Add this configuration:
+
+```json
+{
+  "github.copilot.chat.mcp.enabled": true,
+  "github.copilot.chat.mcp.servers": {
+    "xenodocs": {
+      "command": "uvx",
+      "args": ["xenodocs-mcp-server"],
+      "env": {
+        "XENODOCS_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+### Method 2: Using System Environment Variables
+
+Set your API key as a system environment variable:
+
+**Windows (PowerShell):**
+```powershell
+$env:XENODOCS_API_KEY="your-api-key-here"
+```
+
+**Windows (CMD):**
+```cmd
+set XENODOCS_API_KEY=your-api-key-here
+```
+
+**macOS/Linux:**
+```bash
+export XENODOCS_API_KEY="your-api-key-here"
+```
+
+Then configure VS Code without the env key:
+
+```json
+{
+  "github.copilot.chat.mcp.enabled": true,
+  "github.copilot.chat.mcp.servers": {
+    "xenodocs": {
+      "command": "uvx",
+      "args": ["xenodocs-mcp-server"]
+    }
+  }
+}
+```
+
+## Getting Your API Key
+
+1. Visit [XenoDocs Dashboard](https://xenodocs.com/dashboard)
+2. Navigate to **Settings** → **API Keys**
+3. Click **Generate New API Key**
+4. Copy the key and use it in your VS Code configuration
+
+## Available Tools
+
+### 1. `search_documentation`
+Search XenoDocs documentation database.
+
+**Example:**
+```
+@copilot search documentation for "authentication setup"
+```
+
+### 2. `get_document`
+Retrieve a specific document by ID.
+
+**Example:**
+```
+@copilot get document with ID "doc_123456"
+```
+
+### 3. `list_projects`
+List all available projects.
+
+**Example:**
+```
+@copilot list all projects
+```
+
+### 4. `get_project_docs`
+Get all documentation for a specific project.
+
+**Example:**
+```
+@copilot get all docs for project "my-project-id"
+```
+
+## Development
+
+### Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/xenodocs-mcp-server.git
+cd xenodocs-mcp-server
+
+# Install dependencies
+uv sync
+
+# Or use pip
+pip install -e .
+
+# Set API key
+export XENODOCS_API_KEY="your-api-key"
+
+# Run locally
+uv run xenodocs-mcp-server
+```
+
+### Testing
+
+Test with the MCP Inspector:
+
+```bash
+npx @modelcontextprotocol/inspector uv run xenodocs-mcp-server
+```
+
+## Publishing to PyPI
+
+```bash
+# Build the package
+uv build
+
+# Upload to PyPI
+uv publish
+```
+
+## Troubleshooting
+
+### API Key Not Found Error
+
+If you see:
+```
+ValueError: XENODOCS_API_KEY environment variable not set
+```
+
+**Solution:** Make sure you've configured the API key in VS Code settings or as a system environment variable.
+
+### Server Not Starting
+
+1. Restart VS Code completely
+2. Check that uvx is installed: `uvx --version`
+3. Verify the server is installed: `uvx list`
+4. Check VS Code Output panel for MCP logs
+
+### Permission Denied
+
+Run VS Code with appropriate permissions or check that the uvx cache directory is writable.
+
+## Security
+
+⚠️ **Never commit your API keys!** 
+
+- Always use environment variables
+- Add `.env` files to `.gitignore`
+- Use VS Code secrets for shared workspaces
+- Rotate your API keys regularly
+
+## Support
+
+- **Issues:** [GitHub Issues](https://github.com/yourusername/xenodocs-mcp-server/issues)
+- **Documentation:** [XenoDocs Docs](https://docs.xenodocs.com)
+- **Email:** support@xenodocs.com
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines and submit pull requests.
