@@ -1,0 +1,38 @@
+Metadata-Version: 2.4
+Name: AFL_2_MATH
+Version: 4.0
+Description-Content-Type: text/markdown
+Dynamic: description
+Dynamic: description-content-type
+
+<h1>AFL_2_MATH</h1>
+Before you start make sure you already run this command below:
+
+```
+pip install AFL_2_MATH
+```
+and this is example on how your code should look like
+```python
+from AFL_2_MATH import Himpunan #Very Important
+
+
+# Create a set with mixed types: int, str, tuple, and another Himpunan
+A = Himpunan(1, "a", (2, 3), ("x", "y"), [4, 5])
+print(A)  # Output: {1, a, (2, 3), {x, y}, (4, 5)}
+
+# Add and remove elements
+A += "z"
+A -= 1
+
+# Set operations
+B = Himpunan("a", (2, 3), "z")
+print("Union:", A + B)
+print("Intersection:", A / B)
+print("Difference:", A - B)
+print("Symmetric Difference:", A * B)
+print("Cartesian Product:", A ** B)
+
+# Power set and subsets
+print("Power set size:", abs(A))
+print("All subsets:", A.ListKuasa())
+```
