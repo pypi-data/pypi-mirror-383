@@ -1,0 +1,22 @@
+[project]
+name = "bfgdealer"
+version = "0.0.21"
+description = "Dealer for BfG"
+authors = [
+    {name = "Jeff",email = "jeffwatkins2000@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "bfgbidding>=0.0.21",
+    "bridgeobjects>=0.1.30",
+    "endplay>=0.5.12",
+    "termcolor>=3.1.0",
+]
+
+[dependency-groups]
+dev = ['pytest']
+
+[build-system]
+requires = ['uv-build']
+build-backend = 'uv_build'
