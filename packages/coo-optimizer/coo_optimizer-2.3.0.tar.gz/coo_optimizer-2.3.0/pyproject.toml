@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coo_optimizer"
+version = "2.3.0"
+description = "Canine Olfactory Optimization Algorithm"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Sandip Garai", email = "sandipnicksandy@gmail.com"}
+]
+keywords = ["optimization", "metaheuristic", "machine-learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/SandipGarai/coo_optimizer"
+Documentation = "https://coo_optimizer.readthedocs.io"
+Repository = "https://github.com/SandipGarai/coo_optimizer"
