@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "magicsoft-ai"
+version = "0.1.1"
+authors = [
+    { name = "Sreedev Melethil", email = "sreedev.melethil@magic-hire.com" },
+]
+description = "A module for AI assistant functionalities (version 1)"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers"
+]
+dependencies = [
+    "langchain>=0.3.23",
+    "langchain-community>=0.3.21",
+    "langchain-google-genai>=2.0.1",
+    "langchain-deepseek>=0.1.2",
+    "loguru>=0.7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Magic-Hire/Yukthi-ai-agent-package/"
