@@ -1,0 +1,15 @@
+rdflib>=6.1.1
+pyld>=2.0.4
+geomet>=0.2.0
+ckantoolkit>=0.0.7
+
+[dev]
+responses>=0.25.2
+pyshacl
+mock
+pytest-ckan
+pytest-cov
+pytest-pretty
+
+[dev:python_version >= "3.10"]
+mlcroissant==1.0.21
