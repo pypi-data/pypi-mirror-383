@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simple_md2html"
+description = "a very simple python package to convert markdown document into html document."
+authors = [
+    { name = "GGN_2015", email = "premierbob@qq.com" }
+]
+version = "0.0.0"
+dependencies = [
+    "markdown2"
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+
+[tool.setuptools]
+include-package-data = true
