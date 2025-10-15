@@ -1,0 +1,16 @@
+Pillow
+
+[dev]
+pytest
+pylint
+numpy
+
+[mouthing]
+epitran
+g2pk
+
+[server]
+Flask
+Flask-RESTful
+Flask-Cors
+gunicorn
