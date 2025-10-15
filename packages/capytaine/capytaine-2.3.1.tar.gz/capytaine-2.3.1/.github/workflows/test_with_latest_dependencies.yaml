@@ -1,0 +1,48 @@
+name: Build and test using latest available dependencies
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5 5 5/15 * *'  # On the 5th and 20th of each month at 5:05
+
+env:
+  FORCE_COLOR: 3
+
+jobs:
+  "test_in_latest_env":
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up UV
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+
+    - name: Set up Just
+      run: sudo apt install -y just
+
+    - name: Run tests
+      run: just test_in_latest_env
+
+  "test_in_nightly_env":
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up UV
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+
+    - name: Set up Just
+      run: sudo apt install -y just
+
+    - name: Run tests
+      run: just test_in_nightly_env

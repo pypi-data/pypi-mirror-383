@@ -1,0 +1,57 @@
+name: Build and deploy documentation
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
+
+  pull_request:
+    paths:
+      - 'docs/**'
+
+  workflow_dispatch:
+
+
+# The following block is meant to cancel the workflow if a newer commit is pushed on the pull request
+# From https://stackoverflow.com/questions/66335225/how-to-cancel-previous-runs-in-the-pr-when-you-push-new-commitsupdate-the-curre
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Just
+        run: sudo apt install -y just
+
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Build documentation
+        run: just build_docs
+
+      - name: Deploy pages
+        if: |
+          github.repository_owner == 'capytaine' &&
+          github.ref == 'refs/heads/master'
+        # Only deploy the version merged into the master branch of capytaine/capytaine
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          folder: ./docs/_build/html/
+          repository-name: capytaine/capytaine.github.io
+          branch: main
+          target-folder: master/
+          clean: true
+          token: ${{ secrets.TOKEN_PAGES }}
