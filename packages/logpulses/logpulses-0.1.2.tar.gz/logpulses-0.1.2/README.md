@@ -1,0 +1,222 @@
+# FastAPI Request Logger
+
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg)](https://fastapi.tiangolo.com/)
+
+A comprehensive, production-ready logging middleware for FastAPI applications that provides detailed insights into every request and response with zero configuration.
+
+## ✨ Features
+
+- 🚀 **Zero Configuration** - Just add one line of middleware
+- 📊 **Comprehensive Logging** - Captures everything:
+  - Request details (method, route, headers, body, query params)
+  - Response details (status, body, size)
+  - Performance metrics (execution time, memory usage)
+  - System metrics (CPU, memory)
+  - Network information (interface type - WiFi/Ethernet, IP, traffic)
+- 🔄 **Works with All Request Types** - GET, POST, PUT, PATCH, DELETE
+- 💪 **No Body Consumption Issues** - Routes can freely use `request.json()` and `request.body()`
+- 🎯 **Smart Network Detection** - Automatically identifies WiFi vs Ethernet
+- 📝 **Beautiful JSON Output** - Pretty-printed, structured logs
+- ⚡ **High Performance** - Minimal overhead using ASGI-level interception
+- 🛡️ **Production Ready** - Error handling and edge case coverage
+
+## 📦 Installation
+
+```bash
+pip install logpulses
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/Hari-vasan/logpulses.git
+cd logpulses
+pip install -e .
+```
+
+## 🚀 Quick Start
+
+```python
+from fastapi import FastAPI, Request
+from logpulses.logger import RequestLoggingMiddleware
+
+app = FastAPI()
+
+# Enable comprehensive logging
+app.add_middleware(RequestLoggingMiddleware,enable_db_monitoring=True,)
+
+@app.get("/mysql/users")
+async def get_mysql_users():
+    """MySQL SELECT - Automatically tracked"""
+    conn = get_mysql_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT * FROM test")
+        results = cursor.fetchall()
+        return {"test": results, "count": len(results)}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+@app.post("/mysql/users")
+async def create_mysql_user(name: str, age: int):
+    """MySQL INSERT - Automatically tracked"""
+    conn = get_mysql_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("INSERT INTO test (name, empolyeid) VALUES (%s, %s)", (name, age))
+        conn.commit()
+        return {"message": "User created", "id": cursor.lastrowid, "rows_affected": cursor.rowcount}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+@app.get("/mongo/users")
+async def get_mongo_users():
+    """MongoDB find - Automatically tracked"""
+    users = [serialize_mongo_doc(user) for user in users_collection.find()]
+    return {"users": users, "count": len(users)}
+
+
+@app.post("/mongo/users")
+async def create_mongo_user(name: str, age: str):
+    """MongoDB insert - Automatically tracked"""
+    document = {"name": name, "age": age}
+    result = users_collection.insert_one(document)  # InsertOneResult object
+    # Return the inserted document with string ID
+    document["_id"] = str(result.inserted_id)
+    return {"message": "User created", "document": document}
+```
+
+## 📋 Log Output Example
+
+```json
+{
+  "timestamp": "2025-10-14 15:33:06",
+  "request": {
+    "route": "/mixed-query",
+    "method": "GET",
+    "fullUrl": "http://localhost:8000/mixed-query",
+    "clientIp": "127.0.0.1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+    "size": "0 bytes",
+    "body": "No query parameters"
+  },
+  "response": {
+    "status": 200,
+    "success": true,
+    "size": "44 bytes",
+    "body": {
+      "mysql_users": 3,
+      "mongo_users": 9,
+      "total": 12
+    }
+  },
+  "performance": {
+    "processingTime": "46.70 ms",
+    "memoryUsed": "58.54 KB"
+  },
+  "system": {
+    "cpuUsage": "10.8%",
+    "memoryUsage": {
+      "total": "16.00 GB",
+      "used": "12.20 GB",
+      "available": "3.80 GB",
+      "percent": "76.3%"
+    }
+  },
+  "network": {
+    "interface": "Ethernet",
+    "type": "LAN",
+    "ip": "192.168.1.25",
+    "netmask": "255.255.255.0",
+    "isActive": true,
+    "bytesSent": "92.13 MB",
+    "bytesRecv": "472.80 MB"
+  },
+  "server": {
+    "instanceId": "e1234567-89ab-4cde-f012-3456789abcde",
+    "platform": "Linux",
+    "hostname": "example-server"
+  },
+  "database": {
+    "totalOperations": 2,
+    "totalDuration": "32.62 ms",
+    "totalConnectionTime": "18.51 ms",
+    "databaseTypes": [
+      "MongoDB",
+      "MySQL"
+    ],
+    "operationsByType": {
+      "MySQL": {
+        "count": 1,
+        "totalDuration": "18.51 ms",
+        "operations": [
+          {
+            "type": "MySQL",
+            "operation": "connect",
+            "duration_ms": "18.51",
+            "timestamp": "2025-10-14T15:33:06.240461",
+            "status": "success",
+            "connection_time_ms": "18.51",
+            "metadata": {
+              "host": "db.example.local",
+              "database": "test_db"
+            }
+          }
+        ]
+      },
+      "MongoDB": {
+        "count": 1,
+        "totalDuration": "14.11 ms",
+        "operations": [
+          {
+            "type": "MongoDB",
+            "operation": "count_documents",
+            "duration_ms": "14.11",
+            "timestamp": "2025-10-14T15:33:06.265669",
+            "status": "success",
+            "result_count": 9,
+            "metadata": {
+              "collection": "user_logs"
+            }
+          }
+        ]
+      }
+    },
+    "failedOperations": 0,
+    "percentageOfRequestTime": "69.9%"
+  }
+}
+```
+
+## 🔧 Configuration
+
+```python
+app.add_middleware(
+    RequestLoggingMiddleware,
+    enable_db_monitoring=True,
+)
+```
+
+## 📧 Contact
+
+- **Author:** Hariharan S
+- **Email:** hvasan59@gmail.com
+- **GitHub:** [@Hari-vasan](https://github.com/Hari-vasan)
+
+## 🔗 Links
+
+- [Documentation](https://github.com/Hari-vasan/logpulses#readme)
+- [Issue Tracker](https://github.com/Hari-vasan/logpulses/issues)
+- [PyPI Package](https://pypi.org/project/logpulses/)
+
+---
+
+**Star ⭐ this repo if you find it useful!**
