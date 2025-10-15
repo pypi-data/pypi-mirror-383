@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: srx-lib-llm
+Version: 0.1.3
+Summary: LLM helpers for SRX services: ChatOpenAI wrapper, tool base and Tavily tool
+Author-email: SRX <dev@srx.id>
+Requires-Python: >=3.12
+Requires-Dist: langchain-community>=0.0.24
+Requires-Dist: langchain-core>=0.3.43
+Requires-Dist: langchain-openai>=0.3.6
+Requires-Dist: langchain>=0.3.26
+Requires-Dist: openai>=1.65.5
+Requires-Dist: tavily-python>=0.4.0
+Description-Content-Type: text/markdown
+
+# srx-lib-llm
+
+LLM helpers for SRX services built on LangChain.
+
+What it includes:
+- `responses_chat(prompt, cache=False)`: simple text chat via OpenAI Responses API
+- Tool strategy base and registry
+- Tavily search tool strategy
+
+Designed to work with official OpenAI only.
+
+## Install
+
+PyPI (public):
+
+- `pip install srx-lib-llm`
+
+uv (pyproject):
+```
+[project]
+dependencies = ["srx-lib-llm>=0.1.0"]
+```
+
+## Usage
+
+```
+from srx_lib_llm import responses_chat
+text = await responses_chat("Hello there", cache=True)
+```
+
+Tools:
+```
+from srx_lib_llm.tools import ToolStrategyBase, register_strategy, get_strategies
+from srx_lib_llm.tools.tavily import TavilyToolStrategy
+
+register_strategy(TavilyToolStrategy())
+strategies = get_strategies()
+```
+
+## Environment Variables
+
+- `OPENAI_API_KEY` (required)
+- `OPENAI_MODEL` (optional, default: `gpt-4.1-nano`)
+- `TAVILY_API_KEY` (optional, for the Tavily tool)
+
+## Release
+
+Tag `vX.Y.Z` to publish to GitHub Packages via Actions.
+
+## License
+
+Proprietary © SRX
