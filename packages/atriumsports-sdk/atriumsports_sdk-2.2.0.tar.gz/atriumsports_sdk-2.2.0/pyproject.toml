@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atriumsports_sdk"
+version = "2.2.0"
+description = "Python module for integration to Atrium Sports APIs"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT License" }
+authors = [
+  { name = "Atrium Sports", email = "python_dev@atriumsports.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "requests",
+    "paho-mqtt>=2.1.0",
+    "python-dateutil>=2.8.2",
+    "urllib3>=2.1.0,<3.0.0",
+    "pydantic>=2",
+    "typing-extensions>=4.7.1",
+    "aenum>=3.1.11",
+    "pyjwt>=2.8.0",
+]
+
+[project.optional-dependencies] 
+dev = [
+    "ruff",
+    "build",
+    "twine",
+    "pytest",
+    "requests-mock",
+    "pytest-cov>=7.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["atriumsports*"] 
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
