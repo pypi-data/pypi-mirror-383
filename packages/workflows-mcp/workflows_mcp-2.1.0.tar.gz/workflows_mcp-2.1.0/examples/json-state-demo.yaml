@@ -1,0 +1,88 @@
+name: json-state-demo
+description: |
+  Demonstration of JSON state management blocks for TDD workflows.
+  Shows reading, writing, and merging state across workflow executions.
+
+version: "1.0.0"
+author: mcp-workflows
+
+inputs:
+  workspace:
+    type: string
+    description: Workspace directory for state file
+    required: true
+    default: "."
+
+blocks:
+  # Read existing state (or get empty dict if doesn't exist)
+  - id: read_state
+    type: ReadJSONState
+    inputs:
+      path: "${workspace}/.tdd-state.json"
+
+  # Initial state creation if file doesn't exist
+  - id: init_state
+    type: WriteJSONState
+    inputs:
+      path: "${workspace}/.tdd-state.json"
+      state:
+        phase: "planning"
+        modules: []
+        metrics:
+          coverage: 0
+          tests: 0
+    depends_on:
+      - read_state
+    condition: "${read_state.found} == False"
+
+  # Merge updates into existing state
+  - id: update_state
+    type: MergeJSONState
+    inputs:
+      path: "${workspace}/.tdd-state.json"
+      updates:
+        phase: "implementation"
+        modules: ["core", "utils"]
+        metrics:
+          coverage: 85
+          tests: 42
+          passed: true
+    depends_on:
+      - read_state
+
+  # Read final state to verify merge
+  - id: read_final
+    type: ReadJSONState
+    inputs:
+      path: "${workspace}/.tdd-state.json"
+    depends_on:
+      - update_state
+
+  # Display results
+  - id: show_results
+    type: EchoBlock
+    inputs:
+      message: |
+        State Management Demo Complete!
+
+        Initial found: ${read_state.found}
+        Final state: ${read_final.state}
+        Modules: ${read_final.state.modules}
+        Coverage: ${read_final.state.metrics.coverage}%
+        Tests: ${read_final.state.metrics.tests}
+
+        File location: ${read_final.path}
+    depends_on:
+      - read_final
+
+outputs:
+  state: "${read_final.state}"
+  found: "${read_state.found}"
+  created: "${update_state.created}"
+  path: "${read_final.path}"
+
+tags:
+  - example
+  - state
+  - json
+  - tdd
