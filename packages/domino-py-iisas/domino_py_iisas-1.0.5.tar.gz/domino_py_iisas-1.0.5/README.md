@@ -1,0 +1,1 @@
+This is a fork of the [Domino](https://github.com/Tauffer-Consulting/domino) project with added support of [Apache Airflow v3.0.6](https://github.com/apache/airflow/tree/3.0.6).
