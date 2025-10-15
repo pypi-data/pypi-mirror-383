@@ -1,0 +1,29 @@
+[project]
+name = "readerbotda"
+version = "1.4.2"
+description = "Pacchetto per lettura e visualizzazione file di log sensore BOTDA Cohaerentia"
+authors = [
+    {name = "Marco Brunero",email = "marco.brunero@cohaerentia.com"}
+]
+readme = "README.md"
+requires-python = ">3.10"
+dependencies = [
+    "dacite (>=1.9.2,<2.0.0)",
+    "plotly (>=6.0.1,<7.0.0)",
+    "numpy (>=2.2.4,<3.0.0)",
+    "bokeh (>=3.7.2,<4.0.0)",
+    "typer (>=0.15.2,<0.16.0)",
+    "progress (>=1.6,<2.0)",
+    "h5py (>=3.14.0,<4.0.0)",
+    "nbformat (>=5.10.4,<6.0.0)"
+]
+
+[tool.poetry.scripts]
+readBOTDA = "ReaderBOTDA.script:app"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
