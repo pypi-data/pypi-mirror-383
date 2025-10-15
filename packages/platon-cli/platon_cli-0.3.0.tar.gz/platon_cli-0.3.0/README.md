@@ -1,0 +1,370 @@
+# Platon CLI
+
+Unified command-line tool for managing Vault secrets and Kubernetes resources for Sikt GitLab repositories.
+
+## Features
+
+- Vault secret management (get, set, delete, export, diff)
+- Kubernetes resource operations (pods, logs, exec, scale, restart)
+- Auto-detection of repository configuration from git remote
+- Multiple output formats (table, json, yaml, env, dotenv)
+- Interactive TUI menu
+- Profile-based configuration
+- Shell completion for bash and zsh
+
+## Installation
+
+```bash
+# Using uv
+uv pip install -e .
+
+# Using pip
+pip install -e .
+```
+
+## Quick Start
+
+Navigate to a Sikt GitLab repository and run:
+
+```bash
+# Interactive mode
+platon
+
+# Get help
+platon --help
+
+# Initialize config for current repo
+platon init
+
+# View status
+platon status
+```
+
+## Configuration
+
+Platon uses two configuration files:
+
+**Global config**: `~/.config/platon/config.yaml`
+```yaml
+current_profile: default
+profiles:
+  default:
+    vault_addr: https://vault.sikt.no
+    vault_token: your-token
+    vault_mount: secret
+    default_format: table
+    theme: default
+```
+
+**Local config**: `.platon.yaml` (per repository)
+```yaml
+vault_path: gitlab/path/to/repo
+namespace: path-to-repo
+template: basic
+```
+
+### Environment Variables
+
+- `VAULT_ADDR` - Vault server address
+- `VAULT_TOKEN` - Vault authentication token
+- `KUBE_NAMESPACE` - Default Kubernetes namespace
+
+## Usage
+
+### Vault Operations
+
+#### List all secrets
+```bash
+# Table format (default)
+platon vault get --all
+
+# JSON format
+platon vault get --all --format json
+
+# Export to file
+platon vault get --all --format env -o .env
+```
+
+#### Get specific secret
+```bash
+platon vault get DATABASE_URL
+```
+
+#### Set secret
+```bash
+# Interactive prompt
+platon vault set API_KEY
+
+# Direct value
+platon vault set API_KEY "secret-value"
+
+# From file
+platon vault set CERTIFICATE --from-file cert.pem
+
+# From stdin
+echo "secret" | platon vault set PASSWORD --from-stdin
+```
+
+#### Delete secret
+```bash
+# With confirmation
+platon vault delete OLD_KEY
+
+# Skip confirmation
+platon vault delete OLD_KEY --force
+```
+
+#### Export secrets
+```bash
+# Export as environment variables
+platon vault export --format env
+
+# Export as JSON
+platon vault export --format json -o secrets.json
+
+# Export as .env file
+platon vault export --format dotenv -o .env
+
+# Copy to clipboard
+platon vault export --clipboard
+```
+
+#### Compare versions
+```bash
+platon vault diff --version1 1 --version2 2
+```
+
+### Kubernetes Operations
+
+#### List pods
+```bash
+# All pods in namespace
+platon k8s pods
+
+# With label selector
+platon k8s pods --selector app=myapp
+
+# Watch for changes
+platon k8s pods --watch
+```
+
+#### View logs
+```bash
+# Interactive pod selection
+platon k8s logs
+
+# Specific pod
+platon k8s logs my-pod-name
+
+# Follow logs
+platon k8s logs my-pod-name --follow
+
+# Show previous container logs
+platon k8s logs my-pod-name --previous
+
+# Limit lines
+platon k8s logs my-pod-name --tail 50
+
+# Specific container
+platon k8s logs my-pod-name -c container-name
+```
+
+#### Execute commands
+```bash
+# Interactive pod selection with bash
+platon k8s exec
+
+# Specific pod
+platon k8s exec my-pod-name
+
+# Custom command
+platon k8s exec my-pod-name --command "/bin/sh"
+
+# Specific container
+platon k8s exec my-pod-name -c container-name
+```
+
+#### Scale deployment
+```bash
+platon k8s scale my-deployment 3
+```
+
+#### Restart deployment
+```bash
+platon k8s restart my-deployment
+```
+
+### Sync Operations
+
+```bash
+# Sync Vault secrets to environment
+platon sync --direction to-env
+
+# Dry run
+platon sync --direction to-env --dry-run
+```
+
+### Status
+
+```bash
+# Show overall status
+platon status
+```
+
+### Shell Completion
+
+Install completion for your shell:
+
+```bash
+# Bash
+platon completion bash >> ~/.bashrc
+source ~/.bashrc
+
+# Zsh
+platon completion zsh >> ~/.zshrc
+source ~/.zshrc
+```
+
+### Aliases
+
+Both `platon` and `plt` commands are available:
+
+```bash
+plt vault get --all
+plt k8s pods
+plt status
+```
+
+### Profiles
+
+Manage multiple configurations with profiles:
+
+```bash
+# Use specific profile
+platon --profile production vault get --all
+
+# Set default profile in config
+platon --config-file ~/.config/platon/config.yaml
+```
+
+## Repository Detection
+
+Platon automatically detects repository configuration from git remote URL:
+
+- Remote: `git@gitlab.sikt.no:team/project.git`
+- Vault path: `gitlab/team/project`
+- Namespace: `team-project`
+
+## Output Formats
+
+Supported formats for `--format` option:
+
+- `table` - Rich formatted table (default)
+- `json` - JSON format
+- `yaml` - YAML format
+- `env` - Shell export statements
+- `dotenv` - .env file format
+
+## Interactive Mode
+
+Run `platon` without arguments to enter interactive tui mode.
+
+## Architecture
+
+```
+platon-cli/
+├── pyproject.toml          # Project configuration and dependencies
+├── README.md               # This file
+├── platon/
+│   ├── __init__.py        # Package initialization
+│   ├── __main__.py        # Module entry point
+│   ├── cli.py             # Main CLI commands and interface
+│   ├── config.py          # Configuration management
+│   ├── vault.py           # Vault operations wrapper
+│   ├── kubectl.py         # Kubernetes operations wrapper
+│   ├── git.py             # Git repository detection
+│   └── utils.py           # Utility functions
+└── tests/
+    └── test_cli.py        # Unit tests
+```
+
+## Requirements
+
+- Python 3.8+
+- vault CLI (for Vault operations)
+- kubectl CLI (for Kubernetes operations)
+- git (for repository detection)
+
+## Development
+
+### Publishing
+
+#### Prerequisites
+
+Ensure you have the necessary credentials configured:
+
+```bash
+# Configure PyPI token
+export UV_PUBLISH_TOKEN="your-pypi-token"
+
+# Or use .pypirc
+cat > ~/.pypirc << EOF
+[pypi]
+username = __token__
+password = your-pypi-token
+EOF
+```
+
+#### Version Management
+
+Update version in `pyproject.toml`:
+
+```toml
+[project]
+version = "0.1.0"  # Update this
+```
+
+#### Build and Publish
+
+```bash
+# Clean previous builds
+rm -rf dist/
+
+# Build the package
+uv build
+
+# Publish to PyPI
+uv publish
+
+# Publish to Test PyPI (for testing)
+uv publish --publish-url https://test.pypi.org/legacy/
+```
+
+#### Pre-publish Checklist
+
+Before publishing a new version:
+
+1. Update version in `pyproject.toml`
+2. Update CHANGELOG if present
+3. Run syntax checks: `python -m py_compile platon/**/*.py`
+4. Test installation: `uv pip install -e .`
+5. Test basic functionality: `platon --help`
+6. Create git tag: `git tag v0.1.0 && git push origin v0.1.0`
+7. Build: `uv build`
+8. Publish: `uv publish`
+
+#### Installing from PyPI
+
+Once published, users can install with:
+
+```bash
+# Using uv
+uv pip install platon-cli
+
+# Using pip
+pip install platon-cli
+```
+
+## License
+
+MIT
