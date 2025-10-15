@@ -1,0 +1,85 @@
+from pydantic import BaseModel, ConfigDict
+
+from .item_bundle import ItemBundle
+
+
+class ActivityEnemyDuelConstData(BaseModel):
+    model_config: ConfigDict = ConfigDict(extra="forbid")  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    maxLoadingTime: float
+    maxRetryTimeInBattle: float
+    maxMatchTime: float
+    maxRoomTime: float
+    maxRetryTimeInTeamRoom: float
+    roomReserveTime: float
+    minRoomNum: int
+    roomFinishWaitingTime: int
+    roomMasterRestartWaitingTime: int
+    pingConds: list["ActivityEnemyDuelConstData.PingCond"]
+    chatCd: float
+    chatTime: float
+    dailyMissionParam: int
+    dailyMissionReward: ItemBundle
+    dailyMissionName: str
+    dailyMissionDesc: str
+    maxOperatorDelay: float
+    maxPlaySpeed: float
+    delayTimeNeedTip: float
+    netBlockTimeNeedTip: float
+    stageTimeMax: float
+    npcCorrectProb: float
+    winStreakRoundNum: int
+    settlementPicNum: int
+    timeBeforeSelectAfterRoundBegin: int
+    npcMaxCorrectCountInStand: int
+    battlePhaseTimeMax: int
+    battleFinishToSettleTimeMax: int
+    minBetCd: float
+    defaultEmoticonItemId: str
+    defaultEmoticonPicId: str
+    modeOperationRoundNumber: int
+    modeOperationInitialScore: int
+    modeOperationMaxScore: int
+    modeOperationSelectTime: int
+    modeOperationSelectTimeLast: int
+    modeOperationSkipParam: float
+    modeOperationBetParam: float
+    modeOperationAllinParam: float
+    modeOperationTopRank: int
+    modeOperationRankTime: int
+    modeSoloOperationRankTime: int
+    modeOperationRewardMultiplier: int
+    modeOperationRewardMultiplierAllin: int
+    modeOperationHotRoundNumber: int
+    modeSoloOperationSelectTime: int
+    modeStandRoundNumber: int
+    modeStandShieldTurn: int
+    modeStandSelectTime: int
+    modeStandSelectTimeLast: int
+    modeStandAllinParam: float
+    modeStandTopRank: int
+    modeStandRankTime: int
+    modeStandHotRoundNumber: int
+    milestoneName: str
+    milestoneItemId: str
+    milestoneItemName: str
+    milestoneItemText: str
+    milestoneTrackId: str
+    entryVideoId: str
+    entryTabText: str
+    matchTabText: str
+    modeOperationId: str
+    modeStandId: str
+    multiPreposedModeId: str
+    entryMusicName: str
+    milestonePlanName: str
+    modeCondLockText: str
+    modeTimeLockText: str
+    titlePicRotateTime: float
+    titlePicId: str
+
+    class PingCond(BaseModel):
+        model_config: ConfigDict = ConfigDict(extra="forbid")  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        cond: int
+        txt: str
